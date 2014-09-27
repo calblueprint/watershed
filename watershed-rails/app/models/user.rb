@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   def ensure_authentication_token
     if authentication_token.blank?
       self.authentication_token = generate_authentication_token
+      self.save
     end
   end
 
