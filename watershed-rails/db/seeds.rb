@@ -18,6 +18,7 @@ def create_users(users_info, role)
         name: name,
         email: email,
         password: "password",
+        role: role,
       )
       puts "Created user: #{new_user.name}."
     end
