@@ -1,4 +1,5 @@
 class API::V1::SessionsController < Devise::SessionsController
+  # Modified version of: https://gist.github.com/marcomd/3129118
   respond_to :json
 
   def create
@@ -15,6 +16,17 @@ class API::V1::SessionsController < Devise::SessionsController
     else
       invalid_login_attempt
     end
+  end
+
+  private
+
+  def ensure_params_exist
+    return unless params[:user].blank?
+    render json: { message: "Missing user parameter" }, status: 422
+  end
+
+  def invalid_login_attempt
+    render json: { message: "Incorrect login or password" }, status: 401
   end
 
 end
