@@ -1,5 +1,7 @@
 class API::V1::SessionsController < Devise::SessionsController
   # Modified version of: https://gist.github.com/marcomd/3129118
+  before_filter :authenticate_user!,  only: [:destroy]
+  before_filter :ensure_params_exist, only: [:create]
   respond_to :json
 
   def create
