@@ -16,6 +16,7 @@ gem "will_paginate", "~> 3.0"
 gem "bootstrap-will_paginate"
 
 gem "devise", "3.3.0"
+gem "cancancan", "1.9.2"
 
 gem "pg", "0.17.1"
 
