@@ -7,12 +7,14 @@ We're using [Devise](https://github.com/plataformatec/devise).
 `POST /api/v1/users/sign_in`
 
 Request Body:
+
     {
       "email":"mark@mark.com",
       "password":"password"
     }
 
 Response:
+
     {
       "authentication_token":"kDz94MkMKtZH9QQ6iS-H",
       "email":"mark@mark.com"
@@ -30,6 +32,7 @@ Here is an example of the sites#index request:
 `GET /api/v1/sites`
 
 Response:
+
     {
       "sites":[
         ...
