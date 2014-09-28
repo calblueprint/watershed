@@ -7,17 +7,17 @@ class Api::V1::SitesController < Api::V1::BaseController
 
   def create
     if @site.save
-      # Success
+      render json: @site
     else
-      # Error
+      render json: { errors: @site.errors }, status: 422
     end
   end
 
   def update
     if @site.update(site_params)
-      # Success
+      render json: @site
     else
-      # Error
+      render json: { errors: @site.errors }, status: 422
     end
   end
 
