@@ -1,6 +1,6 @@
 ### API
 
-* v0.1.1-api: User Model and Login Authentication
+* v0.0.1-api: User Model and Login Authentication
 
 
 ### iOS
