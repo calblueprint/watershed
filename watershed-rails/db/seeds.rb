@@ -18,11 +18,11 @@ def create_users(users_info, role)
         name: name,
         email: email,
         password: "password",
-        role: role,
+        role: User.roles[role],
       )
       puts "Created user: #{new_user.name}."
     end
   end
 end
 
-create_users(managers, "manager")
+create_users(managers, :manager)
