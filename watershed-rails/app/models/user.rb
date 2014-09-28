@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  enum role: [ :manager, :employee, :community_member ]
+
   # Token Authentication
   def ensure_authentication_token
     if authentication_token.blank?

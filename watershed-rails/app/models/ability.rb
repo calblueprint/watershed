@@ -4,9 +4,10 @@ class Ability
   def initialize(user)
     user ||= User.new
 
-    if user.is_manager?
+
+    if user.manager?
       can :manage, :all
-    elsif user.is_employee?
+    elsif user.employee?
       can :read, :all
     else
       # Community Member
