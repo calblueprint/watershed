@@ -8,7 +8,7 @@
 
 #import "WPAppDelegate.h"
 #import "WPTasksListViewController.h"
-#import "LoginViewController.h"
+#import "WPLoginViewController.h"
 
 @implementation WPAppDelegate
 
@@ -24,7 +24,7 @@
     
     // Override point for customization after application launch.
     
-    UIViewController *viewController = [[LoginViewController  alloc] init];
+    UIViewController *viewController = [[WPLoginViewController  alloc] init];
     self.window.rootViewController = viewController;//making a view to root view
     [self.window makeKeyAndVisible];
     

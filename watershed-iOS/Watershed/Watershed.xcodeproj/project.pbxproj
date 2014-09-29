@@ -12,8 +12,9 @@
 		06A8139819D91A7500E3EB05 /* WPTasksListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A8139719D91A7500E3EB05 /* WPTasksListView.m */; };
 		06A8139B19D91D8600E3EB05 /* UIColor+WPColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A8139A19D91D8600E3EB05 /* UIColor+WPColors.m */; };
 		0BFD8558DD12470AB2409F6A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 38F773F3CE0741AE9B08A802 /* libPods.a */; };
-		27714CA919D9076F005344B0 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27714CA819D9076F005344B0 /* LoginViewController.m */; };
-		27714CAF19D93341005344B0 /* WPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 27714CAE19D93341005344B0 /* WPAppDelegate.m */; };
+		27714CA919D9076F005344B0 /* WPLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27714CA819D9076F005344B0 /* WPLoginViewController.m */; };
+		27714CAC19D9182D005344B0 /* WPLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27714CAB19D9182D005344B0 /* WPLoginView.m */; };
+		27714CB219D93405005344B0 /* WPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 27714CB119D93405005344B0 /* WPAppDelegate.m */; };
 		BA4F8DD019C7739300C816E3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA4F8DCF19C7739300C816E3 /* Foundation.framework */; };
 		BA4F8DD219C7739300C816E3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA4F8DD119C7739300C816E3 /* CoreGraphics.framework */; };
 		BA4F8DD419C7739300C816E3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA4F8DD319C7739300C816E3 /* UIKit.framework */; };
@@ -46,10 +47,12 @@
 		06A8139719D91A7500E3EB05 /* WPTasksListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPTasksListView.m; sourceTree = "<group>"; };
 		06A8139919D91D8600E3EB05 /* UIColor+WPColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+WPColors.h"; sourceTree = "<group>"; };
 		06A8139A19D91D8600E3EB05 /* UIColor+WPColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+WPColors.m"; sourceTree = "<group>"; };
-		27714CA719D9076F005344B0 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
-		27714CA819D9076F005344B0 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
-		27714CAD19D93341005344B0 /* WPAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPAppDelegate.h; sourceTree = "<group>"; };
-		27714CAE19D93341005344B0 /* WPAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPAppDelegate.m; sourceTree = "<group>"; };
+		27714CA719D9076F005344B0 /* WPLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPLoginViewController.h; sourceTree = "<group>"; };
+		27714CA819D9076F005344B0 /* WPLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPLoginViewController.m; sourceTree = "<group>"; };
+		27714CAA19D9182D005344B0 /* WPLoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPLoginView.h; sourceTree = "<group>"; };
+		27714CAB19D9182D005344B0 /* WPLoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPLoginView.m; sourceTree = "<group>"; };
+		27714CB019D93405005344B0 /* WPAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPAppDelegate.h; sourceTree = "<group>"; };
+		27714CB119D93405005344B0 /* WPAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPAppDelegate.m; sourceTree = "<group>"; };
 		38F773F3CE0741AE9B08A802 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		79DB95E49611D8089647C47B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		94DA147371834FC199109DD7 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
@@ -148,12 +151,14 @@
 				06A8139A19D91D8600E3EB05 /* UIColor+WPColors.m */,
 				06305F4519D9274400BD2CE4 /* UIView+WPExtensions.h */,
 				06305F4619D9274400BD2CE4 /* UIView+WPExtensions.m */,
-				27714CA719D9076F005344B0 /* LoginViewController.h */,
-				27714CA819D9076F005344B0 /* LoginViewController.m */,
-				27714CAD19D93341005344B0 /* WPAppDelegate.h */,
-				27714CAE19D93341005344B0 /* WPAppDelegate.m */,
+				27714CA719D9076F005344B0 /* WPLoginViewController.h */,
+				27714CA819D9076F005344B0 /* WPLoginViewController.m */,
 				BA4F8DEA19C7739300C816E3 /* Images.xcassets */,
 				BA4F8DD619C7739300C816E3 /* Supporting Files */,
+				27714CAA19D9182D005344B0 /* WPLoginView.h */,
+				27714CAB19D9182D005344B0 /* WPLoginView.m */,
+				27714CB019D93405005344B0 /* WPAppDelegate.h */,
+				27714CB119D93405005344B0 /* WPAppDelegate.m */,
 			);
 			path = Watershed;
 			sourceTree = "<group>";
@@ -324,8 +329,10 @@
 				06A8139519D911C900E3EB05 /* WPTasksListViewController.m in Sources */,
 				06A8139B19D91D8600E3EB05 /* UIColor+WPColors.m in Sources */,
 				06305F4719D9274400BD2CE4 /* UIView+WPExtensions.m in Sources */,
-				27714CA919D9076F005344B0 /* LoginViewController.m in Sources */,
-				27714CAF19D93341005344B0 /* WPAppDelegate.m in Sources */,
+				27714CB219D93405005344B0 /* WPAppDelegate.m in Sources */,
+				27714CA919D9076F005344B0 /* WPLoginViewController.m in Sources */,
+				27714CA919D9076F005344B0 /* WPLoginViewController.m in Sources */,
+				27714CAC19D9182D005344B0 /* WPLoginView.m in Sources */,
 				BA4F8DDC19C7739300C816E3 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
