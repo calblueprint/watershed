@@ -10,6 +10,7 @@ import com.blueprint.watershed.R;
 
 public class MainActivity extends Activity {
 
+    // Constants
     public  static final String PREFERENCES = "LOGIN_PREFERENCES";
     private static final String TAG         = "MainActivity";
 
@@ -40,8 +41,8 @@ public class MainActivity extends Activity {
         initializeNavigation();
 
         SharedPreferences prefs = getSharedPreferences(PREFERENCES, 0);
-        authToken = prefs.getString("auth_token", "NONE");
-        authEmail = prefs.getString("auth_email", "NONE");
+        authToken = prefs.getString("auth_token", "none");
+        authEmail = prefs.getString("auth_email", "none");
 
         mTitle = getTitle();
     }
@@ -72,5 +73,7 @@ public class MainActivity extends Activity {
 
     private void initializeNavigation() {
         // Initialize the left drawer
+
+        String titles[] = { "Tasks", "Sites", "Activity Log", "Profile", "About", "Logout" };
     }
 }
