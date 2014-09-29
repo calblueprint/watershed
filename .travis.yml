@@ -6,5 +6,6 @@ env:
 before_script:
   - cp watershed-rails/config/database.travis.yml watershed-rails/config/database.yml
   - psql -c 'create database watershed_test' -U postgres
+  - cd watershed-rails
 script:
   - bundle exec rake --trace db:migrate db:seed && bundle exec rspec spec
