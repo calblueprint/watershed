@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		06305F4719D9274400BD2CE4 /* UIView+WPExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 06305F4619D9274400BD2CE4 /* UIView+WPExtensions.m */; };
 		06A8139519D911C900E3EB05 /* WPTasksListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A8139419D911C900E3EB05 /* WPTasksListViewController.m */; };
 		06A8139819D91A7500E3EB05 /* WPTasksListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A8139719D91A7500E3EB05 /* WPTasksListView.m */; };
 		06A8139B19D91D8600E3EB05 /* UIColor+WPColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A8139A19D91D8600E3EB05 /* UIColor+WPColors.m */; };
@@ -36,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		06305F4519D9274400BD2CE4 /* UIView+WPExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WPExtensions.h"; sourceTree = "<group>"; };
+		06305F4619D9274400BD2CE4 /* UIView+WPExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WPExtensions.m"; sourceTree = "<group>"; };
 		06A8139319D911C900E3EB05 /* WPTasksListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPTasksListViewController.h; sourceTree = "<group>"; };
 		06A8139419D911C900E3EB05 /* WPTasksListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPTasksListViewController.m; sourceTree = "<group>"; };
 		06A8139619D91A7500E3EB05 /* WPTasksListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPTasksListView.h; sourceTree = "<group>"; };
@@ -138,8 +141,10 @@
 				06A8139719D91A7500E3EB05 /* WPTasksListView.m */,
 				06A8139919D91D8600E3EB05 /* UIColor+WPColors.h */,
 				06A8139A19D91D8600E3EB05 /* UIColor+WPColors.m */,
-				BA4F8DDE19C7739300C816E3 /* WPAppDelegate.h */,
 				BA4F8DDF19C7739300C816E3 /* WPAppDelegate.m */,
+				BA4F8DDE19C7739300C816E3 /* WPAppDelegate.h */,
+				06305F4519D9274400BD2CE4 /* UIView+WPExtensions.h */,
+				06305F4619D9274400BD2CE4 /* UIView+WPExtensions.m */,
 				BA4F8DEA19C7739300C816E3 /* Images.xcassets */,
 				BA4F8DD619C7739300C816E3 /* Supporting Files */,
 			);
@@ -312,6 +317,7 @@
 				06A8139519D911C900E3EB05 /* WPTasksListViewController.m in Sources */,
 				06A8139B19D91D8600E3EB05 /* UIColor+WPColors.m in Sources */,
 				BA4F8DE019C7739300C816E3 /* WPAppDelegate.m in Sources */,
+				06305F4719D9274400BD2CE4 /* UIView+WPExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

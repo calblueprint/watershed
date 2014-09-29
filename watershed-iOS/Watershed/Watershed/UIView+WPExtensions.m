@@ -1,0 +1,19 @@
+//
+//  UIView+WPExtensions.m
+//  Watershed
+//
+//  Created by Jordeen Chang on 9/28/14.
+//  Copyright (c) 2014 Blueprint. All rights reserved.
+//
+
+#import "UIView+WPExtensions.h"
+
+@implementation UIView (WPExtensions)
+
+- (UIView *)wp_addToSuperview:(UIView *)view {
+    // Add some check to make sure view is not nil
+    [view addSubview:self];
+    return self;
+}
+
+@end

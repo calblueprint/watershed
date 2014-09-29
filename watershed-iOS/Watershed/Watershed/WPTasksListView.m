@@ -7,6 +7,9 @@
 //
 
 #import "WPTasksListView.h"
+#import "UIView+WPExtensions.h"
+#import "UIColor+WPColors.h"
+
 
 @interface WPTasksListView()
 
@@ -20,7 +23,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-//        [self createSubviews];
+        [self createSubviews];
 //        [self setUpActions];
         [self updateConstraints];
     }
@@ -30,26 +33,25 @@
 #pragma mark - View Hierarchy
 
 - (void)createSubviews {
-    UIView *view = [[UIView alloc] init];
-    view.backgroundColor = 
-//    _segmentedTasksTabBarView = [({
-//        UIView *view = [[UIView alloc] init];
-//        view.backgroundColor = [UIColor blueColor];
-//        view;
-//    }) mm_addToSuperview:self];
-//    
-//    _tasksTableView = [({
-//        UIView *view = [[UIView alloc] init];
-//        view.backgroundColor = [UIColor redColor];
-//        view;
-//    }) mm_addToSuperview:self];
+    _segmentedTasksTabBarView = [({
+        UIView *view = [[UIView alloc] initWithFrame:(CGRectMake(0, 0, 100, 100))];
+        view.backgroundColor = [UIColor wp_darkBlue];
+        view;
+    }) wp_addToSuperview:self];
+    
+    _tasksTableView = [({
+        UIView *view = [[UIView alloc] init];
+        view.backgroundColor = [UIColor redColor];
+        view;
+    }) wp_addToSuperview:self];
 }
-//
-//- (void)setUpActions {
-//    // Here is where you set up buttons taps and gesture recognizers.
-//}
-//
-//- (void)updateConstraints {
+
+- (void)setUpActions {
+    // Here is where you set up buttons taps and gesture recognizers.
+}
+
+- (void)updateConstraints {
+    
 //    [self.segmentedTasksTabBarView mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.top.equalTo(@100);
 //        make.leading.equalTo(@10);
@@ -63,9 +65,9 @@
 //        make.leading.equalTo(@10);
 //        make.trailing.equalTo(@(-10));
 //    }];
-//    
-//    [super updateConstraints];
-//}
+    
+    [super updateConstraints];
+}
 
 
 @end
