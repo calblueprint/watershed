@@ -4,14 +4,25 @@ import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+
+import java.util.ArrayList;
 
 
 public class TaskActivity extends ListActivity {
 
+    ArrayList<Task> TaskList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
+
+        TaskList = new ArrayList<Task>();
+
+        ArrayAdapter<Task> arrayAdapter =
+                new ArrayAdapter<Task>(this,android.R.layout.simple_list_item_1, TaskList);
+
+        TaskList.setAdapter(arrayAdapter);
     }
 
     @Override
@@ -31,5 +42,13 @@ public class TaskActivity extends ListActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    void getTasks() {
+        TaskList.add(new Task());
+        TaskList.add(new Task());
+        TaskList.add(new Task());
+        TaskList.add(new Task());
+        TaskList.add(new Task());
     }
 }
