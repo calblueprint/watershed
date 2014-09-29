@@ -1,4 +1,4 @@
-package com.example.maxwolffe.watershed;
+package com.blueprint.watershed;
 
 import android.app.Activity;
 import android.os.Bundle;
