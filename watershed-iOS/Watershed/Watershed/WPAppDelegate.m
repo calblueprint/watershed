@@ -7,11 +7,20 @@
 //
 
 #import "WPAppDelegate.h"
+#import "WPTasksListViewController.h"
 
 @implementation WPAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+
+    WPTasksListViewController *tasksListViewController = [[WPTasksListViewController alloc] init];
+    // determine the initial view controller here and instantiate it with [storyboard instantiateViewControllerWithIdentifier:];
+    
+    self.window.rootViewController = tasksListViewController;//making a view to root view
+    [self.window makeKeyAndVisible];
+    
     // Override point for customization after application launch.
     return YES;
 }
