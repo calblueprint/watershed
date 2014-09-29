@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import com.blueprint.watershed.R;
 
 public class MainActivity extends Activity {
@@ -19,6 +20,15 @@ public class MainActivity extends Activity {
     // For storing our credentials once we have successfully authenticated
     SharedPreferences preferences;
 
+    // Fragments
+
+    // View Elements
+    public CharSequence mTitle;
+
+    // UI Elements
+    public Typeface watershedFont;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +39,11 @@ public class MainActivity extends Activity {
 
         initializeNavigation();
 
+        SharedPreferences prefs = getSharedPreferences(PREFERENCES, 0);
+        authToken = prefs.getString("auth_token", "NONE");
+        authEmail = prefs.getString("auth_email", "NONE");
 
+        mTitle = getTitle();
     }
 
 
