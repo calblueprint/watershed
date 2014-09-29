@@ -2,9 +2,8 @@ language: ruby
 rvm:
   - 2.1.2
 env:
-  - DB=postgresql RAILS_ENV=test SECRET_KEY="$(bundle exec rake secret)"
+  - DB=postgresql RAILS_ENV=test SECRET_KEY="$(bundle exec rake secret)" && cd watershed-rails
 before_script:
-  - cd watershed-rails
   - cp config/database.travis.yml config/database.yml
   - psql -c 'create database watershed_test' -U postgres
 script:
