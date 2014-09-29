@@ -8,6 +8,7 @@
 
 #import "WPAppDelegate.h"
 #import "WPTasksListViewController.h"
+#import "WPLoginViewController.h"
 
 @implementation WPAppDelegate
 
@@ -22,6 +23,13 @@
     [self.window makeKeyAndVisible];
     
     // Override point for customization after application launch.
+    
+    UIViewController *viewController = [[WPLoginViewController  alloc] init];
+    self.window.rootViewController = viewController;//making a view to root view
+    [self.window makeKeyAndVisible];
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+
     return YES;
 }
 							
