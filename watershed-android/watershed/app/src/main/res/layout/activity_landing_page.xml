@@ -6,26 +6,20 @@
     android:paddingRight="@dimen/standard_margin"
     android:paddingTop="@dimen/tight_margin"
     android:paddingBottom="@dimen/tight_margin"
-    tools:context="com.blueprint.watershed.LoginActivity">
+    tools:context="com.blueprint.watershed.LandingPageActivity">
 
-    <EditText
-        android:id="@+id/username"
-        android:layout_width="match_parent"
-        android:inputType="textEmailAddress"
-        android:layout_height="@dimen/text_field_standard_height"
-        android:layout_marginTop="20dp"
-        />
-
-    <EditText
-        android:id="@+id/pass"
-        android:inputType="textPassword"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/text_field_standard_height"
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/imageView"
+        android:background="@drawable/watershed_logo"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
         />
 
     <Button
-        android:id="@+id/sign_in_button"
-        android:onClick="attemptLogin"
+        android:id="@+id/login_button"
+        android:onClick="loadLoginActivity"
         android:layout_width="200dp"
         android:layout_height="@dimen/button_standard_height"
         android:textSize="20sp"
