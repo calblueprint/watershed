@@ -34,6 +34,6 @@ public class LandingPageActivity extends Activity {
     }
 
     public void loadLoginActivity(View view) {
-
+        // Switch fragments
     }
 }
