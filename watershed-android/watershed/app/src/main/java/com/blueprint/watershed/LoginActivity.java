@@ -7,13 +7,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.content.SharedPreferences;
 
-import com.android.volley.NetworkError;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.Request;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+import android.view.View;
+
+import com.android.volley.*;
+import com.android.volley.toolbox.*;
 import android.widget.Toast;
 
 
@@ -47,5 +44,9 @@ public class LoginActivity extends Activity {
             this.finish();
             startActivity(intent);
         }
+    }
+
+    public void attemptLogin(View view) {
+
     }
 }
