@@ -25,12 +25,17 @@ public class LandingPageActivity extends Activity {
 
         SharedPreferences preferences = getSharedPreferences(PREFERENCES, 0);
 
-        if (!preferences.getString("auth_token", "none").equals("none") && !preferences.getString("auth_email", "none").equals("none")) {
+        if (hasAuthCredentials(preferences)) {
             final Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("auth_token", preferences.getString("auth_token", null));
             this.finish();
             startActivity(intent);
         }
+    }
+
+    public boolean hasAuthCredentials(SharedPreferences preferences) {
+        return !preferences.getString("auth_token", "none").equals("none") &&
+               !preferences.getString("auth_email", "none").equals("none");
     }
 
     public void loadLoginActivity(View view) {
