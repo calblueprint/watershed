@@ -2,13 +2,10 @@ package com.blueprint.watershed;
 
 import android.app.Activity;
 import android.content.Context;
-import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -17,24 +14,25 @@ import android.widget.TextView;
  *
  */
 public class TaskAdapter extends ArrayAdapter<Task> {
-    private Context mContext;
-    private int mlayoutResourceId;
-    private Task mdata[] = null;
+    Context context;
+    int layoutResourceId;
+    Task data[] = null;
 
     public TaskAdapter(Context context, int layoutResourceId, Task[] data){
         super(context, layoutResourceId, data);
-        mContext = context;
-        mdata = data;
+        this.layoutResourceId = layoutResourceId;
+        this.context = context;
+        this.data = data;
     }
 
     @Override
-    public View getView(int position,  View view, ViewGroup parent){
-        View row = view;
+    public View getView(int position,  View convertview, ViewGroup parent){
+        View row = convertview;
         TaskHolder holder = null;
 
         if (row == null) {
-            LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
-            view = inflater.inflate(R.layout.taskview_each_item, null);
+            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+            row = inflater.inflate(layoutResourceId, parent, false);
 
             holder = new TaskHolder();
             holder.title = (TextView)row.findViewById(R.id.title);
@@ -47,7 +45,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
             holder = (TaskHolder)row.getTag();
         }
 
-        Task task = mdata[position];
+        Task task = data[position];
         holder.title.setText(task.getTitle());
         holder.description.setText(task.getDescription());
 
