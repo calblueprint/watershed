@@ -30,6 +30,8 @@ GEM
       activesupport (= 4.1.4)
       builder (~> 3.1)
       erubis (~> 2.7.0)
+    active_model_serializers (0.9.0)
+      activemodel (>= 3.2)
     activemodel (4.1.4)
       activesupport (= 4.1.4)
       builder (~> 3.1)
@@ -64,6 +66,7 @@ GEM
     bullet (4.8.0)
       activesupport
       uniform_notifier (>= 1.4.0)
+    cancancan (1.9.2)
     celluloid (0.16.0)
       timers (~> 4.0.0)
     code_analyzer (0.4.5)
@@ -362,6 +365,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_model_serializers (= 0.9.0)
   annotate (~> 2.6.1)
   awesome_print (~> 1.2.0)
   better_errors (~> 1.1.0)
@@ -369,6 +373,7 @@ DEPENDENCIES
   bootstrap-sass (~> 3.1.1)
   bootstrap-will_paginate
   bullet (~> 4.8.0)
+  cancancan (= 1.9.2)
   coffee-rails (~> 4.0.0)
   commands (~> 0.2.1)
   database_cleaner
