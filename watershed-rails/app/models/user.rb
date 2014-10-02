@@ -28,6 +28,8 @@ class User < ActiveRecord::Base
 
   enum role: [ :manager, :employee, :community_member ]
 
+  has_many :field_reports
+
   # Token Authentication
   def ensure_authentication_token
     if authentication_token.blank?
