@@ -6,10 +6,11 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/standard_margin"
     android:paddingBottom="@dimen/standard_margin"
+    android:theme="@style/AppTheme"
     tools:context="com.blueprint.watershed.MainActivity">
 
     <TextView
-        android:text="Main Activity"
+        android:text="Yay Watershed!"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
