@@ -11,10 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140928040257) do
+ActiveRecord::Schema.define(version: 20141002040008) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "mini_sites", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.text     "street"
+    t.string   "city"
+    t.string   "state"
+    t.integer  "zipcode"
+    t.decimal  "latitude"
+    t.decimal  "longitude"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "sites", force: true do |t|
     t.string   "name"
