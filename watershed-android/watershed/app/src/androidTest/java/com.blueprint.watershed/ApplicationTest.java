@@ -1,4 +1,4 @@
-package com.example.maxwolffe.watershed;
+package com.blueprint.watershed;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

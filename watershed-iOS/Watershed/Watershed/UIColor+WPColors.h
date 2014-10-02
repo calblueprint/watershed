@@ -13,6 +13,7 @@
 + (UIColor *)wp_darkBlue;
 + (UIColor *)wp_blue;
 + (UIColor *)wp_lightBlue;
-
++ (UIColor *)wp_facebookBlue;
++ (UIColor *)wp_transWhite;
 @end
 
