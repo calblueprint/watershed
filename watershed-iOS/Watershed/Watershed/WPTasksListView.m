@@ -37,7 +37,7 @@
     _segmentedTasksTabBarView = [({
 //        UIView *view = [[UIView alloc] initWithFrame:(CGRectMake(0, 0, 100, 100))];
         UIView *view = [[UIView alloc] init];
-        view.backgroundColor = [UIColor wp_darkBlue];
+//        view.backgroundColor = [UIColor wp_darkBlue];
         view;
     }) wp_addToSuperview:self];
     
@@ -46,6 +46,22 @@
         view.backgroundColor = [UIColor wp_darkBlue];
         view;
     }) wp_addToSuperview:self];
+
+    //-----------------FIGURE OUT WHAT SCROLL DOES----------------
+    UIScrollView *scroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 435)];
+    scroll.contentSize = CGSizeMake(320, 700);
+    scroll.showsHorizontalScrollIndicator = YES;
+    
+    NSArray *itemArray = [NSArray arrayWithObjects: @"My Tasks", @"All Tasks", nil];
+    UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:itemArray];
+    segmentedControl.frame = CGRectMake(30, 30, 250, 30);
+//    segmentedControl.segmentedControlStyle = UISegmentedControlStylePlain;
+//    [segmentedControl addTarget:self action:@selector(MySegmentControlAction:) forControlEvents: UIControlEventValueChanged];
+    segmentedControl.selectedSegmentIndex = 0;
+    segmentedControl.tintColor = [UIColor wp_darkBlue];
+    [scroll addSubview:segmentedControl];
+//    [segmentedControl release];
+    [self.segmentedTasksTabBarView addSubview:segmentedControl];
 }
 
 - (void)setUpActions {
@@ -55,10 +71,10 @@
 - (void)updateConstraints {
     
     [self.segmentedTasksTabBarView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@100);
+        make.top.equalTo(@0);
         make.leading.equalTo(@10);
         make.trailing.equalTo(@(-10));
-        make.height.equalTo(@100);
+        make.height.equalTo(@60);
     }];
     
     [self.tasksTableView mas_makeConstraints:^(MASConstraintMaker *make) {
