@@ -3,6 +3,7 @@ class CreateFieldReports < ActiveRecord::Migration
     create_table :field_reports do |t|
       t.references :user
       t.references :mini_site
+      t.text :description
       t.integer :health_rating
       t.boolean :urgent, default: false
 

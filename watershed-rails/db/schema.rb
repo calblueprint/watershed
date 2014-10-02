@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20141002040009) do
   create_table "field_reports", force: true do |t|
     t.integer  "user_id"
     t.integer  "mini_site_id"
+    t.text     "description"
     t.integer  "health_rating"
     t.boolean  "urgent",        default: false
     t.datetime "created_at"
