@@ -4,8 +4,7 @@ class CreateFieldReports < ActiveRecord::Migration
       t.references :user
       t.references :mini_site
       t.integer :health_rating
-      t.text :comment
-      t.urgent :boolean
+      t.boolean :urgent, default: false
 
       t.timestamps
     end
