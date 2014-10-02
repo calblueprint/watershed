@@ -2,13 +2,16 @@ package com.blueprint.watershed;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import com.blueprint.watershed.R;
 
-public class MainActivity extends Activity {
+public class MainActivity extends ActionBarActivity {
 
     // Constants
     public  static final String PREFERENCES = "LOGIN_PREFERENCES";
@@ -22,6 +25,7 @@ public class MainActivity extends Activity {
     SharedPreferences preferences;
 
     // Fragments
+    public Fragment currentFragment;
 
     // View Elements
     public CharSequence mTitle;
@@ -65,6 +69,17 @@ public class MainActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void replaceFragment(Fragment newFragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();
+        if(!newFragment.isAdded()){
+            ft.add(R.id.container, newFragment);
+        }
+        ft.hide(currentFragment);
+        ft.show(newFragment);
+        ft.commit();
     }
 
     private void initializeFragments() {
