@@ -9,6 +9,7 @@
 #import "WPLoginView.h"
 #import "Masonry.h"
 #import "UIColor+WPColors.h"
+#import "UIView+WPExtensions.h"
 
 @interface WPLoginView ()
 
@@ -112,16 +113,16 @@
     }];
     
     [self.emailButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(@-10);
-        make.leading.equalTo(@10);
-        make.trailing.equalTo(@-10);
+        make.bottom.equalTo([UIView wp_styleNegativePadding]);
+        make.leading.equalTo([UIView wp_stylePadding]);
+        make.trailing.equalTo([UIView wp_styleNegativePadding]);
         make.height.equalTo(@50);
     }];
     
     [self.facebookButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.emailButton.mas_top).with.offset(-10.0);
-        make.leading.equalTo(@10);
-        make.trailing.equalTo(@-10);
+        make.bottom.equalTo(self.emailButton.mas_top).with.offset([[UIView wp_styleNegativePadding] floatValue]);
+        make.leading.equalTo([UIView wp_stylePadding]);
+        make.trailing.equalTo([UIView wp_styleNegativePadding]);
         make.height.equalTo(@50);
     }];
     
