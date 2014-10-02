@@ -16,4 +16,5 @@
 #
 
 class MiniSite < ActiveRecord::Base
+  has_many :field_reports, dependent: :destroy
 end
