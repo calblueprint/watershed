@@ -1,0 +1,34 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/standard_margin"
+    android:paddingRight="@dimen/standard_margin"
+    android:paddingTop="@dimen/tight_margin"
+    android:paddingBottom="@dimen/tight_margin"
+    tools:context="com.blueprint.watershed.LandingPageActivity"
+    android:background="@color/ws_blue"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/imageView"
+        android:background="@drawable/watershed_logo"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        />
+
+    <Button
+        android:id="@+id/login_button"
+        android:onClick="loadLoginActivity"
+        android:layout_width="200dp"
+        android:layout_height="@dimen/button_standard_height"
+        android:background="@color/white"
+        android:textSize="14sp"
+        android:text="Sign In"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        />
+
+</LinearLayout>
