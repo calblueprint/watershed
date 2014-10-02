@@ -56,7 +56,7 @@
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:itemArray];
     segmentedControl.frame = CGRectMake(30, 30, 250, 30);
 //    segmentedControl.segmentedControlStyle = UISegmentedControlStylePlain;
-//    [segmentedControl addTarget:self action:@selector(MySegmentControlAction:) forControlEvents: UIControlEventValueChanged];
+    [segmentedControl addTarget:self action:@selector(MySegmentControlAction:) forControlEvents: UIControlEventValueChanged];
     segmentedControl.selectedSegmentIndex = 0;
     segmentedControl.tintColor = [UIColor wp_darkBlue];
     [scroll addSubview:segmentedControl];
@@ -66,6 +66,16 @@
 
 - (void)setUpActions {
     // Here is where you set up buttons taps and gesture recognizers.
+}
+
+- (void)MySegmentControlAction:(UISegmentedControl *)segment
+{
+    self.tasksTableView.backgroundColor = [UIColor wp_lightBlue];
+    if(segment.selectedSegmentIndex == 0)
+    {
+        self.tasksTableView.backgroundColor = [UIColor wp_blue];
+        // code for the first button
+    }
 }
 
 - (void)updateConstraints {
