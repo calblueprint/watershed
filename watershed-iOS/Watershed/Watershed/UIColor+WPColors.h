@@ -11,6 +11,8 @@
 @interface UIColor (WPColors)
 
 + (UIColor *)wp_darkBlue;
++ (UIColor *)wp_blue;
++ (UIColor *)wp_lightBlue;
 
 @end
 

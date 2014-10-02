@@ -9,6 +9,7 @@
 #import "WPTasksListView.h"
 #import "UIView+WPExtensions.h"
 #import "UIColor+WPColors.h"
+#import "Masonry.h"
 
 
 @interface WPTasksListView()
@@ -34,14 +35,15 @@
 
 - (void)createSubviews {
     _segmentedTasksTabBarView = [({
-        UIView *view = [[UIView alloc] initWithFrame:(CGRectMake(0, 0, 100, 100))];
+//        UIView *view = [[UIView alloc] initWithFrame:(CGRectMake(0, 0, 100, 100))];
+        UIView *view = [[UIView alloc] init];
         view.backgroundColor = [UIColor wp_darkBlue];
         view;
     }) wp_addToSuperview:self];
     
     _tasksTableView = [({
         UIView *view = [[UIView alloc] init];
-        view.backgroundColor = [UIColor redColor];
+        view.backgroundColor = [UIColor wp_darkBlue];
         view;
     }) wp_addToSuperview:self];
 }
@@ -52,19 +54,19 @@
 
 - (void)updateConstraints {
     
-//    [self.segmentedTasksTabBarView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(@100);
-//        make.leading.equalTo(@10);
-//        make.trailing.equalTo(@(-10));
-//        make.height.equalTo(@100);
-//    }];
-//    
-//    [self.tasksTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.sampleView.mas_bottom).with.offset(10);
-//        make.bottom.equalTo(@(-10));
-//        make.leading.equalTo(@10);
-//        make.trailing.equalTo(@(-10));
-//    }];
+    [self.segmentedTasksTabBarView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@100);
+        make.leading.equalTo(@10);
+        make.trailing.equalTo(@(-10));
+        make.height.equalTo(@100);
+    }];
+    
+    [self.tasksTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.segmentedTasksTabBarView.mas_bottom).with.offset(10);
+        make.bottom.equalTo(@(-10));
+        make.leading.equalTo(@10);
+        make.trailing.equalTo(@(-10));
+    }];
     
     [super updateConstraints];
 }

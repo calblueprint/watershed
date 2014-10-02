@@ -24,9 +24,9 @@
     
     // Override point for customization after application launch.
     
-    UIViewController *viewController = [[WPLoginViewController  alloc] init];
-    self.window.rootViewController = viewController;//making a view to root view
-    [self.window makeKeyAndVisible];
+    //UIViewController *viewController = [[WPLoginViewController  alloc] init];
+    ///self.window.rootViewController = viewController;//making a view to root view
+    //[self.window makeKeyAndVisible];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 
