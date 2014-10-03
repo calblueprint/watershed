@@ -29,6 +29,8 @@ class User < ActiveRecord::Base
   enum role: [ :manager, :employee, :community_member ]
 
   has_many :field_reports
+  has_many :assigned_tasks, class_name: 'Task', foreign_key: 'assigner_id'
+  has_many :tasks, class_name: 'Task', foreign_key: 'assignee_id'
 
   # Token Authentication
   def ensure_authentication_token
