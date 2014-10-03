@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
       resources :sites, only: [:index, :create, :update]
       resources :tasks, only: [:index, :create, :update]
+      resources :field_reports, only: [:index, :show, :create, :update]
 
     end
   end
