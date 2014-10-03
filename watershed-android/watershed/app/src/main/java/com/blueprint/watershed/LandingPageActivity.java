@@ -10,7 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-
+import android.widget.*;
 import android.view.View;
 
 import android.content.SharedPreferences;
@@ -25,10 +25,24 @@ public class LandingPageActivity extends Activity {
     // Fragments
     public Fragment currentFragment;
 
+    // UI Elements
+    private ImageView mLogoImageView;
+    private EditText mEmailField;
+    private EditText mPasswordField;
+    private Button mLoginButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing_page);
+
+        setLogoImageView((ImageView)findViewById(R.id.logo_image_view));
+        setEmailField((EditText)findViewById(R.id.username_field));
+        setPasswordField((EditText)findViewById(R.id.password_field));
+        setLoginButton((Button)findViewById(R.id.login_button));
+
+        mEmailField.setVisibility(View.INVISIBLE);
+        mPasswordField.setVisibility(View.INVISIBLE);
 
         SharedPreferences preferences = getSharedPreferences(PREFERENCES, 0);
 
@@ -46,7 +60,18 @@ public class LandingPageActivity extends Activity {
                !preferences.getString("auth_email", "none").equals("none");
     }
 
-    public void loadLoginActivity(View view) {
-        // Switch fragments
+    public void didTapSignInButton(View view) {
+        mLogoImageView.setVisibility(View.INVISIBLE);
+        mLoginButton.setVisibility(View.INVISIBLE);
+        mEmailField.setVisibility(View.VISIBLE);
+        mPasswordField.setVisibility(View.VISIBLE);
     }
+
+    // Getters
+
+    // Setters
+    public void setLogoImageView(ImageView imageView) { mLogoImageView = imageView; }
+    public void setEmailField(EditText emailField) { mEmailField = emailField; }
+    public void setPasswordField(EditText passwordField) { mPasswordField = passwordField; }
+    public void setLoginButton(Button loginButton) { mLoginButton = loginButton; }
 }

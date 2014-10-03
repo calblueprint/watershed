@@ -13,7 +13,7 @@
     <ImageView
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:id="@+id/imageView"
+        android:id="@+id/logo_image_view"
         android:background="@drawable/watershed_logo"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="40dp"
@@ -21,14 +21,29 @@
 
     <Button
         android:id="@+id/login_button"
-        android:onClick="loadLoginActivity"
+        android:onClick="didTapSignInButton"
         android:layout_width="200dp"
         android:layout_height="@dimen/button_standard_height"
         android:background="@color/white"
         android:textSize="14sp"
-        android:text="Sign In"
+        android:text="Log In"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
+        />
+
+    <EditText
+        android:id="@+id/username_field"
+        android:layout_width="match_parent"
+        android:inputType="textEmailAddress"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        />
+
+    <EditText
+        android:id="@+id/password_field"
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
         />
 
 </LinearLayout>
