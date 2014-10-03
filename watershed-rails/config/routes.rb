@@ -4,8 +4,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       devise_for :users
 
-      resources :sites, only: [:index, :create, :update]
-      resources :tasks, only: [:index, :create, :update]
+      resources :sites, only: [:index, :show, :create, :update]
+      resources :tasks, only: [:index, :show, :create, :update]
       resources :field_reports, only: [:index, :show, :create, :update]
 
     end
