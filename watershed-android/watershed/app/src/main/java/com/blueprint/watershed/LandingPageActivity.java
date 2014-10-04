@@ -83,8 +83,11 @@ public class LandingPageActivity extends Activity {
         }, 500);
     }
 
-    public void didTapFacebookLoginButton(View view) {
+    public void didTapFacebookButton(View view) {
         // Facebook authentication
+    }
+
+    public void didTapSignUpButton(View view) {
     }
 
     // View Animations
