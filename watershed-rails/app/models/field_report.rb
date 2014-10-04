@@ -18,7 +18,7 @@ class FieldReport < ActiveRecord::Base
 
   validates :user_id, presence: true
   validates :mini_site_id, presence: true
-  validates :health_rating, numericality: { less_than_or_equal_to: 5 }
+  validates :health_rating, numericality: { less_than_or_equal_to: 5, greater_than_or_equal_to: 1 }
 
   default_scope -> { order("created_at DESC") }
 
