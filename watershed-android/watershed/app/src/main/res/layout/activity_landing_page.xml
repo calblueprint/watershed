@@ -1,5 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:animateLayoutChanges="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/standard_margin"
@@ -32,9 +33,10 @@
         />
 
     <EditText
-        android:id="@+id/username_field"
+        android:id="@+id/email_field"
         android:layout_width="match_parent"
         android:inputType="textEmailAddress"
+        android:hint="@string/email_hint"
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         />
@@ -42,6 +44,7 @@
     <EditText
         android:id="@+id/password_field"
         android:inputType="textPassword"
+        android:hint="@string/password_hint"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         />

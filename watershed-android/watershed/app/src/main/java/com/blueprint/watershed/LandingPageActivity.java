@@ -12,6 +12,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.*;
 import android.view.View;
+import android.os.Handler;
+import java.util.*;
 
 import android.content.SharedPreferences;
 
@@ -21,6 +23,9 @@ public class LandingPageActivity extends Activity {
     // Constants
     public  static final String PREFERENCES = "LOGIN_PREFERENCES";
     private static final String TAG         = "LandingPageActivity";
+
+    // View Constants
+    private static final int TEXTFIELD_ANIMATION_Y_OFFSET = -300;
 
     // Fragments
     public Fragment currentFragment;
@@ -37,12 +42,11 @@ public class LandingPageActivity extends Activity {
         setContentView(R.layout.activity_landing_page);
 
         setLogoImageView((ImageView)findViewById(R.id.logo_image_view));
-        setEmailField((EditText)findViewById(R.id.username_field));
+        setEmailField((EditText)findViewById(R.id.email_field));
         setPasswordField((EditText)findViewById(R.id.password_field));
         setLoginButton((Button)findViewById(R.id.login_button));
 
-        mEmailField.setVisibility(View.INVISIBLE);
-        mPasswordField.setVisibility(View.INVISIBLE);
+        toggleVisibilityOfElements(Arrays.asList((View)getEmailField(), (View)getPasswordField()));
 
         SharedPreferences preferences = getSharedPreferences(PREFERENCES, 0);
 
@@ -60,14 +64,43 @@ public class LandingPageActivity extends Activity {
                !preferences.getString("auth_email", "none").equals("none");
     }
 
+    // UI Actions
     public void didTapSignInButton(View view) {
-        mLogoImageView.setVisibility(View.INVISIBLE);
-        mLoginButton.setVisibility(View.INVISIBLE);
-        mEmailField.setVisibility(View.VISIBLE);
-        mPasswordField.setVisibility(View.VISIBLE);
+        toggleVisibilityOfElements(Arrays.asList(
+                (View)getLogoImageView(),
+                (View)getLoginButton(),
+                (View)getEmailField(),
+                (View)getPasswordField()
+        ));
+
+        new Handler().postDelayed(new Runnable() {
+            // Animate the textfields after a 0.5 second delay.
+            @Override
+            public void run() {
+                mEmailField.animate().translationY(TEXTFIELD_ANIMATION_Y_OFFSET);
+                mPasswordField.animate().translationY(TEXTFIELD_ANIMATION_Y_OFFSET);
+            }
+        }, 500);
     }
 
+    // View Animations
+    public void toggleVisibilityOfElements(List<View> views) {
+        for (View view : views) {
+            // Android is dumb because it doesn't have a toggle visibility method.
+            if (view.getVisibility() == View.VISIBLE) {
+                view.setVisibility(View.INVISIBLE);
+            } else {
+                view.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+
     // Getters
+    public ImageView getLogoImageView() { return mLogoImageView; }
+    public EditText getEmailField() { return mEmailField; }
+    public EditText getPasswordField() { return mPasswordField; }
+    public Button getLoginButton() { return mLoginButton; }
 
     // Setters
     public void setLogoImageView(ImageView imageView) { mLogoImageView = imageView; }
