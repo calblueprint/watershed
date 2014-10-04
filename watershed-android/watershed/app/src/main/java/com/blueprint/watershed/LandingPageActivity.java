@@ -25,7 +25,7 @@ public class LandingPageActivity extends Activity {
     private static final String TAG         = "LandingPageActivity";
 
     // View Constants
-    private static final int TEXT_FIELD_ANIMATION_Y_OFFSET = -300;
+    private static final int TEXT_FIELD_ANIMATION_Y_OFFSET = 100;
 
     // Fragments
     public Fragment currentFragment;
@@ -37,6 +37,9 @@ public class LandingPageActivity extends Activity {
     private Button mLoginButton;
     private Button mFacebookButton;
     private Button mSignUpButton;
+
+    private Button mSendLoginRequestButton;
+    private Button mSendSignUpRequestButton;
 
     // Layouts
     private LinearLayout mButtonsLayout;
@@ -92,8 +95,7 @@ public class LandingPageActivity extends Activity {
             // Animate the text fields after a 0.5 second delay.
             @Override
             public void run() {
-                mEmailField.animate().translationY(TEXT_FIELD_ANIMATION_Y_OFFSET);
-                mPasswordField.animate().translationY(TEXT_FIELD_ANIMATION_Y_OFFSET);
+                getLoginWithEmailLayout().animate().translationY(TEXT_FIELD_ANIMATION_Y_OFFSET);
             }
         }, 500);
     }
@@ -103,6 +105,12 @@ public class LandingPageActivity extends Activity {
     }
 
     public void didTapSignUpButton(View view) {
+    }
+
+    public void didTapSendLoginRequestButton(View view) {
+    }
+
+    public void didTapSendSignUpRequestButton(View view) {
     }
 
     // View Animations
