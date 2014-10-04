@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:animateLayoutChanges="true"
     android:layout_width="match_parent"
@@ -18,35 +18,79 @@
         android:background="@drawable/watershed_logo"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         />
 
-    <Button
-        android:id="@+id/login_button"
-        android:onClick="didTapSignInButton"
-        android:layout_width="200dp"
-        android:layout_height="@dimen/button_standard_height"
-        android:background="@color/white"
-        android:textSize="14sp"
-        android:text="Log In"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        />
-
-    <EditText
-        android:id="@+id/email_field"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:inputType="textEmailAddress"
-        android:hint="@string/email_hint"
-        android:layout_height="40dp"
-        android:layout_marginTop="20dp"
-        />
+        android:layout_height="120dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/password_field"
-        android:inputType="textPassword"
-        android:hint="@string/password_hint"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
 
-</LinearLayout>
+            <Button
+                android:id="@+id/facebook_login_button"
+                android:onClick="didTapFacebookLoginButton"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/button_standard_height"
+                android:layout_weight=".90"
+                android:background="@color/white"
+                android:textSize="14sp"
+                android:text="Login with Facebook"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp">
+
+            <Button
+                android:id="@+id/login_button"
+                android:onClick="didTapLoginButton"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/button_standard_height"
+                android:layout_weight=".90"
+                android:background="@color/white"
+                android:textSize="14sp"
+                android:text="Log In"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/login_text_fields"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <EditText
+            android:id="@+id/email_field"
+            android:layout_width="match_parent"
+            android:inputType="textEmailAddress"
+            android:hint="@string/email_hint"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentTop="true"
+            />
+
+        <EditText
+            android:id="@+id/password_field"
+            android:inputType="textPassword"
+            android:hint="@string/password_hint"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentTop="true"
+            />
+    </RelativeLayout>
+
+</RelativeLayout>

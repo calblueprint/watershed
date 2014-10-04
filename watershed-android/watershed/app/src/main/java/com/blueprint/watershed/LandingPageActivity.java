@@ -65,7 +65,7 @@ public class LandingPageActivity extends Activity {
     }
 
     // UI Actions
-    public void didTapSignInButton(View view) {
+    public void didTapLoginButton(View view) {
         toggleVisibilityOfElements(Arrays.asList(
                 (View)getLogoImageView(),
                 (View)getLoginButton(),
@@ -81,6 +81,10 @@ public class LandingPageActivity extends Activity {
                 mPasswordField.animate().translationY(TEXTFIELD_ANIMATION_Y_OFFSET);
             }
         }, 500);
+    }
+
+    public void didTapFacebookLoginButton(View view) {
+        // Facebook authentication
     }
 
     // View Animations
