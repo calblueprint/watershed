@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/standard_margin"
     android:paddingRight="@dimen/standard_margin"
-    android:paddingTop="@dimen/tight_margin"
-    android:paddingBottom="@dimen/tight_margin"
+    android:paddingTop="@dimen/no_margin"
+    android:paddingBottom="@dimen/no_margin"
     tools:context="com.blueprint.watershed.LandingPageActivity"
     android:background="@color/ws_blue"
     android:orientation="vertical">
@@ -49,8 +49,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp">
+            android:layout_marginTop="20dp">
 
             <Button
                 android:id="@+id/login_button"
