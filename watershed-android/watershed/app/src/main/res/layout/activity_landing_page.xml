@@ -23,6 +23,7 @@
         />
 
     <LinearLayout
+        android:id="@+id/buttons"
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:layout_alignParentBottom="true"
@@ -33,7 +34,7 @@
             android:layout_height="40dp">
 
             <Button
-                android:id="@+id/facebook_login_button"
+                android:id="@+id/facebook_button"
                 android:onClick="didTapFacebookButton"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/button_standard_height"
@@ -85,11 +86,12 @@
         </LinearLayout>
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/login_text_fields"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+    <LinearLayout
+        android:id="@+id/login_with_email_layout"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/email_field"
@@ -109,6 +111,6 @@
             android:layout_height="40dp"
             android:layout_alignParentTop="true"
             />
-    </RelativeLayout>
+    </LinearLayout>
 
 </RelativeLayout>
