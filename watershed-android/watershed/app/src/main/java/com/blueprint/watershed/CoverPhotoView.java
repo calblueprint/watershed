@@ -3,14 +3,14 @@ package com.blueprint.watershed;
 import android.content.Context;
 import android.util.AttributeSet;
 
+import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 /**
  * Created by Mark Miyashita on 10/4/14.
  */
-public class CoverPhotoView extends RelativeLayout {
+public class CoverPhotoView extends View {
 
     private ImageView mImageView;
     private TextView mPrimaryLabel;
@@ -18,6 +18,13 @@ public class CoverPhotoView extends RelativeLayout {
 
     public CoverPhotoView(Context context, AttributeSet attrs) {
        super(context, attrs);
+       initializeViews();
+    }
+
+    public void initializeViews() {
+        setImageView((ImageView) findViewById(R.id.cover_photo));
+        setPrimaryLabel((TextView) findViewById(R.id.primary_label));
+        setSecondaryLabel((TextView) findViewById(R.id.secondary_label));
     }
 
     // Getters

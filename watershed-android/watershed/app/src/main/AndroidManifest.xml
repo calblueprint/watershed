@@ -6,7 +6,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".LandingPageActivity"
             android:label="@string/title_activity_landing_page" >
@@ -19,7 +19,11 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".CoverPhotoViewActivity"
+            android:label="@string/title_activity_cover_photo_view" >
         </activity>
     </application>
 

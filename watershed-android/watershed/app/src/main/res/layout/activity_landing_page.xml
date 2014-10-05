@@ -36,21 +36,21 @@
 
     </LinearLayout>
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="250dp"
+        android:layout_below="@+id/layout_top"
         android:orientation="vertical"
-        android:id="@+id/container">
+        android:id="@+id/container"
+        android:background="@color/white">
 
         <com.blueprint.watershed.CoverPhotoView
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="200dp"
             android:id="@+id/cover_photo_view"
-            android:layout_gravity="center_horizontal"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
+            android:background="@color/ws_blue"
             />
-    </FrameLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/buttons"

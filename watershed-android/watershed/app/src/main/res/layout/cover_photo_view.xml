@@ -9,7 +9,8 @@
         android:src="@drawable/default_cover_photo"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:contentDescription="Cover Photo"/>
 
     <TextView
         android:id="@+id/primary_label"
@@ -17,8 +18,10 @@
         android:layout_height="wrap_content"
         android:text="Primary Label"
         android:layout_toRightOf="@+id/cover_photo"
+        android:layout_toEndOf="@+id/cover_photo"
         android:textAppearance="@android:style/TextAppearance.Holo.Medium"
-        android:layout_marginLeft="?android:attr/listPreferredItemPaddingLeft"/>
+        android:layout_marginLeft="?android:attr/listPreferredItemPaddingLeft"
+        android:layout_marginStart="?android:attr/listPreferredItemPaddingLeft"/>
 
     <TextView
         android:id="@+id/secondary_label"
@@ -26,8 +29,10 @@
         android:layout_height="wrap_content"
         android:text="Secondary Label"
         android:layout_toRightOf="@+id/cover_photo"
+        android:layout_toEndOf="@+id/cover_photo"
         android:layout_below="@+id/primary_label"
         android:layout_marginLeft="?android:attr/listPreferredItemPaddingLeft"
+        android:layout_marginStart="?android:attr/listPreferredItemPaddingLeft"
         android:textAppearance="@android:style/TextAppearance.Holo.Small"/>
 
 </RelativeLayout>
