@@ -10,10 +10,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.*;
 import android.view.View;
 import android.os.Handler;
-import java.util.*;
+
+import android.widget.ImageView;
+import android.widget.EditText;
+import android.widget.Button;
+import android.widget.LinearLayout;
+
+import java.util.Arrays;
+import java.util.List;
 
 import android.content.SharedPreferences;
 
