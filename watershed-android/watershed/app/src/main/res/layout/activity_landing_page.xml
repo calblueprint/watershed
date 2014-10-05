@@ -3,22 +3,54 @@
     android:animateLayoutChanges="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/standard_margin"
-    android:paddingRight="@dimen/standard_margin"
-    android:paddingTop="@dimen/no_margin"
-    android:paddingBottom="@dimen/no_margin"
     tools:context="com.blueprint.watershed.LandingPageActivity"
     android:background="@color/ws_blue"
     android:orientation="vertical">
 
-    <com.blueprint.watershed.CoverPhotoView
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout_top"
+        android:background="@color/white">
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="7dp"
+                android:text="@string/app_name"
+                android:textSize="24sp"
+                android:textColor="#999999"
+                android:layout_gravity="center"
+                android:id="@+id/title"/>
+        </FrameLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="#ebebeb"/>
+
+    </LinearLayout>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:id="@+id/cover_photo_view"
-        android:layout_gravity="center_horizontal"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/container">
+
+        <com.blueprint.watershed.CoverPhotoView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:id="@+id/cover_photo_view"
+            android:layout_gravity="center_horizontal"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            />
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/buttons"
