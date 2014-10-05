@@ -124,6 +124,9 @@ public class MainActivity extends ActionBarActivity
                 //replaceFragment();
                 break;
             case 4:
+                //replaceFragment();
+                break;
+            case 5:
                 SharedPreferences prefs = getSharedPreferences(LandingPageActivity.PREFERENCES, 0);
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.clear();
