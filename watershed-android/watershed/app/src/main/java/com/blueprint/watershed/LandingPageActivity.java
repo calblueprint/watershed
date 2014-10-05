@@ -33,7 +33,7 @@ public class LandingPageActivity extends Activity {
         SharedPreferences preferences = getSharedPreferences(PREFERENCES, 0);
 
         // NOTE(mark): Change to !hasAuthCredentials if you want the main activity to show.
-        if (hasAuthCredentials(preferences)) {
+        if (!hasAuthCredentials(preferences)) {
             final Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("auth_token", preferences.getString("auth_token", null));
             this.finish();
