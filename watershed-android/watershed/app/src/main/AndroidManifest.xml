@@ -21,10 +21,6 @@
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait" >
         </activity>
-        <activity
-            android:name=".CoverPhotoViewActivity"
-            android:label="@string/title_activity_cover_photo_view" >
-        </activity>
     </application>
 
 </manifest>
