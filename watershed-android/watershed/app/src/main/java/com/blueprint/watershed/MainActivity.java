@@ -10,8 +10,18 @@ import android.view.MenuItem;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import com.blueprint.watershed.R;
+import java.util.*;
+import android.view.View;
+import android.content.Context;
+import android.content.Intent;
+import android.widget.TextView;
 
-public class MainActivity extends ActionBarActivity {
+import android.os.Build;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+
+public class MainActivity extends ActionBarActivity
+                          implements View.OnClickListener {
 
     // Constants
     public  static final String PREFERENCES = "LOGIN_PREFERENCES";
@@ -26,6 +36,10 @@ public class MainActivity extends ActionBarActivity {
 
     // Fragments
     public Fragment currentFragment;
+
+    // Navigation Drawer
+    private ResideMenu resideMenu;
+    private ArrayList<ResideMenuItem> menuItems;
 
     // View Elements
     public CharSequence mTitle;
@@ -42,7 +56,7 @@ public class MainActivity extends ActionBarActivity {
 
         setContentView(R.layout.activity_main);
 
-        initializeNavigation();
+        initializeNavigationDrawer();
 
         SharedPreferences prefs = getSharedPreferences(PREFERENCES, 0);
         authToken = prefs.getString("auth_token", "none");
@@ -86,9 +100,103 @@ public class MainActivity extends ActionBarActivity {
         // Initialize each of the fragments and set the current fragment
     }
 
-    private void initializeNavigation() {
-        // Initialize the left drawer
+    private void initializeNavigationDrawer() {
+        resideMenu = new ResideMenu(this);
+        resideMenu.attachToActivity(this);
+        resideMenu.setShadowVisible(false);
+        resideMenu.setDirectionDisable(ResideMenu.DIRECTION_RIGHT);
+
+        int currentVersion = Build.VERSION.SDK_INT;
+        if (currentVersion >= Build.VERSION_CODES.JELLY_BEAN) {
+            resideMenu.setBackground(R.drawable.blueberries3);
+        } else {
+            resideMenu.setBackground(R.drawable.blueberries3_low);
+        }
 
         String titles[] = { "Tasks", "Sites", "Activity Log", "Profile", "About", "Logout" };
+        int icon[] = { R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo };
+        menuItems = new ArrayList<ResideMenuItem>();
+        for (int i = 0; i < titles.length; i++) {
+            ResideMenuItem item = new ResideMenuItem(this, icon[i], titles[i]);
+            item.setOnClickListener(this);
+            resideMenu.addMenuItem(item, ResideMenu.DIRECTION_LEFT);
+            menuItems.add(item);
+        }
+
+        findViewById(R.id.title_bar_left_menu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
+            }
+        });
+    }
+
+    // View on click listener
+    @Override
+    public void onClick(View view) {
+        int position = menuItems.indexOf(view);
+        setActionBarTitle(position);
+        switch (position) {
+            case 0:
+                replaceFragment(locationFragment);
+                break;
+            case 1:
+                replaceFragment(donationListFragment);
+                break;
+            case 2:
+                replaceFragment(accountFragment);
+                break;
+            case 3:
+                replaceFragment(faqFragment);
+                break;
+            case 4:
+                SharedPreferences prefs = getSharedPreferences(LandingPageActivity.PREFERENCES, 0);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.clear();
+                editor.commit();
+                Intent intent = new Intent(this, LandingPageActivity.class);
+                this.finish();
+                startActivity(intent);
+                break;
+        }
+        resideMenu.closeMenu();
+    }
+
+    private void setActionBarTitle(int position){
+        switch (position) {
+            case 0:
+                mTitle = "Tasks";
+                break;
+            case 1:
+                mTitle = "Sites";
+                break;
+            case 2:
+                mTitle = "Activity Log";
+                break;
+            case 3:
+                mTitle = "Profile";
+                break;
+            case 4:
+                mTitle = "About";
+                break;
+            case 5:
+                mTitle = "Logout";
+                break;
+        }
+        TextView titleView = (TextView) findViewById(R.id.title);
+        titleView.setTypeface(watershedFont);
+        titleView.setText(mTitle);
+    }
+
+    // System level attributes
+    private static int getAppVersion(Context context) {
+        try {
+            PackageInfo packageInfo = context.getPackageManager()
+                    .getPackageInfo(context.getPackageName(), 0);
+            return packageInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            // should never happen
+            throw new RuntimeException("Could not get package name: " + e);
+        }
     }
 }
