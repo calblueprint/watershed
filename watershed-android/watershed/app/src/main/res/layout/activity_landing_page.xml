@@ -11,13 +11,11 @@
     android:background="@color/ws_blue"
     android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="150dp"
+    <com.blueprint.watershed.CoverPhotoView
+        android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:id="@+id/logo_image_view"
-        android:background="@drawable/watershed_logo"
+        android:id="@+id/cover_photo_view"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         />

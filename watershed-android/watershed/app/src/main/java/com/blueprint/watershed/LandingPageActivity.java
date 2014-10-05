@@ -37,7 +37,7 @@ public class LandingPageActivity extends Activity {
     public Fragment currentFragment;
 
     // UI Elements
-    private ImageView mLogoImageView;
+    private CoverPhotoView mCoverPhotoView;
     private EditText mEmailField;
     private EditText mPasswordField;
     private Button mLoginButton;
@@ -62,7 +62,7 @@ public class LandingPageActivity extends Activity {
         SharedPreferences preferences = getSharedPreferences(PREFERENCES, 0);
 
         // NOTE(mark): Change to !hasAuthCredentials if you want the main activity to show.
-        if (!hasAuthCredentials(preferences)) {
+        if (hasAuthCredentials(preferences)) {
             final Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("auth_token", preferences.getString("auth_token", null));
             this.finish();
@@ -71,7 +71,7 @@ public class LandingPageActivity extends Activity {
     }
 
     public void initializeViews() {
-        setLogoImageView((ImageView)findViewById(R.id.logo_image_view));
+        setCoverPhotoView((CoverPhotoView)findViewById(R.id.cover_photo_view));
 
         setEmailField((EditText)findViewById(R.id.email_field));
         setPasswordField((EditText)findViewById(R.id.password_field));
@@ -92,7 +92,7 @@ public class LandingPageActivity extends Activity {
     // UI Actions
     public void didTapLoginButton(View view) {
         toggleVisibilityOfElements(Arrays.asList(
-                (View)getLogoImageView(),
+                (View)getCoverPhotoView(),
                 (View)getButtonsLayout(),
                 (View)getLoginWithEmailLayout()
         ));
@@ -133,7 +133,7 @@ public class LandingPageActivity extends Activity {
 
 
     // Getters
-    public ImageView getLogoImageView() { return mLogoImageView; }
+    public CoverPhotoView getCoverPhotoView() { return mCoverPhotoView; }
     public EditText getEmailField() { return mEmailField; }
     public EditText getPasswordField() { return mPasswordField; }
     public Button getLoginButton() { return mLoginButton; }
@@ -143,7 +143,7 @@ public class LandingPageActivity extends Activity {
     public LinearLayout getLoginWithEmailLayout() { return mLoginWithEmailLayout; }
 
     // Setters
-    public void setLogoImageView(ImageView imageView) { mLogoImageView = imageView; }
+    public void setCoverPhotoView(CoverPhotoView coverPhotoView) { mCoverPhotoView = coverPhotoView; }
     public void setEmailField(EditText emailField) { mEmailField = emailField; }
     public void setPasswordField(EditText passwordField) { mPasswordField = passwordField; }
     public void setLoginButton(Button loginButton) { mLoginButton = loginButton; }
