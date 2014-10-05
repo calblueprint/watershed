@@ -32,7 +32,9 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:background="#ebebeb"/>
+            android:background="#ebebeb"
+            android:contentDescription="@string/title_image_content_description"
+            />
 
     </LinearLayout>
 
@@ -72,8 +74,6 @@
                 android:background="@color/white"
                 android:textSize="14sp"
                 android:text="Facebook"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
                 />
         </LinearLayout>
 

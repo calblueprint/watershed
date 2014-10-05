@@ -10,6 +10,8 @@
     <string name="title_activity_landing_page">Watershed</string>
     <string name="email_hint">Email</string>
     <string name="password_hint">Password</string>
+
     <string name="title_activity_cover_photo_view">CoverPhotoViewActivity</string>
+    <string name="title_image_content_description">Watershed Image</string>
 
 </resources>
