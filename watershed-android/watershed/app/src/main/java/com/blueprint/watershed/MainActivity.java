@@ -105,13 +105,7 @@ public class MainActivity extends ActionBarActivity
         resideMenu.attachToActivity(this);
         resideMenu.setShadowVisible(false);
         resideMenu.setDirectionDisable(ResideMenu.DIRECTION_RIGHT);
-
-        int currentVersion = Build.VERSION.SDK_INT;
-        if (currentVersion >= Build.VERSION_CODES.JELLY_BEAN) {
-            resideMenu.setBackground(R.drawable.blueberries3);
-        } else {
-            resideMenu.setBackground(R.drawable.blueberries3_low);
-        }
+        resideMenu.setBackground(R.drawable.golden_gate_bridge);
 
         String titles[] = { "Tasks", "Sites", "Activity Log", "Profile", "About", "Logout" };
         int icon[] = { R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo };
