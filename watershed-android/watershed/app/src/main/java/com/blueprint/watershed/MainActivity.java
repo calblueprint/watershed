@@ -2,6 +2,9 @@ package com.blueprint.watershed;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Build;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
@@ -10,15 +13,12 @@ import android.view.MenuItem;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import com.blueprint.watershed.R;
-import java.util.*;
 import android.view.View;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.TextView;
 
-import android.os.Build;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
+import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity
                           implements View.OnClickListener {
