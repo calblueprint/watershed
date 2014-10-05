@@ -11,6 +11,9 @@
     <string name="title_activity_landing_page">Watershed</string>
     <string name="title_image_content_description">Watershed Image</string>
 
+    <!-- Menu -->
+    <string name="action_settings">Settings</string>
+
     <!-- Landing Page -->
     <string name="title_activity_cover_photo_view">CoverPhotoViewActivity</string>
     <string name="landing_page_facebook_button">Facebook</string>

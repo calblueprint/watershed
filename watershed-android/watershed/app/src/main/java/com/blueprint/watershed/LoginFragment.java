@@ -24,8 +24,6 @@ public class LoginFragment extends Fragment {
     }
 
     public LoginFragment() {
-        setEmailField((EditText) rootView.findViewById(R.id.email_field));
-        setPasswordField((EditText) rootView.findViewById(R.id.password_field));
     }
 
     @Override
@@ -39,6 +37,8 @@ public class LoginFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_login, container, false);
 
         // Configure view
+        setEmailField((EditText) rootView.findViewById(R.id.email_field));
+        setPasswordField((EditText) rootView.findViewById(R.id.password_field));
 
         return rootView;
     }

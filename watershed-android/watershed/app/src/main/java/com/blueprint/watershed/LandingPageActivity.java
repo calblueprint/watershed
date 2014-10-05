@@ -5,8 +5,9 @@ import android.app.Notification;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -55,7 +56,7 @@ public class LandingPageActivity extends Activity {
     }
 
     public void initializeViews() {
-        setCoverPhotoView((CoverPhotoView)findViewById(R.id.cover_photo_view));
+        //setCoverPhotoView((CoverPhotoView)findViewById(R.id.cover_photo_view));
 
         setLoginButton((Button)findViewById(R.id.login_button));
         setFacebookButton((Button)findViewById(R.id.facebook_button));
@@ -69,7 +70,13 @@ public class LandingPageActivity extends Activity {
 
     // UI Actions
     public void didTapLoginButton(View view) {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
+        LoginFragment fragment = new LoginFragment();
+        fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     public void didTapFacebookButton(View view) {
