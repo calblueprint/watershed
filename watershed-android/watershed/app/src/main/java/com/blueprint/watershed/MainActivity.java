@@ -132,16 +132,16 @@ public class MainActivity extends ActionBarActivity
         setActionBarTitle(position);
         switch (position) {
             case 0:
-                replaceFragment(locationFragment);
+                //replaceFragment();
                 break;
             case 1:
-                replaceFragment(donationListFragment);
+                //replaceFragment();
                 break;
             case 2:
-                replaceFragment(accountFragment);
+                //replaceFragment();
                 break;
             case 3:
-                replaceFragment(faqFragment);
+                //replaceFragment();
                 break;
             case 4:
                 SharedPreferences prefs = getSharedPreferences(LandingPageActivity.PREFERENCES, 0);
