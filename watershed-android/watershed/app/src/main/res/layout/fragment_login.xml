@@ -35,7 +35,6 @@
 
             <Button
                 android:id="@+id/login_button"
-                android:onClick="didTapLoginButton"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/button_standard_height"
                 android:layout_weight=".90"
