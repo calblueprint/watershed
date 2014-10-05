@@ -8,9 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Button;
+import android.content.Intent;
+
+import java.util.HashMap;
 
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment implements View.OnClickListener {
 
     private LandingPageActivity parentActivity;
     private View rootView;
@@ -18,6 +22,7 @@ public class LoginFragment extends Fragment {
     // UI Elements
     private EditText mEmailField;
     private EditText mPasswordField;
+    private Button mLoginButton;
 
     public static LoginFragment newInstance() {
         return new LoginFragment();
@@ -39,6 +44,10 @@ public class LoginFragment extends Fragment {
         // Configure view
         setEmailField((EditText) rootView.findViewById(R.id.email_field));
         setPasswordField((EditText) rootView.findViewById(R.id.password_field));
+        setLoginButton((Button) rootView.findViewById(R.id.login_button));
+
+        // Set OnClickListeners
+        getLoginButton().setOnClickListener(this);
 
         return rootView;
     }
@@ -53,15 +62,38 @@ public class LoginFragment extends Fragment {
         super.onDetach();
     }
 
+    // View.OnClickListener
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.login_button:
+                didTapLoginButton(view);
+                break;
+        }
+    }
+
     // UI Actions
     public void didTapLoginButton(View view) {
+        final Intent intent = new Intent(parentActivity, MainActivity.class);
+
+        final String emailString = getEmailField().getText().toString();
+        final String passwordString = getPasswordField().getText().toString();
+
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("email", emailString);
+        params.put("password", passwordString);
+
+        // Send the request, for now just load the main activity
+        parentActivity.finish();
+        startActivity(intent);
     }
 
     // Getters
     public EditText getEmailField() { return mEmailField; }
     public EditText getPasswordField() { return mPasswordField; }
+    public Button getLoginButton() { return mLoginButton; }
 
     // Setters
     public void setEmailField(EditText emailField) { mEmailField = emailField; }
     public void setPasswordField(EditText passwordField) { mPasswordField = passwordField; }
+    public void setLoginButton(Button loginButton) { mLoginButton = loginButton; }
 }

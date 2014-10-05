@@ -69,12 +69,13 @@ public class LandingPageActivity extends Activity {
     }
 
     // UI Actions
-    public void didTapLoginButton(View view) {
+    public void didTapLoginLoadFragmentButton(View view) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         LoginFragment fragment = new LoginFragment();
         fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
@@ -83,7 +84,7 @@ public class LandingPageActivity extends Activity {
         // Facebook authentication
     }
 
-    public void didTapSignUpButton(View view) {
+    public void didTapSignUpLoadFragmentButton(View view) {
     }
 
     // Getters
