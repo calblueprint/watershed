@@ -9,4 +9,6 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_landing_page">Watershed</string>
 
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
 </resources>
