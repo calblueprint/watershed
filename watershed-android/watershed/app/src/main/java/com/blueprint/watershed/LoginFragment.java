@@ -53,6 +53,10 @@ public class LoginFragment extends Fragment {
         super.onDetach();
     }
 
+    // UI Actions
+    public void didTapLoginButton(View view) {
+    }
+
     // Getters
     public EditText getEmailField() { return mEmailField; }
     public EditText getPasswordField() { return mPasswordField; }

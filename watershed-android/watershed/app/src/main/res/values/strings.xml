@@ -23,5 +23,6 @@
     <!-- Login View -->
     <string name="email_hint">Email</string>
     <string name="password_hint">Password</string>
+    <string name="login_fragment_login_button">Log In</string>
 
 </resources>
