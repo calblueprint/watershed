@@ -31,27 +31,11 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="#ebebeb"
+            android:layout_height="1dp"
+            android:background="#333333"
             android:contentDescription="@string/title_image_content_description"
             />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_below="@+id/layout_top"
-        android:orientation="vertical"
-        android:id="@+id/container"
-        android:background="@color/white">
-
-        <com.blueprint.watershed.CoverPhotoView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:id="@+id/cover_photo_view"
-            android:background="@color/ws_blue"
-            />
     </LinearLayout>
 
     <LinearLayout
@@ -73,7 +57,7 @@
                 android:layout_weight=".90"
                 android:background="@color/white"
                 android:textSize="14sp"
-                android:text="Facebook"
+                android:text="@string/landing_page_facebook_button"
                 />
         </LinearLayout>
 
@@ -90,9 +74,7 @@
                 android:layout_weight=".90"
                 android:background="@color/white"
                 android:textSize="14sp"
-                android:text="Sign Up with Email"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
+                android:text="@string/landing_page_sign_up_button"
                 />
         </LinearLayout>
 
@@ -102,68 +84,15 @@
             android:layout_marginTop="20dp">
 
             <Button
-                android:id="@+id/login_button"  
+                android:id="@+id/login_button"
                 android:onClick="didTapLoginButton"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/button_standard_height"
                 android:layout_weight=".90"
                 android:background="@color/white"
                 android:textSize="14sp"
-                android:text="Log In with Email"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
+                android:text="@string/landing_page_login_button"
                 />
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:id="@+id/login_with_email_layout"
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:orientation="vertical">
-
-            <EditText
-                android:id="@+id/email_field"
-                android:layout_width="match_parent"
-                android:inputType="textEmailAddress"
-                android:hint="@string/email_hint"
-                android:layout_height="40dp"
-                android:layout_marginTop="20dp"
-                android:layout_alignParentTop="true"
-                />
-
-            <EditText
-                android:id="@+id/password_field"
-                android:inputType="textPassword"
-                android:hint="@string/password_hint"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_alignParentTop="true"
-                />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="20dp">
-
-                <Button
-                    android:id="@+id/send_login_request_button"
-                    android:onClick="didTapSendLoginRequestButton"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/button_standard_height"
-                    android:layout_weight=".90"
-                    android:background="@color/white"
-                    android:textSize="14sp"
-                    android:text="Log In"
-                    android:layout_centerHorizontal="true"
-                    android:layout_alignParentTop="true"
-                    />
-            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

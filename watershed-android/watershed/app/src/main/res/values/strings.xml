@@ -2,16 +2,23 @@
 <resources>
 
     <string name="app_name">Watershed</string>
+
     <string name="title_activity_task">TaskActivity</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_login">LoginActivity</string>
+
+    <!-- Navigation Bar -->
     <string name="title_activity_landing_page">Watershed</string>
+    <string name="title_image_content_description">Watershed Image</string>
+
+    <!-- Landing Page -->
+    <string name="title_activity_cover_photo_view">CoverPhotoViewActivity</string>
+    <string name="landing_page_facebook_button">Facebook</string>
+    <string name="landing_page_sign_up_button">Sign Up with Email</string>
+    <string name="landing_page_login_button">Log In with Email</string>
+
+    <!-- Login View -->
     <string name="email_hint">Email</string>
     <string name="password_hint">Password</string>
-
-    <string name="title_activity_cover_photo_view">CoverPhotoViewActivity</string>
-    <string name="title_image_content_description">Watershed Image</string>
 
 </resources>
