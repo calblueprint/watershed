@@ -7,8 +7,13 @@
 //
 
 #import "WPRootViewController.h"
+#import "WPTabBarController.h"
+#import "WPLoginViewController.h"
 
 @interface WPRootViewController ()
+
+@property (nonatomic, strong) UIViewController  *currentViewController;
+
 
 @end
 
@@ -16,7 +21,24 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    UIViewController *launchingViewController = [self newInitialViewController];
+    
+    [self showInitialViewController:launchingViewController];
+}
+
+- (UIViewController *)newInitialViewController {
+    return [[WPTabBarController alloc] init];
+}
+
+- (WPLoginViewController *)newLoginViewController {
+    return [[WPLoginViewController alloc] init];
+}
+
+- (void)showInitialViewController:(UIViewController *)initialViewController {
+    [self addChildViewController:initialViewController];
+    [self.view addSubview:initialViewController.view];
+    self.currentViewController = initialViewController;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -24,14 +46,5 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

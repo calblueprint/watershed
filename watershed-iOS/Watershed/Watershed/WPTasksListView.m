@@ -73,14 +73,6 @@
     [self.tasksSegmentedControl addTarget:self action:@selector(taskSegmentControlAction:) forControlEvents: UIControlEventValueChanged];
 }
 
-- (void)taskSegmentControlAction:(UISegmentedControl *)segment
-{
-    self.tasksTableView.backgroundColor = [UIColor wp_lightBlue];
-    if(segment.selectedSegmentIndex == 0)
-    {
-        self.tasksTableView.backgroundColor = [UIColor wp_blue];
-    }
-}
 
 - (void)updateConstraints {
     
@@ -99,6 +91,35 @@
     }];
     
     [super updateConstraints];
+}
+
+- (NSInteger)numberOfRowsInTableView:(UITableView *)tableView {
+    return _colors.count;
+}
+
+- (void)taskSegmentControlAction:(UISegmentedControl *)segment
+{
+    self.tasksTableView.backgroundColor = [UIColor wp_lightBlue];
+    if(segment.selectedSegmentIndex == 0)
+    {
+        self.tasksTableView.backgroundColor = [UIColor wp_blue];
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *cellIdentifier = @"Cell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (cell == nil)
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    
+    cell.backgroundView = [[UIView alloc] init];
+    [cell.backgroundView setBackgroundColor:[UIColor redColor]];
+    [[[cell contentView] subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
+//    cell.titleLabel.text = [NSString stringWithFormat:@"Cell %ld", indexPath.row + 1];
+    
+    return cell;
 }
 
 

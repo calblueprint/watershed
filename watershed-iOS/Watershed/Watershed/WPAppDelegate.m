@@ -9,8 +9,13 @@
 #import "WPAppDelegate.h"
 #import "WPTasksListViewController.h"
 #import "WPLoginViewController.h"
+#import "WPRootViewController.h"
 
 @implementation WPAppDelegate
+
++ (WPAppDelegate *)instance {
+    return (WPAppDelegate *)[[UIApplication sharedApplication] delegate];
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -24,9 +29,12 @@
     
     // Override point for customization after application launch.
     
-    //UIViewController *viewController = [[WPLoginViewController  alloc] init];
-    ///self.window.rootViewController = viewController;//making a view to root view
-    //[self.window makeKeyAndVisible];
+
+//    self.window.rootViewController = [[WPRootViewController alloc] init];
+//    [self.window makeKeyAndVisible];
+    
+    //[AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
+
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 
