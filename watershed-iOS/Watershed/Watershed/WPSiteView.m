@@ -7,6 +7,16 @@
 //
 
 #import "WPSiteView.h"
+#import "Masonry.h"
+#import "UIColor+WPColors.h"
+#import "UIView+WPExtensions.h"
+#import "UIImage+ImageEffects.h"
+
+@interface WPSiteView ()
+
+@property (nonatomic) UIImageView *coverPhotoView;
+
+@end
 
 @implementation WPSiteView
 
@@ -14,18 +24,39 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+        [self createSubviews];
+        [self setUpActions];
+        [self updateConstraints];
     }
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
+#pragma mark - View Hierarchy
+
+- (void)createSubviews {
+
+    UIImage *coverPhoto = [UIImage imageNamed:@"SampleCoverPhoto"];
+    UIImageView *coverPhotoView = [[UIImageView alloc] initWithImage:coverPhoto];
+    [coverPhotoView setContentMode:UIViewContentModeScaleAspectFill];
+    _coverPhotoView = coverPhotoView;
+    
+    
 }
-*/
+
+- (void)setUpActions {
+    // Here is where you set up buttons taps and gesture recognizers.
+}
+
+- (void)updateConstraints {
+    
+    [self.coverPhotoView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@200);
+        make.leading.equalTo(@0);
+        make.trailing.equalTo(@0);
+    }];
+    
+    [super updateConstraints];
+}
 
 @end
+
