@@ -2,7 +2,13 @@
 <resources>
     <!-- Main Colors -->
     <color name="white">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
+    <color name="light_gray">#F9F9F9</color>
 
     <!-- Watershed Colors -->
     <color name="ws_blue">#81B4DE</color>
+
+    <!-- Other Colors -->
+    <color name="facebook_blue">#3B5998</color>
+    <color name="facebook_dark_blue">#1D4088</color>
 </resources>
