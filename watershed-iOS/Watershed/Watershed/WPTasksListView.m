@@ -16,8 +16,8 @@
 
 @property (nonatomic) UIView *segmentedTasksTabBarView;
 @property (nonatomic) UIView *tasksTableView;
-@property (nonatomic) UIView *tasksSegmentedControl;
-@property (nonatomic) UIView *tableView;
+@property (nonatomic) UISegmentedControl *tasksSegmentedControl;
+@property (nonatomic) UITableView *tableView;
 @property (nonatomic) NSArray *colors;
 
 @end
@@ -28,7 +28,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self createSubviews];
-//        [self setUpActions];
+        [self setUpActions];
         [self updateConstraints];
     }
     return self;
@@ -52,37 +52,34 @@
         NSArray *itemArray = [NSArray arrayWithObjects: @"My Tasks", @"All Tasks", nil];
         UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:itemArray];
         segmentedControl.frame = CGRectMake(30, 30, 250, 30);
-        [segmentedControl addTarget:self action:@selector(taskSegmentControlAction:) forControlEvents: UIControlEventValueChanged];
         segmentedControl.selectedSegmentIndex = 0;
         segmentedControl.tintColor = [UIColor wp_darkBlue];
         segmentedControl;
     }) wp_addToSuperview:self.segmentedTasksTabBarView];
     
     _tableView = [({
-        UITableView *tableView = [[UITableView alloc] init];
+        //UITableView *tableView = [[UITableView alloc] init];
+        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 435)];
+        tableView.contentSize = CGSizeMake(320, 700);
+//        tableView.showsHorizontalScrollIndicator = true;
         _colors = [[NSArray alloc] initWithObjects: @"Red", @"Yellow", @"Green",
                  @"Blue", @"Purpole", nil];
         tableView;
     }) wp_addToSuperview:self.tasksTableView];
-
-    //-----------------FIGURE OUT WHAT SCROLL DOES----------------
-    UIScrollView *scroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 435)];
-    scroll.contentSize = CGSizeMake(320, 700);
-    scroll.showsHorizontalScrollIndicator = YES;
 }
 
 - (void)setUpActions {
-    
     // Here is where you set up buttons taps and gesture recognizers.
+    [self.tasksSegmentedControl addTarget:self action:@selector(taskSegmentControlAction:) forControlEvents: UIControlEventValueChanged];
 }
 
 - (void)taskSegmentControlAction:(UISegmentedControl *)segment
 {
-//    self.tasksTableView.backgroundColor = [UIColor wp_lightBlue];
-//    if(segment.selectedSegmentIndex == 0)
-//    {
-//        self.tasksTableView.backgroundColor = [UIColor wp_blue];
-//    }
+    self.tasksTableView.backgroundColor = [UIColor wp_lightBlue];
+    if(segment.selectedSegmentIndex == 0)
+    {
+        self.tasksTableView.backgroundColor = [UIColor wp_blue];
+    }
 }
 
 - (void)updateConstraints {
