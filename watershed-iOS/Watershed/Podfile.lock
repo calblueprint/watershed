@@ -27,6 +27,7 @@ PODS:
   - TransitionKit (2.1.0)
 
 DEPENDENCIES:
+  - AFNetworking
   - Masonry
   - RestKit
 
@@ -39,4 +40,4 @@ SPEC CHECKSUMS:
   SOCKit: d8d0dd3688ae1026c12367570da8fa8e1a6980fb
   TransitionKit: 6a6f3ddda38ae758778aa889dcb930e4f8d64edc
 
-COCOAPODS: 0.33.1
+COCOAPODS: 0.34.1

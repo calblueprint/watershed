@@ -14,7 +14,6 @@ import java.util.ArrayList;
 public class TaskActivity extends ListActivity {
 
     private ListView listView1;
-    ArrayList<Task> TaskList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +27,8 @@ public class TaskActivity extends ListActivity {
                 new Task()
             };
 
-        TaskAdapter arrayAdapter = new TaskAdapter(this,R.layout.taskview_each_item, TaskList);
-
         listView1 = (ListView)findViewById(android.R.id.list);
+        TaskAdapter arrayAdapter = new TaskAdapter(this,R.layout.taskview_each_item, TaskList);
 
         listView1.setAdapter(arrayAdapter);
     }

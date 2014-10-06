@@ -8,6 +8,8 @@
 
 #import "WPLoginView.h"
 #import "Masonry.h"
+#import "UIColor+WPColors.h"
+#import "UIView+WPExtensions.h"
 
 @interface WPLoginView ()
 
@@ -26,10 +28,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor colorWithRed:129.0/255.0
-                                               green:180.0/255.0
-                                                blue:222.0/255.0
-                                               alpha:1.0];
+        self.backgroundColor = [UIColor wp_blue];
         [self createSubviews];
         [self setUpActions];
         [self updateConstraints];
@@ -41,10 +40,7 @@
 
 - (void)createSubviews {
     UIButton *emailButton = [[UIButton alloc] init];
-    emailButton.backgroundColor = [UIColor colorWithRed:1.0
-                                                  green:1.0
-                                                   blue:1.0
-                                                  alpha:0.5];
+    emailButton.backgroundColor = [UIColor wp_transWhite];
     [emailButton setTitle:@"Sign in with Email" forState:UIControlStateNormal];
     emailButton.layer.cornerRadius = 5.0;
     
@@ -57,10 +53,7 @@
     [self addSubview:emailButton];
     
     UIButton *facebookButton = [[UIButton alloc] init];
-    facebookButton.backgroundColor = [UIColor colorWithRed:59.0/255.0
-                                                  green:89.0/255.0
-                                                   blue:152.0/255.0
-                                                  alpha:1.0];
+    facebookButton.backgroundColor = [UIColor wp_facebookBlue];
     [facebookButton setTitle:@"Sign in with Facebook" forState:UIControlStateNormal];
     facebookButton.layer.cornerRadius = 5.0;
     
@@ -120,16 +113,16 @@
     }];
     
     [self.emailButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(@-10);
-        make.leading.equalTo(@10);
-        make.trailing.equalTo(@-10);
+        make.bottom.equalTo([UIView wp_styleNegativePadding]);
+        make.leading.equalTo([UIView wp_stylePadding]);
+        make.trailing.equalTo([UIView wp_styleNegativePadding]);
         make.height.equalTo(@50);
     }];
     
     [self.facebookButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.emailButton.mas_top).with.offset(-10.0);
-        make.leading.equalTo(@10);
-        make.trailing.equalTo(@-10);
+        make.bottom.equalTo(self.emailButton.mas_top).with.offset([[UIView wp_styleNegativePadding] floatValue]);
+        make.leading.equalTo([UIView wp_stylePadding]);
+        make.trailing.equalTo([UIView wp_styleNegativePadding]);
         make.height.equalTo(@50);
     }];
     
