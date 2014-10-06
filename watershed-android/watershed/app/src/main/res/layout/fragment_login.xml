@@ -57,12 +57,12 @@
 
             <Button
                 android:id="@+id/login_button"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/button_standard_height"
-                android:layout_weight=".90"
-                android:background="@color/white"
+                android:background="@drawable/border_button"
                 android:textSize="14sp"
                 android:text="@string/login_fragment_login_button"
+                android:textColor="@color/white"
                 />
         </LinearLayout>
     </LinearLayout>
