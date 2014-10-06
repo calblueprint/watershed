@@ -56,11 +56,11 @@ public class LandingPageActivity extends Activity {
     }
 
     public void initializeViews() {
-        //setCoverPhotoView((CoverPhotoView)findViewById(R.id.cover_photo_view));
+        setCoverPhotoView((CoverPhotoView)findViewById(R.id.cover_photo_view));
 
-        setLoginButton((Button)findViewById(R.id.login_button));
+        setLoginButton((Button)findViewById(R.id.login_load_fragment_button));
         setFacebookButton((Button)findViewById(R.id.facebook_button));
-        setSignUpButton((Button)findViewById(R.id.sign_up_button));
+        setSignUpButton((Button)findViewById(R.id.sign_up_load_fragment_button));
     }
 
     public boolean hasAuthCredentials(SharedPreferences preferences) {

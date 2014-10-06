@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -8,7 +8,7 @@
         android:id="@+id/cover_photo"
         android:src="@drawable/default_cover_photo"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:contentDescription="Cover Photo"
         android:layout_alignParentTop="true"
@@ -20,22 +20,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Primary Label"
-        android:layout_toRightOf="@+id/cover_photo"
-        android:layout_toEndOf="@+id/cover_photo"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:textColor="@color/white"
         android:textAppearance="@android:style/TextAppearance.Holo.Medium"
-        android:layout_marginLeft="?android:attr/listPreferredItemPaddingLeft"
-        android:layout_marginStart="?android:attr/listPreferredItemPaddingLeft"/>
+        />
 
     <TextView
         android:id="@+id/secondary_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Secondary Label"
-        android:layout_toRightOf="@+id/cover_photo"
-        android:layout_toEndOf="@+id/cover_photo"
         android:layout_below="@+id/primary_label"
-        android:layout_marginLeft="?android:attr/listPreferredItemPaddingLeft"
-        android:layout_marginStart="?android:attr/listPreferredItemPaddingLeft"
-        android:textAppearance="@android:style/TextAppearance.Holo.Small"/>
+        android:layout_centerInParent="true"
+        android:textColor="@color/white"
+        android:textAppearance="@android:style/TextAppearance.Holo.Small"
+        />
 
-</RelativeLayout>
+</merge>

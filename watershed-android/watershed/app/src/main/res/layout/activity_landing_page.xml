@@ -43,6 +43,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/container">
 
+        <com.blueprint.watershed.CoverPhotoView
+            android:layout_width="wrap_content"
+            android:layout_height="250dp"
+            android:id="@+id/cover_photo_view"
+            />
+
         <LinearLayout
             android:id="@+id/buttons"
             android:layout_width="match_parent"
@@ -72,7 +78,7 @@
                 android:layout_marginTop="20dp">
 
                 <Button
-                    android:id="@+id/sign_up_button"
+                    android:id="@+id/sign_up_load_fragment_button"
                     android:onClick="didTapSignUpLoadFragmentButton"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/button_standard_height"
@@ -89,7 +95,7 @@
                 android:layout_marginTop="20dp">
 
                 <Button
-                    android:id="@+id/login_button"
+                    android:id="@+id/login_load_fragment_button"
                     android:onClick="didTapLoginLoadFragmentButton"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/button_standard_height"

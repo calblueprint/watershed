@@ -36,8 +36,10 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="#ebebeb"/>
+            android:layout_height="1dp"
+            android:background="#333333"
+            android:contentDescription="@string/title_image_content_description"
+            />
 
     </LinearLayout>
 

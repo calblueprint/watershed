@@ -3,22 +3,26 @@ package com.blueprint.watershed;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import android.view.View;
+import android.view.LayoutInflater;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 /**
  * Created by Mark Miyashita on 10/4/14.
  */
-public class CoverPhotoView extends View {
+public class CoverPhotoView extends RelativeLayout {
 
     private ImageView mImageView;
     private TextView mPrimaryLabel;
     private TextView mSecondaryLabel;
 
     public CoverPhotoView(Context context, AttributeSet attrs) {
-       super(context, attrs);
-       initializeViews();
+        super(context, attrs);
+        initializeViews();
+
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater.inflate(R.layout.cover_photo_view, this, true);
     }
 
     public void initializeViews() {
