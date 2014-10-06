@@ -23,6 +23,9 @@
 
 @implementation WPSiteView
 
+static const int COVER_PHOTO_HEIGHT = 184;
+static int COVER_PHOTO_TRANS = 0;
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -75,7 +78,7 @@
 - (void)updateConstraints {
     
     [self.coverPhotoView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@184);
+        make.height.equalTo(@(COVER_PHOTO_HEIGHT));
         make.top.equalTo(@0);
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
@@ -89,12 +92,13 @@
         (sender.state == UIGestureRecognizerStateEnded)) {
         CGPoint trans = [sender translationInView:self];
         
-        self.blurRadius -= trans.y;
-        if (self.blurRadius < 0) {self.blurRadius = 0;}
-        if (self.blurRadius > 40) {self.blurRadius = 40;}
+        COVER_PHOTO_TRANS -= trans.y;
+        if (COVER_PHOTO_TRANS < 0) {COVER_PHOTO_TRANS = 0;}
+        if (COVER_PHOTO_TRANS > 120) {COVER_PHOTO_TRANS = 120;}
+        self.blurRadius = (NSInteger) COVER_PHOTO_TRANS / 3;
         
         [self.coverPhotoView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.equalTo([[NSNumber alloc] initWithFloat:184.0 - self.blurRadius * 3 ]);
+            make.height.equalTo(@(COVER_PHOTO_HEIGHT - COVER_PHOTO_TRANS));
         }];
         
         [super updateConstraints];
