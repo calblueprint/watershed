@@ -52,16 +52,20 @@ static int COVER_PHOTO_TRANS = 0;
     [self addSubview:coverPhotoView];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        for (int i = 0; i <= 40; i++) {
+        for (int i = 0; i <= 40; i+= 2) {
             UIImage *image = self.originalCoverPhoto;
             image = [image applyBlurWithRadius:i
                                      tintColor:[UIColor colorWithRed:0
                                                                green:0
                                                                 blue:0
-                                                               alpha:(i * 0.15 / 40)]
+                                                               alpha:(i * 0.15 / 38)]
                          saturationDeltaFactor:1
                                      maskImage:nil];
+            
+            //add the image twice
             [self.coverPhotoArray addObject:image];
+            [self.coverPhotoArray addObject:image];
+            
             NSLog(@"%d", i);
         }
     });
@@ -96,6 +100,7 @@ static int COVER_PHOTO_TRANS = 0;
         if (COVER_PHOTO_TRANS < 0) {COVER_PHOTO_TRANS = 0;}
         if (COVER_PHOTO_TRANS > 120) {COVER_PHOTO_TRANS = 120;}
         self.blurRadius = (NSInteger) COVER_PHOTO_TRANS / 3;
+        //self.blurRadius += self.blurRadius % 2;
         
         [self.coverPhotoView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.height.equalTo(@(COVER_PHOTO_HEIGHT - COVER_PHOTO_TRANS));
