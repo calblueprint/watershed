@@ -9,7 +9,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".LandingPageActivity"
-            android:label="@string/title_activity_landing_page" >
+            android:label="@string/title_activity_landing_page"
+            android:theme="@style/AppThemeTranslucent">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
