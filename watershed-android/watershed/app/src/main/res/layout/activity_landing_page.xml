@@ -1,34 +1,111 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:animateLayoutChanges="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/standard_margin"
-    android:paddingRight="@dimen/standard_margin"
-    android:paddingTop="@dimen/tight_margin"
-    android:paddingBottom="@dimen/tight_margin"
     tools:context="com.blueprint.watershed.LandingPageActivity"
     android:background="@color/ws_blue"
     android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:id="@+id/imageView"
-        android:background="@drawable/watershed_logo"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
-        />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout_top"
+        android:background="@color/white">
 
-    <Button
-        android:id="@+id/login_button"
-        android:onClick="loadLoginActivity"
-        android:layout_width="200dp"
-        android:layout_height="@dimen/button_standard_height"
-        android:background="@color/white"
-        android:textSize="14sp"
-        android:text="Sign In"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        />
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="7dp"
+                android:text="@string/app_name"
+                android:textSize="24sp"
+                android:textColor="#999999"
+                android:layout_gravity="center"
+                android:id="@+id/title"/>
+        </FrameLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#333333"
+            android:contentDescription="@string/title_image_content_description"
+            />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/container">
+
+        <com.blueprint.watershed.CoverPhotoView
+            android:layout_width="wrap_content"
+            android:layout_height="250dp"
+            android:id="@+id/cover_photo_view"
+            />
+
+        <LinearLayout
+            android:id="@+id/buttons"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+                <Button
+                    android:id="@+id/facebook_button"
+                    android:onClick="didTapFacebookButton"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/button_standard_height"
+                    android:layout_weight=".90"
+                    android:background="@color/white"
+                    android:textSize="14sp"
+                    android:text="@string/landing_page_facebook_button"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp">
+
+                <Button
+                    android:id="@+id/sign_up_load_fragment_button"
+                    android:onClick="didTapSignUpLoadFragmentButton"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/button_standard_height"
+                    android:layout_weight=".90"
+                    android:background="@color/white"
+                    android:textSize="14sp"
+                    android:text="@string/landing_page_sign_up_button"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp">
+
+                <Button
+                    android:id="@+id/login_load_fragment_button"
+                    android:onClick="didTapLoginLoadFragmentButton"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/button_standard_height"
+                    android:layout_weight=".90"
+                    android:background="@color/white"
+                    android:textSize="14sp"
+                    android:text="@string/landing_page_login_button"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

@@ -1,0 +1,48 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ws_blue"
+    tools:context="com.blueprint.watershed.LoginFragment">
+
+    <LinearLayout
+        android:id="@+id/login_with_email_layout"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/email_field"
+            android:layout_width="match_parent"
+            android:inputType="textEmailAddress"
+            android:hint="@string/email_hint"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            />
+
+        <EditText
+            android:id="@+id/password_field"
+            android:inputType="textPassword"
+            android:hint="@string/password_hint"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp">
+
+            <Button
+                android:id="@+id/login_button"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/button_standard_height"
+                android:layout_weight=".90"
+                android:background="@color/white"
+                android:textSize="14sp"
+                android:text="@string/login_fragment_login_button"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>
