@@ -2,6 +2,8 @@
 <resources>
     <!-- Main Colors -->
     <color name="white">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
+    <color name="light_gray">#F9F9F9</color>
 
     <!-- Watershed Colors -->
     <color name="ws_blue">#81B4DE</color>

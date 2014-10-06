@@ -75,7 +75,6 @@ public class LandingPageActivity extends Activity {
 
         LoginFragment fragment = new LoginFragment();
         fragmentTransaction.replace(R.id.container, fragment);
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
