@@ -36,6 +36,8 @@
     self.tabBar.tintColor = [UIColor grayColor];
     self.tabBar.translucent = NO;
     
+    
+    
     self.viewControllers = ({
         NSArray *titles = @[
                             NSLocalizedString(@"Tasks", HNNoLocalizationComment),
