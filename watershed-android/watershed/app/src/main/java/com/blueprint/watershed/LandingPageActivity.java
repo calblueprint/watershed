@@ -32,7 +32,7 @@ public class LandingPageActivity extends Activity {
     private static final String TAG         = "LandingPageActivity";
 
     // UI Elements
-    private CoverPhotoView mCoverPhotoView;
+    private ImageView mLandingPageImage;
     private Button mLoginButton;
     private Button mFacebookButton;
     private Button mSignUpButton;
@@ -56,7 +56,7 @@ public class LandingPageActivity extends Activity {
     }
 
     public void initializeViews() {
-        setCoverPhotoView((CoverPhotoView)findViewById(R.id.cover_photo_view));
+        //setLandingPageImage((ImageView)findViewById(R.id.landing_page_image));
 
         setLoginButton((Button)findViewById(R.id.login_load_fragment_button));
         setFacebookButton((Button)findViewById(R.id.facebook_button));
@@ -88,13 +88,13 @@ public class LandingPageActivity extends Activity {
     }
 
     // Getters
-    public CoverPhotoView getCoverPhotoView() { return mCoverPhotoView; }
+    public ImageView getLandingPageImage() { return mLandingPageImage; }
     public Button getLoginButton() { return mLoginButton; }
     public Button getFacebookButton() { return mFacebookButton; }
     public Button getSignUpButton() { return mSignUpButton; }
 
     // Setters
-    public void setCoverPhotoView(CoverPhotoView coverPhotoView) { mCoverPhotoView = coverPhotoView; }
+    public void setLandingPageImage(ImageView imageView) { mLandingPageImage = imageView; }
     public void setLoginButton(Button loginButton) { mLoginButton = loginButton; }
     public void setFacebookButton(Button facebookButton) { mFacebookButton = facebookButton; }
     public void setSignUpButton(Button signUpButton) { mSignUpButton = signUpButton; }

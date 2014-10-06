@@ -4,55 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.blueprint.watershed.LandingPageActivity"
-    android:background="@color/ws_blue"
+    android:background="@drawable/landing_page_photo"
     android:orientation="vertical">
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/layout_top"
-        android:background="@color/white">
-
-        <FrameLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="7dp"
-                android:text="@string/app_name"
-                android:textSize="24sp"
-                android:textColor="#999999"
-                android:layout_gravity="center"
-                android:id="@+id/title"/>
-        </FrameLayout>
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#333333"
-            android:contentDescription="@string/title_image_content_description"
-            />
-
-    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/container">
 
-        <com.blueprint.watershed.CoverPhotoView
-            android:layout_width="wrap_content"
-            android:layout_height="250dp"
-            android:id="@+id/cover_photo_view"
-            />
-
         <LinearLayout
             android:id="@+id/buttons"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="200dp"
             android:layout_alignParentBottom="true"
             android:orientation="vertical">
 
