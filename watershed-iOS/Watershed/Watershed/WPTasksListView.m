@@ -57,22 +57,24 @@
         segmentedControl;
     }) wp_addToSuperview:self.segmentedTasksTabBarView];
     
-    _tableView = [({
-        //UITableView *tableView = [[UITableView alloc] init];
-        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 435)];
-        tableView.contentSize = CGSizeMake(320, 700);
+//    _tableView = [({
+//        UITableView *tableView = [[UITableView alloc] init];
+//        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 435)];
+//
+//        tableView.contentSize = CGSizeMake(200, 200);
+//        _colors = [[NSArray alloc] initWithObjects: @"Red", @"Yellow", @"Green",
+//                   @"Blue", @"Purpole", nil];
+//        [self.tasksTableView addConstraints:_colors];
 //        tableView.showsHorizontalScrollIndicator = true;
-        _colors = [[NSArray alloc] initWithObjects: @"Red", @"Yellow", @"Green",
-                 @"Blue", @"Purpole", nil];
-        tableView;
-    }) wp_addToSuperview:self.tasksTableView];
+//        
+//        tableView;
+//    }) wp_addToSuperview:self.tasksTableView];
 }
 
 - (void)setUpActions {
     // Here is where you set up buttons taps and gesture recognizers.
     [self.tasksSegmentedControl addTarget:self action:@selector(taskSegmentControlAction:) forControlEvents: UIControlEventValueChanged];
 }
-
 
 - (void)updateConstraints {
     
@@ -93,7 +95,9 @@
     [super updateConstraints];
 }
 
-- (NSInteger)numberOfRowsInTableView:(UITableView *)tableView {
+#pragma mark - Table View Data source
+
+- (NSInteger)numberOfRowsInTableView:(UITableView *)_tableView {
     return _colors.count;
 }
 
@@ -104,22 +108,6 @@
     {
         self.tasksTableView.backgroundColor = [UIColor wp_blue];
     }
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellIdentifier = @"Cell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (cell == nil)
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-    
-    cell.backgroundView = [[UIView alloc] init];
-    [cell.backgroundView setBackgroundColor:[UIColor redColor]];
-    [[[cell contentView] subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    
-//    cell.titleLabel.text = [NSString stringWithFormat:@"Cell %ld", indexPath.row + 1];
-    
-    return cell;
 }
 
 

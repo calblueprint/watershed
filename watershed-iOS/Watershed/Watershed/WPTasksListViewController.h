@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WPTasksListViewController : UIViewController
+@interface WPTasksListViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
 @end
