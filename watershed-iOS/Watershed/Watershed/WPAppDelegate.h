@@ -11,5 +11,7 @@
 @interface WPAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
++ (WPAppDelegate *)instance;
+
 
 @end
