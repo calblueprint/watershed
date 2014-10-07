@@ -16,6 +16,7 @@
 
     <!-- Landing Page -->
     <string name="title_activity_cover_photo_view">CoverPhotoViewActivity</string>
+    <string name="landing_page_logo_text">Watershed</string>
     <string name="landing_page_facebook_button">Facebook</string>
     <string name="landing_page_sign_up_button">Sign Up with Email</string>
     <string name="landing_page_login_button">Log In with Email</string>
