@@ -16,6 +16,7 @@
 
 @property (nonatomic) UIImageView *coverPhotoView;
 @property (nonatomic) UIImage *originalCoverPhoto;
+@property (nonatomic) UILabel *titleLabel;
 @property (nonatomic) NSMutableArray *coverPhotoArray;
 @property (nonatomic) NSInteger blurRadius;
 
@@ -52,24 +53,27 @@ static int COVER_PHOTO_TRANS = 0;
     [self addSubview:coverPhotoView];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        for (int i = 0; i <= 40; i+= 2) {
+        for (int i = 0; i <= 20; i+= 2) {
             UIImage *image = self.originalCoverPhoto;
             image = [image applyBlurWithRadius:i
                                      tintColor:[UIColor colorWithRed:0
                                                                green:0
                                                                 blue:0
-                                                               alpha:(i * 0.15 / 38)]
+                                                               alpha:(i * 0.15 / 20)]
                          saturationDeltaFactor:1
                                      maskImage:nil];
             
-            //add the image twice
             [self.coverPhotoArray addObject:image];
             [self.coverPhotoArray addObject:image];
-            
             NSLog(@"%d", i);
         }
     });
     
+    UILabel *titleLabel = [[UILabel alloc] init];
+    titleLabel.text = @"Watershed";
+    titleLabel.font = [UIFont boldSystemFontOfSize:25.0];
+    _titleLabel = titleLabel;
+    [self addSubview:titleLabel];
     
 }
 
@@ -88,6 +92,12 @@ static int COVER_PHOTO_TRANS = 0;
         make.trailing.equalTo(@0);
     }];
     
+    [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.coverPhotoView.mas_bottom)
+            .with.offset([[UIView wp_stylePadding] floatValue]);
+        make.centerX.equalTo(self.mas_centerX);
+    }];
+    
     [super updateConstraints];
 }
 
@@ -99,7 +109,7 @@ static int COVER_PHOTO_TRANS = 0;
         COVER_PHOTO_TRANS -= trans.y;
         if (COVER_PHOTO_TRANS < 0) {COVER_PHOTO_TRANS = 0;}
         if (COVER_PHOTO_TRANS > 120) {COVER_PHOTO_TRANS = 120;}
-        self.blurRadius = (NSInteger) COVER_PHOTO_TRANS / 3;
+        self.blurRadius = (NSInteger) COVER_PHOTO_TRANS / 6;
         //self.blurRadius += self.blurRadius % 2;
         
         [self.coverPhotoView mas_updateConstraints:^(MASConstraintMaker *make) {
