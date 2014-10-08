@@ -50,24 +50,8 @@ static int COVER_PHOTO_TRANS = 0;
     [coverPhotoView setContentMode:UIViewContentModeScaleAspectFill];
     [coverPhotoView setClipsToBounds:YES];
     _coverPhotoView = coverPhotoView;
+    [self generateBlurredPhotos];
     [self addSubview:coverPhotoView];
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        for (int i = 0; i <= 20; i+= 2) {
-            UIImage *image = self.originalCoverPhoto;
-            image = [image applyBlurWithRadius:i
-                                     tintColor:[UIColor colorWithRed:0
-                                                               green:0
-                                                                blue:0
-                                                               alpha:(i * 0.15 / 20)]
-                         saturationDeltaFactor:1
-                                     maskImage:nil];
-            
-            [self.coverPhotoArray addObject:image];
-            [self.coverPhotoArray addObject:image];
-            NSLog(@"%d", i);
-        }
-    });
     
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.text = @"Watershed";
@@ -121,6 +105,25 @@ static int COVER_PHOTO_TRANS = 0;
         [self.coverPhotoView setImage:self.coverPhotoArray[self.blurRadius]];
         [sender setTranslation:CGPointZero inView:self];
     }
+}
+
+- (void)generateBlurredPhotos {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        for (int i = 0; i <= 20; i+= 2) {
+            UIImage *image = self.originalCoverPhoto;
+            image = [image applyBlurWithRadius:i
+                                     tintColor:[UIColor colorWithRed:0
+                                                               green:0
+                                                                blue:0
+                                                               alpha:(i * 0.15 / 20)]
+                         saturationDeltaFactor:1
+                                     maskImage:nil];
+            
+            [self.coverPhotoArray addObject:image];
+            [self.coverPhotoArray addObject:image];
+            NSLog(@"%d", i);
+        }
+    });
 }
 
 - (NSMutableArray *)coverPhotoArray
