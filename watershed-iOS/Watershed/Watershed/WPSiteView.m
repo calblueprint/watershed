@@ -18,6 +18,8 @@
 @property (nonatomic) UIImage *originalCoverPhoto;
 @property (nonatomic) UILabel *titleLabel;
 @property (nonatomic) UILabel *descriptionLabel;
+@property (nonatomic) UITableView *taskTableView;
+
 @property (nonatomic) NSMutableArray *coverPhotoArray;
 @property (nonatomic) NSInteger blurRadius;
 
@@ -68,6 +70,11 @@ static int COVER_PHOTO_TRANS = 0;
     _descriptionLabel = descriptionLabel;
     [self addSubview:descriptionLabel];
     
+    UITableView *taskTableView = [[UITableView alloc] init];
+    taskTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    _taskTableView = taskTableView;
+    [self addSubview:taskTableView];
+    
 }
 
 - (void)setUpActions {
@@ -98,6 +105,15 @@ static int COVER_PHOTO_TRANS = 0;
         make.leading.equalTo([UIView wp_stylePadding]);
         make.trailing.equalTo([UIView wp_styleNegativePadding]);
     }];
+    
+    [self.taskTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.descriptionLabel.mas_bottom)
+        .with.offset([[UIView wp_stylePadding] floatValue]);
+        make.leading.equalTo(@0);
+        make.trailing.equalTo(@0);
+        make.bottom.equalTo(@0);
+    }];
+    
     
     [super updateConstraints];
 }
