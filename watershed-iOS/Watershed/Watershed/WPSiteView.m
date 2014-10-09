@@ -12,7 +12,7 @@
 #import "UIView+WPExtensions.h"
 #import "UIImage+ImageEffects.h"
 
-@interface WPSiteView ()
+@interface WPSiteView () <UIScrollViewDelegate>
 
 @property (nonatomic) UIImageView *coverPhotoView;
 @property (nonatomic) UIImage *originalCoverPhoto;
@@ -29,6 +29,7 @@
 
 static const int COVER_PHOTO_HEIGHT = 184;
 static int COVER_PHOTO_TRANS = 0;
+static int SCROLL_OFFSET = 0;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -71,16 +72,14 @@ static int COVER_PHOTO_TRANS = 0;
     [self addSubview:descriptionLabel];
     
     UITableView *taskTableView = [[UITableView alloc] init];
-    taskTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    ((UIScrollView *)taskTableView).delegate = self;
     _taskTableView = taskTableView;
     [self addSubview:taskTableView];
     
 }
 
 - (void)setUpActions {
-    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self
-                                                                          action:@selector(pan:)];
-    [self addGestureRecognizer:pan];
+    [self addGestureRecognizer:self.taskTableView.panGestureRecognizer];
 }
 
 - (void)updateConstraints {
@@ -100,7 +99,7 @@ static int COVER_PHOTO_TRANS = 0;
     
     [self.descriptionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.titleLabel.mas_bottom)
-        .with.offset([[UIView wp_stylePadding] floatValue]);
+            .with.offset([[UIView wp_stylePadding] floatValue]);
         make.centerX.equalTo(self.mas_centerX);
         make.leading.equalTo([UIView wp_stylePadding]);
         make.trailing.equalTo([UIView wp_styleNegativePadding]);
@@ -114,31 +113,10 @@ static int COVER_PHOTO_TRANS = 0;
         make.bottom.equalTo(@0);
     }];
     
-    
     [super updateConstraints];
 }
 
-- (void)pan:(UIPanGestureRecognizer *)sender {
-    if ((sender.state == UIGestureRecognizerStateChanged) ||
-        (sender.state == UIGestureRecognizerStateEnded)) {
-        CGPoint trans = [sender translationInView:self];
-        
-        COVER_PHOTO_TRANS -= trans.y;
-        if (COVER_PHOTO_TRANS < 0) {COVER_PHOTO_TRANS = 0;}
-        if (COVER_PHOTO_TRANS > 120) {COVER_PHOTO_TRANS = 120;}
-        self.blurRadius = (NSInteger) COVER_PHOTO_TRANS / 6;
-        //self.blurRadius += self.blurRadius % 2;
-        
-        [self.coverPhotoView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.equalTo(@(COVER_PHOTO_HEIGHT - COVER_PHOTO_TRANS));
-        }];
-        
-        [super updateConstraints];
-        
-        [self.coverPhotoView setImage:self.coverPhotoArray[self.blurRadius]];
-        [sender setTranslation:CGPointZero inView:self];
-    }
-}
+#pragma mark - Blurred Photo Generation
 
 - (void)generateBlurredPhotos {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
@@ -159,12 +137,41 @@ static int COVER_PHOTO_TRANS = 0;
     });
 }
 
+#pragma mark - Lazy Instantiation
+
 - (NSMutableArray *)coverPhotoArray
 {
     if (!_coverPhotoArray) {
         _coverPhotoArray = [[NSMutableArray alloc] init];
     }
     return _coverPhotoArray;
+}
+
+#pragma mark - ScrollView Delegate Methods
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    UIPanGestureRecognizer *sender = scrollView.panGestureRecognizer;
+    if ((sender.state == UIGestureRecognizerStateChanged) ||
+        (sender.state == UIGestureRecognizerStateEnded)) {
+        CGPoint trans = [sender translationInView:self];
+        
+        COVER_PHOTO_TRANS = -trans.y;
+        SCROLL_OFFSET = -trans.y;
+        if (COVER_PHOTO_TRANS < 0) {COVER_PHOTO_TRANS = 0;}
+        if (COVER_PHOTO_TRANS > 120) {COVER_PHOTO_TRANS = 120;}
+        self.blurRadius = (NSInteger) COVER_PHOTO_TRANS / 6;
+        //self.blurRadius += self.blurRadius % 2;
+        
+        [self.coverPhotoView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.equalTo(@(COVER_PHOTO_HEIGHT - COVER_PHOTO_TRANS));
+        }];
+        NSLog(@"%d", scrollView.contentOffset.y);
+        [super updateConstraints];
+        
+        [self.coverPhotoView setImage:self.coverPhotoArray[self.blurRadius]];
+        //[sender setTranslation:CGPointZero inView:self];
+    }
 }
 
 @end
