@@ -28,6 +28,7 @@
 @implementation WPSiteView
 
 static const int COVER_PHOTO_HEIGHT = 184;
+static const int SITE_TITLE_HEIGHT = 30;
 static int COVER_PHOTO_TRANS = 0;
 static int SCROLL_OFFSET = 0;
 
@@ -46,16 +47,6 @@ static int SCROLL_OFFSET = 0;
 #pragma mark - View Hierarchy
 
 - (void)createSubviews {
-
-    UIImage *coverPhoto = [UIImage imageNamed:@"SampleCoverPhoto"];
-    _originalCoverPhoto = coverPhoto;
-    
-    UIImageView *coverPhotoView = [[UIImageView alloc] initWithImage:coverPhoto];
-    [coverPhotoView setContentMode:UIViewContentModeScaleAspectFill];
-    [coverPhotoView setClipsToBounds:YES];
-    _coverPhotoView = coverPhotoView;
-    [self generateBlurredPhotos];
-    [self addSubview:coverPhotoView];
     
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.text = @"Watershed";
@@ -76,6 +67,15 @@ static int SCROLL_OFFSET = 0;
     _taskTableView = taskTableView;
     [self addSubview:taskTableView];
     
+    UIImage *coverPhoto = [UIImage imageNamed:@"SampleCoverPhoto"];
+    _originalCoverPhoto = coverPhoto;
+    
+    UIImageView *coverPhotoView = [[UIImageView alloc] initWithImage:coverPhoto];
+    [coverPhotoView setContentMode:UIViewContentModeScaleAspectFill];
+    [coverPhotoView setClipsToBounds:YES];
+    _coverPhotoView = coverPhotoView;
+    [self generateBlurredPhotos];
+    [self addSubview:coverPhotoView];
 }
 
 - (void)setUpActions {
@@ -92,14 +92,12 @@ static int SCROLL_OFFSET = 0;
     }];
     
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.coverPhotoView.mas_bottom)
-            .with.offset([[UIView wp_stylePadding] floatValue]);
+        make.top.equalTo(@(COVER_PHOTO_HEIGHT + 10));
         make.centerX.equalTo(self.mas_centerX);
     }];
     
     [self.descriptionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.titleLabel.mas_bottom)
-            .with.offset([[UIView wp_stylePadding] floatValue]);
+        make.top.equalTo(@(COVER_PHOTO_HEIGHT + SITE_TITLE_HEIGHT + 20));
         make.centerX.equalTo(self.mas_centerX);
         make.leading.equalTo([UIView wp_stylePadding]);
         make.trailing.equalTo([UIView wp_styleNegativePadding]);
@@ -152,12 +150,17 @@ static int SCROLL_OFFSET = 0;
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
     UIPanGestureRecognizer *sender = scrollView.panGestureRecognizer;
+    
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        [sender setTranslation:CGPointMake(0, SCROLL_OFFSET) inView:self];
+    }
+    
     if ((sender.state == UIGestureRecognizerStateChanged) ||
         (sender.state == UIGestureRecognizerStateEnded)) {
         CGPoint trans = [sender translationInView:self];
         
         COVER_PHOTO_TRANS = -trans.y;
-        SCROLL_OFFSET = -trans.y;
+        SCROLL_OFFSET = trans.y;
         if (COVER_PHOTO_TRANS < 0) {COVER_PHOTO_TRANS = 0;}
         if (COVER_PHOTO_TRANS > 120) {COVER_PHOTO_TRANS = 120;}
         self.blurRadius = (NSInteger) COVER_PHOTO_TRANS / 6;
@@ -166,7 +169,16 @@ static int SCROLL_OFFSET = 0;
         [self.coverPhotoView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.height.equalTo(@(COVER_PHOTO_HEIGHT - COVER_PHOTO_TRANS));
         }];
-        NSLog(@"%d", scrollView.contentOffset.y);
+        
+        [self.titleLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(@(COVER_PHOTO_HEIGHT + 10 + SCROLL_OFFSET));
+        }];
+        
+        [self.descriptionLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(@(COVER_PHOTO_HEIGHT + SITE_TITLE_HEIGHT + 20 + SCROLL_OFFSET));
+        }];
+        
+        NSLog(@"%f", scrollView.contentOffset.y);
         [super updateConstraints];
         
         [self.coverPhotoView setImage:self.coverPhotoArray[self.blurRadius]];
