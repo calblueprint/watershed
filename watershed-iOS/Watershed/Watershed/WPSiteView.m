@@ -17,6 +17,7 @@
 @property (nonatomic) UIImageView *coverPhotoView;
 @property (nonatomic) UIImage *originalCoverPhoto;
 @property (nonatomic) UILabel *titleLabel;
+@property (nonatomic) UILabel *descriptionLabel;
 @property (nonatomic) NSMutableArray *coverPhotoArray;
 @property (nonatomic) NSInteger blurRadius;
 
@@ -59,6 +60,14 @@ static int COVER_PHOTO_TRANS = 0;
     _titleLabel = titleLabel;
     [self addSubview:titleLabel];
     
+    UILabel *descriptionLabel = [[UILabel alloc] init];
+    descriptionLabel.text = @"Cal Blueprint is a student-run UC Berkeley organization devoted to matching the skills of its members to our desire to see social good enacted in our community. Each semester, teams of 4-5 students work closely with a non-profit to bring technological solutions to the problems they face every day.";
+    descriptionLabel.font = [UIFont systemFontOfSize:14.0];
+    descriptionLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    descriptionLabel.numberOfLines = 0;
+    _descriptionLabel = descriptionLabel;
+    [self addSubview:descriptionLabel];
+    
 }
 
 - (void)setUpActions {
@@ -80,6 +89,14 @@ static int COVER_PHOTO_TRANS = 0;
         make.top.equalTo(self.coverPhotoView.mas_bottom)
             .with.offset([[UIView wp_stylePadding] floatValue]);
         make.centerX.equalTo(self.mas_centerX);
+    }];
+    
+    [self.descriptionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.titleLabel.mas_bottom)
+        .with.offset([[UIView wp_stylePadding] floatValue]);
+        make.centerX.equalTo(self.mas_centerX);
+        make.leading.equalTo([UIView wp_stylePadding]);
+        make.trailing.equalTo([UIView wp_styleNegativePadding]);
     }];
     
     [super updateConstraints];
