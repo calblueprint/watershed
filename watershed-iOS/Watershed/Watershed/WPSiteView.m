@@ -71,7 +71,7 @@ static int COVER_PHOTO_TRANS = 0;
     _taskTableView = taskTableView;
     [self.taskScrollView addSubview:taskTableView];
     
-    UIImage *coverPhoto = [UIImage imageNamed:@"SampleCoverPhoto"];
+    UIImage *coverPhoto = [UIImage imageNamed:@"SampleCoverPhoto2"];
     _originalCoverPhoto = coverPhoto;
     
     UIImageView *coverPhotoView = [[UIImageView alloc] initWithImage:coverPhoto];
