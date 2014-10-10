@@ -88,7 +88,7 @@ static int COVER_PHOTO_TRANS = 0;
 
 - (void)updateConstraints {
     
-    [self.coverPhotoView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.coverPhotoView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(COVER_PHOTO_HEIGHT));
         make.top.equalTo(@0);
         make.leading.equalTo(@0);
