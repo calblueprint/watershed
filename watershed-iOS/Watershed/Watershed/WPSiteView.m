@@ -29,7 +29,6 @@
 @implementation WPSiteView
 
 static const int COVER_PHOTO_HEIGHT = 184;
-static const int SITE_TITLE_HEIGHT = 30;
 static int COVER_PHOTO_TRANS = 0;
 
 - (id)initWithFrame:(CGRect)frame
@@ -109,7 +108,8 @@ static int COVER_PHOTO_TRANS = 0;
     }];
     
     [self.descriptionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(COVER_PHOTO_HEIGHT + SITE_TITLE_HEIGHT + 20));
+        make.top.equalTo(self.titleLabel.mas_bottom)
+            .with.offset([[UIView wp_stylePadding] floatValue]);
         make.centerX.equalTo(self.mas_centerX);
         make.leading.equalTo([UIView wp_stylePadding]);
         make.trailing.equalTo([UIView wp_styleNegativePadding]);
@@ -123,7 +123,7 @@ static int COVER_PHOTO_TRANS = 0;
         make.trailing.equalTo(@0);
         make.bottom.equalTo(@0);
     }];
-    
+
     [super updateConstraints];
 }
 
@@ -165,16 +165,15 @@ static int COVER_PHOTO_TRANS = 0;
     CGPoint trans = scrollView.contentOffset;
     
     COVER_PHOTO_TRANS = trans.y;
-    if (COVER_PHOTO_TRANS > 120) {COVER_PHOTO_TRANS = 120;}
-    self.blurRadius = (NSInteger) COVER_PHOTO_TRANS / 6;
-    if (self.blurRadius < -20) self.blurRadius = -20;
+    if (COVER_PHOTO_TRANS > 120) COVER_PHOTO_TRANS = 120;
+    self.blurRadius = MIN(ABS(COVER_PHOTO_TRANS / 6), 20);
     
     [self.coverPhotoView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(COVER_PHOTO_HEIGHT - COVER_PHOTO_TRANS));
     }];
     [super updateConstraints];
-    NSLog(@"%d", COVER_PHOTO_TRANS);
-    [self.coverPhotoView setImage:self.coverPhotoArray[ABS(self.blurRadius)]];
+    
+    [self.coverPhotoView setImage:self.coverPhotoArray[self.blurRadius]];
 }
 
 @end
