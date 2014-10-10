@@ -31,7 +31,6 @@
 static const int COVER_PHOTO_HEIGHT = 184;
 static const int SITE_TITLE_HEIGHT = 30;
 static int COVER_PHOTO_TRANS = 0;
-static int SCROLL_OFFSET = 0;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -166,17 +165,16 @@ static int SCROLL_OFFSET = 0;
     CGPoint trans = scrollView.contentOffset;
     
     COVER_PHOTO_TRANS = trans.y;
-    SCROLL_OFFSET = -trans.y;
-    if (COVER_PHOTO_TRANS < 0) {COVER_PHOTO_TRANS = 0;}
     if (COVER_PHOTO_TRANS > 120) {COVER_PHOTO_TRANS = 120;}
     self.blurRadius = (NSInteger) COVER_PHOTO_TRANS / 6;
+    if (self.blurRadius < -20) self.blurRadius = -20;
     
     [self.coverPhotoView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(COVER_PHOTO_HEIGHT - COVER_PHOTO_TRANS));
     }];
     [super updateConstraints];
-    
-    [self.coverPhotoView setImage:self.coverPhotoArray[self.blurRadius]];
+    NSLog(@"%d", COVER_PHOTO_TRANS);
+    [self.coverPhotoView setImage:self.coverPhotoArray[ABS(self.blurRadius)]];
 }
 
 @end
