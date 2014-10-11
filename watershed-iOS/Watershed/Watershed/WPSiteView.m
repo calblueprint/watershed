@@ -19,7 +19,6 @@
 @property (nonatomic) UILabel *titleLabel;
 @property (nonatomic) UILabel *descriptionLabel;
 @property (nonatomic) UIScrollView *taskScrollView;
-@property (nonatomic) UITableView *taskTableView;
 
 @property (nonatomic) NSMutableArray *coverPhotoArray;
 @property (nonatomic) NSInteger blurRadius;

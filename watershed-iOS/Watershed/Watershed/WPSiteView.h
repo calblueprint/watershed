@@ -10,4 +10,6 @@
 
 @interface WPSiteView : UIView
 
+@property (nonatomic) UITableView *taskTableView;
+
 @end
