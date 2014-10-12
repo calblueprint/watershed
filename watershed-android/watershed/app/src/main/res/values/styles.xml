@@ -5,4 +5,7 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
+    <style name="AppThemeTranslucent" parent="AppTheme">
+    </style>
+
 </resources>

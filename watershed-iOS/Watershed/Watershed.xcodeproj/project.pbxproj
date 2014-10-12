@@ -380,7 +380,10 @@
 		<key>BA24044119DCF01900E9DB2F</key>
 		<dict>
 			<key>children</key>
-			<array/>
+			<array>
+				<string>BA24044919E2471200E9DB2F</string>
+				<string>BA24044A19E2471200E9DB2F</string>
+			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
 			<key>name</key>
@@ -394,6 +397,8 @@
 			<array>
 				<string>BA24044319DCF06C00E9DB2F</string>
 				<string>BA24044419DCF06C00E9DB2F</string>
+				<string>BA24044619DCF35300E9DB2F</string>
+				<string>BA24044719DCF35300E9DB2F</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
@@ -432,6 +437,119 @@
 		<dict>
 			<key>fileRef</key>
 			<string>BA24044419DCF06C00E9DB2F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BA24044619DCF35300E9DB2F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>WPTabBarController.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BA24044719DCF35300E9DB2F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>WPTabBarController.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BA24044819DCF35300E9DB2F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BA24044719DCF35300E9DB2F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BA24044919E2471200E9DB2F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>WPSitesListViewController.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BA24044A19E2471200E9DB2F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>WPSitesListViewController.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BA24044B19E2471200E9DB2F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BA24044A19E2471200E9DB2F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BA24044C19E2474A00E9DB2F</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>BA24044D19E2477000E9DB2F</string>
+				<string>BA24044E19E2477000E9DB2F</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Profile</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BA24044D19E2477000E9DB2F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>WPProfileViewController.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BA24044E19E2477000E9DB2F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>WPProfileViewController.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BA24044F19E2477000E9DB2F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BA24044E19E2477000E9DB2F</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
@@ -520,14 +638,17 @@
 			<string>2147483647</string>
 			<key>files</key>
 			<array>
+				<string>BA24044819DCF35300E9DB2F</string>
 				<string>06A8139819D91A7500E3EB05</string>
 				<string>06A8139519D911C900E3EB05</string>
+				<string>BA24044F19E2477000E9DB2F</string>
 				<string>BA24044519DCF06C00E9DB2F</string>
 				<string>06A8139B19D91D8600E3EB05</string>
 				<string>06305F4719D9274400BD2CE4</string>
 				<string>27714CB219D93405005344B0</string>
 				<string>27714CA919D9076F005344B0</string>
 				<string>27714CAC19D9182D005344B0</string>
+				<string>BA24044B19E2471200E9DB2F</string>
 				<string>BA4F8DDC19C7739300C816E3</string>
 			</array>
 			<key>isa</key>
@@ -701,6 +822,7 @@
 			<key>children</key>
 			<array>
 				<string>BA24044219DCF02C00E9DB2F</string>
+				<string>BA24044C19E2474A00E9DB2F</string>
 				<string>BA24044019DCEFFC00E9DB2F</string>
 				<string>BA24044119DCF01900E9DB2F</string>
 				<string>BA24043E19DCEFC800E9DB2F</string>
