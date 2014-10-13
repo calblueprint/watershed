@@ -33,7 +33,7 @@ static const int VIEW_HEIGHT = 16;
         [self addSubview:label];
         _label = label;
         
-        self.alpha = 0.4;
+        self.alpha = 0.2;
         
         [self.iconView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(@0);

@@ -19,14 +19,13 @@
 @property (nonatomic) UIImage *originalCoverPhoto;
 @property (nonatomic) UILabel *titleLabel;
 @property (nonatomic) UILabel *descriptionLabel;
+@property (nonatomic) UIView *headingLineBreak;
 @property (nonatomic) WPLabledIcon *addressLabel;
 @property (nonatomic) WPLabledIcon *siteCountLabel;
 @property (nonatomic) UIScrollView *taskScrollView;
 
 @property (nonatomic) NSMutableArray *coverPhotoArray;
 @property (nonatomic) NSInteger blurRadius;
-
-@property (nonatomic) UIView *lineBreak;
 
 @end
 
@@ -71,11 +70,11 @@ static int COVER_PHOTO_TRANS = 0;
     _descriptionLabel = descriptionLabel;
     [self.taskScrollView addSubview:descriptionLabel];
     
-    UIView *lineBreak = [[UIView alloc] init];
-    lineBreak.backgroundColor = [UIColor blackColor];
-    lineBreak.alpha = 0.2;
-    _lineBreak = lineBreak;
-    [self addSubview:lineBreak];
+    UIView *headingLineBreak = [[UIView alloc] init];
+    headingLineBreak.backgroundColor = [UIColor blackColor];
+    headingLineBreak.alpha = 0.2;
+    _headingLineBreak = headingLineBreak;
+    [self addSubview:headingLineBreak];
     
     WPLabledIcon *addressLabel = [[WPLabledIcon alloc] initWithText:@"123 Mark Miyashita Drive, Berkeley, CA 94720" icon:[UIImage imageNamed:@"MapMarkerIcon"]];
     _addressLabel = addressLabel;
@@ -125,7 +124,9 @@ static int COVER_PHOTO_TRANS = 0;
     
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(COVER_PHOTO_HEIGHT + 15));
-        make.left.equalTo([UIView wp_stylePadding]);
+        make.centerX.equalTo(self.mas_centerX);
+        make.leading.equalTo([UIView wp_stylePadding]);
+        make.trailing.equalTo([UIView wp_styleNegativePadding]);
     }];
     
     [self.descriptionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -136,7 +137,7 @@ static int COVER_PHOTO_TRANS = 0;
         make.trailing.equalTo([UIView wp_styleNegativePadding]);
     }];
     
-    [self.lineBreak mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.headingLineBreak mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.descriptionLabel.mas_bottom)
             .with.offset([[UIView wp_stylePadding] floatValue] * 2);
         make.leading.equalTo([UIView wp_stylePadding]);
@@ -145,7 +146,7 @@ static int COVER_PHOTO_TRANS = 0;
     }];
     
     [self.addressLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.lineBreak.mas_bottom)
+        make.top.equalTo(self.headingLineBreak.mas_bottom)
             .with.offset([[UIView wp_stylePadding] floatValue] * 2);
         make.leading.equalTo([UIView wp_stylePadding]);
         make.trailing.equalTo([UIView wp_styleNegativePadding]);
