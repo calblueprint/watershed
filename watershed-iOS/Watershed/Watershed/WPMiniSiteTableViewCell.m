@@ -8,7 +8,9 @@
 
 #import "WPMiniSiteTableViewCell.h"
 #import "UIColor+WPColors.h"
+#import "UIView+WPExtensions.h"
 #import "WPLabledIcon.h"
+#import "Masonry.h"
 
 @implementation WPMiniSiteTableViewCell
 
@@ -46,7 +48,44 @@
                                                                      icon:[UIImage imageNamed:@"TreeIcon"]];
         [content addSubview:fieldReportCountLabel];
         
+        [self mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.equalTo(@100);
+        }];
         
+        [photoView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.equalTo(@40);
+            make.top.equalTo(@0);
+            make.leading.equalTo(@0);
+        }];
+        
+        [nameLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(@0);
+            make.leading.equalTo(photoView.mas_right);
+            make.trailing.equalTo(@30);
+        }];
+        
+        [ratingDotView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.equalTo(@10);
+            make.width.equalTo(@10);
+            make.top.equalTo(@10);
+            make.trailing.equalTo(@10);
+        }];
+        
+        [taskCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(nameLabel.mas_bottom)
+                .with.offset([[UIView wp_stylePadding] floatValue] / 2);
+            make.leading.equalTo([UIView wp_stylePadding]);
+            make.trailing.equalTo([UIView wp_styleNegativePadding]);
+        }];
+        
+        [fieldReportCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(taskCountLabel.mas_bottom)
+                .with.offset([[UIView wp_stylePadding] floatValue] / 2);
+            make.leading.equalTo([UIView wp_stylePadding]);
+            make.trailing.equalTo([UIView wp_styleNegativePadding]);
+        }];
+        
+        [self updateConstraints];
         
     }
     return self;
