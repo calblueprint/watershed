@@ -2,6 +2,7 @@ package com.blueprint.watershed;
 
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Build;
 import android.content.pm.PackageInfo;
@@ -88,6 +89,10 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void onFragmentInteraction(String id){
+        // Deals with fragment interactions
+    }
+
+    public void onFragmentInteraction(Uri uri){
         // Deals with fragment interactions
     }
 
