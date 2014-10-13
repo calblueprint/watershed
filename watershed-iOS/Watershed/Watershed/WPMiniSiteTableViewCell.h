@@ -10,4 +10,12 @@
 
 @interface WPMiniSiteTableViewCell : UITableViewCell
 
+- (id)initWithStyle:(UITableViewCellStyle)style
+    reuseIdentifier:(NSString *)reuseIdentifier
+               name:(NSString *)name
+              image:(UIImage *)image
+             rating:(NSInteger)rating
+          taskCount:(NSInteger)taskCount
+   fieldReportCount:(NSInteger)fieldReportCount;
+
 @end
