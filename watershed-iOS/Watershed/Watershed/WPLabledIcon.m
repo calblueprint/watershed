@@ -49,6 +49,10 @@ static const int VIEW_HEIGHT = 16;
             make.right.equalTo(@0);
         }];
         
+        [self mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.equalTo(self.label.mas_height);
+        }];
+        
         [self updateConstraints];
     }
     return self;

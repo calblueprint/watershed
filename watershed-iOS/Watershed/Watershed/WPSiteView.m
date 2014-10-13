@@ -11,6 +11,7 @@
 #import "UIColor+WPColors.h"
 #import "UIView+WPExtensions.h"
 #import "UIImage+ImageEffects.h"
+#import "WPLabledIcon.h"
 
 @interface WPSiteView () <UIScrollViewDelegate>
 
@@ -18,6 +19,8 @@
 @property (nonatomic) UIImage *originalCoverPhoto;
 @property (nonatomic) UILabel *titleLabel;
 @property (nonatomic) UILabel *descriptionLabel;
+@property (nonatomic) WPLabledIcon *addressLabel;
+@property (nonatomic) WPLabledIcon *siteCountLabel;
 @property (nonatomic) UIScrollView *taskScrollView;
 
 @property (nonatomic) NSMutableArray *coverPhotoArray;
@@ -65,8 +68,17 @@ static int COVER_PHOTO_TRANS = 0;
     _descriptionLabel = descriptionLabel;
     [self.taskScrollView addSubview:descriptionLabel];
     
+    WPLabledIcon *addressLabel = [[WPLabledIcon alloc] initWithText:@"123 Mark Miyashita Drive, Berkeley, CA 94720" icon:[UIImage imageNamed:@"MapMarkerIcon"]];
+    _addressLabel = addressLabel;
+    [self addSubview:addressLabel];
+    
+    WPLabledIcon *siteCountLabel = [[WPLabledIcon alloc] initWithText:@"10 Sites" icon:[UIImage imageNamed:@"TreeIcon"]];
+    _siteCountLabel = siteCountLabel;
+    [self addSubview:siteCountLabel];
+    
     UITableView *taskTableView = [[UITableView alloc] init];
     ((UIScrollView *)taskTableView).delegate = self;
+    taskTableView.backgroundColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
     _taskTableView = taskTableView;
     [self.taskScrollView addSubview:taskTableView];
     
@@ -114,8 +126,22 @@ static int COVER_PHOTO_TRANS = 0;
         make.trailing.equalTo([UIView wp_styleNegativePadding]);
     }];
     
-    [self.taskTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.addressLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.descriptionLabel.mas_bottom)
+            .with.offset([[UIView wp_stylePadding] floatValue]);
+        make.leading.equalTo([UIView wp_stylePadding]);
+        make.trailing.equalTo([UIView wp_styleNegativePadding]);
+    }];
+    
+    [self.siteCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.addressLabel.mas_bottom)
+            .with.offset([[UIView wp_stylePadding] floatValue] / 2);
+        make.leading.equalTo([UIView wp_stylePadding]);
+        make.trailing.equalTo([UIView wp_styleNegativePadding]);
+    }];
+    
+    [self.taskTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.siteCountLabel.mas_bottom)
             .with.offset([[UIView wp_stylePadding] floatValue]);
         make.height.equalTo(@1000);
         make.leading.equalTo(@0);
