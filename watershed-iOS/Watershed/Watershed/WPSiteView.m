@@ -26,6 +26,8 @@
 @property (nonatomic) NSMutableArray *coverPhotoArray;
 @property (nonatomic) NSInteger blurRadius;
 
+@property (nonatomic) UIView *lineBreak;
+
 @end
 
 @implementation WPSiteView
@@ -65,8 +67,15 @@ static int COVER_PHOTO_TRANS = 0;
     descriptionLabel.font = [UIFont systemFontOfSize:14.0];
     descriptionLabel.lineBreakMode = NSLineBreakByWordWrapping;
     descriptionLabel.numberOfLines = 0;
+    descriptionLabel.textAlignment = NSTextAlignmentJustified;
     _descriptionLabel = descriptionLabel;
     [self.taskScrollView addSubview:descriptionLabel];
+    
+    UIView *lineBreak = [[UIView alloc] init];
+    lineBreak.backgroundColor = [UIColor blackColor];
+    lineBreak.alpha = 0.2;
+    _lineBreak = lineBreak;
+    [self addSubview:lineBreak];
     
     WPLabledIcon *addressLabel = [[WPLabledIcon alloc] initWithText:@"123 Mark Miyashita Drive, Berkeley, CA 94720" icon:[UIImage imageNamed:@"MapMarkerIcon"]];
     _addressLabel = addressLabel;
@@ -91,6 +100,7 @@ static int COVER_PHOTO_TRANS = 0;
     _coverPhotoView = coverPhotoView;
     [self generateBlurredPhotos];
     [self addSubview:coverPhotoView];
+    
 }
 
 - (void)setUpActions {
@@ -114,8 +124,8 @@ static int COVER_PHOTO_TRANS = 0;
     }];
     
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(COVER_PHOTO_HEIGHT + 10));
-        make.centerX.equalTo(self.mas_centerX);
+        make.top.equalTo(@(COVER_PHOTO_HEIGHT + 15));
+        make.left.equalTo([UIView wp_stylePadding]);
     }];
     
     [self.descriptionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -126,9 +136,17 @@ static int COVER_PHOTO_TRANS = 0;
         make.trailing.equalTo([UIView wp_styleNegativePadding]);
     }];
     
-    [self.addressLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.lineBreak mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.descriptionLabel.mas_bottom)
-            .with.offset([[UIView wp_stylePadding] floatValue]);
+            .with.offset([[UIView wp_stylePadding] floatValue] * 2);
+        make.leading.equalTo([UIView wp_stylePadding]);
+        make.trailing.equalTo([UIView wp_styleNegativePadding]);
+        make.height.equalTo(@1);
+    }];
+    
+    [self.addressLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.lineBreak.mas_bottom)
+            .with.offset([[UIView wp_stylePadding] floatValue] * 2);
         make.leading.equalTo([UIView wp_stylePadding]);
         make.trailing.equalTo([UIView wp_styleNegativePadding]);
     }];
@@ -142,7 +160,7 @@ static int COVER_PHOTO_TRANS = 0;
     
     [self.taskTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.siteCountLabel.mas_bottom)
-            .with.offset([[UIView wp_stylePadding] floatValue]);
+            .with.offset([[UIView wp_stylePadding] floatValue] * 2);
         make.height.equalTo(@1000);
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
