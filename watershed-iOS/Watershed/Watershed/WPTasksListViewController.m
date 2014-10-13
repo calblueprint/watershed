@@ -8,6 +8,7 @@
 
 #import "WPTasksListViewController.h"
 #import "WPTasksListView.h"
+#import "WPTableViewCell.h"
 #import "UIColor+WPColors.h"
 
 @interface WPTasksListViewController ()
@@ -19,16 +20,23 @@
 
 @implementation WPTasksListViewController {
     UITableView *tableView;
+    
 }
+
+static NSString *CellIdentifier = @"CellTaskIdentifier";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _currentTasks = [NSArray arrayWithObjects:@"Clean Tree", @"Prune Tree", @"Eat Tree", @"Water Tree", @"Water Tree 2", @"Plant Tree", @"Prune Tree 2", @"Resoil Tree", nil];
+    _tasks = @[
+               @{@"Task": @"Water Tree", @"Description": @"Please"},
+               @{@"Task": @"Prune Tree", @"Description": @"Pretty Please"},
+               @{@"Task": @"Keep Tree Alive", @"Description": @"Cherry On Top"}
+               ];
     self.view = [[WPTasksListView alloc] init];
     
 //    tableView = [[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] style:UITableViewStylePlain];
     tableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 70, 300, 490)];
-    
+    [tableView registerClass:[WPTableViewCell class] forCellReuseIdentifier:CellIdentifier];
     // must set delegate & dataSource, otherwise the the table will be empty and not responsive
     tableView.backgroundColor = [UIColor wp_lightBlue];
     tableView.delegate = self;
@@ -49,21 +57,33 @@
 - (NSInteger)tableView:(UITableView *)tasksTableView numberOfRowsInSection:(NSInteger)section
 {
 //    NSString *color = [self tableView:tableView titleForHeaderInSection:section];
-    return [_currentTasks count];
+    return [_tasks count];
 }
 
 - (NSInteger)numberOfRowsInTableView:(UITableView *)tasksTableView {
-    return [_currentTasks count];
+    return [_tasks count];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+//    if (indexPath.section == 1 && indexPath.row == 1) {
+//        return 100;
+//    }
+    return 200;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tasksTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *MyIdentifier = @"MyReuseIdentifier";
-    UITableViewCell *cell = [tasksTableView dequeueReusableCellWithIdentifier:MyIdentifier];
+//    static NSString *CellIdentifier = @"TaskCellIdentifier";
+    WPTableViewCell *cell = [tasksTableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault  reuseIdentifier:MyIdentifier];
+        cell = [[WPTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault  reuseIdentifier:CellIdentifier];
     }
+    //row 1 people get data 1
+    NSDictionary *rowData = self.tasks[indexPath.row];
+    cell.title = rowData[@"Task"];
+    cell.taskDescription = rowData[@"Description"];
     cell.backgroundColor = [UIColor wp_lightBlue];
-    cell.textLabel.text = [_currentTasks objectAtIndex:indexPath.row];
+//    cell.textLabel.text = [_currentTasks objectAtIndex:indexPath.row];
 ;
     return cell;
 }

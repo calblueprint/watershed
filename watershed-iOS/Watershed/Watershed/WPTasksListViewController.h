@@ -10,4 +10,6 @@
 
 @interface WPTasksListViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
+@property (copy, nonatomic) NSArray *tasks;
+
 @end
