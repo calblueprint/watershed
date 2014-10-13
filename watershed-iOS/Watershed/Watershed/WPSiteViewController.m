@@ -11,38 +11,30 @@
 
 @interface WPSiteViewController ()
 
+@property (nonatomic) UITableView *miniSiteTableView;
+@property (nonatomic) NSMutableArray *miniSiteList;
+
 @end
 
 @implementation WPSiteViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    [self loadMiniSiteData];
+    self.miniSiteTableView.delegate = self;
+    self.miniSiteTableView.dataSource = self;
 }
 
 - (void)loadView
 {
     self.view = [[WPSiteView alloc] init];
+    self.miniSiteTableView = ((WPSiteView *)self.view).miniSiteTableView;
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (void)loadMiniSiteData
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    NSLog(@"Fetching mini site data");
 }
-*/
 
 @end

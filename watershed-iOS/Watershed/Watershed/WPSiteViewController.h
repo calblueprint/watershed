@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WPSiteViewController : UIViewController
+@interface WPSiteViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @end
