@@ -23,7 +23,7 @@
 @property (nonatomic) UIView *headingLineBreak;
 @property (nonatomic) WPLabledIcon *addressLabel;
 @property (nonatomic) WPLabledIcon *siteCountLabel;
-@property (nonatomic) UIScrollView *taskScrollView;
+@property (nonatomic) UIScrollView *miniSiteScrollView;
 
 @property (nonatomic) NSMutableArray *coverPhotoArray;
 @property (nonatomic) NSInteger blurRadius;
@@ -51,10 +51,10 @@ static int COVER_PHOTO_TRANS = 0;
 
 - (void)createSubviews {
     
-    UIScrollView *taskScrollView = [[UIScrollView alloc] init];
-    taskScrollView.delegate = self;
-    _taskScrollView = taskScrollView;
-    [self addSubview:taskScrollView];
+    UIScrollView *miniSiteScrollView = [[UIScrollView alloc] init];
+    miniSiteScrollView.delegate = self;
+    _miniSiteScrollView = miniSiteScrollView;
+    [self addSubview:miniSiteScrollView];
     
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.text = @"Watershed";
@@ -62,7 +62,7 @@ static int COVER_PHOTO_TRANS = 0;
     titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     titleLabel.numberOfLines = 0;
     _titleLabel = titleLabel;
-    [self.taskScrollView addSubview:titleLabel];
+    [self.miniSiteScrollView addSubview:titleLabel];
     
     UILabel *descriptionLabel = [[UILabel alloc] init];
     descriptionLabel.text = @"Cal Blueprint is a student-run UC Berkeley organization devoted to matching the skills of its members to our desire to see social good enacted in our community. Each semester, teams of 4-5 students work closely with a non-profit to bring technological solutions to the problems they face every day.";
@@ -70,7 +70,7 @@ static int COVER_PHOTO_TRANS = 0;
     descriptionLabel.lineBreakMode = NSLineBreakByWordWrapping;
     descriptionLabel.numberOfLines = 0;
     _descriptionLabel = descriptionLabel;
-    [self.taskScrollView addSubview:descriptionLabel];
+    [self.miniSiteScrollView addSubview:descriptionLabel];
     
     UIView *headingLineBreak = [[UIView alloc] init];
     headingLineBreak.backgroundColor = [UIColor blackColor];
@@ -86,11 +86,11 @@ static int COVER_PHOTO_TRANS = 0;
     _siteCountLabel = siteCountLabel;
     [self addSubview:siteCountLabel];
     
-    UITableView *taskTableView = [[UITableView alloc] init];
-    ((UIScrollView *)taskTableView).delegate = self;
-    taskTableView.backgroundColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
-    _taskTableView = taskTableView;
-    [self.taskScrollView addSubview:taskTableView];
+    UITableView *miniSiteTableView = [[UITableView alloc] init];
+    ((UIScrollView *)miniSiteTableView).delegate = self;
+    miniSiteTableView.backgroundColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
+    _miniSiteTableView = miniSiteTableView;
+    [self.miniSiteScrollView addSubview:miniSiteTableView];
     
     UIImage *coverPhoto = [UIImage imageNamed:@"SampleCoverPhoto2"];
     _originalCoverPhoto = coverPhoto;
@@ -111,7 +111,7 @@ static int COVER_PHOTO_TRANS = 0;
 }
 
 - (void)setUpActions {
-    [self addGestureRecognizer:self.taskTableView.panGestureRecognizer];
+    [self addGestureRecognizer:self.miniSiteTableView.panGestureRecognizer];
 }
 
 - (void)updateConstraints {
@@ -130,7 +130,7 @@ static int COVER_PHOTO_TRANS = 0;
         make.trailing.equalTo(@0);
     }];
     
-    [self.taskScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.miniSiteScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(self.mas_height);
         make.top.equalTo(@0);
         make.leading.equalTo(@0);
@@ -174,7 +174,7 @@ static int COVER_PHOTO_TRANS = 0;
         make.trailing.equalTo([UIView wp_styleNegativePadding]);
     }];
     
-    [self.taskTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.miniSiteTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.siteCountLabel.mas_bottom)
             .with.offset([[UIView wp_stylePadding] floatValue] * 2);
         make.height.equalTo(@1000);

@@ -10,6 +10,6 @@
 
 @interface WPSiteView : UIView
 
-@property (nonatomic) UITableView *taskTableView;
+@property (nonatomic) UITableView *miniSiteTableView;
 
 @end
