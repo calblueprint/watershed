@@ -64,17 +64,18 @@
         cellView = [[WPMiniSiteTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                   reuseIdentifier:cellIdentifier
                                                              name:@"Yes"
-                                                            image:[UIImage new]
+                                                            image:[UIImage imageNamed:@"SampleCoverPhoto"]
                                                            rating:5
                                                         taskCount:5
                                                  fieldReportCount:5];
     }
+    NSLog(@"%f, %f", cellView.bounds.size.height,cellView.bounds.size.width);
     return cellView;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100.0f;
+    return 106.0f;
 }
 
 @end

@@ -88,7 +88,7 @@ static int COVER_PHOTO_TRANS = 0;
     
     UITableView *miniSiteTableView = [[UITableView alloc] init];
     ((UIScrollView *)miniSiteTableView).delegate = self;
-    miniSiteTableView.backgroundColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
+    miniSiteTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _miniSiteTableView = miniSiteTableView;
     [self.miniSiteScrollView addSubview:miniSiteTableView];
     
@@ -133,6 +133,7 @@ static int COVER_PHOTO_TRANS = 0;
     [self.miniSiteScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(self.mas_height);
         make.top.equalTo(@0);
+        make.bottom.equalTo(@0);
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
     }];
@@ -177,7 +178,7 @@ static int COVER_PHOTO_TRANS = 0;
     [self.miniSiteTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.siteCountLabel.mas_bottom)
             .with.offset([[UIView wp_stylePadding] floatValue] * 2);
-        make.height.equalTo(@1000);
+        make.height.equalTo(@(106*8));
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
         make.bottom.equalTo(@0);
