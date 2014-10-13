@@ -72,7 +72,7 @@ static int COVER_PHOTO_TRANS = 0;
     _addressLabel = addressLabel;
     [self addSubview:addressLabel];
     
-    WPLabledIcon *siteCountLabel = [[WPLabledIcon alloc] initWithText:@"10 Sites" icon:[UIImage imageNamed:@"TreeIcon"]];
+    WPLabledIcon *siteCountLabel = [[WPLabledIcon alloc] initWithText:@"10 mini sites" icon:[UIImage imageNamed:@"TreeIcon"]];
     _siteCountLabel = siteCountLabel;
     [self addSubview:siteCountLabel];
     
