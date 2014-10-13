@@ -17,6 +17,7 @@
 
 @property (nonatomic) UIImageView *coverPhotoView;
 @property (nonatomic) UIImage *originalCoverPhoto;
+@property (nonatomic) UIImageView *navbarShadowOverlay;
 @property (nonatomic) UILabel *titleLabel;
 @property (nonatomic) UILabel *descriptionLabel;
 @property (nonatomic) UIView *headingLineBreak;
@@ -101,6 +102,12 @@ static int COVER_PHOTO_TRANS = 0;
     [self generateBlurredPhotos];
     [self addSubview:coverPhotoView];
     
+    UIImageView *navbarShadowOverlay = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ShadowOverlay"]];
+    [navbarShadowOverlay setContentMode:UIViewContentModeScaleToFill];
+    [navbarShadowOverlay setClipsToBounds:YES];
+    _navbarShadowOverlay = navbarShadowOverlay;
+    [self addSubview:navbarShadowOverlay];
+    
 }
 
 - (void)setUpActions {
@@ -111,6 +118,13 @@ static int COVER_PHOTO_TRANS = 0;
     
     [self.coverPhotoView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(COVER_PHOTO_HEIGHT));
+        make.top.equalTo(@0);
+        make.leading.equalTo(@0);
+        make.trailing.equalTo(@0);
+    }];
+    
+    [self.navbarShadowOverlay mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@(64));
         make.top.equalTo(@0);
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
@@ -179,10 +193,7 @@ static int COVER_PHOTO_TRANS = 0;
         for (int i = 0; i <= 20; i+= 2) {
             UIImage *image = self.originalCoverPhoto;
             image = [image applyBlurWithRadius:i
-                                     tintColor:[UIColor colorWithRed:0
-                                                               green:0
-                                                                blue:0
-                                                               alpha:(i * 0.15 / 20)]
+                                     tintColor:[UIColor clearColor]
                          saturationDeltaFactor:1
                                      maskImage:nil];
             
