@@ -8,13 +8,12 @@
 
 #import "WPTasksListViewController.h"
 #import "WPTasksListView.h"
+#import "UIColor+WPColors.h"
 
 @interface WPTasksListViewController ()
 
 @property (nonatomic) WPTasksListView *view;
-//@property (nonatomic) UIView *view;
-
-//@property (nonatomic) NSArray *colors;
+@property (nonatomic) NSArray *currentTasks;
 
 @end
 
@@ -24,21 +23,21 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    _colors = [NSArray arrayWithObjects:@"Egg Benedict", @"Mushroom Risotto", @"Full Breakfast", @"Hamburger", @"Ham and Egg Sandwich", @"Creme Brelee", @"White Chocolate Donut", @"Starbucks Coffee", @"Vegetable Curry", @"Instant Noodle with Egg", @"Noodle with BBQ Pork", @"Japanese Noodle with Pork", @"Green Tea", @"Thai Shrimp Cake", @"Angry Birds Cake", @"Ham and Cheese Panini", nil];
+    _currentTasks = [NSArray arrayWithObjects:@"Clean Tree", @"Prune Tree", @"Eat Tree", @"Water Tree", @"Water Tree 2", @"Plant Tree", @"Prune Tree 2", @"Resoil Tree", nil];
     self.view = [[WPTasksListView alloc] init];
     
-    tableView = [[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] style:UITableViewStylePlain];
-//    tableView.frame = CGRectMake(0, 0, 200, 200);
+//    tableView = [[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] style:UITableViewStylePlain];
+    tableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 70, 300, 490)];
     
     // must set delegate & dataSource, otherwise the the table will be empty and not responsive
+    tableView.backgroundColor = [UIColor wp_lightBlue];
     tableView.delegate = self;
     tableView.dataSource = self;
     
-    tableView.backgroundColor = [UIColor cyanColor];
-    
-    NSLog(@"%@", NSStringFromCGRect(self.view.frame));
+//    NSLog(@"%@", NSStringFromCGRect(self.view.frame));
 
     // add to canvas
+    //I want to add this view to view.tasksTableView
     [self.view addSubview:tableView];
     // Do any additional setup after loading the view.
 }
@@ -50,13 +49,11 @@
 - (NSInteger)tableView:(UITableView *)tasksTableView numberOfRowsInSection:(NSInteger)section
 {
 //    NSString *color = [self tableView:tableView titleForHeaderInSection:section];
-//    return [[self.colors valueForKey:color] count];
-    return 1;
+    return [_currentTasks count];
 }
 
 - (NSInteger)numberOfRowsInTableView:(UITableView *)tasksTableView {
-//    return [_colors count];
-    return 1;
+    return [_currentTasks count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tasksTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -65,7 +62,9 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault  reuseIdentifier:MyIdentifier];
     }
-    cell.textLabel.text = @"Testing";
+    cell.backgroundColor = [UIColor wp_lightBlue];
+    cell.textLabel.text = [_currentTasks objectAtIndex:indexPath.row];
+;
     return cell;
 }
 @end

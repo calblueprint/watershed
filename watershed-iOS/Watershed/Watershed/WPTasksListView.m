@@ -17,12 +17,14 @@
 @property (nonatomic) UIView *segmentedTasksTabBarView;
 @property (nonatomic) UIView *tasksTableView;
 @property (nonatomic) UISegmentedControl *tasksSegmentedControl;
-@property (nonatomic) UITableView *tableView;
+//@property (nonatomic) UITableView *tableView;
 @property (nonatomic) NSArray *colors;
 
 @end
 
-@implementation WPTasksListView
+@implementation WPTasksListView {
+    UITableView *tasksTable;
+}
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -52,21 +54,18 @@
         NSArray *itemArray = [NSArray arrayWithObjects: @"My Tasks", @"All Tasks", nil];
         UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:itemArray];
         segmentedControl.frame = CGRectMake(30, 30, 250, 30);
+        //TODO --------------- change size of the frame----------------
         segmentedControl.selectedSegmentIndex = 0;
         segmentedControl.tintColor = [UIColor wp_darkBlue];
         segmentedControl;
     }) wp_addToSuperview:self.segmentedTasksTabBarView];
     
-//    _tableView = [({
-//        UITableView *tableView = [[UITableView alloc] init];
-//        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 435)];
-//
-//        tableView.contentSize = CGSizeMake(200, 200);
+//    tasksTable = [({
+//        UITableView *tableView =[[UITableView alloc] initWithFrame:CGRectMake(0, 0, 300, 490)];
+//        tableView.backgroundColor = [UIColor wp_lightBlue];
 //        _colors = [[NSArray alloc] initWithObjects: @"Red", @"Yellow", @"Green",
 //                   @"Blue", @"Purpole", nil];
-//        [self.tasksTableView addConstraints:_colors];
 //        tableView.showsHorizontalScrollIndicator = true;
-//        
 //        tableView;
 //    }) wp_addToSuperview:self.tasksTableView];
 }
