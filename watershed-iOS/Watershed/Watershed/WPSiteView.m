@@ -58,6 +58,8 @@ static int COVER_PHOTO_TRANS = 0;
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.text = @"Watershed";
     titleLabel.font = [UIFont boldSystemFontOfSize:25.0];
+    titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    titleLabel.numberOfLines = 0;
     _titleLabel = titleLabel;
     [self.taskScrollView addSubview:titleLabel];
     
@@ -66,7 +68,6 @@ static int COVER_PHOTO_TRANS = 0;
     descriptionLabel.font = [UIFont systemFontOfSize:14.0];
     descriptionLabel.lineBreakMode = NSLineBreakByWordWrapping;
     descriptionLabel.numberOfLines = 0;
-    descriptionLabel.textAlignment = NSTextAlignmentJustified;
     _descriptionLabel = descriptionLabel;
     [self.taskScrollView addSubview:descriptionLabel];
     
@@ -123,7 +124,7 @@ static int COVER_PHOTO_TRANS = 0;
     }];
     
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(COVER_PHOTO_HEIGHT + 15));
+        make.top.equalTo(@(COVER_PHOTO_HEIGHT + 13));
         make.centerX.equalTo(self.mas_centerX);
         make.leading.equalTo([UIView wp_stylePadding]);
         make.trailing.equalTo([UIView wp_styleNegativePadding]);
