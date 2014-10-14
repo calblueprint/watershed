@@ -29,8 +29,10 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
     [super viewDidLoad];
     _tasks = @[
                @{@"Task": @"Water Tree", @"Description": @"Please"},
-               @{@"Task": @"Prune Tree", @"Description": @"Pretty Please"},
-               @{@"Task": @"Keep Tree Alive", @"Description": @"Cherry On Top"}
+               @{@"Task": @"Prune Tree", @"Description": @"Pretty please"},
+               @{@"Task": @"Keep Tree Alive", @"Description": @"Cherry on top"},
+               @{@"Task": @"Start Tree", @"Description": @"Dig hole"},
+               @{@"Task": @"Put Tree in Hole", @"Description": @"Place it in"}
                ];
     self.view = [[WPTasksListView alloc] init];
     

@@ -1,6 +1,8 @@
 package com.blueprint.watershed;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Build;
 import android.content.pm.PackageInfo;
@@ -21,7 +23,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity
-                          implements View.OnClickListener {
+                          implements View.OnClickListener,TaskFragment.OnFragmentInteractionListener{
 
     // Constants
     public  static final String PREFERENCES = "LOGIN_PREFERENCES";
@@ -47,6 +49,9 @@ public class MainActivity extends ActionBarActivity
     // UI Elements
     public Typeface watershedFont;
 
+    //Adapters
+    public TaskAdapter arrayAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,13 +76,24 @@ public class MainActivity extends ActionBarActivity
         if(!newFragment.isAdded()){
             ft.add(R.id.container, newFragment);
         }
-        ft.hide(currentFragment);
+        if(currentFragment != null) {
+            ft.hide(currentFragment);
+        }
+        ft.addToBackStack(null);
         ft.show(newFragment);
         ft.commit();
     }
 
     private void initializeFragments() {
         // Initialize each of the fragments and set the current fragment
+    }
+
+    public void onFragmentInteraction(String id){
+        // Deals with fragment interactions
+    }
+
+    public void onFragmentInteraction(Uri uri){
+        // Deals with fragment interactions
     }
 
     private void initializeNavigationDrawer() {
@@ -112,7 +128,8 @@ public class MainActivity extends ActionBarActivity
         setActionBarTitle(position);
         switch (position) {
             case 0:
-                //replaceFragment();
+                TaskFragment taskFragment = new TaskFragment();
+                replaceFragment(taskFragment);
                 break;
             case 1:
                 //replaceFragment();
