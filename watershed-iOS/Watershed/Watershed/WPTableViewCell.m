@@ -22,17 +22,19 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self)
     {
-        CGRect titleRect = CGRectMake(0, 5, 70, 15);
+        CGRect titleRect = CGRectMake(0, 5, 70, 30);
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:titleRect];
         titleLabel.text = @"Task: ";
         titleLabel.textAlignment = NSTextAlignmentLeft;
+        titleLabel.backgroundColor = [UIColor orangeColor];
         [self.contentView addSubview:titleLabel];
         
-        CGRect descriptionRect = CGRectMake(0, 26, 70, 15);
+        CGRect descriptionRect = CGRectMake(0, 35, 100, 30);
         UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:descriptionRect];
         descriptionLabel.text = @"Description: ";
         descriptionLabel.textAlignment = NSTextAlignmentLeft;
-        [self.contentView addSubview:titleLabel];
+        descriptionLabel.backgroundColor = [UIColor greenColor];
+        [self.contentView addSubview:descriptionLabel];
         
         //    CGRect descriptionRect = CGRectMake(0, 26, 70, 15);
         //    UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:descriptionRect];
@@ -44,8 +46,9 @@
         titleValue = [[UILabel alloc] initWithFrame:titleValueRect];
         [self.contentView addSubview:titleValue];
         
-        CGRect descriptionValueRect = CGRectMake(80, 25, 200, 30);
+        CGRect descriptionValueRect = CGRectMake(80, 35, 200, 30);
         taskDescriptionValue= [[UILabel alloc] initWithFrame:descriptionValueRect];
+        taskDescriptionValue.backgroundColor = [UIColor yellowColor];
         [self.contentView addSubview:taskDescriptionValue];
     }
     return self;
@@ -66,7 +69,7 @@
     }
 }
 
--(void) setDescription:(NSString *)d {
+-(void) setTaskDescription:(NSString *)d {
     if (![d isEqualToString:_taskDescription]) {
         _taskDescription = [d copy];
         taskDescriptionValue.text = _taskDescription;

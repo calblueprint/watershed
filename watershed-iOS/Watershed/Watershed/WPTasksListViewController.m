@@ -69,7 +69,7 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
 //    if (indexPath.section == 1 && indexPath.row == 1) {
 //        return 100;
 //    }
-    return 200;
+    return 80;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tasksTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
