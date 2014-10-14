@@ -26,15 +26,16 @@
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:titleRect];
         titleLabel.text = @"Task: ";
         titleLabel.textAlignment = NSTextAlignmentLeft;
-        titleLabel.backgroundColor = [UIColor orangeColor];
-        [self.contentView addSubview:titleLabel];
+//        titleLabel.backgroundColor = [UIColor orangeColor];
+//        [self.contentView addSubview:titleLabel];
         
-        CGRect descriptionRect = CGRectMake(0, 35, 100, 30);
+        CGRect descriptionRect = CGRectMake(0, 30, 100, 30);
         UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:descriptionRect];
         descriptionLabel.text = @"Description: ";
         descriptionLabel.textAlignment = NSTextAlignmentLeft;
-        descriptionLabel.backgroundColor = [UIColor greenColor];
-        [self.contentView addSubview:descriptionLabel];
+//        descriptionLabel.backgroundColor = [UIColor greenColor];
+        descriptionLabel.font = [UIFont systemFontOfSize:12];
+//        [self.contentView addSubview:descriptionLabel];
         
         //    CGRect descriptionRect = CGRectMake(0, 26, 70, 15);
         //    UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:descriptionRect];
@@ -42,13 +43,14 @@
         //    descriptionLabel.textAlignment = NSTextAlignmentLeft;
         //    [self.contentView addSubview:titleLabel];
         
-        CGRect titleValueRect = CGRectMake(80, 5, 200, 30);
+        CGRect titleValueRect = CGRectMake(15, 5, 200, 30);
         titleValue = [[UILabel alloc] initWithFrame:titleValueRect];
         [self.contentView addSubview:titleValue];
         
-        CGRect descriptionValueRect = CGRectMake(80, 35, 200, 30);
+        CGRect descriptionValueRect = CGRectMake(15, 30, 200, 30);
         taskDescriptionValue= [[UILabel alloc] initWithFrame:descriptionValueRect];
-        taskDescriptionValue.backgroundColor = [UIColor yellowColor];
+        taskDescriptionValue.font = [UIFont systemFontOfSize:12];
+//        taskDescriptionValue.backgroundColor = [UIColor yellowColor];
         [self.contentView addSubview:taskDescriptionValue];
     }
     return self;
