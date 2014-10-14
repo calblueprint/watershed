@@ -99,7 +99,7 @@ static int COVER_PHOTO_TRANS = 0;
     UIImageView *tableViewShadowOverlay = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ShadowOverlay"]];
     [tableViewShadowOverlay setContentMode:UIViewContentModeScaleToFill];
     [tableViewShadowOverlay setClipsToBounds:YES];
-    tableViewShadowOverlay.alpha = 0.35;
+    tableViewShadowOverlay.alpha = 0.25;
     _tableViewShadowOverlay = tableViewShadowOverlay;
     [self addSubview:tableViewShadowOverlay];
     
@@ -196,7 +196,7 @@ static int COVER_PHOTO_TRANS = 0;
     }];
     
     [self.tableViewShadowOverlay mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@20);
+        make.height.equalTo(@10);
         make.top.equalTo(self.miniSiteTableView.mas_top);
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
