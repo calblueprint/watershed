@@ -37,7 +37,7 @@
 {
     NSLog(@"Fetching mini site data");
     
-    self.miniSiteList = @[@"1",@"1",@"1",@"1",@"1",@"1",@"1",@"1"];
+    self.miniSiteList = @[@1, @3, @4, @2, @5, @1, @5, @2];
 }
 
 #pragma mark - TableView Delegate/DataSource Methods
@@ -65,7 +65,7 @@
                                                   reuseIdentifier:cellIdentifier
                                                              name:@"Yes"
                                                             image:[UIImage imageNamed:@"SampleCoverPhoto"]
-                                                           rating:5
+                                                           rating:[self.miniSiteList[indexPath.row] intValue]
                                                         taskCount:5
                                                  fieldReportCount:5];
     }
@@ -75,7 +75,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 106.0f;
+    return 86.0f;
 }
 
 @end

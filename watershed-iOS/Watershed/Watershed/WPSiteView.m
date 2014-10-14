@@ -23,6 +23,7 @@
 @property (nonatomic) UIView *headingLineBreak;
 @property (nonatomic) WPLabledIcon *addressLabel;
 @property (nonatomic) WPLabledIcon *siteCountLabel;
+@property (nonatomic) UIImageView *tableViewShadowOverlay;
 @property (nonatomic) UIScrollView *miniSiteScrollView;
 
 @property (nonatomic) NSMutableArray *coverPhotoArray;
@@ -79,18 +80,28 @@ static int COVER_PHOTO_TRANS = 0;
     [self addSubview:headingLineBreak];
     
     WPLabledIcon *addressLabel = [[WPLabledIcon alloc] initWithText:@"123 Mark Miyashita Drive, Berkeley, CA 94720" icon:[UIImage imageNamed:@"MapMarkerIcon"]];
+    addressLabel.alpha = 1.0;
     _addressLabel = addressLabel;
     [self addSubview:addressLabel];
     
     WPLabledIcon *siteCountLabel = [[WPLabledIcon alloc] initWithText:@"10 mini sites" icon:[UIImage imageNamed:@"TreeIcon"]];
+    siteCountLabel.alpha = 1.0;
     _siteCountLabel = siteCountLabel;
     [self addSubview:siteCountLabel];
     
     UITableView *miniSiteTableView = [[UITableView alloc] init];
     ((UIScrollView *)miniSiteTableView).delegate = self;
-    miniSiteTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [miniSiteTableView setSeparatorInset:UIEdgeInsetsZero];
+    miniSiteTableView.separatorColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1];
     _miniSiteTableView = miniSiteTableView;
     [self.miniSiteScrollView addSubview:miniSiteTableView];
+    
+    UIImageView *tableViewShadowOverlay = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ShadowOverlay"]];
+    [tableViewShadowOverlay setContentMode:UIViewContentModeScaleToFill];
+    [tableViewShadowOverlay setClipsToBounds:YES];
+    tableViewShadowOverlay.alpha = 0.25;
+    _tableViewShadowOverlay = tableViewShadowOverlay;
+    [self addSubview:tableViewShadowOverlay];
     
     UIImage *coverPhoto = [UIImage imageNamed:@"SampleCoverPhoto2"];
     _originalCoverPhoto = coverPhoto;
@@ -175,10 +186,17 @@ static int COVER_PHOTO_TRANS = 0;
         make.trailing.equalTo([UIView wp_styleNegativePadding]);
     }];
     
+    [self.tableViewShadowOverlay mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@(15));
+        make.top.equalTo(self.miniSiteTableView.mas_top);
+        make.leading.equalTo(@0);
+        make.trailing.equalTo(@0);
+    }];
+
     [self.miniSiteTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.siteCountLabel.mas_bottom)
             .with.offset([[UIView wp_stylePadding] floatValue] * 2);
-        make.height.equalTo(@(106*8));
+        make.height.equalTo(@(86*8));
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
         make.bottom.equalTo(@0);

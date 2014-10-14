@@ -27,7 +27,7 @@
         self.backgroundColor = [UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:1];
         
         UIView *content = self.contentView;
-        content.layer.cornerRadius = 3.0;
+        //content.layer.cornerRadius = 3.0;
         [content setBackgroundColor:[UIColor whiteColor]];
         
         UILabel *nameLabel = [[UILabel alloc] init];
@@ -42,26 +42,27 @@
         
         UIView *ratingDotView = [[UIView alloc] init];
         ratingDotView.layer.cornerRadius = 5.0;
-        ratingDotView.backgroundColor = [UIColor colorWithRed:1 green:0.3 blue:1 alpha:1];
+        ratingDotView.backgroundColor = [WPMiniSiteTableViewCell colorForRating:rating];
         [content addSubview:ratingDotView];
         
         WPLabledIcon *taskCountLabel = [[WPLabledIcon alloc] initWithText:@"4 tasks"
-                                                                     icon:[UIImage imageNamed:@"TreeIcon"]];
+                                                                     icon:[UIImage imageNamed:@"CheckIcon"]];
         [self addSubview:taskCountLabel];
         
         WPLabledIcon *fieldReportCountLabel = [[WPLabledIcon alloc] initWithText:@"4 field reports"
-                                                                     icon:[UIImage imageNamed:@"TreeIcon"]];
+                                                                     icon:[UIImage imageNamed:@"ExclamationIcon"]];
         [self addSubview:fieldReportCountLabel];
         
         [self mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.equalTo(@106);
+            make.height.equalTo(@86);
             make.width.equalTo(@([[UIScreen mainScreen] bounds].size.width));
         }];
         
         [self.contentView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo([UIView wp_stylePadding]);
-            make.leading.equalTo([UIView wp_stylePadding]);
-            make.trailing.equalTo([UIView wp_styleNegativePadding]);
+            make.top.equalTo(@0);
+            make.leading.equalTo(@0);
+            make.trailing.equalTo(@0);
+            make.bottom.equalTo(@0);
             make.centerX.equalTo(self.mas_centerX);
             make.centerY.equalTo(self.mas_centerY);
         }];
@@ -113,6 +114,34 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
++ (UIColor *)colorForRating:(NSInteger)rating
+{
+    switch (rating) {
+        case 1:
+            return [UIColor colorWithRed:231/255.0 green:76/255.0 blue:60/255.0 alpha:1];
+            break;
+            
+        case 2:
+            return [UIColor colorWithRed:230/255.0 green:126/255.0 blue:34/255.0 alpha:1];
+            break;
+            
+        case 3:
+            return [UIColor colorWithRed:241/255.0 green:196/255.0 blue:15/255.0 alpha:1];
+            break;
+            
+        case 4:
+            return [UIColor colorWithRed:164/255.0 green:196/255.0 blue:0/255.0 alpha:1];
+            break;
+            
+        case 5:
+            return [UIColor colorWithRed:39/255.0 green:174/255.0 blue:96/255.0 alpha:1];
+            break;
+        default:
+            break;
+    }
+    return [UIColor grayColor];
 }
 
 @end
