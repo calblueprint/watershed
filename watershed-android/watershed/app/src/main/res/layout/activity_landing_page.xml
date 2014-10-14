@@ -43,7 +43,9 @@
         android:layout_weight="0.5"
         android:orientation="vertical"
         android:layout_marginStart="@dimen/standard_margin"
-        android:layout_marginEnd="@dimen/standard_margin">
+        android:layout_marginLeft="@dimen/standard_margin"
+        android:layout_marginEnd="@dimen/standard_margin"
+        android:layout_marginRight="@dimen/standard_margin">
 
         <LinearLayout
             android:layout_width="match_parent"
