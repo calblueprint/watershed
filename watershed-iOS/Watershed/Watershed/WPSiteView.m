@@ -99,7 +99,7 @@ static int COVER_PHOTO_TRANS = 0;
     UIImageView *tableViewShadowOverlay = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ShadowOverlay"]];
     [tableViewShadowOverlay setContentMode:UIViewContentModeScaleToFill];
     [tableViewShadowOverlay setClipsToBounds:YES];
-    tableViewShadowOverlay.alpha = 0.25;
+    tableViewShadowOverlay.alpha = 0.35;
     _tableViewShadowOverlay = tableViewShadowOverlay;
     [self addSubview:tableViewShadowOverlay];
     
@@ -185,13 +185,6 @@ static int COVER_PHOTO_TRANS = 0;
         make.leading.equalTo([UIView wp_stylePadding]);
         make.trailing.equalTo([UIView wp_styleNegativePadding]);
     }];
-    
-    [self.tableViewShadowOverlay mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@(15));
-        make.top.equalTo(self.miniSiteTableView.mas_top);
-        make.leading.equalTo(@0);
-        make.trailing.equalTo(@0);
-    }];
 
     [self.miniSiteTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.siteCountLabel.mas_bottom)
@@ -200,6 +193,13 @@ static int COVER_PHOTO_TRANS = 0;
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
         make.bottom.equalTo(@0);
+    }];
+    
+    [self.tableViewShadowOverlay mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@20);
+        make.top.equalTo(self.miniSiteTableView.mas_top);
+        make.leading.equalTo(@0);
+        make.trailing.equalTo(@0);
     }];
 
     [super updateConstraints];
