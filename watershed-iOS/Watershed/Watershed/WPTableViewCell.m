@@ -7,6 +7,7 @@
 //
 
 #import "WPTableViewCell.h"
+#import "UIColor+WPColors.h"
 
 @implementation WPTableViewCell {
     UILabel *titleValue;
@@ -37,12 +38,6 @@
         descriptionLabel.font = [UIFont systemFontOfSize:12];
 //        [self.contentView addSubview:descriptionLabel];
         
-        //    CGRect descriptionRect = CGRectMake(0, 26, 70, 15);
-        //    UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:descriptionRect];
-        //    descriptionLabel.text = @"Description: ";
-        //    descriptionLabel.textAlignment = NSTextAlignmentLeft;
-        //    [self.contentView addSubview:titleLabel];
-        
         CGRect titleValueRect = CGRectMake(15, 5, 200, 30);
         titleValue = [[UILabel alloc] initWithFrame:titleValueRect];
         [self.contentView addSubview:titleValue];
@@ -52,6 +47,12 @@
         taskDescriptionValue.font = [UIFont systemFontOfSize:12];
 //        taskDescriptionValue.backgroundColor = [UIColor yellowColor];
         [self.contentView addSubview:taskDescriptionValue];
+        
+        CGRect dueDateValueRect = CGRectMake(15, 5, 290, 30);
+        dueDateValue = [[UILabel alloc] initWithFrame:dueDateValueRect];
+        dueDateValue.font = [UIFont systemFontOfSize:12];
+        //        taskDescriptionValue.backgroundColor = [UIColor yellowColor];
+        [self.contentView addSubview:dueDateValue];
     }
     return self;
 }
@@ -68,6 +69,8 @@
     if (![t isEqualToString:_title]) {
         _title = [t copy];
         titleValue.text = _title;
+        titleValue.font = [UIFont boldSystemFontOfSize:16];
+        titleValue.textColor = [UIColor wp_darkBlue];
     }
 }
 
@@ -75,6 +78,17 @@
     if (![d isEqualToString:_taskDescription]) {
         _taskDescription = [d copy];
         taskDescriptionValue.text = _taskDescription;
+        taskDescriptionValue.textColor = [UIColor grayColor];
+    }
+}
+
+-(void) setDueDate:(NSString *)dd {
+    if (![dd isEqualToString:_dueDate]) {
+        _dueDate = [dd copy];
+        //NSDate instead?
+        dueDateValue.text = _dueDate;
+        dueDateValue.textAlignment = NSTextAlignmentRight;
+        dueDateValue.textColor = [UIColor wp_blue];
     }
 }
 @end

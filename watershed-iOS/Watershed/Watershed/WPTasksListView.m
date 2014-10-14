@@ -53,7 +53,7 @@
     _tasksSegmentedControl = [({
         NSArray *itemArray = [NSArray arrayWithObjects: @"My Tasks", @"All Tasks", nil];
         UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:itemArray];
-        segmentedControl.frame = CGRectMake(30, 30, 250, 30);
+        segmentedControl.frame = CGRectMake(30, 20, 250, 30);
         //TODO --------------- change size of the frame----------------
         segmentedControl.selectedSegmentIndex = 0;
         segmentedControl.tintColor = [UIColor wp_darkBlue];

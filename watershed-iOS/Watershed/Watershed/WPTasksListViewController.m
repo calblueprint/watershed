@@ -28,19 +28,19 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
 - (void)viewDidLoad {
     [super viewDidLoad];
     _tasks = @[
-               @{@"Task": @"Water Tree", @"Description": @"Please"},
-               @{@"Task": @"Prune Tree", @"Description": @"Pretty please"},
+               @{@"Task": @"Water Tree", @"Description": @"Please", @"DueDate": @"05/11"},
+               @{@"Task": @"Prune Tree", @"Description": @"Pretty please", @"DueDate": @"05/10"},
                @{@"Task": @"Keep Tree Alive", @"Description": @"Cherry on top"},
-               @{@"Task": @"Start Tree", @"Description": @"Dig hole"},
-               @{@"Task": @"Put Tree in Hole", @"Description": @"Place it in"}
+               @{@"Task": @"Start Tree", @"Description": @"Dig hole", @"DueDate": @"05/12"},
+               @{@"Task": @"Put Tree in Hole", @"Description": @"Place it in", @"DueDate": @"05/12"}
                ];
     self.view = [[WPTasksListView alloc] init];
-    
+    self.view.backgroundColor = [UIColor whiteColor];
 //    tableView = [[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] style:UITableViewStylePlain];
-    tableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 70, 300, 490)];
+    tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 70, 320, 490)];
     [tableView registerClass:[WPTableViewCell class] forCellReuseIdentifier:CellIdentifier];
     // must set delegate & dataSource, otherwise the the table will be empty and not responsive
-    tableView.backgroundColor = [UIColor wp_lightBlue];
+//    tableView.backgroundColor = [UIColor wp_lightBlue];
     tableView.delegate = self;
     tableView.dataSource = self;
     
@@ -84,8 +84,8 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
     NSDictionary *rowData = self.tasks[indexPath.row];
     cell.title = rowData[@"Task"];
     cell.taskDescription = rowData[@"Description"];
-    cell.backgroundColor = [UIColor wp_lightBlue];
-//    cell.textLabel.text = [_currentTasks objectAtIndex:indexPath.row];
+    cell.dueDate = rowData[@"DueDate"];
+//    cell.backgroundColor = [UIColor whiteColor];
 ;
     return cell;
 }
