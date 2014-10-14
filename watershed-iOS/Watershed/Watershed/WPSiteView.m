@@ -77,17 +77,17 @@ static int COVER_PHOTO_TRANS = 0;
     headingLineBreak.backgroundColor = [UIColor blackColor];
     headingLineBreak.alpha = 0.2;
     _headingLineBreak = headingLineBreak;
-    [self addSubview:headingLineBreak];
+    [self.miniSiteScrollView addSubview:headingLineBreak];
     
     WPLabledIcon *addressLabel = [[WPLabledIcon alloc] initWithText:@"123 Mark Miyashita Drive, Berkeley, CA 94720" icon:[UIImage imageNamed:@"MapMarkerIcon"]];
     addressLabel.alpha = 1.0;
     _addressLabel = addressLabel;
-    [self addSubview:addressLabel];
+    [self.miniSiteScrollView addSubview:addressLabel];
     
     WPLabledIcon *siteCountLabel = [[WPLabledIcon alloc] initWithText:@"10 mini sites" icon:[UIImage imageNamed:@"TreeIcon"]];
     siteCountLabel.alpha = 1.0;
     _siteCountLabel = siteCountLabel;
-    [self addSubview:siteCountLabel];
+    [self.miniSiteScrollView addSubview:siteCountLabel];
     
     UITableView *miniSiteTableView = [[UITableView alloc] init];
     ((UIScrollView *)miniSiteTableView).delegate = self;
