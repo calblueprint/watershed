@@ -2,7 +2,7 @@ package com.blueprint.watershed;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +10,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 
@@ -20,7 +21,7 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
 
     private OnFragmentInteractionListener mListener;
 
-    private AbsListView mListView;
+    private ListView mSiteListView;
     private ListAdapter mAdapter;
 
 
@@ -44,10 +45,10 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_site, container, false);
 
-        mListView = (AbsListView) view.findViewById(android.R.id.list);
-        ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
+        mSiteListView = (ListView) view.findViewById(android.R.id.list);
+        ((AdapterView<ListAdapter>) mSiteListView).setAdapter(mAdapter);
 
-        mListView.setOnItemClickListener(this);
+        mSiteListView.setOnItemClickListener(this);
 
         return view;
     }
@@ -80,7 +81,7 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
     }
 
     public void setEmptyText(CharSequence emptyText) {
-        View emptyView = mListView.getEmptyView();
+        View emptyView = mSiteListView.getEmptyView();
 
         if (emptyText instanceof TextView) {
             ((TextView) emptyView).setText(emptyText);

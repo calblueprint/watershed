@@ -132,7 +132,8 @@ public class MainActivity extends ActionBarActivity
                 replaceFragment(taskFragment);
                 break;
             case 1:
-                //replaceFragment();
+                SiteListFragment siteListFragment = new SiteListFragment();
+                replaceFragment(siteListFragment);
                 break;
             case 2:
                 //replaceFragment();
