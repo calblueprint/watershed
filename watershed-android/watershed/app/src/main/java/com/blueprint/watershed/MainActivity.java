@@ -52,6 +52,9 @@ public class MainActivity extends ActionBarActivity
     //Adapters
     public TaskAdapter arrayAdapter;
 
+    //Networking
+    private requestHandler mMainRequestHandler;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +71,8 @@ public class MainActivity extends ActionBarActivity
         authEmail = prefs.getString("auth_email", "none");
 
         mTitle = getTitle();
+
+        mMainRequestHandler = RequestHandler.getInstance(this.getApplicationContext());
     }
 
     public void replaceFragment(Fragment newFragment) {
