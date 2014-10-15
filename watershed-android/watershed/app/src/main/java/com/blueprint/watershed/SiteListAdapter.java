@@ -15,9 +15,9 @@ public class SiteListAdapter extends ArrayAdapter<Site> {
 
     Context context;
     int layoutResourceId;
-    Task data[] = null;
+    Site data[] = null;
 
-    public SiteListAdapter(Context context, int layoutResourceId, Task[] data) {
+    public SiteListAdapter(Context context, int layoutResourceId, Site[] data) {
         super(context, layoutResourceId, data);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
@@ -25,32 +25,33 @@ public class SiteListAdapter extends ArrayAdapter<Site> {
     }
 
     @Override
-    public View getView(int position, View convertview, ViewGroup parent) {
-        View row = convertview;
-        TaskHolder holder = null;
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View row = convertView;
+        SiteHolder holder = null;
 
         if (row == null) {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             row = inflater.inflate(layoutResourceId, parent, false);
 
-            holder = new TaskHolder();
-            holder.title = (TextView)row.findViewById(R.id.title);
-            holder.description = (TextView)row.findViewById(R.id.description);
+            holder = new SiteHolder();
+            holder.name = (TextView) row.findViewById(R.id.name);
+            holder.description = (TextView) row.findViewById(R.id.description);
 
             row.setTag(holder);
         } else {
-            holder = (TaskHolder)row.getTag();
+            holder = (SiteHolder)row.getTag();
         }
 
-        Task task = data[position];
-        holder.title.setText(task.getTitle());
-        holder.description.setText(task.getDescription());
+        Site site = data[position];
+
+        holder.name.setText(site.getName());
+        holder.description.setText(site.getDescription());
 
         return row;
     }
 
-    static class TaskHolder {
-        TextView title;
+    static class SiteHolder {
+        TextView name;
         TextView description;
     }
 }
