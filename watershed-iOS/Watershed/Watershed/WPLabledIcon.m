@@ -58,4 +58,6 @@ static const int VIEW_HEIGHT = 16;
     return self;
 }
 
++ (NSInteger)viewHeight { return VIEW_HEIGHT; }
+
 @end

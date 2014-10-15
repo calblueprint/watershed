@@ -16,4 +16,6 @@
 - (id)initWithText:(NSString *)text
               icon:(UIImage *)icon;
 
++ (NSInteger)viewHeight;
+
 @end
