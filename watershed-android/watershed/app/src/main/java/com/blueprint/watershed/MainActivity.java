@@ -56,6 +56,9 @@ public class MainActivity extends ActionBarActivity
 
     private TaskFragment mtaskFragment;
 
+    //Networking
+    private requestHandler mMainRequestHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +74,8 @@ public class MainActivity extends ActionBarActivity
         authEmail = prefs.getString("auth_email", "none");
 
         mTitle = "Tasks";
+
+        mMainRequestHandler = RequestHandler.getInstance(this.getApplicationContext());
     }
 
     public void replaceFragment(Fragment newFragment) {
