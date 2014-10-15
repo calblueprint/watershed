@@ -9,6 +9,7 @@
 #import "WPSiteViewController.h"
 #import "WPSiteView.h"
 #import "WPMiniSiteTableViewCell.h"
+#import "Masonry.h"
 
 @interface WPSiteViewController ()
 
@@ -31,6 +32,7 @@
 {
     self.view = [[WPSiteView alloc] init];
     self.miniSiteTableView = ((WPSiteView *)self.view).miniSiteTableView;
+    [self.view updateConstraints];
 }
 
 - (void)loadMiniSiteData
@@ -76,6 +78,11 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 86.0f;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    [(WPSiteView *)self.view adjustCoverPhoto];
 }
 
 @end

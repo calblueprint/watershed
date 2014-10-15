@@ -18,13 +18,14 @@
 @property (nonatomic) UIImageView *coverPhotoView;
 @property (nonatomic) UIImage *originalCoverPhoto;
 @property (nonatomic) UIImageView *navbarShadowOverlay;
+@property (nonatomic) UIView *tableHeaderView;
 @property (nonatomic) UILabel *titleLabel;
 @property (nonatomic) UILabel *descriptionLabel;
 @property (nonatomic) UIView *headingLineBreak;
 @property (nonatomic) WPLabledIcon *addressLabel;
 @property (nonatomic) WPLabledIcon *siteCountLabel;
 @property (nonatomic) UIImageView *tableViewShadowOverlay;
-@property (nonatomic) UIScrollView *miniSiteScrollView;
+//@property (nonatomic) UIScrollView *miniSiteScrollView;
 
 @property (nonatomic) NSMutableArray *coverPhotoArray;
 @property (nonatomic) NSInteger blurRadius;
@@ -52,10 +53,14 @@ static int COVER_PHOTO_TRANS = 0;
 
 - (void)createSubviews {
     
-    UIScrollView *miniSiteScrollView = [[UIScrollView alloc] init];
+    /*UIScrollView *miniSiteScrollView = [[UIScrollView alloc] init];
     miniSiteScrollView.delegate = self;
     _miniSiteScrollView = miniSiteScrollView;
-    [self addSubview:miniSiteScrollView];
+    [self addSubview:miniSiteScrollView];*/
+    
+    UIView *tableHeaderView = [[UIView alloc] init];
+    _tableHeaderView = tableHeaderView;
+    [self addSubview:tableHeaderView];
     
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.text = @"Watershed";
@@ -63,7 +68,7 @@ static int COVER_PHOTO_TRANS = 0;
     titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     titleLabel.numberOfLines = 0;
     _titleLabel = titleLabel;
-    [self.miniSiteScrollView addSubview:titleLabel];
+    [self.tableHeaderView addSubview:titleLabel];
     
     UILabel *descriptionLabel = [[UILabel alloc] init];
     descriptionLabel.text = @"Cal Blueprint is a student-run UC Berkeley organization devoted to matching the skills of its members to our desire to see social good enacted in our community. Each semester, teams of 4-5 students work closely with a non-profit to bring technological solutions to the problems they face every day.";
@@ -71,30 +76,31 @@ static int COVER_PHOTO_TRANS = 0;
     descriptionLabel.lineBreakMode = NSLineBreakByWordWrapping;
     descriptionLabel.numberOfLines = 0;
     _descriptionLabel = descriptionLabel;
-    [self.miniSiteScrollView addSubview:descriptionLabel];
+    [self.tableHeaderView addSubview:descriptionLabel];
     
     UIView *headingLineBreak = [[UIView alloc] init];
     headingLineBreak.backgroundColor = [UIColor blackColor];
     headingLineBreak.alpha = 0.2;
     _headingLineBreak = headingLineBreak;
-    [self.miniSiteScrollView addSubview:headingLineBreak];
+    [self.tableHeaderView addSubview:headingLineBreak];
     
     WPLabledIcon *addressLabel = [[WPLabledIcon alloc] initWithText:@"123 Mark Miyashita Drive, Berkeley, CA 94720" icon:[UIImage imageNamed:@"MapMarkerIcon"]];
     addressLabel.alpha = 1.0;
     _addressLabel = addressLabel;
-    [self.miniSiteScrollView addSubview:addressLabel];
+    [self.tableHeaderView addSubview:addressLabel];
     
     WPLabledIcon *siteCountLabel = [[WPLabledIcon alloc] initWithText:@"10 mini sites" icon:[UIImage imageNamed:@"TreeIcon"]];
     siteCountLabel.alpha = 1.0;
     _siteCountLabel = siteCountLabel;
-    [self.miniSiteScrollView addSubview:siteCountLabel];
+    [self.tableHeaderView addSubview:siteCountLabel];
     
     UITableView *miniSiteTableView = [[UITableView alloc] init];
-    ((UIScrollView *)miniSiteTableView).delegate = self;
+    miniSiteTableView.backgroundColor = [UIColor whiteColor];
     [miniSiteTableView setSeparatorInset:UIEdgeInsetsZero];
     miniSiteTableView.separatorColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1];
+    //miniSiteTableView.tableHeaderView = tableHeaderView;
     _miniSiteTableView = miniSiteTableView;
-    [self.miniSiteScrollView addSubview:miniSiteTableView];
+    [self addSubview:miniSiteTableView];
     
     UIImageView *tableViewShadowOverlay = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ShadowOverlay"]];
     [tableViewShadowOverlay setContentMode:UIViewContentModeScaleToFill];
@@ -141,16 +147,23 @@ static int COVER_PHOTO_TRANS = 0;
         make.trailing.equalTo(@0);
     }];
     
-    [self.miniSiteScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.tableHeaderView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(COVER_PHOTO_HEIGHT));
+        make.leading.equalTo(@0);
+        make.trailing.equalTo(@0);
+        make.bottom.equalTo(self.tableViewShadowOverlay.mas_top);
+    }];
+    
+    /*[self.miniSiteScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(self.mas_height);
         make.top.equalTo(@0);
         make.bottom.equalTo(@0);
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
-    }];
+    }];*/
     
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(COVER_PHOTO_HEIGHT + 13));
+        make.top.equalTo(@13);
         make.centerX.equalTo(self.mas_centerX);
         make.leading.equalTo([UIView wp_stylePadding]);
         make.trailing.equalTo([UIView wp_styleNegativePadding]);
@@ -185,23 +198,22 @@ static int COVER_PHOTO_TRANS = 0;
         make.leading.equalTo([UIView wp_stylePadding]);
         make.trailing.equalTo([UIView wp_styleNegativePadding]);
     }];
-
-    [self.miniSiteTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+    
+    [self.tableViewShadowOverlay mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@10);
         make.top.equalTo(self.siteCountLabel.mas_bottom)
             .with.offset([[UIView wp_stylePadding] floatValue] * 2);
-        make.height.equalTo(@(86*8));
+        make.leading.equalTo(@0);
+        make.trailing.equalTo(@0);
+    }];
+
+    [self.miniSiteTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.tableHeaderView.mas_bottom);
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
         make.bottom.equalTo(@0);
     }];
     
-    [self.tableViewShadowOverlay mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@10);
-        make.top.equalTo(self.miniSiteTableView.mas_top);
-        make.leading.equalTo(@0);
-        make.trailing.equalTo(@0);
-    }];
-
     [super updateConstraints];
 }
 
@@ -233,11 +245,11 @@ static int COVER_PHOTO_TRANS = 0;
     return _coverPhotoArray;
 }
 
-#pragma mark - ScrollView Delegate Methods
+#pragma mark - ScrollView Delegate Method from ViewController
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+- (void)adjustCoverPhoto {
     
-    CGPoint trans = scrollView.contentOffset;
+    CGPoint trans = self.miniSiteTableView.contentOffset;
     
     COVER_PHOTO_TRANS = trans.y;
     if (COVER_PHOTO_TRANS > 120) COVER_PHOTO_TRANS = 120;
@@ -246,6 +258,11 @@ static int COVER_PHOTO_TRANS = 0;
     [self.coverPhotoView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(COVER_PHOTO_HEIGHT - COVER_PHOTO_TRANS));
     }];
+    
+    [self.tableHeaderView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(COVER_PHOTO_HEIGHT - trans.y));
+    }];
+    
     [super updateConstraints];
     
     [self.coverPhotoView setImage:self.coverPhotoArray[self.blurRadius]];

@@ -11,5 +11,6 @@
 @interface WPSiteView : UIView
 
 @property (nonatomic) UITableView *miniSiteTableView;
+- (void)adjustCoverPhoto;
 
 @end

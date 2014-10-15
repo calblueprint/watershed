@@ -54,7 +54,6 @@
         [self addSubview:fieldReportCountLabel];
         
         [self mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.equalTo(@86);
             make.width.equalTo(@([[UIScreen mainScreen] bounds].size.width));
         }];
         
@@ -103,7 +102,7 @@
                 .with.offset([[UIView wp_stylePadding] floatValue]);
         }];
         
-        [self updateConstraints];
+        [super updateConstraints];
         
     }
     return self;
