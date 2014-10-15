@@ -63,8 +63,6 @@
     // Configure the view for the selected state
 }
 
-//////////////////ADDED ALL FUNCTIONS AFTER THIS/////////////
-
 -(void) setTitle:(NSString *)t {
     if (![t isEqualToString:_title]) {
         _title = [t copy];

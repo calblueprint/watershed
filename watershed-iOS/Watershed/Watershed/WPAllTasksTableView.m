@@ -7,6 +7,9 @@
 //
 
 #import "WPAllTasksTableView.h"
+#import "UIView+WPExtensions.h"
+#import "UIColor+WPColors.h"
+#import "Masonry.h"
 
 @implementation WPAllTasksTableView
 
@@ -17,5 +20,6 @@
     // Drawing code
 }
 */
+
 
 @end

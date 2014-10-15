@@ -10,6 +10,7 @@
 #import "UIColor+WPColors.h"
 #import "WPAllTasksTableViewController.h"
 #import "WPAllTasksTableView.h"
+#import "Masonry.h"
 
 @interface WPAllTasksTableViewController ()
 
@@ -30,11 +31,12 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
                @{@"Task": @"Start Tree", @"Description": @"Dig hole", @"DueDate": @"05/12"},
                @{@"Task": @"Put Tree in Hole", @"Description": @"Place it in", @"DueDate": @"05/12"}
                ];
-    self.tableView = [[WPAllTasksTableView alloc] initWithFrame:CGRectMake(0, 0, 300, 490)];
+    self.tableView = [[WPAllTasksTableView alloc] init];
     [self.tableView registerClass:[WPTableViewCell class] forCellReuseIdentifier:CellIdentifier];
     // must set delegate & dataSource, otherwise the the table will be empty and not responsive
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+//    [self.tableView updateConstraints];
     
     //    NSLog(@"%@", NSStringFromCGRect(self.view.frame));
     
@@ -44,6 +46,17 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
+
+
+//- (void)updateConstraints {
+//
+//    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(@0);
+//        make.leading.equalTo(@10);
+//        make.trailing.equalTo(@(-10));
+//        make.height.equalTo(@60);
+//    }];
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
