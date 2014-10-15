@@ -34,8 +34,8 @@ public class SiteListAdapter extends ArrayAdapter<Site> {
             row = inflater.inflate(layoutResourceId, parent, false);
 
             holder = new SiteHolder();
-            holder.name = (TextView) row.findViewById(R.id.name);
-            holder.description = (TextView) row.findViewById(R.id.description);
+//            holder.name = (TextView) row.findViewById(R.id.name);
+//            holder.description = (TextView) row.findViewById(R.id.description);
 
             row.setTag(holder);
         } else {
@@ -44,8 +44,8 @@ public class SiteListAdapter extends ArrayAdapter<Site> {
 
         Site site = data[position];
 
-        holder.name.setText(site.getName());
-        holder.description.setText(site.getDescription());
+//        holder.name.setText(site.getName());
+//        holder.description.setText(site.getDescription());
 
         return row;
     }

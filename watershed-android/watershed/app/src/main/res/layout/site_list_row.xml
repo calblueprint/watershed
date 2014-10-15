@@ -5,23 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/name"
-        android:paddingLeft="2dp"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:textColor="#0000FF"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
-
-    <TextView
-        android:id="@+id/description"
-        android:paddingLeft="5dp"
-        android:textColor="#5C002E"
-        android:textSize="17dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_cover_photo"
+        />
 
 </LinearLayout>
