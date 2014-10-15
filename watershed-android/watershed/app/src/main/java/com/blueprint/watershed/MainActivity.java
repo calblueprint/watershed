@@ -23,7 +23,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity
-                          implements View.OnClickListener,TaskFragment.OnFragmentInteractionListener{
+                          implements View.OnClickListener,
+                                     TaskFragment.OnFragmentInteractionListener,
+                                     SiteListFragment.OnFragmentInteractionListener {
 
     // Constants
     public  static final String PREFERENCES = "LOGIN_PREFERENCES";
@@ -132,7 +134,8 @@ public class MainActivity extends ActionBarActivity
                 replaceFragment(taskFragment);
                 break;
             case 1:
-                //replaceFragment();
+                SiteListFragment siteListFragment = new SiteListFragment();
+                replaceFragment(siteListFragment);
                 break;
             case 2:
                 //replaceFragment();
