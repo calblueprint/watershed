@@ -90,14 +90,7 @@
         make.leading.equalTo(@10);
         make.trailing.equalTo(@(-10));
     }];
-    
     [super updateConstraints];
-}
-
-#pragma mark - Table View Data source
-
-- (NSInteger)numberOfRowsInTableView:(UITableView *)_tableView {
-    return _colors.count;
 }
 
 - (void)taskSegmentControlAction:(UISegmentedControl *)segment

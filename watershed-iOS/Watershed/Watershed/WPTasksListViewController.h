@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WPTasksListViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
-
-@property (copy, nonatomic) NSArray *tasks;
+@interface WPTasksListViewController : UIViewController
 
 @end
