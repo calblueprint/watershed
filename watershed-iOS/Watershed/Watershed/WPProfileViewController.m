@@ -10,6 +10,8 @@
 
 @interface WPProfileViewController ()
 
+@property (nonatomic) WPProfileView *view;
+
 @end
 
 @implementation WPProfileViewController
@@ -22,6 +24,12 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)loadView
+{
+    self.navigationItem.title = @"My Profile";
+    self.view = [[WPProfileView alloc] init];
 }
 
 
