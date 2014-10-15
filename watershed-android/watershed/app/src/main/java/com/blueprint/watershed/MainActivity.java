@@ -23,7 +23,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity
-                          implements View.OnClickListener,TaskFragment.OnFragmentInteractionListener{
+                          implements View.OnClickListener,
+                                     TaskFragment.OnFragmentInteractionListener,
+                                     SiteListFragment.OnFragmentInteractionListener {
 
     // Constants
     public  static final String PREFERENCES = "LOGIN_PREFERENCES";

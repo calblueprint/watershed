@@ -24,7 +24,7 @@ public class Site {
     }
 
     public Site() {
-        new Site("Awesome Site", "This is the best site ever.", "1000 Andrew Millman Way", "Berkeley", "CA", 94720);
+        this("Awesome Site", "This is the best site ever.", "1000 Andrew Millman Way", "Berkeley", "CA", 94720);
     }
 
     // Getters

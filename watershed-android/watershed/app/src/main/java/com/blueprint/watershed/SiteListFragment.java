@@ -35,21 +35,26 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_site, container, false);
+        View view = inflater.inflate(R.layout.fragment_site_list, container, false);
+
+        Site[] siteList = new Site[] {
+                new Site(),
+                new Site(),
+                new Site(),
+                new Site()
+        };
 
         mSiteListView = (ListView) view.findViewById(android.R.id.list);
-        ((AdapterView<ListAdapter>) mSiteListView).setAdapter(mAdapter);
+
+        SiteListAdapter siteListAdapter = new SiteListAdapter(getActivity(), R.layout.site_list_row, siteList);
+        mSiteListView.setAdapter(siteListAdapter);
 
         mSiteListView.setOnItemClickListener(this);
-
         return view;
     }
 
