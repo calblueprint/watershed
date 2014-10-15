@@ -50,6 +50,10 @@ public class RequestHandler {
         return mInstance;
     }
 
+    /**
+     * Returns an Image Loader for populating Views with images fetched from a URL. 
+     * @return
+     */
     public ImageLoader getImageLoader(){
         return mImageLoader;
     }
@@ -136,7 +140,7 @@ public class RequestHandler {
                 }, 0, 0, null,
                 new Response.ErrorListener() {
                     public void onErrorResponse(VolleyError error) {
-                        Log.e("Volley Error")
+                        Log.d("Volley Error", volleyError.getMessage())
                         //mImageView.setImageResource(R.drawable.image_load_error);
                     }
                 });
