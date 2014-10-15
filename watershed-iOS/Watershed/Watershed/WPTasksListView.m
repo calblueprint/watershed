@@ -7,6 +7,10 @@
 //
 
 #import "WPTasksListView.h"
+#import "WPMyTasksTableView.h"
+#import "WPAllTasksTableView.h"
+#import "WPAllTasksTableViewController.h"
+#import "WPMyTasksTableViewController.h"
 #import "UIView+WPExtensions.h"
 #import "UIColor+WPColors.h"
 #import "Masonry.h"
@@ -17,7 +21,9 @@
 @property (nonatomic) UIView *segmentedTasksTabBarView;
 @property (nonatomic) UIView *tasksTableView;
 @property (nonatomic) UISegmentedControl *tasksSegmentedControl;
-//@property (nonatomic) UITableView *tableView;
+@property (nonatomic) WPMyTasksTableViewController *myTasksTableController;
+@property (nonatomic) WPAllTasksTableViewController *allTasksTableController;
+@property (nonatomic) UITableView *currentView;
 @property (nonatomic) NSArray *colors;
 
 @end
@@ -50,6 +56,32 @@
         view;
     }) wp_addToSuperview:self];
     
+//    _myTasksTable = ({
+//        _myTasksTableController = [[WPMyTasksTableViewController alloc] init];
+//        WPMyTasksTableView *myTasks = _myTasksTableController.tableView;
+//        myTasks;
+//    });
+//    
+    _myTasksTableController = ({
+        WPMyTasksTableViewController *myController = [[WPMyTasksTableViewController alloc] init];
+        myController;
+    });
+    
+    _currentView = [({
+        UITableView *myView= _myTasksTableController.tableView;
+        myView;
+    }) wp_addToSuperview:self.tasksTableView];
+
+    _allTasksTableController = ({
+        WPAllTasksTableViewController *allController = [[WPAllTasksTableViewController alloc] init];
+        allController;
+    });
+    
+//    _allTasksTable = ({
+//        WPAllTasksTableView *allTasks = [[WPAllTasksTableView alloc] init];
+//        allTasks;
+//    });
+
     _tasksSegmentedControl = [({
         NSArray *itemArray = [NSArray arrayWithObjects: @"My Tasks", @"All Tasks", nil];
         UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:itemArray];
@@ -95,10 +127,11 @@
 
 - (void)taskSegmentControlAction:(UISegmentedControl *)segment
 {
-    self.tasksTableView.backgroundColor = [UIColor wp_lightBlue];
     if(segment.selectedSegmentIndex == 0)
     {
-        self.tasksTableView.backgroundColor = [UIColor wp_blue];
+        [self.tasksTableView addSubview:_myTasksTableController.tableView];
+    } else {
+        [self.tasksTableView addSubview:_allTasksTableController.tableView];
     }
 }
 

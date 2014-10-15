@@ -48,7 +48,7 @@
 //        taskDescriptionValue.backgroundColor = [UIColor yellowColor];
         [self.contentView addSubview:taskDescriptionValue];
         
-        CGRect dueDateValueRect = CGRectMake(15, 5, 290, 30);
+        CGRect dueDateValueRect = CGRectMake(15, 5, 260, 30);
         dueDateValue = [[UILabel alloc] initWithFrame:dueDateValueRect];
         dueDateValue.font = [UIFont systemFontOfSize:12];
         //        taskDescriptionValue.backgroundColor = [UIColor yellowColor];

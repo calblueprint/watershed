@@ -19,7 +19,7 @@
 @end
 
 @implementation WPTasksListViewController {
-    WPAllTasksTableViewController *allTasksController;
+//    WPAllTasksTableViewController *allTasksController;
 }
 
 static NSString *CellIdentifier = @"CellTaskIdentifier";
@@ -33,8 +33,8 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
     //I want to add this view to view.tasksTableView
 //    [self.view addSubview:tableView];
     // Do any additional setup after loading the view.
-    allTasksController = [[WPAllTasksTableViewController alloc] init];
-    [self.view addSubview:allTasksController.tableView];
+//    allTasksController = [[WPAllTasksTableViewController alloc] init];
+//    [self.view addSubview:allTasksController.tableView];
 }
 
 - (void)loadView {

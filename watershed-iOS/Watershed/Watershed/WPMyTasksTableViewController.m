@@ -1,48 +1,42 @@
 //
-//  WPAllTasksTableViewController.m
+//  WPMyTasksTableViewController.m
 //  Watershed
 //
 //  Created by Jordeen Chang on 10/14/14.
 //  Copyright (c) 2014 Blueprint. All rights reserved.
 //
 
+#import "WPMyTasksTableViewController.h"
 #import "WPTableViewCell.h"
 #import "UIColor+WPColors.h"
-#import "WPAllTasksTableViewController.h"
-#import "WPAllTasksTableView.h"
+#import "WPMyTasksTableView.h"
 
-@interface WPAllTasksTableViewController ()
+@interface WPMyTasksTableViewController ()
 
-@property (nonatomic) WPAllTasksTableView *tableView;
+@property (nonatomic) WPMyTasksTableView *tableView;
 
 @end
 
 static NSString *CellIdentifier = @"CellTaskIdentifier";
 
-@implementation WPAllTasksTableViewController
+@implementation WPMyTasksTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     _tasks = @[
-               @{@"Task": @"Water Tree", @"Description": @"Please", @"DueDate": @"05/11"},
-               @{@"Task": @"Prune Tree", @"Description": @"Pretty please", @"DueDate": @"05/10"},
-               @{@"Task": @"Keep Tree Alive", @"Description": @"Cherry on top"},
-               @{@"Task": @"Start Tree", @"Description": @"Dig hole", @"DueDate": @"05/12"},
-               @{@"Task": @"Put Tree in Hole", @"Description": @"Place it in", @"DueDate": @"05/12"}
+               @{@"Task": @"Water MY Tree", @"Description": @"Please", @"DueDate": @"05/11"},
+               @{@"Task": @"Prune MY Tree", @"Description": @"Pretty please", @"DueDate": @"05/10"},
+               @{@"Task": @"Keep MY Tree Alive", @"Description": @"Cherry on top"},
+               @{@"Task": @"Start MY Tree", @"Description": @"Dig hole", @"DueDate": @"05/12"},
+               @{@"Task": @"Put MY Tree in Hole", @"Description": @"Place it in", @"DueDate": @"05/12"}
                ];
-    self.tableView = [[WPAllTasksTableView alloc] initWithFrame:CGRectMake(0, 0, 300, 490)];
+    self.tableView = [[WPMyTasksTableView alloc] initWithFrame:CGRectMake(0, 0, 300, 490)];
     [self.tableView registerClass:[WPTableViewCell class] forCellReuseIdentifier:CellIdentifier];
     // must set delegate & dataSource, otherwise the the table will be empty and not responsive
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    
-    //    NSLog(@"%@", NSStringFromCGRect(self.view.frame));
-    
-    // add to canvas
-//    [self.view addSubview:self.tableView];
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -53,11 +47,8 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    // Return the number of sections.
     return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [_tasks count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -66,6 +57,11 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
     //        return 100;
     //    }
     return 60;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    // Return the number of rows in the section.
+    return _tasks.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -78,7 +74,6 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
     cell.dueDate = rowData[@"DueDate"];
     return cell;
 }
-
 
 /*
 // Override to support conditional editing of the table view.
