@@ -7,7 +7,7 @@ import java.util.Date;
  */
 public class Task {
 
-
+    private ObjectMapper mMapper = new ObjectMapper();
 
     /** The title of the task**/
     private String mtitle;
@@ -82,6 +82,11 @@ public class Task {
 
     public void setmdueDate(Date dueDate){
         mdueDate = dueDate;
+    }
+
+    //probably doesn't work yet. Should serialize the Task to JSON
+    public JSONOBject Serializer(){
+        mapper.writeValue(new File("task.json"), this);
     }
 
 }
