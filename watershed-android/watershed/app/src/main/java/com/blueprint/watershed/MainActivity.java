@@ -79,7 +79,7 @@ public class MainActivity extends ActionBarActivity
         }
         if(currentFragment != null) {
             ft.hide(currentFragment);
-            currentFragment = newFragment
+            currentFragment = newFragment;
         }
         ft.addToBackStack(null);
         ft.show(newFragment);
