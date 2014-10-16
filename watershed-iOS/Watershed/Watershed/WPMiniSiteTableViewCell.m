@@ -14,6 +14,8 @@
 
 @implementation WPMiniSiteTableViewCell
 
+const static float CELL_HEIGHT = 86.0f;
+
 - (id)initWithStyle:(UITableViewCellStyle)style
     reuseIdentifier:(NSString *)reuseIdentifier
                name:(NSString *)name
@@ -54,7 +56,7 @@
         [self addSubview:fieldReportCountLabel];
         
         [self mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.equalTo(@86);
+            make.height.equalTo(@(CELL_HEIGHT));
             make.width.equalTo(@([[UIScreen mainScreen] bounds].size.width));
         }];
         
@@ -115,6 +117,8 @@
 
     // Configure the view for the selected state
 }
+
++ (CGFloat)cellHeight { return CELL_HEIGHT; }
 
 + (UIColor *)colorForRating:(NSInteger)rating
 {

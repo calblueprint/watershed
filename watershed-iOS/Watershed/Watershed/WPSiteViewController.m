@@ -77,7 +77,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 86.0f;
+    return [WPMiniSiteTableViewCell cellHeight];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

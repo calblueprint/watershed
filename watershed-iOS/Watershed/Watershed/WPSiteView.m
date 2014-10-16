@@ -11,6 +11,7 @@
 #import "UIColor+WPColors.h"
 #import "UIView+WPExtensions.h"
 #import "UIImage+ImageEffects.h"
+#import "WPMiniSiteTableViewCell.h"
 #import "WPLabledIcon.h"
 
 @interface WPSiteView () <UIScrollViewDelegate>
@@ -269,7 +270,7 @@ static int COVER_PHOTO_TRANS = 0;
 
 - (void)updateTableViewHeight:(NSInteger)cellCount {
     [self.miniSiteTableView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@(86*cellCount));
+        make.height.equalTo(@([WPMiniSiteTableViewCell cellHeight] * cellCount));
     }];
     [super updateConstraints];
 }

@@ -18,4 +18,6 @@
           taskCount:(NSInteger)taskCount
    fieldReportCount:(NSInteger)fieldReportCount;
 
++ (CGFloat)cellHeight;
+
 @end
