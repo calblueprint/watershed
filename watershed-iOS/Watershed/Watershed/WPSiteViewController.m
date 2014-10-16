@@ -59,13 +59,14 @@
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"Render cell at given index path");
-    
     UITableViewCell *cellView = nil;
     
     if ([tableView isEqual:self.miniSiteTableView]) {
+        
         static NSString *cellIdentifier = @"MiniSiteCell";
         cellView = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (!cellView) {
+            
             NSLog(@"RENDER NEW");
             cellView = [[WPMiniSiteTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                       reuseIdentifier:cellIdentifier

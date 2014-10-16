@@ -256,7 +256,6 @@ static int COVER_PHOTO_TRANS = 0;
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
     CGPoint trans = scrollView.contentOffset;
-    
     COVER_PHOTO_TRANS = trans.y;
     if (COVER_PHOTO_TRANS > 120) COVER_PHOTO_TRANS = 120;
     self.blurRadius = MIN(ABS(COVER_PHOTO_TRANS / 6), 20);
@@ -264,8 +263,8 @@ static int COVER_PHOTO_TRANS = 0;
     [self.coverPhotoView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(COVER_PHOTO_HEIGHT - COVER_PHOTO_TRANS));
     }];
-    
     [super updateConstraints];
+    
     if (self.coverPhotoArray.count > self.blurRadius) {
         [self.coverPhotoView setImage:self.coverPhotoArray[self.blurRadius]];
     }
