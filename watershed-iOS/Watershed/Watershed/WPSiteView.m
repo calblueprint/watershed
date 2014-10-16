@@ -25,7 +25,7 @@
 @property (nonatomic) WPLabledIcon *addressLabel;
 @property (nonatomic) WPLabledIcon *siteCountLabel;
 @property (nonatomic) UIImageView *tableViewShadowOverlay;
-//@property (nonatomic) UIScrollView *miniSiteScrollView;
+@property (nonatomic) UIScrollView *miniSiteScrollView;
 
 @property (nonatomic) NSMutableArray *coverPhotoArray;
 @property (nonatomic) NSInteger blurRadius;
@@ -53,14 +53,13 @@ static int COVER_PHOTO_TRANS = 0;
 
 - (void)createSubviews {
     
-    /*UIScrollView *miniSiteScrollView = [[UIScrollView alloc] init];
+    UIScrollView *miniSiteScrollView = [[UIScrollView alloc] init];
     miniSiteScrollView.delegate = self;
     _miniSiteScrollView = miniSiteScrollView;
-    [self addSubview:miniSiteScrollView];*/
+    [self addSubview:miniSiteScrollView];
     
     UIView *tableHeaderView = [[UIView alloc] init];
     _tableHeaderView = tableHeaderView;
-    [self addSubview:tableHeaderView];
     
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.text = @"Watershed";
@@ -100,14 +99,16 @@ static int COVER_PHOTO_TRANS = 0;
     miniSiteTableView.separatorColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1];
     //miniSiteTableView.tableHeaderView = tableHeaderView;
     _miniSiteTableView = miniSiteTableView;
-    [self addSubview:miniSiteTableView];
+    [self.miniSiteScrollView addSubview:miniSiteTableView];
     
     UIImageView *tableViewShadowOverlay = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ShadowOverlay"]];
     [tableViewShadowOverlay setContentMode:UIViewContentModeScaleToFill];
     [tableViewShadowOverlay setClipsToBounds:YES];
     tableViewShadowOverlay.alpha = 0.25;
     _tableViewShadowOverlay = tableViewShadowOverlay;
-    [self addSubview:tableViewShadowOverlay];
+    [self.tableHeaderView addSubview:tableViewShadowOverlay];
+    
+    [self.miniSiteScrollView addSubview:tableHeaderView];
     
     UIImage *coverPhoto = [UIImage imageNamed:@"SampleCoverPhoto2"];
     _originalCoverPhoto = coverPhoto;
@@ -154,13 +155,13 @@ static int COVER_PHOTO_TRANS = 0;
         make.bottom.equalTo(self.tableViewShadowOverlay.mas_top);
     }];
     
-    /*[self.miniSiteScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.miniSiteScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(self.mas_height);
         make.top.equalTo(@0);
         make.bottom.equalTo(@0);
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
-    }];*/
+    }];
     
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@13);
@@ -215,6 +216,8 @@ static int COVER_PHOTO_TRANS = 0;
     }];
     
     [super updateConstraints];
+    NSLog(@"HEight- - - - - -- - - - - -%@", @"");
+    //self.miniSiteTableView.contentInset = UIEdgeInsetsMake(50, 0, 0, 0);
 }
 
 #pragma mark - Blurred Photo Generation
@@ -247,9 +250,9 @@ static int COVER_PHOTO_TRANS = 0;
 
 #pragma mark - ScrollView Delegate Method from ViewController
 
-- (void)adjustCoverPhoto {
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
-    CGPoint trans = self.miniSiteTableView.contentOffset;
+    CGPoint trans = scrollView.contentOffset;
     
     COVER_PHOTO_TRANS = trans.y;
     if (COVER_PHOTO_TRANS > 120) COVER_PHOTO_TRANS = 120;
@@ -259,13 +262,16 @@ static int COVER_PHOTO_TRANS = 0;
         make.height.equalTo(@(COVER_PHOTO_HEIGHT - COVER_PHOTO_TRANS));
     }];
     
-    [self.tableHeaderView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(COVER_PHOTO_HEIGHT - trans.y));
-    }];
-    
     [super updateConstraints];
     
     [self.coverPhotoView setImage:self.coverPhotoArray[self.blurRadius]];
+}
+
+- (void)updateTableViewHeight:(NSInteger)cellCount {
+    [self.miniSiteTableView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@(86*cellCount));
+    }];
+    [super updateConstraints];
 }
 
 @end

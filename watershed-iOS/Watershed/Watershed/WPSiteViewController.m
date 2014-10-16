@@ -39,7 +39,7 @@
 {
     NSLog(@"Fetching mini site data");
     
-    self.miniSiteList = @[@1, @3, @4, @2, @5, @1, @5, @2];
+    self.miniSiteList = @[@1, @3, @4, @2, @5, @1, @5, @2, @2, @3, @4, @0];
 }
 
 #pragma mark - TableView Delegate/DataSource Methods
@@ -51,6 +51,7 @@
     NSInteger rowCount = 0;
     
     if ([tableView isEqual:self.miniSiteTableView]) rowCount = self.miniSiteList.count;
+    [(WPSiteView *)self.view updateTableViewHeight:self.miniSiteList.count];
     return rowCount;
 }
 
@@ -71,7 +72,6 @@
                                                         taskCount:5
                                                  fieldReportCount:5];
     }
-    NSLog(@"%f, %f", cellView.bounds.size.height,cellView.bounds.size.width);
     return cellView;
 }
 
@@ -82,7 +82,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
-    [(WPSiteView *)self.view adjustCoverPhoto];
+    //[(WPSiteView *)self.view adjustCoverPhoto];
 }
 
 @end

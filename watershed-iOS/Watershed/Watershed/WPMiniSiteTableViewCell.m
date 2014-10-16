@@ -54,6 +54,7 @@
         [self addSubview:fieldReportCountLabel];
         
         [self mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.equalTo(@86);
             make.width.equalTo(@([[UIScreen mainScreen] bounds].size.width));
         }];
         

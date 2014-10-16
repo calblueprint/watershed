@@ -11,6 +11,6 @@
 @interface WPSiteView : UIView
 
 @property (nonatomic) UITableView *miniSiteTableView;
-- (void)adjustCoverPhoto;
+- (void)updateTableViewHeight:(NSInteger)cellCount;
 
 @end
