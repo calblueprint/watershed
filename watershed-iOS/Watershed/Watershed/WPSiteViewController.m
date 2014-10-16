@@ -64,13 +64,17 @@
     
     if ([tableView isEqual:self.miniSiteTableView]) {
         static NSString *cellIdentifier = @"MiniSiteCell";
-        cellView = [[WPMiniSiteTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                  reuseIdentifier:cellIdentifier
-                                                             name:@"Yes"
-                                                            image:[UIImage imageNamed:@"SampleCoverPhoto"]
-                                                           rating:[self.miniSiteList[indexPath.row] intValue]
-                                                        taskCount:5
-                                                 fieldReportCount:5];
+        cellView = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        if (!cellView) {
+            NSLog(@"RENDER NEW");
+            cellView = [[WPMiniSiteTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                      reuseIdentifier:cellIdentifier
+                                                                 name:@"Yes"
+                                                                image:[UIImage imageNamed:@"SampleCoverPhoto"]
+                                                               rating:[self.miniSiteList[indexPath.row] intValue]
+                                                            taskCount:5
+                                                     fieldReportCount:5];
+        }
     }
     return cellView;
 }
@@ -78,11 +82,6 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return [WPMiniSiteTableViewCell cellHeight];
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
-    //[(WPSiteView *)self.view adjustCoverPhoto];
 }
 
 @end

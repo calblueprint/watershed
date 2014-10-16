@@ -59,8 +59,16 @@ static int COVER_PHOTO_TRANS = 0;
     _miniSiteScrollView = miniSiteScrollView;
     [self addSubview:miniSiteScrollView];
     
+    UITableView *miniSiteTableView = [[UITableView alloc] init];
+    miniSiteTableView.backgroundColor = [UIColor whiteColor];
+    [miniSiteTableView setSeparatorInset:UIEdgeInsetsZero];
+    miniSiteTableView.separatorColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1];
+    _miniSiteTableView = miniSiteTableView;
+    [self.miniSiteScrollView addSubview:miniSiteTableView];
+    
     UIView *tableHeaderView = [[UIView alloc] init];
     _tableHeaderView = tableHeaderView;
+    [self.miniSiteScrollView addSubview:tableHeaderView];
     
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.text = @"Watershed";
@@ -94,14 +102,6 @@ static int COVER_PHOTO_TRANS = 0;
     _siteCountLabel = siteCountLabel;
     [self.tableHeaderView addSubview:siteCountLabel];
     
-    UITableView *miniSiteTableView = [[UITableView alloc] init];
-    miniSiteTableView.backgroundColor = [UIColor whiteColor];
-    [miniSiteTableView setSeparatorInset:UIEdgeInsetsZero];
-    miniSiteTableView.separatorColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1];
-    //miniSiteTableView.tableHeaderView = tableHeaderView;
-    _miniSiteTableView = miniSiteTableView;
-    [self.miniSiteScrollView addSubview:miniSiteTableView];
-    
     UIImageView *tableViewShadowOverlay = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ShadowOverlay"]];
     [tableViewShadowOverlay setContentMode:UIViewContentModeScaleToFill];
     [tableViewShadowOverlay setClipsToBounds:YES];
@@ -109,11 +109,8 @@ static int COVER_PHOTO_TRANS = 0;
     _tableViewShadowOverlay = tableViewShadowOverlay;
     [self.tableHeaderView addSubview:tableViewShadowOverlay];
     
-    [self.miniSiteScrollView addSubview:tableHeaderView];
-    
     UIImage *coverPhoto = [UIImage imageNamed:@"SampleCoverPhoto2"];
     _originalCoverPhoto = coverPhoto;
-    
     UIImageView *coverPhotoView = [[UIImageView alloc] initWithImage:coverPhoto];
     [coverPhotoView setContentMode:UIViewContentModeScaleAspectFill];
     [coverPhotoView setClipsToBounds:YES];
@@ -130,7 +127,7 @@ static int COVER_PHOTO_TRANS = 0;
 }
 
 - (void)setUpActions {
-    [self addGestureRecognizer:self.miniSiteTableView.panGestureRecognizer];
+    [self addGestureRecognizer:self.miniSiteScrollView.panGestureRecognizer];
 }
 
 - (void)updateConstraints {
@@ -149,19 +146,19 @@ static int COVER_PHOTO_TRANS = 0;
         make.trailing.equalTo(@0);
     }];
     
-    [self.tableHeaderView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(COVER_PHOTO_HEIGHT));
-        make.leading.equalTo(@0);
-        make.trailing.equalTo(@0);
-        make.bottom.equalTo(self.tableViewShadowOverlay.mas_top);
-    }];
-    
     [self.miniSiteScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(self.mas_height);
         make.top.equalTo(@0);
         make.bottom.equalTo(@0);
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
+    }];
+    
+    [self.tableHeaderView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(COVER_PHOTO_HEIGHT));
+        make.leading.equalTo(@0);
+        make.trailing.equalTo(@0);
+        make.bottom.equalTo(self.tableViewShadowOverlay.mas_top);
     }];
     
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -217,8 +214,13 @@ static int COVER_PHOTO_TRANS = 0;
     }];
     
     [super updateConstraints];
-    NSLog(@"HEight- - - - - -- - - - - -%@", @"");
-    //self.miniSiteTableView.contentInset = UIEdgeInsetsMake(50, 0, 0, 0);
+}
+
+- (void)updateTableViewHeight:(NSInteger)cellCount {
+    [self.miniSiteTableView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@([WPMiniSiteTableViewCell cellHeight] * cellCount));
+    }];
+    [super updateConstraints];
 }
 
 #pragma mark - Blurred Photo Generation
@@ -264,15 +266,9 @@ static int COVER_PHOTO_TRANS = 0;
     }];
     
     [super updateConstraints];
-    
-    [self.coverPhotoView setImage:self.coverPhotoArray[self.blurRadius]];
-}
-
-- (void)updateTableViewHeight:(NSInteger)cellCount {
-    [self.miniSiteTableView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@([WPMiniSiteTableViewCell cellHeight] * cellCount));
-    }];
-    [super updateConstraints];
+    if (self.coverPhotoArray.count > self.blurRadius) {
+        [self.coverPhotoView setImage:self.coverPhotoArray[self.blurRadius]];
+    }
 }
 
 @end
