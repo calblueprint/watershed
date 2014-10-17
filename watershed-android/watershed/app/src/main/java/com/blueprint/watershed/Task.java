@@ -46,7 +46,7 @@ public class Task {
 
     public Task(){
         mtitle = "Sweet Title";
-        mdescription = "";
+        mdescription = "No description yet";
         msiteId = 0;
         massigneeId = 0;
         massignerId = 0;
@@ -95,7 +95,7 @@ public class Task {
     //probably doesn't work yet. Should serialize the Task to JSON
     public void Serializer(){
         try {
-            mMapper.writeValue(new File("task.json"), "Butt");
+            mMapper.writeValue(new File("task.json"), this);
         }
         catch (JsonGenerationException ex) {
             //handle exception

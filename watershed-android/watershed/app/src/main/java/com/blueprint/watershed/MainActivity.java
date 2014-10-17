@@ -76,7 +76,6 @@ public class MainActivity extends ActionBarActivity
         android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();
         if(!newFragment.isAdded()){
             ft.replace(R.id.container, newFragment);
-            //ft.addToBackStack(null);
             ft.commit();
         }
     }
