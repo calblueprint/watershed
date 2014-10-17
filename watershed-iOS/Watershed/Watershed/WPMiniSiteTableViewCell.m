@@ -47,12 +47,12 @@ const static float CELL_HEIGHT = 86.0f;
         ratingDotView.backgroundColor = [WPMiniSiteTableViewCell colorForRating:rating];
         [content addSubview:ratingDotView];
         
-        NSString *taskText = [NSString stringWithFormat:@"%d tasks", taskCount];
+        NSString *taskText = [NSString stringWithFormat:@"%d tasks", (int)taskCount];
         WPLabledIcon *taskCountLabel = [[WPLabledIcon alloc] initWithText:taskText
                                                                      icon:[UIImage imageNamed:@"CheckIcon"]];
         [self addSubview:taskCountLabel];
         
-        NSString *fieldReportText = [NSString stringWithFormat:@"%d tasks", fieldReportCount];
+        NSString *fieldReportText = [NSString stringWithFormat:@"%d tasks", (int)fieldReportCount];
         WPLabledIcon *fieldReportCountLabel = [[WPLabledIcon alloc] initWithText:fieldReportText
                                                                      icon:[UIImage imageNamed:@"ExclamationIcon"]];
         [self addSubview:fieldReportCountLabel];

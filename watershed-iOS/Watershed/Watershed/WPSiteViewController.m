@@ -37,9 +37,7 @@
 
 - (void)loadMiniSiteData
 {
-    NSLog(@"Fetching mini site data");
-    
-    self.miniSiteList = @[@1, @3, @4, @2, @5, @1, @5, @2, @2, @3, @4, @0];
+    self.miniSiteList = @[@1, @3, @4, @2, @5, @1, @5, @2, @2, @3, @4, @0].mutableCopy;
 }
 
 #pragma mark - TableView Delegate/DataSource Methods
@@ -58,7 +56,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"Render cell at given index path");
     UITableViewCell *cellView = nil;
     
     if ([tableView isEqual:self.miniSiteTableView]) {

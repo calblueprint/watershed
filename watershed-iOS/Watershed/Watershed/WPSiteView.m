@@ -63,6 +63,7 @@ static int COVER_PHOTO_TRANS = 0;
     miniSiteTableView.backgroundColor = [UIColor whiteColor];
     [miniSiteTableView setSeparatorInset:UIEdgeInsetsZero];
     miniSiteTableView.separatorColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1];
+    miniSiteTableView.scrollEnabled = NO;
     _miniSiteTableView = miniSiteTableView;
     [self.miniSiteScrollView addSubview:miniSiteTableView];
     
@@ -236,7 +237,6 @@ static int COVER_PHOTO_TRANS = 0;
             
             [self.coverPhotoArray addObject:image];
             [self.coverPhotoArray addObject:image];
-            NSLog(@"%d", i);
         }
     });
 }

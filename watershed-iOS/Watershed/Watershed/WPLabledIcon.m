@@ -36,10 +36,10 @@ static const int VIEW_HEIGHT = 16;
         self.alpha = 0.3;
         
         [self.iconView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(@0);
-            make.left.equalTo(@0);
             make.height.equalTo(@(VIEW_HEIGHT));
             make.width.equalTo(@(VIEW_HEIGHT));
+            make.top.equalTo(@0);
+            make.left.equalTo(@0);
         }];
         
         [self.label mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -53,7 +53,7 @@ static const int VIEW_HEIGHT = 16;
             make.height.equalTo(self.label.mas_height);
         }];
         
-        [self updateConstraints];
+        [super updateConstraints];
     }
     return self;
 }
