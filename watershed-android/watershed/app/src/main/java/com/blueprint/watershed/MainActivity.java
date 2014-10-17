@@ -75,11 +75,10 @@ public class MainActivity extends ActionBarActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();
         if(!newFragment.isAdded()){
-            ft.add(R.id.container, newFragment);
+            ft.replace(R.id.container, newFragment);
+            //ft.addToBackStack(null);
+            ft.commit();
         }
-        ft.addToBackStack(null);
-        ft.replace(R.id.container, newFragment);
-        ft.commit();
     }
 
     private void initializeFragments() {
