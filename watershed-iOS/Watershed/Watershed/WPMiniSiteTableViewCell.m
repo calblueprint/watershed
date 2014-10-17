@@ -12,6 +12,15 @@
 #import "WPLabledIcon.h"
 #import "Masonry.h"
 
+@interface WPMiniSiteTableViewCell()
+
+@property (nonatomic) UILabel *nameLabel;
+@property (nonatomic) UIImageView *photoView;
+@property (nonatomic) UIView *ratingDotView;
+@property (nonatomic) WPLabledIcon *taskCountLabel;
+@property (nonatomic) WPLabledIcon *fieldReportCountLabel;
+@end
+
 @implementation WPMiniSiteTableViewCell
 
 const static float CELL_HEIGHT = 86.0f;
@@ -34,83 +43,92 @@ const static float CELL_HEIGHT = 86.0f;
         
         UILabel *nameLabel = [[UILabel alloc] init];
         nameLabel.text = name;
+        _nameLabel = nameLabel;
         [content addSubview:nameLabel];
         
         UIImageView *photoView = [[UIImageView alloc] initWithImage:image];
         [photoView setContentMode:UIViewContentModeScaleAspectFit];
         [photoView setClipsToBounds:YES];
         photoView.layer.cornerRadius = 3.0;
+        _photoView = photoView;
         [content addSubview:photoView];
         
         UIView *ratingDotView = [[UIView alloc] init];
         ratingDotView.layer.cornerRadius = 5.0;
         ratingDotView.backgroundColor = [WPMiniSiteTableViewCell colorForRating:rating];
+        _ratingDotView = ratingDotView;
         [content addSubview:ratingDotView];
         
         NSString *taskText = [NSString stringWithFormat:@"%d tasks", (int)taskCount];
         WPLabledIcon *taskCountLabel = [[WPLabledIcon alloc] initWithText:taskText
                                                                      icon:[UIImage imageNamed:@"CheckIcon"]];
-        [self addSubview:taskCountLabel];
+        _taskCountLabel = taskCountLabel;
+        [content addSubview:taskCountLabel];
         
         NSString *fieldReportText = [NSString stringWithFormat:@"%d tasks", (int)fieldReportCount];
         WPLabledIcon *fieldReportCountLabel = [[WPLabledIcon alloc] initWithText:fieldReportText
                                                                      icon:[UIImage imageNamed:@"ExclamationIcon"]];
-        [self addSubview:fieldReportCountLabel];
+        _fieldReportCountLabel = fieldReportCountLabel;
+        [content addSubview:fieldReportCountLabel];
         
-        [self mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.equalTo(@(CELL_HEIGHT));
-            make.width.equalTo(@([[UIScreen mainScreen] bounds].size.width));
-        }];
-        
-        [self.contentView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(@0);
-            make.leading.equalTo(@0);
-            make.trailing.equalTo(@0);
-            make.bottom.equalTo(@0);
-            make.centerX.equalTo(self.mas_centerX);
-            make.centerY.equalTo(self.mas_centerY);
-        }];
-        
-        [photoView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.equalTo(@40);
-            make.width.equalTo(@40);
-            make.top.equalTo(@10);
-            make.leading.equalTo(@10);
-        }];
-        
-        [nameLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.greaterThanOrEqualTo(@40);
-            make.top.equalTo(photoView.mas_top);
-            make.left.equalTo(photoView.mas_right)
-                .with.offset(10.0);
-            make.trailing.equalTo(@30);
-        }];
-        
-        [ratingDotView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.equalTo(@10);
-            make.width.equalTo(@10);
-            make.top.equalTo(@10);
-            make.trailing.equalTo(@-10);
-        }];
-        
-        [taskCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(nameLabel.mas_bottom)
-                .with.offset([[UIView wp_stylePadding] floatValue]);
-            make.leading.equalTo(photoView.mas_leading);
-            //make.trailing.equalTo([UIView wp_styleNegativePadding]);
-        }];
-        
-        [fieldReportCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(nameLabel.mas_bottom)
-                .with.offset([[UIView wp_stylePadding] floatValue]);
-            make.leading.equalTo(taskCountLabel.mas_trailing)
-                .with.offset([[UIView wp_stylePadding] floatValue]);
-        }];
-        
-        [super updateConstraints];
-        
+        [self updateConstraints];
     }
     return self;
+}
+
+- (void)updateConstraints
+{
+    [self mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@(CELL_HEIGHT));
+        make.width.equalTo(@([[UIScreen mainScreen] bounds].size.width));
+    }];
+    
+    [self.contentView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@0);
+        make.leading.equalTo(@0);
+        make.trailing.equalTo(@0);
+        make.bottom.equalTo(@0);
+        make.centerX.equalTo(self.mas_centerX);
+        make.centerY.equalTo(self.mas_centerY);
+    }];
+    
+    [self.photoView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@40);
+        make.width.equalTo(@40);
+        make.top.equalTo(@10);
+        make.leading.equalTo(@10);
+    }];
+    
+    [self.nameLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.greaterThanOrEqualTo(@40);
+        make.top.equalTo(self.photoView.mas_top);
+        make.left.equalTo(self.photoView.mas_right)
+            .with.offset(10.0);
+        make.trailing.equalTo(@30);
+    }];
+    
+    [self.ratingDotView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@10);
+        make.width.equalTo(@10);
+        make.top.equalTo(@10);
+        make.trailing.equalTo(@-10);
+    }];
+    
+    [self.taskCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.nameLabel.mas_bottom)
+            .with.offset([[UIView wp_stylePadding] floatValue]);
+        make.leading.equalTo(self.photoView.mas_leading);
+        //make.trailing.equalTo([UIView wp_styleNegativePadding]);
+    }];
+    
+    [self.fieldReportCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.nameLabel.mas_bottom)
+            .with.offset([[UIView wp_stylePadding] floatValue]);
+        make.leading.equalTo(self.taskCountLabel.mas_trailing)
+            .with.offset([[UIView wp_stylePadding] floatValue]);
+    }];
+    
+    [super updateConstraints];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

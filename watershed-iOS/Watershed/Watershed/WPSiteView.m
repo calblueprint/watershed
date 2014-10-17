@@ -221,7 +221,6 @@ static int COVER_PHOTO_TRANS = 0;
     [self.miniSiteTableView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@([WPMiniSiteTableViewCell cellHeight] * cellCount));
     }];
-    [super updateConstraints];
 }
 
 #pragma mark - Blurred Photo Generation
@@ -263,7 +262,6 @@ static int COVER_PHOTO_TRANS = 0;
     [self.coverPhotoView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(COVER_PHOTO_HEIGHT - COVER_PHOTO_TRANS));
     }];
-    [super updateConstraints];
     
     if (self.coverPhotoArray.count > self.blurRadius) {
         [self.coverPhotoView setImage:self.coverPhotoArray[self.blurRadius]];

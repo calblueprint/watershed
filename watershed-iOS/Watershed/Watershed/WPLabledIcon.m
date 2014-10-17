@@ -35,27 +35,32 @@ static const int VIEW_HEIGHT = 16;
         
         self.alpha = 0.3;
         
-        [self.iconView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.equalTo(@(VIEW_HEIGHT));
-            make.width.equalTo(@(VIEW_HEIGHT));
-            make.top.equalTo(@0);
-            make.left.equalTo(@0);
-        }];
-        
-        [self.label mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(@0);
-            make.left.equalTo(self.iconView.mas_right)
-                .with.offset([[UIView wp_stylePadding] floatValue]/2);
-            make.right.equalTo(@0);
-        }];
-        
-        [self mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.equalTo(self.label.mas_height);
-        }];
-        
-        [super updateConstraints];
+        [self updateConstraints];
     }
     return self;
+}
+
+- (void)updateConstraints
+{
+    [self.iconView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@(VIEW_HEIGHT));
+        make.width.equalTo(@(VIEW_HEIGHT)).with.priorityHigh();
+        make.top.equalTo(@0);
+        make.left.equalTo(@0);
+    }];
+    
+    [self.label mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@0);
+        make.left.equalTo(self.iconView.mas_right)
+        .with.offset([[UIView wp_stylePadding] floatValue]/2);
+        make.right.equalTo(@0);
+    }];
+    
+    [self mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(self.label.mas_height);
+    }];
+    
+    [super updateConstraints];
 }
 
 + (NSInteger)viewHeight { return VIEW_HEIGHT; }
