@@ -50,6 +50,7 @@ static const int VIEW_HEIGHT = 16;
     }];
     
     [self.label mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.greaterThanOrEqualTo(@(VIEW_HEIGHT));
         make.top.equalTo(@0);
         make.left.equalTo(self.iconView.mas_right)
         .with.offset([[UIView wp_stylePadding] floatValue]/2);

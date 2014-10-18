@@ -164,7 +164,6 @@ static int COVER_PHOTO_TRANS = 0;
     
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@13);
-        make.centerX.equalTo(self.mas_centerX);
         make.leading.equalTo([UIView wp_stylePadding]);
         make.trailing.equalTo([UIView wp_styleNegativePadding]);
     }];
