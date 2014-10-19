@@ -39,10 +39,10 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
         View view = inflater.inflate(R.layout.fragment_site_list, container, false);
 
         Site[] siteList = new Site[] {
-                new Site(),
-                new Site(),
-                new Site(),
-                new Site()
+                new Site("Melissa's Home", "A view of Melissa's home."),
+                new Site("Andrew's Cave", "This is where Andrew sleeps."),
+                new Site("Max's Lair", "Bubble butt"),
+                new Site("Jordeen's Street Corner", "-- Melissa")
         };
 
         mSiteListView = (ListView) view.findViewById(android.R.id.list);

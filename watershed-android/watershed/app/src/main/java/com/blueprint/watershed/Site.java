@@ -23,8 +23,8 @@ public class Site {
         mZipCode = zipCode;
     }
 
-    public Site() {
-        this("Awesome Site", "This is the best site ever.", "1000 Andrew Millman Way", "Berkeley", "CA", 94720);
+    public Site(String name, String description) {
+        this(name, description, "1000 Andrew Millman Way", "Berkeley", "CA", 94720);
     }
 
     // Getters
