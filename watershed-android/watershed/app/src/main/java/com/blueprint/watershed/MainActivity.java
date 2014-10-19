@@ -53,7 +53,7 @@ public class MainActivity extends ActionBarActivity
     public TaskAdapter arrayAdapter;
 
     //Networking
-    private requestHandler mMainRequestHandler;
+    private RequestHandler mMainRequestHandler;
 
 
     @Override
