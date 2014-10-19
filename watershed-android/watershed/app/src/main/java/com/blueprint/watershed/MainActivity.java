@@ -54,6 +54,7 @@ public class MainActivity extends ActionBarActivity
     //Adapters
     public TaskAdapter arrayAdapter;
 
+    private TaskFragment mtaskFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,25 +70,25 @@ public class MainActivity extends ActionBarActivity
         authToken = prefs.getString("auth_token", "none");
         authEmail = prefs.getString("auth_email", "none");
 
-        mTitle = getTitle();
+        mTitle = "Tasks";
     }
 
     public void replaceFragment(Fragment newFragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();
         if(!newFragment.isAdded()){
-            ft.add(R.id.container, newFragment);
+            ft.replace(R.id.container, newFragment);
+            ft.commit();
         }
-        if(currentFragment != null) {
-            ft.hide(currentFragment);
-        }
-        ft.addToBackStack(null);
-        ft.show(newFragment);
-        ft.commit();
     }
 
     private void initializeFragments() {
-        // Initialize each of the fragments and set the current fragment
+        mtaskFragment = new TaskFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.add(R.id.container, mtaskFragment);
+        ft.show(mtaskFragment);
+        ft.commit();
     }
 
     public void onFragmentInteraction(String id){

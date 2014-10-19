@@ -17,6 +17,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    packagingOptions{
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
 }
 
 dependencies {
@@ -24,4 +29,7 @@ dependencies {
     compile 'com.google.android.gms:play-services:4.2.42'
     compile 'com.android.support:appcompat-v7:20.0.0'
     compile 'com.mcxiaoke.volley:library:1.0.6'
+    compile files('libs/jackson-core-2.4.3.jar')
+    compile files('libs/jackson-databind-2.4.3.jar')
+    compile files('libs/jackson-annotations-2.4.3.jar')
 }

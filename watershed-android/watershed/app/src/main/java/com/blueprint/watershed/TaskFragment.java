@@ -11,9 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-
-
-
 public class TaskFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;

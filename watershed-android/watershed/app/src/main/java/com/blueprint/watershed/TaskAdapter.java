@@ -37,6 +37,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
             holder = new TaskHolder();
             holder.title = (TextView)row.findViewById(R.id.title);
             holder.description = (TextView)row.findViewById(R.id.description);
+            holder.due_date = (TextView)row.findViewById(R.id.due_date);
 
             row.setTag(holder);
         }
@@ -48,6 +49,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         Task task = data[position];
         holder.title.setText(task.getTitle());
         holder.description.setText(task.getDescription());
+        holder.due_date.setText(task.getDescription());
 
         return row;
     }
@@ -56,5 +58,6 @@ public class TaskAdapter extends ArrayAdapter<Task> {
     {
         TextView title;
         TextView description;
+        TextView due_date;
     }
 }
