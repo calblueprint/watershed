@@ -36,7 +36,7 @@ public class LandingPageActivity extends Activity {
     private Button mLoginButton;
     private Button mFacebookButton;
     private Button mSignUpButton;
-    private requestHandler mloginRequestHandler;
+    private RequestHandler mloginRequestHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

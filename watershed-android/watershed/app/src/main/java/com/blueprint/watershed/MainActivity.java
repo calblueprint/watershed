@@ -57,7 +57,7 @@ public class MainActivity extends ActionBarActivity
     private TaskFragment mtaskFragment;
 
     //Networking
-    private requestHandler mMainRequestHandler;
+    private RequestHandler mMainRequestHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

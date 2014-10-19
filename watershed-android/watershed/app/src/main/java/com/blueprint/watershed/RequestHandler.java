@@ -1,3 +1,21 @@
+package com.blueprint.watershed;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.support.v4.util.LruCache;
+import android.util.Log;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /*
 Singleton Request Handler to interface with Network.
@@ -6,7 +24,7 @@ public class RequestHandler {
     /**
      * An object to handle API calls at the HTTP request level.
      */
-    private static MySingleton mInstance;
+    private static RequestHandler mInstance;
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
     private static Context mCtx;
@@ -18,7 +36,7 @@ public class RequestHandler {
      */
     private RequestHandler(Context context) {
         mCtx = context;
-        mRequestQueue = getRequestQueue();
+        mRequestQueue = Volley.newRequestQueue(mCtx);
 
         mImageLoader = new ImageLoader(mRequestQueue,
                 new ImageLoader.ImageCache() {
@@ -87,7 +105,7 @@ public class RequestHandler {
         }
         );
 
-        queue.add(request);
+        mRequestQueue.add(request);
 
         return response[0];
     }
@@ -116,7 +134,7 @@ public class RequestHandler {
         }
         );
 
-        queue.add(request);
+        mRequestQueue.add(request);
 
         return response[0];
     }
@@ -129,23 +147,24 @@ public class RequestHandler {
      */
     public Bitmap imageRequest( String url, JSONObject params ){
 
-        Bitmap returnedImage;
+        final Bitmap[] returnedImage = new Bitmap[1];
 
         ImageRequest request = new ImageRequest(url,
-                new Response.Listener() {
+                new Response.Listener<Bitmap>() {
                     @Override
                     public void onResponse(Bitmap bitmap) {
-                        returnedImage = bitmap;
+                        returnedImage[0] = bitmap;
                     }
                 }, 0, 0, null,
                 new Response.ErrorListener() {
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("Volley Error", volleyError.getMessage())
+                        Log.d("Volley Error", error.getMessage());
                         //mImageView.setImageResource(R.drawable.image_load_error);
                     }
                 });
+
+        mRequestQueue.add(request);
+
+        return returnedImage[0];
     }
-
-
-
 }
