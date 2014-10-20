@@ -23,7 +23,7 @@
 //@property (nonatomic) UIView *tasksNumber;
 //@property (nonatomic) UIView *sitesView;
 @property (nonatomic) UIView *locationView;
-@property (nonatomic) UIView *locationIconView;
+@property (nonatomic) UIImageView *locationIconImageView;
 @property (nonatomic) UILabel *locationLabel;
 @property (nonatomic) UIImageView *mailIconImageView;
 
@@ -81,10 +81,9 @@
     [self addSubview:locationView];
     
     FAKIonIcons *locationIcon = [FAKIonIcons ios7LocationOutlineIconWithSize:20];
-    _locationImageView = [[UIImageView alloc] init];
-    [_mailIconImageView setImage:[mailIcon imageWithSize:CGSizeMake(15, 15)]];
-    
-    [self addSubview:_mailIconImageView];
+    _locationIconImageView = [[UIImageView alloc] init];
+    [_locationIconImageView setImage:[locationIcon imageWithSize:CGSizeMake(20, 20)]];
+    [self addSubview:_locationIconImageView];
     
     UILabel *locationLabel = [[UILabel alloc] init];
     locationLabel.text = @"123 Cloyne Way Berkeley, CA 94709";
@@ -94,10 +93,9 @@
 //    [self addSubview:locationLabel];
     [locationView addSubview:locationLabel];
     
-    FAKIonIcons *mailIcon = [FAKIonIcons ios7EmailOutlineIconWithSize:20];
+    FAKIonIcons *mailIcon = [FAKIonIcons ios7EmailOutlineIconWithSize:17];
     _mailIconImageView = [[UIImageView alloc] init];
     [_mailIconImageView setImage:[mailIcon imageWithSize:CGSizeMake(15, 15)]];
-
     [self addSubview:_mailIconImageView];
     
 //    UIView *tasksView = [[UIView alloc] init];
@@ -149,21 +147,22 @@
         make.width.equalTo(@200);
     }];
 
-    [self.locationIconView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.locationIconImageView setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
+    [self.locationIconImageView setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisVertical];
+    [self.locationIconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@215);
         make.leading.equalTo(@55);
-        make.height.equalTo(@20);
-        make.width.equalTo(@20);
     }];
     
     [self.locationView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@110);
         make.leading.equalTo(@125);
-        make.height.equalTo(@50);
+        make.height.equalTo(@60);
         make.width.equalTo(@200);
     }];
     
     [self.mailIconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+       // make.top.equalTo(self.locationIconImageView).width.offset@285);
         make.top.equalTo(@285);
         make.leading.equalTo(@55);
         make.height.equalTo(@20);

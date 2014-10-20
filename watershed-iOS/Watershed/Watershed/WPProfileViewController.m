@@ -7,6 +7,8 @@
 //
 
 #import "WPProfileViewController.h"
+#import "FontAwesomeKit/FontAwesomeKit.h"
+
 
 @interface WPProfileViewController ()
 
@@ -29,7 +31,17 @@
 -(void)loadView
 {
     self.navigationItem.title = @"My Profile";
+    FAKIonIcons *settingsIcon = [FAKIonIcons ios7GearOutlineIconWithSize:20];
+//    _mailIconImageView = [[UIImageView alloc] init];
+//    [_mailIconImageView setImage:[mailIcon imageWithSize:CGSizeMake(15, 15)]];
+    UIImage *settingsImage = [settingsIcon imageWithSize:CGSizeMake(15, 15)];
+    UIBarButtonItem *settingsButtonItem = [[UIBarButtonItem alloc] initWithImage:settingsImage style:UIBarButtonItemStylePlain target:self action:@selector(openSettings)];
+    self.navigationItem.rightBarButtonItem = settingsButtonItem;
     self.view = [[WPProfileView alloc] init];
+}
+
+-(void)openSettings {
+    //open Settings
 }
 
 
