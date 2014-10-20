@@ -36,11 +36,13 @@ public class LandingPageActivity extends Activity {
     private Button mLoginButton;
     private Button mFacebookButton;
     private Button mSignUpButton;
+    private RequestHandler mloginRequestHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing_page);
+        mloginRequestHandler = RequestHandler.getInstance(this.getApplicationContext());
 
         initializeViews();
 

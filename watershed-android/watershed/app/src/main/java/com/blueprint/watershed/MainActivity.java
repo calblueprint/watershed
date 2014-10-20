@@ -40,6 +40,7 @@ public class MainActivity extends ActionBarActivity
 
     // Fragments
     public Fragment currentFragment;
+    private TaskFragment mtaskFragment;
 
     // Navigation Drawer
     private ResideMenu resideMenu;
@@ -54,7 +55,8 @@ public class MainActivity extends ActionBarActivity
     //Adapters
     public TaskAdapter arrayAdapter;
 
-    private TaskFragment mtaskFragment;
+    //Networking
+    private RequestHandler mMainRequestHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +71,10 @@ public class MainActivity extends ActionBarActivity
         SharedPreferences prefs = getSharedPreferences(PREFERENCES, 0);
         authToken = prefs.getString("auth_token", "none");
         authEmail = prefs.getString("auth_email", "none");
-
         mTitle = "Tasks";
+
+
+        mMainRequestHandler = RequestHandler.getInstance(this.getApplicationContext());
     }
 
     public void replaceFragment(Fragment newFragment) {
