@@ -8,6 +8,9 @@
 
 #import "WPTasksListViewController.h"
 #import "WPTasksListView.h"
+#import "WPTableViewCell.h"
+#import "UIColor+WPColors.h"
+#import "WPAllTasksTableViewController.h"
 
 @interface WPTasksListViewController ()
 
@@ -15,12 +18,13 @@
 
 @end
 
-@implementation WPTasksListViewController
+@implementation WPTasksListViewController {
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // Do any additional setup after loading the view.
+    self.navigationItem.title = @"Tasks";
+    self.view.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)loadView {

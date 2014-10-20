@@ -10,7 +10,7 @@
 
 @implementation UIView (WPExtensions)
 
-- (UIView *)wp_addToSuperview:(UIView *)view {
+- (instancetype)wp_addToSuperview:(UIView *)view {
     // Add some check to make sure view is not nil
     [view addSubview:self];
     return self;

@@ -7,14 +7,22 @@
 //
 
 #import "WPTasksListView.h"
+#import "WPAllTasksTableViewController.h"
+#import "WPMyTasksTableViewController.h"
 #import "UIView+WPExtensions.h"
 #import "UIColor+WPColors.h"
+#import "Masonry.h"
 
 
 @interface WPTasksListView()
 
 @property (nonatomic) UIView *segmentedTasksTabBarView;
 @property (nonatomic) UIView *tasksTableView;
+@property (nonatomic) UISegmentedControl *tasksSegmentedControl;
+@property (nonatomic) WPMyTasksTableViewController *myTasksTableController;
+@property (nonatomic) WPAllTasksTableViewController *allTasksTableController;
+@property (nonatomic) UITableView *currentView;
+@property (nonatomic) NSArray *colors;
 
 @end
 
@@ -24,7 +32,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self createSubviews];
-//        [self setUpActions];
+        [self setUpActions];
         [self updateConstraints];
     }
     return self;
@@ -34,39 +42,79 @@
 
 - (void)createSubviews {
     _segmentedTasksTabBarView = [({
-        UIView *view = [[UIView alloc] initWithFrame:(CGRectMake(0, 0, 100, 100))];
-        view.backgroundColor = [UIColor wp_darkBlue];
+        UIView *view = [[UIView alloc] init];
         view;
     }) wp_addToSuperview:self];
     
     _tasksTableView = [({
         UIView *view = [[UIView alloc] init];
-        view.backgroundColor = [UIColor redColor];
+        view.backgroundColor = [UIColor wp_darkBlue];
         view;
     }) wp_addToSuperview:self];
+    
+    _myTasksTableController = [[WPMyTasksTableViewController alloc] init];
+    _allTasksTableController = [[WPAllTasksTableViewController alloc] init];
+    
+    _currentView = [({
+        UITableView *myView = _myTasksTableController.tableView;
+        myView;
+    }) wp_addToSuperview:self.tasksTableView];
+
+    _tasksSegmentedControl = [({
+        NSArray *itemArray = [NSArray arrayWithObjects: @"My Tasks", @"All Tasks", nil];
+        UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:itemArray];
+        segmentedControl.selectedSegmentIndex = 0;
+        segmentedControl.tintColor = [UIColor wp_darkBlue];
+        segmentedControl;
+    }) wp_addToSuperview:self.segmentedTasksTabBarView];
 }
 
 - (void)setUpActions {
-    // Here is where you set up buttons taps and gesture recognizers.
+    [self.tasksSegmentedControl addTarget:self action:@selector(taskSegmentControlAction:) forControlEvents: UIControlEventValueChanged];
 }
 
 - (void)updateConstraints {
     
-//    [self.segmentedTasksTabBarView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(@100);
-//        make.leading.equalTo(@10);
-//        make.trailing.equalTo(@(-10));
-//        make.height.equalTo(@100);
-//    }];
-//    
-//    [self.tasksTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.sampleView.mas_bottom).with.offset(10);
-//        make.bottom.equalTo(@(-10));
-//        make.leading.equalTo(@10);
-//        make.trailing.equalTo(@(-10));
-//    }];
+    [self.segmentedTasksTabBarView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@64);
+        make.leading.equalTo(@10);
+        make.trailing.equalTo(@(-10));
+        make.height.equalTo(@50);
+    }];
+    
+    [self.tasksSegmentedControl mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(@0);
+        make.top.equalTo(@20);
+        make.leading.equalTo(@10);
+        make.trailing.equalTo(@(-10));
+    }];
+    
+    [self.tasksTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.segmentedTasksTabBarView.mas_bottom).with.offset(10);
+        make.bottom.equalTo(@(-10));
+        make.leading.equalTo(@10);
+        make.trailing.equalTo(@(-10));
+    }];
+    
+    [self.tasksTableView.subviews mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@0);
+        make.leading.equalTo(@0);
+        make.trailing.equalTo(@0);
+        make.bottom.equalTo(@0);
+    }];
     
     [super updateConstraints];
+}
+
+- (void)taskSegmentControlAction:(UISegmentedControl *)segment
+{
+    if(segment.selectedSegmentIndex == 0)
+    {
+        [self.tasksTableView addSubview:_myTasksTableController.tableView];
+    } else {
+        [self.tasksTableView addSubview:_allTasksTableController.tableView];
+    }
+    [self setNeedsUpdateConstraints];
 }
 
 
