@@ -1,18 +1,18 @@
 //
-//  WPLabledIcon.m
+//  WPLabeledIcon.m
 //  Watershed
 //
 //  Created by Andrew on 10/12/14.
 //  Copyright (c) 2014 Blueprint. All rights reserved.
 //
 
-#import "WPLabledIcon.h"
+#import "WPLabeledIcon.h"
 #import "UIView+WPExtensions.h"
 #import "Masonry.h"
 
 #define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
-@implementation WPLabledIcon
+@implementation WPLabeledIcon
 
 static const int VIEW_HEIGHT = 16;
 

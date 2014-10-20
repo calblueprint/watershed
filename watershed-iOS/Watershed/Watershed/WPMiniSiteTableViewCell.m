@@ -9,7 +9,7 @@
 #import "WPMiniSiteTableViewCell.h"
 #import "UIColor+WPColors.h"
 #import "UIView+WPExtensions.h"
-#import "WPLabledIcon.h"
+#import "WPLabeledIcon.h"
 #import "Masonry.h"
 
 @interface WPMiniSiteTableViewCell()
@@ -17,8 +17,8 @@
 @property (nonatomic) UILabel *nameLabel;
 @property (nonatomic) UIImageView *photoView;
 @property (nonatomic) UIView *ratingDotView;
-@property (nonatomic) WPLabledIcon *taskCountLabel;
-@property (nonatomic) WPLabledIcon *fieldReportCountLabel;
+@property (nonatomic) WPLabeledIcon *taskCountLabel;
+@property (nonatomic) WPLabeledIcon *fieldReportCountLabel;
 @end
 
 @implementation WPMiniSiteTableViewCell
@@ -59,13 +59,13 @@ const static float CELL_HEIGHT = 86.0f;
         [content addSubview:ratingDotView];
         
         NSString *taskText = [NSString stringWithFormat:@"%d tasks", (int)taskCount];
-        WPLabledIcon *taskCountLabel = [[WPLabledIcon alloc] initWithText:taskText
+        WPLabeledIcon *taskCountLabel = [[WPLabeledIcon alloc] initWithText:taskText
                                                                      icon:[UIImage imageNamed:@"CheckIcon"]];
         _taskCountLabel = taskCountLabel;
         [content addSubview:taskCountLabel];
         
         NSString *fieldReportText = [NSString stringWithFormat:@"%d reports", (int)fieldReportCount];
-        WPLabledIcon *fieldReportCountLabel = [[WPLabledIcon alloc] initWithText:fieldReportText
+        WPLabeledIcon *fieldReportCountLabel = [[WPLabeledIcon alloc] initWithText:fieldReportText
                                                                      icon:[UIImage imageNamed:@"ExclamationIcon"]];
         _fieldReportCountLabel = fieldReportCountLabel;
         [content addSubview:fieldReportCountLabel];

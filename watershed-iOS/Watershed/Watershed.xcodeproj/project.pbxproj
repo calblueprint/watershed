@@ -15,7 +15,7 @@
 		273ABEC519EDFA2500FC1C92 /* WPTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273ABEC419EDFA2500FC1C92 /* WPTabBarController.m */; };
 		273ABEC919EDFA5900FC1C92 /* WPProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273ABEC819EDFA5900FC1C92 /* WPProfileViewController.m */; };
 		273ABECC19EDFA8600FC1C92 /* WPSitesListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273ABECB19EDFA8600FC1C92 /* WPSitesListViewController.m */; };
-		275C798D19EB911900E722C7 /* WPLabledIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 275C798C19EB911900E722C7 /* WPLabledIcon.m */; };
+		275C798D19EB911900E722C7 /* WPLabeledIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 275C798C19EB911900E722C7 /* WPLabeledIcon.m */; };
 		275C799019EC4F6500E722C7 /* WPMiniSiteTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 275C798F19EC4F6500E722C7 /* WPMiniSiteTableViewCell.m */; };
 		27714CA919D9076F005344B0 /* WPLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27714CA819D9076F005344B0 /* WPLoginViewController.m */; };
 		27714CAC19D9182D005344B0 /* WPLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27714CAB19D9182D005344B0 /* WPLoginView.m */; };
@@ -65,8 +65,8 @@
 		273ABEC819EDFA5900FC1C92 /* WPProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPProfileViewController.m; sourceTree = "<group>"; };
 		273ABECA19EDFA8600FC1C92 /* WPSitesListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPSitesListViewController.h; sourceTree = "<group>"; };
 		273ABECB19EDFA8600FC1C92 /* WPSitesListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPSitesListViewController.m; sourceTree = "<group>"; };
-		275C798B19EB911900E722C7 /* WPLabledIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPLabledIcon.h; sourceTree = "<group>"; };
-		275C798C19EB911900E722C7 /* WPLabledIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPLabledIcon.m; sourceTree = "<group>"; };
+		275C798B19EB911900E722C7 /* WPLabeledIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPLabeledIcon.h; sourceTree = "<group>"; };
+		275C798C19EB911900E722C7 /* WPLabeledIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPLabeledIcon.m; sourceTree = "<group>"; };
 		275C798E19EC4F6500E722C7 /* WPMiniSiteTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPMiniSiteTableViewCell.h; sourceTree = "<group>"; };
 		275C798F19EC4F6500E722C7 /* WPMiniSiteTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPMiniSiteTableViewCell.m; sourceTree = "<group>"; };
 		27714CA719D9076F005344B0 /* WPLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPLoginViewController.h; sourceTree = "<group>"; };
@@ -145,8 +145,8 @@
 		275C798A19EB904100E722C7 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
-				275C798B19EB911900E722C7 /* WPLabledIcon.h */,
-				275C798C19EB911900E722C7 /* WPLabledIcon.m */,
+				275C798B19EB911900E722C7 /* WPLabeledIcon.h */,
+				275C798C19EB911900E722C7 /* WPLabeledIcon.m */,
 			);
 			name = "Custom Views";
 			sourceTree = "<group>";
@@ -455,7 +455,7 @@
 				273ABEC919EDFA5900FC1C92 /* WPProfileViewController.m in Sources */,
 				27F0B70419E249CE00E848C3 /* WPSiteViewController.m in Sources */,
 				27714CA919D9076F005344B0 /* WPLoginViewController.m in Sources */,
-				275C798D19EB911900E722C7 /* WPLabledIcon.m in Sources */,
+				275C798D19EB911900E722C7 /* WPLabeledIcon.m in Sources */,
 				27714CAC19D9182D005344B0 /* WPLoginView.m in Sources */,
 				BA4F8DDC19C7739300C816E3 /* main.m in Sources */,
 			);

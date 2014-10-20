@@ -1,5 +1,5 @@
 //
-//  WPLabledIcon.h
+//  WPLabeledIcon.h
 //  Watershed
 //
 //  Created by Andrew on 10/12/14.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WPLabledIcon : UILabel
+@interface WPLabeledIcon : UILabel
 
 @property (nonatomic) UILabel *label;
 @property (nonatomic) UIImageView *iconView;

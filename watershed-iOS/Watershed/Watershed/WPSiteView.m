@@ -12,7 +12,7 @@
 #import "UIView+WPExtensions.h"
 #import "UIImage+ImageEffects.h"
 #import "WPMiniSiteTableViewCell.h"
-#import "WPLabledIcon.h"
+#import "WPLabeledIcon.h"
 
 @interface WPSiteView () <UIScrollViewDelegate>
 
@@ -23,8 +23,8 @@
 @property (nonatomic) UILabel *titleLabel;
 @property (nonatomic) UILabel *descriptionLabel;
 @property (nonatomic) UIView *headingLineBreak;
-@property (nonatomic) WPLabledIcon *addressLabel;
-@property (nonatomic) WPLabledIcon *siteCountLabel;
+@property (nonatomic) WPLabeledIcon *addressLabel;
+@property (nonatomic) WPLabeledIcon *siteCountLabel;
 @property (nonatomic) UIImageView *tableViewShadowOverlay;
 @property (nonatomic) UIScrollView *miniSiteScrollView;
 
@@ -93,13 +93,13 @@ static int COVER_PHOTO_TRANS = 0;
     _headingLineBreak = headingLineBreak;
     [self.tableHeaderView addSubview:headingLineBreak];
     
-    WPLabledIcon *addressLabel = [[WPLabledIcon alloc] initWithText:@"123 Mark Miyashita Drive, Berkeley, CA 94720" icon:[UIImage imageNamed:@"MapMarkerIcon"]];
+    WPLabeledIcon *addressLabel = [[WPLabeledIcon alloc] initWithText:@"123 Mark Miyashita Drive, Berkeley, CA 94720" icon:[UIImage imageNamed:@"MapMarkerIcon"]];
     addressLabel.alpha = 1.0;
     
     _addressLabel = addressLabel;
     [self.tableHeaderView addSubview:addressLabel];
     
-    WPLabledIcon *siteCountLabel = [[WPLabledIcon alloc] initWithText:@"10 mini sites" icon:[UIImage imageNamed:@"TreeIcon"]];
+    WPLabeledIcon *siteCountLabel = [[WPLabeledIcon alloc] initWithText:@"10 mini sites" icon:[UIImage imageNamed:@"TreeIcon"]];
     siteCountLabel.alpha = 1.0;
     _siteCountLabel = siteCountLabel;
     [self.tableHeaderView addSubview:siteCountLabel];
