@@ -9,54 +9,34 @@
 #import "WPTableViewCell.h"
 #import "UIColor+WPColors.h"
 #import "WPAllTasksTableViewController.h"
-#import "WPAllTasksTableView.h"
+//#import "WPAllTasksTableView.h"
 #import "Masonry.h"
 
 @interface WPAllTasksTableViewController ()
 
-@property (nonatomic) WPAllTasksTableView *tableView;
+@property (nonatomic) UITableView *tableView;
 
 @end
 
-static NSString *CellIdentifier = @"CellTaskIdentifier";
+static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
 
 @implementation WPAllTasksTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _tasks = @[
+    
+    _allTasks = @[
                @{@"Task": @"Water Tree", @"Description": @"Please", @"DueDate": @"05/11"},
                @{@"Task": @"Prune Tree", @"Description": @"Pretty please", @"DueDate": @"05/10"},
                @{@"Task": @"Keep Tree Alive", @"Description": @"Cherry on top"},
                @{@"Task": @"Start Tree", @"Description": @"Dig hole", @"DueDate": @"05/12"},
                @{@"Task": @"Put Tree in Hole", @"Description": @"Place it in", @"DueDate": @"05/12"}
                ];
-    self.tableView = [[WPAllTasksTableView alloc] init];
-    [self.tableView registerClass:[WPTableViewCell class] forCellReuseIdentifier:CellIdentifier];
-    // must set delegate & dataSource, otherwise the the table will be empty and not responsive
+    self.tableView = [[UITableView alloc] init];
+    [self.tableView registerClass:[WPTableViewCell class] forCellReuseIdentifier:allTasksIdentifier];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-//    [self.tableView updateConstraints];
-    
-    //    NSLog(@"%@", NSStringFromCGRect(self.view.frame));
-    
-    // add to canvas
-//    [self.view addSubview:self.tableView];
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
-
-
-//- (void)updateConstraints {
-//
-//    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(@0);
-//        make.leading.equalTo(@10);
-//        make.trailing.equalTo(@(-10));
-//        make.height.equalTo(@60);
-//    }];
-//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -69,23 +49,19 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [_tasks count];
-}
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //    if (indexPath.section == 1 && indexPath.row == 1) {
-    //        return 100;
-    //    }
     return 60;
 }
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return _allTasks.count;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WPTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    WPTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:allTasksIdentifier forIndexPath:indexPath];
     
-    // Configure the cell...
-    NSDictionary *rowData = self.tasks[indexPath.row];
+    NSDictionary *rowData = self.allTasks[indexPath.row];
     cell.title = rowData[@"Task"];
     cell.taskDescription = rowData[@"Description"];
     cell.dueDate = rowData[@"DueDate"];
@@ -124,16 +100,6 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
     // Return NO if you do not want the item to be re-orderable.
     return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
 }
 */
 

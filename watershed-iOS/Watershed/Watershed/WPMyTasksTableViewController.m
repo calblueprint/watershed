@@ -9,11 +9,11 @@
 #import "WPMyTasksTableViewController.h"
 #import "WPTableViewCell.h"
 #import "UIColor+WPColors.h"
-#import "WPMyTasksTableView.h"
+//#import "WPMyTasksTableView.h"
 
 @interface WPMyTasksTableViewController ()
 
-@property (nonatomic) WPMyTasksTableView *tableView;
+@property (nonatomic) UITableView *tableView;
 
 @end
 
@@ -31,9 +31,8 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
                @{@"Task": @"Start MY Tree", @"Description": @"Dig hole", @"DueDate": @"05/12"},
                @{@"Task": @"Put MY Tree in Hole", @"Description": @"Place it in", @"DueDate": @"05/12"}
                ];
-    self.tableView = [[WPMyTasksTableView alloc] initWithFrame:CGRectMake(0, 0, 300, 490)];
+    self.tableView = [[UITableView alloc] init];
     [self.tableView registerClass:[WPTableViewCell class] forCellReuseIdentifier:CellIdentifier];
-    // must set delegate & dataSource, otherwise the the table will be empty and not responsive
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
 
@@ -53,9 +52,6 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //    if (indexPath.section == 1 && indexPath.row == 1) {
-    //        return 100;
-    //    }
     return 60;
 }
 
@@ -106,16 +102,6 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
     // Return NO if you do not want the item to be re-orderable.
     return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
 }
 */
 

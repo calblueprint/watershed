@@ -28,9 +28,7 @@
 
 @end
 
-@implementation WPTasksListView {
-    UITableView *tasksTable;
-}
+@implementation WPTasksListView
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -63,7 +61,9 @@
 //    });
 //    
     _myTasksTableController = ({
-        WPMyTasksTableViewController *myController = [[WPMyTasksTableViewController alloc] init];
+//        WPMyTasksTableViewController *myController = [[WPMyTasksTableViewController alloc] init];
+        WPMyTasksTableViewController *myController =
+        [[WPMyTasksTableViewController alloc] init];
         myController;
     });
     
@@ -80,8 +80,6 @@
     _tasksSegmentedControl = [({
         NSArray *itemArray = [NSArray arrayWithObjects: @"My Tasks", @"All Tasks", nil];
         UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:itemArray];
-//        segmentedControl.frame = CGRectMake(30, 20, 250, 30);
-        //TODO --------------- change size of the frame----------------
         segmentedControl.selectedSegmentIndex = 0;
         segmentedControl.tintColor = [UIColor wp_darkBlue];
         segmentedControl;
@@ -132,6 +130,7 @@
         [self.tasksTableView addSubview:_myTasksTableController.tableView];
     } else {
         [self.tasksTableView addSubview:_allTasksTableController.tableView];
+        [self setNeedsUpdateConstraints];
     }
 }
 

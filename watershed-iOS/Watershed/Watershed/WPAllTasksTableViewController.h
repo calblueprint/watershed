@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WPAllTasksTableViewController : UITableViewController
+@interface WPAllTasksTableViewController : UITableViewController<UITableViewDataSource, UITableViewDelegate>
 
-@property (copy, nonatomic) NSArray *tasks;
+@property (copy, nonatomic) NSArray *allTasks;
 
 @end

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WPMyTasksTableViewController : UITableViewController
+@interface WPMyTasksTableViewController : UITableViewController<UITableViewDelegate, UITableViewDataSource>
 
 @property (copy, nonatomic) NSArray *tasks;
 
