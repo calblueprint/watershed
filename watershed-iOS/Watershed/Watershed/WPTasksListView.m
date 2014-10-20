@@ -52,21 +52,13 @@
         view;
     }) wp_addToSuperview:self];
     
-    _myTasksTableController = ({
-        WPMyTasksTableViewController *myController =
-        [[WPMyTasksTableViewController alloc] init];
-        myController;
-    });
+    _myTasksTableController = [[WPMyTasksTableViewController alloc] init];
+    _allTasksTableController = [[WPAllTasksTableViewController alloc] init];
     
     _currentView = [({
-        UITableView *myView= _myTasksTableController.tableView;
+        UITableView *myView = _myTasksTableController.tableView;
         myView;
     }) wp_addToSuperview:self.tasksTableView];
-
-    _allTasksTableController = ({
-        WPAllTasksTableViewController *allController = [[WPAllTasksTableViewController alloc] init];
-        allController;
-    });
 
     _tasksSegmentedControl = [({
         NSArray *itemArray = [NSArray arrayWithObjects: @"My Tasks", @"All Tasks", nil];
