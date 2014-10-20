@@ -99,7 +99,7 @@ const static float CELL_HEIGHT = 86.0f;
         make.top.equalTo(self.photoView.mas_top);
         make.left.equalTo(self.photoView.mas_right)
             .with.offset(10.0);
-        make.trailing.equalTo(@30);
+        make.trailing.equalTo(self.ratingDotView.mas_leading).with.offset([[UIView wp_styleNegativePadding] floatValue]);
     }];
     
     [self.ratingDotView mas_updateConstraints:^(MASConstraintMaker *make) {
