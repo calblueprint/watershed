@@ -10,6 +10,8 @@
 #import "UIView+WPExtensions.h"
 #import "Masonry.h"
 
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+
 @implementation WPLabledIcon
 
 static const int VIEW_HEIGHT = 16;
@@ -19,7 +21,8 @@ static const int VIEW_HEIGHT = 16;
 {
     self = [super init];
     if (self) {
-        UIImageView *iconView = [[UIImageView alloc] initWithImage:icon];
+        UIImageView *iconView = [[UIImageView alloc] init];
+        [iconView setImage:icon];
         [iconView setContentMode:UIViewContentModeScaleAspectFill];
         [iconView setClipsToBounds:YES];
         [self addSubview:iconView];
@@ -27,10 +30,11 @@ static const int VIEW_HEIGHT = 16;
         
         UILabel *label = [[UILabel alloc] init];
         label.text = text;
+        label.font = [UIFont systemFontOfSize:14.0];
         label.lineBreakMode = NSLineBreakByWordWrapping;
         label.numberOfLines = 0;
-        label.font = [UIFont systemFontOfSize:14.0];
         [self addSubview:label];
+        [label setPreferredMaxLayoutWidth:[[UIScreen mainScreen] bounds].size.width - [[UIView wp_stylePadding] floatValue]*4];
         _label = label;
         
         self.alpha = 0.3;
@@ -44,23 +48,25 @@ static const int VIEW_HEIGHT = 16;
 {
     [self.iconView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(VIEW_HEIGHT));
-        make.width.equalTo(@(VIEW_HEIGHT)).with.priorityHigh();
+        make.width.equalTo(@(VIEW_HEIGHT));
         make.top.equalTo(@0);
-        make.left.equalTo(@0);
+        make.leading.equalTo(@0);
     }];
     
     [self.label mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.greaterThanOrEqualTo(@(VIEW_HEIGHT));
         make.top.equalTo(@0);
-        make.left.equalTo(self.iconView.mas_right)
-        .with.offset([[UIView wp_stylePadding] floatValue]/2);
-        make.right.equalTo(@0);
+        make.leading.equalTo(self.iconView.mas_trailing)
+            .with.offset([[UIView wp_stylePadding] floatValue]/2);
+        make.trailing.equalTo(@0);
     }];
     
     [self mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(self.label.mas_height);
     }];
-    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
+        [self layoutSubviews];
+    }
     [super updateConstraints];
 }
 

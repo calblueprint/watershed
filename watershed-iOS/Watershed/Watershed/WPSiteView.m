@@ -95,6 +95,7 @@ static int COVER_PHOTO_TRANS = 0;
     
     WPLabledIcon *addressLabel = [[WPLabledIcon alloc] initWithText:@"123 Mark Miyashita Drive, Berkeley, CA 94720" icon:[UIImage imageNamed:@"MapMarkerIcon"]];
     addressLabel.alpha = 1.0;
+    
     _addressLabel = addressLabel;
     [self.tableHeaderView addSubview:addressLabel];
     
@@ -189,6 +190,7 @@ static int COVER_PHOTO_TRANS = 0;
             .with.offset([[UIView wp_stylePadding] floatValue] * 2);
         make.leading.equalTo([UIView wp_stylePadding]);
         make.trailing.equalTo([UIView wp_styleNegativePadding]);
+        make.width.equalTo(@300);
     }];
     
     [self.siteCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -212,7 +214,7 @@ static int COVER_PHOTO_TRANS = 0;
         make.trailing.equalTo(@0);
         make.bottom.equalTo(@0);
     }];
-    
+
     [super updateConstraints];
 }
 

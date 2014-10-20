@@ -38,8 +38,7 @@ const static float CELL_HEIGHT = 86.0f;
         self.backgroundColor = [UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:1];
         
         UIView *content = self.contentView;
-        //content.layer.cornerRadius = 3.0;
-        [content setBackgroundColor:[UIColor whiteColor]];
+        content.backgroundColor = [UIColor whiteColor];
         
         UILabel *nameLabel = [[UILabel alloc] init];
         nameLabel.text = name;
@@ -78,10 +77,6 @@ const static float CELL_HEIGHT = 86.0f;
 
 - (void)updateConstraints
 {
-    [self mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@(CELL_HEIGHT));
-        make.width.equalTo(@([[UIScreen mainScreen] bounds].size.width));
-    }];
     
     [self.contentView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@0);
@@ -118,7 +113,6 @@ const static float CELL_HEIGHT = 86.0f;
         make.top.equalTo(self.nameLabel.mas_bottom)
             .with.offset([[UIView wp_stylePadding] floatValue]);
         make.leading.equalTo(self.photoView.mas_leading);
-        //make.trailing.equalTo([UIView wp_styleNegativePadding]);
     }];
     
     [self.fieldReportCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {

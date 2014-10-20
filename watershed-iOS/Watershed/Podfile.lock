@@ -43,4 +43,4 @@ SPEC CHECKSUMS:
   TransitionKit: 6a6f3ddda38ae758778aa889dcb930e4f8d64edc
   UIImage+BlurredFrame: 0c38f5760d72125c47d16001a88faaac573bd35d
 
-COCOAPODS: 0.34.2
+COCOAPODS: 0.34.4

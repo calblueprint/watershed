@@ -32,7 +32,6 @@
 {
     self.view = [[WPSiteView alloc] init];
     self.miniSiteTableView = ((WPSiteView *)self.view).miniSiteTableView;
-    [self.view updateConstraints];
 }
 
 - (void)loadMiniSiteData
