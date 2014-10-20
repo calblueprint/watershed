@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/action_search"
+        android:icon="@drawable/watershed_logo"
+        android:title="Seriously Dance"/>
+    <item android:id="@+id/action_compose"
+        android:icon="@drawable/watershed_logo"
+        android:title="Dance" />
+</menu>

@@ -1,5 +1,6 @@
 package com.blueprint.watershed;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.net.Uri;
@@ -10,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.SharedPreferences;
@@ -19,11 +21,13 @@ import android.view.View;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.TextView;
+import android.app.ActionBar.Tab;
 
 import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity
-                          implements View.OnClickListener,
+                          implements ActionBar.TabListener,
+                                     View.OnClickListener,
                                      TaskFragment.OnFragmentInteractionListener,
                                      SiteListFragment.OnFragmentInteractionListener {
 
@@ -40,6 +44,7 @@ public class MainActivity extends ActionBarActivity
 
     // Fragments
     public Fragment currentFragment;
+    private TaskFragment mtaskFragment;
 
     // Navigation Drawer
     private ResideMenu resideMenu;
@@ -54,23 +59,53 @@ public class MainActivity extends ActionBarActivity
     //Adapters
     public TaskAdapter arrayAdapter;
 
-    private TaskFragment mtaskFragment;
+    public ActionBar actionBar;
+    private ViewPager viewPager;
+    private TabsPagerAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        actionBar = getActionBar();
 
         initializeFragments();
+        initializeTabs();
+        mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
 
+        viewPager.setAdapter(mAdapter);
+        actionBar.setHomeButtonEnabled(false);
+        viewPager = (ViewPager) findViewById(R.id.pager);
         setContentView(R.layout.activity_main);
 
-        initializeNavigationDrawer();
+        //initializeNavigationDrawer();
 
         SharedPreferences prefs = getSharedPreferences(PREFERENCES, 0);
         authToken = prefs.getString("auth_token", "none");
         authEmail = prefs.getString("auth_email", "none");
 
         mTitle = "Tasks";
+    }
+
+    public void initializeTabs(){
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        ActionBar.TabListener tabListener = new ActionBar.TabListener() {
+            public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+                // show the given tab
+            }
+            public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+                // hide the given tab
+            }
+            public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+                // probably ignore this event
+            }
+        };
+
+        for (int i = 0; i < 3; i++) {
+            actionBar.addTab(
+                    actionBar.newTab()
+                            .setText("PartyTab " + (i + 1))
+                            .setTabListener(tabListener));
+        }
     }
 
     public void replaceFragment(Fragment newFragment) {
@@ -98,6 +133,22 @@ public class MainActivity extends ActionBarActivity
     public void onFragmentInteraction(Uri uri){
         // Deals with fragment interactions
     }
+
+    @Override
+    public void onTabReselected(Tab tab, FragmentTransaction ft) {
+    }
+
+    @Override
+    public void onTabSelected(Tab tab, FragmentTransaction ft) {
+        // on tab selected
+        // show respected fragment view
+        viewPager.setCurrentItem(tab.getPosition());
+    }
+
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+    }
+
 
     private void initializeNavigationDrawer() {
         resideMenu = new ResideMenu(this);
