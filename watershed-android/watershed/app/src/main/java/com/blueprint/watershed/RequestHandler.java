@@ -150,9 +150,7 @@ public class RequestHandler {
      * @return
      */
     public Bitmap imageRequest(String url, JSONObject params) {
-
         final Bitmap[] returnedImage = new Bitmap[1];
-
         ImageRequest request = new ImageRequest(url,
                 new Response.Listener<Bitmap>() {
                     @Override
@@ -170,7 +168,7 @@ public class RequestHandler {
         return returnedImage[0];
     }
 
-    public String testRequest(String url) {
+    public String stringRequest(String url) {
         final String[] Stringresponse = new String[1];
 
         StringRequest request = new StringRequest(Request.Method.GET, url,
@@ -186,6 +184,7 @@ public class RequestHandler {
                 Log.e("INTERNET RESPONSE", "IT DIDN't WORK!");
             }
         });
+        mRequestQueue.add(request);
         return Stringresponse[0];
     }
 
