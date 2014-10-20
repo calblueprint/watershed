@@ -9,8 +9,8 @@
 #import "WPTasksListViewController.h"
 #import "WPTasksListView.h"
 #import "WPTasksTableViewCell.h"
-#import "UIColor+WPColors.h"
 #import "WPAllTasksTableViewController.h"
+#import "UIExtensions.h"
 
 @interface WPTasksListViewController ()
 

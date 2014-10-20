@@ -31,6 +31,7 @@
     //UIViewController *viewController = [[WPSiteViewController  alloc] init];
     //self.window.rootViewController = viewController;//making a view to root view
     self.window.rootViewController = [[WPTaskViewController alloc] init];
+//    self.window.rootViewController = [[WPRootViewController alloc] init];
     [self.window makeKeyAndVisible];
     
     //[AFNetworkActivityIndicatorManager sharedManager].enabled = YES;

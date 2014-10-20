@@ -7,9 +7,8 @@
 //
 
 #import "WPTasksTableViewCell.h"
-#import "UIColor+WPColors.h"
 #import "WPAllTasksTableViewController.h"
-#import "Masonry.h"
+#import "UIExtensions.h"
 
 @interface WPAllTasksTableViewController ()
 

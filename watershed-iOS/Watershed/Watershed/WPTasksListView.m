@@ -9,6 +9,7 @@
 #import "WPTasksListView.h"
 #import "WPAllTasksTableViewController.h"
 #import "WPMyTasksTableViewController.h"
+#import "UIExtensions.h"
 
 
 @interface WPTasksListView()

@@ -66,6 +66,7 @@
 		06B1B00719F4E77A007FC3D5 /* WPTaskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPTaskViewController.m; sourceTree = "<group>"; };
 		06B1B00919F4E82B007FC3D5 /* WPTaskView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPTaskView.h; sourceTree = "<group>"; };
 		06B1B00A19F4E82B007FC3D5 /* WPTaskView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPTaskView.m; sourceTree = "<group>"; };
+		06B1B00C19F4F241007FC3D5 /* UIExtensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIExtensions.h; sourceTree = "<group>"; };
 		27714CA719D9076F005344B0 /* WPLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPLoginViewController.h; sourceTree = "<group>"; };
 		27714CA819D9076F005344B0 /* WPLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPLoginViewController.m; sourceTree = "<group>"; };
 		27714CAA19D9182D005344B0 /* WPLoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPLoginView.h; sourceTree = "<group>"; };
@@ -161,6 +162,7 @@
 				06A8139A19D91D8600E3EB05 /* UIColor+WPColors.m */,
 				06305F4519D9274400BD2CE4 /* UIView+WPExtensions.h */,
 				06305F4619D9274400BD2CE4 /* UIView+WPExtensions.m */,
+				06B1B00C19F4F241007FC3D5 /* UIExtensions.h */,
 			);
 			name = Categories;
 			sourceTree = "<group>";

@@ -7,8 +7,7 @@
 //
 
 #import "WPTasksTableViewCell.h"
-#import "UIColor+WPColors.h"
-#import "UIView+WPExtensions.h"
+#import "UIExtensions.h"
 
 @implementation WPTasksTableViewCell {
     UILabel *titleValue;
