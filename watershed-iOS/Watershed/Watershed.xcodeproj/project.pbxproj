@@ -20,6 +20,10 @@
 		27714CA919D9076F005344B0 /* WPLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27714CA819D9076F005344B0 /* WPLoginViewController.m */; };
 		27714CAC19D9182D005344B0 /* WPLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27714CAB19D9182D005344B0 /* WPLoginView.m */; };
 		27714CB219D93405005344B0 /* WPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 27714CB119D93405005344B0 /* WPAppDelegate.m */; };
+		27B33E5D19F5C25600DB83AD /* WPAllTasksTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B33E5A19F5C25600DB83AD /* WPAllTasksTableView.m */; };
+		27B33E5E19F5C25600DB83AD /* WPAllTasksTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B33E5C19F5C25600DB83AD /* WPAllTasksTableViewController.m */; };
+		27B33E6119F5C26A00DB83AD /* WPMyTasksTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B33E6019F5C26A00DB83AD /* WPMyTasksTableViewController.m */; };
+		27B33E6419F5C29500DB83AD /* WPTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B33E6319F5C29500DB83AD /* WPTableViewCell.m */; };
 		27F0B70119E2496400E848C3 /* WPSiteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F0B70019E2496400E848C3 /* WPSiteView.m */; };
 		27F0B70419E249CE00E848C3 /* WPSiteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F0B70319E249CE00E848C3 /* WPSiteViewController.m */; };
 		BA24044519DCF06C00E9DB2F /* WPRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA24044419DCF06C00E9DB2F /* WPRootViewController.m */; };
@@ -71,6 +75,14 @@
 		27714CAB19D9182D005344B0 /* WPLoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPLoginView.m; sourceTree = "<group>"; };
 		27714CB019D93405005344B0 /* WPAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPAppDelegate.h; sourceTree = "<group>"; };
 		27714CB119D93405005344B0 /* WPAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPAppDelegate.m; sourceTree = "<group>"; };
+		27B33E5919F5C25600DB83AD /* WPAllTasksTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPAllTasksTableView.h; sourceTree = "<group>"; };
+		27B33E5A19F5C25600DB83AD /* WPAllTasksTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPAllTasksTableView.m; sourceTree = "<group>"; };
+		27B33E5B19F5C25600DB83AD /* WPAllTasksTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPAllTasksTableViewController.h; sourceTree = "<group>"; };
+		27B33E5C19F5C25600DB83AD /* WPAllTasksTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPAllTasksTableViewController.m; sourceTree = "<group>"; };
+		27B33E5F19F5C26A00DB83AD /* WPMyTasksTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPMyTasksTableViewController.h; sourceTree = "<group>"; };
+		27B33E6019F5C26A00DB83AD /* WPMyTasksTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPMyTasksTableViewController.m; sourceTree = "<group>"; };
+		27B33E6219F5C29500DB83AD /* WPTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPTableViewCell.h; sourceTree = "<group>"; };
+		27B33E6319F5C29500DB83AD /* WPTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPTableViewCell.m; sourceTree = "<group>"; };
 		27F0B6FF19E2496400E848C3 /* WPSiteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPSiteView.h; sourceTree = "<group>"; };
 		27F0B70019E2496400E848C3 /* WPSiteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPSiteView.m; sourceTree = "<group>"; };
 		27F0B70219E249CE00E848C3 /* WPSiteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPSiteViewController.h; sourceTree = "<group>"; };
@@ -151,6 +163,14 @@
 		BA24043E19DCEFC800E9DB2F /* Tasks */ = {
 			isa = PBXGroup;
 			children = (
+				27B33E6219F5C29500DB83AD /* WPTableViewCell.h */,
+				27B33E6319F5C29500DB83AD /* WPTableViewCell.m */,
+				27B33E5F19F5C26A00DB83AD /* WPMyTasksTableViewController.h */,
+				27B33E6019F5C26A00DB83AD /* WPMyTasksTableViewController.m */,
+				27B33E5919F5C25600DB83AD /* WPAllTasksTableView.h */,
+				27B33E5A19F5C25600DB83AD /* WPAllTasksTableView.m */,
+				27B33E5B19F5C25600DB83AD /* WPAllTasksTableViewController.h */,
+				27B33E5C19F5C25600DB83AD /* WPAllTasksTableViewController.m */,
 				06A8139319D911C900E3EB05 /* WPTasksListViewController.h */,
 				06A8139419D911C900E3EB05 /* WPTasksListViewController.m */,
 				06A8139619D91A7500E3EB05 /* WPTasksListView.h */,
@@ -418,10 +438,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27B33E5D19F5C25600DB83AD /* WPAllTasksTableView.m in Sources */,
 				273ABECC19EDFA8600FC1C92 /* WPSitesListViewController.m in Sources */,
+				27B33E6119F5C26A00DB83AD /* WPMyTasksTableViewController.m in Sources */,
 				275C799019EC4F6500E722C7 /* WPMiniSiteTableViewCell.m in Sources */,
 				06A8139819D91A7500E3EB05 /* WPTasksListView.m in Sources */,
 				273ABEC519EDFA2500FC1C92 /* WPTabBarController.m in Sources */,
+				27B33E6419F5C29500DB83AD /* WPTableViewCell.m in Sources */,
+				27B33E5E19F5C25600DB83AD /* WPAllTasksTableViewController.m in Sources */,
 				06A8139519D911C900E3EB05 /* WPTasksListViewController.m in Sources */,
 				BA24044519DCF06C00E9DB2F /* WPRootViewController.m in Sources */,
 				06A8139B19D91D8600E3EB05 /* UIColor+WPColors.m in Sources */,
