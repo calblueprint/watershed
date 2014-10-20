@@ -8,6 +8,7 @@
 
 #import "WPTableViewCell.h"
 #import "UIColor+WPColors.h"
+#import "UIView+WPExtensions.h"
 
 @implementation WPTableViewCell {
     UILabel *titleValue;
@@ -22,15 +23,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self)
     {
-        CGRect titleRect = CGRectMake(0, 5, 70, 30);
-        UILabel *titleLabel = [[UILabel alloc] initWithFrame:titleRect];
-        titleLabel.text = @"Task: ";
-        titleLabel.textAlignment = NSTextAlignmentLeft;
-        CGRect descriptionRect = CGRectMake(0, 30, 100, 30);
-        UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:descriptionRect];
-        descriptionLabel.text = @"Description: ";
-        descriptionLabel.textAlignment = NSTextAlignmentLeft;
-        descriptionLabel.font = [UIFont systemFontOfSize:12];
+        [self updateConstraints];
         CGRect titleValueRect = CGRectMake(15, 5, 200, 30);
         titleValue = [[UILabel alloc] initWithFrame:titleValueRect];
         [self.contentView addSubview:titleValue];

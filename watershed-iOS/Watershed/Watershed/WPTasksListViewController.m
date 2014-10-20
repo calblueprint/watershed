@@ -23,6 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.title = @"Tasks";
     self.view.backgroundColor = [UIColor whiteColor];
 }
 

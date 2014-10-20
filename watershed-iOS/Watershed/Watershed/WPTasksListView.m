@@ -84,7 +84,7 @@
 - (void)updateConstraints {
     
     [self.segmentedTasksTabBarView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@0);
+        make.top.equalTo(@64);
         make.leading.equalTo(@10);
         make.trailing.equalTo(@(-10));
         make.height.equalTo(@50);
@@ -93,7 +93,6 @@
     [self.tasksSegmentedControl mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(@0);
         make.top.equalTo(@20);
-        
         make.leading.equalTo(@10);
         make.trailing.equalTo(@(-10));
     }];
@@ -122,8 +121,8 @@
         [self.tasksTableView addSubview:_myTasksTableController.tableView];
     } else {
         [self.tasksTableView addSubview:_allTasksTableController.tableView];
-        [self setNeedsUpdateConstraints];
     }
+    [self setNeedsUpdateConstraints];
 }
 
 
