@@ -58,11 +58,11 @@ static const int VIEW_HEIGHT = 16;
         make.top.equalTo(@0);
         make.leading.equalTo(self.iconView.mas_trailing)
             .with.offset([[UIView wp_stylePadding] floatValue]/2);
-        make.trailing.equalTo(@0);
     }];
     
     [self mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(self.label.mas_height);
+        make.bottom.equalTo(self.label.mas_bottom);
+        make.trailing.equalTo(self.label.mas_trailing);
     }];
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
         [self layoutSubviews];

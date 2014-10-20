@@ -64,7 +64,7 @@ const static float CELL_HEIGHT = 86.0f;
         _taskCountLabel = taskCountLabel;
         [content addSubview:taskCountLabel];
         
-        NSString *fieldReportText = [NSString stringWithFormat:@"%d tasks", (int)fieldReportCount];
+        NSString *fieldReportText = [NSString stringWithFormat:@"%d reports", (int)fieldReportCount];
         WPLabledIcon *fieldReportCountLabel = [[WPLabledIcon alloc] initWithText:fieldReportText
                                                                      icon:[UIImage imageNamed:@"ExclamationIcon"]];
         _fieldReportCountLabel = fieldReportCountLabel;

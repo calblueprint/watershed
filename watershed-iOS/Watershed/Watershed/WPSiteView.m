@@ -190,7 +190,6 @@ static int COVER_PHOTO_TRANS = 0;
             .with.offset([[UIView wp_stylePadding] floatValue] * 2);
         make.leading.equalTo([UIView wp_stylePadding]);
         make.trailing.equalTo([UIView wp_styleNegativePadding]);
-        make.width.equalTo(@300);
     }];
     
     [self.siteCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
