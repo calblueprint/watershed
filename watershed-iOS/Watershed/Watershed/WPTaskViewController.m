@@ -22,6 +22,7 @@
 
 -(void)loadView {
     self.view = [[WPTaskView alloc] init];
+    self.view.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)didReceiveMemoryWarning {

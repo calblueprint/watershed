@@ -28,7 +28,7 @@
         [self.contentView addSubview:titleValue];
         
         CGRect descriptionValueRect = CGRectMake(15, 30, 200, 30);
-        taskDescriptionValue= [[UILabel alloc] initWithFrame:descriptionValueRect];
+        taskDescriptionValue = [[UILabel alloc] initWithFrame:descriptionValueRect];
         taskDescriptionValue.font = [UIFont systemFontOfSize:12];
         [self.contentView addSubview:taskDescriptionValue];
         
