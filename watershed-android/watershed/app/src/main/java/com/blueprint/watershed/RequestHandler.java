@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;
 import android.util.Log;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -12,6 +13,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -30,9 +32,10 @@ public class RequestHandler {
     private static Context mCtx;
 
 
-    /** Returns a RequestHandler by assigning CONTEXT, an applicaiton
-     *  context set by the caller, to a RequestQueue object, which
-     *  handles background threading of HTTP requests.
+    /**
+     * Returns a RequestHandler by assigning CONTEXT, an applicaiton
+     * context set by the caller, to a RequestQueue object, which
+     * handles background threading of HTTP requests.
      */
     private RequestHandler(Context context) {
         mCtx = context;
@@ -58,6 +61,7 @@ public class RequestHandler {
     /**
      * Ensures singleton requestHandler that survies the duration of the Application
      * Lifecycle.
+     *
      * @param context
      * @return
      */
@@ -69,18 +73,20 @@ public class RequestHandler {
     }
 
     /**
-     * Returns an Image Loader for populating Views with images fetched from a URL. 
+     * Returns an Image Loader for populating Views with images fetched from a URL.
+     *
      * @return
      */
-    public ImageLoader getImageLoader(){
+    public ImageLoader getImageLoader() {
         return mImageLoader;
     }
 
-    /** Returns a JSONArray object by taking in a URL.
-     *  The Volley API only allows GET requests to return
-     *  a JSON array, so no Method argument is necessary.
-     *  Similarly, the API does not accept parameters for a
-     *  JsonArrayRequest object.
+    /**
+     * Returns a JSONArray object by taking in a URL.
+     * The Volley API only allows GET requests to return
+     * a JSON array, so no Method argument is necessary.
+     * Similarly, the API does not accept parameters for a
+     * JsonArrayRequest object.
      */
     public JSONArray arrayRequest(String url) {
         /**
@@ -104,16 +110,15 @@ public class RequestHandler {
             }
         }
         );
-
         mRequestQueue.add(request);
-
         return response[0];
     }
 
 
-    /** Returns a JSONObject of the response at the given
-     *  URL with the given PARAMS and specified METHOD.
-     *  PARAMS is a JSONObject containing the POST or PUT data.
+    /**
+     * Returns a JSONObject of the response at the given
+     * URL with the given PARAMS and specified METHOD.
+     * PARAMS is a JSONObject containing the POST or PUT data.
      */
     public JSONObject objectRequest(int method, String url, JSONObject params) {
 
@@ -133,19 +138,18 @@ public class RequestHandler {
             }
         }
         );
-
         mRequestQueue.add(request);
-
         return response[0];
     }
 
     /**
      * returns a bitmap response from an image request
+     *
      * @param url
      * @param params
      * @return
      */
-    public Bitmap imageRequest( String url, JSONObject params ){
+    public Bitmap imageRequest(String url, JSONObject params) {
 
         final Bitmap[] returnedImage = new Bitmap[1];
 
@@ -162,9 +166,27 @@ public class RequestHandler {
                         //mImageView.setImageResource(R.drawable.image_load_error);
                     }
                 });
-
         mRequestQueue.add(request);
-
         return returnedImage[0];
     }
+
+    public String testRequest(String url) {
+        final String[] Stringresponse = new String[1];
+
+        StringRequest request = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("INTERNET RESPONSE", "Response is: " + response.substring(0, 500));
+                        Stringresponse[0] = response;
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("INTERNET RESPONSE", "IT DIDN't WORK!");
+            }
+        });
+        return Stringresponse[0];
+    }
+
 }
