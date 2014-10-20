@@ -7,8 +7,6 @@
 //
 
 #import "WPTasksListView.h"
-#import "WPMyTasksTableView.h"
-#import "WPAllTasksTableView.h"
 #import "WPAllTasksTableViewController.h"
 #import "WPMyTasksTableViewController.h"
 #import "UIView+WPExtensions.h"
@@ -54,14 +52,7 @@
         view;
     }) wp_addToSuperview:self];
     
-//    _myTasksTable = ({
-//        _myTasksTableController = [[WPMyTasksTableViewController alloc] init];
-//        WPMyTasksTableView *myTasks = _myTasksTableController.tableView;
-//        myTasks;
-//    });
-//    
     _myTasksTableController = ({
-//        WPMyTasksTableViewController *myController = [[WPMyTasksTableViewController alloc] init];
         WPMyTasksTableViewController *myController =
         [[WPMyTasksTableViewController alloc] init];
         myController;
@@ -87,7 +78,6 @@
 }
 
 - (void)setUpActions {
-    // Here is where you set up buttons taps and gesture recognizers.
     [self.tasksSegmentedControl addTarget:self action:@selector(taskSegmentControlAction:) forControlEvents: UIControlEventValueChanged];
 }
 
@@ -97,11 +87,13 @@
         make.top.equalTo(@0);
         make.leading.equalTo(@10);
         make.trailing.equalTo(@(-10));
-        make.height.equalTo(@60);
+        make.height.equalTo(@50);
     }];
     
     [self.tasksSegmentedControl mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.equalTo(@0);
+        make.centerX.equalTo(@0);
+        make.top.equalTo(@20);
+        
         make.leading.equalTo(@10);
         make.trailing.equalTo(@(-10));
     }];

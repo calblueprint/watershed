@@ -19,20 +19,11 @@
 @end
 
 @implementation WPTasksListViewController {
-//    WPAllTasksTableViewController *allTasksController;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-//    NSLog(@"%@", NSStringFromCGRect(self.view.frame));
-
-    // add to canvas
-    //I want to add this view to view.tasksTableView
-//    [self.view addSubview:tableView];
-    // Do any additional setup after loading the view.
-//    allTasksController = [[WPAllTasksTableViewController alloc] init];
-//    [self.view addSubview:allTasksController.tableView];
 }
 
 - (void)loadView {
