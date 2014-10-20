@@ -66,16 +66,13 @@ public class MainActivity extends ActionBarActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        actionBar = getActionBar();
+        setContentView(R.layout.activity_main);
 
+        actionBar = getActionBar();
+        mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
+        viewPager = (ViewPager) findViewById(R.id.pager);
         initializeFragments();
         initializeTabs();
-        mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
-
-        viewPager.setAdapter(mAdapter);
-        actionBar.setHomeButtonEnabled(false);
-        viewPager = (ViewPager) findViewById(R.id.pager);
-        setContentView(R.layout.activity_main);
 
         //initializeNavigationDrawer();
 
@@ -100,12 +97,34 @@ public class MainActivity extends ActionBarActivity
             }
         };
 
+        viewPager.setAdapter(mAdapter);
+        actionBar.setHomeButtonEnabled(false);
+
         for (int i = 0; i < 3; i++) {
             actionBar.addTab(
                     actionBar.newTab()
                             .setText("PartyTab " + (i + 1))
                             .setTabListener(tabListener));
         }
+
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int position) {
+                // on changing the page
+                // make respected tab selected
+                actionBar.setSelectedNavigationItem(position);
+            }
+
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int arg0) {
+            }
+        });
+
     }
 
     public void replaceFragment(Fragment newFragment) {
