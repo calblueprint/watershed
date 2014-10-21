@@ -157,7 +157,7 @@ static int COVER_PHOTO_TRANS = 0;
     }];
     
     [self.tableHeaderView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(COVER_PHOTO_HEIGHT));
+        make.top.equalTo(@(COVER_PHOTO_HEIGHT - 64));
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
         make.bottom.equalTo(self.tableViewShadowOverlay.mas_top);
@@ -255,7 +255,7 @@ static int COVER_PHOTO_TRANS = 0;
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
     CGPoint trans = scrollView.contentOffset;
-    COVER_PHOTO_TRANS = trans.y;
+    COVER_PHOTO_TRANS = trans.y + 64;
     if (COVER_PHOTO_TRANS > 120) COVER_PHOTO_TRANS = 120;
     self.blurRadius = MIN(ABS(COVER_PHOTO_TRANS / 6), 20);
     
