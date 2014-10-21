@@ -23,6 +23,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationItem.title = @"Watershed";
     [self loadMiniSiteData];
     self.miniSiteTableView.delegate = self;
     self.miniSiteTableView.dataSource = self;

@@ -252,8 +252,8 @@ static int COVER_PHOTO_TRANS = 0;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
-    CGPoint trans = scrollView.contentOffset;
-    COVER_PHOTO_TRANS = trans.y + 64;
+    CGFloat trans = scrollView.contentOffset.y + 64.0;
+    COVER_PHOTO_TRANS = trans;
     if (COVER_PHOTO_TRANS > 120) COVER_PHOTO_TRANS = 120;
     self.blurRadius = MIN(ABS(COVER_PHOTO_TRANS / 6), 20);
     
@@ -264,6 +264,11 @@ static int COVER_PHOTO_TRANS = 0;
     if (self.coverPhotoArray.count > self.blurRadius) {
         [self.coverPhotoView setImage:self.coverPhotoArray[self.blurRadius]];
     }
+    
+    CGFloat titleAlpha = (trans - COVER_PHOTO_TRANS - 20)/40;
+    
+    UINavigationBar *navBar = ((UIViewController *)[self nextResponder]).navigationController.navigationBar;
+    [navBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:titleAlpha]}];
 }
 
 @end
