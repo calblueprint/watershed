@@ -138,28 +138,28 @@ const static float CELL_HEIGHT = 86.0f;
 {
     switch (rating) {
         case 1:
-            return [UIColor colorWithRed:231/255.0 green:76/255.0 blue:60/255.0 alpha:1];
+            return [UIColor wp_red];
             break;
             
         case 2:
-            return [UIColor colorWithRed:230/255.0 green:126/255.0 blue:34/255.0 alpha:1];
+            return [UIColor wp_orange];
             break;
             
         case 3:
-            return [UIColor colorWithRed:241/255.0 green:196/255.0 blue:15/255.0 alpha:1];
+            return [UIColor wp_yellow];
             break;
             
         case 4:
-            return [UIColor colorWithRed:164/255.0 green:196/255.0 blue:0/255.0 alpha:1];
+            return [UIColor wp_lime];
             break;
             
         case 5:
-            return [UIColor colorWithRed:39/255.0 green:174/255.0 blue:96/255.0 alpha:1];
+            return [UIColor wp_green];
             break;
         default:
+            return [UIColor grayColor];
             break;
     }
-    return [UIColor grayColor];
 }
 
 @end

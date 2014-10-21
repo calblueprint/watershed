@@ -32,4 +32,24 @@
     return [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.5];
 }
 
++ (UIColor *)wp_red {
+    return [UIColor colorWithRed:231/255.0 green:76/255.0 blue:60/255.0 alpha:1];
+}
+
++ (UIColor *)wp_orange {
+    return [UIColor colorWithRed:230/255.0 green:126/255.0 blue:34/255.0 alpha:1];
+}
+
++ (UIColor *)wp_yellow {
+    return [UIColor colorWithRed:241/255.0 green:196/255.0 blue:15/255.0 alpha:1];
+}
+
++ (UIColor *)wp_lime {
+    return [UIColor colorWithRed:164/255.0 green:196/255.0 blue:0/255.0 alpha:1];
+}
+
++ (UIColor *)wp_green {
+    return [UIColor colorWithRed:39/255.0 green:174/255.0 blue:96/255.0 alpha:1];
+}
+
 @end
