@@ -31,8 +31,8 @@ const static float CELL_HEIGHT = 86.0f;
               image:(UIImage *)image
              rating:(NSInteger)rating
           taskCount:(NSInteger)taskCount
-   fieldReportCount:(NSInteger)fieldReportCount
-{
+   fieldReportCount:(NSInteger)fieldReportCount {
+    
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.backgroundColor = [UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:1];

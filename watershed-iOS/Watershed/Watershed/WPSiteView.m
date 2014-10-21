@@ -38,8 +38,7 @@
 static const int COVER_PHOTO_HEIGHT = 184;
 static int COVER_PHOTO_TRANS = 0;
 
-- (id)initWithFrame:(CGRect)frame
-{
+- (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor =[UIColor whiteColor];
@@ -242,8 +241,7 @@ static int COVER_PHOTO_TRANS = 0;
 
 #pragma mark - Lazy Instantiation
 
-- (NSMutableArray *)coverPhotoArray
-{
+- (NSMutableArray *)coverPhotoArray {
     if (!_coverPhotoArray) {
         _coverPhotoArray = [[NSMutableArray alloc] init];
     }

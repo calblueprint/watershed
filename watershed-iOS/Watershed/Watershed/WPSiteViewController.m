@@ -42,8 +42,8 @@
 #pragma mark - TableView Delegate/DataSource Methods
 
 - (NSInteger)tableView:(UITableView *)tableView
- numberOfRowsInSection:(NSInteger)section
-{
+ numberOfRowsInSection:(NSInteger)section {
+    
     NSLog(@"Call number of rows");
     NSInteger rowCount = 0;
     
@@ -53,8 +53,8 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
-         cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     UITableViewCell *cellView = nil;
     
     if ([tableView isEqual:self.miniSiteTableView]) {
@@ -76,8 +76,7 @@
     return cellView;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [WPMiniSiteTableViewCell cellHeight];
 }
 
