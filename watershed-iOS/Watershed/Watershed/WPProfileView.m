@@ -11,23 +11,14 @@
 #import "UIColor+WPColors.h"
 #import "UIView+WPExtensions.h"
 #import "FontAwesomeKit/FontAwesomeKit.h"
+#import "WPProfileTableViewCell.h"
+#import "WPProfile.h"
 
 #import <QuartzCore/QuartzCore.h>
 
 @interface WPProfileView ()
 
-@property (nonatomic) UIView *profilePictureView;
-@property (nonatomic) UILabel *nameLabel;
-//@property (nonatomic) UIView *tasksView;
-//@property (nonatomic) UIView *tasksLabel;
-//@property (nonatomic) UIView *tasksNumber;
-//@property (nonatomic) UIView *sitesView;
-@property (nonatomic) UIView *locationView;
-@property (nonatomic) UIImageView *locationIconImageView;
-@property (nonatomic) UILabel *locationLabel;
-@property (nonatomic) UIImageView *mailIconImageView;
-
-
+@property UITableView *infoTableView;
 
 @end
 
@@ -46,6 +37,15 @@
     return self;
 }
 
+- (void)createProfiles {
+    WPProfile *maxWolffe = [[WPProfile alloc] init];
+    [maxWolffe setProfilePicture:@"max"];
+    [maxWolffe setUserId:[NSNumber numberWithInt:5]];
+    [maxWolffe setName:@"Max Wolffe"];
+    [maxWolffe setPhoneNumber:@"9162128793"];
+    [maxWolffe setEmail:@"max@millman.com"];
+}
+
 #pragma mark - View Hierarchy
 
 -(void)setRoundedView:(UIImageView *)roundedView toDiameter:(float)newSize;
@@ -55,10 +55,24 @@
     roundedView.frame = newFrame;
     roundedView.layer.borderWidth = 1.0f;
     roundedView.layer.borderColor = [UIColor blackColor].CGColor;
-
     roundedView.layer.cornerRadius = 65/2;
     roundedView.center = saveCenter;
 }
+
+-(void)populateTableView {
+
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    WPProfileTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:allTasksIdentifier forIndexPath:indexPath];
+    
+    NSDictionary *rowData = self.infoArray[indexPath.row];
+    cell.icon = rowData[@"Icon"];
+    cell.text = rowData[@"Text"];
+    return cell;
+
+}
+
 
 - (void)createSubviews {
 
@@ -71,80 +85,38 @@
     [self addSubview:profilePictureView];
 
 
-    UILabel *nameLabel = [[UILabel alloc] init];
-    nameLabel.text = @"Max Wolffe";
-    nameLabel.textColor = [UIColor blackColor];
-    _nameLabel = nameLabel;
-    [self addSubview:nameLabel];
+    _nameLabel = [[UILabel alloc] init];
+    _nameLabel.text = @"Max Wolffe";
+    _nameLabel.textColor = [UIColor blackColor];
+    [self addSubview:_nameLabel];
     
-    UIView *locationView = [[UIView alloc] init];
-    [self addSubview:locationView];
+    _infoTableView = [[UITableView alloc] init];
     
     FAKIonIcons *locationIcon = [FAKIonIcons ios7LocationOutlineIconWithSize:20];
     _locationIconImageView = [[UIImageView alloc] init];
     [_locationIconImageView setImage:[locationIcon imageWithSize:CGSizeMake(20, 20)]];
     [self addSubview:_locationIconImageView];
     
-    UILabel *locationLabel = [[UILabel alloc] init];
-    locationLabel.text = @"123 Cloyne Way Berkeley, CA 94709";
-    locationLabel.textColor = [UIColor blackColor];
-    locationLabel.font = [UIFont fontWithName:@"Helvetica" size:10];
-    _locationLabel = locationLabel;
-//    [self addSubview:locationLabel];
-    [locationView addSubview:locationLabel];
+    _locationLabel = [[UILabel alloc] init];
+    _locationLabel.text = @"123 Cloyne Way Berkeley, CA 94709";
+    _locationLabel.textColor = [UIColor blackColor];
+    _locationLabel.font = [UIFont fontWithName:@"Helvetica" size:10];
+    [self addSubview:_locationLabel];
     
     FAKIonIcons *mailIcon = [FAKIonIcons ios7EmailOutlineIconWithSize:17];
     _mailIconImageView = [[UIImageView alloc] init];
     [_mailIconImageView setImage:[mailIcon imageWithSize:CGSizeMake(15, 15)]];
     [self addSubview:_mailIconImageView];
-    
-//    UIView *tasksView = [[UIView alloc] init];
-//    tasksView.layer.borderWidth = 0.5f;
-//    tasksView.layer.borderColor = [UIColor grayColor].CGColor;
-//    _tasksView = tasksView;
-//    [self addSubview:tasksView];
-//    
-//    UILabel *tasksNumber = [[UILabel alloc] init];
-//    tasksNumber.text = @"3";
-//    tasksNumber.textColor = [UIColor whiteColor];
-//    _tasksNumber = tasksNumber;
-//    [tasksView addSubview:tasksNumber];
-//    
-//    UILabel *tasksLabel = [[UILabel alloc] init];
-//    tasksLabel.text = @"Tasks";
-//    tasksLabel.textColor = [UIColor whiteColor];
-//    _tasksLabel = tasksLabel;
-//    [tasksView addSubview:tasksLabel];
-//    
-//    UIView *sitesView = [[UIView alloc] init];
-//    sitesView.layer.borderWidth = 0.5f;
-//    sitesView.layer.borderColor = [UIColor grayColor].CGColor;
-//    _sitesView = sitesView;
-//    [self addSubview:sitesView];
+
     
 }
 
 - (void)updateConstraints {
 
-    [self.profilePictureView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@100);
-        make.leading.equalTo(@40);
-        make.height.equalTo(@65);
-        make.width.equalTo(@65);
-    }];
-    
     [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@110);
-        make.leading.equalTo(@125);
+        make.top.equalTo(self.profilePictureView.mas_bottom).with.offset(7);
+        make.centerX.equalTo(@0);
         make.height.equalTo(@50);
-        make.width.equalTo(@100);
-    }];
-    
-    [self.locationLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@220);
-        make.leading.equalTo(@95);
-        make.height.equalTo(@20);
-        make.width.equalTo(@200);
     }];
 
     [self.locationIconImageView setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
@@ -154,47 +126,7 @@
         make.leading.equalTo(@55);
     }];
     
-    [self.locationView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@110);
-        make.leading.equalTo(@125);
-        make.height.equalTo(@60);
-        make.width.equalTo(@200);
-    }];
-    
-    [self.mailIconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-       // make.top.equalTo(self.locationIconImageView).width.offset@285);
-        make.top.equalTo(@285);
-        make.leading.equalTo(@55);
-        make.height.equalTo(@20);
-        make.width.equalTo(@20);
-    }];
-    
-//    [self.tasksView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(@200);
-//        make.leading.equalTo(@0);
-//        make.height.equalTo(@40);
-//        make.width.equalTo(@160);
-//    }];
-//    [self.tasksLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(@10);
-//        make.leading.equalTo(@30);
-//        make.height.equalTo(@10);
-//        make.width.equalTo(@20);
-//    }];
-//    [self.tasksNumber mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(@5);
-//        make.leading.equalTo(@30);
-//        make.height.equalTo(@10);
-//        make.width.equalTo(@20);
-//    }];
-//    
-//    [self.sitesView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(@200);
-//        make.trailing.equalTo(@0);
-//        make.height.equalTo(@40);
-//        make.width.equalTo(@160);
-//    }];
-    
+
     [super updateConstraints];
 }
 

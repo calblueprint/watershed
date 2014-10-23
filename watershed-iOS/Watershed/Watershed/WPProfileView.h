@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WPProfileView : UIView
+@interface WPProfileView : UIView <UITableViewDataSource, UITabBarDelegate>
 
 @end

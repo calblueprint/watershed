@@ -1,1528 +1,637 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>archiveVersion</key>
-	<string>1</string>
-	<key>classes</key>
-	<dict/>
-	<key>objectVersion</key>
-	<string>46</string>
-	<key>objects</key>
-	<dict>
-		<key>06305F4519D9274400BD2CE4</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>UIView+WPExtensions.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>06305F4619D9274400BD2CE4</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>UIView+WPExtensions.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>06305F4719D9274400BD2CE4</key>
-		<dict>
-			<key>fileRef</key>
-			<string>06305F4619D9274400BD2CE4</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>06A8139319D911C900E3EB05</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>WPTasksListViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>06A8139419D911C900E3EB05</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>WPTasksListViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>06A8139519D911C900E3EB05</key>
-		<dict>
-			<key>fileRef</key>
-			<string>06A8139419D911C900E3EB05</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>06A8139619D91A7500E3EB05</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>WPTasksListView.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>06A8139719D91A7500E3EB05</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>WPTasksListView.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>06A8139819D91A7500E3EB05</key>
-		<dict>
-			<key>fileRef</key>
-			<string>06A8139719D91A7500E3EB05</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>06A8139919D91D8600E3EB05</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>UIColor+WPColors.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>06A8139A19D91D8600E3EB05</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>UIColor+WPColors.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>06A8139B19D91D8600E3EB05</key>
-		<dict>
-			<key>fileRef</key>
-			<string>06A8139A19D91D8600E3EB05</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>0BFD8558DD12470AB2409F6A</key>
-		<dict>
-			<key>fileRef</key>
-			<string>38F773F3CE0741AE9B08A802</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>27714CA719D9076F005344B0</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>WPLoginViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>27714CA819D9076F005344B0</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>WPLoginViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>27714CA919D9076F005344B0</key>
-		<dict>
-			<key>fileRef</key>
-			<string>27714CA819D9076F005344B0</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>27714CAA19D9182D005344B0</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>WPLoginView.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>27714CAB19D9182D005344B0</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>WPLoginView.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>27714CAC19D9182D005344B0</key>
-		<dict>
-			<key>fileRef</key>
-			<string>27714CAB19D9182D005344B0</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>27714CB019D93405005344B0</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>WPAppDelegate.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>27714CB119D93405005344B0</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>WPAppDelegate.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>27714CB219D93405005344B0</key>
-		<dict>
-			<key>fileRef</key>
-			<string>27714CB119D93405005344B0</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>38F773F3CE0741AE9B08A802</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>archive.ar</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>libPods.a</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>488CAAA9AEBF498B95636877</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>Copy Pods Resources</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh"
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>652DF64101CB5226F8B44916</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>999F8B69042C0FCBE07F55DB</string>
-				<string>79DB95E49611D8089647C47B</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Pods</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>79DB95E49611D8089647C47B</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods.release.xcconfig</string>
-			<key>path</key>
-			<string>Pods/Target Support Files/Pods/Pods.release.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>999F8B69042C0FCBE07F55DB</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods.debug.xcconfig</string>
-			<key>path</key>
-			<string>Pods/Target Support Files/Pods/Pods.debug.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA24043E19DCEFC800E9DB2F</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>06A8139319D911C900E3EB05</string>
-				<string>06A8139419D911C900E3EB05</string>
-				<string>06A8139619D91A7500E3EB05</string>
-				<string>06A8139719D91A7500E3EB05</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Tasks</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA24043F19DCEFDB00E9DB2F</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>06A8139919D91D8600E3EB05</string>
-				<string>06A8139A19D91D8600E3EB05</string>
-				<string>06305F4519D9274400BD2CE4</string>
-				<string>06305F4619D9274400BD2CE4</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Categories</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA24044019DCEFFC00E9DB2F</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>27714CA719D9076F005344B0</string>
-				<string>27714CA819D9076F005344B0</string>
-				<string>27714CAA19D9182D005344B0</string>
-				<string>27714CAB19D9182D005344B0</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Login</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA24044119DCF01900E9DB2F</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>BA24044919E2471200E9DB2F</string>
-				<string>BA24044A19E2471200E9DB2F</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Sites</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA24044219DCF02C00E9DB2F</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>BA24044319DCF06C00E9DB2F</string>
-				<string>BA24044419DCF06C00E9DB2F</string>
-				<string>BA24044619DCF35300E9DB2F</string>
-				<string>BA24044719DCF35300E9DB2F</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Root</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA24044319DCF06C00E9DB2F</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>WPRootViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA24044419DCF06C00E9DB2F</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>WPRootViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA24044519DCF06C00E9DB2F</key>
-		<dict>
-			<key>fileRef</key>
-			<string>BA24044419DCF06C00E9DB2F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>BA24044619DCF35300E9DB2F</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>WPTabBarController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA24044719DCF35300E9DB2F</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>WPTabBarController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA24044819DCF35300E9DB2F</key>
-		<dict>
-			<key>fileRef</key>
-			<string>BA24044719DCF35300E9DB2F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>BA24044919E2471200E9DB2F</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>WPSitesListViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA24044A19E2471200E9DB2F</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>WPSitesListViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA24044B19E2471200E9DB2F</key>
-		<dict>
-			<key>fileRef</key>
-			<string>BA24044A19E2471200E9DB2F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>BA24044C19E2474A00E9DB2F</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>BA24044D19E2477000E9DB2F</string>
-				<string>BA24044E19E2477000E9DB2F</string>
-				<string>BA560DC519EE0A2300A48918</string>
-				<string>BA560DC619EE0A2300A48918</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Profile</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA24044D19E2477000E9DB2F</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>WPProfileViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA24044E19E2477000E9DB2F</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>WPProfileViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA24044F19E2477000E9DB2F</key>
-		<dict>
-			<key>fileRef</key>
-			<string>BA24044E19E2477000E9DB2F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>BA4F8DC319C7739300C816E3</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>BA4F8DD519C7739300C816E3</string>
-				<string>BA4F8DF719C7739300C816E3</string>
-				<string>BA4F8DCE19C7739300C816E3</string>
-				<string>BA4F8DCD19C7739300C816E3</string>
-				<string>652DF64101CB5226F8B44916</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA4F8DC419C7739300C816E3</key>
-		<dict>
-			<key>attributes</key>
-			<dict>
-				<key>CLASSPREFIX</key>
-				<string>WP</string>
-				<key>LastUpgradeCheck</key>
-				<string>0510</string>
-				<key>ORGANIZATIONNAME</key>
-				<string>Blueprint</string>
-				<key>TargetAttributes</key>
-				<dict>
-					<key>BA4F8DEF19C7739300C816E3</key>
-					<dict>
-						<key>TestTargetID</key>
-						<string>BA4F8DCB19C7739300C816E3</string>
-					</dict>
-				</dict>
-			</dict>
-			<key>buildConfigurationList</key>
-			<string>BA4F8DC719C7739300C816E3</string>
-			<key>compatibilityVersion</key>
-			<string>Xcode 3.2</string>
-			<key>developmentRegion</key>
-			<string>English</string>
-			<key>hasScannedForEncodings</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXProject</string>
-			<key>knownRegions</key>
-			<array>
-				<string>en</string>
-				<string>Base</string>
-			</array>
-			<key>mainGroup</key>
-			<string>BA4F8DC319C7739300C816E3</string>
-			<key>productRefGroup</key>
-			<string>BA4F8DCD19C7739300C816E3</string>
-			<key>projectDirPath</key>
-			<string></string>
-			<key>projectReferences</key>
-			<array/>
-			<key>projectRoot</key>
-			<string></string>
-			<key>targets</key>
-			<array>
-				<string>BA4F8DCB19C7739300C816E3</string>
-				<string>BA4F8DEF19C7739300C816E3</string>
-			</array>
-		</dict>
-		<key>BA4F8DC719C7739300C816E3</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>BA4F8DFF19C7739300C816E3</string>
-				<string>BA4F8E0019C7739300C816E3</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>BA4F8DC819C7739300C816E3</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>BA24044819DCF35300E9DB2F</string>
-				<string>06A8139819D91A7500E3EB05</string>
-				<string>06A8139519D911C900E3EB05</string>
-				<string>BA24044F19E2477000E9DB2F</string>
-				<string>BA24044519DCF06C00E9DB2F</string>
-				<string>06A8139B19D91D8600E3EB05</string>
-				<string>06305F4719D9274400BD2CE4</string>
-				<string>27714CB219D93405005344B0</string>
-				<string>BA560DC719EE0A2300A48918</string>
-				<string>27714CA919D9076F005344B0</string>
-				<string>27714CAC19D9182D005344B0</string>
-				<string>BA24044B19E2471200E9DB2F</string>
-				<string>BA4F8DDC19C7739300C816E3</string>
-			</array>
-			<key>isa</key>
-			<string>PBXSourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>BA4F8DC919C7739300C816E3</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>BA4F8DD219C7739300C816E3</string>
-				<string>BA4F8DD419C7739300C816E3</string>
-				<string>BA4F8DD019C7739300C816E3</string>
-				<string>0BFD8558DD12470AB2409F6A</string>
-			</array>
-			<key>isa</key>
-			<string>PBXFrameworksBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>BA4F8DCA19C7739300C816E3</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>BA4F8DEB19C7739300C816E3</string>
-				<string>BA4F8DDA19C7739300C816E3</string>
-			</array>
-			<key>isa</key>
-			<string>PBXResourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>BA4F8DCB19C7739300C816E3</key>
-		<dict>
-			<key>buildConfigurationList</key>
-			<string>BA4F8E0119C7739300C816E3</string>
-			<key>buildPhases</key>
-			<array>
-				<string>D22910C603D04BEBA4C3EA0D</string>
-				<string>BA4F8DC819C7739300C816E3</string>
-				<string>BA4F8DC919C7739300C816E3</string>
-				<string>BA4F8DCA19C7739300C816E3</string>
-				<string>488CAAA9AEBF498B95636877</string>
-			</array>
-			<key>buildRules</key>
-			<array/>
-			<key>dependencies</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXNativeTarget</string>
-			<key>name</key>
-			<string>Watershed</string>
-			<key>productName</key>
-			<string>Watershed</string>
-			<key>productReference</key>
-			<string>BA4F8DCC19C7739300C816E3</string>
-			<key>productType</key>
-			<string>com.apple.product-type.application</string>
-		</dict>
-		<key>BA4F8DCC19C7739300C816E3</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.application</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>Watershed.app</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>BA4F8DCD19C7739300C816E3</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>BA4F8DCC19C7739300C816E3</string>
-				<string>BA4F8DF019C7739300C816E3</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Products</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA4F8DCE19C7739300C816E3</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>BA4F8DCF19C7739300C816E3</string>
-				<string>BA4F8DD119C7739300C816E3</string>
-				<string>BA4F8DD319C7739300C816E3</string>
-				<string>BA4F8DF119C7739300C816E3</string>
-				<string>38F773F3CE0741AE9B08A802</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Frameworks</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA4F8DCF19C7739300C816E3</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>Foundation.framework</string>
-			<key>path</key>
-			<string>System/Library/Frameworks/Foundation.framework</string>
-			<key>sourceTree</key>
-			<string>SDKROOT</string>
-		</dict>
-		<key>BA4F8DD019C7739300C816E3</key>
-		<dict>
-			<key>fileRef</key>
-			<string>BA4F8DCF19C7739300C816E3</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>BA4F8DD119C7739300C816E3</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>CoreGraphics.framework</string>
-			<key>path</key>
-			<string>System/Library/Frameworks/CoreGraphics.framework</string>
-			<key>sourceTree</key>
-			<string>SDKROOT</string>
-		</dict>
-		<key>BA4F8DD219C7739300C816E3</key>
-		<dict>
-			<key>fileRef</key>
-			<string>BA4F8DD119C7739300C816E3</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>BA4F8DD319C7739300C816E3</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>UIKit.framework</string>
-			<key>path</key>
-			<string>System/Library/Frameworks/UIKit.framework</string>
-			<key>sourceTree</key>
-			<string>SDKROOT</string>
-		</dict>
-		<key>BA4F8DD419C7739300C816E3</key>
-		<dict>
-			<key>fileRef</key>
-			<string>BA4F8DD319C7739300C816E3</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>BA4F8DD519C7739300C816E3</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>BA24044219DCF02C00E9DB2F</string>
-				<string>BA24044C19E2474A00E9DB2F</string>
-				<string>BA24044019DCEFFC00E9DB2F</string>
-				<string>BA24044119DCF01900E9DB2F</string>
-				<string>BA24043E19DCEFC800E9DB2F</string>
-				<string>BA24043F19DCEFDB00E9DB2F</string>
-				<string>BA4F8DEA19C7739300C816E3</string>
-				<string>27714CB019D93405005344B0</string>
-				<string>27714CB119D93405005344B0</string>
-				<string>BA4F8DD619C7739300C816E3</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>Watershed</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA4F8DD619C7739300C816E3</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>BA4F8DD719C7739300C816E3</string>
-				<string>BA4F8DD819C7739300C816E3</string>
-				<string>BA4F8DDB19C7739300C816E3</string>
-				<string>BA4F8DDD19C7739300C816E3</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Supporting Files</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA4F8DD719C7739300C816E3</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.xml</string>
-			<key>path</key>
-			<string>Watershed-Info.plist</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA4F8DD819C7739300C816E3</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>BA4F8DD919C7739300C816E3</string>
-			</array>
-			<key>isa</key>
-			<string>PBXVariantGroup</string>
-			<key>name</key>
-			<string>InfoPlist.strings</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA4F8DD919C7739300C816E3</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.strings</string>
-			<key>name</key>
-			<string>en</string>
-			<key>path</key>
-			<string>en.lproj/InfoPlist.strings</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA4F8DDA19C7739300C816E3</key>
-		<dict>
-			<key>fileRef</key>
-			<string>BA4F8DD819C7739300C816E3</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>BA4F8DDB19C7739300C816E3</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>main.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA4F8DDC19C7739300C816E3</key>
-		<dict>
-			<key>fileRef</key>
-			<string>BA4F8DDB19C7739300C816E3</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>BA4F8DDD19C7739300C816E3</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>Watershed-Prefix.pch</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA4F8DEA19C7739300C816E3</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>folder.assetcatalog</string>
-			<key>path</key>
-			<string>Images.xcassets</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA4F8DEB19C7739300C816E3</key>
-		<dict>
-			<key>fileRef</key>
-			<string>BA4F8DEA19C7739300C816E3</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>BA4F8DEC19C7739300C816E3</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>BA4F8DFE19C7739300C816E3</string>
-			</array>
-			<key>isa</key>
-			<string>PBXSourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>BA4F8DED19C7739300C816E3</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>BA4F8DF219C7739300C816E3</string>
-				<string>BA4F8DF419C7739300C816E3</string>
-				<string>BA4F8DF319C7739300C816E3</string>
-			</array>
-			<key>isa</key>
-			<string>PBXFrameworksBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>BA4F8DEE19C7739300C816E3</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>BA4F8DFC19C7739300C816E3</string>
-			</array>
-			<key>isa</key>
-			<string>PBXResourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>BA4F8DEF19C7739300C816E3</key>
-		<dict>
-			<key>buildConfigurationList</key>
-			<string>BA4F8E0419C7739300C816E3</string>
-			<key>buildPhases</key>
-			<array>
-				<string>BA4F8DEC19C7739300C816E3</string>
-				<string>BA4F8DED19C7739300C816E3</string>
-				<string>BA4F8DEE19C7739300C816E3</string>
-			</array>
-			<key>buildRules</key>
-			<array/>
-			<key>dependencies</key>
-			<array>
-				<string>BA4F8DF619C7739300C816E3</string>
-			</array>
-			<key>isa</key>
-			<string>PBXNativeTarget</string>
-			<key>name</key>
-			<string>WatershedTests</string>
-			<key>productName</key>
-			<string>WatershedTests</string>
-			<key>productReference</key>
-			<string>BA4F8DF019C7739300C816E3</string>
-			<key>productType</key>
-			<string>com.apple.product-type.bundle.unit-test</string>
-		</dict>
-		<key>BA4F8DF019C7739300C816E3</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.cfbundle</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>WatershedTests.xctest</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>BA4F8DF119C7739300C816E3</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>XCTest.framework</string>
-			<key>path</key>
-			<string>Library/Frameworks/XCTest.framework</string>
-			<key>sourceTree</key>
-			<string>DEVELOPER_DIR</string>
-		</dict>
-		<key>BA4F8DF219C7739300C816E3</key>
-		<dict>
-			<key>fileRef</key>
-			<string>BA4F8DF119C7739300C816E3</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>BA4F8DF319C7739300C816E3</key>
-		<dict>
-			<key>fileRef</key>
-			<string>BA4F8DCF19C7739300C816E3</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>BA4F8DF419C7739300C816E3</key>
-		<dict>
-			<key>fileRef</key>
-			<string>BA4F8DD319C7739300C816E3</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>BA4F8DF519C7739300C816E3</key>
-		<dict>
-			<key>containerPortal</key>
-			<string>BA4F8DC419C7739300C816E3</string>
-			<key>isa</key>
-			<string>PBXContainerItemProxy</string>
-			<key>proxyType</key>
-			<string>1</string>
-			<key>remoteGlobalIDString</key>
-			<string>BA4F8DCB19C7739300C816E3</string>
-			<key>remoteInfo</key>
-			<string>Watershed</string>
-		</dict>
-		<key>BA4F8DF619C7739300C816E3</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXTargetDependency</string>
-			<key>target</key>
-			<string>BA4F8DCB19C7739300C816E3</string>
-			<key>targetProxy</key>
-			<string>BA4F8DF519C7739300C816E3</string>
-		</dict>
-		<key>BA4F8DF719C7739300C816E3</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>BA4F8DFD19C7739300C816E3</string>
-				<string>BA4F8DF819C7739300C816E3</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>WatershedTests</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA4F8DF819C7739300C816E3</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>BA4F8DF919C7739300C816E3</string>
-				<string>BA4F8DFA19C7739300C816E3</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Supporting Files</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA4F8DF919C7739300C816E3</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.xml</string>
-			<key>path</key>
-			<string>WatershedTests-Info.plist</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA4F8DFA19C7739300C816E3</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>BA4F8DFB19C7739300C816E3</string>
-			</array>
-			<key>isa</key>
-			<string>PBXVariantGroup</string>
-			<key>name</key>
-			<string>InfoPlist.strings</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA4F8DFB19C7739300C816E3</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.strings</string>
-			<key>name</key>
-			<string>en</string>
-			<key>path</key>
-			<string>en.lproj/InfoPlist.strings</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA4F8DFC19C7739300C816E3</key>
-		<dict>
-			<key>fileRef</key>
-			<string>BA4F8DFA19C7739300C816E3</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>BA4F8DFD19C7739300C816E3</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>WatershedTests.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA4F8DFE19C7739300C816E3</key>
-		<dict>
-			<key>fileRef</key>
-			<string>BA4F8DFD19C7739300C816E3</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>BA4F8DFF19C7739300C816E3</key>
-		<dict>
-			<key>buildSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>NO</string>
-				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
-				<string>gnu++0x</string>
-				<key>CLANG_CXX_LIBRARY</key>
-				<string>libc++</string>
-				<key>CLANG_ENABLE_MODULES</key>
-				<string>YES</string>
-				<key>CLANG_ENABLE_OBJC_ARC</key>
-				<string>YES</string>
-				<key>CLANG_WARN_BOOL_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
-				<string>YES_ERROR</string>
-				<key>CLANG_WARN_EMPTY_BODY</key>
-				<string>YES</string>
-				<key>CLANG_WARN_ENUM_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_INT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
-				<string>YES_ERROR</string>
-				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
-				<string>YES</string>
-				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
-				<string>iPhone Developer</string>
-				<key>COPY_PHASE_STRIP</key>
-				<string>NO</string>
-				<key>GCC_C_LANGUAGE_STANDARD</key>
-				<string>gnu99</string>
-				<key>GCC_DYNAMIC_NO_PIC</key>
-				<string>NO</string>
-				<key>GCC_OPTIMIZATION_LEVEL</key>
-				<string>0</string>
-				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
-				<array>
-					<string>DEBUG=1</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
-				<string>NO</string>
-				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
-				<string>YES</string>
-				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
-				<string>YES_ERROR</string>
-				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
-				<string>YES_AGGRESSIVE</string>
-				<key>GCC_WARN_UNUSED_FUNCTION</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNUSED_VARIABLE</key>
-				<string>YES</string>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>7.1</string>
-				<key>ONLY_ACTIVE_ARCH</key>
-				<string>YES</string>
-				<key>SDKROOT</key>
-				<string>iphoneos</string>
-				<key>TARGETED_DEVICE_FAMILY</key>
-				<string>1,2</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Debug</string>
-		</dict>
-		<key>BA4F8E0019C7739300C816E3</key>
-		<dict>
-			<key>buildSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>NO</string>
-				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
-				<string>gnu++0x</string>
-				<key>CLANG_CXX_LIBRARY</key>
-				<string>libc++</string>
-				<key>CLANG_ENABLE_MODULES</key>
-				<string>YES</string>
-				<key>CLANG_ENABLE_OBJC_ARC</key>
-				<string>YES</string>
-				<key>CLANG_WARN_BOOL_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
-				<string>YES_ERROR</string>
-				<key>CLANG_WARN_EMPTY_BODY</key>
-				<string>YES</string>
-				<key>CLANG_WARN_ENUM_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_INT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
-				<string>YES_ERROR</string>
-				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
-				<string>YES</string>
-				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
-				<string>iPhone Developer</string>
-				<key>COPY_PHASE_STRIP</key>
-				<string>YES</string>
-				<key>ENABLE_NS_ASSERTIONS</key>
-				<string>NO</string>
-				<key>GCC_C_LANGUAGE_STANDARD</key>
-				<string>gnu99</string>
-				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
-				<string>YES</string>
-				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
-				<string>YES_ERROR</string>
-				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
-				<string>YES_AGGRESSIVE</string>
-				<key>GCC_WARN_UNUSED_FUNCTION</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNUSED_VARIABLE</key>
-				<string>YES</string>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>7.1</string>
-				<key>SDKROOT</key>
-				<string>iphoneos</string>
-				<key>TARGETED_DEVICE_FAMILY</key>
-				<string>1,2</string>
-				<key>VALIDATE_PRODUCT</key>
-				<string>YES</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>BA4F8E0119C7739300C816E3</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>BA4F8E0219C7739300C816E3</string>
-				<string>BA4F8E0319C7739300C816E3</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>BA4F8E0219C7739300C816E3</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>999F8B69042C0FCBE07F55DB</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
-				<string>AppIcon</string>
-				<key>ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME</key>
-				<string>LaunchImage</string>
-				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
-				<string>YES</string>
-				<key>GCC_PREFIX_HEADER</key>
-				<string>Watershed/Watershed-Prefix.pch</string>
-				<key>INFOPLIST_FILE</key>
-				<string>Watershed/Watershed-Info.plist</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>WRAPPER_EXTENSION</key>
-				<string>app</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Debug</string>
-		</dict>
-		<key>BA4F8E0319C7739300C816E3</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>79DB95E49611D8089647C47B</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
-				<string>AppIcon</string>
-				<key>ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME</key>
-				<string>LaunchImage</string>
-				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
-				<string>YES</string>
-				<key>GCC_PREFIX_HEADER</key>
-				<string>Watershed/Watershed-Prefix.pch</string>
-				<key>INFOPLIST_FILE</key>
-				<string>Watershed/Watershed-Info.plist</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>WRAPPER_EXTENSION</key>
-				<string>app</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>BA4F8E0419C7739300C816E3</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>BA4F8E0519C7739300C816E3</string>
-				<string>BA4F8E0619C7739300C816E3</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>BA4F8E0519C7739300C816E3</key>
-		<dict>
-			<key>buildSettings</key>
-			<dict>
-				<key>BUNDLE_LOADER</key>
-				<string>$(BUILT_PRODUCTS_DIR)/Watershed.app/Watershed</string>
-				<key>FRAMEWORK_SEARCH_PATHS</key>
-				<array>
-					<string>$(SDKROOT)/Developer/Library/Frameworks</string>
-					<string>$(inherited)</string>
-					<string>$(DEVELOPER_FRAMEWORKS_DIR)</string>
-				</array>
-				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
-				<string>YES</string>
-				<key>GCC_PREFIX_HEADER</key>
-				<string>Watershed/Watershed-Prefix.pch</string>
-				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
-				<array>
-					<string>DEBUG=1</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>INFOPLIST_FILE</key>
-				<string>WatershedTests/WatershedTests-Info.plist</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>TEST_HOST</key>
-				<string>$(BUNDLE_LOADER)</string>
-				<key>WRAPPER_EXTENSION</key>
-				<string>xctest</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Debug</string>
-		</dict>
-		<key>BA4F8E0619C7739300C816E3</key>
-		<dict>
-			<key>buildSettings</key>
-			<dict>
-				<key>BUNDLE_LOADER</key>
-				<string>$(BUILT_PRODUCTS_DIR)/Watershed.app/Watershed</string>
-				<key>FRAMEWORK_SEARCH_PATHS</key>
-				<array>
-					<string>$(SDKROOT)/Developer/Library/Frameworks</string>
-					<string>$(inherited)</string>
-					<string>$(DEVELOPER_FRAMEWORKS_DIR)</string>
-				</array>
-				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
-				<string>YES</string>
-				<key>GCC_PREFIX_HEADER</key>
-				<string>Watershed/Watershed-Prefix.pch</string>
-				<key>INFOPLIST_FILE</key>
-				<string>WatershedTests/WatershedTests-Info.plist</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>TEST_HOST</key>
-				<string>$(BUNDLE_LOADER)</string>
-				<key>WRAPPER_EXTENSION</key>
-				<string>xctest</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>BA560DC519EE0A2300A48918</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>WPProfileView.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA560DC619EE0A2300A48918</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>WPProfileView.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BA560DC719EE0A2300A48918</key>
-		<dict>
-			<key>fileRef</key>
-			<string>BA560DC619EE0A2300A48918</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D22910C603D04BEBA4C3EA0D</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>Check Pods Manifest.lock</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
-if [[ $? != 0 ]] ; then
-    cat &lt;&lt; EOM
-error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
-EOM
-    exit 1
-fi
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-	</dict>
-	<key>rootObject</key>
-	<string>BA4F8DC419C7739300C816E3</string>
-</dict>
-</plist>
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		06305F4719D9274400BD2CE4 /* UIView+WPExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 06305F4619D9274400BD2CE4 /* UIView+WPExtensions.m */; };
+		06A8139519D911C900E3EB05 /* WPTasksListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A8139419D911C900E3EB05 /* WPTasksListViewController.m */; };
+		06A8139819D91A7500E3EB05 /* WPTasksListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A8139719D91A7500E3EB05 /* WPTasksListView.m */; };
+		06A8139B19D91D8600E3EB05 /* UIColor+WPColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A8139A19D91D8600E3EB05 /* UIColor+WPColors.m */; };
+		0BFD8558DD12470AB2409F6A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 38F773F3CE0741AE9B08A802 /* libPods.a */; };
+		27714CA919D9076F005344B0 /* WPLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27714CA819D9076F005344B0 /* WPLoginViewController.m */; };
+		27714CAC19D9182D005344B0 /* WPLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27714CAB19D9182D005344B0 /* WPLoginView.m */; };
+		27714CB219D93405005344B0 /* WPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 27714CB119D93405005344B0 /* WPAppDelegate.m */; };
+		BA24044519DCF06C00E9DB2F /* WPRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA24044419DCF06C00E9DB2F /* WPRootViewController.m */; };
+		BA24044819DCF35300E9DB2F /* WPTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA24044719DCF35300E9DB2F /* WPTabBarController.m */; };
+		BA24044B19E2471200E9DB2F /* WPSitesListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA24044A19E2471200E9DB2F /* WPSitesListViewController.m */; };
+		BA24044F19E2477000E9DB2F /* WPProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA24044E19E2477000E9DB2F /* WPProfileViewController.m */; };
+		BA4F8DD019C7739300C816E3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA4F8DCF19C7739300C816E3 /* Foundation.framework */; };
+		BA4F8DD219C7739300C816E3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA4F8DD119C7739300C816E3 /* CoreGraphics.framework */; };
+		BA4F8DD419C7739300C816E3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA4F8DD319C7739300C816E3 /* UIKit.framework */; };
+		BA4F8DDA19C7739300C816E3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BA4F8DD819C7739300C816E3 /* InfoPlist.strings */; };
+		BA4F8DDC19C7739300C816E3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4F8DDB19C7739300C816E3 /* main.m */; };
+		BA4F8DEB19C7739300C816E3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA4F8DEA19C7739300C816E3 /* Images.xcassets */; };
+		BA4F8DF219C7739300C816E3 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA4F8DF119C7739300C816E3 /* XCTest.framework */; };
+		BA4F8DF319C7739300C816E3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA4F8DCF19C7739300C816E3 /* Foundation.framework */; };
+		BA4F8DF419C7739300C816E3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA4F8DD319C7739300C816E3 /* UIKit.framework */; };
+		BA4F8DFC19C7739300C816E3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BA4F8DFA19C7739300C816E3 /* InfoPlist.strings */; };
+		BA4F8DFE19C7739300C816E3 /* WatershedTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4F8DFD19C7739300C816E3 /* WatershedTests.m */; };
+		BA560DC719EE0A2300A48918 /* WPProfileView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA560DC619EE0A2300A48918 /* WPProfileView.m */; };
+		BADC555D19F4CDDF000B2A64 /* WPProfileTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BADC555C19F4CDDF000B2A64 /* WPProfileTableViewCell.m */; };
+		BADC556019F8A008000B2A64 /* WPProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BADC555F19F8A008000B2A64 /* WPProfile.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BA4F8DF519C7739300C816E3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA4F8DC419C7739300C816E3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BA4F8DCB19C7739300C816E3;
+			remoteInfo = Watershed;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		06305F4519D9274400BD2CE4 /* UIView+WPExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WPExtensions.h"; sourceTree = "<group>"; };
+		06305F4619D9274400BD2CE4 /* UIView+WPExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WPExtensions.m"; sourceTree = "<group>"; };
+		06A8139319D911C900E3EB05 /* WPTasksListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPTasksListViewController.h; sourceTree = "<group>"; };
+		06A8139419D911C900E3EB05 /* WPTasksListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPTasksListViewController.m; sourceTree = "<group>"; };
+		06A8139619D91A7500E3EB05 /* WPTasksListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPTasksListView.h; sourceTree = "<group>"; };
+		06A8139719D91A7500E3EB05 /* WPTasksListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPTasksListView.m; sourceTree = "<group>"; };
+		06A8139919D91D8600E3EB05 /* UIColor+WPColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+WPColors.h"; sourceTree = "<group>"; };
+		06A8139A19D91D8600E3EB05 /* UIColor+WPColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+WPColors.m"; sourceTree = "<group>"; };
+		27714CA719D9076F005344B0 /* WPLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPLoginViewController.h; sourceTree = "<group>"; };
+		27714CA819D9076F005344B0 /* WPLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPLoginViewController.m; sourceTree = "<group>"; };
+		27714CAA19D9182D005344B0 /* WPLoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPLoginView.h; sourceTree = "<group>"; };
+		27714CAB19D9182D005344B0 /* WPLoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPLoginView.m; sourceTree = "<group>"; };
+		27714CB019D93405005344B0 /* WPAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPAppDelegate.h; sourceTree = "<group>"; };
+		27714CB119D93405005344B0 /* WPAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPAppDelegate.m; sourceTree = "<group>"; };
+		38F773F3CE0741AE9B08A802 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		79DB95E49611D8089647C47B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		999F8B69042C0FCBE07F55DB /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		BA24044319DCF06C00E9DB2F /* WPRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPRootViewController.h; sourceTree = "<group>"; };
+		BA24044419DCF06C00E9DB2F /* WPRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPRootViewController.m; sourceTree = "<group>"; };
+		BA24044619DCF35300E9DB2F /* WPTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPTabBarController.h; sourceTree = "<group>"; };
+		BA24044719DCF35300E9DB2F /* WPTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPTabBarController.m; sourceTree = "<group>"; };
+		BA24044919E2471200E9DB2F /* WPSitesListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPSitesListViewController.h; sourceTree = "<group>"; };
+		BA24044A19E2471200E9DB2F /* WPSitesListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPSitesListViewController.m; sourceTree = "<group>"; };
+		BA24044D19E2477000E9DB2F /* WPProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPProfileViewController.h; sourceTree = "<group>"; };
+		BA24044E19E2477000E9DB2F /* WPProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPProfileViewController.m; sourceTree = "<group>"; };
+		BA4F8DCC19C7739300C816E3 /* Watershed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Watershed.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA4F8DCF19C7739300C816E3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		BA4F8DD119C7739300C816E3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		BA4F8DD319C7739300C816E3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		BA4F8DD719C7739300C816E3 /* Watershed-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Watershed-Info.plist"; sourceTree = "<group>"; };
+		BA4F8DD919C7739300C816E3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		BA4F8DDB19C7739300C816E3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		BA4F8DDD19C7739300C816E3 /* Watershed-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Watershed-Prefix.pch"; sourceTree = "<group>"; };
+		BA4F8DEA19C7739300C816E3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		BA4F8DF019C7739300C816E3 /* WatershedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WatershedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA4F8DF119C7739300C816E3 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		BA4F8DF919C7739300C816E3 /* WatershedTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WatershedTests-Info.plist"; sourceTree = "<group>"; };
+		BA4F8DFB19C7739300C816E3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		BA4F8DFD19C7739300C816E3 /* WatershedTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WatershedTests.m; sourceTree = "<group>"; };
+		BA560DC519EE0A2300A48918 /* WPProfileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPProfileView.h; sourceTree = "<group>"; };
+		BA560DC619EE0A2300A48918 /* WPProfileView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPProfileView.m; sourceTree = "<group>"; };
+		BADC555B19F4CDDF000B2A64 /* WPProfileTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPProfileTableViewCell.h; sourceTree = "<group>"; };
+		BADC555C19F4CDDF000B2A64 /* WPProfileTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPProfileTableViewCell.m; sourceTree = "<group>"; };
+		BADC555E19F8A008000B2A64 /* WPProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPProfile.h; sourceTree = "<group>"; };
+		BADC555F19F8A008000B2A64 /* WPProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPProfile.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BA4F8DC919C7739300C816E3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA4F8DD219C7739300C816E3 /* CoreGraphics.framework in Frameworks */,
+				BA4F8DD419C7739300C816E3 /* UIKit.framework in Frameworks */,
+				BA4F8DD019C7739300C816E3 /* Foundation.framework in Frameworks */,
+				0BFD8558DD12470AB2409F6A /* libPods.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BA4F8DED19C7739300C816E3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA4F8DF219C7739300C816E3 /* XCTest.framework in Frameworks */,
+				BA4F8DF419C7739300C816E3 /* UIKit.framework in Frameworks */,
+				BA4F8DF319C7739300C816E3 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		652DF64101CB5226F8B44916 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				999F8B69042C0FCBE07F55DB /* Pods.debug.xcconfig */,
+				79DB95E49611D8089647C47B /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		BA24043E19DCEFC800E9DB2F /* Tasks */ = {
+			isa = PBXGroup;
+			children = (
+				06A8139319D911C900E3EB05 /* WPTasksListViewController.h */,
+				06A8139419D911C900E3EB05 /* WPTasksListViewController.m */,
+				06A8139619D91A7500E3EB05 /* WPTasksListView.h */,
+				06A8139719D91A7500E3EB05 /* WPTasksListView.m */,
+			);
+			name = Tasks;
+			sourceTree = "<group>";
+		};
+		BA24043F19DCEFDB00E9DB2F /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				06A8139919D91D8600E3EB05 /* UIColor+WPColors.h */,
+				06A8139A19D91D8600E3EB05 /* UIColor+WPColors.m */,
+				06305F4519D9274400BD2CE4 /* UIView+WPExtensions.h */,
+				06305F4619D9274400BD2CE4 /* UIView+WPExtensions.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		BA24044019DCEFFC00E9DB2F /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				27714CA719D9076F005344B0 /* WPLoginViewController.h */,
+				27714CA819D9076F005344B0 /* WPLoginViewController.m */,
+				27714CAA19D9182D005344B0 /* WPLoginView.h */,
+				27714CAB19D9182D005344B0 /* WPLoginView.m */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
+		BA24044119DCF01900E9DB2F /* Sites */ = {
+			isa = PBXGroup;
+			children = (
+				BA24044919E2471200E9DB2F /* WPSitesListViewController.h */,
+				BA24044A19E2471200E9DB2F /* WPSitesListViewController.m */,
+			);
+			name = Sites;
+			sourceTree = "<group>";
+		};
+		BA24044219DCF02C00E9DB2F /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				BA24044319DCF06C00E9DB2F /* WPRootViewController.h */,
+				BA24044419DCF06C00E9DB2F /* WPRootViewController.m */,
+				BA24044619DCF35300E9DB2F /* WPTabBarController.h */,
+				BA24044719DCF35300E9DB2F /* WPTabBarController.m */,
+			);
+			name = Root;
+			sourceTree = "<group>";
+		};
+		BA24044C19E2474A00E9DB2F /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				BA24044D19E2477000E9DB2F /* WPProfileViewController.h */,
+				BA24044E19E2477000E9DB2F /* WPProfileViewController.m */,
+				BA560DC519EE0A2300A48918 /* WPProfileView.h */,
+				BA560DC619EE0A2300A48918 /* WPProfileView.m */,
+				BADC555B19F4CDDF000B2A64 /* WPProfileTableViewCell.h */,
+				BADC555C19F4CDDF000B2A64 /* WPProfileTableViewCell.m */,
+				BADC555E19F8A008000B2A64 /* WPProfile.h */,
+				BADC555F19F8A008000B2A64 /* WPProfile.m */,
+			);
+			name = Profile;
+			sourceTree = "<group>";
+		};
+		BA4F8DC319C7739300C816E3 = {
+			isa = PBXGroup;
+			children = (
+				BA4F8DD519C7739300C816E3 /* Watershed */,
+				BA4F8DF719C7739300C816E3 /* WatershedTests */,
+				BA4F8DCE19C7739300C816E3 /* Frameworks */,
+				BA4F8DCD19C7739300C816E3 /* Products */,
+				652DF64101CB5226F8B44916 /* Pods */,
+			);
+			sourceTree = "<group>";
+		};
+		BA4F8DCD19C7739300C816E3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BA4F8DCC19C7739300C816E3 /* Watershed.app */,
+				BA4F8DF019C7739300C816E3 /* WatershedTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BA4F8DCE19C7739300C816E3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BA4F8DCF19C7739300C816E3 /* Foundation.framework */,
+				BA4F8DD119C7739300C816E3 /* CoreGraphics.framework */,
+				BA4F8DD319C7739300C816E3 /* UIKit.framework */,
+				BA4F8DF119C7739300C816E3 /* XCTest.framework */,
+				38F773F3CE0741AE9B08A802 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BA4F8DD519C7739300C816E3 /* Watershed */ = {
+			isa = PBXGroup;
+			children = (
+				BA24044219DCF02C00E9DB2F /* Root */,
+				BA24044C19E2474A00E9DB2F /* Profile */,
+				BA24044019DCEFFC00E9DB2F /* Login */,
+				BA24044119DCF01900E9DB2F /* Sites */,
+				BA24043E19DCEFC800E9DB2F /* Tasks */,
+				BA24043F19DCEFDB00E9DB2F /* Categories */,
+				BA4F8DEA19C7739300C816E3 /* Images.xcassets */,
+				27714CB019D93405005344B0 /* WPAppDelegate.h */,
+				27714CB119D93405005344B0 /* WPAppDelegate.m */,
+				BA4F8DD619C7739300C816E3 /* Supporting Files */,
+			);
+			path = Watershed;
+			sourceTree = "<group>";
+		};
+		BA4F8DD619C7739300C816E3 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BA4F8DD719C7739300C816E3 /* Watershed-Info.plist */,
+				BA4F8DD819C7739300C816E3 /* InfoPlist.strings */,
+				BA4F8DDB19C7739300C816E3 /* main.m */,
+				BA4F8DDD19C7739300C816E3 /* Watershed-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BA4F8DF719C7739300C816E3 /* WatershedTests */ = {
+			isa = PBXGroup;
+			children = (
+				BA4F8DFD19C7739300C816E3 /* WatershedTests.m */,
+				BA4F8DF819C7739300C816E3 /* Supporting Files */,
+			);
+			path = WatershedTests;
+			sourceTree = "<group>";
+		};
+		BA4F8DF819C7739300C816E3 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BA4F8DF919C7739300C816E3 /* WatershedTests-Info.plist */,
+				BA4F8DFA19C7739300C816E3 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BA4F8DCB19C7739300C816E3 /* Watershed */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BA4F8E0119C7739300C816E3 /* Build configuration list for PBXNativeTarget "Watershed" */;
+			buildPhases = (
+				D22910C603D04BEBA4C3EA0D /* Check Pods Manifest.lock */,
+				BA4F8DC819C7739300C816E3 /* Sources */,
+				BA4F8DC919C7739300C816E3 /* Frameworks */,
+				BA4F8DCA19C7739300C816E3 /* Resources */,
+				488CAAA9AEBF498B95636877 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Watershed;
+			productName = Watershed;
+			productReference = BA4F8DCC19C7739300C816E3 /* Watershed.app */;
+			productType = "com.apple.product-type.application";
+		};
+		BA4F8DEF19C7739300C816E3 /* WatershedTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BA4F8E0419C7739300C816E3 /* Build configuration list for PBXNativeTarget "WatershedTests" */;
+			buildPhases = (
+				BA4F8DEC19C7739300C816E3 /* Sources */,
+				BA4F8DED19C7739300C816E3 /* Frameworks */,
+				BA4F8DEE19C7739300C816E3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BA4F8DF619C7739300C816E3 /* PBXTargetDependency */,
+			);
+			name = WatershedTests;
+			productName = WatershedTests;
+			productReference = BA4F8DF019C7739300C816E3 /* WatershedTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BA4F8DC419C7739300C816E3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = WP;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = Blueprint;
+				TargetAttributes = {
+					BA4F8DEF19C7739300C816E3 = {
+						TestTargetID = BA4F8DCB19C7739300C816E3;
+					};
+				};
+			};
+			buildConfigurationList = BA4F8DC719C7739300C816E3 /* Build configuration list for PBXProject "Watershed" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BA4F8DC319C7739300C816E3;
+			productRefGroup = BA4F8DCD19C7739300C816E3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BA4F8DCB19C7739300C816E3 /* Watershed */,
+				BA4F8DEF19C7739300C816E3 /* WatershedTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BA4F8DCA19C7739300C816E3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA4F8DEB19C7739300C816E3 /* Images.xcassets in Resources */,
+				BA4F8DDA19C7739300C816E3 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BA4F8DEE19C7739300C816E3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA4F8DFC19C7739300C816E3 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		488CAAA9AEBF498B95636877 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D22910C603D04BEBA4C3EA0D /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BA4F8DC819C7739300C816E3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA24044819DCF35300E9DB2F /* WPTabBarController.m in Sources */,
+				06A8139819D91A7500E3EB05 /* WPTasksListView.m in Sources */,
+				06A8139519D911C900E3EB05 /* WPTasksListViewController.m in Sources */,
+				BA24044F19E2477000E9DB2F /* WPProfileViewController.m in Sources */,
+				BADC555D19F4CDDF000B2A64 /* WPProfileTableViewCell.m in Sources */,
+				BA24044519DCF06C00E9DB2F /* WPRootViewController.m in Sources */,
+				06A8139B19D91D8600E3EB05 /* UIColor+WPColors.m in Sources */,
+				06305F4719D9274400BD2CE4 /* UIView+WPExtensions.m in Sources */,
+				27714CB219D93405005344B0 /* WPAppDelegate.m in Sources */,
+				BA560DC719EE0A2300A48918 /* WPProfileView.m in Sources */,
+				27714CA919D9076F005344B0 /* WPLoginViewController.m in Sources */,
+				BADC556019F8A008000B2A64 /* WPProfile.m in Sources */,
+				27714CAC19D9182D005344B0 /* WPLoginView.m in Sources */,
+				BA24044B19E2471200E9DB2F /* WPSitesListViewController.m in Sources */,
+				BA4F8DDC19C7739300C816E3 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BA4F8DEC19C7739300C816E3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA4F8DFE19C7739300C816E3 /* WatershedTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BA4F8DF619C7739300C816E3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BA4F8DCB19C7739300C816E3 /* Watershed */;
+			targetProxy = BA4F8DF519C7739300C816E3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		BA4F8DD819C7739300C816E3 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BA4F8DD919C7739300C816E3 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		BA4F8DFA19C7739300C816E3 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BA4F8DFB19C7739300C816E3 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		BA4F8DFF19C7739300C816E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BA4F8E0019C7739300C816E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		BA4F8E0219C7739300C816E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 999F8B69042C0FCBE07F55DB /* Pods.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Watershed/Watershed-Prefix.pch";
+				INFOPLIST_FILE = "Watershed/Watershed-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		BA4F8E0319C7739300C816E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 79DB95E49611D8089647C47B /* Pods.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Watershed/Watershed-Prefix.pch";
+				INFOPLIST_FILE = "Watershed/Watershed-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		BA4F8E0519C7739300C816E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Watershed.app/Watershed";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Watershed/Watershed-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "WatershedTests/WatershedTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		BA4F8E0619C7739300C816E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Watershed.app/Watershed";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Watershed/Watershed-Prefix.pch";
+				INFOPLIST_FILE = "WatershedTests/WatershedTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BA4F8DC719C7739300C816E3 /* Build configuration list for PBXProject "Watershed" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BA4F8DFF19C7739300C816E3 /* Debug */,
+				BA4F8E0019C7739300C816E3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BA4F8E0119C7739300C816E3 /* Build configuration list for PBXNativeTarget "Watershed" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BA4F8E0219C7739300C816E3 /* Debug */,
+				BA4F8E0319C7739300C816E3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BA4F8E0419C7739300C816E3 /* Build configuration list for PBXNativeTarget "WatershedTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BA4F8E0519C7739300C816E3 /* Debug */,
+				BA4F8E0619C7739300C816E3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BA4F8DC419C7739300C816E3 /* Project object */;
+}
