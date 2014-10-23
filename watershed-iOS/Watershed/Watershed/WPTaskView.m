@@ -64,6 +64,7 @@
         completed.layer.cornerRadius = 10.0f;
         completed.layer.borderColor = [UIColor wp_blue].CGColor;
         completed.layer.borderWidth = 2.0f;
+        completed.titleLabel.font = [UIFont boldSystemFontOfSize:18];
         completed;
     }) wp_addToSuperview:self];
 
@@ -71,10 +72,23 @@
 
 - (void)setUpActions {
     [_completed setTitle:@"Mark as Complete" forState:UIControlStateNormal];
-    [_completed setTitle:@"Complete" forState:UIControlStateSelected];
     [_completed setTitleColor:[UIColor wp_blue] forState:UIControlStateNormal];
+    [_completed addTarget:self action:@selector(onclick) forControlEvents:UIControlEventTouchUpInside];
+}
 
-    [_completed setTitleColor:[UIColor greenColor] forState:UIControlStateHighlighted];
+-(void)onclick{
+    if (_completed.backgroundColor == [UIColor wp_green]) {
+        [_completed setTitle:@"Mark as Complete" forState:UIControlStateNormal];
+        [_completed setTitleColor:[UIColor wp_blue] forState:UIControlStateNormal];
+        _completed.layer.borderWidth = 2.0f;
+        NSLog(@"at the top bitch");
+    } else {
+        [_completed setTitle:@"Completed" forState:UIControlStateNormal];
+        _completed.backgroundColor = [UIColor wp_green];
+        [_completed setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        _completed.layer.borderWidth = 0;
+        NSLog(@"now at the bottom");
+    }
 }
 
 - (void)updateConstraints {
@@ -97,7 +111,7 @@
     }];
 
     [self.completed mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.taskDescription.mas_bottom).with.offset(stdMargin);
+        make.top.equalTo(self.taskDescription.mas_bottom).with.offset(stdMargin * 2);
         make.centerX.equalTo(@(self.center.x));
         make.height.equalTo(@50);
         make.width.equalTo(@200);
