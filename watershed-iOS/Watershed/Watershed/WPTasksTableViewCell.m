@@ -25,6 +25,7 @@
         [self updateConstraints];
         CGRect titleValueRect = CGRectMake(15, 5, 200, 30);
         titleValue = [[UILabel alloc] initWithFrame:titleValueRect];
+        titleValue.font = [UIFont boldSystemFontOfSize:16];
         [self.contentView addSubview:titleValue];
         
         CGRect descriptionValueRect = CGRectMake(15, 30, 200, 30);
@@ -50,7 +51,6 @@
     if (![t isEqualToString:_title]) {
         _title = [t copy];
         titleValue.text = _title;
-        titleValue.font = [UIFont boldSystemFontOfSize:16];
         titleValue.textColor = [UIColor wp_darkBlue];
     }
 }
