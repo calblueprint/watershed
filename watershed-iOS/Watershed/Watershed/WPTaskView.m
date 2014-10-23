@@ -60,7 +60,7 @@
     
     _completed = [({
         UILabel *completed = [[UILabel alloc] init];
-        completed.backgroundColor = [UIColor greenColor];
+//        completed.backgroundColor = [UIColor greenColor];
         completed;
     }) wp_addToSuperview:self];
 
@@ -72,33 +72,28 @@
 
 - (void)updateConstraints {
     [self.dueDate mas_makeConstraints:^(MASConstraintMaker *make) {
-        //        make.top.equalTo(self.title.mas_bottom).with.offset(10);
-        make.top.equalTo(@64);
-        //        make.leading.equalTo(@10);
+        make.top.equalTo(@(topMargin));
         make.width.equalTo(@125);
-//        make.leading.equalTo(self.title.mas_right).with.offset(10);
-        make.trailing.equalTo(@(-15));
+        make.trailing.equalTo(@(-(stdMargin)));
     }];
     
     [self.title mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@64);
-        make.leading.equalTo(@15);
-        make.trailing.equalTo(self.dueDate.mas_left).with.offset(15);
+        make.top.equalTo(@(topMargin));
+        make.leading.equalTo(@(stdMargin));
+        make.trailing.equalTo(self.dueDate.mas_left).with.offset(stdMargin);
     }];
 
     [self.taskDescription mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.dueDate.mas_bottom).with.offset(15);
-        make.leading.equalTo(@15);
-        make.trailing.equalTo(@(-15));
+        make.top.equalTo(self.dueDate.mas_bottom).with.offset(stdMargin);
+        make.leading.equalTo(@(stdMargin));
+        make.trailing.equalTo(@(-(stdMargin)));
     }];
 
     [self.completed mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.taskDescription.mas_bottom).with.offset(15);
-        make.leading.equalTo(@0);
-        make.trailing.equalTo(@0);
-        make.height.equalTo(@15);
+        make.top.equalTo(self.taskDescription.mas_bottom).with.offset(stdMargin);
+        make.height.equalTo(@(stdMargin));
     }];
-    
+
      [super updateConstraints];
 }
 

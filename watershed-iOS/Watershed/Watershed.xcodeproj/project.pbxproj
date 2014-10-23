@@ -62,6 +62,7 @@
 		06AE1DC819EE030600F22250 /* WPAllTasksTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPAllTasksTableViewController.m; sourceTree = "<group>"; };
 		06AE1DD019EE0C5900F22250 /* WPMyTasksTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPMyTasksTableViewController.h; sourceTree = "<group>"; };
 		06AE1DD119EE0C5900F22250 /* WPMyTasksTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPMyTasksTableViewController.m; sourceTree = "<group>"; };
+		06AF931619F8B80E00B615CF /* WPProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WPProperties.h; sourceTree = "<group>"; };
 		06B1B00619F4E77A007FC3D5 /* WPTaskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPTaskViewController.h; sourceTree = "<group>"; };
 		06B1B00719F4E77A007FC3D5 /* WPTaskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPTaskViewController.m; sourceTree = "<group>"; };
 		06B1B00919F4E82B007FC3D5 /* WPTaskView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPTaskView.h; sourceTree = "<group>"; };
@@ -125,6 +126,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		06AF931519F8B72B00B615CF /* Additional */ = {
+			isa = PBXGroup;
+			children = (
+				06B1B00C19F4F241007FC3D5 /* UIExtensions.h */,
+				06AF931619F8B80E00B615CF /* WPProperties.h */,
+			);
+			name = Additional;
+			sourceTree = "<group>";
+		};
 		652DF64101CB5226F8B44916 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -162,7 +172,6 @@
 				06A8139A19D91D8600E3EB05 /* UIColor+WPColors.m */,
 				06305F4519D9274400BD2CE4 /* UIView+WPExtensions.h */,
 				06305F4619D9274400BD2CE4 /* UIView+WPExtensions.m */,
-				06B1B00C19F4F241007FC3D5 /* UIExtensions.h */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -242,6 +251,7 @@
 		BA4F8DD519C7739300C816E3 /* Watershed */ = {
 			isa = PBXGroup;
 			children = (
+				06AF931519F8B72B00B615CF /* Additional */,
 				BA24044219DCF02C00E9DB2F /* Root */,
 				BA24044C19E2474A00E9DB2F /* Profile */,
 				BA24044019DCEFFC00E9DB2F /* Login */,

@@ -12,5 +12,6 @@
 #import "UIView+WPExtensions.h"
 #import "UIColor+WPColors.h"
 #import "Masonry.h"
+#import "WPProperties.h"
 
 #endif
