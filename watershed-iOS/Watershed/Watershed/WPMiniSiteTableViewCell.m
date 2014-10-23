@@ -89,6 +89,8 @@ const static float CELL_HEIGHT = 86.0f;
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
         make.bottom.equalTo(@0);
+        make.centerX.equalTo(self.mas_centerX);
+        make.centerY.equalTo(self.mas_centerY);
     }];
     
     [self.photoView mas_updateConstraints:^(MASConstraintMaker *make) {
