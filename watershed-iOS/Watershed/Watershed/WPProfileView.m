@@ -33,6 +33,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
+        [self createProfiles];
         [self createSubviews];
         //[self setUpActions];
         [self updateConstraints];
@@ -45,7 +46,7 @@
 
 - (void)createProfiles {
     self.profile = [[WPProfile alloc] init];
-    [self.profile setProfilePicture:@"max"];
+    [self.profile setProfilePicture:@"max.png"];
     [self.profile setUserId:[NSNumber numberWithInt:5]];
     [self.profile setName:@"Max Wolffe"];
     [self.profile setPhoneNumber:@"9162128793"];
@@ -55,11 +56,9 @@
 
 #pragma mark - View Hierarchy
 
--(void)setRoundedView:(UIImageView *)roundedView toDiameter:(float)newSize;
+-(void)setRoundedView:(UIImageView *)roundedView;
 {
     CGPoint saveCenter = roundedView.center;
-    CGRect newFrame = CGRectMake(roundedView.frame.origin.x, roundedView.frame.origin.y, newSize, newSize);
-    roundedView.frame = newFrame;
     roundedView.layer.borderWidth = 1.0f;
     roundedView.layer.borderColor = [UIColor blackColor].CGColor;
     roundedView.layer.cornerRadius = 65/2;
@@ -78,6 +77,7 @@
             UILabel *infoLabel = [[UILabel alloc] init];
             infoLabel.text = self.profile.email;
             [cell setInfoLabel:infoLabel];
+            
             break;
         }
         case 1: {
@@ -103,7 +103,7 @@
     _profilePictureView = [[UIImageView alloc] init];
     _profilePictureView.contentMode = UIViewContentModeScaleAspectFit;
     _profilePictureView.clipsToBounds = YES;
-    [self setRoundedView:_profilePictureView toDiameter:10];
+    [self setRoundedView:_profilePictureView];
     [_profilePictureView setImage:[UIImage imageNamed:self.profile.profilePicture]];
     [self addSubview:_profilePictureView];
 
@@ -114,17 +114,41 @@
     [self addSubview:_nameLabel];
     
     _infoTableView = [[UITableView alloc] init];
+    [self addSubview:_infoTableView];
 
     
 }
 
 - (void)updateConstraints {
+    
+    [self.profilePictureView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@79);
+        make.centerX.equalTo(@0);
+        make.height.equalTo(@65);
+        make.width.equalTo(@65);
+    }];
 
     [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.profilePictureView.mas_bottom).with.offset(7);
         make.centerX.equalTo(@0);
         make.height.equalTo(@50);
+        make.width.equalTo(@100);
+
     }];
+    
+    [self.infoTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.nameLabel.mas_bottom).with.offset(10);
+        make.leading.equalTo(@0);
+        make.trailing.equalTo(@0);
+        make.bottom.equalTo(@0);
+    }];
+    
+//    [self.infoTableView.subviews mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(@0);
+//        make.leading.equalTo(@0);
+//        make.trailing.equalTo(@0);
+//        make.bottom.equalTo(@0);
+//    }];
 
 //    [self.locationIconImageView setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
 //    [self.locationIconImageView setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisVertical];
@@ -137,7 +161,19 @@
     [super updateConstraints];
 }
 
-#pragma mark 
+#pragma mark - Table View Protocols
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 5;
+}
 
 @end

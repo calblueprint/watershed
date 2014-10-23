@@ -7,6 +7,7 @@
 //
 
 #import "WPProfileTableViewCell.h"
+#import "Masonry.h"
 
 @implementation WPProfileTableViewCell
 
@@ -27,5 +28,24 @@
     return self;
 }
 
+- (void)addSubviews {
+    
+}
 
+- (void)updateConstraints {
+    
+    [self.iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@0);
+        make.height.equalTo(@30);
+        make.width.equalTo(@30);
+    }];
+    
+    [self.infoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.iconImageView.mas_top);
+        make.leading.equalTo(self.iconImageView.mas_right).with.offset(5);
+        make.height.equalTo(@50);
+        make.width.equalTo(@100);
+        
+    }];
+}
 @end

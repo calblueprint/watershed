@@ -14,4 +14,6 @@
 @property UIImageView *iconImageView;
 @property UILabel *infoLabel;
 
+- (void)addSubviews;
+
 @end
