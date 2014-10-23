@@ -68,7 +68,6 @@ public class MainActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.e("What0", "da fuq0");
 
         actionBar = getActionBar();
         if (actionBar == null){
@@ -92,9 +91,7 @@ public class MainActivity extends ActionBarActivity
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         ActionBar.TabListener tabListener = new ActionBar.TabListener() {
             public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-                Log.e("What", Integer.toString(tab.getPosition()));
-                viewPager.setCurrentItem(tab.getPosition(), false);
-                Log.e("What1", "da fuq");
+                viewPager.setCurrentItem(tab.getPosition());
             }
             public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
                 // hide the given tab
