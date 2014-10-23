@@ -29,7 +29,8 @@
 }
 
 - (void)addSubviews {
-    
+    [self.contentView addSubview:self.iconImageView];
+    [self.contentView addSubview:self.infoLabel];
 }
 
 - (void)updateConstraints {

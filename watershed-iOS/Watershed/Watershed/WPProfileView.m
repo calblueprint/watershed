@@ -93,7 +93,8 @@
             //do nothing
         }
     }
-
+    
+    [cell addSubviews];
     return cell;
 }
 
