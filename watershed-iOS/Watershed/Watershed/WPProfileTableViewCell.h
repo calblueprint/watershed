@@ -12,6 +12,6 @@
 @interface WPProfileTableViewCell : UITableViewCell
 
 @property UIImageView *iconImageView;
-@property UILabel *;
+@property UILabel *infoLabel;
 
 @end

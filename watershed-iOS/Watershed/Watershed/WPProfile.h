@@ -16,5 +16,6 @@
 @property NSString *name;
 @property NSString *phoneNumber;
 @property NSInteger *role;
+@property NSString *location;
 
 @end

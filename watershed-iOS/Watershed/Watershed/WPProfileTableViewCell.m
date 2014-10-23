@@ -16,32 +16,16 @@
     // Configure the view for the selected state
 }
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier profile:(WPProfile *)profile {
+- (id)initWithStyle:(UITableViewCellStyle)style
+    reuseIdentifier:(NSString *)reuseIdentifier {
     
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self)
     {
         [self updateConstraints];
-        self.profile = profile;
-        [self setAttributes];
     }
     return self;
 }
 
-- (void)setAttributes {
-    
-    UIImageView *profilePicture = [[UIImageView alloc] initWithImage:[UIImage imageNamed:self.profile.profilePicture]];
-    [self.contentView addSubview:profilePicture];
-    
-    UILabel *nameLabel = [[UILabel alloc] init];
-    nameLabel.text = self.profile.name;
-    
-    UILabel *emailLabel = [[UILabel alloc] init];
-    emailLabel.text = self.profile.email;
-    
-    UILabel *phoneLabel = [[UILabel alloc] init];
-    phoneLabel.text = self.profile.phoneNumber;
-    
-}
 
 @end

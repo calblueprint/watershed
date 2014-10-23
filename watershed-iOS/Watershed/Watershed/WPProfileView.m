@@ -19,6 +19,9 @@
 @interface WPProfileView ()
 
 @property UITableView *infoTableView;
+@property WPProfile *profile;
+@property UIImageView *profilePictureView;
+@property UILabel *nameLabel;
 
 @end
 
@@ -34,16 +37,20 @@
         //[self setUpActions];
         [self updateConstraints];
     }
+    self.infoTableView.delegate = self;
+    self.infoTableView.dataSource = self;
+    [self.infoTableView reloadData];
     return self;
 }
 
 - (void)createProfiles {
-    WPProfile *maxWolffe = [[WPProfile alloc] init];
-    [maxWolffe setProfilePicture:@"max"];
-    [maxWolffe setUserId:[NSNumber numberWithInt:5]];
-    [maxWolffe setName:@"Max Wolffe"];
-    [maxWolffe setPhoneNumber:@"9162128793"];
-    [maxWolffe setEmail:@"max@millman.com"];
+    self.profile = [[WPProfile alloc] init];
+    [self.profile setProfilePicture:@"max"];
+    [self.profile setUserId:[NSNumber numberWithInt:5]];
+    [self.profile setName:@"Max Wolffe"];
+    [self.profile setPhoneNumber:@"9162128793"];
+    [self.profile setEmail:@"max@millman.com"];
+    [self.profile setLocation:@"123 Millman Way Berkeley, CA 82918"];
 }
 
 #pragma mark - View Hierarchy
@@ -59,54 +66,54 @@
     roundedView.center = saveCenter;
 }
 
--(void)populateTableView {
-
-}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WPProfileTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:allTasksIdentifier forIndexPath:indexPath];
-    
-    NSDictionary *rowData = self.infoArray[indexPath.row];
-    cell.icon = rowData[@"Icon"];
-    cell.text = rowData[@"Text"];
-    return cell;
+    NSString *reuseIdentifier = @"WPProfileCell";
+    WPProfileTableViewCell *cell = [[WPProfileTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
+    switch (indexPath.row) {
+        case 0: {
+            FAKIonIcons *mailIcon = [FAKIonIcons ios7EmailOutlineIconWithSize:17];
+            [cell setIconImageView:[[UIImageView alloc] initWithImage:[mailIcon imageWithSize:CGSizeMake(15, 15)]]];
+            
+            UILabel *infoLabel = [[UILabel alloc] init];
+            infoLabel.text = self.profile.email;
+            [cell setInfoLabel:infoLabel];
+            break;
+        }
+        case 1: {
+            FAKIonIcons *locationIcon = [FAKIonIcons ios7LocationOutlineIconWithSize:20];
+            [cell setIconImageView:[[UIImageView alloc] initWithImage:[locationIcon imageWithSize:CGSizeMake(20, 20)]]];
+            
+            UILabel *infoLabel = [[UILabel alloc] init];
+            infoLabel.text = self.profile.location;
+            [cell setInfoLabel:infoLabel];
+            break;
+        }
+        default: {
+            //do nothing
+        }
+    }
 
+    return cell;
 }
 
 
 - (void)createSubviews {
 
-    UIImageView *profilePictureView = [[UIImageView alloc] init];
-    profilePictureView.contentMode = UIViewContentModeScaleAspectFit;
-    profilePictureView.clipsToBounds = YES;
-    [self setRoundedView:profilePictureView toDiameter:10];
-    [profilePictureView setImage:[UIImage imageNamed:@"max.png"]];
-    _profilePictureView = profilePictureView;
-    [self addSubview:profilePictureView];
+    _profilePictureView = [[UIImageView alloc] init];
+    _profilePictureView.contentMode = UIViewContentModeScaleAspectFit;
+    _profilePictureView.clipsToBounds = YES;
+    [self setRoundedView:_profilePictureView toDiameter:10];
+    [_profilePictureView setImage:[UIImage imageNamed:self.profile.profilePicture]];
+    [self addSubview:_profilePictureView];
 
 
     _nameLabel = [[UILabel alloc] init];
-    _nameLabel.text = @"Max Wolffe";
+    _nameLabel.text = self.profile.name;
     _nameLabel.textColor = [UIColor blackColor];
     [self addSubview:_nameLabel];
     
     _infoTableView = [[UITableView alloc] init];
-    
-    FAKIonIcons *locationIcon = [FAKIonIcons ios7LocationOutlineIconWithSize:20];
-    _locationIconImageView = [[UIImageView alloc] init];
-    [_locationIconImageView setImage:[locationIcon imageWithSize:CGSizeMake(20, 20)]];
-    [self addSubview:_locationIconImageView];
-    
-    _locationLabel = [[UILabel alloc] init];
-    _locationLabel.text = @"123 Cloyne Way Berkeley, CA 94709";
-    _locationLabel.textColor = [UIColor blackColor];
-    _locationLabel.font = [UIFont fontWithName:@"Helvetica" size:10];
-    [self addSubview:_locationLabel];
-    
-    FAKIonIcons *mailIcon = [FAKIonIcons ios7EmailOutlineIconWithSize:17];
-    _mailIconImageView = [[UIImageView alloc] init];
-    [_mailIconImageView setImage:[mailIcon imageWithSize:CGSizeMake(15, 15)]];
-    [self addSubview:_mailIconImageView];
 
     
 }
@@ -119,16 +126,18 @@
         make.height.equalTo(@50);
     }];
 
-    [self.locationIconImageView setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
-    [self.locationIconImageView setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisVertical];
-    [self.locationIconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@215);
-        make.leading.equalTo(@55);
-    }];
+//    [self.locationIconImageView setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
+//    [self.locationIconImageView setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisVertical];
+//    [self.locationIconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(@215);
+//        make.leading.equalTo(@55);
+//    }];
     
 
     [super updateConstraints];
 }
+
+#pragma mark 
 
 
 @end
