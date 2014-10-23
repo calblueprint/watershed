@@ -21,24 +21,28 @@ static const int VIEW_HEIGHT = 16;
 {
     self = [super init];
     if (self) {
-        UIImageView *iconView = [[UIImageView alloc] init];
-        [iconView setImage:icon];
-        [iconView setContentMode:UIViewContentModeScaleAspectFill];
-        [iconView setClipsToBounds:YES];
-        [self addSubview:iconView];
-        _iconView = iconView;
+ 
+        _iconView = [({
+            UIImageView *iconView = [[UIImageView alloc] init];
+            [iconView setImage:icon];
+            [iconView setContentMode:UIViewContentModeScaleAspectFill];
+            [iconView setClipsToBounds:YES];
+            iconView;
+        }) wp_addToSuperview:self];
         
-        UILabel *label = [[UILabel alloc] init];
-        label.text = text;
-        label.font = [UIFont systemFontOfSize:14.0];
-        label.lineBreakMode = NSLineBreakByWordWrapping;
-        label.numberOfLines = 0;
-        [self addSubview:label];
-        [label setPreferredMaxLayoutWidth:[[UIScreen mainScreen] bounds].size.width - [[UIView wp_stylePadding] floatValue]*4];
-        _label = label;
+        _label = [({
+            UILabel *label = [[UILabel alloc] init];
+            label.text = text;
+            label.font = [UIFont systemFontOfSize:14.0];
+            label.lineBreakMode = NSLineBreakByWordWrapping;
+            label.numberOfLines = 0;
+            [label setPreferredMaxLayoutWidth:[[UIScreen mainScreen] bounds].size.width - [[UIView wp_stylePadding] floatValue]*4];
+            label;
+        }) wp_addToSuperview:self];
         
-        self.alpha = 0.3;
-        
+        // updateConstraints needs to be called
+        // There is weird stuff going on with the
+        // dynamic label heights
         [self updateConstraints];
     }
     return self;

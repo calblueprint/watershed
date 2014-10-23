@@ -53,78 +53,88 @@ static int COVER_PHOTO_TRANS = 0;
 
 - (void)createSubviews {
     
-    UIScrollView *miniSiteScrollView = [[UIScrollView alloc] init];
-    miniSiteScrollView.delegate = self;
-    _miniSiteScrollView = miniSiteScrollView;
-    [self addSubview:miniSiteScrollView];
+    _miniSiteScrollView = [({
+        UIScrollView *miniSiteScrollView = [[UIScrollView alloc] init];
+        miniSiteScrollView.delegate = self;
+        miniSiteScrollView;
+    }) wp_addToSuperview:self];
     
-    UITableView *miniSiteTableView = [[UITableView alloc] init];
-    miniSiteTableView.backgroundColor = [UIColor whiteColor];
-    [miniSiteTableView setSeparatorInset:UIEdgeInsetsZero];
-    miniSiteTableView.separatorColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1];
-    miniSiteTableView.scrollEnabled = NO;
-    _miniSiteTableView = miniSiteTableView;
-    [self.miniSiteScrollView addSubview:miniSiteTableView];
+    _miniSiteTableView = [({
+        UITableView *miniSiteTableView = [[UITableView alloc] init];
+        miniSiteTableView.backgroundColor = [UIColor whiteColor];
+        [miniSiteTableView setSeparatorInset:UIEdgeInsetsZero];
+        miniSiteTableView.separatorColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1];
+        miniSiteTableView.scrollEnabled = NO;
+        miniSiteTableView;
+    }) wp_addToSuperview:self.miniSiteScrollView];
     
-    UIView *tableHeaderView = [[UIView alloc] init];
-    _tableHeaderView = tableHeaderView;
-    [self.miniSiteScrollView addSubview:tableHeaderView];
+    _tableHeaderView = [({
+        UIView *tableHeaderView = [[UIView alloc] init];
+        tableHeaderView;
+    }) wp_addToSuperview:self.miniSiteScrollView];
     
-    UILabel *titleLabel = [[UILabel alloc] init];
-    titleLabel.text = @"Watershed";
-    titleLabel.font = [UIFont boldSystemFontOfSize:25.0];
-    titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    titleLabel.numberOfLines = 0;
-    _titleLabel = titleLabel;
-    [self.tableHeaderView addSubview:titleLabel];
+    _titleLabel = [({
+        UILabel *titleLabel = [[UILabel alloc] init];
+        titleLabel.text = @"Watershed";
+        titleLabel.font = [UIFont boldSystemFontOfSize:25.0];
+        titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        titleLabel.numberOfLines = 0;
+        titleLabel;
+    }) wp_addToSuperview:self.tableHeaderView];
     
-    UILabel *descriptionLabel = [[UILabel alloc] init];
-    descriptionLabel.text = @"Cal Blueprint is a student-run UC Berkeley organization devoted to matching the skills of its members to our desire to see social good enacted in our community. Each semester, teams of 4-5 students work closely with a non-profit to bring technological solutions to the problems they face every day.";
-    descriptionLabel.font = [UIFont systemFontOfSize:14.0];
-    descriptionLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    descriptionLabel.numberOfLines = 0;
-    _descriptionLabel = descriptionLabel;
-    [self.tableHeaderView addSubview:descriptionLabel];
+    _descriptionLabel = [({
+        UILabel *descriptionLabel = [[UILabel alloc] init];
+        descriptionLabel.text = @"Cal Blueprint is a student-run UC Berkeley organization devoted to matching the skills of its members to our desire to see social good enacted in our community. Each semester, teams of 4-5 students work closely with a non-profit to bring technological solutions to the problems they face every day.";
+        descriptionLabel.font = [UIFont systemFontOfSize:14.0];
+        descriptionLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        descriptionLabel.numberOfLines = 0;
+        descriptionLabel;
+    }) wp_addToSuperview:self.tableHeaderView];
     
-    UIView *headingLineBreak = [[UIView alloc] init];
-    headingLineBreak.backgroundColor = [UIColor blackColor];
-    headingLineBreak.alpha = 0.2;
-    _headingLineBreak = headingLineBreak;
-    [self.tableHeaderView addSubview:headingLineBreak];
+    _headingLineBreak = [({
+        UIView *headingLineBreak = [[UIView alloc] init];
+        headingLineBreak.backgroundColor = [UIColor blackColor];
+        headingLineBreak.alpha = 0.2;
+        headingLineBreak;
+    }) wp_addToSuperview:self.tableHeaderView];
     
-    WPLabeledIcon *addressLabel = [[WPLabeledIcon alloc] initWithText:@"123 Mark Miyashita Drive, Berkeley, CA 94720" icon:[UIImage imageNamed:@"MapMarkerIcon"]];
-    addressLabel.alpha = 1.0;
+    _addressLabel = [({
+        WPLabeledIcon *addressLabel = [[WPLabeledIcon alloc] initWithText:@"123 Mark Miyashita Drive, Berkeley, CA 94720" icon:[UIImage imageNamed:@"MapMarkerIcon"]];
+        addressLabel;
+    }) wp_addToSuperview:self.tableHeaderView];
     
-    _addressLabel = addressLabel;
-    [self.tableHeaderView addSubview:addressLabel];
+    _siteCountLabel = [({
+        WPLabeledIcon *siteCountLabel = [[WPLabeledIcon alloc] initWithText:@"10 mini sites" icon:[UIImage imageNamed:@"TreeIcon"]];
+        siteCountLabel;
+    }) wp_addToSuperview:self.tableHeaderView];
     
-    WPLabeledIcon *siteCountLabel = [[WPLabeledIcon alloc] initWithText:@"10 mini sites" icon:[UIImage imageNamed:@"TreeIcon"]];
-    siteCountLabel.alpha = 1.0;
-    _siteCountLabel = siteCountLabel;
-    [self.tableHeaderView addSubview:siteCountLabel];
+    _tableViewShadowOverlay = [({
+        UIImageView *tableViewShadowOverlay = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ShadowOverlay"]];
+        [tableViewShadowOverlay setContentMode:UIViewContentModeScaleToFill];
+        [tableViewShadowOverlay setClipsToBounds:YES];
+        tableViewShadowOverlay.alpha = 0.25;
+        tableViewShadowOverlay;
+    }) wp_addToSuperview:self.tableHeaderView];
     
-    UIImageView *tableViewShadowOverlay = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ShadowOverlay"]];
-    [tableViewShadowOverlay setContentMode:UIViewContentModeScaleToFill];
-    [tableViewShadowOverlay setClipsToBounds:YES];
-    tableViewShadowOverlay.alpha = 0.25;
-    _tableViewShadowOverlay = tableViewShadowOverlay;
-    [self.tableHeaderView addSubview:tableViewShadowOverlay];
+    _coverPhotoView = [({
+        UIImage *coverPhoto = [UIImage imageNamed:@"SampleCoverPhoto2"];
+        _originalCoverPhoto = coverPhoto;
+        UIImageView *coverPhotoView = [[UIImageView alloc] initWithImage:coverPhoto];
+        [coverPhotoView setContentMode:UIViewContentModeScaleAspectFill];
+        [coverPhotoView setClipsToBounds:YES];
+        coverPhotoView;
+    }) wp_addToSuperview:self];
     
-    UIImage *coverPhoto = [UIImage imageNamed:@"SampleCoverPhoto2"];
-    _originalCoverPhoto = coverPhoto;
-    UIImageView *coverPhotoView = [[UIImageView alloc] initWithImage:coverPhoto];
-    [coverPhotoView setContentMode:UIViewContentModeScaleAspectFill];
-    [coverPhotoView setClipsToBounds:YES];
-    _coverPhotoView = coverPhotoView;
     [self generateBlurredPhotos];
-    [self addSubview:coverPhotoView];
     
-    UIImageView *navbarShadowOverlay = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ShadowOverlay"]];
-    [navbarShadowOverlay setContentMode:UIViewContentModeScaleToFill];
-    [navbarShadowOverlay setClipsToBounds:YES];
-    _navbarShadowOverlay = navbarShadowOverlay;
-    [self addSubview:navbarShadowOverlay];
+    _navbarShadowOverlay = [({
+        UIImageView *navbarShadowOverlay = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ShadowOverlay"]];
+        [navbarShadowOverlay setContentMode:UIViewContentModeScaleToFill];
+        [navbarShadowOverlay setClipsToBounds:YES];
+        navbarShadowOverlay;
+    }) wp_addToSuperview:self];
     
+    [self setNeedsUpdateConstraints];
 }
 
 - (void)setUpActions {
