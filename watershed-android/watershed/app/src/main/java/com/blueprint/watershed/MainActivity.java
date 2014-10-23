@@ -10,6 +10,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -78,7 +79,7 @@ public class MainActivity extends ActionBarActivity
         initializeFragments();
         initializeTabs();
 
-        //initializeNavigationDrawer();
+        initializeNavigationDrawer();
 
         SharedPreferences prefs = getSharedPreferences(PREFERENCES, 0);
         authToken = prefs.getString("auth_token", "none");
@@ -103,6 +104,7 @@ public class MainActivity extends ActionBarActivity
 
         viewPager.setAdapter(mAdapter);
         actionBar.setHomeButtonEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         actionBar.addTab(
                 actionBar.newTab()
@@ -174,31 +176,31 @@ public class MainActivity extends ActionBarActivity
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
     }
 
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
-//    private void initializeNavigationDrawer() {
-//        resideMenu = new ResideMenu(this);
-//        resideMenu.attachToActivity(this);
-//        resideMenu.setShadowVisible(false);
-//        resideMenu.setDirectionDisable(ResideMenu.DIRECTION_RIGHT);
-//        resideMenu.setBackground(R.drawable.golden_gate_bridge);
-//
-//        String titles[] = { "Tasks", "Sites", "Activity Log", "Profile", "About", "Logout" };
-//        int icon[] = { R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo };
-//        menuItems = new ArrayList<ResideMenuItem>();
-//        for (int i = 0; i < titles.length; i++) {
-//            ResideMenuItem item = new ResideMenuItem(this, icon[i], titles[i]);
-//            item.setOnClickListener(this);
-//            resideMenu.addMenuItem(item, ResideMenu.DIRECTION_LEFT);
-//            menuItems.add(item);
-//        }
-//
-//        findViewById(R.id.title_bar_left_menu).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
-//            }
-//        });
-//    }
+    private void initializeNavigationDrawer() {
+        resideMenu = new ResideMenu(this);
+        resideMenu.attachToActivity(this);
+        resideMenu.setShadowVisible(false);
+        //resideMenu.setDirectionDisable(ResideMenu.DIRECTION_RIGHT);
+        resideMenu.setBackground(R.drawable.golden_gate_bridge);
+        String titles[] = { "Tasks", "Sites", "Activity Log", "Profile", "About", "Logout" };
+        int icon[] = { R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo };
+        menuItems = new ArrayList<ResideMenuItem>();
+        for (int i = 0; i < titles.length; i++) {
+            ResideMenuItem item = new ResideMenuItem(this, icon[i], titles[i]);
+            item.setOnClickListener(this);
+            resideMenu.addMenuItem(item, ResideMenu.DIRECTION_LEFT);
+            menuItems.add(item);
+        }
+    }
 
     // View on click listener
     @Override
