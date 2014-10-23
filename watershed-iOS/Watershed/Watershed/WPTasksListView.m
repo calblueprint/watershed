@@ -74,9 +74,9 @@
 - (void)updateConstraints {
     
     [self.segmentedTasksTabBarView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@64);
-        make.leading.equalTo(@10);
-        make.trailing.equalTo(@(-10));
+        make.top.equalTo(@(topMargin));
+        make.leading.equalTo(@(stdMargin));
+        make.trailing.equalTo(@(-(stdMargin)));
         make.height.equalTo(@50);
     }];
     

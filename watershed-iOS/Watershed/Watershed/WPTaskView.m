@@ -14,7 +14,8 @@
 @property (nonatomic) UILabel *title;
 @property (nonatomic) UILabel *taskDescription;
 @property (nonatomic) UILabel *dueDate;
-@property (nonatomic) UILabel *completed;
+//@property (nonatomic) UILabel *completed;
+@property (nonatomic) UIButton *completed;
 
 @end
 
@@ -59,15 +60,21 @@
     }) wp_addToSuperview:self];
     
     _completed = [({
-        UILabel *completed = [[UILabel alloc] init];
-//        completed.backgroundColor = [UIColor greenColor];
+        UIButton *completed = [[UIButton alloc] init];
+        completed.layer.cornerRadius = 10.0f;
+        completed.layer.borderColor = [UIColor wp_blue].CGColor;
+        completed.layer.borderWidth = 2.0f;
         completed;
     }) wp_addToSuperview:self];
 
 }
 
 - (void)setUpActions {
+    [_completed setTitle:@"Mark as Complete" forState:UIControlStateNormal];
+    [_completed setTitle:@"Complete" forState:UIControlStateSelected];
+    [_completed setTitleColor:[UIColor wp_blue] forState:UIControlStateNormal];
 
+    [_completed setTitleColor:[UIColor greenColor] forState:UIControlStateHighlighted];
 }
 
 - (void)updateConstraints {
@@ -76,7 +83,7 @@
         make.width.equalTo(@125);
         make.trailing.equalTo(@(-(stdMargin)));
     }];
-    
+
     [self.title mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(topMargin));
         make.leading.equalTo(@(stdMargin));
@@ -91,7 +98,9 @@
 
     [self.completed mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.taskDescription.mas_bottom).with.offset(stdMargin);
-        make.height.equalTo(@(stdMargin));
+        make.centerX.equalTo(@(self.center.x));
+        make.height.equalTo(@50);
+        make.width.equalTo(@200);
     }];
 
      [super updateConstraints];
