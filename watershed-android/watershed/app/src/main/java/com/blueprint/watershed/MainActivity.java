@@ -91,7 +91,7 @@ public class MainActivity extends ActionBarActivity
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         ActionBar.TabListener tabListener = new ActionBar.TabListener() {
             public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-                // show the given tab
+                viewPager.setCurrentItem(tab.getPosition());
             }
             public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
                 // hide the given tab
@@ -104,12 +104,14 @@ public class MainActivity extends ActionBarActivity
         viewPager.setAdapter(mAdapter);
         actionBar.setHomeButtonEnabled(false);
 
-        for (int i = 0; i < 3; i++) {
-            actionBar.addTab(
-                    actionBar.newTab()
-                            .setText("PartyTab " + (i + 1))
-                            .setTabListener(tabListener));
-        }
+        actionBar.addTab(
+                actionBar.newTab()
+                        .setText("Your Tasks")
+                        .setTabListener(tabListener));
+        actionBar.addTab(
+                actionBar.newTab()
+                        .setText("All Tasks")
+                        .setTabListener(tabListener));
 
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -141,7 +143,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     private void initializeFragments() {
-        mtaskFragment = new TaskFragment();
+        mtaskFragment = TaskFragment.newInstance(0);
         FragmentManager fragmentManager = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.add(R.id.container, mtaskFragment);
