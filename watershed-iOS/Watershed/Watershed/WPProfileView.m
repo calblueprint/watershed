@@ -153,10 +153,7 @@
 
 //    [self.locationIconImageView setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
 //    [self.locationIconImageView setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisVertical];
-//    [self.locationIconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(@215);
-//        make.leading.equalTo(@55);
-//    }];
+
     
 
     [super updateConstraints];

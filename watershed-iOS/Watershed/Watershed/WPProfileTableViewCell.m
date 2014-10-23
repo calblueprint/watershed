@@ -23,7 +23,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self)
     {
-        [self updateConstraints];
+        [self setNeedsUpdateConstraints];
     }
     return self;
 }
@@ -34,6 +34,7 @@
 }
 
 - (void)updateConstraints {
+    NSLog(@"hey");
     
     [self.iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@0);
@@ -43,10 +44,11 @@
     
     [self.infoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.iconImageView.mas_top);
-        make.leading.equalTo(self.iconImageView.mas_right).with.offset(5);
+        make.left.equalTo(self.iconImageView.mas_right).with.offset(5);
         make.height.equalTo(@50);
         make.width.equalTo(@100);
-        
     }];
+    
+    [super updateConstraints];
 }
 @end
