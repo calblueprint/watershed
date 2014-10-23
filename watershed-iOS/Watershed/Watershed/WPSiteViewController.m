@@ -20,8 +20,7 @@
 
 @implementation WPSiteViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"Watershed";
     [self loadMiniSiteData];
@@ -29,14 +28,12 @@
     self.miniSiteTableView.dataSource = self;
 }
 
-- (void)loadView
-{
+- (void)loadView {
     self.view = [[WPSiteView alloc] init];
     self.miniSiteTableView = ((WPSiteView *)self.view).miniSiteTableView;
 }
 
-- (void)loadMiniSiteData
-{
+- (void)loadMiniSiteData {
     self.miniSiteList = @[@1, @3, @4, @2, @5, @1, @5, @2, @2, @3, @4, @0].mutableCopy;
 }
 

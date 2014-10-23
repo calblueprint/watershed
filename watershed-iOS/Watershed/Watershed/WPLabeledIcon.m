@@ -17,8 +17,7 @@
 static const int VIEW_HEIGHT = 16;
 
 - (id)initWithText:(NSString *)text
-               icon:(UIImage *)icon
-{
+               icon:(UIImage *)icon {
     self = [super init];
     if (self) {
  
@@ -48,8 +47,7 @@ static const int VIEW_HEIGHT = 16;
     return self;
 }
 
-- (void)updateConstraints
-{
+- (void)updateConstraints {
     [self.iconView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(VIEW_HEIGHT));
         make.width.equalTo(@(VIEW_HEIGHT));

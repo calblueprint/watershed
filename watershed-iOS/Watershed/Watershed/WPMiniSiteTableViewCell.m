@@ -82,8 +82,7 @@ const static float CELL_HEIGHT = 86.0f;
     return self;
 }
 
-- (void)updateConstraints
-{
+- (void)updateConstraints {
     
     [self.contentView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@0);
@@ -130,8 +129,7 @@ const static float CELL_HEIGHT = 86.0f;
     [super updateConstraints];
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
@@ -139,8 +137,7 @@ const static float CELL_HEIGHT = 86.0f;
 
 + (CGFloat)cellHeight { return CELL_HEIGHT; }
 
-+ (UIColor *)colorForRating:(NSInteger)rating
-{
++ (UIColor *)colorForRating:(NSInteger)rating {
     switch (rating) {
         case 1:
             return [UIColor wp_red];
