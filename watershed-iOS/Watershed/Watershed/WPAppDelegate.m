@@ -10,6 +10,7 @@
 #import "WPTasksListViewController.h"
 #import "WPLoginViewController.h"
 #import "WPRootViewController.h"
+#import "WPSiteViewController.h"
 
 @implementation WPAppDelegate
 
@@ -26,12 +27,18 @@
     
 
     self.window.rootViewController = [[WPRootViewController alloc] init];
+    //UIViewController *viewController = [[WPSiteViewController  alloc] init];
+    //self.window.rootViewController = viewController;//making a view to root view
     [self.window makeKeyAndVisible];
     
     //[AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
 
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setShadowImage:[UIImage new]];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
 
     return YES;
 }

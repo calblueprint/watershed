@@ -9,8 +9,9 @@
 #import "WPAppDelegate.h"
 #import "WPTabBarController.h"
 #import "WPTasksListViewController.h"
-#import "WPSitesListViewController.h"
+#import "WPSiteViewController.h"
 #import "WPProfileViewController.h"
+#import "UIColor+WPColors.h"
 
 @interface WPTabBarController ()
 
@@ -33,7 +34,7 @@
     
     self.delegate = self;
     // TODO: change color
-    self.tabBar.tintColor = [UIColor grayColor];
+    self.tabBar.tintColor = [UIColor wp_blue];
     self.tabBar.translucent = NO;
     
     
@@ -45,8 +46,15 @@
                             NSLocalizedString(@"Profile", HNNoLocalizationComment)
                             ];
         
+        NSArray *images = @[
+                            [UIImage imageNamed:@"CheckIcon"],
+                            [UIImage imageNamed:@"TreeIcon"],
+                            [UIImage imageNamed:@"MapMarkerIcon"]
+                            ];
+        
         WPTasksListViewController *tasksListViewController = [[WPTasksListViewController alloc] init];
-        WPSitesListViewController *sitesListViewController = [[WPSitesListViewController alloc] init];
+        //CHANGE LATAR
+        WPSiteViewController *sitesListViewController = [[WPSiteViewController alloc] init];
         WPProfileViewController *profileViewController = [[WPProfileViewController alloc] init];
         NSArray *rootViewControllers = @[
                                          tasksListViewController,
@@ -59,7 +67,7 @@
         for (NSInteger i = 0; i < [rootViewControllers count]; i++) {
             UINavigationController *navigationController = [[UINavigationController alloc] init];
             navigationController.delegate = self;
-            navigationController.tabBarItem = [[UITabBarItem alloc] initWithTitle:titles[i] image:nil tag:i];
+            navigationController.tabBarItem = [[UITabBarItem alloc] initWithTitle:titles[i] image:images[i] tag:i];
             navigationController.viewControllers = @[ rootViewControllers[i] ];
             [viewControllers addObject:navigationController];
         }
