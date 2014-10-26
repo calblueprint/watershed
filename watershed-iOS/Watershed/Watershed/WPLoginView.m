@@ -11,6 +11,7 @@
 #import "UIColor+WPColors.h"
 #import "UIView+WPExtensions.h"
 
+
 @interface WPLoginView ()
 
 @property (nonatomic) UIView *logoView;
@@ -26,7 +27,7 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
+    self = [super initWithFrame:frame visibleNavbar:NO];
     if (self) {
         self.backgroundColor = [UIColor wp_blue];
         [self createSubviews];

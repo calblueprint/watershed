@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WPView.h"
 
-@interface WPSiteView : UIView
+@interface WPSiteView : WPView
 
 @property (nonatomic) UITableView *miniSiteTableView;
 - (void)updateTableViewHeight:(NSInteger)cellCount;

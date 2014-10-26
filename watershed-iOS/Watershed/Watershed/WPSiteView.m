@@ -39,7 +39,7 @@ static const int COVER_PHOTO_HEIGHT = 184;
 static int COVER_PHOTO_TRANS = 0;
 
 - (id)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
+    self = [super initWithFrame:frame visibleNavbar:NO];
     if (self) {
         self.backgroundColor =[UIColor whiteColor];
         [self createSubviews];
