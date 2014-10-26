@@ -7,12 +7,7 @@
 //
 
 #import "WPSiteView.h"
-#import "Masonry.h"
-#import "UIColor+WPColors.h"
-#import "UIView+WPExtensions.h"
-#import "UIImage+ImageEffects.h"
 #import "WPMiniSiteTableViewCell.h"
-#import "WPLabeledIcon.h"
 
 @interface WPSiteView () <UIScrollViewDelegate>
 
@@ -39,7 +34,7 @@ static const int COVER_PHOTO_HEIGHT = 184;
 static int COVER_PHOTO_TRANS = 0;
 
 - (id)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
+    self = [super initWithFrame:frame visibleNavbar:NO];
     if (self) {
         self.backgroundColor =[UIColor whiteColor];
         [self createSubviews];

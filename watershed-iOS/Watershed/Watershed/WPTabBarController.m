@@ -48,8 +48,8 @@
         
         NSArray *images = @[
                             [UIImage imageNamed:@"CheckIcon"],
-                            [UIImage imageNamed:@"TreeIcon"],
-                            [UIImage imageNamed:@"MapMarkerIcon"]
+                            [UIImage imageNamed:@"CheckIcon"],
+                            [UIImage imageNamed:@"CheckIcon"]
                             ];
         
         WPTasksListViewController *tasksListViewController = [[WPTasksListViewController alloc] init];

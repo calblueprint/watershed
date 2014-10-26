@@ -9,9 +9,6 @@
 #import "WPTasksListView.h"
 #import "WPAllTasksTableViewController.h"
 #import "WPMyTasksTableViewController.h"
-#import "UIView+WPExtensions.h"
-#import "UIColor+WPColors.h"
-#import "Masonry.h"
 
 
 @interface WPTasksListView()
@@ -29,7 +26,7 @@
 @implementation WPTasksListView
 
 - (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
+    self = [super initWithFrame:frame visibleNavbar:YES];
     if (self) {
         [self createSubviews];
         [self setUpActions];

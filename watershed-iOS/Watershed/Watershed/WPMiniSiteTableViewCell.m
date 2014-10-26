@@ -7,10 +7,6 @@
 //
 
 #import "WPMiniSiteTableViewCell.h"
-#import "UIColor+WPColors.h"
-#import "UIView+WPExtensions.h"
-#import "WPLabeledIcon.h"
-#import "Masonry.h"
 
 @interface WPMiniSiteTableViewCell()
 

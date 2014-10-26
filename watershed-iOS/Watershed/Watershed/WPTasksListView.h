@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WPView.h"
 
-@interface WPTasksListView : UIView
+@interface WPTasksListView : WPView
 
 @end

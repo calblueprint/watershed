@@ -7,8 +7,6 @@
 //
 
 #import "WPLabeledIcon.h"
-#import "UIView+WPExtensions.h"
-#import "Masonry.h"
 
 #define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
