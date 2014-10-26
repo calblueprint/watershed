@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WPView.h"
 
 @interface WPAllTasksTableView : UITableView
 

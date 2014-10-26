@@ -7,12 +7,7 @@
 //
 
 #import "WPSiteView.h"
-#import "Masonry.h"
-#import "UIColor+WPColors.h"
-#import "UIView+WPExtensions.h"
-#import "UIImage+ImageEffects.h"
 #import "WPMiniSiteTableViewCell.h"
-#import "WPLabeledIcon.h"
 
 @interface WPSiteView () <UIScrollViewDelegate>
 

@@ -7,9 +7,6 @@
 //
 
 #import "WPView.h"
-#import "UIView+WPExtensions.h"
-#import "UIColor+WPColors.h"
-#import "Masonry.h"
 
 @interface WPView ()
 
