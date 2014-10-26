@@ -20,8 +20,9 @@
 
 @implementation WPView
 
-- (instancetype)initWithVisibleNavbar:(BOOL)visible {
-    self = [super init];
+- (instancetype)initWithFrame:(CGRect)frame
+                visibleNavbar:(BOOL)visible {
+    self = [super initWithFrame:frame];
     if (self) {
         
         _navbarVisible = visible;

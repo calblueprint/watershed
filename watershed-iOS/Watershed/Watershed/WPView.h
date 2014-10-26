@@ -10,6 +10,7 @@
 
 @interface WPView : UIView
 
-- (instancetype)initWithVisibleNavbar:(BOOL)visible;
+- (instancetype)initWithFrame:(CGRect)frame
+                visibleNavbar:(BOOL)visible;
 
 @end
