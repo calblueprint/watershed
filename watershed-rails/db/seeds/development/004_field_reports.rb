@@ -8,9 +8,9 @@ user_count = User.count
     example_field_report = FieldReport.where(
       user_id: rand(0..user_count) + 1,
       mini_site_id: mini_site_number + 1
-      description: "Oh wow, this tree sucks so much",
+      description: "This is report #{report_number}. This tree sucks so much.",
       health_rating: rand(0..5) + 1,
-      urgent: [true, false][report_number]
+      urgent: [true, false].sample
     ).first_or_create
     puts "Created Field Report: Report #{report_number} at Mini Site #{mini_site_number}.
           Created by User #{example_field_report.user_id}"
