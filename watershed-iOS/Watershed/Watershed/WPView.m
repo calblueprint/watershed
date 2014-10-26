@@ -41,6 +41,7 @@
     if (self.navbarVisible) {
         [self.navbarView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.height.equalTo(@64);
+            make.top.equalTo(@0);
             make.leading.equalTo(@0);
             make.trailing.equalTo(@0);
         }];
