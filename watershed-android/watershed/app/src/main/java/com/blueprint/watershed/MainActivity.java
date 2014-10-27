@@ -47,6 +47,7 @@ public class MainActivity extends ActionBarActivity
     // Fragments
     public Fragment currentFragment;
     private TaskFragment mtaskFragment;
+    private FragmentManager fragmentManager;
 
     // Navigation Drawer
     private ResideMenu resideMenu;
@@ -152,7 +153,6 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void replaceFragment(Fragment newFragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();
         if(!newFragment.isAdded()){
             ft.replace(R.id.container, newFragment);
@@ -162,7 +162,7 @@ public class MainActivity extends ActionBarActivity
 
     private void initializeFragments() {
         mtaskFragment = TaskFragment.newInstance(0);
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.add(R.id.container, mtaskFragment);
         ft.show(mtaskFragment);
