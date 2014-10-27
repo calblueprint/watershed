@@ -34,7 +34,7 @@
 - (void)createSubviews {
     _title = [({
         UILabel *title = [[UILabel alloc] init];
-        title.text = @"Plant tree";
+        title.text = @"PLANT TREE";
         title.numberOfLines = 0;
         title.font = [UIFont boldSystemFontOfSize:20.0];
         title.textColor = [UIColor wp_darkBlue];
@@ -77,7 +77,7 @@
 }
 
 -(void)onclick{
-    if (_completed.backgroundColor == [UIColor wp_green]) {
+    if ([_completed.titleLabel.text isEqualToString:@"Completed"]) {
         [_completed setTitle:@"Mark as Complete" forState:UIControlStateNormal];
         [_completed setTitleColor:[UIColor wp_blue] forState:UIControlStateNormal];
         _completed.layer.borderWidth = 2.0f;
