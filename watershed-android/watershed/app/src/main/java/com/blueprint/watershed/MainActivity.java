@@ -156,6 +156,7 @@ public class MainActivity extends ActionBarActivity
         android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();
         if(!newFragment.isAdded()){
             ft.replace(R.id.container, newFragment);
+            ft.addToBackStack("Does this do anything?");
             ft.commit();
         }
     }
@@ -163,10 +164,17 @@ public class MainActivity extends ActionBarActivity
     private void initializeFragments() {
         mtaskFragment = TaskFragment.newInstance(0);
         fragmentManager = getSupportFragmentManager();
+        fragmentManager.addOnBackStackChangedListener(
+                new FragmentManager.OnBackStackChangedListener() {
+                    public void onBackStackChanged() {
+                        setTitle("Dat Back Stack");
+                    }
+                });
         android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.add(R.id.container, mtaskFragment);
         ft.show(mtaskFragment);
         ft.commit();
+        currentFragment = mtaskFragment;
     }
 
     public void onFragmentInteraction(String id){
@@ -226,17 +234,21 @@ public class MainActivity extends ActionBarActivity
         setActionBarTitle(position);
         switch (position) {
             case 0:
+                if (currentFragment instanceof TaskFragment){break;}
                 TaskFragment taskFragment = TaskFragment.newInstance(0);
-                setTitle("Tasks");
                 actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
                 viewPager.setVisibility(view.VISIBLE);
                 replaceFragment(taskFragment);
+                currentFragment = taskFragment;
+                setTitle("Tasks");
                 break;
             case 1:
+                if (currentFragment instanceof SiteListFragment){break;}
                 hideTaskView();
-                setTitle("Sites");
                 SiteListFragment siteListFragment = new SiteListFragment();
                 replaceFragment(siteListFragment);
+                currentFragment = siteListFragment;
+                setTitle("Sites");
                 break;
             case 2:
                 //replaceFragment();
