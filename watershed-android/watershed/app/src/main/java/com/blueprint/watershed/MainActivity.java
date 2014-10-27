@@ -118,17 +118,6 @@ public class MainActivity extends ActionBarActivity
                             .setText("All Tasks")
                             .setTabListener(tabListener));
         }
-        else if (option == 1){
-            // handle Site tabs
-            actionBar.addTab(
-                    actionBar.newTab()
-                            .setText("Your Sites")
-                            .setTabListener(tabListener));
-            actionBar.addTab(
-                    actionBar.newTab()
-                            .setText("All Sites")
-                            .setTabListener(tabListener));
-        }
 
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -180,6 +169,7 @@ public class MainActivity extends ActionBarActivity
                             else{
                                 currentFragment = mtaskFragment;
                                 actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+                                viewPager.setVisibility(View.VISIBLE);
                                 setTitle("Tasks");
                             }
                             mBackStackSize--;
