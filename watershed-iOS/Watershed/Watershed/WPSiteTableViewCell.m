@@ -43,7 +43,7 @@ const static float CELL_HEIGHT = 150.0f;
         
         _darkOverlay = [({
             UIView *darkOverlay = [[UIView alloc] init];
-            darkOverlay.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25];
+            darkOverlay.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.15];
             darkOverlay;
         }) wp_addToSuperview:content];
         
@@ -52,6 +52,7 @@ const static float CELL_HEIGHT = 150.0f;
             label.text = name;
             label.textColor = [UIColor whiteColor];
             label.font = [UIFont systemFontOfSize:20.0];
+            [self addTextShadow:label];
             label;
         }) wp_addToSuperview:content];
         
@@ -60,6 +61,7 @@ const static float CELL_HEIGHT = 150.0f;
             miniSiteLabel.text = [NSString stringWithFormat:@"%d mini sites", (int)miniSiteCount];
             miniSiteLabel.textColor = [UIColor whiteColor];
             miniSiteLabel.font = [UIFont systemFontOfSize:14.0];
+            [self addTextShadow:miniSiteLabel];
             miniSiteLabel;
         }) wp_addToSuperview:content];
         
@@ -110,6 +112,15 @@ const static float CELL_HEIGHT = 150.0f;
     [super setSelected:selected animated:animated];
     
     // Configure the view for the selected state
+}
+
+- (void)addTextShadow:(UILabel *)label {
+    label.layer.shadowColor = [[UIColor blackColor] CGColor];
+    label.layer.shadowOffset = CGSizeMake(0.0, 0.0);
+    label.layer.shadowRadius = 4.0;
+    label.layer.shadowOpacity = 1.0;
+    label.layer.masksToBounds = NO;
+    label.layer.shouldRasterize = YES;
 }
 
 + (CGFloat)cellHeight { return CELL_HEIGHT; }
