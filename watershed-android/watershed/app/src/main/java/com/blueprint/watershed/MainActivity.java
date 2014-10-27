@@ -71,9 +71,7 @@ public class MainActivity extends ActionBarActivity
         setContentView(R.layout.activity_main);
 
         actionBar = getActionBar();
-        if (actionBar == null){
-            Log.e("NO ACTIONBAR ", "FIGHT ME");
-        }
+        setTitle("Tasks");
         mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
         viewPager = (ViewPager) findViewById(R.id.pager);
         initializeFragments();
@@ -151,7 +149,6 @@ public class MainActivity extends ActionBarActivity
     public void hideTaskView(){
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         viewPager.setVisibility(View.INVISIBLE);
-
     }
 
     public void replaceFragment(Fragment newFragment) {
@@ -230,12 +227,14 @@ public class MainActivity extends ActionBarActivity
         switch (position) {
             case 0:
                 TaskFragment taskFragment = TaskFragment.newInstance(0);
+                setTitle("Tasks");
                 actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
                 viewPager.setVisibility(view.VISIBLE);
                 replaceFragment(taskFragment);
                 break;
             case 1:
                 hideTaskView();
+                setTitle("Sites");
                 SiteListFragment siteListFragment = new SiteListFragment();
                 replaceFragment(siteListFragment);
                 break;
