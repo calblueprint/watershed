@@ -34,6 +34,7 @@ public class TaskFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e("OnCreateCalled", "Beginning");
         if (getArguments() != null) {
             int option = getArguments().getInt("option");
             switch (option) {

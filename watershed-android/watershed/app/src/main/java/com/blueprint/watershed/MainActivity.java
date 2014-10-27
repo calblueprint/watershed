@@ -135,6 +135,11 @@ public class MainActivity extends ActionBarActivity
 
     }
 
+    public void hideTaskView(){
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        viewPager.setVisibility(View.INVISIBLE);
+    }
+
     public void replaceFragment(Fragment newFragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();
@@ -209,10 +214,13 @@ public class MainActivity extends ActionBarActivity
         setActionBarTitle(position);
         switch (position) {
             case 0:
-                TaskFragment taskFragment = new TaskFragment();
+                TaskFragment taskFragment = TaskFragment.newInstance(0);
+                actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+                viewPager.setVisibility(view.VISIBLE);
                 replaceFragment(taskFragment);
                 break;
             case 1:
+                hideTaskView();
                 SiteListFragment siteListFragment = new SiteListFragment();
                 replaceFragment(siteListFragment);
                 break;
