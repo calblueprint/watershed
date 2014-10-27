@@ -3,13 +3,13 @@
 #
 # Examples:
 #
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+#   cities = City.create([{ name: "Chicago" }, { name: "Copenhagen" }])
+#   Mayor.create(name: "Emanuel", city: cities.first)
 
 
 # Loads seed files from db/seeds
 def load_from_folder(folder)
-  Dir[File.join(Rails.root, 'db', 'seeds', folder, '*.rb')].sort.each do |seed|
+  Dir[File.join(Rails.root, "db", "seeds", folder, "*.rb")].sort.each do |seed|
     puts "Seeding #{seed}."
     load seed
   end
@@ -28,6 +28,10 @@ end
 
 # Load per environment
 if Rails.env.development?
-  load_from_folder('development')
+  load_from_folder("development")
+end
+
+if Rails.env.production?
+  load_from_folder("production")
 end
 
