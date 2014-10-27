@@ -20,7 +20,9 @@ end
 # Load in all environments.
 ##############
 
-folders = []
+folders = [
+  "sites",
+]
 
 folders.each do |folder|
   load_from_folder(folder)
