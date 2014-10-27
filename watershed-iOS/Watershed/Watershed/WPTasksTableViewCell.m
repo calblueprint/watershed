@@ -8,6 +8,7 @@
 
 #import "WPTasksTableViewCell.h"
 #import "UIExtensions.h"
+#import "WPTaskViewController.h"
 
 @implementation WPTasksTableViewCell {
     UILabel *titleValue;
@@ -43,8 +44,7 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-    
-    // Configure the view for the selected state
+
 }
 
 -(void) setTitle:(NSString *)t {

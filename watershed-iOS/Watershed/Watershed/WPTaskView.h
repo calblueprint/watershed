@@ -10,4 +10,11 @@
 
 @interface WPTaskView : UIView
 
+@property (nonatomic) UILabel *title;
+@property (nonatomic) UILabel *taskDescription;
+@property (nonatomic) UILabel *dueDate;
+//@property (nonatomic) UILabel *completed;
+@property (nonatomic) UIButton *completed;
+
+
 @end

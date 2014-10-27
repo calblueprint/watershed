@@ -9,17 +9,8 @@
 #import "WPTaskView.h"
 #import "UIExtensions.h"
 
-@interface WPTaskView()
-
-@property (nonatomic) UILabel *title;
-@property (nonatomic) UILabel *taskDescription;
-@property (nonatomic) UILabel *dueDate;
-//@property (nonatomic) UILabel *completed;
-@property (nonatomic) UIButton *completed;
-
-@end
-
 @implementation WPTaskView
+
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -82,25 +73,23 @@
         [_completed setTitleColor:[UIColor wp_blue] forState:UIControlStateNormal];
         _completed.backgroundColor = [UIColor whiteColor];
         _completed.layer.borderWidth = 2.0f;
-        NSLog(@"at the top bitch");
     } else {
         [_completed setTitle:@"Completed" forState:UIControlStateNormal];
         _completed.backgroundColor = [UIColor wp_green];
         [_completed setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _completed.layer.borderWidth = 0;
-        NSLog(@"now at the bottom");
     }
 }
 
 - (void)updateConstraints {
     [self.dueDate mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(topMargin));
+        make.top.equalTo(@(stdMargin));
         make.width.equalTo(@125);
         make.trailing.equalTo(@(-(stdMargin)));
     }];
 
     [self.title mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(topMargin));
+        make.top.equalTo(@(stdMargin));
         make.leading.equalTo(@(stdMargin));
         make.trailing.equalTo(self.dueDate.mas_left).with.offset(stdMargin);
     }];
