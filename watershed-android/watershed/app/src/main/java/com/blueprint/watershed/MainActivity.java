@@ -77,7 +77,7 @@ public class MainActivity extends ActionBarActivity
         mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
         viewPager = (ViewPager) findViewById(R.id.pager);
         initializeFragments();
-        initializeTabs();
+        initializeTabs(0);
 
         initializeNavigationDrawer();
 
@@ -88,7 +88,7 @@ public class MainActivity extends ActionBarActivity
         mTitle = "Tasks";
     }
 
-    public void initializeTabs(){
+    public void initializeTabs(int option){
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         ActionBar.TabListener tabListener = new ActionBar.TabListener() {
             public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
@@ -106,14 +106,27 @@ public class MainActivity extends ActionBarActivity
         actionBar.setHomeButtonEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        actionBar.addTab(
-                actionBar.newTab()
-                        .setText("Your Tasks")
-                        .setTabListener(tabListener));
-        actionBar.addTab(
-                actionBar.newTab()
-                        .setText("All Tasks")
-                        .setTabListener(tabListener));
+        if (option == 0) {
+            actionBar.addTab(
+                    actionBar.newTab()
+                            .setText("Your Tasks")
+                            .setTabListener(tabListener));
+            actionBar.addTab(
+                    actionBar.newTab()
+                            .setText("All Tasks")
+                            .setTabListener(tabListener));
+        }
+        else if (option == 1){
+            // handle Site tabs
+            actionBar.addTab(
+                    actionBar.newTab()
+                            .setText("Your Sites")
+                            .setTabListener(tabListener));
+            actionBar.addTab(
+                    actionBar.newTab()
+                            .setText("All Sites")
+                            .setTabListener(tabListener));
+        }
 
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -138,6 +151,7 @@ public class MainActivity extends ActionBarActivity
     public void hideTaskView(){
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         viewPager.setVisibility(View.INVISIBLE);
+
     }
 
     public void replaceFragment(Fragment newFragment) {
@@ -194,7 +208,8 @@ public class MainActivity extends ActionBarActivity
         resideMenu = new ResideMenu(this);
         resideMenu.attachToActivity(this);
         resideMenu.setShadowVisible(false);
-        //resideMenu.setDirectionDisable(ResideMenu.DIRECTION_RIGHT);
+        resideMenu.setDirectionDisable(ResideMenu.DIRECTION_RIGHT);
+        resideMenu.setDirectionDisable(ResideMenu.DIRECTION_LEFT);
         resideMenu.setBackground(R.drawable.golden_gate_bridge);
         String titles[] = { "Tasks", "Sites", "Activity Log", "Profile", "About", "Logout" };
         int icon[] = { R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo };
