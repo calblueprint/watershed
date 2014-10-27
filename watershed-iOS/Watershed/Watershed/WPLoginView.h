@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WPView.h"
 
-@interface WPLoginView : UIView
+@interface WPLoginView : WPView
 
 @end

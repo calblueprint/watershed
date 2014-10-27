@@ -47,8 +47,9 @@ public class MainActivity extends ActionBarActivity
     // Fragments
     public Fragment currentFragment;
     private TaskFragment mtaskFragment;
-    SiteListFragment siteListFragment;
+    private SiteListFragment siteListFragment;
     private FragmentManager fragmentManager;
+
 
     // Navigation Drawer
     private ResideMenu resideMenu;
@@ -69,6 +70,10 @@ public class MainActivity extends ActionBarActivity
     private TabsPagerAdapter mAdapter;
     private int mBackStackSize = 0;
 
+    //Networking
+    private RequestHandler mMainRequestHandler;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,8 +91,10 @@ public class MainActivity extends ActionBarActivity
         SharedPreferences prefs = getSharedPreferences(PREFERENCES, 0);
         authToken = prefs.getString("auth_token", "none");
         authEmail = prefs.getString("auth_email", "none");
-
         mTitle = "Tasks";
+
+
+        mMainRequestHandler = RequestHandler.getInstance(this.getApplicationContext());
     }
 
     public void initializeTabs(int option){
