@@ -10,6 +10,14 @@
 
 @implementation WPSitesTableView
 
+- (id)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    }
+    return self;
+}
+
 - (void)updateConstraints {
     [self mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@64);

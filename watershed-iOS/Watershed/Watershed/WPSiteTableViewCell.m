@@ -43,13 +43,14 @@ const static float CELL_HEIGHT = 150.0f;
         
         _darkOverlay = [({
             UIView *darkOverlay = [[UIView alloc] init];
-            darkOverlay.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.2];
+            darkOverlay.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25];
             darkOverlay;
         }) wp_addToSuperview:content];
         
         _nameLabel = [({
             UILabel *label = [[UILabel alloc] init];
             label.text = name;
+            label.textColor = [UIColor whiteColor];
             label.font = [UIFont systemFontOfSize:20.0];
             label;
         }) wp_addToSuperview:content];
@@ -57,6 +58,7 @@ const static float CELL_HEIGHT = 150.0f;
         _miniSiteLabel = [({
             UILabel *miniSiteLabel = [[UILabel alloc] init];
             miniSiteLabel.text = [NSString stringWithFormat:@"%d mini sites", (int)miniSiteCount];
+            miniSiteLabel.textColor = [UIColor whiteColor];
             miniSiteLabel.font = [UIFont systemFontOfSize:14.0];
             miniSiteLabel;
         }) wp_addToSuperview:content];

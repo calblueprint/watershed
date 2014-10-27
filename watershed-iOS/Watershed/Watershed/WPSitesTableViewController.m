@@ -46,7 +46,7 @@
             cellView = [[WPSiteTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                       reuseIdentifier:cellIdentifier
                                                                  name:@"Sample Site"
-                                                                image:[UIImage imageNamed:@"SampleCoverPhoto"]
+                                                                image:[UIImage imageNamed:@"SampleCoverPhoto2"]
                                                         miniSiteCount:5
                         ];
         }
