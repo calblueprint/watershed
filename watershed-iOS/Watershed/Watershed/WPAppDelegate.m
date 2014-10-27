@@ -11,6 +11,7 @@
 #import "WPLoginViewController.h"
 #import "WPRootViewController.h"
 #import "WPSiteViewController.h"
+#import "WPTaskViewController.h"
 
 @implementation WPAppDelegate
 
@@ -29,6 +30,7 @@
     self.window.rootViewController = [[WPRootViewController alloc] init];
     //UIViewController *viewController = [[WPSiteViewController  alloc] init];
     //self.window.rootViewController = viewController;//making a view to root view
+    self.window.rootViewController = [[WPTaskViewController alloc] init];
     [self.window makeKeyAndVisible];
     
     //[AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
