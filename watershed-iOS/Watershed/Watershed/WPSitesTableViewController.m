@@ -12,18 +12,30 @@
 
 @interface WPSitesTableViewController ()
 
+@property (nonatomic) WPSitesTableView *sitesTableView;
+
 @end
 
 @implementation WPSitesTableViewController
 
 - (void)loadView {
-    self.view = [[WPSitesTableView alloc] init];
+    self.view = [[WPView alloc] initWithFrame:[[UIScreen mainScreen] bounds] visibleNavbar:YES];
 }
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
-    ((WPSitesTableView *)self.view).delegate = self;
-    ((WPSitesTableView *)self.view).dataSource = self;
+    self.navigationItem.title = @"Sites";
+    self.sitesTableView.delegate = self;
+    self.sitesTableView.dataSource = self;
+}
+
+- (WPSitesTableView *)sitesTableView {
+    if (!_sitesTableView) {
+        _sitesTableView = [[WPSitesTableView alloc] init];
+        [self.view addSubview:_sitesTableView];
+    }
+    return _sitesTableView;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView
@@ -36,7 +48,7 @@
     
     UITableViewCell *cellView = nil;
     
-    if ([tableView isEqual:self.view]) {
+    if ([tableView isEqual:self.sitesTableView]) {
         
         static NSString *cellIdentifier = @"SiteCell";
         cellView = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
