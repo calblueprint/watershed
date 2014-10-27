@@ -30,13 +30,7 @@
     self.sitesTableView.dataSource = self;
 }
 
-- (WPSitesTableView *)sitesTableView {
-    if (!_sitesTableView) {
-        _sitesTableView = [[WPSitesTableView alloc] init];
-        [self.view addSubview:_sitesTableView];
-    }
-    return _sitesTableView;
-}
+#pragma mark - TableView Delegate/DataSource Methods
 
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section {
@@ -68,6 +62,16 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [WPSiteTableViewCell cellHeight];
+}
+
+#pragma mark - Lazy instantiation
+
+- (WPSitesTableView *)sitesTableView {
+    if (!_sitesTableView) {
+        _sitesTableView = [[WPSitesTableView alloc] init];
+        [self.view addSubview:_sitesTableView];
+    }
+    return _sitesTableView;
 }
 
 @end
