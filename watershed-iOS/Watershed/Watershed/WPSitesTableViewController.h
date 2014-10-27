@@ -1,5 +1,5 @@
 //
-//  WPSitesListViewController.h
+//  WPSitesTableViewController.h
 //  Watershed
 //
 //  Created by Melissa Huang on 10/5/14.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WPSitesListViewController : UIViewController
+@interface WPSitesTableViewController : UIViewController
 
 @end

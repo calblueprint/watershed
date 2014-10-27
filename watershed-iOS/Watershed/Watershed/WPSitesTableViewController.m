@@ -1,18 +1,18 @@
 //
-//  WPSitesListViewController.m
+//  WPSitesTableViewController.m
 //  Watershed
 //
 //  Created by Melissa Huang on 10/5/14.
 //  Copyright (c) 2014 Blueprint. All rights reserved.
 //
 
-#import "WPSitesListViewController.h"
+#import "WPSitesTableViewController.h"
 
-@interface WPSitesListViewController ()
+@interface WPSitesTableViewController ()
 
 @end
 
-@implementation WPSitesListViewController
+@implementation WPSitesTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
