@@ -19,7 +19,7 @@
 
 @implementation WPSiteTableViewCell
 
-const static float CELL_HEIGHT = 86.0f;
+const static float CELL_HEIGHT = 150.0f;
 
 - (id)initWithStyle:(UITableViewCellStyle)style
     reuseIdentifier:(NSString *)reuseIdentifier
