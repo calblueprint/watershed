@@ -25,6 +25,7 @@
     {
         [self setNeedsUpdateConstraints];
     }
+    self.separatorInset = UIEdgeInsetsMake(0, 15, 0, 15);
     return self;
 }
 
@@ -34,19 +35,16 @@
 }
 
 - (void)updateConstraints {
-    NSLog(@"hey");
-    
-    [self.iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@0);
-        make.height.equalTo(@30);
-        make.width.equalTo(@30);
-    }];
     
     [self.infoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.iconImageView.mas_top);
-        make.left.equalTo(self.iconImageView.mas_right).with.offset(5);
-        make.height.equalTo(@50);
-        make.width.equalTo(@100);
+        make.centerY.equalTo(@0);
+        make.left.equalTo(@15);
+    }];
+    
+    [self.iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(@0);
+        make.right.equalTo(@-15);
+
     }];
     
     [super updateConstraints];

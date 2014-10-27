@@ -38,6 +38,9 @@
         //[self setUpActions];
         [self updateConstraints];
     }
+
+    
+    
     self.infoTableView.delegate = self;
     self.infoTableView.dataSource = self;
     [self.infoTableView reloadData];
@@ -71,8 +74,8 @@
     WPProfileTableViewCell *cell = [[WPProfileTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
     switch (indexPath.row) {
         case 0: {
-            FAKIonIcons *mailIcon = [FAKIonIcons ios7EmailOutlineIconWithSize:17];
-            [cell setIconImageView:[[UIImageView alloc] initWithImage:[mailIcon imageWithSize:CGSizeMake(15, 15)]]];
+            FAKIonIcons *mailIcon = [FAKIonIcons ios7EmailOutlineIconWithSize:30];
+            [cell setIconImageView:[[UIImageView alloc] initWithImage:[mailIcon imageWithSize:CGSizeMake(30, 30)]]];
             
             UILabel *infoLabel = [[UILabel alloc] init];
             infoLabel.text = self.profile.email;
@@ -81,8 +84,8 @@
             break;
         }
         case 1: {
-            FAKIonIcons *locationIcon = [FAKIonIcons ios7LocationOutlineIconWithSize:20];
-            [cell setIconImageView:[[UIImageView alloc] initWithImage:[locationIcon imageWithSize:CGSizeMake(20, 20)]]];
+            FAKIonIcons *locationIcon = [FAKIonIcons ios7LocationOutlineIconWithSize:30];
+            [cell setIconImageView:[[UIImageView alloc] initWithImage:[locationIcon imageWithSize:CGSizeMake(30, 30)]]];
             
             UILabel *infoLabel = [[UILabel alloc] init];
             infoLabel.text = self.profile.location;
@@ -93,7 +96,8 @@
             //do nothing
         }
     }
-    
+    cell.infoLabel.textColor = [UIColor darkGrayColor];
+    cell.infoLabel.font = [UIFont fontWithName:@"Helvetica" size:12];
     [cell addSubviews];
     return cell;
 }
