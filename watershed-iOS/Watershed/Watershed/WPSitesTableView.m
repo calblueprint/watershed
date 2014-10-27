@@ -10,12 +10,16 @@
 
 @implementation WPSitesTableView
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+- (void)updateConstraints {
+    [self mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@64);
+        make.leading.equalTo(@0);
+        make.trailing.equalTo(@0);
+        make.bottom.equalTo(@0);
+    }];
+    
+    [super updateConstraints];
 }
-*/
+
 
 @end

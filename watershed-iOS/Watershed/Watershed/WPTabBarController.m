@@ -9,7 +9,7 @@
 #import "WPAppDelegate.h"
 #import "WPTabBarController.h"
 #import "WPTasksListViewController.h"
-#import "WPSiteViewController.h"
+#import "WPSitesTableViewController.h"
 #import "WPProfileViewController.h"
 #import "UIColor+WPColors.h"
 
@@ -54,11 +54,11 @@
         
         WPTasksListViewController *tasksListViewController = [[WPTasksListViewController alloc] init];
         //CHANGE LATAR
-        WPSiteViewController *sitesListViewController = [[WPSiteViewController alloc] init];
+        WPSitesTableViewController *sitesTableViewController = [[WPSitesTableViewController alloc] init];
         WPProfileViewController *profileViewController = [[WPProfileViewController alloc] init];
         NSArray *rootViewControllers = @[
                                          tasksListViewController,
-                                         sitesListViewController,
+                                         sitesTableViewController,
                                          profileViewController
                                          ];
         
