@@ -7,7 +7,7 @@
 //
 
 #import "WPMyTasksTableViewController.h"
-#import "WPTableViewCell.h"
+#import "WPTasksTableViewCell.h"
 #import "UIColor+WPColors.h"
 
 @interface WPMyTasksTableViewController ()
@@ -31,7 +31,7 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
                @{@"Task": @"Put MY Tree in Hole", @"Description": @"Place it in", @"DueDate": @"05/12"}
                ];
     self.tableView = [[UITableView alloc] init];
-    [self.tableView registerClass:[WPTableViewCell class] forCellReuseIdentifier:CellIdentifier];
+    [self.tableView registerClass:[WPTasksTableViewCell class] forCellReuseIdentifier:CellIdentifier];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
 
@@ -58,7 +58,7 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WPTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    WPTasksTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     NSDictionary *rowData = self.tasks[indexPath.row];
     cell.title = rowData[@"Task"];
     cell.taskDescription = rowData[@"Description"];

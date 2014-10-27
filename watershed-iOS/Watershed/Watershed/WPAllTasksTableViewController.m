@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Blueprint. All rights reserved.
 //
 
-#import "WPTableViewCell.h"
+#import "WPTasksTableViewCell.h"
 #import "UIColor+WPColors.h"
 #import "WPAllTasksTableViewController.h"
 #import "Masonry.h"
@@ -32,7 +32,7 @@ static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
                @{@"Task": @"Put Tree in Hole", @"Description": @"Place it in", @"DueDate": @"05/12"}
                ];
     self.tableView = [[UITableView alloc] init];
-    [self.tableView registerClass:[WPTableViewCell class] forCellReuseIdentifier:allTasksIdentifier];
+    [self.tableView registerClass:[WPTasksTableViewCell class] forCellReuseIdentifier:allTasksIdentifier];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
 }
@@ -58,7 +58,7 @@ static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WPTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:allTasksIdentifier forIndexPath:indexPath];
+    WPTasksTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:allTasksIdentifier forIndexPath:indexPath];
     
     NSDictionary *rowData = self.allTasks[indexPath.row];
     cell.title = rowData[@"Task"];

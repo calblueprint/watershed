@@ -6,9 +6,11 @@
 //  Copyright (c) 2014 Blueprint. All rights reserved.
 //
 
-#import "WPTableViewCell.h"
+#import "WPTasksTableViewCell.h"
+#import "UIColor+WPColors.h"
+#import "UIView+WPExtensions.h"
 
-@implementation WPTableViewCell {
+@implementation WPTasksTableViewCell {
     UILabel *titleValue;
     UILabel *taskDescriptionValue;
     UILabel *dueDateValue;
