@@ -10,4 +10,6 @@
 
 @interface WPSiteTableViewCell : UITableViewCell
 
++ (CGFloat)cellHeight;
+
 @end

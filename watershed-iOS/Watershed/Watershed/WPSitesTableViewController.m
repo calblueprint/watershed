@@ -8,6 +8,7 @@
 
 #import "WPSitesTableViewController.h"
 #import "WPSitesTableView.h"
+#import "WPSiteTableViewCell.h"
 
 @interface WPSitesTableViewController ()
 
@@ -22,12 +23,22 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    ((WPSitesTableView *)self.view).delegate = self;
+    ((WPSitesTableView *)self.view).dataSource = self;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (NSInteger)tableView:(UITableView *)tableView
+ numberOfRowsInSection:(NSInteger)section {
+    return 10;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [[UITableViewCell alloc] init];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [WPSiteTableViewCell cellHeight];
 }
 
 @end

@@ -10,9 +10,9 @@
 
 @implementation WPSiteTableViewCell
 
-- (void)awakeFromNib {
-    // Initialization code
-}
+const static float CELL_HEIGHT = 150.0f;
+
++ (CGFloat)cellHeight { return CELL_HEIGHT; }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
