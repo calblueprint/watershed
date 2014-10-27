@@ -47,6 +47,7 @@ public class MainActivity extends ActionBarActivity
     // Fragments
     public Fragment currentFragment;
     private TaskFragment mtaskFragment;
+    SiteListFragment siteListFragment;
     private FragmentManager fragmentManager;
 
     // Navigation Drawer
@@ -62,9 +63,11 @@ public class MainActivity extends ActionBarActivity
     //Adapters
     public TaskAdapter arrayAdapter;
 
+    //Action Bar Elements
     private ActionBar actionBar;
     private ViewPager viewPager;
     private TabsPagerAdapter mAdapter;
+    private int mBackStackSize = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,8 +159,9 @@ public class MainActivity extends ActionBarActivity
         android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();
         if(!newFragment.isAdded()){
             ft.replace(R.id.container, newFragment);
-            ft.addToBackStack("Does this do anything?");
+            ft.addToBackStack(null);
             ft.commit();
+            mBackStackSize++;
         }
     }
 
@@ -167,7 +171,19 @@ public class MainActivity extends ActionBarActivity
         fragmentManager.addOnBackStackChangedListener(
                 new FragmentManager.OnBackStackChangedListener() {
                     public void onBackStackChanged() {
-                        setTitle("Dat Back Stack");
+                        if (fragmentManager.getBackStackEntryCount() < mBackStackSize){
+                            if (currentFragment instanceof TaskFragment){
+                                currentFragment = siteListFragment;
+                                hideTaskView();
+                                setTitle("Sites");
+                            }
+                            else{
+                                currentFragment = mtaskFragment;
+                                actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+                                setTitle("Tasks");
+                            }
+                            mBackStackSize--;
+                        }
                     }
                 });
         android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();
@@ -231,7 +247,6 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onClick(View view) {
         int position = menuItems.indexOf(view);
-        setActionBarTitle(position);
         switch (position) {
             case 0:
                 if (currentFragment instanceof TaskFragment){break;}
@@ -245,7 +260,7 @@ public class MainActivity extends ActionBarActivity
             case 1:
                 if (currentFragment instanceof SiteListFragment){break;}
                 hideTaskView();
-                SiteListFragment siteListFragment = new SiteListFragment();
+                siteListFragment = new SiteListFragment();
                 replaceFragment(siteListFragment);
                 currentFragment = siteListFragment;
                 setTitle("Sites");
@@ -270,32 +285,6 @@ public class MainActivity extends ActionBarActivity
                 break;
         }
         resideMenu.closeMenu();
-    }
-
-    private void setActionBarTitle(int position){
-        switch (position) {
-            case 0:
-                mTitle = "Tasks";
-                break;
-            case 1:
-                mTitle = "Sites";
-                break;
-            case 2:
-                mTitle = "Activity Log";
-                break;
-            case 3:
-                mTitle = "Profile";
-                break;
-            case 4:
-                mTitle = "About";
-                break;
-            case 5:
-                mTitle = "Logout";
-                break;
-        }
-        TextView titleView = (TextView) findViewById(R.id.title);
-        titleView.setTypeface(watershedFont);
-        titleView.setText(mTitle);
     }
 
     // System level attributes
