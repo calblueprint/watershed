@@ -80,6 +80,7 @@
     if ([_completed.titleLabel.text isEqualToString:@"Completed"]) {
         [_completed setTitle:@"Mark as Complete" forState:UIControlStateNormal];
         [_completed setTitleColor:[UIColor wp_blue] forState:UIControlStateNormal];
+        _completed.backgroundColor = [UIColor whiteColor];
         _completed.layer.borderWidth = 2.0f;
         NSLog(@"at the top bitch");
     } else {
