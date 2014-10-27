@@ -18,7 +18,6 @@
 
 - (void)loadView {
     self.view = [[WPSitesTableView alloc] init];
-    self.view.backgroundColor = [UIColor redColor];
 }
 
 - (void)viewDidLoad {
@@ -34,7 +33,25 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [[UITableViewCell alloc] init];
+    
+    UITableViewCell *cellView = nil;
+    
+    if ([tableView isEqual:self.view]) {
+        
+        static NSString *cellIdentifier = @"SiteCell";
+        cellView = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        if (!cellView) {
+            
+            NSLog(@"RENDER NEW");
+            cellView = [[WPSiteTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                      reuseIdentifier:cellIdentifier
+                                                                 name:@"Sample Site"
+                                                                image:[UIImage imageNamed:@"SampleCoverPhoto"]
+                                                        miniSiteCount:5
+                        ];
+        }
+    }
+    return cellView;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
