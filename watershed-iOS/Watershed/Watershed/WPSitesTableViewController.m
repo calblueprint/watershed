@@ -25,12 +25,16 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    [self updatePhotoOffset:0.0];
     self.navigationItem.title = @"Sites";
     self.sitesTableView.delegate = self;
     self.sitesTableView.dataSource = self;
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self updatePhotoOffset:0.0];
+    
+}
 #pragma mark - TableView Delegate/DataSource Methods
 
 - (NSInteger)tableView:(UITableView *)tableView
@@ -53,7 +57,7 @@
             cellView = [[WPSiteTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                       reuseIdentifier:cellIdentifier
                                                                  name:@"Sample Site"
-                                                                image:[UIImage imageNamed:@"SampleCoverPhoto2"]
+                                                                image:[UIImage imageNamed:@"SampleCoverPhoto"]
                                                         miniSiteCount:5
                         ];
         }
