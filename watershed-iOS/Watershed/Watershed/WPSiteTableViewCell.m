@@ -20,6 +20,7 @@
 @implementation WPSiteTableViewCell
 
 const static float CELL_HEIGHT = 150.0f;
+const static int ORIGINAL_PHOTO_POSITION = 50;
 const static int OFFSET_FACTOR = 5;
 
 - (id)initWithStyle:(UITableViewCellStyle)style
@@ -84,7 +85,7 @@ const static int OFFSET_FACTOR = 5;
     }];
     
     [self.photoView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@50);
+        make.top.equalTo(@(ORIGINAL_PHOTO_POSITION));
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
         make.bottom.equalTo(@0);
@@ -113,7 +114,7 @@ const static int OFFSET_FACTOR = 5;
 
 - (void)updatePhotoPosition:(NSInteger)offset {
     [self.photoView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(50 + offset / OFFSET_FACTOR));
+        make.top.equalTo(@(ORIGINAL_PHOTO_POSITION + offset / OFFSET_FACTOR));
     }];
 }
 
