@@ -64,6 +64,20 @@
     return [WPSiteTableViewCell cellHeight];
 }
 
+#pragma mark - ScrollView Delegate Methods
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if ([scrollView isEqual:self.sitesTableView]) {
+        for (WPSiteTableViewCell *cell in self.sitesTableView.visibleCells) {
+            CGFloat scrollTrans = scrollView.contentOffset.y;
+            CGFloat cellOriginY = cell.frame.origin.y;
+            [cell updatePhotoPosition:scrollTrans - cellOriginY];
+            NSLog(@"%f",cell.frame.origin.y);
+        }
+    }
+    
+}
+
 #pragma mark - Lazy instantiation
 
 - (WPSitesTableView *)sitesTableView {
@@ -73,5 +87,7 @@
     }
     return _sitesTableView;
 }
+
+
 
 @end

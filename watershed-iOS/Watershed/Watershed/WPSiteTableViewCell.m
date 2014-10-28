@@ -31,13 +31,15 @@ const static float CELL_HEIGHT = 150.0f;
     
     if (self) {
         
+        [self setClipsToBounds:YES];
+        
         UIView *content = self.contentView;
         content.backgroundColor = [UIColor whiteColor];
         
         _photoView = [({
             UIImageView *photoView = [[UIImageView alloc] initWithImage:image];
             [photoView setContentMode:UIViewContentModeScaleAspectFill];
-            [photoView setClipsToBounds:YES];
+            //[photoView setClipsToBounds:YES];
             photoView;
         }) wp_addToSuperview:content];
         
@@ -81,7 +83,7 @@ const static float CELL_HEIGHT = 150.0f;
     }];
     
     [self.photoView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@0);
+        make.top.equalTo(@50);
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
         make.bottom.equalTo(@0);
@@ -106,6 +108,12 @@ const static float CELL_HEIGHT = 150.0f;
 
     
     [super updateConstraints];
+}
+
+- (void)updatePhotoPosition:(NSInteger)offset {
+    [self.photoView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(offset));
+    }];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

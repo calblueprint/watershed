@@ -17,6 +17,8 @@
               image:(UIImage *)image
       miniSiteCount:(NSInteger)miniSiteCount;
 
+- (void)updatePhotoPosition:(NSInteger)offset;
+
 + (CGFloat)cellHeight;
 
 @end
