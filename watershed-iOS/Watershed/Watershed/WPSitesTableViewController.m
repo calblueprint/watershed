@@ -25,6 +25,7 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    [self updatePhotoOffset:0.0];
     self.navigationItem.title = @"Sites";
     self.sitesTableView.delegate = self;
     self.sitesTableView.dataSource = self;
@@ -68,14 +69,18 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if ([scrollView isEqual:self.sitesTableView]) {
-        for (WPSiteTableViewCell *cell in self.sitesTableView.visibleCells) {
-            CGFloat scrollTrans = scrollView.contentOffset.y;
-            CGFloat cellOriginY = cell.frame.origin.y;
-            [cell updatePhotoPosition:scrollTrans - cellOriginY];
-            NSLog(@"%f",cell.frame.origin.y);
-        }
+        [self updatePhotoOffset:scrollView.contentOffset.y];
     }
     
+}
+
+- (void)updatePhotoOffset:(CGFloat)contentOffset {
+    for (WPSiteTableViewCell *cell in self.sitesTableView.visibleCells) {
+        CGFloat scrollTrans = contentOffset;
+        CGFloat cellOriginY = cell.frame.origin.y;
+        [cell updatePhotoPosition:scrollTrans - cellOriginY];
+        NSLog(@"%f",cell.frame.origin.y);
+    }
 }
 
 #pragma mark - Lazy instantiation

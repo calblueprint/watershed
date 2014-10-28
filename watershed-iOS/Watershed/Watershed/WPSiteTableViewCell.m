@@ -20,6 +20,7 @@
 @implementation WPSiteTableViewCell
 
 const static float CELL_HEIGHT = 150.0f;
+const static int OFFSET_FACTOR = 5;
 
 - (id)initWithStyle:(UITableViewCellStyle)style
     reuseIdentifier:(NSString *)reuseIdentifier
@@ -112,7 +113,7 @@ const static float CELL_HEIGHT = 150.0f;
 
 - (void)updatePhotoPosition:(NSInteger)offset {
     [self.photoView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(offset));
+        make.top.equalTo(@(50 + offset / OFFSET_FACTOR));
     }];
 }
 
