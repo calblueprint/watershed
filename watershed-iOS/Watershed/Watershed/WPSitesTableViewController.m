@@ -45,7 +45,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section {
-    NSLog(@"Call number of rows");
+
     NSInteger rowCount = 0;
     
     if ([tableView isEqual:self.sitesTableView]) rowCount = self.siteList.count;
@@ -63,7 +63,6 @@
         cellView = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (!cellView) {
             
-            NSLog(@"RENDER NEW");
             cellView = [[WPSiteTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                       reuseIdentifier:cellIdentifier
                                                                  name:@"Sample Site"
