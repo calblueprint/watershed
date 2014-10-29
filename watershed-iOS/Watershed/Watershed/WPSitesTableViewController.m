@@ -79,12 +79,8 @@
 }
 
 - (void)updatePhotoOffset:(CGFloat)contentOffset {
-    for (WPSiteTableViewCell *cell in self.sitesTableView.visibleCells) {
-        CGFloat scrollTrans = contentOffset;
-        CGFloat cellOriginY = cell.frame.origin.y;
-        [cell updatePhotoPosition:scrollTrans - cellOriginY];
-        NSLog(@"%f",cell.frame.origin.y);
-    }
+    [self.sitesTableView.visibleCells makeObjectsPerformSelector:@selector(updatePhotoPosition:)
+                                                      withObject:@(contentOffset)];
 }
 
 #pragma mark - Lazy instantiation
