@@ -32,9 +32,9 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self updatePhotoOffset:0.0];
-    
+    [self updatePhotoOffset:self.sitesTableView.contentOffset.y];
 }
+
 #pragma mark - TableView Delegate/DataSource Methods
 
 - (NSInteger)tableView:(UITableView *)tableView
