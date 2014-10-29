@@ -7,9 +7,6 @@
 //
 
 #import "WPLoginView.h"
-#import "Masonry.h"
-#import "UIColor+WPColors.h"
-#import "UIView+WPExtensions.h"
 
 @interface WPLoginView ()
 
@@ -26,7 +23,7 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
+    self = [super initWithFrame:frame visibleNavbar:NO];
     if (self) {
         self.backgroundColor = [UIColor wp_blue];
         [self createSubviews];

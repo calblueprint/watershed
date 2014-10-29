@@ -40,12 +40,14 @@ PODS:
   - RKValueTransformers (1.1.0)
   - SOCKit (1.1)
   - TransitionKit (2.1.0)
+  - UIImage+BlurredFrame (0.0.4)
 
 DEPENDENCIES:
   - AFNetworking
   - FontAwesomeKit
   - Masonry
   - RestKit
+  - UIImage+BlurredFrame
 
 SPEC CHECKSUMS:
   AFNetworking: 80c4e0652b08eb34e25b9c0ff3c82556fe5967b4
@@ -56,5 +58,6 @@ SPEC CHECKSUMS:
   RKValueTransformers: b705e7b4651b9206b94600408462b74554bba969
   SOCKit: d8d0dd3688ae1026c12367570da8fa8e1a6980fb
   TransitionKit: 6a6f3ddda38ae758778aa889dcb930e4f8d64edc
+  UIImage+BlurredFrame: 0c38f5760d72125c47d16001a88faaac573bd35d
 
 COCOAPODS: 0.34.4

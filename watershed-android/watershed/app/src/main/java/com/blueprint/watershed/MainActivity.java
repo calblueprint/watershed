@@ -23,7 +23,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity
-                          implements View.OnClickListener,TaskFragment.OnFragmentInteractionListener{
+                          implements View.OnClickListener,
+                                     TaskFragment.OnFragmentInteractionListener,
+                                     SiteListFragment.OnFragmentInteractionListener {
 
     // Constants
     public  static final String PREFERENCES = "LOGIN_PREFERENCES";
@@ -38,6 +40,7 @@ public class MainActivity extends ActionBarActivity
 
     // Fragments
     public Fragment currentFragment;
+    private TaskFragment mtaskFragment;
 
     // Navigation Drawer
     private ResideMenu resideMenu;
@@ -52,6 +55,8 @@ public class MainActivity extends ActionBarActivity
     //Adapters
     public TaskAdapter arrayAdapter;
 
+    //Networking
+    private RequestHandler mMainRequestHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,26 +71,28 @@ public class MainActivity extends ActionBarActivity
         SharedPreferences prefs = getSharedPreferences(PREFERENCES, 0);
         authToken = prefs.getString("auth_token", "none");
         authEmail = prefs.getString("auth_email", "none");
+        mTitle = "Tasks";
 
-        mTitle = getTitle();
+
+        mMainRequestHandler = RequestHandler.getInstance(this.getApplicationContext());
     }
 
     public void replaceFragment(Fragment newFragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();
         if(!newFragment.isAdded()){
-            ft.add(R.id.container, newFragment);
+            ft.replace(R.id.container, newFragment);
+            ft.commit();
         }
-        if(currentFragment != null) {
-            ft.hide(currentFragment);
-        }
-        ft.addToBackStack(null);
-        ft.show(newFragment);
-        ft.commit();
     }
 
     private void initializeFragments() {
-        // Initialize each of the fragments and set the current fragment
+        mtaskFragment = new TaskFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.add(R.id.container, mtaskFragment);
+        ft.show(mtaskFragment);
+        ft.commit();
     }
 
     public void onFragmentInteraction(String id){
@@ -132,7 +139,8 @@ public class MainActivity extends ActionBarActivity
                 replaceFragment(taskFragment);
                 break;
             case 1:
-                //replaceFragment();
+                SiteListFragment siteListFragment = new SiteListFragment();
+                replaceFragment(siteListFragment);
                 break;
             case 2:
                 //replaceFragment();

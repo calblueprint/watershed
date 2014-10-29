@@ -10,7 +10,7 @@
 
 @interface UIView (WPExtensions)
 
-- (UIView *)wp_addToSuperview:(UIView *)view;
+- (instancetype)wp_addToSuperview:(UIView *)view;
 
 + (NSNumber *)wp_stylePadding;
 + (NSNumber *)wp_styleNegativePadding;
