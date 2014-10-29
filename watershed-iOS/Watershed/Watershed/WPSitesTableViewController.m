@@ -13,6 +13,7 @@
 @interface WPSitesTableViewController ()
 
 @property (nonatomic) WPSitesTableView *sitesTableView;
+@property (nonatomic) NSMutableArray *siteList;
 
 @end
 
@@ -26,6 +27,7 @@
     
     [super viewDidLoad];
     self.navigationItem.title = @"Sites";
+    [self loadSiteData];
     self.sitesTableView.delegate = self;
     self.sitesTableView.dataSource = self;
 }
@@ -35,11 +37,19 @@
     [self updatePhotoOffset:self.sitesTableView.contentOffset.y];
 }
 
+- (void)loadSiteData {
+    self.siteList = @[@1, @3, @4, @2, @5, @1, @5, @2, @2, @3, @4, @0].mutableCopy;
+}
+
 #pragma mark - TableView Delegate/DataSource Methods
 
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    NSLog(@"Call number of rows");
+    NSInteger rowCount = 0;
+    
+    if ([tableView isEqual:self.sitesTableView]) rowCount = self.siteList.count;
+    return rowCount;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -58,7 +68,7 @@
                                                       reuseIdentifier:cellIdentifier
                                                                  name:@"Sample Site"
                                                                 image:[UIImage imageNamed:@"SampleCoverPhoto"]
-                                                        miniSiteCount:5
+                                                        miniSiteCount:[self.siteList[indexPath.row] intValue]
                         ];
         }
     }
