@@ -2,7 +2,7 @@
 //  WPLoginView.m
 //  Watershed
 //
-//  Created by Andrew on 9/28/14.
+//  Created by Andrew Millman on 9/28/14.
 //  Copyright (c) 2014 Blueprint. All rights reserved.
 //
 
