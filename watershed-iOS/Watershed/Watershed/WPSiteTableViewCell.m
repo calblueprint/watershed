@@ -21,7 +21,7 @@
 
 const static float CELL_HEIGHT = 150.0f;
 const static int ORIGINAL_PHOTO_POSITION = 50;
-const static int OFFSET_DECREASE = 5;
+const static int PARALLAX_REDUCTION = 4;
 
 - (id)initWithStyle:(UITableViewCellStyle)style
     reuseIdentifier:(NSString *)reuseIdentifier
@@ -116,7 +116,7 @@ const static int OFFSET_DECREASE = 5;
     CGFloat photoOffset = [contentOffset floatValue] - self.frame.origin.y;
     
     [self.photoView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(ORIGINAL_PHOTO_POSITION + photoOffset / OFFSET_DECREASE));
+        make.top.equalTo(@(ORIGINAL_PHOTO_POSITION + photoOffset / PARALLAX_REDUCTION));
     }];
 }
 
