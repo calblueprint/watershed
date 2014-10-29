@@ -21,7 +21,7 @@
 
 const static float CELL_HEIGHT = 150.0f;
 const static int ORIGINAL_PHOTO_POSITION = 50;
-const static int PARALLAX_REDUCTION = 4;
+const static float PARALLAX_REDUCTION = 3.5;
 
 - (id)initWithStyle:(UITableViewCellStyle)style
     reuseIdentifier:(NSString *)reuseIdentifier
