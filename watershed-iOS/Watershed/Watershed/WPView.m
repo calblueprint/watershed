@@ -17,6 +17,10 @@
 
 @implementation WPView
 
+- (instancetype)initWithFrame:(CGRect)frame {
+    return [self initWithFrame:frame visibleNavbar:NO];
+}
+
 - (instancetype)initWithFrame:(CGRect)frame
                 visibleNavbar:(BOOL)visible {
     self = [super initWithFrame:frame];
