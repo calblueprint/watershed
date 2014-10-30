@@ -70,7 +70,7 @@
     NSString *reuseIdentifier = @"WPProfileCell";
     WPProfileTableViewCell *cell = [[WPProfileTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
     switch (indexPath.row) {
-        case 0: {
+        case 1: {
             FAKIonIcons *mailIcon = [FAKIonIcons ios7EmailOutlineIconWithSize:30];
             [cell setIconImageView:[[UIImageView alloc] initWithImage:[mailIcon imageWithSize:CGSizeMake(30, 30)]]];
             
@@ -80,7 +80,7 @@
             
             break;
         }
-        case 1: {
+        case 2: {
             FAKIonIcons *locationIcon = [FAKIonIcons ios7LocationOutlineIconWithSize:30];
             [cell setIconImageView:[[UIImageView alloc] initWithImage:[locationIcon imageWithSize:CGSizeMake(30, 30)]]];
             
@@ -89,7 +89,7 @@
             [cell setInfoLabel:infoLabel];
             break;
         }
-        case 2: {
+        case 3: {
             FAKIonIcons *phoneIcon = [FAKIonIcons ios7TelephoneOutlineIconWithSize:30];
             [cell setIconImageView:[[UIImageView alloc] initWithImage:[phoneIcon imageWithSize:CGSizeMake(30, 30)]]];
             
@@ -124,8 +124,8 @@
     _nameLabel.textColor = [UIColor blackColor];
     [self addSubview:_nameLabel];
     
-    _infoTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
-    _infoTableView.backgroundColor = [UIColor whiteColor];
+    _infoTableView = [[UITableView alloc] init];
+    _infoTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self addSubview:_infoTableView];
 
     
@@ -134,22 +134,22 @@
 - (void)updateConstraints {
     
     [self.profilePictureView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@79);
+        make.top.equalTo(@(64 + 15));
         make.centerX.equalTo(@0);
         make.height.equalTo(@65);
         make.width.equalTo(@65);
     }];
 
     [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.profilePictureView.mas_bottom).with.offset(7);
+        make.top.equalTo(self.profilePictureView.mas_bottom).with.offset(10);
         make.centerX.equalTo(@0);
-        make.height.equalTo(@50);
-        make.width.equalTo(@100);
+//        make.height.equalTo(@50);
+//        make.width.equalTo(@100);
 
     }];
     
     [self.infoTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.nameLabel.mas_bottom).with.offset(10);
+        make.top.equalTo(self.nameLabel.mas_bottom).with.offset(50);
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
         make.bottom.equalTo(@0);
@@ -166,11 +166,14 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.row == 0) {
+        return 1.f;
+    }
     return 50;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return 4;
 }
 
 

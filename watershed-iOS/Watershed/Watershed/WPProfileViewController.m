@@ -32,7 +32,7 @@
 {
     self.navigationItem.title = @"My Profile";
     FAKIonIcons *settingsIcon = [FAKIonIcons ios7GearOutlineIconWithSize:20];
-    UIImage *settingsImage = [settingsIcon imageWithSize:CGSizeMake(15, 15)];
+    UIImage *settingsImage = [settingsIcon imageWithSize:CGSizeMake(20, 20)];
     UIBarButtonItem *settingsButtonItem = [[UIBarButtonItem alloc] initWithImage:settingsImage style:UIBarButtonItemStylePlain target:self action:@selector(openSettings)];
     self.navigationItem.rightBarButtonItem = settingsButtonItem;
     self.view = [[WPProfileView alloc] init];
