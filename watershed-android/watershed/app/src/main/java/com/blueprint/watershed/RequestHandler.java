@@ -188,4 +188,9 @@ public class RequestHandler {
         return Stringresponse[0];
     }
 
+    //Getters
+
+    public RequestQueue getRequestQueue() {
+        return mRequestQueue;
+    }
 }

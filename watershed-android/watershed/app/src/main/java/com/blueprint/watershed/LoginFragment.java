@@ -1,15 +1,27 @@
 package com.blueprint.watershed;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Button;
 import android.content.Intent;
+import android.widget.Toast;
+
+import com.android.volley.NetworkError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -18,8 +30,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     private LandingPageActivity parentActivity;
     private View rootView;
-
-    private String LOGIN_URL = "http://10.0.2.2:3000/api/v1/users/sign_in";
 
     // UI Elements
     private EditText mEmailField;
@@ -80,21 +90,24 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         final String emailString = getEmailField().getText().toString();
         final String passwordString = getPasswordField().getText().toString();
 
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("email", emailString);
-        params.put("password", passwordString);
+        HashMap<String, String> user_params = new HashMap<String, String>();
+        user_params.put("email", emailString);
+        user_params.put("password", passwordString);
+        HashMap<String, HashMap<String, String>> params = new HashMap<String, HashMap<String,String>>();
+        params.put("user",user_params);
 
-
+        parentActivity.Login(params);
 
         // Send the request, for now just load the main activity
-        parentActivity.finish();
-        startActivity(intent);
+        //parentActivity.finish();
+        //startActivity(intent);
     }
 
     // Getters
     public EditText getEmailField() { return mEmailField; }
     public EditText getPasswordField() { return mPasswordField; }
     public Button getLoginButton() { return mLoginButton; }
+
 
     // Setters
     public void setEmailField(EditText emailField) { mEmailField = emailField; }
