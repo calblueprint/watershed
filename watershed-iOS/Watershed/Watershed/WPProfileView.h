@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WPView.h"
 
-@interface WPProfileView : UIView <UITableViewDataSource, UITableViewDelegate>
+@interface WPProfileView : WPView <UITableViewDataSource, UITableViewDelegate>
 
 @end

@@ -42,7 +42,6 @@
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section {
     
-    NSLog(@"Call number of rows");
     NSInteger rowCount = 0;
     
     if ([tableView isEqual:self.miniSiteTableView]) rowCount = self.miniSiteList.count;
@@ -61,7 +60,6 @@
         cellView = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (!cellView) {
             
-            NSLog(@"RENDER NEW");
             cellView = [[WPMiniSiteTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                       reuseIdentifier:cellIdentifier
                                                                  name:@"Yes"

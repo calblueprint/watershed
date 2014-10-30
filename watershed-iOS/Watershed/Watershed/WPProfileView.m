@@ -30,16 +30,13 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
+    self = [super initWithFrame:frame visibleNavbar:YES];
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
         [self createProfiles];
         [self createSubviews];
-        //[self setUpActions];
         [self updateConstraints];
     }
-
-    
     
     self.infoTableView.delegate = self;
     self.infoTableView.dataSource = self;
@@ -92,6 +89,15 @@
             [cell setInfoLabel:infoLabel];
             break;
         }
+        case 2: {
+            FAKIonIcons *phoneIcon = [FAKIonIcons ios7TelephoneOutlineIconWithSize:30];
+            [cell setIconImageView:[[UIImageView alloc] initWithImage:[phoneIcon imageWithSize:CGSizeMake(30, 30)]]];
+            
+            UILabel *infoLabel = [[UILabel alloc] init];
+            infoLabel.text = self.profile.phoneNumber;
+            [cell setInfoLabel:infoLabel];
+            break;
+        }
         default: {
             //do nothing
         }
@@ -118,7 +124,8 @@
     _nameLabel.textColor = [UIColor blackColor];
     [self addSubview:_nameLabel];
     
-    _infoTableView = [[UITableView alloc] init];
+    _infoTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+    _infoTableView.backgroundColor = [UIColor whiteColor];
     [self addSubview:_infoTableView];
 
     
@@ -147,18 +154,6 @@
         make.trailing.equalTo(@0);
         make.bottom.equalTo(@0);
     }];
-    
-//    [self.infoTableView.subviews mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(@0);
-//        make.leading.equalTo(@0);
-//        make.trailing.equalTo(@0);
-//        make.bottom.equalTo(@0);
-//    }];
-
-//    [self.locationIconImageView setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
-//    [self.locationIconImageView setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisVertical];
-
-    
 
     [super updateConstraints];
 }
@@ -171,11 +166,12 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 60;
+    return 50;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return 3;
 }
+
 
 @end
