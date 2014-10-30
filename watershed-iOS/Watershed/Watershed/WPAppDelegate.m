@@ -36,11 +36,20 @@
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
+    //clear navbar
     [[UINavigationBar appearance] setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    
+    //no borderline for navbar
     [[UINavigationBar appearance] setShadowImage:[UIImage new]];
+    
+    //white text
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    
+    //white navigation items
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-
+    
+    //no back button text
+    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(-1000.f, -1000.f) forBarMetrics:UIBarMetricsDefault];
     return YES;
 }
 							
