@@ -47,9 +47,7 @@
     
     //white navigation items
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    
-    //no back button text
-    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(-1000.f, -1000.f) forBarMetrics:UIBarMetricsDefault];
+
     return YES;
 }
 							
