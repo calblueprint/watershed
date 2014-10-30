@@ -75,11 +75,7 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
     taskViewController.taskTitle = self.tasks[indexPath.row][@"Task"];
     taskViewController.taskDescription = self.tasks[indexPath.row][@"Description"];
     taskViewController.dueDate = self.tasks[indexPath.row][@"DueDate"];
-    self.view.window.rootViewController = taskViewController;
-//    [self.view.superview.superview addSubview:taskViewController.view];
-//    [self.view addSubview:taskViewController.view];
-//    [self presentViewController:taskViewController animated:YES completion:nil];
-//    [[self navigationController] pushViewController:taskViewController animated:YES];
+    [[self.parentViewController navigationController] pushViewController:taskViewController animated:YES];
 }
 
 @end

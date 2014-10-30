@@ -83,19 +83,19 @@
 
 - (void)updateConstraints {
     [self.dueDate mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(stdMargin));
+        make.top.equalTo(@(topMargin));
         make.width.equalTo(@125);
         make.trailing.equalTo(@(-(stdMargin)));
     }];
 
     [self.title mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(stdMargin));
+        make.top.equalTo(@(topMargin));
         make.leading.equalTo(@(stdMargin));
         make.trailing.equalTo(self.dueDate.mas_left).with.offset(stdMargin);
     }];
 
     [self.taskDescription mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.dueDate.mas_bottom).with.offset(stdMargin);
+        make.top.equalTo(self.title.mas_bottom).with.offset(stdMargin);
         make.leading.equalTo(@(stdMargin));
         make.trailing.equalTo(@(-(stdMargin)));
     }];

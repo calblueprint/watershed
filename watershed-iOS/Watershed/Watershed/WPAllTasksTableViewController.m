@@ -9,6 +9,7 @@
 #import "WPTasksTableViewCell.h"
 #import "WPAllTasksTableViewController.h"
 #import "UIExtensions.h"
+#import "WPTaskViewController.h"
 
 @interface WPAllTasksTableViewController ()
 
@@ -64,6 +65,16 @@ static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
     cell.taskDescription = rowData[@"Description"];
     cell.dueDate = rowData[@"DueDate"];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    WPTaskViewController *taskViewController = [[WPTaskViewController alloc] init];
+    taskViewController.taskTitle = self.allTasks[indexPath.row][@"Task"];
+    taskViewController.taskDescription = self.allTasks[indexPath.row][@"Description"];
+    taskViewController.dueDate = self.allTasks[indexPath.row][@"DueDate"];
+    [[self.parentViewController navigationController] pushViewController:taskViewController animated:YES];
 }
 
 @end
