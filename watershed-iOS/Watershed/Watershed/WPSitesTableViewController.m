@@ -9,6 +9,7 @@
 #import "WPSitesTableViewController.h"
 #import "WPSitesTableView.h"
 #import "WPSiteTableViewCell.h"
+#import "WPSiteViewController.h"
 
 @interface WPSitesTableViewController ()
 
@@ -76,6 +77,11 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [WPSiteTableViewCell cellHeight];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    WPSiteViewController *siteViewController = [[WPSiteViewController alloc] init];
+    [self.navigationController pushViewController:siteViewController animated:YES];
 }
 
 #pragma mark - ScrollView Delegate Methods
