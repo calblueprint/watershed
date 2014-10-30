@@ -18,6 +18,8 @@
 
 @end
 
+static NSString *cellIdentifier = @"SiteCell";
+
 @implementation WPSitesTableViewController
 
 - (void)loadView {
@@ -60,7 +62,6 @@
     
     if ([tableView isEqual:self.sitesTableView]) {
         
-        static NSString *cellIdentifier = @"SiteCell";
         cellView = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (!cellView) {
             

@@ -18,6 +18,8 @@
 
 @end
 
+static NSString *cellIdentifier = @"MiniSiteCell";
+
 @implementation WPSiteViewController
 
 - (void)viewDidLoad {
@@ -61,7 +63,6 @@
     
     if ([tableView isEqual:self.miniSiteTableView]) {
         
-        static NSString *cellIdentifier = @"MiniSiteCell";
         cellView = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (!cellView) {
             
