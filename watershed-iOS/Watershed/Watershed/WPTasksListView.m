@@ -36,10 +36,9 @@
     return self;
 }
 
--(instancetype)initWithTableController:(WPTasksListViewController *)parentController frame:(CGRect)frame{
-    NSLog(@"This is it: %@",parentController.myTasksTableController);
+-(instancetype)initWithFrame:(CGRect)frame andTableViewController:(WPTasksListViewController *)tableViewController {
     self = [super initWithFrame:frame visibleNavbar:YES];
-    self.parentTasksListViewController = parentController;
+    self.parentTasksListViewController = tableViewController;
     if (self) {
         [self createSubviews];
         [self setUpActions];

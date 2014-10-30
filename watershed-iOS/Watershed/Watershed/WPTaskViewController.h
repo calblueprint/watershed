@@ -11,9 +11,9 @@
 
 @interface WPTaskViewController : UIViewController
 
-@property (nonatomic, strong) NSString *taskTitle;
-@property (nonatomic, strong) NSString *taskDescription;
-@property (nonatomic, strong) NSString *dueDate;
-@property (nonatomic, strong) NSString *completed;
+@property (nonatomic) NSString *taskTitle;
+@property (nonatomic) NSString *taskDescription;
+@property (nonatomic) NSString *dueDate;
+@property (nonatomic) NSString *completed;
 @property (nonatomic) WPTaskView *view;
 @end

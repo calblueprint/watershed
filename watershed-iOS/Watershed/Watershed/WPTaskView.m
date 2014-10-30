@@ -64,10 +64,10 @@
 - (void)setUpActions {
     [_completed setTitle:@"Mark as Complete" forState:UIControlStateNormal];
     [_completed setTitleColor:[UIColor wp_blue] forState:UIControlStateNormal];
-    [_completed addTarget:self action:@selector(onclick) forControlEvents:UIControlEventTouchUpInside];
+    [_completed addTarget:self action:@selector(onClick) forControlEvents:UIControlEventTouchUpInside];
 }
 
--(void)onclick{
+-(void)onClick {
     if ([_completed.titleLabel.text isEqualToString:@"Completed"]) {
         [_completed setTitle:@"Mark as Complete" forState:UIControlStateNormal];
         [_completed setTitleColor:[UIColor wp_blue] forState:UIControlStateNormal];
@@ -85,7 +85,7 @@
     [self.dueDate mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(topMargin));
         make.width.equalTo(@125);
-        make.trailing.equalTo(@(-(stdMargin)));
+        make.trailing.equalTo(@(-stdMargin));
     }];
 
     [self.title mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -97,12 +97,12 @@
     [self.taskDescription mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.title.mas_bottom).with.offset(stdMargin);
         make.leading.equalTo(@(stdMargin));
-        make.trailing.equalTo(@(-(stdMargin)));
+        make.trailing.equalTo(@(-stdMargin));
     }];
 
     [self.completed mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.taskDescription.mas_bottom).with.offset(stdMargin * 2);
-        make.centerX.equalTo(@(self.center.x));
+        make.centerX.equalTo(self.mas_centerX);
         make.height.equalTo(@50);
         make.width.equalTo(@200);
     }];
