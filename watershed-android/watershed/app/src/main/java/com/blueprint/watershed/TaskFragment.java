@@ -11,26 +11,51 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import java.util.Date;
+
 public class TaskFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private ListView listView1;
+    private Task mTaskList[];
 
 
-    public static TaskFragment newInstance() {
+    public static TaskFragment newInstance(int option) {
         TaskFragment fragment = new TaskFragment();
         Bundle args = new Bundle();
+        args.putInt("option", option);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public TaskFragment() {
+    public TaskFragment(){
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            int option = getArguments().getInt("option");
+            switch (option) {
+                case 0: //populates with tasks that you are assigned
+                    mTaskList = new Task[]
+                            {
+                                    new Task("Title 1", "Description 1 ", 1, 1, 1, true, new Date()),
+                                    new Task("Title 2", "Description 2 ", 1, 1, 1, true, new Date()),
+                                    new Task("Title 3", "Description 3 ", 1, 1, 1, true, new Date()),
+                            };
+                    break;
+
+                case 1: //populates with all tasks
+                    mTaskList = new Task[]
+                            {
+                                    new Task("Title 4", "Description 1 ", 1, 1, 1, true, new Date()),
+                                    new Task("Title 5", "Description 2 ", 1, 1, 1, true, new Date()),
+                                    new Task("Title 6", "Description 3 ", 1, 1, 1, true, new Date()),
+                            };
+                    break;
+
+            }
         }
     }
 
@@ -38,15 +63,9 @@ public class TaskFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View finalView = inflater.inflate(R.layout.fragment_task_list, container, false);
-        Task TaskList[] = new Task[]
-                {
-                        new Task(),
-                        new Task(),
-                        new Task()
-                };
 
         listView1 = (ListView)finalView.findViewById(android.R.id.list);
-        TaskAdapter arrayAdapter = new TaskAdapter(getActivity(),R.layout.taskview_each_item, TaskList);
+        TaskAdapter arrayAdapter = new TaskAdapter(getActivity(),R.layout.taskview_each_item, mTaskList);
         listView1.setAdapter(arrayAdapter);
         return finalView;
     }
