@@ -19,6 +19,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private LandingPageActivity parentActivity;
     private View rootView;
 
+    private String LOGIN_URL = "http://10.0.2.2:3000/api/v1/users/sign_in";
+
     // UI Elements
     private EditText mEmailField;
     private EditText mPasswordField;
@@ -81,6 +83,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("email", emailString);
         params.put("password", passwordString);
+
+
 
         // Send the request, for now just load the main activity
         parentActivity.finish();
