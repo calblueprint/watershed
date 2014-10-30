@@ -16,4 +16,5 @@
 @property (nonatomic, strong) NSString *dueDate;
 @property (nonatomic, strong) NSString *completed;
 @property (nonatomic) WPTaskView *view;
+
 @end
