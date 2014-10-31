@@ -14,6 +14,9 @@
 @property (nonatomic) UIImageView *photoView;
 @property (nonatomic) UILabel *miniSiteLabel;
 @property (nonatomic) UIView *darkOverlay;
+@property (nonatomic) NSString *name;
+@property (nonatomic) UIImage *image;
+@property (nonatomic) NSInteger miniSiteCount;
 
 @end
 
@@ -35,44 +38,53 @@ const static float PARALLAX_REDUCTION = 3.5;
         
         [self setClipsToBounds:YES];
         
-        UIView *content = self.contentView;
-        content.backgroundColor = [UIColor whiteColor];
+        _name = name;
+        _image = image;
+        _miniSiteCount = miniSiteCount;
         
-        _photoView = [({
-            UIImageView *photoView = [[UIImageView alloc] initWithImage:image];
-            [photoView setContentMode:UIViewContentModeScaleAspectFill];
-            //[photoView setClipsToBounds:YES];
-            photoView;
-        }) wp_addToSuperview:content];
-        
-        _darkOverlay = [({
-            UIView *darkOverlay = [[UIView alloc] init];
-            darkOverlay.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.15];
-            darkOverlay;
-        }) wp_addToSuperview:content];
-        
-        _nameLabel = [({
-            UILabel *label = [[UILabel alloc] init];
-            label.text = name;
-            label.textColor = [UIColor whiteColor];
-            label.font = [UIFont systemFontOfSize:20.0];
-            [self addTextShadow:label];
-            label;
-        }) wp_addToSuperview:content];
-        
-        _miniSiteLabel = [({
-            UILabel *miniSiteLabel = [[UILabel alloc] init];
-            miniSiteLabel.text = [NSString stringWithFormat:@"%d mini sites", (int)miniSiteCount];
-            miniSiteLabel.textColor = [UIColor whiteColor];
-            miniSiteLabel.font = [UIFont systemFontOfSize:14.0];
-            [self addTextShadow:miniSiteLabel];
-            miniSiteLabel;
-        }) wp_addToSuperview:content];
-        
-        
+        [self createSubviews];
         [self setNeedsUpdateConstraints];
     }
     return self;
+}
+
+#pragma mark - View Hierarchy
+
+- (void)createSubviews {
+    
+    UIView *content = self.contentView;
+    content.backgroundColor = [UIColor whiteColor];
+    
+    _photoView = [({
+        UIImageView *photoView = [[UIImageView alloc] initWithImage:self.image];
+        [photoView setContentMode:UIViewContentModeScaleAspectFill];
+        //[photoView setClipsToBounds:YES];
+        photoView;
+    }) wp_addToSuperview:content];
+    
+    _darkOverlay = [({
+        UIView *darkOverlay = [[UIView alloc] init];
+        darkOverlay.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.15];
+        darkOverlay;
+    }) wp_addToSuperview:content];
+    
+    _nameLabel = [({
+        UILabel *label = [[UILabel alloc] init];
+        label.text = self.name;
+        label.textColor = [UIColor whiteColor];
+        label.font = [UIFont systemFontOfSize:20.0];
+        [self addTextShadow:label];
+        label;
+    }) wp_addToSuperview:content];
+    
+    _miniSiteLabel = [({
+        UILabel *miniSiteLabel = [[UILabel alloc] init];
+        miniSiteLabel.text = [NSString stringWithFormat:@"%d mini sites", (int) self.miniSiteCount];
+        miniSiteLabel.textColor = [UIColor whiteColor];
+        miniSiteLabel.font = [UIFont systemFontOfSize:14.0];
+        [self addTextShadow:miniSiteLabel];
+        miniSiteLabel;
+    }) wp_addToSuperview:content];
 }
 
 - (void)updateConstraints {
@@ -114,6 +126,14 @@ const static float PARALLAX_REDUCTION = 3.5;
     [super updateConstraints];
 }
 
+#pragma mark - UIView Modifications
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+    
+    // Configure the view for the selected state
+}
+
 - (void)updatePhotoPosition:(NSNumber *)contentOffset {
     CGFloat photoOffset = [contentOffset floatValue] - self.frame.origin.y;
     
@@ -122,11 +142,7 @@ const static float PARALLAX_REDUCTION = 3.5;
     }];
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    
-    // Configure the view for the selected state
-}
+
 
 - (void)addTextShadow:(UILabel *)label {
     label.layer.shadowColor = [[UIColor blackColor] CGColor];

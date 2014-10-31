@@ -15,6 +15,12 @@
 @property (nonatomic) UIView *ratingDotView;
 @property (nonatomic) WPLabeledIcon *taskCountLabel;
 @property (nonatomic) WPLabeledIcon *fieldReportCountLabel;
+@property (nonatomic) NSString *name;
+@property (nonatomic) UIImage *image;
+@property (nonatomic) NSInteger rating;
+@property (nonatomic) NSInteger taskCount;
+@property (nonatomic) NSInteger fieldReportCount;
+
 @end
 
 @implementation WPMiniSiteTableViewCell
@@ -33,49 +39,60 @@ const static float CELL_HEIGHT = 86.0f;
     if (self) {
         self.backgroundColor = [UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:1];
         
-        UIView *content = self.contentView;
-        content.backgroundColor = [UIColor whiteColor];
-        
-        _nameLabel = [({
-            UILabel *label = [[UILabel alloc] init];
-            label.text = name;
-            label;
-        }) wp_addToSuperview:content];
-        
-        _photoView = [({
-            UIImageView *photoView = [[UIImageView alloc] initWithImage:image];
-            [photoView setContentMode:UIViewContentModeScaleAspectFit];
-            [photoView setClipsToBounds:YES];
-            photoView.layer.cornerRadius = 3.0;
-            photoView;
-        }) wp_addToSuperview:content];
-        
-        _ratingDotView = [({
-            UIView *ratingDotView = [[UIView alloc] init];
-            ratingDotView.layer.cornerRadius = 5.0;
-            ratingDotView.backgroundColor = [WPMiniSiteTableViewCell colorForRating:rating];
-            ratingDotView;
-        }) wp_addToSuperview:content];
-        
-        _taskCountLabel = [({
-            NSString *taskText = [NSString stringWithFormat:@"%d tasks", (int)taskCount];
-            WPLabeledIcon *taskCountLabel = [[WPLabeledIcon alloc] initWithText:taskText
-                                                                           icon:[UIImage imageNamed:@"CheckIcon"]];
-            taskCountLabel.alpha = 0.3;
-            taskCountLabel;
-        }) wp_addToSuperview:content];
-        
-        _fieldReportCountLabel = [({
-            NSString *fieldReportText = [NSString stringWithFormat:@"%d reports", (int)fieldReportCount];
-            WPLabeledIcon *fieldReportCountLabel = [[WPLabeledIcon alloc] initWithText:fieldReportText
-                                                                                  icon:[UIImage imageNamed:@"ExclamationIcon"]];
-            fieldReportCountLabel.alpha = 0.3;
-            fieldReportCountLabel;
-        }) wp_addToSuperview:content];
-        
+        _name = name;
+        _image = image;
+        _rating = rating;
+        _taskCount = taskCount;
+        _fieldReportCount = fieldReportCount;
+       
+        [self createSubviews];
         [self setNeedsUpdateConstraints];
     }
     return self;
+}
+
+#pragma mark - View Hierarchy
+
+- (void)createSubviews {
+    UIView *content = self.contentView;
+    content.backgroundColor = [UIColor whiteColor];
+    
+    _nameLabel = [({
+        UILabel *label = [[UILabel alloc] init];
+        label.text = self.name;
+        label;
+    }) wp_addToSuperview:content];
+    
+    _photoView = [({
+        UIImageView *photoView = [[UIImageView alloc] initWithImage:self.image];
+        [photoView setContentMode:UIViewContentModeScaleAspectFit];
+        [photoView setClipsToBounds:YES];
+        photoView.layer.cornerRadius = 3.0;
+        photoView;
+    }) wp_addToSuperview:content];
+    
+    _ratingDotView = [({
+        UIView *ratingDotView = [[UIView alloc] init];
+        ratingDotView.layer.cornerRadius = 5.0;
+        ratingDotView.backgroundColor = [WPMiniSiteTableViewCell colorForRating:self.rating];
+        ratingDotView;
+    }) wp_addToSuperview:content];
+    
+    _taskCountLabel = [({
+        NSString *taskText = [NSString stringWithFormat:@"%d tasks", (int) self.taskCount];
+        WPLabeledIcon *taskCountLabel = [[WPLabeledIcon alloc] initWithText:taskText
+                                                                       icon:[UIImage imageNamed:@"CheckIcon"]];
+        taskCountLabel.alpha = 0.3;
+        taskCountLabel;
+    }) wp_addToSuperview:content];
+    
+    _fieldReportCountLabel = [({
+        NSString *fieldReportText = [NSString stringWithFormat:@"%d reports", (int) self.fieldReportCount];
+        WPLabeledIcon *fieldReportCountLabel = [[WPLabeledIcon alloc] initWithText:fieldReportText
+                                                                              icon:[UIImage imageNamed:@"ExclamationIcon"]];
+        fieldReportCountLabel.alpha = 0.3;
+        fieldReportCountLabel;
+    }) wp_addToSuperview:content];
 }
 
 - (void)updateConstraints {
@@ -126,6 +143,8 @@ const static float CELL_HEIGHT = 86.0f;
     
     [super updateConstraints];
 }
+
+#pragma mark - UIView Modifications
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
