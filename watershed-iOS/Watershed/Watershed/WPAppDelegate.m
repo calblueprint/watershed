@@ -47,6 +47,9 @@
     
     //white navigation items
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    
+    [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"BackButton" ]];
+    [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"BackButton" ]];
 
     return YES;
 }
