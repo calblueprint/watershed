@@ -7,12 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WPProfile.h"
 
 @interface WPProfileTableViewCell : UITableViewCell
 
-@property UIImageView *iconImageView;
-@property UILabel *infoLabel;
+@property (nonatomic) UIImageView *iconImageView;
+@property (nonatomic) UILabel *infoLabel;
 
 - (void)addSubviews;
 

@@ -8,6 +8,8 @@
 
 #import "WPProfileViewController.h"
 #import "FontAwesomeKit/FontAwesomeKit.h"
+#import "WPSettingsTableViewController.h"
+
 
 
 @interface WPProfileViewController ()
@@ -19,27 +21,28 @@
 @implementation WPProfileViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
--(void)loadView
-{
     self.navigationItem.title = @"My Profile";
     FAKIonIcons *settingsIcon = [FAKIonIcons ios7GearOutlineIconWithSize:20];
     UIImage *settingsImage = [settingsIcon imageWithSize:CGSizeMake(20, 20)];
     UIBarButtonItem *settingsButtonItem = [[UIBarButtonItem alloc] initWithImage:settingsImage style:UIBarButtonItemStylePlain target:self action:@selector(openSettings)];
+    settingsButtonItem.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = settingsButtonItem;
+    self.editButtonItem.tintColor = [UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    [super viewDidLoad];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+}
+
+-(void)loadView {
     self.view = [[WPProfileView alloc] init];
 }
 
 -(void)openSettings {
-    //open Settings
+    WPSettingsTableViewController *settingsTableViewController = [[WPSettingsTableViewController alloc] init];
+    [self.navigationController pushViewController:settingsTableViewController animated:NO];
 }
 
 

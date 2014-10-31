@@ -41,7 +41,9 @@
 		BA4F8DFE19C7739300C816E3 /* WatershedTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4F8DFD19C7739300C816E3 /* WatershedTests.m */; };
 		BA4F960F1A00966B005309FC /* WPProfileView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4F960E1A00966B005309FC /* WPProfileView.m */; };
 		BA4F96121A009685005309FC /* WPProfileTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4F96111A009685005309FC /* WPProfileTableViewCell.m */; };
-		BA4F96151A0096A4005309FC /* WPProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4F96141A0096A4005309FC /* WPProfile.m */; };
+		BA4F96151A0096A4005309FC /* WPUser.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4F96141A0096A4005309FC /* WPUser.m */; };
+		BA4F961C1A01ED40005309FC /* WPSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4F961B1A01ED40005309FC /* WPSettingsTableViewController.m */; };
+		BA4F961F1A01EFD4005309FC /* WPSettingsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4F961E1A01EFD4005309FC /* WPSettingsTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,8 +118,12 @@
 		BA4F960E1A00966B005309FC /* WPProfileView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPProfileView.m; sourceTree = "<group>"; };
 		BA4F96101A009685005309FC /* WPProfileTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPProfileTableViewCell.h; sourceTree = "<group>"; };
 		BA4F96111A009685005309FC /* WPProfileTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPProfileTableViewCell.m; sourceTree = "<group>"; };
-		BA4F96131A0096A4005309FC /* WPProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPProfile.h; sourceTree = "<group>"; };
-		BA4F96141A0096A4005309FC /* WPProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPProfile.m; sourceTree = "<group>"; };
+		BA4F96131A0096A4005309FC /* WPUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPUser.h; sourceTree = "<group>"; };
+		BA4F96141A0096A4005309FC /* WPUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPUser.m; sourceTree = "<group>"; };
+		BA4F961A1A01ED40005309FC /* WPSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPSettingsTableViewController.h; sourceTree = "<group>"; };
+		BA4F961B1A01ED40005309FC /* WPSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPSettingsTableViewController.m; sourceTree = "<group>"; };
+		BA4F961D1A01EFD4005309FC /* WPSettingsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPSettingsTableViewCell.h; sourceTree = "<group>"; };
+		BA4F961E1A01EFD4005309FC /* WPSettingsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPSettingsTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,8 +154,9 @@
 		273ABEC619EDFA4C00FC1C92 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				BA4F96131A0096A4005309FC /* WPProfile.h */,
-				BA4F96141A0096A4005309FC /* WPProfile.m */,
+				BA4F96161A01ECE9005309FC /* Settings */,
+				BA4F96131A0096A4005309FC /* WPUser.h */,
+				BA4F96141A0096A4005309FC /* WPUser.m */,
 				BA4F960D1A00966B005309FC /* WPProfileView.h */,
 				BA4F960E1A00966B005309FC /* WPProfileView.m */,
 				BA4F96101A009685005309FC /* WPProfileTableViewCell.h */,
@@ -326,6 +333,17 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		BA4F96161A01ECE9005309FC /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				BA4F961A1A01ED40005309FC /* WPSettingsTableViewController.h */,
+				BA4F961B1A01ED40005309FC /* WPSettingsTableViewController.m */,
+				BA4F961D1A01EFD4005309FC /* WPSettingsTableViewCell.h */,
+				BA4F961E1A01EFD4005309FC /* WPSettingsTableViewCell.m */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -472,12 +490,14 @@
 				27F0B70119E2496400E848C3 /* WPSiteView.m in Sources */,
 				06305F4719D9274400BD2CE4 /* UIView+WPExtensions.m in Sources */,
 				27714CB219D93405005344B0 /* WPAppDelegate.m in Sources */,
-				BA4F96151A0096A4005309FC /* WPProfile.m in Sources */,
+				BA4F96151A0096A4005309FC /* WPUser.m in Sources */,
 				273ABEC919EDFA5900FC1C92 /* WPProfileViewController.m in Sources */,
 				27F0B70419E249CE00E848C3 /* WPSiteViewController.m in Sources */,
+				BA4F961C1A01ED40005309FC /* WPSettingsTableViewController.m in Sources */,
 				27714CA919D9076F005344B0 /* WPLoginViewController.m in Sources */,
 				27E36EE119FCBBE5008A63FB /* WPView.m in Sources */,
 				275C798D19EB911900E722C7 /* WPLabeledIcon.m in Sources */,
+				BA4F961F1A01EFD4005309FC /* WPSettingsTableViewCell.m in Sources */,
 				BA4F960F1A00966B005309FC /* WPProfileView.m in Sources */,
 				27714CAC19D9182D005344B0 /* WPLoginView.m in Sources */,
 				BA4F96121A009685005309FC /* WPProfileTableViewCell.m in Sources */,

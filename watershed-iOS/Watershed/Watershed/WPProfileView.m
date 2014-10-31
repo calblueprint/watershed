@@ -12,28 +12,30 @@
 #import "UIView+WPExtensions.h"
 #import "FontAwesomeKit/FontAwesomeKit.h"
 #import "WPProfileTableViewCell.h"
-#import "WPProfile.h"
+#import "WPUser.h"
 
 #import <QuartzCore/QuartzCore.h>
 
 @interface WPProfileView ()
 
-@property UITableView *infoTableView;
-@property WPProfile *profile;
-@property UIImageView *profilePictureView;
-@property UILabel *nameLabel;
+@property (nonatomic) UITableView *infoTableView;
+@property (nonatomic) WPUser *user;
+@property (nonatomic) UIImageView *profilePictureView;
+@property (nonatomic) UILabel *nameLabel;
 
 @end
 
 
 @implementation WPProfileView
 
-- (id)initWithFrame:(CGRect)frame
-{
+NSString *reuseIdentifier = @"WPProfileCell";
+static int PROFILE_PIC_HEIGHT = 65;
+
+- (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame visibleNavbar:YES];
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
-        [self createProfiles];
+        [self configureWithUser];
         [self createSubviews];
         [self updateConstraints];
     }
@@ -44,30 +46,28 @@
     return self;
 }
 
-- (void)createProfiles {
-    self.profile = [[WPProfile alloc] init];
-    [self.profile setProfilePicture:@"max.png"];
-    [self.profile setUserId:[NSNumber numberWithInt:5]];
-    [self.profile setName:@"Max Wolffe"];
-    [self.profile setPhoneNumber:@"9162128793"];
-    [self.profile setEmail:@"max@millman.com"];
-    [self.profile setLocation:@"123 Millman Way Berkeley, CA 82918"];
+- (void)configureWithUser {
+    self.user = [[WPUser alloc] init];
+    [self.user setProfilePicture:@"max.png"];
+    [self.user setUserId:[NSNumber numberWithInt:5]];
+    [self.user setName:@"Max Wolffe"];
+    [self.user setPhoneNumber:@"9162128793"];
+    [self.user setEmail:@"max@millman.com"];
+    [self.user setLocation:@"123 Millman Way Berkeley, CA 82918"];
 }
 
 #pragma mark - View Hierarchy
 
--(void)setRoundedView:(UIImageView *)roundedView;
-{
+-(void)setRoundedView:(UIImageView *)roundedView {
     CGPoint saveCenter = roundedView.center;
     roundedView.layer.borderWidth = 1.0f;
     roundedView.layer.borderColor = [UIColor blackColor].CGColor;
-    roundedView.layer.cornerRadius = 65/2;
+    roundedView.layer.cornerRadius = PROFILE_PIC_HEIGHT/2;
     roundedView.center = saveCenter;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *reuseIdentifier = @"WPProfileCell";
     WPProfileTableViewCell *cell = [[WPProfileTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
     switch (indexPath.row) {
         case 1: {
@@ -75,7 +75,7 @@
             [cell setIconImageView:[[UIImageView alloc] initWithImage:[mailIcon imageWithSize:CGSizeMake(30, 30)]]];
             
             UILabel *infoLabel = [[UILabel alloc] init];
-            infoLabel.text = self.profile.email;
+            infoLabel.text = self.user.email;
             [cell setInfoLabel:infoLabel];
             
             break;
@@ -85,7 +85,7 @@
             [cell setIconImageView:[[UIImageView alloc] initWithImage:[locationIcon imageWithSize:CGSizeMake(30, 30)]]];
             
             UILabel *infoLabel = [[UILabel alloc] init];
-            infoLabel.text = self.profile.location;
+            infoLabel.text = self.user.location;
             [cell setInfoLabel:infoLabel];
             break;
         }
@@ -94,7 +94,7 @@
             [cell setIconImageView:[[UIImageView alloc] initWithImage:[phoneIcon imageWithSize:CGSizeMake(30, 30)]]];
             
             UILabel *infoLabel = [[UILabel alloc] init];
-            infoLabel.text = self.profile.phoneNumber;
+            infoLabel.text = self.user.phoneNumber;
             [cell setInfoLabel:infoLabel];
             break;
         }
@@ -115,12 +115,12 @@
     _profilePictureView.contentMode = UIViewContentModeScaleAspectFit;
     _profilePictureView.clipsToBounds = YES;
     [self setRoundedView:_profilePictureView];
-    [_profilePictureView setImage:[UIImage imageNamed:self.profile.profilePicture]];
+    [_profilePictureView setImage:[UIImage imageNamed:self.user.profilePicture]];
     [self addSubview:_profilePictureView];
 
 
     _nameLabel = [[UILabel alloc] init];
-    _nameLabel.text = self.profile.name;
+    _nameLabel.text = self.user.name;
     _nameLabel.textColor = [UIColor blackColor];
     [self addSubview:_nameLabel];
     
@@ -136,16 +136,13 @@
     [self.profilePictureView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(64 + 15));
         make.centerX.equalTo(@0);
-        make.height.equalTo(@65);
-        make.width.equalTo(@65);
+        make.height.equalTo(@(PROFILE_PIC_HEIGHT));
+        make.width.equalTo(@(PROFILE_PIC_HEIGHT));
     }];
 
     [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.profilePictureView.mas_bottom).with.offset(10);
         make.centerX.equalTo(@0);
-//        make.height.equalTo(@50);
-//        make.width.equalTo(@100);
-
     }];
     
     [self.infoTableView mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -21,8 +21,7 @@
     reuseIdentifier:(NSString *)reuseIdentifier {
     
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self)
-    {
+    if (self) {
         [self setNeedsUpdateConstraints];
     }
     self.separatorInset = UIEdgeInsetsMake(0, 15, 0, 15);
@@ -44,7 +43,6 @@
     [self.iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(@0);
         make.right.equalTo(@-15);
-
     }];
     
     [super updateConstraints];
