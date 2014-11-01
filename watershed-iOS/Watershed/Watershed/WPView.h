@@ -11,6 +11,7 @@
 #import "UIView+WPExtensions.h"
 #import "UIColor+WPColors.h"
 #import "UIImage+ImageEffects.h"
+#import "FontAwesomeKit/FontAwesomeKit.h"
 #import "Masonry.h"
 
 @interface WPView : UIView

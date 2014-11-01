@@ -7,7 +7,6 @@
 //
 
 #import "WPProfileViewController.h"
-#import "FontAwesomeKit/FontAwesomeKit.h"
 #import "WPSettingsTableViewController.h"
 
 
