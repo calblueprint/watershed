@@ -8,6 +8,7 @@
 
 #import "WPSettingsTableViewController.h"
 #import "WPSettingsTableViewCell.h"
+#import "WPSettingsTableView.h"
 
 @interface WPSettingsTableViewController ()
 
@@ -18,10 +19,15 @@
 
 @implementation WPSettingsTableViewController
 
+- (void)loadView {
+    self.view = [[WPView alloc] initWithFrame:[[UIScreen mainScreen] bounds] visibleNavbar:YES];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"Settings";
-    _settingsTableView = [[UITableView alloc] init];
+    _settingsTableView = [[WPSettingsTableView alloc] init];
+    [self.view addSubview:_settingsTableView];
     
     _settingsTableView.delegate = self;
     _settingsTableView.dataSource = self;
