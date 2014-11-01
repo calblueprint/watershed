@@ -21,9 +21,8 @@
 
 @implementation WPLoginView
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame visibleNavbar:NO];
+- (id)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor wp_blue];
         [self createSubviews];
@@ -78,7 +77,6 @@
     appTitleLabel.textAlignment = NSTextAlignmentCenter;
     _appTitleLabel = appTitleLabel;
     [self.logoView addSubview:appTitleLabel];
-    
     
 }
 
