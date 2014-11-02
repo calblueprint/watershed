@@ -65,7 +65,7 @@ const static float CELL_HEIGHT = 86.0f;
     
     _photoView = [({
         UIImageView *photoView = [[UIImageView alloc] initWithImage:self.image];
-        [photoView setContentMode:UIViewContentModeScaleAspectFit];
+        [photoView setContentMode:UIViewContentModeScaleAspectFill];
         [photoView setClipsToBounds:YES];
         photoView.layer.cornerRadius = 3.0;
         photoView;
