@@ -9,7 +9,7 @@
 #import "WPSiteViewController.h"
 #import "WPSiteView.h"
 #import "WPMiniSiteTableViewCell.h"
-#import "Masonry.h"
+#import "WPMiniSiteViewController.h"
 
 @interface WPSiteViewController ()
 
@@ -70,7 +70,7 @@ static NSString *cellIdentifier = @"MiniSiteCell";
             cellView = [[WPMiniSiteTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                       reuseIdentifier:cellIdentifier
                                                                  name:@"Yes"
-                                                                image:[UIImage imageNamed:@"SampleCoverPhoto"]
+                                                                image:[UIImage imageNamed:@"SampleCoverPhoto2"]
                                                                rating:[self.miniSiteList[indexPath.row] intValue]
                                                             taskCount:5
                                                      fieldReportCount:5];
@@ -81,6 +81,11 @@ static NSString *cellIdentifier = @"MiniSiteCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [WPMiniSiteTableViewCell cellHeight];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    WPMiniSiteViewController *miniSiteViewController = [[WPMiniSiteViewController alloc] init];
+    [self.navigationController pushViewController:miniSiteViewController animated:YES];
 }
 
 @end

@@ -116,7 +116,7 @@ static int COVER_PHOTO_TRANS = 0;
     }) wp_addToSuperview:self.tableHeaderView];
     
     _coverPhotoView = [({
-        UIImage *coverPhoto = [UIImage imageNamed:@"SampleCoverPhoto2"];
+        UIImage *coverPhoto = [UIImage imageNamed:@"SampleCoverPhoto"];
         _originalCoverPhoto = coverPhoto;
         UIImageView *coverPhotoView = [[UIImageView alloc] initWithImage:coverPhoto];
         [coverPhotoView setContentMode:UIViewContentModeScaleAspectFill];
