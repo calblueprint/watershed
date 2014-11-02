@@ -46,10 +46,19 @@
                             NSLocalizedString(@"Profile", HNNoLocalizationComment)
                             ];
         
+        FAKFontAwesome *checkIcon = [FAKFontAwesome checkCircleIconWithSize:25];
+        UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake(25, 25)];
+        
+        FAKFontAwesome *treeIcon = [FAKFontAwesome treeIconWithSize:25];
+        UIImage *treeImage = [treeIcon imageWithSize:CGSizeMake(25, 25)];
+        
+        FAKFontAwesome *profileIcon = [FAKFontAwesome userIconWithSize:25];
+        UIImage *profileImage = [profileIcon imageWithSize:CGSizeMake(25, 25)];
+        
         NSArray *images = @[
-                            [UIImage imageNamed:@"CheckIcon"],
-                            [UIImage imageNamed:@"CheckIcon"],
-                            [UIImage imageNamed:@"CheckIcon"]
+                            checkImage,
+                            treeImage,
+                            profileImage
                             ];
         
         WPTasksListViewController *tasksListViewController = [[WPTasksListViewController alloc] init];
