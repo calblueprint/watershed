@@ -7,6 +7,7 @@
 //
 
 #import "WPMiniSiteView.h"
+#import "WPMiniSiteTableViewCell.h"
 
 @interface WPMiniSiteView () <UIScrollViewDelegate>
 

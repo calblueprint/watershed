@@ -1,0 +1,85 @@
+//
+//  WPMiniSiteViewController.m
+//  Watershed
+//
+//  Created by Andrew on 11/2/14.
+//  Copyright (c) 2014 Blueprint. All rights reserved.
+//
+
+#import "WPMiniSiteViewController.h"
+#import "WPMiniSiteView.h"
+#import "WPMiniSiteTableViewCell.h"
+
+@interface WPMiniSiteViewController ()
+
+@property (nonatomic) UITableView *fieldReportTableView;
+@property (nonatomic) NSMutableArray *fieldReportList;
+
+@end
+
+static NSString *cellIdentifier = @"FieldReportCell";
+
+@implementation WPMiniSiteViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.navigationItem.title = @"Watershed";
+    [self loadFieldReportData];
+    self.fieldReportTableView.delegate = self;
+    self.fieldReportTableView.dataSource = self;
+}
+
+- (void)loadView {
+    WPMiniSiteView *miniSiteView = [[WPMiniSiteView alloc] init];
+    self.view = miniSiteView;
+    self.fieldReportTableView = miniSiteView.fieldReportTableView;
+}
+
+- (void)loadFieldReportData {
+    self.fieldReportList = @[@1, @3, @4, @2, @5, @1, @5, @2, @2, @3, @4, @0].mutableCopy;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+}
+
+#pragma mark - TableView Delegate/DataSource Methods
+
+- (NSInteger)tableView:(UITableView *)tableView
+ numberOfRowsInSection:(NSInteger)section {
+    
+    NSInteger rowCount = 0;
+    
+    if ([tableView isEqual:self.fieldReportTableView]) rowCount = self.fieldReportList.count;
+    [(WPMiniSiteView *)self.view updateTableViewHeight:self.fieldReportList.count];
+    return rowCount;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UITableViewCell *cellView = nil;
+    
+    if ([tableView isEqual:self.fieldReportTableView]) {
+        
+        cellView = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        if (!cellView) {
+            
+            cellView = [[WPMiniSiteTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                      reuseIdentifier:cellIdentifier
+                                                                 name:@"Yes"
+                                                                image:[UIImage imageNamed:@"SampleCoverPhoto"]
+                                                               rating:[self.fieldReportList[indexPath.row] intValue]
+                                                            taskCount:5
+                                                     fieldReportCount:5];
+        }
+    }
+    return cellView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [WPMiniSiteTableViewCell cellHeight];
+}
+
+@end
