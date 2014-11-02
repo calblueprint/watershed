@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WPViewController.h"
 
-@interface WPSettingsTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate>
+@interface WPSettingsTableViewController : WPViewController <UITableViewDelegate, UITableViewDataSource>
 
 @end

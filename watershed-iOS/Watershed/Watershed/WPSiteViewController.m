@@ -2,7 +2,7 @@
 //  WPSiteViewController.m
 //  Watershed
 //
-//  Created by Andrew on 10/5/14.
+//  Created by Andrew Millman on 10/5/14.
 //  Copyright (c) 2014 Blueprint. All rights reserved.
 //
 
@@ -18,6 +18,8 @@
 
 @end
 
+static NSString *cellIdentifier = @"MiniSiteCell";
+
 @implementation WPSiteViewController
 
 - (void)viewDidLoad {
@@ -29,12 +31,18 @@
 }
 
 - (void)loadView {
-    self.view = [[WPSiteView alloc] init];
-    self.miniSiteTableView = ((WPSiteView *)self.view).miniSiteTableView;
+    WPSiteView *siteView = [[WPSiteView alloc] init];
+    self.view = siteView;
+    self.miniSiteTableView = siteView.miniSiteTableView;
 }
 
 - (void)loadMiniSiteData {
     self.miniSiteList = @[@1, @3, @4, @2, @5, @1, @5, @2, @2, @3, @4, @0].mutableCopy;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
 }
 
 #pragma mark - TableView Delegate/DataSource Methods
@@ -56,7 +64,6 @@
     
     if ([tableView isEqual:self.miniSiteTableView]) {
         
-        static NSString *cellIdentifier = @"MiniSiteCell";
         cellView = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (!cellView) {
             

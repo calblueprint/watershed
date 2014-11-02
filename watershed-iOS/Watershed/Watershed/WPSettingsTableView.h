@@ -1,14 +1,14 @@
 //
-//  WPLoginView.h
+//  WPSettingsTableView.h
 //  Watershed
 //
-//  Created by Andrew Millman on 9/28/14.
+//  Created by Andrew on 11/1/14.
 //  Copyright (c) 2014 Blueprint. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "WPView.h"
 
-@interface WPLoginView : WPView
+@interface WPSettingsTableView : UITableView
 
 @end

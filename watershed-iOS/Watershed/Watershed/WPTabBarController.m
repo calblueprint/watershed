@@ -9,7 +9,7 @@
 #import "WPAppDelegate.h"
 #import "WPTabBarController.h"
 #import "WPTasksListViewController.h"
-#import "WPSiteViewController.h"
+#import "WPSitesTableViewController.h"
 #import "WPProfileViewController.h"
 #import "UIColor+WPColors.h"
 
@@ -46,19 +46,28 @@
                             NSLocalizedString(@"Profile", HNNoLocalizationComment)
                             ];
         
+        FAKFontAwesome *checkIcon = [FAKFontAwesome checkCircleIconWithSize:25];
+        UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake(25, 25)];
+        
+        FAKFontAwesome *treeIcon = [FAKFontAwesome treeIconWithSize:25];
+        UIImage *treeImage = [treeIcon imageWithSize:CGSizeMake(25, 25)];
+        
+        FAKFontAwesome *profileIcon = [FAKFontAwesome userIconWithSize:25];
+        UIImage *profileImage = [profileIcon imageWithSize:CGSizeMake(25, 25)];
+        
         NSArray *images = @[
-                            [UIImage imageNamed:@"CheckIcon"],
-                            [UIImage imageNamed:@"CheckIcon"],
-                            [UIImage imageNamed:@"CheckIcon"]
+                            checkImage,
+                            treeImage,
+                            profileImage
                             ];
         
         WPTasksListViewController *tasksListViewController = [[WPTasksListViewController alloc] init];
         //CHANGE LATAR
-        WPSiteViewController *sitesListViewController = [[WPSiteViewController alloc] init];
+        WPSitesTableViewController *sitesTableViewController = [[WPSitesTableViewController alloc] init];
         WPProfileViewController *profileViewController = [[WPProfileViewController alloc] init];
         NSArray *rootViewControllers = @[
                                          tasksListViewController,
-                                         sitesListViewController,
+                                         sitesTableViewController,
                                          profileViewController
                                          ];
         

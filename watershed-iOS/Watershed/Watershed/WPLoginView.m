@@ -2,7 +2,7 @@
 //  WPLoginView.m
 //  Watershed
 //
-//  Created by Andrew on 9/28/14.
+//  Created by Andrew Millman on 9/28/14.
 //  Copyright (c) 2014 Blueprint. All rights reserved.
 //
 
@@ -21,9 +21,8 @@
 
 @implementation WPLoginView
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame visibleNavbar:NO];
+- (id)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor wp_blue];
         [self createSubviews];
@@ -78,7 +77,6 @@
     appTitleLabel.textAlignment = NSTextAlignmentCenter;
     _appTitleLabel = appTitleLabel;
     [self.logoView addSubview:appTitleLabel];
-    
     
 }
 
