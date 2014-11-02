@@ -79,17 +79,23 @@ const static float CELL_HEIGHT = 86.0f;
     }) wp_addToSuperview:content];
     
     _taskCountLabel = [({
+        FAKFontAwesome *checkIcon = [FAKFontAwesome checkIconWithSize:[WPLabeledIcon viewHeight]];
+        UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
+        
         NSString *taskText = [NSString stringWithFormat:@"%d tasks", (int) self.taskCount];
         WPLabeledIcon *taskCountLabel = [[WPLabeledIcon alloc] initWithText:taskText
-                                                                       icon:[UIImage imageNamed:@"CheckIcon"]];
+                                                                       icon:checkImage];
         taskCountLabel.alpha = 0.3;
         taskCountLabel;
     }) wp_addToSuperview:content];
     
     _fieldReportCountLabel = [({
+        FAKFontAwesome *exclamationIcon = [FAKFontAwesome exclamationTriangleIconWithSize:[WPLabeledIcon viewHeight]];
+        UIImage *exclamationImage = [exclamationIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
+        
         NSString *fieldReportText = [NSString stringWithFormat:@"%d reports", (int) self.fieldReportCount];
         WPLabeledIcon *fieldReportCountLabel = [[WPLabeledIcon alloc] initWithText:fieldReportText
-                                                                              icon:[UIImage imageNamed:@"ExclamationIcon"]];
+                                                                              icon:exclamationImage];
         fieldReportCountLabel.alpha = 0.3;
         fieldReportCountLabel;
     }) wp_addToSuperview:content];
