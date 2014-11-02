@@ -94,12 +94,16 @@ static int COVER_PHOTO_TRANS = 0;
     }) wp_addToSuperview:self.tableHeaderView];
     
     _addressLabel = [({
-        WPLabeledIcon *addressLabel = [[WPLabeledIcon alloc] initWithText:@"123 Mark Miyashita Drive, Berkeley, CA 94720" icon:[UIImage imageNamed:@"MapMarkerIcon"]];
+        FAKFontAwesome *mapMarkerIcon = [FAKFontAwesome mapMarkerIconWithSize:[WPLabeledIcon viewHeight]];
+        UIImage *mapMarkerImage = [mapMarkerIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
+        WPLabeledIcon *addressLabel = [[WPLabeledIcon alloc] initWithText:@"123 Mark Miyashita Drive, Berkeley, CA 94720" icon:mapMarkerImage];
         addressLabel;
     }) wp_addToSuperview:self.tableHeaderView];
     
     _siteCountLabel = [({
-        WPLabeledIcon *siteCountLabel = [[WPLabeledIcon alloc] initWithText:@"10 mini sites" icon:[UIImage imageNamed:@"TreeIcon"]];
+        FAKFontAwesome *treeIcon = [FAKFontAwesome treeIconWithSize:[WPLabeledIcon viewHeight]];
+        UIImage *treeImage = [treeIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
+        WPLabeledIcon *siteCountLabel = [[WPLabeledIcon alloc] initWithText:@"10 mini sites" icon:treeImage];
         siteCountLabel;
     }) wp_addToSuperview:self.tableHeaderView];
     
