@@ -31,8 +31,9 @@ static NSString *cellIdentifier = @"MiniSiteCell";
 }
 
 - (void)loadView {
-    self.view = [[WPSiteView alloc] init];
-    self.miniSiteTableView = ((WPSiteView *)self.view).miniSiteTableView;
+    WPSiteView *siteView = [[WPSiteView alloc] init];
+    self.view = siteView;
+    self.miniSiteTableView = siteView.miniSiteTableView;
 }
 
 - (void)loadMiniSiteData {
