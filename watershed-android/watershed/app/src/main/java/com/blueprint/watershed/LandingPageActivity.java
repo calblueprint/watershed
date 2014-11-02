@@ -31,6 +31,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,6 +51,7 @@ public class LandingPageActivity extends Activity {
     private Button mSignUpButton;
     private RequestHandler mloginRequestHandler;
     private SharedPreferences preferences;
+    private ObjectMapper mMapper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,12 +104,18 @@ public class LandingPageActivity extends Activity {
     }
 
     public void Login(HashMap<String, HashMap<String, String>> params){
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, LOGIN_URL, new JSONObject(params),
+
+        JSONObject request_user = new JSONObject(params.get("user"));
+        HashMap<String, JSONObject> real_params = new HashMap<String, JSONObject>();
+        real_params.put("user", request_user);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, LOGIN_URL, new JSONObject(real_params),
                 new Response.Listener<JSONObject>() {
                     @Override
                     // presumably will receive a hash that has the auth info and user object
                     public void onResponse(JSONObject jsonObject) {
                         SharedPreferences.Editor editor = preferences.edit();
+                        Log.e("RESPONSE:", jsonObject.toString());
 
                         try {
                             /*
@@ -115,7 +123,7 @@ public class LandingPageActivity extends Activity {
                             String token = auth_info.getString("token");
                             String email = auth_info.getString("email");
                             */
-                            String token = jsonObject.getString("token");
+                            String token = jsonObject.getString("authentication_token");
                             String email = jsonObject.getString("email");
 
                             //Testing
