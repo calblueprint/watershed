@@ -1,5 +1,5 @@
 //
-//  WPSiteViewController.h
+//  WPSitesTableViewController.h
 //  Watershed
 //
 //  Created by Andrew Millman on 10/5/14.
@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "WPViewController.h"
 
-@interface WPSiteViewController : WPViewController <UITableViewDelegate, UITableViewDataSource>
+@interface WPSitesTableViewController : WPViewController <UITableViewDelegate, UITableViewDataSource>
 
 @end

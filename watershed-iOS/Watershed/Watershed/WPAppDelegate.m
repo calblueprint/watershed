@@ -29,9 +29,20 @@
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
+    //clear navbar
     [[UINavigationBar appearance] setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    
+    //no borderline for navbar
     [[UINavigationBar appearance] setShadowImage:[UIImage new]];
+    
+    //white text
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    
+    //white navigation items
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    
+    [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"BackButton" ]];
+    [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"BackButton" ]];
 
     return YES;
 }
