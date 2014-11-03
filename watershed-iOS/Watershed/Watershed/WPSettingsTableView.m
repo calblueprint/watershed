@@ -60,14 +60,14 @@
     
     [_bp mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.twp.mas_bottom);
-        make.centerX.equalTo(@0);
+        make.centerX.equalTo(@-10);
         make.height.equalTo(@20);
     }];
     
     [_paw mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.bp.mas_top);
         make.bottom.equalTo(self.bp.mas_bottom);
-        make.centerX.equalTo(self.bp.mas_centerX).with.offset(70);
+        make.centerX.equalTo(self.bp.mas_centerX).with.offset(68);
     }];
     
     [self mas_updateConstraints:^(MASConstraintMaker *make) {
