@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WPProfileView.h"
+#import "WPViewController.h"
 
-@interface WPProfileViewController : UIViewController
+@interface WPProfileViewController : WPViewController
 
 @end

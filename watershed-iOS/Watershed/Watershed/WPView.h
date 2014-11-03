@@ -2,7 +2,7 @@
 //  WPView.h
 //  Watershed
 //
-//  Created by Andrew on 10/25/14.
+//  Created by Andrew Millman on 10/25/14.
 //  Copyright (c) 2014 Blueprint. All rights reserved.
 //
 
@@ -11,6 +11,7 @@
 #import "UIView+WPExtensions.h"
 #import "UIColor+WPColors.h"
 #import "UIImage+ImageEffects.h"
+#import "FontAwesomeKit/FontAwesomeKit.h"
 #import "Masonry.h"
 
 @interface WPView : UIView
