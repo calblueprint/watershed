@@ -98,9 +98,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
         parentActivity.Login(params);
 
-        // Send the request, for now just load the main activity
-        //parentActivity.finish();
-        //startActivity(intent);
+        if (parentActivity.getRequestHandler().has_Credentials()){
+            parentActivity.finish();
+            startActivity(intent);
+        }
+
+        Log.e("No go", "joe");
     }
 
     // Getters

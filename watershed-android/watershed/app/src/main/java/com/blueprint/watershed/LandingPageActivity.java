@@ -2,6 +2,7 @@ package com.blueprint.watershed;
 
 import android.app.Activity;
 import android.app.Notification;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.content.SharedPreferences;
+import android.widget.Toast;
 
 import com.android.volley.NetworkError;
 import com.android.volley.Request;
@@ -118,7 +120,7 @@ public class LandingPageActivity extends Activity {
                         Log.e("RESPONSE:", jsonObject.toString());
 
                         try {
-                            /*
+                            /* This will be broken into a user object and auth info later.
                             JSONObject auth_info = jsonObject.getJSONObject("auth_info");
                             String token = auth_info.getString("token");
                             String email = auth_info.getString("email");
@@ -155,7 +157,11 @@ public class LandingPageActivity extends Activity {
                                 e.printStackTrace();
                             }
                         }
-                        Log.e("Login Error", message);
+                        Context context = getApplicationContext();
+                        int duration = Toast.LENGTH_SHORT;
+
+                        Toast toast = Toast.makeText(context, message, duration);
+                        toast.show();
                     }
                 }
         );
