@@ -39,9 +39,20 @@ static NSString *cellIdentifier = @"FieldReportCell";
     self.fieldReportList = @[@1, @3, @4, @2, @5, @1, @5, @2, @2, @3, @4, @0].mutableCopy;
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if ([self isMovingToParentViewController]) {
+        //view controller is being pushed on
+        [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor clearColor]}];
+    }
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    if ([self isMovingFromParentViewController]) {
+        //view controller is being popped off
+        [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    }
 }
 
 #pragma mark - TableView Delegate/DataSource Methods
