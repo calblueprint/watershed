@@ -32,7 +32,7 @@
     _allTasksTableController = [[WPAllTasksTableViewController alloc] init];
     [self addChildViewController:_myTasksTableController];
     [self addChildViewController:_allTasksTableController];
-    self.view = [[WPTasksListView alloc] initWithFrame:CGRectMake(0,0,0,0)andTableViewController:self];
+    self.view = [[WPTasksListView alloc] initWithFrame:CGRectZero  andTableViewController:self];
 }
 
 @end
