@@ -4,21 +4,22 @@ user_count = User.count
 site_count = Site.count
 
 tasks = ["Water",
-		"Prune",
-		"Weed",
-		"Clear inlet/outlet",
-		"Re-Plant",
-		"Hardware Fix",
-		"Outreach",
-		"Other"]
+	"Prune",
+	"Weed",
+	"Clear inlet/outlet",
+	"Re-Plant",
+	"Hardware Fix",
+	"Outreach",
+	"Other",
+	]
 
 (0..20).each do |task_number|
 	example_task = Task.where(
 		title: "Task #{task_number}",
 		description: tasks.sample,
-		assignee_id: rand(0..user_count),
-		assigner_id: rand(0..user_count),
-		site_id: rand(0..site_count),
+		assignee_id: User.first,
+		assigner_id: User.last,
+		site_id: Site.first,
 		complete: false,
 		due_date: Time.now,
 	).first_or_create
