@@ -8,8 +8,6 @@
 
 #import "UIColor+WPColors.h"
 
-// In UIColor+WPColors.m
-
 @implementation UIColor (WPColors)
 
 + (UIColor *)wp_blue {
@@ -26,6 +24,10 @@
 
 + (UIColor *)wp_facebookBlue {
     return [UIColor colorWithRed:59.0/255.0 green:89.0/255.0 blue:152.0/255.0 alpha:1.0];
+}
+
++ (UIColor *)wp_green {
+    return [UIColor colorWithRed:11.0/255.0 green:173.0/255.0 blue:94.0/255.0 alpha:1.0];
 }
 
 + (UIColor *)wp_transWhite {
@@ -48,8 +50,9 @@
     return [UIColor colorWithRed:164/255.0 green:196/255.0 blue:0/255.0 alpha:1];
 }
 
-+ (UIColor *)wp_green {
++ (UIColor *)wp_lightGreen {
     return [UIColor colorWithRed:39/255.0 green:174/255.0 blue:96/255.0 alpha:1];
 }
+
 
 @end

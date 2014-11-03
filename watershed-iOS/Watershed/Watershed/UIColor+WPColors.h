@@ -19,7 +19,7 @@
 + (UIColor *)wp_orange;
 + (UIColor *)wp_yellow;
 + (UIColor *)wp_lime;
++ (UIColor *)wp_lightGreen;
 + (UIColor *)wp_green;
-
 @end
 

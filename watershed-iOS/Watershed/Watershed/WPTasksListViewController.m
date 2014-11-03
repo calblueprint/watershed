@@ -8,9 +8,9 @@
 
 #import "WPTasksListViewController.h"
 #import "WPTasksListView.h"
-#import "WPTableViewCell.h"
-#import "UIColor+WPColors.h"
+#import "WPTasksTableViewCell.h"
 #import "WPAllTasksTableViewController.h"
+#import "UIExtensions.h"
 
 @interface WPTasksListViewController ()
 
@@ -28,7 +28,11 @@
 }
 
 - (void)loadView {
-    self.view = [[WPTasksListView alloc] init];
+    _myTasksTableController = [[WPMyTasksTableViewController alloc] init];
+    _allTasksTableController = [[WPAllTasksTableViewController alloc] init];
+    [self addChildViewController:_myTasksTableController];
+    [self addChildViewController:_allTasksTableController];
+    self.view = [[WPTasksListView alloc] initWithFrame:CGRectZero  andTableViewController:self];
 }
 
 @end
