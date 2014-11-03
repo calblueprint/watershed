@@ -106,8 +106,8 @@ public class LandingPageActivity extends Activity {
     }
 
     public void Login(HashMap<String, HashMap<String, String>> params){
-
         final Intent intent = new Intent(this, MainActivity.class);
+
         JSONObject request_user = new JSONObject(params.get("user"));
         HashMap<String, JSONObject> real_params = new HashMap<String, JSONObject>();
         real_params.put("user", request_user);
@@ -129,9 +129,6 @@ public class LandingPageActivity extends Activity {
                             */
                             String token = jsonObject.getString("authentication_token");
                             String email = jsonObject.getString("email");
-
-                            //Testing
-                            Log.e("Token!", token);
 
                             editor.putString("authentication_token", token);
                             editor.putString("email", email);
@@ -171,8 +168,6 @@ public class LandingPageActivity extends Activity {
         );
 
         mloginRequestHandler.getRequestQueue().add(request);
-
-
     }
 
     public boolean has_Credentials(){
