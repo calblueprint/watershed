@@ -189,9 +189,6 @@ public class RequestHandler {
     }
 
     //Getters
-
-    public RequestQueue getRequestQueue() {
-        return mRequestQueue;
-    }
+    public RequestQueue getRequestQueue() {return mRequestQueue;}
 
 }

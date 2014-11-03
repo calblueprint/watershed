@@ -118,7 +118,6 @@ public class LandingPageActivity extends Activity {
                     // presumably will receive a hash that has the auth info and user object
                     public void onResponse(JSONObject jsonObject) {
                         SharedPreferences.Editor editor = preferences.edit();
-                        Log.e("RESPONSE:", jsonObject.toString());
 
                         try {
 
@@ -138,7 +137,7 @@ public class LandingPageActivity extends Activity {
                             startActivity(intent);
                         }
                         catch (JSONException e) {
-                            Log.e("JSON EXCEPTION IN LOGIN FRAGMENT", "FO REAL DOE");
+                            Log.e("Json exception", "in login fragment");
                         }
                     }
                 },
