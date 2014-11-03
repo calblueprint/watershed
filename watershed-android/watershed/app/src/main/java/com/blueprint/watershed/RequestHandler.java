@@ -1,6 +1,7 @@
 package com.blueprint.watershed;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;
 import android.util.Log;
@@ -30,9 +31,6 @@ public class RequestHandler {
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
     private static Context mCtx;
-    private String auth_token;
-    private String email;
-
 
     /**
      * Returns a RequestHandler by assigning CONTEXT, an applicaiton
@@ -195,18 +193,5 @@ public class RequestHandler {
     public RequestQueue getRequestQueue() {
         return mRequestQueue;
     }
-    public String getAuth_token() {return auth_token;}
-    public String getEmail() {return email;}
 
-    public void set_Credentials(String email, String token){
-        this.email = email;
-        this.auth_token = token;
-    }
-
-    public boolean has_Credentials(){
-        if (this.email != null && this.auth_token != null){
-            return true;
-        }
-        return false;
-    }
 }

@@ -35,6 +35,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private EditText mEmailField;
     private EditText mPasswordField;
     private Button mLoginButton;
+    private SharedPreferences preferences;
 
     public static LoginFragment newInstance() {
         return new LoginFragment();
@@ -85,8 +86,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     // UI Actions
     public void didTapLoginButton(View view) {
-        final Intent intent = new Intent(parentActivity, MainActivity.class);
-
+        
         final String emailString = getEmailField().getText().toString();
         final String passwordString = getPasswordField().getText().toString();
 
@@ -97,14 +97,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         params.put("user",user_params);
 
         parentActivity.Login(params);
-
-        if (parentActivity.getRequestHandler().has_Credentials()){
-            parentActivity.finish();
-            startActivity(intent);
-        }
-
-        Log.e("No go", "joe");
     }
+
+
 
     // Getters
     public EditText getEmailField() { return mEmailField; }
