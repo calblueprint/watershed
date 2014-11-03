@@ -1,6 +1,7 @@
 package com.blueprint.watershed;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;
 import android.util.Log;
@@ -30,7 +31,6 @@ public class RequestHandler {
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
     private static Context mCtx;
-
 
     /**
      * Returns a RequestHandler by assigning CONTEXT, an applicaiton
@@ -187,5 +187,8 @@ public class RequestHandler {
         mRequestQueue.add(request);
         return Stringresponse[0];
     }
+
+    //Getters
+    public RequestQueue getRequestQueue() {return mRequestQueue;}
 
 }
