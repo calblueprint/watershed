@@ -10,7 +10,7 @@
 #define Watershed_WPProperties_h
 
 //Margins
-static const CGFloat stdMargin = 10;
+static const CGFloat standardMargin = 10;
 static const CGFloat topMargin = 64;
 
 #endif

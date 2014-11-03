@@ -83,23 +83,23 @@
     
     [self.segmentedTasksTabBarView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(topMargin));
-        make.leading.equalTo(@(stdMargin));
-        make.trailing.equalTo(@(-(stdMargin)));
+        make.leading.equalTo(@(standardMargin));
+        make.trailing.equalTo(@(-standardMargin));
         make.height.equalTo(@50);
     }];
     
     [self.tasksSegmentedControl mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(@0);
         make.top.equalTo(@20);
-        make.leading.equalTo(@10);
-        make.trailing.equalTo(@(-10));
+        make.leading.equalTo(@(standardMargin));
+        make.trailing.equalTo(@(-standardMargin));
     }];
     
     [self.tasksTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.segmentedTasksTabBarView.mas_bottom).with.offset(10);
-        make.bottom.equalTo(@(-10));
-        make.leading.equalTo(@10);
-        make.trailing.equalTo(@(-10));
+        make.bottom.equalTo(@(-standardMargin));
+        make.leading.equalTo(@(standardMargin));
+        make.trailing.equalTo(@(-standardMargin));
     }];
     
     [self.tasksTableView.subviews mas_makeConstraints:^(MASConstraintMaker *make) {

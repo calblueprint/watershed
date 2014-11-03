@@ -66,8 +66,7 @@ static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     WPTaskViewController *taskViewController = [[WPTaskViewController alloc] init];
     taskViewController.taskTitle = self.allTasks[indexPath.row][@"Task"];

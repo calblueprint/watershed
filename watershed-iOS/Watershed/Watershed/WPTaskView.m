@@ -85,23 +85,23 @@
     [self.dueDate mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(topMargin));
         make.width.equalTo(@125);
-        make.trailing.equalTo(@(-stdMargin));
+        make.trailing.equalTo(@(-standardMargin));
     }];
 
     [self.title mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(topMargin));
-        make.leading.equalTo(@(stdMargin));
-        make.trailing.equalTo(self.dueDate.mas_left).with.offset(stdMargin);
+        make.leading.equalTo(@(standardMargin));
+        make.trailing.equalTo(self.dueDate.mas_left).with.offset(standardMargin);
     }];
 
     [self.taskDescription mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.title.mas_bottom).with.offset(stdMargin);
-        make.leading.equalTo(@(stdMargin));
-        make.trailing.equalTo(@(-stdMargin));
+        make.top.equalTo(self.title.mas_bottom).with.offset(standardMargin);
+        make.leading.equalTo(@(standardMargin));
+        make.trailing.equalTo(@(-standardMargin));
     }];
 
     [self.completed mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.taskDescription.mas_bottom).with.offset(stdMargin * 2);
+        make.top.equalTo(self.taskDescription.mas_bottom).with.offset(standardMargin * 2);
         make.centerX.equalTo(self.mas_centerX);
         make.height.equalTo(@50);
         make.width.equalTo(@200);
