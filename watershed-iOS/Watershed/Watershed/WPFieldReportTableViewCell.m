@@ -71,7 +71,8 @@ const static float CELL_HEIGHT = 60.0f;
     _ratingNumberLabel = [({
         UILabel *label = [[UILabel alloc] init];
         label.text = [NSString stringWithFormat:@"%d", (int)self.rating];
-        label.font = [UIFont systemFontOfSize:30.0];
+        label.font = [UIFont systemFontOfSize:27.0];
+        label.textAlignment = NSTextAlignmentCenter;
         label;
     }) wp_addToSuperview:content];
     
@@ -79,11 +80,48 @@ const static float CELL_HEIGHT = 60.0f;
         UILabel *label = [[UILabel alloc] init];
         label.text = @"RATING";
         label.font = [UIFont systemFontOfSize:12.0];
+        label.textAlignment = NSTextAlignmentCenter;
         label;
     }) wp_addToSuperview:content];
 }
 
 - (void)updateConstraints {
+    
+    [self.contentView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@0);
+        make.leading.equalTo(@0);
+        make.trailing.equalTo(@0);
+        make.bottom.equalTo(@0);
+        make.centerX.equalTo(self.mas_centerX);
+        make.centerY.equalTo(self.mas_centerY);
+    }];
+    
+    [self.photoView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@40);
+        make.width.equalTo(@40);
+        make.top.equalTo(@10);
+        make.leading.equalTo(@10);
+    }];
+    
+    [self.dateLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.greaterThanOrEqualTo(@40);
+        make.top.equalTo(self.photoView.mas_top);
+        make.left.equalTo(self.photoView.mas_right)
+            .with.offset(10.0);
+        make.trailing.equalTo(self.ratingNumberLabel.mas_leading).with.offset([[UIView wp_styleNegativePadding] floatValue]);
+    }];
+    
+    [self.ratingNumberLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@30);
+        make.top.equalTo(@10);
+        make.trailing.equalTo(@-10);
+    }];
+    
+    [self.ratingTextLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(@10);
+        make.trailing.equalTo(@-10);
+    }];
+    
     [super updateConstraints];
 }
 
