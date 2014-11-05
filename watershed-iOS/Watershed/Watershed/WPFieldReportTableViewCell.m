@@ -53,6 +53,34 @@ const static float CELL_HEIGHT = 60.0f;
 - (void)createSubviews {
     UIView *content = self.contentView;
     content.backgroundColor = [UIColor whiteColor];
+    
+    _photoView = [({
+        UIImageView *photoView = [[UIImageView alloc] initWithImage:self.image];
+        [photoView setContentMode:UIViewContentModeScaleAspectFill];
+        [photoView setClipsToBounds:YES];
+        photoView.layer.cornerRadius = 3.0;
+        photoView;
+    }) wp_addToSuperview:content];
+    
+    _dateLabel = [({
+        UILabel *label = [[UILabel alloc] init];
+        label.text = self.date;
+        label;
+    }) wp_addToSuperview:content];
+    
+    _ratingNumberLabel = [({
+        UILabel *label = [[UILabel alloc] init];
+        label.text = [NSString stringWithFormat:@"%d", (int)self.rating];
+        label.font = [UIFont systemFontOfSize:30.0];
+        label;
+    }) wp_addToSuperview:content];
+    
+    _ratingTextLabel = [({
+        UILabel *label = [[UILabel alloc] init];
+        label.text = @"RATING";
+        label.font = [UIFont systemFontOfSize:12.0];
+        label;
+    }) wp_addToSuperview:content];
 }
 
 - (void)updateConstraints {
