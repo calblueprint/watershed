@@ -73,6 +73,7 @@ const static float CELL_HEIGHT = 70.0f;
         label.text = [NSString stringWithFormat:@"%d", (int)self.rating];
         label.font = [UIFont systemFontOfSize:38.0];
         label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = [WPFieldReportTableViewCell colorForRating:self.rating];
         label;
     }) wp_addToSuperview:content];
     

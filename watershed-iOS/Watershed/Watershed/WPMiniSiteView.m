@@ -70,7 +70,7 @@ static int COVER_PHOTO_TRANS = 0;
     
     _titleLabel = [({
         UILabel *titleLabel = [[UILabel alloc] init];
-        titleLabel.text = @"Watershed";
+        titleLabel.text = @"Mini Site";
         titleLabel.font = [UIFont boldSystemFontOfSize:25.0];
         titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
         titleLabel.numberOfLines = 0;
@@ -79,7 +79,7 @@ static int COVER_PHOTO_TRANS = 0;
     
     _descriptionLabel = [({
         UILabel *descriptionLabel = [[UILabel alloc] init];
-        descriptionLabel.text = @"Cal Blueprint is a student-run UC Berkeley organization devoted to matching the skills of its members to our desire to see social good enacted in our community. Each semester, teams of 4-5 students work closely with a non-profit to bring technological solutions to the problems they face every day.";
+        descriptionLabel.text = @"This is tha minisite. Tha minisite has vegetation and other stoof, like tasks and field reports.";
         descriptionLabel.font = [UIFont systemFontOfSize:14.0];
         descriptionLabel.lineBreakMode = NSLineBreakByWordWrapping;
         descriptionLabel.numberOfLines = 0;
