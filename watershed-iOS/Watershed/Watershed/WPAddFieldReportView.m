@@ -7,15 +7,9 @@
 //
 
 #import "WPAddFieldReportView.h"
+#import "UIExtensions.h"
 
 @implementation WPAddFieldReportView
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
 
 @end

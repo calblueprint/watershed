@@ -12,6 +12,7 @@
 #import "WPRootViewController.h"
 #import "WPSiteViewController.h"
 #import "WPTaskViewController.h"
+#import "WPAddPhotoViewController.h"
 
 @implementation WPAppDelegate
 
@@ -22,15 +23,12 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
-<<<<<<< HEAD
     // determine the initial view controller here and instantiate it with [storyboard instantiateViewControllerWithIdentifier:];
     
     // Override point for customization after application launch.
     
     //UIViewController *viewController = [[WPSiteViewController  alloc] init];
-=======
->>>>>>> master
-    self.window.rootViewController = [[WPRootViewController alloc] init];
+    self.window.rootViewController = [[WPAddPhotoViewController alloc] init];
     [self.window makeKeyAndVisible];
     
     //[AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
