@@ -158,6 +158,7 @@ public class MainActivity extends ActionBarActivity
             ft.replace(R.id.container, newFragment);
             ft.addToBackStack(null);
             ft.commit();
+            currentFragment = newFragment;
             mBackStackSize++;
         }
     }
@@ -174,7 +175,7 @@ public class MainActivity extends ActionBarActivity
                                 hideTaskView();
                                 setTitle("Sites");
                             }
-                            else{
+                            else {
                                 currentFragment = mtaskFragment;
                                 actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
                                 viewPager.setVisibility(View.VISIBLE);
@@ -247,20 +248,18 @@ public class MainActivity extends ActionBarActivity
         int position = menuItems.indexOf(view);
         switch (position) {
             case 0:
-                if (currentFragment instanceof TaskFragment){break;}
+                if (currentFragment instanceof TaskFragment) { break; }
                 TaskFragment taskFragment = TaskFragment.newInstance(0);
                 actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
                 viewPager.setVisibility(view.VISIBLE);
                 replaceFragment(taskFragment);
-                currentFragment = taskFragment;
                 setTitle("Tasks");
                 break;
             case 1:
-                if (currentFragment instanceof SiteListFragment){break;}
+                if (currentFragment instanceof SiteListFragment) { break; }
                 hideTaskView();
                 siteListFragment = new SiteListFragment();
                 replaceFragment(siteListFragment);
-                currentFragment = siteListFragment;
                 setTitle("Sites");
                 break;
             case 2:
