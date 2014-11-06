@@ -12,6 +12,7 @@
 #import "WPRootViewController.h"
 #import "WPSiteViewController.h"
 #import "WPTaskViewController.h"
+<<<<<<< HEAD
 #import "AFNetworkActivityIndicatorManager.h"
 
 static NSString * const BASE_URL = @"https://intense-reaches-1457.herokuapp.com/api/v1/";
@@ -22,6 +23,9 @@ static NSString * const BASE_URL = @"https://intense-reaches-1457.herokuapp.com/
 @property (nonatomic) UICKeyChainStore *store;
 
 @end
+=======
+#import "WPAddPhotoViewController.h"
+>>>>>>> adding files for field reports and adding photos
 
 @implementation WPAppDelegate
 
