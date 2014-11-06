@@ -51,6 +51,8 @@
 		BA4F8DF419C7739300C816E3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA4F8DD319C7739300C816E3 /* UIKit.framework */; };
 		BA4F8DFC19C7739300C816E3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BA4F8DFA19C7739300C816E3 /* InfoPlist.strings */; };
 		BA4F8DFE19C7739300C816E3 /* WatershedTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4F8DFD19C7739300C816E3 /* WatershedTests.m */; };
+		BABC5E1C1A0B2805002825E4 /* WPEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BABC5E1B1A0B2805002825E4 /* WPEditViewController.m */; };
+		BABC5E1F1A0B281F002825E4 /* WPEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = BABC5E1E1A0B281F002825E4 /* WPEditView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,6 +145,10 @@
 		BA4F8DF919C7739300C816E3 /* WatershedTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WatershedTests-Info.plist"; sourceTree = "<group>"; };
 		BA4F8DFB19C7739300C816E3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BA4F8DFD19C7739300C816E3 /* WatershedTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WatershedTests.m; sourceTree = "<group>"; };
+		BABC5E1A1A0B2805002825E4 /* WPEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPEditViewController.h; sourceTree = "<group>"; };
+		BABC5E1B1A0B2805002825E4 /* WPEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPEditViewController.m; sourceTree = "<group>"; };
+		BABC5E1D1A0B281F002825E4 /* WPEditView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPEditView.h; sourceTree = "<group>"; };
+		BABC5E1E1A0B281F002825E4 /* WPEditView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPEditView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +179,7 @@
 		064462EE1A0739BF00C6FE8B /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				BABC5E191A0B27C1002825E4 /* Edit */,
 				064462EF1A073A0F00C6FE8B /* WPSettingsTableView.h */,
 				064462F01A073A0F00C6FE8B /* WPSettingsTableView.m */,
 				064462F11A073A0F00C6FE8B /* WPSettingsTableViewCell.h */,
@@ -391,6 +398,17 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		BABC5E191A0B27C1002825E4 /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				BABC5E1A1A0B2805002825E4 /* WPEditViewController.h */,
+				BABC5E1B1A0B2805002825E4 /* WPEditViewController.m */,
+				BABC5E1D1A0B281F002825E4 /* WPEditView.h */,
+				BABC5E1E1A0B281F002825E4 /* WPEditView.m */,
+			);
+			name = Edit;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -529,6 +547,7 @@
 				064463041A073E3700C6FE8B /* WPTabBarController.m in Sources */,
 				064463051A073E3700C6FE8B /* WPTasksTableViewCell.m in Sources */,
 				273ABECC19EDFA8600FC1C92 /* WPSitesTableViewController.m in Sources */,
+				BABC5E1F1A0B281F002825E4 /* WPEditView.m in Sources */,
 				275C799019EC4F6500E722C7 /* WPMiniSiteTableViewCell.m in Sources */,
 				06A8139819D91A7500E3EB05 /* WPTasksListView.m in Sources */,
 				06A8139519D911C900E3EB05 /* WPTasksListViewController.m in Sources */,
@@ -559,6 +578,7 @@
 				2766EC9819FDF2730062D358 /* WPSitesTableView.m in Sources */,
 				2766EC9519FDF2440062D358 /* WPSiteTableViewCell.m in Sources */,
 				064462F71A073A0F00C6FE8B /* WPSettingsTableViewController.m in Sources */,
+				BABC5E1C1A0B2805002825E4 /* WPEditViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

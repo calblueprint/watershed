@@ -73,7 +73,6 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
     if (!cell) {
         cell = [[WPSettingsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:settingsReuseIdentifier];
     }
-    [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
     switch (indexPath.row) {
         case 0: {
@@ -84,6 +83,7 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
             } else if (indexPath.section == 2) {
                 cell.textLabel.text = @"Log Out";
                 cell.accessoryType = UITableViewCellAccessoryNone;
+                cell.textLabel.textAlignment = NSTextAlignmentCenter;
             }
             break;
         }
@@ -101,6 +101,10 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
         }
     }
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
 
