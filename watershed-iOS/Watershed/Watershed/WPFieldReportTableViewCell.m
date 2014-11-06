@@ -23,7 +23,7 @@
 
 @implementation WPFieldReportTableViewCell
 
-const static float CELL_HEIGHT = 60.0f;
+const static float CELL_HEIGHT = 70.0f;
 
 - (id)initWithStyle:(UITableViewCellStyle)style
     reuseIdentifier:(NSString *)reuseIdentifier
@@ -71,7 +71,7 @@ const static float CELL_HEIGHT = 60.0f;
     _ratingNumberLabel = [({
         UILabel *label = [[UILabel alloc] init];
         label.text = [NSString stringWithFormat:@"%d", (int)self.rating];
-        label.font = [UIFont systemFontOfSize:27.0];
+        label.font = [UIFont systemFontOfSize:38.0];
         label.textAlignment = NSTextAlignmentCenter;
         label;
     }) wp_addToSuperview:content];
@@ -81,6 +81,7 @@ const static float CELL_HEIGHT = 60.0f;
         label.text = @"RATING";
         label.font = [UIFont systemFontOfSize:12.0];
         label.textAlignment = NSTextAlignmentCenter;
+        label.alpha = 0.5;
         label;
     }) wp_addToSuperview:content];
 }
@@ -112,13 +113,16 @@ const static float CELL_HEIGHT = 60.0f;
     }];
     
     [self.ratingNumberLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@30);
+        make.height.equalTo(@35);
         make.top.equalTo(@10);
+        make.leading.equalTo(self.ratingTextLabel.mas_leading);
         make.trailing.equalTo(@-10);
     }];
     
     [self.ratingTextLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(@10);
+        make.height.equalTo(@10);
+        make.width.greaterThanOrEqualTo(@50);
+        make.bottom.equalTo(@-10);
         make.trailing.equalTo(@-10);
     }];
     
