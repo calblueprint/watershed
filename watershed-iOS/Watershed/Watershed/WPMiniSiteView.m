@@ -7,7 +7,7 @@
 //
 
 #import "WPMiniSiteView.h"
-#import "WPMiniSiteTableViewCell.h"
+#import "WPFieldReportTableViewCell.h"
 
 @interface WPMiniSiteView () <UIScrollViewDelegate>
 
@@ -227,7 +227,7 @@ static int COVER_PHOTO_TRANS = 0;
 
 - (void)updateTableViewHeight:(NSInteger)cellCount {
     [self.fieldReportTableView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@([WPMiniSiteTableViewCell cellHeight] * cellCount));
+        make.height.equalTo(@([WPFieldReportTableViewCell cellHeight] * cellCount));
     }];
 }
 
