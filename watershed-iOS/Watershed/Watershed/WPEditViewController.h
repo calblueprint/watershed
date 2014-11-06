@@ -10,4 +10,6 @@
 
 @interface WPEditViewController : UIViewController
 
+-(void)dismissSelf;
+
 @end
