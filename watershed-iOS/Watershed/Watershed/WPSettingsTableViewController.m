@@ -9,6 +9,7 @@
 #import "WPSettingsTableViewController.h"
 #import "WPSettingsTableViewCell.h"
 #import "WPSettingsTableView.h"
+#import "WPEditViewController.h"
 
 @interface WPSettingsTableViewController ()
 
@@ -105,6 +106,10 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        WPEditViewController *editViewController = [[WPEditViewController alloc] init];
+        [self presentViewController:editViewController animated:YES completion:nil];
+    }
 }
 
 

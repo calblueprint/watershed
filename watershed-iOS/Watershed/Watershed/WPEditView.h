@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WPView.h"
 
-@interface WPEditView : UIView
+@interface WPEditView : WPView
 
 @end
