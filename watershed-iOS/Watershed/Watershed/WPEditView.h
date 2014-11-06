@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "WPView.h"
 
-@interface WPEditView : WPView
+@interface WPEditView : WPView <UITableViewDelegate, UITableViewDataSource>
 
 @end

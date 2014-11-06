@@ -14,8 +14,11 @@
 - (void)viewDidLoad {
     self.navigationController.navigationBar.tintColor = [UIColor blackColor];
     self.title = @"Edit Profile";
-    UIBarButtonItem *dismissButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(dismissSelf)];
+    UIBarButtonItem *dismissButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(saveAndDismissSelf)];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(dismissSelf)];
     self.navigationItem.rightBarButtonItem = dismissButton;
+    self.navigationItem.rightBarButtonItem.tintColor = [UIColor greenColor];
+    self.navigationItem.leftBarButtonItem = cancelButton;
 }
 
 -(void)loadView {
@@ -24,6 +27,11 @@
 
 -(void)dismissSelf {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)saveAndDismissSelf {
+    //save
+    [self dismissSelf];
 }
 
 @end
