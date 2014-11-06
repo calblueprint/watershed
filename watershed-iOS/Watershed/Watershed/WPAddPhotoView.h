@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WPAddPhotoViewController.h"
+@class WPAddPhotoViewController;
 
 @interface WPAddPhotoView : UIView
+@property (nonatomic) UIButton *takePhotoButton;
+@property (nonatomic) UIButton *selectPhotoButton;
+@property (nonatomic) UIImageView *selectedImageView;
+
+- (instancetype)initWithAddPhotoViewController:(WPAddPhotoViewController *)addPhotoViewController;
 
 @end
