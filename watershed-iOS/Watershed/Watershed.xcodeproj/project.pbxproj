@@ -441,6 +441,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Blueprint;
 				TargetAttributes = {
+					BA4F8DCB19C7739300C816E3 = {
+						DevelopmentTeam = EXQL69T8ZV;
+					};
 					BA4F8DEF19C7739300C816E3 = {
 						TestTargetID = BA4F8DCB19C7739300C816E3;
 					};

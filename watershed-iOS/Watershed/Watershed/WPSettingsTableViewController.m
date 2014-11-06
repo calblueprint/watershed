@@ -19,6 +19,8 @@
 
 @implementation WPSettingsTableViewController
 
+NSString *settingsReuseIdentifier = @"WPSettingsCell";
+
 - (void)loadView {
     self.view = [[WPView alloc] initWithFrame:[[UIScreen mainScreen] bounds] visibleNavbar:YES];
 }
@@ -53,10 +55,22 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *reuseIdentifier = @"WPSettingsCell";
-    WPSettingsTableViewCell *cell = [[WPSettingsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
-    // Configure the cell...
-    
+    WPSettingsTableViewCell *cell = [[WPSettingsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:settingsReuseIdentifier];
+    switch (indexPath.row) {
+        case 0: {
+            cell.textLabel.text = @"Edit Profile";
+            break;
+        }
+        case 1: {
+            break;
+        }
+        case 2: {
+            break;
+        }
+        default: {
+            //do nothing
+        }
+    }
     return cell;
 }
 

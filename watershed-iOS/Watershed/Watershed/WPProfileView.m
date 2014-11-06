@@ -14,7 +14,6 @@
 #import "WPProfileTableViewCell.h"
 #import "WPUser.h"
 
-#import <QuartzCore/QuartzCore.h>
 
 @interface WPProfileView ()
 
@@ -28,7 +27,7 @@
 
 @implementation WPProfileView
 
-NSString *reuseIdentifier = @"WPProfileCell";
+NSString *profileReuseIdentifier = @"WPProfileCell";
 static int PROFILE_PIC_HEIGHT = 65;
 
 - (id)initWithFrame:(CGRect)frame {
@@ -68,7 +67,7 @@ static int PROFILE_PIC_HEIGHT = 65;
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WPProfileTableViewCell *cell = [[WPProfileTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
+    WPProfileTableViewCell *cell = [[WPProfileTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:profileReuseIdentifier];
     switch (indexPath.row) {
         case 1: {
             FAKIonIcons *mailIcon = [FAKIonIcons ios7EmailOutlineIconWithSize:30];
