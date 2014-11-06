@@ -20,8 +20,9 @@
 
 @implementation WPSettingsTableView
 
+
 - (instancetype)init {
-    self = [super init];
+    self = [super initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     if (self) {
         [self createSubviews];
         [self setNeedsUpdateConstraints];

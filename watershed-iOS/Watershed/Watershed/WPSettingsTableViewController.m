@@ -45,26 +45,55 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-    return 1;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return 5;
+    switch (section) {
+        case 0: {
+            return 2;
+        }
+        case 1: {
+            return 2;
+        }
+        case 2: {
+            return 1;
+        }
+        default: {
+            //do nothing;
+        }
+    }
+    return 0;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WPSettingsTableViewCell *cell = [[WPSettingsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:settingsReuseIdentifier];
+    WPSettingsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:settingsReuseIdentifier];
+    if (!cell) {
+        cell = [[WPSettingsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:settingsReuseIdentifier];
+    }
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    
     switch (indexPath.row) {
         case 0: {
-            cell.textLabel.text = @"Edit Profile";
+            if (indexPath.section == 0) {
+                cell.textLabel.text = @"Edit Profile";
+            } else if (indexPath.section == 1) {
+                cell.textLabel.text = @"About The Watershed Project";
+            } else if (indexPath.section == 2) {
+                cell.textLabel.text = @"Log Out";
+                cell.accessoryType = UITableViewCellAccessoryNone;
+            }
             break;
         }
         case 1: {
-            break;
-        }
-        case 2: {
+            if (indexPath.section == 0) {
+                cell.textLabel.text = @"Push Notifications";
+                cell.accessoryType = UITableViewCellAccessoryNone;
+            } else if (indexPath.section == 1) {
+                cell.textLabel.text = @"Terms and Privacy";
+            }
             break;
         }
         default: {
