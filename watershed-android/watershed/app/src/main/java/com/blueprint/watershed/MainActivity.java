@@ -31,7 +31,8 @@ public class MainActivity extends ActionBarActivity
                           implements ActionBar.TabListener,
                                      View.OnClickListener,
                                      TaskFragment.OnFragmentInteractionListener,
-                                     SiteListFragment.OnFragmentInteractionListener {
+                                     SiteListFragment.OnFragmentInteractionListener,
+                                     SiteFragment.OnFragmentInteractionListener {
 
     // Constants
     public  static final String PREFERENCES = "LOGIN_PREFERENCES";
