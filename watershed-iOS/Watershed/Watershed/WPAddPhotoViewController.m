@@ -7,9 +7,10 @@
 //
 
 #import "WPAddPhotoViewController.h"
+#import "WPAddPhotoView.h"
 
 @interface WPAddPhotoViewController ()
-
+@property (nonatomic) WPAddPhotoView *view;
 @end
 
 @implementation WPAddPhotoViewController
@@ -19,6 +20,10 @@
         UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Device has no camera" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [myAlertView show];
     }
+    [self.view.takePhotoButton addTarget:self action:@selector(takePhoto:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view.selectPhotoButton addTarget:self action:@selector(selectPhoto:) forControlEvents:UIControlEventTouchUpInside];
+
+
     [super viewDidLoad];
 }
 
@@ -26,11 +31,15 @@
     [super didReceiveMemoryWarning];
 }
 
+-(void)loadView {
+    self.view = [[WPAddPhotoView alloc] init];
+}
+
 - (IBAction)takePhoto:(UIButton *)sender {
     
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
-//    picker.allowsEditing = YES;
+    picker.allowsEditing = YES;
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     
     [self presentViewController:picker animated:YES completion:NULL];
@@ -41,10 +50,21 @@
     
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
-//    picker.allowsEditing = YES;
+    picker.allowsEditing = YES;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     
     [self presentViewController:picker animated:YES completion:NULL];
+}
+
+#pragma mark - Image Picker Controller delegate methods
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+
+    UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
+    self.view.selectedImageView.image = chosenImage;
+
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+    
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
