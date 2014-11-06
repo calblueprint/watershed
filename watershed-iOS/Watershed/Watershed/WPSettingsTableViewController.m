@@ -108,7 +108,9 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     if (indexPath.section == 0 && indexPath.row == 0) {
         WPEditViewController *editViewController = [[WPEditViewController alloc] init];
-        [self presentViewController:editViewController animated:YES completion:nil];
+        UINavigationController *editNavController = [[UINavigationController alloc] initWithRootViewController:editViewController];
+        [editNavController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
+        [self.navigationController presentViewController:editNavController animated:YES completion:nil];
     }
 }
 
