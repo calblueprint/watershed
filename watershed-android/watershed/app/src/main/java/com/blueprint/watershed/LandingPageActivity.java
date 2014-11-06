@@ -44,7 +44,7 @@ public class LandingPageActivity extends Activity {
     // Constants
     public  static final String PREFERENCES = "LOGIN_PREFERENCES";
     private static final String TAG         = "LandingPageActivity";
-    private static final String LOGIN_URL = "http://192.168.56.1:3000/api/v1/users/sign_in";
+    private static final String LOGIN_URL = "http://localhost:3001/api/v1/users/sign_in";
 
     // UI Elements
     private ImageView mLandingPageImage;
