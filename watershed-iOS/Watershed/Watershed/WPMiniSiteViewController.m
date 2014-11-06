@@ -8,7 +8,7 @@
 
 #import "WPMiniSiteViewController.h"
 #import "WPMiniSiteView.h"
-#import "WPMiniSiteTableViewCell.h"
+#import "WPFieldReportTableViewCell.h"
 
 @interface WPMiniSiteViewController ()
 
@@ -23,7 +23,7 @@ static NSString *cellIdentifier = @"FieldReportCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"Watershed";
+    self.navigationItem.title = @"Mini Site";
     [self loadFieldReportData];
     self.fieldReportTableView.delegate = self;
     self.fieldReportTableView.dataSource = self;
@@ -77,20 +77,19 @@ static NSString *cellIdentifier = @"FieldReportCell";
         cellView = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (!cellView) {
             
-            cellView = [[WPMiniSiteTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                      reuseIdentifier:cellIdentifier
-                                                                 name:@"Yes"
-                                                                image:[UIImage imageNamed:@"SampleCoverPhoto"]
-                                                               rating:[self.fieldReportList[indexPath.row] intValue]
-                                                            taskCount:5
-                                                     fieldReportCount:5];
+            cellView = [[WPFieldReportTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                         reuseIdentifier:cellIdentifier
+                                                                   image:[UIImage imageNamed:@"SampleCoverPhoto"]
+                                                                    date:@"Oct 1, 2015"
+                                                                  rating:[self.fieldReportList[indexPath.row] intValue]
+                                                                  urgent:YES];
         }
     }
     return cellView;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [WPMiniSiteTableViewCell cellHeight];
+    return [WPFieldReportTableViewCell cellHeight];
 }
 
 @end
