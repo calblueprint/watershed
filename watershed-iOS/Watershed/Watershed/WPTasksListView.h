@@ -13,7 +13,6 @@
 
 @interface WPTasksListView : WPView
 
--(instancetype)initWithTableController:(WPTasksListViewController *)parentController frame:(CGRect)frame;
-
+- (instancetype)initWithFrame:(CGRect)frame andTableViewController:(WPTasksListViewController *)tableViewController;
 
 @end

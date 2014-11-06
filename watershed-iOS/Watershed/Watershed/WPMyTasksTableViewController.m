@@ -50,8 +50,7 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
     return 1;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 60;
 }
 
@@ -68,8 +67,7 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     WPTaskViewController *taskViewController = [[WPTaskViewController alloc] init];
     taskViewController.taskTitle = self.tasks[indexPath.row][@"Task"];

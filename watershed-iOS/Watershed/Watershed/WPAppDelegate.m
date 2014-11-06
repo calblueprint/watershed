@@ -22,23 +22,35 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+<<<<<<< HEAD
     // determine the initial view controller here and instantiate it with [storyboard instantiateViewControllerWithIdentifier:];
     
     // Override point for customization after application launch.
     
     //UIViewController *viewController = [[WPSiteViewController  alloc] init];
+=======
+>>>>>>> master
     self.window.rootViewController = [[WPRootViewController alloc] init];
-//    self.window.rootViewController = [[WPTasksListViewController alloc] init];
     [self.window makeKeyAndVisible];
     
     //[AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
-
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
+    //clear navbar
     [[UINavigationBar appearance] setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    
+    //no borderline for navbar
     [[UINavigationBar appearance] setShadowImage:[UIImage new]];
+    
+    //white text
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    
+    //white navigation items
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    
+    [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"BackButton" ]];
+    [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"BackButton" ]];
 
     return YES;
 }
