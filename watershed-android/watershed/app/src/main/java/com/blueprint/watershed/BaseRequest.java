@@ -25,7 +25,7 @@ public abstract class BaseRequest extends Request{
     public BaseRequest(int method, String url, JSONObject jsonRequest,
                        Response.Listener<JSONArray> listener, Response.ErrorListener errorListener){
         super(method, url, jsonRequest, listener, errorListener);
-    }
+    }   
 
     @Override
     public Map<String, String> getHeaders() throws AuthFailureError {
