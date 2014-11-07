@@ -96,7 +96,8 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
         case 1: {
             if (indexPath.section == 0) {
                 cell.textLabel.text = @"Push Notifications";
-                cell.accessoryType = UITableViewCellAccessoryNone;
+                UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
+                cell.accessoryView = switchView;
             } else if (indexPath.section == 1) {
                 cell.textLabel.text = @"Terms and Privacy";
             }
