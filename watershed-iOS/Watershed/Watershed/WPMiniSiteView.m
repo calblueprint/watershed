@@ -19,6 +19,8 @@
 @property (nonatomic) UILabel *descriptionLabel;
 @property (nonatomic) UIView *headingLineBreak;
 @property (nonatomic) WPLabeledIcon *addressLabel;
+@property (nonatomic) WPLabeledIcon *vegetationListLabel;
+@property (nonatomic) WPLabeledIcon *currentTaskLabel;
 @property (nonatomic) WPLabeledIcon *fieldReportCountLabel;
 @property (nonatomic) UIImageView *tableViewShadowOverlay;
 @property (nonatomic) UIScrollView *miniSiteScrollView;
@@ -100,10 +102,24 @@ static int COVER_PHOTO_TRANS = 0;
         addressLabel;
     }) wp_addToSuperview:self.tableHeaderView];
     
-    _fieldReportCountLabel = [({
+    _vegetationListLabel = [({
         FAKFontAwesome *treeIcon = [FAKFontAwesome treeIconWithSize:[WPLabeledIcon viewHeight]];
         UIImage *treeImage = [treeIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
-        WPLabeledIcon *siteCountLabel = [[WPLabeledIcon alloc] initWithText:@"10 mini sites" icon:treeImage];
+        WPLabeledIcon *vegetationListLabel = [[WPLabeledIcon alloc] initWithText:@"Vegetation -- Apples, Oranges, Carrots, What am I saying" icon:treeImage];
+        vegetationListLabel;
+    }) wp_addToSuperview:self.tableHeaderView];
+    
+    _currentTaskLabel = [({
+        FAKFontAwesome *checkIcon = [FAKFontAwesome checkIconWithSize:[WPLabeledIcon viewHeight]];
+        UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
+        WPLabeledIcon *currentTaskLabel = [[WPLabeledIcon alloc] initWithText:@"Current Task -- Fix the water" icon:checkImage];
+        currentTaskLabel;
+    }) wp_addToSuperview:self.tableHeaderView];
+    
+    _fieldReportCountLabel = [({
+        FAKFontAwesome *exclamationIcon = [FAKFontAwesome exclamationTriangleIconWithSize:[WPLabeledIcon viewHeight]];
+        UIImage *exclamationImage = [exclamationIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
+        WPLabeledIcon *siteCountLabel = [[WPLabeledIcon alloc] initWithText:@"10 field reports" icon:exclamationImage];
         siteCountLabel;
     }) wp_addToSuperview:self.tableHeaderView];
     
@@ -200,9 +216,23 @@ static int COVER_PHOTO_TRANS = 0;
         make.trailing.equalTo([UIView wp_styleNegativePadding]);
     }];
     
-    [self.fieldReportCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.vegetationListLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.addressLabel.mas_bottom)
+            .with.offset([[UIView wp_stylePadding] floatValue] / 2);
+        make.leading.equalTo([UIView wp_stylePadding]);
+        make.trailing.equalTo([UIView wp_styleNegativePadding]);
+    }];
+    
+    [self.currentTaskLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.vegetationListLabel.mas_bottom)
         .with.offset([[UIView wp_stylePadding] floatValue] / 2);
+        make.leading.equalTo([UIView wp_stylePadding]);
+        make.trailing.equalTo([UIView wp_styleNegativePadding]);
+    }];
+    
+    [self.fieldReportCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.currentTaskLabel.mas_bottom)
+            .with.offset([[UIView wp_stylePadding] floatValue] / 2);
         make.leading.equalTo([UIView wp_stylePadding]);
         make.trailing.equalTo([UIView wp_styleNegativePadding]);
     }];
@@ -210,7 +240,7 @@ static int COVER_PHOTO_TRANS = 0;
     [self.tableViewShadowOverlay mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@10);
         make.top.equalTo(self.fieldReportCountLabel.mas_bottom)
-        .with.offset([[UIView wp_stylePadding] floatValue] * 2);
+            .with.offset([[UIView wp_stylePadding] floatValue] * 2);
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
     }];
