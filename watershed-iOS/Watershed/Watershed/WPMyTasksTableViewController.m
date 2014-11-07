@@ -7,8 +7,10 @@
 //
 
 #import "WPMyTasksTableViewController.h"
-#import "WPTableViewCell.h"
-#import "UIColor+WPColors.h"
+#import "WPTasksTableViewCell.h"
+#import "UIExtensions.h"
+#import "WPTaskViewController.h"
+#import "WPTabBarController.h"
 
 @interface WPMyTasksTableViewController ()
 
@@ -31,7 +33,7 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
                @{@"Task": @"Put MY Tree in Hole", @"Description": @"Place it in", @"DueDate": @"05/12"}
                ];
     self.tableView = [[UITableView alloc] init];
-    [self.tableView registerClass:[WPTableViewCell class] forCellReuseIdentifier:CellIdentifier];
+    [self.tableView registerClass:[WPTasksTableViewCell class] forCellReuseIdentifier:CellIdentifier];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
 
@@ -48,8 +50,7 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
     return 1;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 60;
 }
 
@@ -58,12 +59,21 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WPTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    WPTasksTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     NSDictionary *rowData = self.tasks[indexPath.row];
     cell.title = rowData[@"Task"];
     cell.taskDescription = rowData[@"Description"];
     cell.dueDate = rowData[@"DueDate"];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    WPTaskViewController *taskViewController = [[WPTaskViewController alloc] init];
+    taskViewController.taskTitle = self.tasks[indexPath.row][@"Task"];
+    taskViewController.taskDescription = self.tasks[indexPath.row][@"Description"];
+    taskViewController.dueDate = self.tasks[indexPath.row][@"DueDate"];
+    [[self.parentViewController navigationController] pushViewController:taskViewController animated:YES];
 }
 
 @end

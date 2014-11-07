@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 Blueprint. All rights reserved.
 //
 
-#import "WPTableViewCell.h"
-#import "UIColor+WPColors.h"
+#import "WPTasksTableViewCell.h"
 #import "WPAllTasksTableViewController.h"
-#import "Masonry.h"
+#import "UIExtensions.h"
+#import "WPTaskViewController.h"
 
 @interface WPAllTasksTableViewController ()
 
@@ -32,7 +32,7 @@ static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
                @{@"Task": @"Put Tree in Hole", @"Description": @"Place it in", @"DueDate": @"05/12"}
                ];
     self.tableView = [[UITableView alloc] init];
-    [self.tableView registerClass:[WPTableViewCell class] forCellReuseIdentifier:allTasksIdentifier];
+    [self.tableView registerClass:[WPTasksTableViewCell class] forCellReuseIdentifier:allTasksIdentifier];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
 }
@@ -48,8 +48,7 @@ static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
     return 1;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 60;
 }
 
@@ -58,13 +57,22 @@ static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WPTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:allTasksIdentifier forIndexPath:indexPath];
+    WPTasksTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:allTasksIdentifier forIndexPath:indexPath];
     
     NSDictionary *rowData = self.allTasks[indexPath.row];
     cell.title = rowData[@"Task"];
     cell.taskDescription = rowData[@"Description"];
     cell.dueDate = rowData[@"DueDate"];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    WPTaskViewController *taskViewController = [[WPTaskViewController alloc] init];
+    taskViewController.taskTitle = self.allTasks[indexPath.row][@"Task"];
+    taskViewController.taskDescription = self.allTasks[indexPath.row][@"Description"];
+    taskViewController.dueDate = self.allTasks[indexPath.row][@"DueDate"];
+    [[self.parentViewController navigationController] pushViewController:taskViewController animated:YES];
 }
 
 @end

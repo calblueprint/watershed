@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "WPView.h"
 
-@interface WPTableViewCell : UITableViewCell
+@interface WPTasksTableViewCell : UITableViewCell
 
 @property (copy, nonatomic) NSString *title;
 @property (copy, nonatomic) NSString *taskDescription;
