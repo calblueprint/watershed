@@ -246,7 +246,7 @@ public class MainActivity extends ActionBarActivity
         int position = menuItems.indexOf(view);
         switch (position) {
             case 0:
-                if (currentFragment instanceof TaskFragment){break;}
+                if (currentFragment instanceof TaskFragment){ break; }
                 TaskFragment taskFragment = TaskFragment.newInstance(0);
                 actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
                 viewPager.setVisibility(view.VISIBLE);

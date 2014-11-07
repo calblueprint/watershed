@@ -4,16 +4,19 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.Date;
 
-public class TaskFragment extends Fragment {
+public class TaskFragment extends ListFragment {
 
     private OnFragmentInteractionListener mListener;
     private ListView listView1;
@@ -74,6 +77,12 @@ public class TaskFragment extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id){
+        Task taskClicked = this.mTaskList[position];
+        Toast.makeText(getActivity(), taskClicked.getTitle() + " Clicked!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
