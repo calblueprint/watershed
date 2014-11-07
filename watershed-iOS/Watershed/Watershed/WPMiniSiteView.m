@@ -218,21 +218,21 @@ static int COVER_PHOTO_TRANS = 0;
     
     [self.vegetationListLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.addressLabel.mas_bottom)
-            .with.offset([[UIView wp_stylePadding] floatValue] / 2);
+            .with.offset([[UIView wp_stylePadding] floatValue]);
         make.leading.equalTo([UIView wp_stylePadding]);
         make.trailing.equalTo([UIView wp_styleNegativePadding]);
     }];
     
     [self.currentTaskLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.vegetationListLabel.mas_bottom)
-        .with.offset([[UIView wp_stylePadding] floatValue] / 2);
+        .with.offset([[UIView wp_stylePadding] floatValue]);
         make.leading.equalTo([UIView wp_stylePadding]);
         make.trailing.equalTo([UIView wp_styleNegativePadding]);
     }];
     
     [self.fieldReportCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.currentTaskLabel.mas_bottom)
-            .with.offset([[UIView wp_stylePadding] floatValue] / 2);
+            .with.offset([[UIView wp_stylePadding] floatValue]);
         make.leading.equalTo([UIView wp_stylePadding]);
         make.trailing.equalTo([UIView wp_styleNegativePadding]);
     }];

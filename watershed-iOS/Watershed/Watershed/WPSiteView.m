@@ -202,7 +202,7 @@ static int COVER_PHOTO_TRANS = 0;
     
     [self.siteCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.addressLabel.mas_bottom)
-            .with.offset([[UIView wp_stylePadding] floatValue] / 2);
+            .with.offset([[UIView wp_stylePadding] floatValue]);
         make.leading.equalTo([UIView wp_stylePadding]);
         make.trailing.equalTo([UIView wp_styleNegativePadding]);
     }];
