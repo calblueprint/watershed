@@ -82,6 +82,7 @@ public class TaskFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id){
         Task taskClicked = this.mTaskList[position];
+
         Toast.makeText(getActivity(), taskClicked.getTitle() + " Clicked!", Toast.LENGTH_SHORT).show();
     }
 
