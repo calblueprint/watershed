@@ -30,13 +30,16 @@
 
 - (void)createSubviews {
     _infoTableView = [[UITableView alloc] init];
+    _infoTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    _infoTableView.delegate = self;
+    _infoTableView.dataSource = self;
     [self addSubview:_infoTableView];
 }
 
 - (void)updateConstraints {
      
     [self.infoTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(topMargin));
+        make.top.equalTo(@0);
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
         make.bottom.equalTo(@0);
@@ -65,6 +68,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *newCell = [[UITableViewCell alloc] init];
+
     return newCell;
 
 }
