@@ -150,7 +150,7 @@ static int COVER_PHOTO_TRANS = 0;
     }];
     
     [self.navbarShadowOverlay mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@(64));
+        make.height.equalTo(@(topMargin));
         make.top.equalTo(@0);
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
@@ -165,7 +165,7 @@ static int COVER_PHOTO_TRANS = 0;
     }];
     
     [self.tableHeaderView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(COVER_PHOTO_HEIGHT - 64));
+        make.top.equalTo(@(COVER_PHOTO_HEIGHT - topMargin));
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
         make.bottom.equalTo(self.tableViewShadowOverlay.mas_top);
@@ -173,44 +173,44 @@ static int COVER_PHOTO_TRANS = 0;
     
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@13);
-        make.leading.equalTo([UIView wp_stylePadding]);
-        make.trailing.equalTo([UIView wp_styleNegativePadding]);
+        make.leading.equalTo(@(standardMargin));
+        make.trailing.equalTo(@(-standardMargin));
     }];
     
     [self.descriptionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.titleLabel.mas_bottom)
-            .with.offset([[UIView wp_stylePadding] floatValue]);
+            .with.offset(standardMargin);
         make.centerX.equalTo(self.mas_centerX);
-        make.leading.equalTo([UIView wp_stylePadding]);
-        make.trailing.equalTo([UIView wp_styleNegativePadding]);
+        make.leading.equalTo(@(standardMargin));
+        make.trailing.equalTo(@(-standardMargin));
     }];
     
     [self.headingLineBreak mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.descriptionLabel.mas_bottom)
-            .with.offset([[UIView wp_stylePadding] floatValue] * 2);
-        make.leading.equalTo([UIView wp_stylePadding]);
-        make.trailing.equalTo([UIView wp_styleNegativePadding]);
+            .with.offset(standardMargin * 2);
+        make.leading.equalTo(@(standardMargin));
+        make.trailing.equalTo(@(-standardMargin));
         make.height.equalTo(@1);
     }];
     
     [self.addressLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.headingLineBreak.mas_bottom)
-            .with.offset([[UIView wp_stylePadding] floatValue] * 2);
-        make.leading.equalTo([UIView wp_stylePadding]);
-        make.trailing.equalTo([UIView wp_styleNegativePadding]);
+            .with.offset(standardMargin * 2);
+        make.leading.equalTo(@(standardMargin));
+        make.trailing.equalTo(@(-standardMargin));
     }];
     
     [self.siteCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.addressLabel.mas_bottom)
-            .with.offset([[UIView wp_stylePadding] floatValue]);
-        make.leading.equalTo([UIView wp_stylePadding]);
-        make.trailing.equalTo([UIView wp_styleNegativePadding]);
+            .with.offset(standardMargin);
+        make.leading.equalTo(@(standardMargin));
+        make.trailing.equalTo(@(-standardMargin));
     }];
     
     [self.tableViewShadowOverlay mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@10);
         make.top.equalTo(self.siteCountLabel.mas_bottom)
-            .with.offset([[UIView wp_stylePadding] floatValue] * 2);
+            .with.offset(standardMargin * 2);
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
     }];
