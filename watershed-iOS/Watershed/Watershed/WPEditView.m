@@ -29,7 +29,7 @@
 }
 
 - (void)createSubviews {
-    _infoTableView = [[UITableView alloc] init];
+    _infoTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     _infoTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     _infoTableView.delegate = self;
     _infoTableView.dataSource = self;
@@ -57,7 +57,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return 3;
+    return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -68,7 +68,27 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *newCell = [[UITableViewCell alloc] init];
-
+    switch (indexPath.row) {
+        case 0: {
+            newCell.textLabel.text = @"Name";
+            break;
+        }
+        case 1: {
+            newCell.textLabel.text = @"Email";
+            break;
+        }
+        case 2: {
+            newCell.textLabel.text = @"Address";
+            break;
+        }
+        case 3: {
+            newCell.textLabel.text = @"Phone Number";
+            break;
+        }
+        default: {
+            //do nothing
+        }
+    }
     return newCell;
 
 }
