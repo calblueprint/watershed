@@ -101,30 +101,31 @@ const static float CELL_HEIGHT = 70.0f;
     [self.photoView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@40);
         make.width.equalTo(@40);
-        make.top.equalTo(@10);
-        make.leading.equalTo(@10);
+        make.top.equalTo(@(standardMargin));
+        make.leading.equalTo(@(standardMargin));
     }];
     
     [self.dateLabel mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.greaterThanOrEqualTo(@40);
         make.top.equalTo(self.photoView.mas_top);
-        make.left.equalTo(self.photoView.mas_right)
-            .with.offset(10.0);
-        make.trailing.equalTo(self.ratingNumberLabel.mas_leading).with.offset([[UIView wp_styleNegativePadding] floatValue]);
+        make.leading.equalTo(self.photoView.mas_trailing)
+            .with.offset(standardMargin);
+        make.trailing.equalTo(self.ratingNumberLabel.mas_leading)
+            .with.offset(-standardMargin);
     }];
     
     [self.ratingNumberLabel mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@35);
-        make.top.equalTo(@10);
+        make.top.equalTo(@(standardMargin));
         make.leading.equalTo(self.ratingTextLabel.mas_leading);
-        make.trailing.equalTo(@-10);
+        make.trailing.equalTo(@(-standardMargin));
     }];
     
     [self.ratingTextLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@10);
+        make.height.equalTo(@(standardMargin));
         make.width.greaterThanOrEqualTo(@50);
-        make.bottom.equalTo(@-10);
-        make.trailing.equalTo(@-10);
+        make.bottom.equalTo(@(-standardMargin));
+        make.trailing.equalTo(@(-standardMargin));
     }];
     
     [super updateConstraints];

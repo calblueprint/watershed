@@ -115,36 +115,37 @@ const static float CELL_HEIGHT = 86.0f;
     [self.photoView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@40);
         make.width.equalTo(@40);
-        make.top.equalTo(@10);
-        make.leading.equalTo(@10);
+        make.top.equalTo(@(standardMargin));
+        make.leading.equalTo(@(standardMargin));
     }];
     
     [self.nameLabel mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.greaterThanOrEqualTo(@40);
         make.top.equalTo(self.photoView.mas_top);
-        make.left.equalTo(self.photoView.mas_right)
-            .with.offset(10.0);
-        make.trailing.equalTo(self.ratingDotView.mas_leading).with.offset([[UIView wp_styleNegativePadding] floatValue]);
+        make.leading.equalTo(self.photoView.mas_trailing)
+            .with.offset(standardMargin);
+        make.trailing.equalTo(self.ratingDotView.mas_leading)
+            .with.offset(-standardMargin);
     }];
     
     [self.ratingDotView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@10);
-        make.width.equalTo(@10);
-        make.top.equalTo(@10);
-        make.trailing.equalTo(@-10);
+        make.height.equalTo(@(standardMargin));
+        make.width.equalTo(@(standardMargin));
+        make.top.equalTo(@(standardMargin));
+        make.trailing.equalTo(@(-standardMargin));
     }];
     
     [self.taskCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.nameLabel.mas_bottom)
-            .with.offset([[UIView wp_stylePadding] floatValue]);
+            .with.offset(standardMargin);
         make.leading.equalTo(self.photoView.mas_leading);
     }];
     
     [self.fieldReportCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.nameLabel.mas_bottom)
-            .with.offset([[UIView wp_stylePadding] floatValue]);
+            .with.offset(standardMargin);
         make.leading.equalTo(self.taskCountLabel.mas_trailing)
-            .with.offset([[UIView wp_stylePadding] floatValue]);
+            .with.offset(standardMargin);
     }];
     
     [super updateConstraints];
