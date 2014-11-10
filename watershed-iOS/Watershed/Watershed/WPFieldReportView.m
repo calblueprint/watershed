@@ -112,6 +112,38 @@ const static float BORDER_WIDTH = 5.0f;
         make.centerX.equalTo(self.mas_centerX);
     }];
     
+    /*[self.ratingTextLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(20));
+        make.leading.equalTo(self.ratingNumberLabel.mas_leading);
+        make.width.equalTo(self.ratingNumberLabel.mas_width);
+    }];*/
+    
+    [self.reportImageView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@(REPORT_IMAGE_SIZE));
+        make.width.equalTo(@(REPORT_IMAGE_SIZE));
+        make.centerX.equalTo(self.ratingNumberLabel.mas_centerX)
+            .with.offset(-RATING_SIZE / 2 / 1.41);
+        make.centerY.equalTo(self.ratingNumberLabel.mas_centerY)
+            .with.offset(-RATING_SIZE / 2 / 1.41);
+    }];
+    
+    [self.userImageView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@(USER_IMAGE_SIZE));
+        make.width.equalTo(@(USER_IMAGE_SIZE));
+        make.centerX.equalTo(self.ratingNumberLabel.mas_centerX)
+            .with.offset(RATING_SIZE / 2 / 1.41);
+        make.centerY.equalTo(self.ratingNumberLabel.mas_centerY)
+            .with.offset(RATING_SIZE / 2 / 1.41);
+    }];
+    
+    [self.descriptionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.ratingNumberLabel.mas_bottom)
+            .with.offset(40);
+        make.centerX.equalTo(self.mas_centerX);
+        make.leading.equalTo([UIView wp_stylePadding]);
+        make.trailing.equalTo([UIView wp_styleNegativePadding]);
+    }];
+    
     [super updateConstraints];
 }
 
