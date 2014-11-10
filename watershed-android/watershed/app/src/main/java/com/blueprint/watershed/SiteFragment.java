@@ -16,11 +16,16 @@ public class SiteFragment extends Fragment {
 
 
     public static SiteFragment newInstance(Site site) {
-        //SiteFragment siteFragment = new SiteFragment();
-        return new SiteFragment(new Site("Test", "test location"));
+        SiteFragment siteFragment = new SiteFragment();
+        siteFragment.configureWithSite(new Site("Test", "test location"));
+        return siteFragment;
     }
 
     public SiteFragment() {
+    }
+
+    public void configureWithSite(Site site) {
+        mSite = site;
     }
 
     @Override

@@ -66,7 +66,7 @@ public class LandingPageActivity extends Activity {
         preferences = getSharedPreferences(PREFERENCES, 0);
 
         // NOTE(mark): Change to !hasAuthCredentials if you want the main activity to show.
-        if (!hasAuthCredentials(preferences)) {
+        if (hasAuthCredentials(preferences)) {
             final Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("auth_token", preferences.getString("auth_token", null));
             this.finish();
@@ -108,7 +108,6 @@ public class LandingPageActivity extends Activity {
     public void login(HashMap<String, HashMap<String, String>> params) {
         final Intent intent = new Intent(this, MainActivity.class);
 
-        Log.e("asdf", "ASDF");
         JSONObject requestUser = new JSONObject(params.get("user"));
         HashMap<String, JSONObject> realParams = new HashMap<String, JSONObject>();
         realParams.put("user", requestUser);
@@ -118,7 +117,6 @@ public class LandingPageActivity extends Activity {
                     @Override
                     // presumably will receive a hash that has the auth info and user object
                     public void onResponse(JSONObject jsonObject) {
-                        Log.e("adffds","fffff");
                         SharedPreferences.Editor editor = preferences.edit();
 
                         try {

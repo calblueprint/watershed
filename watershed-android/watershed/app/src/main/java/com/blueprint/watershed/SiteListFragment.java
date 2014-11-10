@@ -81,7 +81,8 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
         if (null != mListener) {
             // Load site
             Site site = getSite(position);
-            SiteFragment siteFragment = new SiteFragment(site);
+            SiteFragment siteFragment = new SiteFragment();
+            siteFragment.configureWithSite(site);
 
             mMainActivity.replaceFragment(siteFragment);
         }
