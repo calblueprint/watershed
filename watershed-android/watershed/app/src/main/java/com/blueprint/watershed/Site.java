@@ -14,21 +14,6 @@ public class Site {
     private String mLatitude;
     private String mLongitude;
 
-    public Site(String name, String description, String street, String city, String state, Integer zip_code, String latitude, String longitude) {
-        mName = name;
-        mDescription = description;
-        mStreet = street;
-        mCity = city;
-        mState = state;
-        mZipCode = zip_code;
-        mLatitude = latitude;
-        mLongitude = longitude;
-    }
-
-    public Site(String name, String description) {
-        this(name, description, "1000 Andrew Millman Way", "Berkeley", "CA", 94720, "10", "100");
-    }
-
     public Site() {
     }
 

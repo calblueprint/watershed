@@ -17,7 +17,7 @@ public class SiteFragment extends Fragment {
 
     public static SiteFragment newInstance(Site site) {
         SiteFragment siteFragment = new SiteFragment();
-        siteFragment.configureWithSite(new Site("Test", "test location"));
+        siteFragment.configureWithSite(site);
         return siteFragment;
     }
 

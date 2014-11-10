@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Mark Miyashita on 10/14/14.
  */
@@ -17,8 +20,8 @@ public class SiteListAdapter extends ArrayAdapter<Site> {
     int layoutResourceId;
     Site data[] = null;
 
-    public SiteListAdapter(Context context, int layoutResourceId, Site[] data) {
-        super(context, layoutResourceId, data);
+    public SiteListAdapter(Context context, int layoutResourceId, ArrayList<Site> sites) {
+        super(context, layoutResourceId, sites);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.data = data;
