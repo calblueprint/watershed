@@ -7,8 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WPAddPhotoViewController.h"
+
 
 @interface WPAddFieldReportView : UIView
 
+@property (nonatomic) UITextField *fieldDescription;
+@property (nonatomic) UIPickerView *healthRating;
+@property (nonatomic) UISwitch *urgent;
+@property (nonatomic) UIButton *addPhotoButton;
 
 @end

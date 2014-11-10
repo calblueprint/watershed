@@ -13,6 +13,7 @@
 #import "WPSiteViewController.h"
 #import "WPTaskViewController.h"
 #import "WPAddPhotoViewController.h"
+#import "WPAddFieldReportViewController.h"
 
 @implementation WPAppDelegate
 
@@ -28,7 +29,7 @@
     // Override point for customization after application launch.
     
     //UIViewController *viewController = [[WPSiteViewController  alloc] init];
-    self.window.rootViewController = [[WPAddPhotoViewController alloc] init];
+    self.window.rootViewController = [[WPAddFieldReportViewController alloc] init];
     [self.window makeKeyAndVisible];
     
     //[AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
