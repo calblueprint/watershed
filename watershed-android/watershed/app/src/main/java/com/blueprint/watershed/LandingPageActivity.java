@@ -68,9 +68,11 @@ public class LandingPageActivity extends Activity {
         // NOTE(mark): Change to !hasAuthCredentials if you want the main activity to show.
         if (hasAuthCredentials(preferences)) {
             final Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("auth_token", preferences.getString("auth_token", null));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            // intent.putExtra("auth_token", preferences.getString("auth_token", null));
             this.finish();
             startActivity(intent);
+            overridePendingTransition(0, 0);
         }
     }
 
@@ -83,8 +85,8 @@ public class LandingPageActivity extends Activity {
     }
 
     public boolean hasAuthCredentials(SharedPreferences preferences) {
-        return !preferences.getString("auth_token", "none").equals("none") &&
-               !preferences.getString("auth_email", "none").equals("none");
+        return !preferences.getString("authentication_token", "none").equals("none") &&
+               !preferences.getString("email", "none").equals("none");
     }
 
     // UI Actions
@@ -167,11 +169,6 @@ public class LandingPageActivity extends Activity {
         );
 
         mloginRequestHandler.getRequestQueue().add(request);
-    }
-
-    public boolean has_Credentials(){
-        return !preferences.getString("auth_token", "none").equals("none") &&
-                !preferences.getString("auth_email", "none").equals("none");
     }
 
     // Getters
