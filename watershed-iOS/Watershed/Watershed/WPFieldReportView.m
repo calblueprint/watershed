@@ -22,6 +22,7 @@
 const static float RATING_SIZE = 140.0f;
 const static float REPORT_IMAGE_SIZE = 70.0f;
 const static float USER_IMAGE_SIZE = 40.0f;
+const static float BORDER_WIDTH = 5.0f;
 
 @implementation WPFieldReportView
 
@@ -69,7 +70,7 @@ const static float USER_IMAGE_SIZE = 40.0f;
         UIImageView *reportImageView = [[UIImageView alloc] init];
         reportImageView.image = [UIImage imageNamed:@"SampleCoverPhoto"];
         reportImageView.layer.cornerRadius = REPORT_IMAGE_SIZE / 2;
-        reportImageView.layer.borderWidth = 5.0f;
+        reportImageView.layer.borderWidth = BORDER_WIDTH;
         reportImageView.layer.borderColor = [[UIColor wp_yellow] CGColor];
         reportImageView;
     }) wp_addToSuperview:self.contentScrollView];
@@ -78,7 +79,7 @@ const static float USER_IMAGE_SIZE = 40.0f;
         UIImageView *userImageView = [[UIImageView alloc] init];
         userImageView.image = [UIImage imageNamed:@"max"];
         userImageView.layer.cornerRadius = USER_IMAGE_SIZE / 2;
-        userImageView.layer.borderWidth = 5.0f;
+        userImageView.layer.borderWidth = BORDER_WIDTH;
         userImageView.layer.borderColor = [[UIColor wp_yellow] CGColor];
         userImageView;
     }) wp_addToSuperview:self.contentScrollView];
