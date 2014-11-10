@@ -33,7 +33,9 @@ public class MainActivity extends ActionBarActivity
                                      TaskFragment.OnFragmentInteractionListener,
                                      SiteListFragment.OnFragmentInteractionListener,
                                      TaskDetailFragment.OnFragmentInteractionListener,
-                                     SiteFragment.OnFragmentInteractionListener {
+                                     SiteFragment.OnFragmentInteractionListener,
+                                     ProfileFragment.OnFragmentInteractionListener,
+                                     AboutFragment.OnFragmentInteractionListener{
 
     // Constants
     public  static final String PREFERENCES = "LOGIN_PREFERENCES";
@@ -154,8 +156,14 @@ public class MainActivity extends ActionBarActivity
             displayTaskView(true);
             return;
         }
-        else if (f instanceof SiteListFragment) {
+        else if (f instanceof SiteListFragment || f instanceof SiteFragment) {
             setTitle("Sites");
+        }
+        else if (f instanceof AboutFragment) {
+            setTitle("About");
+        }
+        else if (f instanceof ProfileFragment) {
+            setTitle("Profile");
         }
         displayTaskView(false);
 
