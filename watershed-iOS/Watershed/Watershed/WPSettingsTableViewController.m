@@ -11,6 +11,7 @@
 #import "WPSettingsTableView.h"
 #import "WPEditViewController.h"
 #import "WPAboutViewController.h"
+#import "WPTermsViewController.h"
 
 @interface WPSettingsTableViewController ()
 
@@ -121,9 +122,14 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
         [editNavController.navigationBar setBarTintColor:[UIColor whiteColor]];
         [editNavController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
         [self.navigationController presentViewController:editNavController animated:YES completion:nil];
-    } else if (indexPath.section == 1 && indexPath.row == 0) {
-        WPAboutViewController *aboutViewController = [[WPAboutViewController alloc] init];
-        [self.navigationController pushViewController:aboutViewController animated:YES];
+    } else if (indexPath.section == 1) {
+        if (indexPath.row == 0) {
+            WPAboutViewController *aboutViewController = [[WPAboutViewController alloc] init];
+            [self.navigationController pushViewController:aboutViewController animated:YES];
+        } else if (indexPath.row == 1) {
+            WPTermsViewController *termsViewController = [[WPTermsViewController alloc] init];
+            [self.navigationController pushViewController:termsViewController animated:YES];
+        }
     }
 }
 
