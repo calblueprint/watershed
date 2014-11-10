@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WPAddFieldReportViewController : UIViewController
+@interface WPAddFieldReportViewController : UIViewController<UIPickerViewDelegate>
 
 @end
