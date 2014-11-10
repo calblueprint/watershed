@@ -19,5 +19,6 @@
 @property (nonatomic) UIButton *addPhotoButton;
 @property (nonatomic) UIPickerView *healthRatingPicker;
 @property (nonatomic) UITextField *ratingField;
+@property (nonatomic) UIImageView *selectedImageView;
 
 @end

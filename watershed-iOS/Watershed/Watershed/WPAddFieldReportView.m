@@ -18,7 +18,6 @@
 @property (nonatomic) UILabel *urgentLabel;
 @property (nonatomic) UILabel *ratingLabel;
 
-
 @end
 
 @implementation WPAddFieldReportView
@@ -99,6 +98,14 @@
         addPhoto.titleLabel.textColor = [UIColor wp_blue];
         addPhoto;
     }) wp_addToSuperview:self];
+    
+    _selectedImageView = [({
+        UIImageView *imageView = [[UIImageView alloc] init];
+        imageView.layer.borderColor = [UIColor wp_blue].CGColor;
+        imageView.layer.borderWidth = wpBorderWidth;
+        imageView.layer.cornerRadius = wpCornerRadius;
+        imageView;
+    }) wp_addToSuperview:self];
 
 }
 
@@ -139,19 +146,26 @@
         make.height.equalTo(@200);
     }];
     
-    [self.healthRating mas_makeConstraints:^(MASConstraintMaker *make) {
+//    [self.healthRating mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.fieldDescription.mas_bottom).with.offset(standardMargin);
+//        make.centerX.equalTo(self.mas_centerX);
+//        make.height.equalTo(@(wpButtonHeight));
+//        make.width.equalTo(@(wpButtonWidth));
+//    }];
+    
+    [self.selectedImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.fieldDescription.mas_bottom).with.offset(standardMargin);
-        make.centerX.equalTo(self.mas_centerX);
-        make.height.equalTo(@(wpButtonHeight));
-        make.width.equalTo(@(wpButtonWidth));
+        make.bottom.equalTo(@(-standardMargin));
+        make.left.equalTo(self.addPhotoButton.mas_right).with.offset(standardMargin);
+        make.trailing.equalTo(@(-standardMargin));
     }];
     
     [self.addPhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
         //        make.top.equalTo(self.takePhotoButton.mas_bottom).with.offset(standardMargin);
         make.bottom.equalTo(@(-60));
-        make.centerX.equalTo(self.mas_centerX);
+        make.leading.equalTo(@(standardMargin));
         make.height.equalTo(@(wpButtonHeight));
-        make.width.equalTo(@(wpButtonWidth));
+        make.width.equalTo(@50);
     }];
     
     [super updateConstraints];
