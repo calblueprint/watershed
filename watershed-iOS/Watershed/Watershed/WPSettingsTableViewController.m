@@ -10,6 +10,7 @@
 #import "WPSettingsTableViewCell.h"
 #import "WPSettingsTableView.h"
 #import "WPEditViewController.h"
+#import "WPAboutViewController.h"
 
 @interface WPSettingsTableViewController ()
 
@@ -29,6 +30,7 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"Settings";
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     _settingsTableView = [[WPSettingsTableView alloc] init];
     [self.view addSubview:_settingsTableView];
     
@@ -119,6 +121,9 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
         [editNavController.navigationBar setBarTintColor:[UIColor whiteColor]];
         [editNavController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
         [self.navigationController presentViewController:editNavController animated:YES completion:nil];
+    } else if (indexPath.section == 1 && indexPath.row == 0) {
+        WPAboutViewController *aboutViewController = [[WPAboutViewController alloc] init];
+        [self.navigationController pushViewController:aboutViewController animated:YES];
     }
 }
 

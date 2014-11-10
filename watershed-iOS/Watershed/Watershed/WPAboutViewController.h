@@ -10,4 +10,12 @@
 
 @interface WPAboutViewController : UIViewController
 
+
+@end
+
+@interface WPAboutView : UIView
+
+@property (nonatomic) UILabel *titleLabel;
+@property (nonatomic) UILabel *aboutLabel;
+
 @end
