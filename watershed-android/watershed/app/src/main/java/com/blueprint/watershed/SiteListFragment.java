@@ -21,6 +21,7 @@ import com.android.volley.NetworkError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONException;
@@ -113,11 +114,13 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
         String url = "https://intense-reaches-1457.herokuapp.com/api/v1/sites";
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, new JSONObject(params),
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, new JSONObject(params),
                 new Response.Listener<JSONObject>() {
                     @Override
                     // presumably will receive a hash that has the auth info and user object
                     public void onResponse(JSONObject jsonObject) {
+                        List<SomeClass> list = mapper.readValue(jsonString, new TypeReference<List<SomeClass>>() { });
+                        SomeClass[] array = mapper.readValue(jsonString, SomeClass[].class);
                         Log.e("response", jsonObject.toString());
 //                        try {
 //                            // Make a list of site objects from the response
