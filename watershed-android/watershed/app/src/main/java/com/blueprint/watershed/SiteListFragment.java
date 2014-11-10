@@ -1,8 +1,12 @@
 package com.blueprint.watershed;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +15,18 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.NetworkError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 public class SiteListFragment extends Fragment implements AbsListView.OnItemClickListener {
 
@@ -18,6 +34,7 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
 
     private ListView mSiteListView;
     private ListAdapter mAdapter;
+    private RequestHandler mRequestHandler;
     private MainActivity mMainActivity;
     private Site[] mSites;
 
@@ -32,6 +49,7 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mRequestHandler = RequestHandler.getInstance(getActivity().getApplicationContext());
     }
 
     @Override
@@ -86,6 +104,48 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
 
             mMainActivity.replaceFragment(siteFragment);
         }
+    }
+
+    public void getSitesRequest() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, "https://intense-reaches-1457.herokuapp.com/api/v1/sites", new HashMap<String, String>(),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    // presumably will receive a hash that has the auth info and user object
+                    public void onResponse(JSONObject jsonObject) {
+                        try {
+                            // Make a list of site objects from the response
+                        }
+                        catch (JSONException e) {
+                            Log.e("Json exception", "in login fragment");
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        String message;
+                        if (volleyError instanceof NetworkError) {
+                            message = "Network Error. Please try again later.";
+                        }
+                        else {
+                            try {
+                                JSONObject response = new JSONObject(new String(volleyError.networkResponse.data));
+                                message = (String) response.get("message");
+                            } catch (Exception e) {
+                                message = "Unknown Error";
+                                e.printStackTrace();
+                            }
+                        }
+                        Context context = getActivity().getApplicationContext();
+                        int duration = Toast.LENGTH_SHORT;
+
+                        Toast toast = Toast.makeText(context, message, duration);
+                        toast.show();
+                    }
+                }
+        );
+
+        mRequestHandler.getRequestQueue().add(request);
     }
 
     public void setEmptyText(CharSequence emptyText) {
