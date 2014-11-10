@@ -23,7 +23,7 @@
 
 @implementation WPFieldReportTableViewCell
 
-const static float CELL_HEIGHT = 70.0f;
+const static float CELL_HEIGHT = 61.0f;
 
 - (id)initWithStyle:(UITableViewCellStyle)style
     reuseIdentifier:(NSString *)reuseIdentifier
@@ -71,7 +71,7 @@ const static float CELL_HEIGHT = 70.0f;
     _ratingNumberLabel = [({
         UILabel *label = [[UILabel alloc] init];
         label.text = [NSString stringWithFormat:@"%d", (int)self.rating];
-        label.font = [UIFont systemFontOfSize:38.0];
+        label.font = [UIFont systemFontOfSize:28.0];
         label.textAlignment = NSTextAlignmentCenter;
         label.textColor = [WPFieldReportTableViewCell colorForRating:self.rating];
         label;
@@ -80,7 +80,7 @@ const static float CELL_HEIGHT = 70.0f;
     _ratingTextLabel = [({
         UILabel *label = [[UILabel alloc] init];
         label.text = @"RATING";
-        label.font = [UIFont systemFontOfSize:12.0];
+        label.font = [UIFont systemFontOfSize:11.0];
         label.textAlignment = NSTextAlignmentCenter;
         label.alpha = 0.5;
         label;
@@ -115,14 +115,14 @@ const static float CELL_HEIGHT = 70.0f;
     }];
     
     [self.ratingNumberLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@35);
+        make.height.equalTo(@23);
         make.top.equalTo(@(standardMargin));
         make.leading.equalTo(self.ratingTextLabel.mas_leading);
         make.trailing.equalTo(@(-standardMargin));
     }];
     
     [self.ratingTextLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@(standardMargin));
+        make.height.equalTo(@10);
         make.width.greaterThanOrEqualTo(@50);
         make.bottom.equalTo(@(-standardMargin));
         make.trailing.equalTo(@(-standardMargin));
