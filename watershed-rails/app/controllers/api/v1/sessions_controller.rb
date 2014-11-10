@@ -14,6 +14,7 @@ class Api::V1::SessionsController < Devise::SessionsController
       render json: {
         authentication_token: user.authentication_token,
         email: user.email,
+        user: json_for(user),
       }, status: :ok
     else
       invalid_login_attempt
