@@ -39,6 +39,24 @@
     _termsLabel.text = @"Terms";
     [self addSubview:_termsLabel];
     
+    _termsInfoLabel = [[UILabel alloc] init];
+    _termsInfoLabel.text = @"These are our terms.";
+    _termsInfoLabel.font= [UIFont systemFontOfSize:10];
+    _termsInfoLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    _termsInfoLabel.numberOfLines = 0;
+    [self addSubview:_termsInfoLabel];
+    
+    _privacyLabel = [[UILabel alloc] init];
+    _privacyLabel.text = @"Privacy";
+    [self addSubview:_privacyLabel];
+    
+    _privacyInfoLabel = [[UILabel alloc] init];
+    _privacyInfoLabel.text = @"This are our privacy.";
+    _privacyInfoLabel.font= [UIFont systemFontOfSize:10];
+    _privacyInfoLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    _privacyInfoLabel.numberOfLines = 0;
+    [self addSubview:_privacyInfoLabel];
+    
 }
 
 - (void)updateConstraints {

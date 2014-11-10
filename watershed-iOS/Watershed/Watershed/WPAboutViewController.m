@@ -43,7 +43,7 @@
     
     _aboutLabel = [[UILabel alloc] init];
     _aboutLabel.text = @"The Watershed Project’s vision is “people committed to a healthy San Francisco Bay watershed.” Since 1997, we’ve pursued that vision through initiatives that: Restore and preserve our unique, local ecosystems. We are located in Richmond, California, on the University of California's Richmond Field Station.";
-    _aboutLabel.font=  [UIFont systemFontOfSize:10];
+    _aboutLabel.font = [UIFont systemFontOfSize:10];
     _aboutLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _aboutLabel.numberOfLines = 0;
     [self addSubview:_aboutLabel];
