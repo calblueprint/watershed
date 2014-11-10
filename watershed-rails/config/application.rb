@@ -19,5 +19,8 @@ module Watershed
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+
+    # We have to manually iterate over all the extended classes to include them in the project.
+    Dir[Rails.root.join("app", "extended_classes", "*.rb")].each { |extended_class| require extended_class }
   end
 end
