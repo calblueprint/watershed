@@ -18,13 +18,13 @@ public class SiteListAdapter extends ArrayAdapter<Site> {
 
     Context context;
     int layoutResourceId;
-    Site data[] = null;
+    ArrayList<Site> sites;
 
     public SiteListAdapter(Context context, int layoutResourceId, ArrayList<Site> sites) {
         super(context, layoutResourceId, sites);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
-        this.data = data;
+        this.sites = sites;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class SiteListAdapter extends ArrayAdapter<Site> {
             holder = (SiteHolder)row.getTag();
         }
 
-        Site site = data[position];
+        Site site = sites.get(position);
 
         holder.name.setText(site.getName());
         holder.description.setText(site.getDescription());

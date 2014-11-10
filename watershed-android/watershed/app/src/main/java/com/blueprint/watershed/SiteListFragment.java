@@ -53,6 +53,7 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
     }
 
     public SiteListFragment() {
+        mSites = new ArrayList<Site>();
     }
 
     @Override
@@ -70,7 +71,7 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
 
         mSiteListView = (ListView) view.findViewById(android.R.id.list);
 
-        mAdapter = new SiteListAdapter(getActivity(), R.layout.site_list_row, new ArrayList<Site>());
+        mAdapter = new SiteListAdapter(getActivity(), R.layout.site_list_row, getSites());
         mSiteListView.setAdapter(mAdapter);
 
         mSiteListView.setOnItemClickListener(this);
@@ -122,11 +123,11 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
                     public void onResponse(JSONObject jsonObject) {
                         try {
                             String sitesJson = jsonObject.get("sites").toString();
-                            ArrayList<Site> sites = mapper.readValue(sitesJson, new TypeReference<List<Site>>() {
+                            ArrayList<Site> sites = mapper.readValue(sitesJson, new TypeReference<ArrayList<Site>>() {
                             });
                             setSites(sites);
-                            ((BaseAdapter)mAdapter).notifyDataSetChanged();
-                            //blogListAdapter.setData(BlogListUtil.prependHeader(blogPosts));
+                            Log.i("sites count", Integer.toString(sites.size()));
+                            mAdapter.notifyDataSetChanged();
                             Log.e("response", jsonObject.toString());
                         } catch (Exception e) {
                             Log.e("Json exception", "in site list fragment" + e.toString());
@@ -187,5 +188,10 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
     public Site getSite(int position) { return mSites.get(position); }
 
     // Setters
-    public void setSites(ArrayList<Site> sites) { mSites = sites; }
+    public void setSites(ArrayList<Site> sites) {
+        mSites.clear();
+        for (Site site : sites) {
+            mSites.add(site);
+        }
+    }
 }
