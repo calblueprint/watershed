@@ -107,7 +107,10 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
     }
 
     public void getSitesRequest() {
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, "https://intense-reaches-1457.herokuapp.com/api/v1/sites", new HashMap<String, String>(),
+        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
+        String url = "https://intense-reaches-1457.herokuapp.com/api/v1/sites";
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, params,
                 new Response.Listener<JSONObject>() {
                     @Override
                     // presumably will receive a hash that has the auth info and user object
