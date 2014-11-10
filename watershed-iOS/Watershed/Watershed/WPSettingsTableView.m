@@ -7,7 +7,7 @@
 //
 
 #import "WPSettingsTableView.h"
-#import "Masonry.h"
+#import "UIExtensions.h"
 
 @interface WPSettingsTableView ()
 
@@ -54,15 +54,15 @@
 
 - (void)updateConstraints {
     [_twp mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@10);
+        make.top.equalTo(@(standardMargin));
         make.centerX.equalTo(@0);
-        make.height.equalTo(@20);
+        make.height.equalTo(@(2*standardMargin));
     }];
     
     [_bp mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.twp.mas_bottom);
-        make.centerX.equalTo(@-10);
-        make.height.equalTo(@20);
+        make.centerX.equalTo(@(-standardMargin));
+        make.height.equalTo(@(2*standardMargin));
     }];
     
     [_paw mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -72,7 +72,7 @@
     }];
     
     [self mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@64);
+        make.top.equalTo(@(topMargin));
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
         make.bottom.equalTo(@0);
