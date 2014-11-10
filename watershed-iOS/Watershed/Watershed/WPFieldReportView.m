@@ -31,7 +31,6 @@ const static float BORDER_WIDTH = 5.0f;
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
         [self createSubviews];
-        [self setUpActions];
         [self updateConstraints];
     }
     return self;
@@ -92,10 +91,6 @@ const static float BORDER_WIDTH = 5.0f;
         descriptionLabel.numberOfLines = 0;
         descriptionLabel;
     }) wp_addToSuperview:self.contentScrollView];
-}
-
-- (void)setUpActions {
-    
 }
 
 @end
