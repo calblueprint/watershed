@@ -14,7 +14,9 @@
 
 @interface WPTermsView : UIView
 
-@property (nonatomic) UILabel *titleLabel;
-@property (nonatomic) UILabel *detailsLabel;
+@property (nonatomic) UILabel *termsLabel;
+@property (nonatomic) UILabel *termsInfoLabel;
+@property (nonatomic) UILabel *privacyLabel;
+@property (nonatomic) UILabel *privacyInfoLabel;
 
 @end

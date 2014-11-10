@@ -12,7 +12,6 @@
 @implementation WPAboutViewController
 
 - (void)viewDidLoad {
-    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
     self.navigationItem.title = @"About";
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 }
