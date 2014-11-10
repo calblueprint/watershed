@@ -25,6 +25,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -116,7 +117,11 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
 
     public void makeGetSitesRequest() {
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
+
+        // TODO(mark): URL and mapper should be generalized
         String url = "https://intense-reaches-1457.herokuapp.com/api/v1/sites";
+        final ObjectMapper mapper = new ObjectMapper();
+        mapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, new JSONObject(params),
                 new Response.Listener<JSONObject>() {
@@ -124,7 +129,8 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
                     public void onResponse(JSONObject jsonObject) {
                         try {
                             String sitesJson = jsonObject.get("sites").toString();
-                            List<Site> sites = new ObjectMapper().readValue(sitesJson, new TypeReference<List<Site>>() {});
+                            List<Site> sites = mapper.readValue(sitesJson, new TypeReference<List<Site>>() {
+                            });
                             //blogListAdapter.setData(BlogListUtil.prependHeader(blogPosts));
                             Log.e("response", jsonObject.toString());
                         } catch (Exception e) {
