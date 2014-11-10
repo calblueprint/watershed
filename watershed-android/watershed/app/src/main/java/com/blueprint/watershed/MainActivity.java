@@ -156,7 +156,6 @@ public class MainActivity extends ActionBarActivity
         else if (f instanceof SiteListFragment) {
             setTitle("Sites");
         }
-
         displayTaskView(false);
 
     }
@@ -175,6 +174,7 @@ public class MainActivity extends ActionBarActivity
     public void replaceFragment(Fragment newFragment) {
         android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();
         if(!newFragment.isAdded()){
+            updateTitle(newFragment);
             ft.replace(R.id.container, newFragment);
             ft.addToBackStack(null);
             ft.commit();
@@ -191,6 +191,7 @@ public class MainActivity extends ActionBarActivity
                     public void onBackStackChanged() {
                         Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
                         if (f != null){
+                            Log.e("fragment",f.toString());
                             updateTitle(f);
                         }
                     }
@@ -258,19 +259,13 @@ public class MainActivity extends ActionBarActivity
         int position = menuItems.indexOf(view);
         switch (position) {
             case 0:
-                if (currentFragment instanceof TaskFragment){ break; }
                 TaskFragment taskFragment = TaskFragment.newInstance(0);
-                actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-                viewPager.setVisibility(view.VISIBLE);
                 replaceFragment(taskFragment);
-                setTitle("Tasks");
                 break;
             case 1:
-                if (currentFragment instanceof SiteListFragment){break;}
                 displayTaskView(false);
                 siteListFragment = new SiteListFragment();
                 replaceFragment(siteListFragment);
-                setTitle("Sites");
                 break;
             case 2:
                 //replaceFragment();
