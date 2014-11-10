@@ -47,10 +47,11 @@ public class MainActivity extends ActionBarActivity
     SharedPreferences preferences;
 
     // Fragments
-    public Fragment currentFragment;
     private TaskFragment mtaskFragment;
     private SiteListFragment siteListFragment;
     private FragmentManager fragmentManager;
+    private ProfileFragment mProfileFragment;
+    private AboutFragment mAboutFragment;
 
 
     // Navigation Drawer
@@ -183,6 +184,8 @@ public class MainActivity extends ActionBarActivity
 
     private void initializeFragments() {
         mtaskFragment = TaskFragment.newInstance(0);
+        mProfileFragment = new ProfileFragment();
+        mAboutFragment = new AboutFragment();
         fragmentManager = getSupportFragmentManager();
         fragmentManager.addOnBackStackChangedListener(
                 new FragmentManager.OnBackStackChangedListener() {
@@ -200,7 +203,6 @@ public class MainActivity extends ActionBarActivity
         ft.add(R.id.container, mtaskFragment);
         ft.show(mtaskFragment);
         ft.commit();
-        currentFragment = mtaskFragment;
     }
 
     public void onFragmentInteraction(String id){
@@ -271,10 +273,10 @@ public class MainActivity extends ActionBarActivity
                 //replaceFragment();
                 break;
             case 3:
-                //replaceFragment();
+                replaceFragment(mProfileFragment);
                 break;
             case 4:
-                //replaceFragment();
+                replaceFragment(mAboutFragment);
                 break;
             case 5:
                 SharedPreferences prefs = getSharedPreferences(LandingPageActivity.PREFERENCES, 0);
