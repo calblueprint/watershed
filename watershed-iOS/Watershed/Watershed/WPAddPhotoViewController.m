@@ -35,7 +35,8 @@
     [self.view setBackgroundColor:[UIColor whiteColor]];
 }
 
-- (IBAction)takePhoto:(UIButton *)sender {
+
+- (void)takePhoto:(UIButton *)sender {
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     picker.allowsEditing = YES;
@@ -45,7 +46,7 @@
     
 }
 
-- (IBAction)selectPhoto:(UIButton *)sender {
+- (void)selectPhoto:(UIButton *)sender {
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     picker.allowsEditing = YES;

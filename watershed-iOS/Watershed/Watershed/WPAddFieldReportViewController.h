@@ -7,10 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WPHealthPickerViewController.h"
 
-@interface WPAddFieldReportViewController : UIViewController<UIPickerViewDelegate>
-@property (nonatomic) WPHealthPickerViewController *healthPickerController;
+@interface WPAddFieldReportViewController : UIViewController<UIPickerViewDelegate, UIPickerViewDataSource>
 
 
 @end

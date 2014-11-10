@@ -16,6 +16,8 @@
 @property (nonatomic) WPAddFieldReportViewController *parentFieldReportViewController;
 @property (nonatomic) UILabel *descriptionLabel;
 @property (nonatomic) UILabel *urgentLabel;
+@property (nonatomic) UILabel *ratingLabel;
+
 
 @end
 
@@ -56,6 +58,18 @@
         urgent;
     }) wp_addToSuperview:self];
     
+    _ratingLabel = [({
+        UILabel *ratingLabel = [[UILabel alloc] init];
+        ratingLabel.text = @"Rating";
+        ratingLabel;
+    }) wp_addToSuperview:self];
+    
+    _ratingField = [({
+        UITextField *rating = [[UITextField alloc] init];
+        rating.placeholder = @"Select";
+        rating;
+    }) wp_addToSuperview:self];
+    
     _descriptionLabel = [({
         UILabel *descriptionLabel = [[UILabel alloc] init];
         descriptionLabel.text = @"Description";
@@ -70,12 +84,10 @@
         field;
     }) wp_addToSuperview:self];
     
-    _healthRating = [({
-        UIPickerView *health = _parentFieldReportViewController.healthPickerController.healthRatingPicker;
-        health.layer.borderWidth = wpBorderWidth;
-        health.layer.cornerRadius = wpCornerRadius;
-        health;
-    }) wp_addToSuperview:self];
+//    _healthRating = [({
+//        UIPickerView *health = _parentFieldReportViewController.healthPickerController.healthRatingPicker;
+//        health;
+//    }) wp_addToSuperview:self];
 
     _addPhotoButton = [({
         UIButton *addPhoto = [[UIButton alloc] init];
@@ -105,9 +117,18 @@
         make.top.equalTo(@(topMargin));
         make.trailing.equalTo(@(-standardMargin));
     }];
+    [self.ratingLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.urgentLabel.mas_bottom).with.offset(standardMargin);
+        make.leading.equalTo(@(standardMargin));
+    }];
+    
+    [self.ratingField mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.urgentLabel.mas_bottom).with.offset(standardMargin);
+        make.trailing.equalTo(@(-standardMargin));
+    }];
 
     [self.descriptionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.urgent.mas_bottom).with.offset(standardMargin);
+        make.top.equalTo(self.ratingLabel.mas_bottom).with.offset(standardMargin);
         make.leading.equalTo(@(standardMargin));
     }];
     

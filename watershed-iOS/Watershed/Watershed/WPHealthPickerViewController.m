@@ -24,8 +24,12 @@
     {
         [_pickerData addObject:[NSNumber numberWithInt:i]];
     }
-    _healthRatingPicker = [[UIPickerView alloc] init];
+//    _healthRatingPicker = [[UIPickerView alloc] init];
+    _healthRatingPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(10, 200, 300, 200)];
+    _healthRatingPicker.showsSelectionIndicator = YES;
     _healthRatingPicker.delegate = self;
+    _healthRatingPicker.dataSource = self;
+    [self.view addSubview:_healthRatingPicker];
 }
 
 -(NSString*) pickerView:(UIPickerView*)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
@@ -35,11 +39,27 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component;
 {
+    
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+// tell the picker the width of each row for a given component
+- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
+    int sectionWidth = 300;
+    
+    return sectionWidth;
+}
+
+// The number of columns of data
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+// The number of rows of data
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return _pickerData.count;
 }
 
 @end
+
