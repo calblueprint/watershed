@@ -18,6 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"Field Report";
+    self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
 - (void)loadView {

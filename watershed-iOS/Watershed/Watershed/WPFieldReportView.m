@@ -18,7 +18,7 @@
 
 @end
 
-const static float REPORT_IMAGE_SIZE = 200.0f;
+const static float REPORT_IMAGE_SIZE = 220.0f;
 const static float RATING_SIZE = 90.0f;
 const static float USER_IMAGE_SIZE = 50.0f;
 const static float BORDER_WIDTH = 6.0f;
@@ -115,7 +115,7 @@ const static float BORDER_WIDTH = 6.0f;
     }];
     
     [self.reportImageView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(10));
+        make.top.equalTo(@(40));
         make.height.equalTo(@(REPORT_IMAGE_SIZE));
         make.width.equalTo(@(REPORT_IMAGE_SIZE));
         make.centerX.equalTo(self.mas_centerX);
