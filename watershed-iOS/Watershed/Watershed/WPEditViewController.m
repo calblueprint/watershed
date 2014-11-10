@@ -26,6 +26,7 @@
 }
 
 -(void)dismissSelf {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

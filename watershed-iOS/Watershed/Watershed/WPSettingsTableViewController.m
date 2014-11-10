@@ -115,6 +115,8 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
     if (indexPath.section == 0 && indexPath.row == 0) {
         WPEditViewController *editViewController = [[WPEditViewController alloc] init];
         UINavigationController *editNavController = [[UINavigationController alloc] initWithRootViewController:editViewController];
+        [editNavController.navigationBar setBackgroundColor:[UIColor whiteColor]];
+        [editNavController.navigationBar setBarTintColor:[UIColor whiteColor]];
         [editNavController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
         [self.navigationController presentViewController:editNavController animated:YES completion:nil];
     }
