@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,23 +22,30 @@ import com.android.volley.NetworkError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONArray;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class SiteListFragment extends Fragment implements AbsListView.OnItemClickListener {
 
     private OnFragmentInteractionListener mListener;
 
     private ListView mSiteListView;
-    private ListAdapter mAdapter;
+    private SiteListAdapter mAdapter;
     private SharedPreferences preferences;
     private RequestHandler mRequestHandler;
     private MainActivity mMainActivity;
-    private Site[] mSites;
+    private ArrayList<Site> mSites;
 
 
     public static SiteListFragment newInstance(String param1, String param2) {
@@ -45,6 +53,7 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
     }
 
     public SiteListFragment() {
+        mSites = new ArrayList<Site>();
     }
 
     @Override
@@ -60,19 +69,10 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_site_list, container, false);
 
-        setSites(
-            new Site[] {
-                new Site("Melissa's Home", "A view of Melissa's home."),
-                new Site("Andrew's Cave", "This is where Andrew sleeps."),
-                new Site("Max's Lair", "Bubble butt"),
-                new Site("Jordeen's Street Corner", "-- Melissa")
-            }
-        );
-
         mSiteListView = (ListView) view.findViewById(android.R.id.list);
 
-        SiteListAdapter siteListAdapter = new SiteListAdapter(getActivity(), R.layout.site_list_row, getSites());
-        mSiteListView.setAdapter(siteListAdapter);
+        mAdapter = new SiteListAdapter(getActivity(), R.layout.site_list_row, getSites());
+        mSiteListView.setAdapter(mAdapter);
 
         mSiteListView.setOnItemClickListener(this);
         return view;
@@ -111,20 +111,27 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
 
     public void makeGetSitesRequest() {
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
+
+        // TODO(mark): URL and mapper should be generalized
         String url = "https://intense-reaches-1457.herokuapp.com/api/v1/sites";
+        final ObjectMapper mapper = new ObjectMapper();
+        mapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, new JSONObject(params),
                 new Response.Listener<JSONObject>() {
                     @Override
-                    // presumably will receive a hash that has the auth info and user object
                     public void onResponse(JSONObject jsonObject) {
-                        Log.e("response", jsonObject.toString());
-//                        try {
-//                            // Make a list of site objects from the response
-//                        }
-//                        catch (JSONException e) {
-//                            Log.e("Json exception", "in login fragment");
-//                        }
+                        try {
+                            String sitesJson = jsonObject.get("sites").toString();
+                            ArrayList<Site> sites = mapper.readValue(sitesJson, new TypeReference<ArrayList<Site>>() {
+                            });
+                            setSites(sites);
+                            Log.i("sites count", Integer.toString(sites.size()));
+                            mAdapter.notifyDataSetChanged();
+                            Log.e("response", jsonObject.toString());
+                        } catch (Exception e) {
+                            Log.e("Json exception", "in site list fragment" + e.toString());
+                        }
                     }
                 },
                 new Response.ErrorListener() {
@@ -151,6 +158,7 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
                     }
                 }
         ) {
+            // Header params should be generalized into our BaseRequest class
             @Override
             public HashMap<String, String> getHeaders() {
                 HashMap<String, String> params = new HashMap<String, String>();
@@ -176,9 +184,14 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
     }
 
     // Getters
-    public Site[] getSites() { return mSites; }
-    public Site getSite(int position) { return mSites[position]; }
+    public ArrayList<Site> getSites() { return mSites; }
+    public Site getSite(int position) { return mSites.get(position); }
 
     // Setters
-    public void setSites(Site[] sites) { mSites = sites; }
+    public void setSites(ArrayList<Site> sites) {
+        mSites.clear();
+        for (Site site : sites) {
+            mSites.add(site);
+        }
+    }
 }
