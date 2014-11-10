@@ -22,6 +22,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -117,16 +118,17 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
         String url = "https://intense-reaches-1457.herokuapp.com/api/v1/sites";
 
-        JsonArrayRequest request = new JsonArrayRequest(url,
-                new Response.Listener<JSONArray>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, new JSONObject(params),
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONArray jsonArray) {
+                    public void onResponse(JSONObject jsonObject) {
                         try {
-                            List<Site> sites = new ObjectMapper().readValue(jsonArray.toString(), new TypeReference<List<Site>>() {});
+                            String sitesJson = jsonObject.get("sites").toString();
+                            List<Site> sites = new ObjectMapper().readValue(sitesJson, new TypeReference<List<Site>>() {});
                             //blogListAdapter.setData(BlogListUtil.prependHeader(blogPosts));
-                            Log.e("response", jsonArray.toString());
+                            Log.e("response", jsonObject.toString());
                         } catch (Exception e) {
-                            Log.e("Json exception", "in site list fragment");
+                            Log.e("Json exception", "in site list fragment" + e.toString());
                         }
                     }
                 },
