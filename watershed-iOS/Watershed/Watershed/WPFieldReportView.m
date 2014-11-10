@@ -22,7 +22,7 @@
 const static float RATING_SIZE = 200.0f;
 const static float REPORT_IMAGE_SIZE = 90.0f;
 const static float USER_IMAGE_SIZE = 50.0f;
-const static float BORDER_WIDTH = 5.0f;
+const static float BORDER_WIDTH = 6.0f;
 
 @implementation WPFieldReportView
 
