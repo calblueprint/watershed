@@ -11,3 +11,8 @@
 @implementation WPTermsViewController
 
 @end
+
+@implementation WPTermsView
+
+
+@end

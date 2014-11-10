@@ -11,3 +11,10 @@
 @interface WPTermsViewController : UIViewController
 
 @end
+
+@interface WPTermsView : UIView
+
+@property (nonatomic) UILabel *titleLabel;
+@property (nonatomic) UILabel *detailsLabel;
+
+@end
