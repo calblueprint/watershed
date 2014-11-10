@@ -11,8 +11,6 @@
 
 @interface WPAddPhotoView()
 
-//@property (nonatomic) WPAddPhotoViewController *parentController;
-
 @end
 
 @implementation WPAddPhotoView
@@ -27,17 +25,6 @@
     }
     return self;
 }
-//
-//- (instancetype)initWithAddPhotoViewController:(WPAddPhotoViewController *)addPhotoViewController {
-//    self = [super init];
-//    self.parentController = addPhotoViewController;
-//    if (self) {
-//        [self createSubviews];
-//        [self updateConstraints];
-//        [self setUpActions];
-//    }
-//    return self;
-//}
 
 - (void)createSubviews {
 
