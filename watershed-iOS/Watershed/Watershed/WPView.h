@@ -7,12 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WPLabeledIcon.h"
-#import "UIView+WPExtensions.h"
-#import "UIColor+WPColors.h"
-#import "UIImage+ImageEffects.h"
-#import "FontAwesomeKit/FontAwesomeKit.h"
-#import "Masonry.h"
+#import "UIExtensions.h"
 
 @interface WPView : UIView
 
