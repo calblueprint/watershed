@@ -31,7 +31,8 @@ public class MainActivity extends ActionBarActivity
                           implements ActionBar.TabListener,
                                      View.OnClickListener,
                                      TaskFragment.OnFragmentInteractionListener,
-                                     SiteListFragment.OnFragmentInteractionListener {
+                                     SiteListFragment.OnFragmentInteractionListener,
+                                     TaskDetailFragment.OnFragmentInteractionListener{
 
     // Constants
     public  static final String PREFERENCES = "LOGIN_PREFERENCES";
@@ -143,7 +144,16 @@ public class MainActivity extends ActionBarActivity
             public void onPageScrollStateChanged(int arg0) {
             }
         });
+    }
 
+    public void updateTitle(Fragment f){
+        if (f instanceof TaskFragment || f instanceof TaskDetailFragment){
+            setTitle("Tasks");
+        }
+        else if (f instanceof SiteListFragment){
+            setTitle("Sites");
+            hideTaskView();
+        }
     }
 
     public void hideTaskView(){
@@ -157,7 +167,6 @@ public class MainActivity extends ActionBarActivity
             ft.replace(R.id.container, newFragment);
             ft.addToBackStack(null);
             ft.commit();
-            mBackStackSize++;
         }
     }
 
@@ -166,21 +175,14 @@ public class MainActivity extends ActionBarActivity
         fragmentManager = getSupportFragmentManager();
         fragmentManager.addOnBackStackChangedListener(
                 new FragmentManager.OnBackStackChangedListener() {
+
+                    @Override
                     public void onBackStackChanged() {
-                        if (fragmentManager.getBackStackEntryCount() < mBackStackSize){
-                            if (currentFragment instanceof TaskFragment){
-                                currentFragment = siteListFragment;
-                                hideTaskView();
-                                setTitle("Sites");
-                            }
-                            else{
-                                currentFragment = mtaskFragment;
-                                actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-                                viewPager.setVisibility(View.VISIBLE);
-                                setTitle("Tasks");
-                            }
-                            mBackStackSize--;
+                        Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
+                        if (f != null){
+                            Log.e("fragment", f.toString());
                         }
+                        updateTitle(f);
                     }
                 });
         android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();

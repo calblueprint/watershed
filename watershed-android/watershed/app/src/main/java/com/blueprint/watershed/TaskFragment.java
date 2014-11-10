@@ -21,6 +21,7 @@ public class TaskFragment extends ListFragment {
     private OnFragmentInteractionListener mListener;
     private ListView listView1;
     private Task mTaskList[];
+    private MainActivity parentActivity;
 
 
     public static TaskFragment newInstance(int option) {
@@ -37,6 +38,7 @@ public class TaskFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        parentActivity = (MainActivity)getActivity();
         if (getArguments() != null) {
             int option = getArguments().getInt("option");
             switch (option) {
@@ -82,8 +84,9 @@ public class TaskFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id){
         Task taskClicked = this.mTaskList[position];
-
+        TaskDetailFragment detailFragment = new TaskDetailFragment();
         Toast.makeText(getActivity(), taskClicked.getTitle() + " Clicked!", Toast.LENGTH_SHORT).show();
+        parentActivity.replaceFragment(detailFragment);
     }
 
     @Override
