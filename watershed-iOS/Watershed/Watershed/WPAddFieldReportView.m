@@ -54,18 +54,19 @@
 
 - (void)setUpActions {
     [_addPhotoButton setTitle:@"Take Picture" forState:UIControlStateNormal];
-    [_addPhotoButton setTitleColor:[UIColor wp_darkBlue] forState: UIControlStateNormal];}
+    [_addPhotoButton setTitleColor:[UIColor wp_darkBlue] forState: UIControlStateNormal];
+}
 
 - (void)updateConstraints {
     [self.fieldDescription mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(topMargin));
-        make.height.equalTo(@300);
+        make.height.equalTo(@50);
         make.leading.equalTo(@(standardMargin));
         make.trailing.equalTo(@(-standardMargin));
     }];
     
     [self.healthRating mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.fieldDescription.mas_top).with.offset(-25);
+        make.top.equalTo(self.fieldDescription.mas_bottom).with.offset(-standardMargin);
         make.centerX.equalTo(self.mas_centerX);
         make.height.equalTo(@(wpButtonHeight));
         make.width.equalTo(@(wpButtonWidth));
