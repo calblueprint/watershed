@@ -8,16 +8,27 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 public class TaskDetailFragment extends Fragment {
 
     private Task mTask;
     private OnFragmentInteractionListener mListener;
+    private TextView mTitle;
+    private TextView mDescription;
+    private TextView mSiteId;
+    private String mTitleData;
+    private String mDescriptionData;
+    private String mSiteIdData;
 
     public static TaskDetailFragment newInstance(Task task) {
         TaskDetailFragment fragment = new TaskDetailFragment();
         Bundle args = new Bundle();
+        args.putString("title", task.getTitle());
+        args.putString("description", task.getDescription());
+        args.putInt("siteId", task.getSiteId());
+        fragment.setArguments(args);
         return fragment;
     }
     public TaskDetailFragment() {
@@ -28,13 +39,21 @@ public class TaskDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+
+            mTitleData = getArguments().getString("title");
+            mDescriptionData = getArguments().getString("description");
+            mSiteIdData = getArguments().getString("siteId");
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_task_detail, container, false);
+         View view = inflater.inflate(R.layout.fragment_task_detail, container, false);
+        ((TextView)view.findViewById(R.id.task_detail_title)).setText(mTitleData);
+        ((TextView)view.findViewById(R.id.task_detail_description)).setText(mDescriptionData);
+        ((TextView)view.findViewById(R.id.task_detail_site_id)).setText(mSiteIdData);
+        return view;
     }
 
     public void onButtonPressed(Uri uri) {
@@ -46,7 +65,6 @@ public class TaskDetailFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        Log.e("attaching", "yeah");
         try {
             mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {

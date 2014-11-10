@@ -190,9 +190,8 @@ public class MainActivity extends ActionBarActivity
                     public void onBackStackChanged() {
                         Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
                         if (f != null){
-                            Log.e("fragment", f.toString());
+                            updateTitle(f);
                         }
-                        updateTitle(f);
                     }
                 });
         android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();
