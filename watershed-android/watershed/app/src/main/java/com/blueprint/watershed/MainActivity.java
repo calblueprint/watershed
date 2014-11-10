@@ -174,8 +174,7 @@ public class MainActivity extends ActionBarActivity
                                 currentFragment = siteListFragment;
                                 hideTaskView();
                                 setTitle("Sites");
-                            }
-                            else {
+                            } else {
                                 currentFragment = mtaskFragment;
                                 actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
                                 viewPager.setVisibility(View.VISIBLE);

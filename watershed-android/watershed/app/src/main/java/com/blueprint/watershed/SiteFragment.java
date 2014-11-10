@@ -15,16 +15,12 @@ public class SiteFragment extends Fragment {
     private Site mSite;
 
 
-    public static SiteFragment newInstance(String param1, String param2) {
-        //mSite = new Site("New Site", "Description of the best site");
+    public static SiteFragment newInstance(Site site) {
+        //SiteFragment siteFragment = new SiteFragment();
         return new SiteFragment(new Site("Test", "test location"));
     }
 
     public SiteFragment() {
-    }
-
-    public SiteFragment(Site site) {
-        mSite = site;
     }
 
     @Override
