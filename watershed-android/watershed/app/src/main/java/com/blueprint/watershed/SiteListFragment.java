@@ -22,12 +22,15 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class SiteListFragment extends Fragment implements AbsListView.OnItemClickListener {
 
@@ -114,20 +117,17 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
         String url = "https://intense-reaches-1457.herokuapp.com/api/v1/sites";
 
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, new JSONObject(params),
-                new Response.Listener<JSONObject>() {
+        JsonArrayRequest request = new JsonArrayRequest(url,
+                new Response.Listener<JSONArray>() {
                     @Override
-                    // presumably will receive a hash that has the auth info and user object
-                    public void onResponse(JSONObject jsonObject) {
-                        List<SomeClass> list = mapper.readValue(jsonString, new TypeReference<List<SomeClass>>() { });
-                        SomeClass[] array = mapper.readValue(jsonString, SomeClass[].class);
-                        Log.e("response", jsonObject.toString());
-//                        try {
-//                            // Make a list of site objects from the response
-//                        }
-//                        catch (JSONException e) {
-//                            Log.e("Json exception", "in login fragment");
-//                        }
+                    public void onResponse(JSONArray jsonArray) {
+                        try {
+                            List<Site> sites = new ObjectMapper().readValue(jsonArray.toString(), new TypeReference<List<Site>>() {});
+                            //blogListAdapter.setData(BlogListUtil.prependHeader(blogPosts));
+                            Log.e("response", jsonArray.toString());
+                        } catch (Exception e) {
+                            Log.e("Json exception", "in site list fragment");
+                        }
                     }
                 },
                 new Response.ErrorListener() {
@@ -154,6 +154,7 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
                     }
                 }
         ) {
+            // Header params should be generalized into our BaseRequest class
             @Override
             public HashMap<String, String> getHeaders() {
                 HashMap<String, String> params = new HashMap<String, String>();
