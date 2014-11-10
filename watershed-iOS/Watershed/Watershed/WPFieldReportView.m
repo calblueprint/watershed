@@ -12,7 +12,6 @@
 
 @property (nonatomic) UIScrollView *contentScrollView;
 @property (nonatomic) UILabel *ratingNumberLabel;
-@property (nonatomic) UILabel *ratingTextLabel;
 @property (nonatomic) UIImageView *reportImageView;
 @property (nonatomic) UIImageView *userImageView;
 @property (nonatomic) UILabel *descriptionLabel;
@@ -54,15 +53,6 @@ const static float BORDER_WIDTH = 6.0f;
         label.backgroundColor = [UIColor whiteColor];
         label.layer.cornerRadius = RATING_SIZE / 2;
         label.clipsToBounds = YES;
-        label;
-    }) wp_addToSuperview:self.contentScrollView];
-    
-    _ratingTextLabel = [({
-        UILabel *label = [[UILabel alloc] init];
-        label.text = @"RATING";
-        label.font = [UIFont systemFontOfSize:15.0];
-        label.textAlignment = NSTextAlignmentCenter;
-        label.alpha = 0.5;
         label;
     }) wp_addToSuperview:self.contentScrollView];
     
