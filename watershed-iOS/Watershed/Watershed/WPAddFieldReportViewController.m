@@ -20,9 +20,12 @@
 }
 
 -(void)loadView {
+    _healthPickerController = [[WPHealthPickerViewController alloc] init];
+    [self addChildViewController:_healthPickerController];
     self.view = [[WPAddFieldReportView alloc] init];
     [self.view setBackgroundColor:[UIColor whiteColor]];
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }

@@ -12,7 +12,7 @@
 
 @interface WPAddFieldReportView : UIView
 
-@property (nonatomic) UITextField *fieldDescription;
+@property (nonatomic) UITextView *fieldDescription;
 @property (nonatomic) UIPickerView *healthRating;
 @property (nonatomic) UISwitch *urgent;
 @property (nonatomic) UIButton *addPhotoButton;

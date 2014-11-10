@@ -10,4 +10,6 @@
 
 @interface WPHealthPickerViewController : UIViewController<UIPickerViewDelegate>
 
+@property (nonatomic) UIPickerView *healthRatingPicker;
+
 @end
