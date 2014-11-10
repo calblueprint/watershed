@@ -11,15 +11,15 @@
 @interface WPFieldReportView ()
 
 @property (nonatomic) UIScrollView *contentScrollView;
-@property (nonatomic) UILabel *ratingNumberLabel;
 @property (nonatomic) UIImageView *reportImageView;
+@property (nonatomic) UILabel *ratingNumberLabel;
 @property (nonatomic) UIImageView *userImageView;
 @property (nonatomic) UILabel *descriptionLabel;
 
 @end
 
-const static float RATING_SIZE = 200.0f;
-const static float REPORT_IMAGE_SIZE = 90.0f;
+const static float REPORT_IMAGE_SIZE = 200.0f;
+const static float RATING_SIZE = 90.0f;
 const static float USER_IMAGE_SIZE = 50.0f;
 const static float BORDER_WIDTH = 6.0f;
 
@@ -44,35 +44,35 @@ const static float BORDER_WIDTH = 6.0f;
         contentScrollView;
     }) wp_addToSuperview:self];
     
-    _ratingNumberLabel = [({
-        UILabel *label = [[UILabel alloc] init];
-        label.text = @"3";
-        label.font = [UIFont systemFontOfSize:100.0];
-        label.textAlignment = NSTextAlignmentCenter;
-        label.textColor = [UIColor wp_yellow];
-        label.backgroundColor = [UIColor whiteColor];
-        label.layer.cornerRadius = RATING_SIZE / 2;
-        label.clipsToBounds = YES;
-        label;
-    }) wp_addToSuperview:self.contentScrollView];
-    
     _reportImageView = [({
         UIImageView *reportImageView = [[UIImageView alloc] init];
         reportImageView.image = [UIImage imageNamed:@"SampleCoverPhoto"];
         [reportImageView setContentMode:UIViewContentModeScaleAspectFill];
         reportImageView.layer.cornerRadius = REPORT_IMAGE_SIZE / 2;
-        reportImageView.layer.borderWidth = BORDER_WIDTH;
-        reportImageView.layer.borderColor = [[UIColor wp_yellow] CGColor];
         reportImageView.clipsToBounds = YES;
+        reportImageView;
+    }) wp_addToSuperview:self.contentScrollView];
+    
+    _ratingNumberLabel = [({
+        UILabel *label = [[UILabel alloc] init];
+        label.text = @"3";
+        label.font = [UIFont systemFontOfSize:45.0];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = [UIColor wp_yellow];
+        label.backgroundColor = [UIColor whiteColor];
+        label.layer.cornerRadius = RATING_SIZE / 2;
+        label.layer.borderWidth = BORDER_WIDTH;
+        label.layer.borderColor = [[UIColor wp_yellow] CGColor];
+        label.clipsToBounds = YES;
         
         CALayer *mask = [CALayer layer];
-        mask.frame = CGRectMake(1, 1, REPORT_IMAGE_SIZE - 2, REPORT_IMAGE_SIZE - 2);
+        mask.frame = CGRectMake(1, 1, RATING_SIZE - 2, RATING_SIZE - 2);
         mask.backgroundColor = [[UIColor whiteColor] CGColor];
-        mask.cornerRadius = (REPORT_IMAGE_SIZE - 1)/2;
+        mask.cornerRadius = (RATING_SIZE - 1)/2;
         mask.opacity = 1.0;
         
-        reportImageView.layer.mask = mask;
-        reportImageView;
+        label.layer.mask = mask;
+        label;
     }) wp_addToSuperview:self.contentScrollView];
     
     _userImageView = [({
@@ -114,39 +114,33 @@ const static float BORDER_WIDTH = 6.0f;
         make.trailing.equalTo(@0);
     }];
     
-    [self.ratingNumberLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+    [self.reportImageView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(10));
-        make.height.equalTo(@(RATING_SIZE));
-        make.width.equalTo(@(RATING_SIZE));
+        make.height.equalTo(@(REPORT_IMAGE_SIZE));
+        make.width.equalTo(@(REPORT_IMAGE_SIZE));
         make.centerX.equalTo(self.mas_centerX);
     }];
     
-    /*[self.ratingTextLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(20));
-        make.leading.equalTo(self.ratingNumberLabel.mas_leading);
-        make.width.equalTo(self.ratingNumberLabel.mas_width);
-    }];*/
-    
-    [self.reportImageView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@(REPORT_IMAGE_SIZE));
-        make.width.equalTo(@(REPORT_IMAGE_SIZE));
-        make.centerX.equalTo(self.ratingNumberLabel.mas_centerX)
-            .with.offset(-RATING_SIZE / 2 / 1.41);
-        make.centerY.equalTo(self.ratingNumberLabel.mas_centerY)
-            .with.offset(-RATING_SIZE / 2 / 1.41);
+    [self.ratingNumberLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@(RATING_SIZE));
+        make.width.equalTo(@(RATING_SIZE));
+        make.centerX.equalTo(self.reportImageView.mas_centerX)
+            .with.offset(-REPORT_IMAGE_SIZE / 2 / 1.41);
+        make.centerY.equalTo(self.reportImageView.mas_centerY)
+            .with.offset(-REPORT_IMAGE_SIZE / 2 / 1.41);
     }];
     
     [self.userImageView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(USER_IMAGE_SIZE));
         make.width.equalTo(@(USER_IMAGE_SIZE));
-        make.centerX.equalTo(self.ratingNumberLabel.mas_centerX)
-            .with.offset(RATING_SIZE / 2 / 1.41);
-        make.centerY.equalTo(self.ratingNumberLabel.mas_centerY)
-            .with.offset(RATING_SIZE / 2 / 1.41);
+        make.centerX.equalTo(self.reportImageView.mas_centerX)
+            .with.offset(REPORT_IMAGE_SIZE / 2 / 1.41);
+        make.centerY.equalTo(self.reportImageView.mas_centerY)
+            .with.offset(REPORT_IMAGE_SIZE / 2 / 1.41);
     }];
     
     [self.descriptionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.ratingNumberLabel.mas_bottom)
+        make.top.equalTo(self.reportImageView.mas_bottom)
             .with.offset(40);
         make.centerX.equalTo(self.mas_centerX);
         make.leading.equalTo([UIView wp_stylePadding]);
