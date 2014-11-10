@@ -7,7 +7,17 @@
 //
 
 #import "WPAddFieldReportView.h"
+#import "WPHealthPickerViewController.h"
 #import "UIExtensions.h"
+#import "WPAddFieldReportViewController.h"
+
+@interface WPAddFieldReportView()
+
+@property (nonatomic) WPAddFieldReportViewController *parentFieldReportViewController;
+@property (nonatomic) UILabel *descriptionLabel;
+@property (nonatomic) UILabel *urgentLabel;
+
+@end
 
 @implementation WPAddFieldReportView
 
@@ -22,18 +32,46 @@
     return self;
 }
 
+
+- (instancetype)initWithFrame:(CGRect)frame andPickerViewController: (WPAddFieldReportViewController *)parentViewController {
+    self = [super init];
+    self.parentFieldReportViewController = parentViewController;
+    if (self) {
+        [self createSubviews];
+        [self updateConstraints];
+        [self setUpActions];
+    }
+    return self;
+}
 - (void)createSubviews {
+
+    _urgentLabel = [({
+        UILabel *urgentLabel = [[UILabel alloc] init];
+        urgentLabel.text = @"Urgent?";
+        urgentLabel;
+    }) wp_addToSuperview:self];
+    
+    _urgent = [({
+        UISwitch *urgent = [[UISwitch alloc] init];
+        urgent;
+    }) wp_addToSuperview:self];
+    
+    _descriptionLabel = [({
+        UILabel *descriptionLabel = [[UILabel alloc] init];
+        descriptionLabel.text = @"Description";
+        descriptionLabel;
+    }) wp_addToSuperview:self];
     
     _fieldDescription = [({
-        UITextField *field = [[UITextField alloc] init];
-        field.layer.borderColor = [UIColor wp_blue].CGColor;
+        UITextView *field = [[UITextView alloc] init];
+        field.layer.borderColor = [UIColor grayColor].CGColor;
         field.layer.borderWidth = wpBorderWidth;
         field.layer.cornerRadius = wpCornerRadius;
         field;
     }) wp_addToSuperview:self];
     
     _healthRating = [({
-        UIPickerView *health = [[UIPickerView alloc] init];
+        UIPickerView *health = _parentFieldReportViewController.healthPickerController.healthRatingPicker;
         health.layer.borderWidth = wpBorderWidth;
         health.layer.cornerRadius = wpCornerRadius;
         health;
@@ -58,15 +96,30 @@
 }
 
 - (void)updateConstraints {
-    [self.fieldDescription mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.urgentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(topMargin));
-        make.height.equalTo(@50);
         make.leading.equalTo(@(standardMargin));
+    }];
+    
+    [self.urgent mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(topMargin));
         make.trailing.equalTo(@(-standardMargin));
+    }];
+
+    [self.descriptionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.urgent.mas_bottom).with.offset(standardMargin);
+        make.leading.equalTo(@(standardMargin));
+    }];
+    
+    [self.fieldDescription mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.descriptionLabel.mas_bottom).with.offset(standardMargin);
+        make.centerX.equalTo(self.mas_centerX);
+        make.width.equalTo(@(wpButtonWidth));
+        make.height.equalTo(@200);
     }];
     
     [self.healthRating mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.fieldDescription.mas_bottom).with.offset(-standardMargin);
+        make.top.equalTo(self.fieldDescription.mas_bottom).with.offset(standardMargin);
         make.centerX.equalTo(self.mas_centerX);
         make.height.equalTo(@(wpButtonHeight));
         make.width.equalTo(@(wpButtonWidth));

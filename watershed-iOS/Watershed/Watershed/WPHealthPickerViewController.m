@@ -11,7 +11,6 @@
 @interface WPHealthPickerViewController ()
 
 @property (nonatomic) NSMutableArray *pickerData;
-@property (nonatomic) UIPickerView *healthRatingPicker;
 
 @end
 
