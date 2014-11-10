@@ -66,6 +66,23 @@
         make.leading.equalTo(@(standardMargin));
     }];
     
+    [self.termsInfoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.termsLabel.mas_bottom).with.offset(standardMargin);
+        make.leading.equalTo(@(standardMargin));
+        make.trailing.equalTo(@(standardMargin));
+    }];
+    
+    [self.privacyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.termsInfoLabel.mas_bottom).with.offset(2*standardMargin);
+        make.leading.equalTo(@(standardMargin));
+    }];
+    
+    [self.privacyInfoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.privacyLabel.mas_bottom).with.offset(standardMargin);
+        make.leading.equalTo(@(standardMargin));
+        make.trailing.equalTo(@(standardMargin));
+    }];
+    
     [super updateConstraints];
 }
 
