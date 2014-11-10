@@ -32,6 +32,7 @@ public class MainActivity extends ActionBarActivity
                                      View.OnClickListener,
                                      TaskFragment.OnFragmentInteractionListener,
                                      SiteListFragment.OnFragmentInteractionListener,
+                                     TaskDetailFragment.OnFragmentInteractionListener,
                                      SiteFragment.OnFragmentInteractionListener {
 
     // Constants
@@ -144,22 +145,39 @@ public class MainActivity extends ActionBarActivity
             public void onPageScrollStateChanged(int arg0) {
             }
         });
+    }
+
+    public void updateTitle(Fragment f){
+        if (f instanceof TaskFragment){
+            setTitle("Tasks");
+            displayTaskView(true);
+            return;
+        }
+        else if (f instanceof SiteListFragment) {
+            setTitle("Sites");
+        }
+        displayTaskView(false);
 
     }
 
-    public void hideTaskView(){
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        viewPager.setVisibility(View.INVISIBLE);
+    public void displayTaskView(boolean toggle){
+        if (toggle){
+            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+            viewPager.setVisibility(View.VISIBLE);
+        }
+        else {
+            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+            viewPager.setVisibility(View.INVISIBLE);
+        }
     }
 
     public void replaceFragment(Fragment newFragment) {
         android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();
         if(!newFragment.isAdded()){
+            updateTitle(newFragment);
             ft.replace(R.id.container, newFragment);
             ft.addToBackStack(null);
             ft.commit();
-            currentFragment = newFragment;
-            mBackStackSize++;
         }
     }
 
@@ -168,19 +186,13 @@ public class MainActivity extends ActionBarActivity
         fragmentManager = getSupportFragmentManager();
         fragmentManager.addOnBackStackChangedListener(
                 new FragmentManager.OnBackStackChangedListener() {
+
+                    @Override
                     public void onBackStackChanged() {
-                        if (fragmentManager.getBackStackEntryCount() < mBackStackSize){
-                            if (currentFragment instanceof TaskFragment){
-                                currentFragment = siteListFragment;
-                                hideTaskView();
-                                setTitle("Sites");
-                            } else {
-                                currentFragment = mtaskFragment;
-                                actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-                                viewPager.setVisibility(View.VISIBLE);
-                                setTitle("Tasks");
-                            }
-                            mBackStackSize--;
+                        Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
+                        if (f != null){
+                            Log.e("fragment",f.toString());
+                            updateTitle(f);
                         }
                     }
                 });
@@ -247,19 +259,13 @@ public class MainActivity extends ActionBarActivity
         int position = menuItems.indexOf(view);
         switch (position) {
             case 0:
-                if (currentFragment instanceof TaskFragment) { break; }
                 TaskFragment taskFragment = TaskFragment.newInstance(0);
-                actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-                viewPager.setVisibility(view.VISIBLE);
                 replaceFragment(taskFragment);
-                setTitle("Tasks");
                 break;
             case 1:
-                if (currentFragment instanceof SiteListFragment) { break; }
-                hideTaskView();
+                displayTaskView(false);
                 siteListFragment = new SiteListFragment();
                 replaceFragment(siteListFragment);
-                setTitle("Sites");
                 break;
             case 2:
                 //replaceFragment();

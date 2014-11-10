@@ -1,0 +1,41 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.blueprint.watershed.TaskDetailFragment">
+
+    <TextView
+        android:id = "@+id/task_detail_title"
+        android:layout_height="57dp"
+        android:layout_width="132dp"
+        android:layout_weight="0.5"
+        android:text = "Basic"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_gravity="left|top"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id = "@+id/task_detail_description"
+        android:layout_height="20dp"
+        android:layout_width="80dp"
+        android:text = "Basic"
+        android:layout_weight="0.5"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_gravity="left|top" />
+
+    <TextView
+        android:id = "@+id/task_detail_site_id"
+        android:layout_height="46dp"
+        android:layout_width="179dp"
+        android:layout_marginTop="100dp"
+        android:layout_weight="0.5"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:text = "Basic"
+        android:layout_gravity="left|top" />
+
+
+</FrameLayout>

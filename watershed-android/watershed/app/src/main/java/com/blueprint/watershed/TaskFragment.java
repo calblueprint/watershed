@@ -4,20 +4,24 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.Date;
 
-public class TaskFragment extends Fragment {
+public class TaskFragment extends ListFragment {
 
     private OnFragmentInteractionListener mListener;
     private ListView listView1;
     private Task mTaskList[];
+    private MainActivity parentActivity;
 
 
     public static TaskFragment newInstance(int option) {
@@ -34,6 +38,7 @@ public class TaskFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        parentActivity = (MainActivity)getActivity();
         if (getArguments() != null) {
             int option = getArguments().getInt("option");
             switch (option) {
@@ -74,6 +79,13 @@ public class TaskFragment extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id){
+        Task taskClicked = this.mTaskList[position];
+        TaskDetailFragment detailFragment = TaskDetailFragment.newInstance(taskClicked);
+        parentActivity.replaceFragment(detailFragment);
     }
 
     @Override
