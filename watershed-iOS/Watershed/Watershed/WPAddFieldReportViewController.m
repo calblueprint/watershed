@@ -54,6 +54,19 @@
                          handler:^(UIAlertAction * action)
                          {
                              [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
+                                 if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+                                     UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Device has no camera" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                                     [myAlertView show];
+                                 } else {
+                                     
+                                     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+                                     picker.delegate = self;
+                                     picker.allowsEditing = YES;
+                                     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+                                     
+                                     [self presentViewController:picker animated:YES completion:NULL]; 
+                                 }
+
                          }];
     UIAlertAction *selectPhoto = [UIAlertAction
                                 actionWithTitle:@"Choose Existing"
@@ -61,6 +74,12 @@
                                 handler:^(UIAlertAction * action)
                                 {
                                     [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
+                                    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+                                    picker.delegate = self;
+                                    picker.allowsEditing = YES;
+                                    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                                    
+                                    [self presentViewController:picker animated:YES completion:NULL];
                                 }];
     UIAlertAction *cancel = [UIAlertAction
                              actionWithTitle:@"Cancel"
@@ -76,6 +95,22 @@
     [addPhotoActionSheet addAction:selectPhoto];
     [addPhotoActionSheet addAction:cancel];
     [self presentViewController:addPhotoActionSheet animated:YES completion:nil];
+}
+
+
+#pragma mark - Image Picker Controller delegate methods
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    
+    UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
+    self.view.selectedImageView.image = chosenImage;
+    
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+    
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
 -(NSString*) pickerView:(UIPickerView*)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
