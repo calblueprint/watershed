@@ -15,6 +15,6 @@
 @property (nonatomic) UIButton *selectPhotoButton;
 @property (nonatomic) UIImageView *selectedImageView;
 
-- (instancetype)initWithAddPhotoViewController:(WPAddPhotoViewController *)addPhotoViewController;
+//- (instancetype)initWithAddPhotoViewController:(WPAddPhotoViewController *)addPhotoViewController;
 
 @end
