@@ -7,9 +7,7 @@
 //
 
 #import "WPProfileView.h"
-#import "Masonry.h"
-#import "UIColor+WPColors.h"
-#import "UIView+WPExtensions.h"
+#import "UIExtensions.h"
 #import "FontAwesomeKit/FontAwesomeKit.h"
 #import "WPProfileTableViewCell.h"
 #import "WPUser.h"
@@ -134,7 +132,7 @@ static int PROFILE_PIC_HEIGHT = 65;
 - (void)updateConstraints {
     
     [self.profilePictureView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(64 + 15));
+        make.top.equalTo(@(topMargin + 15));
         make.centerX.equalTo(@0);
         make.height.equalTo(@(PROFILE_PIC_HEIGHT));
         make.width.equalTo(@(PROFILE_PIC_HEIGHT));
