@@ -31,7 +31,7 @@ const static float BORDER_WIDTH = 5.0f;
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
         [self createSubviews];
-        [self updateConstraints];
+        [self setNeedsUpdateConstraints];
     }
     return self;
 }
@@ -91,6 +91,25 @@ const static float BORDER_WIDTH = 5.0f;
         descriptionLabel.numberOfLines = 0;
         descriptionLabel;
     }) wp_addToSuperview:self.contentScrollView];
+}
+
+- (void)updateConstraints {
+    
+    [self.contentScrollView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(64));
+        make.bottom.equalTo(@0);
+        make.leading.equalTo(@0);
+        make.trailing.equalTo(@0);
+    }];
+    
+    [self.ratingNumberLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(10));
+        make.height.equalTo(@(RATING_SIZE));
+        make.width.equalTo(@(RATING_SIZE));
+        make.centerX.equalTo(self.mas_centerX);
+    }];
+    
+    [super updateConstraints];
 }
 
 @end
