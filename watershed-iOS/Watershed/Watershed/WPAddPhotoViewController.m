@@ -16,13 +16,12 @@
 @implementation WPAddPhotoViewController
 
 - (void)viewDidLoad {
-    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Device has no camera" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-        [myAlertView show];
-    }
+//    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+//        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Device has no camera" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+//        [myAlertView show];
+//    }
     [self.view.takePhotoButton addTarget:self action:@selector(takePhoto:) forControlEvents:UIControlEventTouchUpInside];
     [self.view.selectPhotoButton addTarget:self action:@selector(selectPhoto:) forControlEvents:UIControlEventTouchUpInside];
-
 
     [super viewDidLoad];
 }
@@ -33,10 +32,10 @@
 
 -(void)loadView {
     self.view = [[WPAddPhotoView alloc] init];
+    [self.view setBackgroundColor:[UIColor whiteColor]];
 }
 
 - (IBAction)takePhoto:(UIButton *)sender {
-    
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     picker.allowsEditing = YES;
@@ -47,7 +46,6 @@
 }
 
 - (IBAction)selectPhoto:(UIButton *)sender {
-    
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     picker.allowsEditing = YES;
@@ -68,9 +66,7 @@
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    
     [picker dismissViewControllerAnimated:YES completion:NULL];
-    
 }
 
 @end

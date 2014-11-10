@@ -52,9 +52,9 @@
     
     _completed = [({
         UIButton *completed = [[UIButton alloc] init];
-        completed.layer.cornerRadius = 10.0f;
+        completed.layer.cornerRadius = wpCornerRadius;
         completed.layer.borderColor = [UIColor wp_blue].CGColor;
-        completed.layer.borderWidth = 2.0f;
+        completed.layer.borderWidth = wpBorderWidth;
         completed.titleLabel.font = [UIFont boldSystemFontOfSize:18];
         completed;
     }) wp_addToSuperview:self];
@@ -72,7 +72,7 @@
         [_completed setTitle:@"Mark as Complete" forState:UIControlStateNormal];
         [_completed setTitleColor:[UIColor wp_blue] forState:UIControlStateNormal];
         _completed.backgroundColor = [UIColor whiteColor];
-        _completed.layer.borderWidth = 2.0f;
+        _completed.layer.borderWidth = wpCornerRadius;
     } else {
         [_completed setTitle:@"Completed" forState:UIControlStateNormal];
         _completed.backgroundColor = [UIColor wp_green];
