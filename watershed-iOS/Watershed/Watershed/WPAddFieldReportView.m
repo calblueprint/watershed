@@ -21,72 +21,57 @@
     }
     return self;
 }
-//
-//- (instancetype)initWithAddPhotoViewController:(WPAddPhotoViewController *)addPhotoViewController {
-//    self = [super init];
-//    self.parentController = addPhotoViewController;
-//    if (self) {
-//        [self createSubviews];
-//        [self updateConstraints];
-//        [self setUpActions];
-//    }
-//    return self;
-//}
 
 - (void)createSubviews {
     
-    _takePhotoButton = [({
-        UIButton *take = [[UIButton alloc] init];
-        take.layer.borderColor = [UIColor wp_blue].CGColor;
-        take.layer.borderWidth = wpBorderWidth;
-        take.layer.cornerRadius = wpCornerRadius;
-        take.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-        take;
+    _fieldDescription = [({
+        UITextField *field = [[UITextField alloc] init];
+        field.layer.borderColor = [UIColor wp_blue].CGColor;
+        field.layer.borderWidth = wpBorderWidth;
+        field.layer.cornerRadius = wpCornerRadius;
+        field;
     }) wp_addToSuperview:self];
     
-    _selectPhotoButton = [({
-        UIButton *select = [[UIButton alloc] init];
-        select.layer.borderColor = [UIColor wp_blue].CGColor;
-        select.layer.borderWidth = wpBorderWidth;
-        select.layer.cornerRadius = wpCornerRadius;
-        select.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-        select.titleLabel.text = @"Select From Photos";
-        select.titleLabel.textColor = [UIColor wp_blue];
-        select;
+    _healthRating = [({
+        UIPickerView *health = [[UIPickerView alloc] init];
+        health.layer.borderWidth = wpBorderWidth;
+        health.layer.cornerRadius = wpCornerRadius;
+        health;
     }) wp_addToSuperview:self];
-    
-    _selectedImageView = [({
-        UIImageView *imageView = [[UIImageView alloc] init];
-        imageView.layer.borderColor = [UIColor wp_blue].CGColor;
-        imageView.layer.borderWidth = wpBorderWidth;
-        imageView.layer.cornerRadius = wpCornerRadius;
-        imageView;
+
+    _addPhotoButton = [({
+        UIButton *addPhoto = [[UIButton alloc] init];
+        addPhoto.layer.borderColor = [UIColor wp_blue].CGColor;
+        addPhoto.layer.borderWidth = wpBorderWidth;
+        addPhoto.layer.cornerRadius = wpCornerRadius;
+        addPhoto.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+        addPhoto.titleLabel.text = @"Select From Photos";
+        addPhoto.titleLabel.textColor = [UIColor wp_blue];
+        addPhoto;
     }) wp_addToSuperview:self];
+
 }
 
 - (void)setUpActions {
-    [_takePhotoButton setTitle:@"Take Picture" forState:UIControlStateNormal];
-    [_takePhotoButton setTitleColor:[UIColor wp_darkBlue] forState: UIControlStateNormal];
-    [_selectPhotoButton setTitle:@"Select From Photos" forState:UIControlStateNormal];
-    [_selectPhotoButton setTitleColor:[UIColor wp_darkBlue] forState: UIControlStateNormal];
-}
+    [_addPhotoButton setTitle:@"Take Picture" forState:UIControlStateNormal];
+    [_addPhotoButton setTitleColor:[UIColor wp_darkBlue] forState: UIControlStateNormal];}
 
 - (void)updateConstraints {
-    [self.selectedImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.fieldDescription mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(topMargin));
         make.height.equalTo(@300);
         make.leading.equalTo(@(standardMargin));
         make.trailing.equalTo(@(-standardMargin));
     }];
     
-    [self.takePhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.selectPhotoButton.mas_top).with.offset(-25);
+    [self.healthRating mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.fieldDescription.mas_top).with.offset(-25);
         make.centerX.equalTo(self.mas_centerX);
         make.height.equalTo(@(wpButtonHeight));
         make.width.equalTo(@(wpButtonWidth));
     }];
     
-    [self.selectPhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.addPhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
         //        make.top.equalTo(self.takePhotoButton.mas_bottom).with.offset(standardMargin);
         make.bottom.equalTo(@(-60));
         make.centerX.equalTo(self.mas_centerX);

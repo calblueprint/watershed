@@ -7,6 +7,7 @@
 //
 
 #import "WPAddFieldReportViewController.h"
+#import "WPAddFieldReportView.h"
 
 @interface WPAddFieldReportViewController ()
 
@@ -18,6 +19,10 @@
     [super viewDidLoad];
 }
 
+-(void)loadView {
+    self.view = [[WPAddFieldReportView alloc] init];
+    [self.view setBackgroundColor:[UIColor whiteColor]];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }

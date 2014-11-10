@@ -11,7 +11,7 @@
 
 @interface WPAddPhotoView()
 
-@property (nonatomic) WPAddPhotoViewController *parentController;
+//@property (nonatomic) WPAddPhotoViewController *parentController;
 
 @end
 
