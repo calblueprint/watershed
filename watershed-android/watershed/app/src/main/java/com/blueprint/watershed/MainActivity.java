@@ -32,7 +32,8 @@ public class MainActivity extends ActionBarActivity
                                      View.OnClickListener,
                                      TaskFragment.OnFragmentInteractionListener,
                                      SiteListFragment.OnFragmentInteractionListener,
-                                     TaskDetailFragment.OnFragmentInteractionListener{
+                                     TaskDetailFragment.OnFragmentInteractionListener,
+                                     SiteFragment.OnFragmentInteractionListener {
 
     // Constants
     public  static final String PREFERENCES = "LOGIN_PREFERENCES";
@@ -262,7 +263,6 @@ public class MainActivity extends ActionBarActivity
                 actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
                 viewPager.setVisibility(view.VISIBLE);
                 replaceFragment(taskFragment);
-                currentFragment = taskFragment;
                 setTitle("Tasks");
                 break;
             case 1:
@@ -270,7 +270,6 @@ public class MainActivity extends ActionBarActivity
                 displayTaskView(false);
                 siteListFragment = new SiteListFragment();
                 replaceFragment(siteListFragment);
-                currentFragment = siteListFragment;
                 setTitle("Sites");
                 break;
             case 2:

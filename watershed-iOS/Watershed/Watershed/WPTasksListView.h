@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "WPView.h"
+#import "WPTasksListViewController.h"
+@class WPTasksListViewController;
 
 @interface WPTasksListView : WPView
+
+- (instancetype)initWithFrame:(CGRect)frame andTableViewController:(WPTasksListViewController *)tableViewController;
 
 @end
