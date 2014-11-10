@@ -34,6 +34,7 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
 
     private ListView mSiteListView;
     private ListAdapter mAdapter;
+    private SharedPreferences preferences;
     private RequestHandler mRequestHandler;
     private MainActivity mMainActivity;
     private Site[] mSites;
@@ -49,6 +50,7 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        preferences = getActivity().getSharedPreferences("LOGIN_PREFERENCES", 0);
         mRequestHandler = RequestHandler.getInstance(getActivity().getApplicationContext());
         makeGetSitesRequest();
     }
@@ -148,7 +150,15 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
                         toast.show();
                     }
                 }
-        );
+        ) {
+            @Override
+            public HashMap<String, String> getHeaders() {
+                HashMap<String, String> params = new HashMap<String, String>();
+                params.put("X-AUTH-TOKEN", preferences.getString("authentication_token", "none"));
+                params.put("X-AUTH-EMAIL", preferences.getString("email", "none"));
+                return params;
+            }
+        };
 
         mRequestHandler.getRequestQueue().add(request);
     }
