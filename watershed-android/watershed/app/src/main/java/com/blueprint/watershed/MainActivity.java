@@ -147,18 +147,28 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void updateTitle(Fragment f){
-        if (f instanceof TaskFragment || f instanceof TaskDetailFragment){
+        if (f instanceof TaskFragment){
             setTitle("Tasks");
+            displayTaskView(true);
+            return;
         }
-        else if (f instanceof SiteListFragment){
+        else if (f instanceof SiteListFragment) {
             setTitle("Sites");
-            hideTaskView();
         }
+
+        displayTaskView(false);
+
     }
 
-    public void hideTaskView(){
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        viewPager.setVisibility(View.INVISIBLE);
+    public void displayTaskView(boolean toggle){
+        if (toggle){
+            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+            viewPager.setVisibility(View.VISIBLE);
+        }
+        else {
+            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+            viewPager.setVisibility(View.INVISIBLE);
+        }
     }
 
     public void replaceFragment(Fragment newFragment) {
@@ -258,7 +268,7 @@ public class MainActivity extends ActionBarActivity
                 break;
             case 1:
                 if (currentFragment instanceof SiteListFragment){break;}
-                hideTaskView();
+                displayTaskView(false);
                 siteListFragment = new SiteListFragment();
                 replaceFragment(siteListFragment);
                 currentFragment = siteListFragment;
