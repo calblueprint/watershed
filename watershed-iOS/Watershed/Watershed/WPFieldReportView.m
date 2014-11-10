@@ -29,7 +29,7 @@ const static float BORDER_WIDTH = 5.0f;
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor wp_yellow];
         [self createSubviews];
         [self setNeedsUpdateConstraints];
     }
@@ -53,6 +53,7 @@ const static float BORDER_WIDTH = 5.0f;
         label.textColor = [UIColor wp_yellow];
         label.backgroundColor = [UIColor whiteColor];
         label.layer.cornerRadius = RATING_SIZE / 2;
+        label.clipsToBounds = YES;
         label;
     }) wp_addToSuperview:self.contentScrollView];
     
@@ -71,6 +72,7 @@ const static float BORDER_WIDTH = 5.0f;
         reportImageView.layer.cornerRadius = REPORT_IMAGE_SIZE / 2;
         reportImageView.layer.borderWidth = BORDER_WIDTH;
         reportImageView.layer.borderColor = [[UIColor wp_yellow] CGColor];
+        reportImageView.clipsToBounds = YES;
         reportImageView;
     }) wp_addToSuperview:self.contentScrollView];
     
@@ -80,6 +82,7 @@ const static float BORDER_WIDTH = 5.0f;
         userImageView.layer.cornerRadius = USER_IMAGE_SIZE / 2;
         userImageView.layer.borderWidth = BORDER_WIDTH;
         userImageView.layer.borderColor = [[UIColor wp_yellow] CGColor];
+        userImageView.clipsToBounds = YES;
         userImageView;
     }) wp_addToSuperview:self.contentScrollView];
     
