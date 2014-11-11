@@ -9,6 +9,7 @@
 #import "WPMiniSiteViewController.h"
 #import "WPMiniSiteView.h"
 #import "WPFieldReportTableViewCell.h"
+#import "WPFieldReportViewController.h"
 
 @interface WPMiniSiteViewController ()
 
@@ -90,6 +91,11 @@ static NSString *cellIdentifier = @"FieldReportCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [WPFieldReportTableViewCell cellHeight];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    WPFieldReportViewController *fieldReportController = [[WPFieldReportViewController alloc] init];
+    [self.navigationController pushViewController:fieldReportController animated:YES];
 }
 
 @end
