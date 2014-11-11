@@ -14,6 +14,7 @@
 @property (nonatomic) UIImageView *reportImageView;
 @property (nonatomic) UILabel *ratingNumberLabel;
 @property (nonatomic) UIImageView *userImageView;
+@property (nonatomic) UILabel *userLabel;
 @property (nonatomic) UILabel *descriptionLabel;
 
 @end
@@ -94,6 +95,18 @@ const static float BORDER_WIDTH = 6.0f;
         userImageView;
     }) wp_addToSuperview:self.contentScrollView];
     
+    _userLabel = [({
+        UILabel *userLabel = [[UILabel alloc] init];
+        userLabel.text = @"Reported by Max Woffle";
+        userLabel.font = [UIFont boldSystemFontOfSize:16.0];
+        userLabel.textAlignment = NSTextAlignmentCenter;
+        userLabel.textColor = [UIColor blackColor];
+        userLabel.alpha = 0.4;
+        userLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        userLabel.numberOfLines = 0;
+        userLabel;
+    }) wp_addToSuperview:self.contentScrollView];
+    
     _descriptionLabel = [({
         UILabel *descriptionLabel = [[UILabel alloc] init];
         descriptionLabel.text = @"Cal Blueprint is a student-run UC Berkeley organization devoted to matching the skills of its members to our desire to see social good enacted in our community. Each semester, teams of 4-5 students work closely with a non-profit to bring technological solutions to the problems they face every day.";
@@ -139,9 +152,17 @@ const static float BORDER_WIDTH = 6.0f;
             .with.offset(REPORT_IMAGE_SIZE / 2 / 1.41);
     }];
     
-    [self.descriptionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.userLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.reportImageView.mas_bottom)
-            .with.offset(40);
+            .with.offset(20);
+        make.centerX.equalTo(self.mas_centerX);
+        make.leading.equalTo([UIView wp_stylePadding]);
+        make.trailing.equalTo([UIView wp_styleNegativePadding]);
+    }];
+    
+    [self.descriptionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.userLabel.mas_bottom)
+            .with.offset(20);
         make.centerX.equalTo(self.mas_centerX);
         make.leading.equalTo([UIView wp_stylePadding]);
         make.trailing.equalTo([UIView wp_styleNegativePadding]);
