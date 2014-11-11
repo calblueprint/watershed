@@ -51,7 +51,7 @@
 }
 
 + (UIColor *)wp_lightGreen {
-    return [UIColor colorWithRed:39/255.0 green:174/255.0 blue:96/255.0 alpha:1];
+    return [UIColor colorWithRed:46/255.0 green:204/255.0 blue:113/255.0 alpha:1];
 }
 
 
