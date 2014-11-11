@@ -14,6 +14,7 @@
 @property (nonatomic) UIImageView *reportImageView;
 @property (nonatomic) UILabel *ratingNumberLabel;
 @property (nonatomic) UIImageView *userImageView;
+@property (nonatomic) UILabel *titleLabel;
 @property (nonatomic) UILabel *userLabel;
 @property (nonatomic) UILabel *descriptionLabel;
 
@@ -100,10 +101,22 @@ const static float BORDER_WIDTH = 6.0f;
         userImageView;
     }) wp_addToSuperview:self.contentScrollView];
     
+    _titleLabel = [({
+        UILabel *titleLabel = [[UILabel alloc] init];
+        titleLabel.text = @"Mini Site Name";
+        titleLabel.font = [UIFont systemFontOfSize:28.0];
+        titleLabel.textAlignment = NSTextAlignmentCenter;
+        titleLabel.textColor = [UIColor blackColor];
+        titleLabel.alpha = 0.4;
+        titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        titleLabel.numberOfLines = 0;
+        titleLabel;
+    }) wp_addToSuperview:self.contentScrollView];
+    
     _userLabel = [({
         UILabel *userLabel = [[UILabel alloc] init];
         userLabel.text = @"Reported by Max Woffle";
-        userLabel.font = [UIFont boldSystemFontOfSize:16.0];
+        userLabel.font = [UIFont systemFontOfSize:16.0];
         userLabel.textAlignment = NSTextAlignmentCenter;
         userLabel.textColor = [UIColor blackColor];
         userLabel.alpha = 0.4;
@@ -157,9 +170,16 @@ const static float BORDER_WIDTH = 6.0f;
             .with.offset(REPORT_IMAGE_SIZE / 2 / 1.41);
     }];
     
-    [self.userLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.reportImageView.mas_bottom)
             .with.offset(standardMargin * 2);
+        make.leading.equalTo(@(standardMargin));
+        make.trailing.equalTo(@(-standardMargin));
+        make.centerX.equalTo(self.mas_centerX);
+    }];
+    
+    [self.userLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.titleLabel.mas_bottom);
         make.leading.equalTo(@(standardMargin));
         make.trailing.equalTo(@(-standardMargin));
         make.centerX.equalTo(self.mas_centerX);
@@ -170,7 +190,7 @@ const static float BORDER_WIDTH = 6.0f;
             .with.offset(standardMargin * 2);
         make.leading.equalTo(@(standardMargin));
         make.trailing.equalTo(@(-standardMargin));
-        make.bottom.equalTo(@(-standardMargin * 2));
+        make.bottom.equalTo(@(-standardMargin));
         make.centerX.equalTo(self.mas_centerX);
     }];
     
