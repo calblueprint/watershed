@@ -8,7 +8,7 @@
 
 #import "WPFieldReportView.h"
 
-@interface WPFieldReportView ()
+@interface WPFieldReportView () <UIScrollViewDelegate>
 
 @property (nonatomic) UIScrollView *contentScrollView;
 @property (nonatomic) UIImageView *reportImageView;
@@ -20,6 +20,7 @@
 
 @property (nonatomic) NSInteger rating;
 @property (nonatomic) UIColor *ratingColor;
+@property (nonatomic) UIView *navbarOverlay;
 
 @end
 
@@ -46,8 +47,16 @@ const static float BORDER_WIDTH = 6.0f;
 
 - (void)createSubviews {
     
+    _navbarOverlay = [({
+        UIView *overlay = [[UIView alloc] init];
+        overlay.backgroundColor = [UIColor blackColor];
+        overlay.alpha = 0;
+        overlay;
+    }) wp_addToSuperview:self];
+    
     _contentScrollView = [({
         UIScrollView *contentScrollView = [[UIScrollView alloc] init];
+        contentScrollView.delegate = self;
         contentScrollView;
     }) wp_addToSuperview:self];
     
@@ -138,6 +147,13 @@ const static float BORDER_WIDTH = 6.0f;
 
 - (void)updateConstraints {
     
+    [self.navbarOverlay mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@0);
+        make.height.equalTo(@(topMargin));
+        make.leading.equalTo(@0);
+        make.trailing.equalTo(@0);
+    }];
+    
     [self.contentScrollView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(topMargin));
         make.bottom.equalTo(@0);
@@ -146,7 +162,7 @@ const static float BORDER_WIDTH = 6.0f;
     }];
     
     [self.reportImageView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(standardMargin * 4));
+        make.top.equalTo(@(standardMargin * 2));
         make.height.equalTo(@(REPORT_IMAGE_SIZE));
         make.width.equalTo(@(REPORT_IMAGE_SIZE));
         make.centerX.equalTo(self.mas_centerX);
@@ -196,6 +212,17 @@ const static float BORDER_WIDTH = 6.0f;
     
     [super updateConstraints];
 }
+
+#pragma mark - ScrollView Delegate Methods
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGFloat trans = scrollView.contentOffset.y;
+    CGFloat navbarAlpha = trans / 400;
+    if (navbarAlpha > 0.1) navbarAlpha = 0.1;
+    self.navbarOverlay.alpha = navbarAlpha;
+}
+
+#pragma mark - UIView Colors
 
 + (UIColor *)colorForRating:(NSInteger)rating {
     switch (rating) {
