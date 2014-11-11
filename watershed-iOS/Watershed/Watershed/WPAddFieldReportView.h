@@ -15,7 +15,7 @@
 
 @property (nonatomic) UITextView *fieldDescription;
 @property (nonatomic) UIPickerView *healthRating;
-@property (nonatomic) UISwitch *urgent;
+@property (nonatomic) UISwitch *urgentSwitch;
 @property (nonatomic) UIButton *addPhotoButton;
 @property (nonatomic) UIPickerView *healthRatingPicker;
 @property (nonatomic) UITextField *ratingField;

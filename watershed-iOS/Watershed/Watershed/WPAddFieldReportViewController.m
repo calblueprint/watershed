@@ -30,7 +30,7 @@
     self.view.healthRatingPicker.showsSelectionIndicator = YES;
     self.view.healthRatingPicker.delegate = self;
     self.view.healthRatingPicker.dataSource = self;
-    self.view.ratingField.inputView = self.view.healthRatingPicker;
+//    self.view.ratingField.inputView = self.view.healthRatingPicker;
 }
 
 -(void)loadView {
