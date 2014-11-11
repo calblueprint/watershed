@@ -26,8 +26,6 @@
 		06A8139B19D91D8600E3EB05 /* UIColor+WPColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A8139A19D91D8600E3EB05 /* UIColor+WPColors.m */; };
 		06A8406F1A0B20B500F70D3B /* WPAddFieldReportView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A8406C1A0B20B500F70D3B /* WPAddFieldReportView.m */; };
 		06A840701A0B20B500F70D3B /* WPAddFieldReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A8406E1A0B20B500F70D3B /* WPAddFieldReportViewController.m */; };
-		06A840731A0B264100F70D3B /* WPAddPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A840721A0B264100F70D3B /* WPAddPhotoView.m */; };
-		06A840791A0B2A7C00F70D3B /* WPAddPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A840781A0B2A7C00F70D3B /* WPAddPhotoViewController.m */; };
 		06AE1DD219EE0C5900F22250 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		06B1B00819F4E77A007FC3D5 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		0BFD8558DD12470AB2409F6A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 38F773F3CE0741AE9B08A802 /* libPods.a */; };
@@ -119,10 +117,6 @@
 		06A8406C1A0B20B500F70D3B /* WPAddFieldReportView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPAddFieldReportView.m; sourceTree = "<group>"; };
 		06A8406D1A0B20B500F70D3B /* WPAddFieldReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPAddFieldReportViewController.h; sourceTree = "<group>"; };
 		06A8406E1A0B20B500F70D3B /* WPAddFieldReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPAddFieldReportViewController.m; sourceTree = "<group>"; };
-		06A840711A0B264100F70D3B /* WPAddPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPAddPhotoView.h; sourceTree = "<group>"; };
-		06A840721A0B264100F70D3B /* WPAddPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPAddPhotoView.m; sourceTree = "<group>"; };
-		06A840771A0B2A7C00F70D3B /* WPAddPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPAddPhotoViewController.h; sourceTree = "<group>"; };
-		06A840781A0B2A7C00F70D3B /* WPAddPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPAddPhotoViewController.m; sourceTree = "<group>"; };
 		273ABECA19EDFA8600FC1C92 /* WPSitesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPSitesTableViewController.h; sourceTree = "<group>"; };
 		273ABECB19EDFA8600FC1C92 /* WPSitesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPSitesTableViewController.m; sourceTree = "<group>"; };
 		2749D18A1A06203000D0ECA2 /* WPMiniSiteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPMiniSiteView.h; sourceTree = "<group>"; };
@@ -662,7 +656,6 @@
 				BA24044519DCF06C00E9DB2F /* WPRootViewController.m in Sources */,
 				27B9CF791A18597100CEB5A8 /* WPSite.m in Sources */,
 				064462E91A0739A500C6FE8B /* WPMyTasksTableViewController.m in Sources */,
-				06A840791A0B2A7C00F70D3B /* WPAddPhotoViewController.m in Sources */,
 				06A8139B19D91D8600E3EB05 /* UIColor+WPColors.m in Sources */,
 				27BABFE91A0202F300F9CCCE /* WPViewController.m in Sources */,
 				27BEC6B01A1063B5006CBFF6 /* WPFieldReportView.m in Sources */,
@@ -673,7 +666,6 @@
 				27714CB219D93405005344B0 /* WPAppDelegate.m in Sources */,
 				064462EB1A0739A500C6FE8B /* WPTaskViewController.m in Sources */,
 				27F0B70419E249CE00E848C3 /* WPSiteViewController.m in Sources */,
-				06A840731A0B264100F70D3B /* WPAddPhotoView.m in Sources */,
 				064462F51A073A0F00C6FE8B /* WPSettingsTableView.m in Sources */,
 				2749D18C1A06203000D0ECA2 /* WPMiniSiteView.m in Sources */,
 				27714CA919D9076F005344B0 /* WPLoginViewController.m in Sources */,

@@ -10,6 +10,7 @@
 #import "WPHealthPickerViewController.h"
 #import "UIExtensions.h"
 #import "WPAddFieldReportViewController.h"
+#import "FontAwesomeKit/FontAwesomeKit.h"
 
 @interface WPAddFieldReportView()
 
@@ -95,6 +96,7 @@
         addPhoto.layer.cornerRadius = wpCornerRadius;
         addPhoto.titleLabel.font = [UIFont boldSystemFontOfSize:18];
         addPhoto.titleLabel.text = @"Select From Photos";
+        FAKIonIcons *photoIcon = [FAKIonIcons ios7PhotosIconWithSize:30];
         addPhoto.titleLabel.textColor = [UIColor wp_blue];
         addPhoto;
     }) wp_addToSuperview:self];
@@ -133,6 +135,14 @@
         make.top.equalTo(self.urgentLabel.mas_bottom).with.offset(standardMargin);
         make.trailing.equalTo(@(-standardMargin));
     }];
+    
+    [self.healthRating mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.fieldDescription.mas_bottom).with.offset(standardMargin);
+        make.centerX.equalTo(self.mas_centerX);
+        make.height.equalTo(@(wpButtonHeight));
+        make.width.equalTo(@(wpButtonWidth));
+    }];
+
 
     [self.descriptionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.ratingLabel.mas_bottom).with.offset(standardMargin);
@@ -145,13 +155,6 @@
         make.width.equalTo(@(wpButtonWidth));
         make.height.equalTo(@200);
     }];
-    
-//    [self.healthRating mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.fieldDescription.mas_bottom).with.offset(standardMargin);
-//        make.centerX.equalTo(self.mas_centerX);
-//        make.height.equalTo(@(wpButtonHeight));
-//        make.width.equalTo(@(wpButtonWidth));
-//    }];
     
     [self.selectedImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.fieldDescription.mas_bottom).with.offset(standardMargin);
