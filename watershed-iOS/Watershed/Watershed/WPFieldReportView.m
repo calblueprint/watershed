@@ -155,18 +155,18 @@ const static float BORDER_WIDTH = 6.0f;
     [self.userLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.reportImageView.mas_bottom)
             .with.offset(standardMargin * 2);
-        make.centerX.equalTo(self.mas_centerX);
         make.leading.equalTo(@(standardMargin));
         make.trailing.equalTo(@(-standardMargin));
+        make.centerX.equalTo(self.mas_centerX);
     }];
     
     [self.descriptionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.userLabel.mas_bottom)
             .with.offset(standardMargin * 2);
-        make.centerX.equalTo(self.mas_centerX);
         make.leading.equalTo(@(standardMargin));
-        make.trailing.equalTo(@(standardMargin));
+        make.trailing.equalTo(@(-standardMargin));
         make.bottom.equalTo(@(-standardMargin * 2));
+        make.centerX.equalTo(self.mas_centerX);
     }];
     
     [super updateConstraints];
