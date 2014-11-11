@@ -43,6 +43,8 @@
 		27F0B70419E249CE00E848C3 /* WPSiteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F0B70319E249CE00E848C3 /* WPSiteViewController.m */; };
 		BA24044519DCF06C00E9DB2F /* WPRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA24044419DCF06C00E9DB2F /* WPRootViewController.m */; };
 		BA24044F19E2477000E9DB2F /* WPProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA24044E19E2477000E9DB2F /* WPProfileViewController.m */; };
+		BA38117E1A106B9A00019447 /* WPAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA38117D1A106B9A00019447 /* WPAboutViewController.m */; };
+		BA3811821A107C4700019447 /* WPTermsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3811811A107C4700019447 /* WPTermsViewController.m */; };
 		BA4F8DD019C7739300C816E3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA4F8DCF19C7739300C816E3 /* Foundation.framework */; };
 		BA4F8DD219C7739300C816E3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA4F8DD119C7739300C816E3 /* CoreGraphics.framework */; };
 		BA4F8DD419C7739300C816E3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA4F8DD319C7739300C816E3 /* UIKit.framework */; };
@@ -54,6 +56,8 @@
 		BA4F8DF419C7739300C816E3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA4F8DD319C7739300C816E3 /* UIKit.framework */; };
 		BA4F8DFC19C7739300C816E3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BA4F8DFA19C7739300C816E3 /* InfoPlist.strings */; };
 		BA4F8DFE19C7739300C816E3 /* WatershedTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4F8DFD19C7739300C816E3 /* WatershedTests.m */; };
+		BABC5E1C1A0B2805002825E4 /* WPEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BABC5E1B1A0B2805002825E4 /* WPEditViewController.m */; };
+		BABC5E1F1A0B281F002825E4 /* WPEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = BABC5E1E1A0B281F002825E4 /* WPEditView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,6 +142,10 @@
 		BA24044719DCF35300E9DB2F /* WPTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPTabBarController.m; sourceTree = "<group>"; };
 		BA24044D19E2477000E9DB2F /* WPProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPProfileViewController.h; sourceTree = "<group>"; };
 		BA24044E19E2477000E9DB2F /* WPProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPProfileViewController.m; sourceTree = "<group>"; };
+		BA38117C1A106B9A00019447 /* WPAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPAboutViewController.h; sourceTree = "<group>"; };
+		BA38117D1A106B9A00019447 /* WPAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPAboutViewController.m; sourceTree = "<group>"; };
+		BA3811801A107C4700019447 /* WPTermsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPTermsViewController.h; sourceTree = "<group>"; };
+		BA3811811A107C4700019447 /* WPTermsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPTermsViewController.m; sourceTree = "<group>"; };
 		BA4F8DCC19C7739300C816E3 /* Watershed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Watershed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA4F8DCF19C7739300C816E3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BA4F8DD119C7739300C816E3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -152,6 +160,10 @@
 		BA4F8DF919C7739300C816E3 /* WatershedTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WatershedTests-Info.plist"; sourceTree = "<group>"; };
 		BA4F8DFB19C7739300C816E3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BA4F8DFD19C7739300C816E3 /* WatershedTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WatershedTests.m; sourceTree = "<group>"; };
+		BABC5E1A1A0B2805002825E4 /* WPEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPEditViewController.h; sourceTree = "<group>"; };
+		BABC5E1B1A0B2805002825E4 /* WPEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPEditViewController.m; sourceTree = "<group>"; };
+		BABC5E1D1A0B281F002825E4 /* WPEditView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPEditView.h; sourceTree = "<group>"; };
+		BABC5E1E1A0B281F002825E4 /* WPEditView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPEditView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +194,9 @@
 		064462EE1A0739BF00C6FE8B /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				BA38117F1A107C2F00019447 /* Terms */,
+				BA38117B1A1069A800019447 /* About */,
+				BABC5E191A0B27C1002825E4 /* Edit */,
 				064462EF1A073A0F00C6FE8B /* WPSettingsTableView.h */,
 				064462F01A073A0F00C6FE8B /* WPSettingsTableView.m */,
 				064462F11A073A0F00C6FE8B /* WPSettingsTableViewCell.h */,
@@ -333,6 +348,24 @@
 			name = Profile;
 			sourceTree = "<group>";
 		};
+		BA38117B1A1069A800019447 /* About */ = {
+			isa = PBXGroup;
+			children = (
+				BA38117C1A106B9A00019447 /* WPAboutViewController.h */,
+				BA38117D1A106B9A00019447 /* WPAboutViewController.m */,
+			);
+			name = About;
+			sourceTree = "<group>";
+		};
+		BA38117F1A107C2F00019447 /* Terms */ = {
+			isa = PBXGroup;
+			children = (
+				BA3811801A107C4700019447 /* WPTermsViewController.h */,
+				BA3811811A107C4700019447 /* WPTermsViewController.m */,
+			);
+			name = Terms;
+			sourceTree = "<group>";
+		};
 		BA4F8DC319C7739300C816E3 = {
 			isa = PBXGroup;
 			children = (
@@ -414,6 +447,17 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		BABC5E191A0B27C1002825E4 /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				BABC5E1A1A0B2805002825E4 /* WPEditViewController.h */,
+				BABC5E1B1A0B2805002825E4 /* WPEditViewController.m */,
+				BABC5E1D1A0B281F002825E4 /* WPEditView.h */,
+				BABC5E1E1A0B281F002825E4 /* WPEditView.m */,
+			);
+			name = Edit;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -464,6 +508,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Blueprint;
 				TargetAttributes = {
+					BA4F8DCB19C7739300C816E3 = {
+						DevelopmentTeam = EXQL69T8ZV;
+					};
 					BA4F8DEF19C7739300C816E3 = {
 						TestTargetID = BA4F8DCB19C7739300C816E3;
 					};
@@ -549,11 +596,14 @@
 				064463041A073E3700C6FE8B /* WPTabBarController.m in Sources */,
 				064463051A073E3700C6FE8B /* WPTasksTableViewCell.m in Sources */,
 				273ABECC19EDFA8600FC1C92 /* WPSitesTableViewController.m in Sources */,
+				BABC5E1F1A0B281F002825E4 /* WPEditView.m in Sources */,
 				275C799019EC4F6500E722C7 /* WPMiniSiteTableViewCell.m in Sources */,
 				06A8139819D91A7500E3EB05 /* WPTasksListView.m in Sources */,
 				06A8139519D911C900E3EB05 /* WPTasksListViewController.m in Sources */,
+				BA38117E1A106B9A00019447 /* WPAboutViewController.m in Sources */,
 				BA24044F19E2477000E9DB2F /* WPProfileViewController.m in Sources */,
 				06AE1DD219EE0C5900F22250 /* (null) in Sources */,
+				BA3811821A107C4700019447 /* WPTermsViewController.m in Sources */,
 				BA24044519DCF06C00E9DB2F /* WPRootViewController.m in Sources */,
 				064462E91A0739A500C6FE8B /* WPMyTasksTableViewController.m in Sources */,
 				06A8139B19D91D8600E3EB05 /* UIColor+WPColors.m in Sources */,
@@ -582,6 +632,7 @@
 				2766EC9819FDF2730062D358 /* WPSitesTableView.m in Sources */,
 				2766EC9519FDF2440062D358 /* WPSiteTableViewCell.m in Sources */,
 				064462F71A073A0F00C6FE8B /* WPSettingsTableViewController.m in Sources */,
+				BABC5E1C1A0B2805002825E4 /* WPEditViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

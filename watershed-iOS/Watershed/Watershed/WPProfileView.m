@@ -7,14 +7,11 @@
 //
 
 #import "WPProfileView.h"
-#import "Masonry.h"
-#import "UIColor+WPColors.h"
-#import "UIView+WPExtensions.h"
+#import "UIExtensions.h"
 #import "FontAwesomeKit/FontAwesomeKit.h"
 #import "WPProfileTableViewCell.h"
 #import "WPUser.h"
 
-#import <QuartzCore/QuartzCore.h>
 
 @interface WPProfileView ()
 
@@ -28,7 +25,7 @@
 
 @implementation WPProfileView
 
-NSString *reuseIdentifier = @"WPProfileCell";
+NSString *profileReuseIdentifier = @"WPProfileCell";
 static int PROFILE_PIC_HEIGHT = 65;
 
 - (id)initWithFrame:(CGRect)frame {
@@ -42,6 +39,7 @@ static int PROFILE_PIC_HEIGHT = 65;
     
     self.infoTableView.delegate = self;
     self.infoTableView.dataSource = self;
+    self.infoTableView.scrollEnabled = NO;
     [self.infoTableView reloadData];
     return self;
 }
@@ -68,7 +66,7 @@ static int PROFILE_PIC_HEIGHT = 65;
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WPProfileTableViewCell *cell = [[WPProfileTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
+    WPProfileTableViewCell *cell = [[WPProfileTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:profileReuseIdentifier];
     switch (indexPath.row) {
         case 1: {
             FAKIonIcons *mailIcon = [FAKIonIcons ios7EmailOutlineIconWithSize:30];
@@ -134,7 +132,7 @@ static int PROFILE_PIC_HEIGHT = 65;
 - (void)updateConstraints {
     
     [self.profilePictureView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(64 + 15));
+        make.top.equalTo(@(topMargin + 15));
         make.centerX.equalTo(@0);
         make.height.equalTo(@(PROFILE_PIC_HEIGHT));
         make.width.equalTo(@(PROFILE_PIC_HEIGHT));
