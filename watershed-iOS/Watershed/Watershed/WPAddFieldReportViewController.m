@@ -26,11 +26,11 @@
     {
         [_pickerData addObject:[NSNumber numberWithInt:i]];
     }
-    //    _healthRatingPicker = [[UIPickerView alloc] init];
     self.view.healthRatingPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(10, 200, 300, 200)];
     self.view.healthRatingPicker.showsSelectionIndicator = YES;
     self.view.healthRatingPicker.delegate = self;
     self.view.healthRatingPicker.dataSource = self;
+    self.view.ratingField.inputView = self.view.healthRatingPicker;
 }
 
 -(void)loadView {
@@ -40,6 +40,23 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+- (void)showPickerView {
+    int ratingMax = 5; //Change this if you want higher ratings
+    _pickerData = [[NSMutableArray alloc] init];
+    for(int i = 0; i < ratingMax; i++)
+    {
+        [_pickerData addObject:[NSNumber numberWithInt:i]];
+    }
+    //    _healthRatingPicker = [[UIPickerView alloc] init];
+    self.view.healthRatingPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(10, 200, 300, 200)];
+    self.view.healthRatingPicker.showsSelectionIndicator = YES;
+    self.view.healthRatingPicker.delegate = self;
+    self.view.healthRatingPicker.dataSource = self;
+    [self.view.healthRatingPicker  setShowsSelectionIndicator:YES];
+    self.view.ratingField.inputView = self.view.healthRatingPicker;
+
 }
 
 
@@ -120,10 +137,11 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component;
 {
+    self.view.ratingField.text = (NSString *)[_pickerData objectAtIndex:row];
+
     
 }
 
-// tell the picker the width of each row for a given component
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
     int sectionWidth = 300;
     

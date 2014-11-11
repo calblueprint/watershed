@@ -49,7 +49,17 @@
         dueDate.textAlignment = NSTextAlignmentRight;
         dueDate;
     }) wp_addToSuperview:self];
+
     
+    _addFieldReportButton = [({
+        UIButton *addFieldReportButton = [[UIButton alloc] init];
+        addFieldReportButton.layer.cornerRadius = wpCornerRadius;
+        addFieldReportButton.layer.borderColor = [UIColor wp_blue].CGColor;
+        addFieldReportButton.layer.borderWidth = wpBorderWidth;
+        addFieldReportButton.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+        addFieldReportButton;
+    }) wp_addToSuperview:self];
+
     _completed = [({
         UIButton *completed = [[UIButton alloc] init];
         completed.layer.cornerRadius = wpCornerRadius;
@@ -65,6 +75,8 @@
     [_completed setTitle:@"Mark as Complete" forState:UIControlStateNormal];
     [_completed setTitleColor:[UIColor wp_blue] forState:UIControlStateNormal];
     [_completed addTarget:self action:@selector(onClick) forControlEvents:UIControlEventTouchUpInside];
+    [_addFieldReportButton setTitle:@"Add Field Report" forState:UIControlStateNormal];
+    [_addFieldReportButton setTitleColor:[UIColor wp_blue] forState:UIControlStateNormal];
 }
 
 -(void)onClick {
@@ -100,8 +112,15 @@
         make.trailing.equalTo(@(-standardMargin));
     }];
 
-    [self.completed mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.addFieldReportButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.taskDescription.mas_bottom).with.offset(standardMargin * 2);
+        make.centerX.equalTo(self.mas_centerX);
+        make.height.equalTo(@50);
+        make.width.equalTo(@200);
+    }];
+
+    [self.completed mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.addFieldReportButton.mas_bottom).with.offset(standardMargin * 2);
         make.centerX.equalTo(self.mas_centerX);
         make.height.equalTo(@50);
         make.width.equalTo(@200);

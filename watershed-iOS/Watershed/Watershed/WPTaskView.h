@@ -14,6 +14,6 @@
 @property (nonatomic) UILabel *taskDescription;
 @property (nonatomic) UILabel *dueDate;
 @property (nonatomic) UIButton *completed;
-
+@property (nonatomic) UIButton *addFieldReportButton;
 
 @end

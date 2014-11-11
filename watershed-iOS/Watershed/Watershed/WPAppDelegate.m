@@ -29,7 +29,7 @@
     // Override point for customization after application launch.
     
     //UIViewController *viewController = [[WPSiteViewController  alloc] init];
-    self.window.rootViewController = [[WPAddFieldReportViewController alloc] init];
+    self.window.rootViewController = [[WPRootViewController alloc] init];
     [self.window makeKeyAndVisible];
     
     //[AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
