@@ -160,7 +160,7 @@ const static float CELL_HEIGHT = 61.0f;
             break;
             
         case 5:
-            return [UIColor wp_green];
+            return [UIColor wp_lightGreen];
             break;
         default:
             return [UIColor grayColor];
