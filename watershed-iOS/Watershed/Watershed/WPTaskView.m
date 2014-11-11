@@ -84,7 +84,7 @@
         [_completed setTitle:@"Mark as Complete" forState:UIControlStateNormal];
         [_completed setTitleColor:[UIColor wp_blue] forState:UIControlStateNormal];
         _completed.backgroundColor = [UIColor whiteColor];
-        _completed.layer.borderWidth = wpCornerRadius;
+        _completed.layer.borderWidth = wpBorderWidth;
     } else {
         [_completed setTitle:@"Completed" forState:UIControlStateNormal];
         _completed.backgroundColor = [UIColor wp_green];

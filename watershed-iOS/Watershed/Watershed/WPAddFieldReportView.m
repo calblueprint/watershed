@@ -50,6 +50,7 @@
     _urgentLabel = [({
         UILabel *urgentLabel = [[UILabel alloc] init];
         urgentLabel.text = @"Urgent?";
+        urgentLabel.textColor = [UIColor wp_blue];
         urgentLabel;
     }) wp_addToSuperview:self];
     
@@ -61,24 +62,26 @@
     _ratingLabel = [({
         UILabel *ratingLabel = [[UILabel alloc] init];
         ratingLabel.text = @"Rating";
+        ratingLabel.textColor = [UIColor wp_blue];
         ratingLabel;
     }) wp_addToSuperview:self];
     
     _ratingField = [({
         UITextField *rating = [[UITextField alloc] init];
-        rating.placeholder = @"Select";
+        rating.placeholder = @"1-5";
         rating;
     }) wp_addToSuperview:self];
     
     _descriptionLabel = [({
         UILabel *descriptionLabel = [[UILabel alloc] init];
         descriptionLabel.text = @"Description";
+        descriptionLabel.textColor = [UIColor wp_blue];
         descriptionLabel;
     }) wp_addToSuperview:self];
     
     _fieldDescription = [({
         UITextView *field = [[UITextView alloc] init];
-        field.layer.borderColor = [UIColor grayColor].CGColor;
+        field.layer.borderColor = [UIColor wp_blue].CGColor;
         field.layer.borderWidth = wpBorderWidth;
         field.layer.cornerRadius = wpCornerRadius;
         field;
@@ -95,8 +98,7 @@
         addPhoto.layer.borderWidth = wpBorderWidth;
         addPhoto.layer.cornerRadius = wpCornerRadius;
         addPhoto.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-//        addPhoto.titleLabel.text = @"Pic";
-        FAKIonIcons *photoIcon = [FAKIonIcons ios7PhotosIconWithSize:30];
+//        FAKIonIcons *photoIcon = [FAKIonIcons ios7PhotosIconWithSize:30];
 //        [addPhoto setImage:[[UIImageView alloc] initWithImage:[photoIcon imageWithSize:CGSizeMake(30,30)]] forState:UIControlStateNormal];
         addPhoto.titleLabel.textColor = [UIColor wp_blue];
         addPhoto;
@@ -113,7 +115,7 @@
 }
 
 - (void)setUpActions {
-    [_addPhotoButton setTitle:@"Pic" forState:UIControlStateNormal];
+    [_addPhotoButton setTitle:@"Add Picture" forState:UIControlStateNormal];
     [_addPhotoButton setTitleColor:[UIColor wp_darkBlue] forState: UIControlStateNormal];
     [_ratingField setKeyboardType:UIKeyboardTypeNumberPad];
     [_urgentSwitch setOnTintColor:[UIColor redColor]];
@@ -131,12 +133,12 @@
         make.trailing.equalTo(@(-standardMargin));
     }];
     [self.ratingLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.urgentLabel.mas_bottom).with.offset(standardMargin);
+        make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
         make.leading.equalTo(@(standardMargin));
     }];
     
     [self.ratingField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.urgentLabel.mas_bottom).with.offset(standardMargin);
+        make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
         make.trailing.equalTo(@(-standardMargin));
     }];
     
@@ -156,23 +158,26 @@
     [self.fieldDescription mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.descriptionLabel.mas_bottom).with.offset(standardMargin);
         make.centerX.equalTo(self.mas_centerX);
-        make.width.equalTo(@(wpButtonWidth));
-        make.height.equalTo(@200);
+        make.leading.equalTo(@10);
+        make.trailing.equalTo(@(-10));
+        make.height.equalTo(@150);
     }];
     
     [self.selectedImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.fieldDescription.mas_bottom).with.offset(standardMargin);
+        make.top.equalTo(self.addPhotoButton.mas_bottom).with.offset(standardMargin);
         make.bottom.equalTo(@(-standardMargin));
-        make.left.equalTo(self.addPhotoButton.mas_right).with.offset(standardMargin);
+//        make.left.equalTo(self.addPhotoButton.mas_right).with.offset(standardMargin);
+        make.leading.equalTo(@(standardMargin));
         make.trailing.equalTo(@(-standardMargin));
     }];
     
     [self.addPhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        //        make.top.equalTo(self.takePhotoButton.mas_bottom).with.offset(standardMargin);
-        make.bottom.equalTo(@(-60));
-        make.leading.equalTo(@(standardMargin));
+        make.top.equalTo(self.fieldDescription.mas_bottom).with.offset(standardMargin);
+//        make.bottom.equalTo(@(-60));
+        make.centerX.equalTo(self.mas_centerX);
+//        make.leading.equalTo(@(standardMargin));
         make.height.equalTo(@(wpButtonHeight));
-        make.width.equalTo(@50);
+        make.width.equalTo(@(wpButtonWidth));
     }];
     
     [super updateConstraints];
