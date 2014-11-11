@@ -17,6 +17,9 @@
 @property (nonatomic) UILabel *userLabel;
 @property (nonatomic) UILabel *descriptionLabel;
 
+@property (nonatomic) NSInteger rating;
+@property (nonatomic) UIColor *ratingColor;
+
 @end
 
 const static float REPORT_IMAGE_SIZE = 220.0f;
@@ -29,7 +32,9 @@ const static float BORDER_WIDTH = 6.0f;
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor wp_yellow];
+        _rating = arc4random() % 5 + 1;
+        _ratingColor = [WPFieldReportView colorForRating:self.rating];
+        self.backgroundColor = self.ratingColor;
         [self createSubviews];
         [self setNeedsUpdateConstraints];
     }
@@ -56,14 +61,14 @@ const static float BORDER_WIDTH = 6.0f;
     
     _ratingNumberLabel = [({
         UILabel *label = [[UILabel alloc] init];
-        label.text = @"3";
+        label.text = [NSString stringWithFormat:@"%d", (int)self.rating];
         label.font = [UIFont systemFontOfSize:45.0];
         label.textAlignment = NSTextAlignmentCenter;
-        label.textColor = [UIColor wp_yellow];
+        label.textColor = self.ratingColor;
         label.backgroundColor = [UIColor whiteColor];
         label.layer.cornerRadius = RATING_SIZE / 2;
         label.layer.borderWidth = BORDER_WIDTH;
-        label.layer.borderColor = [[UIColor wp_yellow] CGColor];
+        label.layer.borderColor = [self.ratingColor CGColor];
         label.clipsToBounds = YES;
         
         CALayer *mask = [CALayer layer];
@@ -82,7 +87,7 @@ const static float BORDER_WIDTH = 6.0f;
         [userImageView setContentMode:UIViewContentModeScaleAspectFill];
         userImageView.layer.cornerRadius = USER_IMAGE_SIZE / 2;
         userImageView.layer.borderWidth = BORDER_WIDTH - 1;
-        userImageView.layer.borderColor = [[UIColor wp_yellow] CGColor];
+        userImageView.layer.borderColor = [self.ratingColor CGColor];
         userImageView.clipsToBounds = YES;
         
         CALayer *mask = [CALayer layer];
@@ -170,6 +175,33 @@ const static float BORDER_WIDTH = 6.0f;
     }];
     
     [super updateConstraints];
+}
+
++ (UIColor *)colorForRating:(NSInteger)rating {
+    switch (rating) {
+        case 1:
+            return [UIColor wp_red];
+            break;
+            
+        case 2:
+            return [UIColor wp_orange];
+            break;
+            
+        case 3:
+            return [UIColor wp_yellow];
+            break;
+            
+        case 4:
+            return [UIColor wp_lime];
+            break;
+            
+        case 5:
+            return [UIColor wp_green];
+            break;
+        default:
+            return [UIColor grayColor];
+            break;
+    }
 }
 
 @end

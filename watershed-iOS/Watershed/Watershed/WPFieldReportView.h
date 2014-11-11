@@ -10,4 +10,6 @@
 
 @interface WPFieldReportView : WPView
 
++ (UIColor *)colorForRating:(NSInteger)rating;
+
 @end
