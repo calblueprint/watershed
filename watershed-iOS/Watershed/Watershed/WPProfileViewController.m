@@ -26,8 +26,6 @@
     UIBarButtonItem *settingsButtonItem = [[UIBarButtonItem alloc] initWithImage:settingsImage style:UIBarButtonItemStylePlain target:self action:@selector(openSettings)];
     settingsButtonItem.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = settingsButtonItem;
-    self.editButtonItem.tintColor = [UIColor whiteColor];
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
     [super viewDidLoad];
 }
 
