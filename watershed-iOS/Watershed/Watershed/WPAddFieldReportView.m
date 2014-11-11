@@ -53,7 +53,7 @@
         urgentLabel;
     }) wp_addToSuperview:self];
     
-    _urgent = [({
+    _urgentSwitch = [({
         UISwitch *urgent = [[UISwitch alloc] init];
         urgent;
     }) wp_addToSuperview:self];
@@ -95,8 +95,9 @@
         addPhoto.layer.borderWidth = wpBorderWidth;
         addPhoto.layer.cornerRadius = wpCornerRadius;
         addPhoto.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-        addPhoto.titleLabel.text = @"Select From Photos";
+//        addPhoto.titleLabel.text = @"Pic";
         FAKIonIcons *photoIcon = [FAKIonIcons ios7PhotosIconWithSize:30];
+//        [addPhoto setImage:[[UIImageView alloc] initWithImage:[photoIcon imageWithSize:CGSizeMake(30,30)]] forState:UIControlStateNormal];
         addPhoto.titleLabel.textColor = [UIColor wp_blue];
         addPhoto;
     }) wp_addToSuperview:self];
@@ -112,8 +113,11 @@
 }
 
 - (void)setUpActions {
-    [_addPhotoButton setTitle:@"Take Picture" forState:UIControlStateNormal];
+    [_addPhotoButton setTitle:@"Pic" forState:UIControlStateNormal];
     [_addPhotoButton setTitleColor:[UIColor wp_darkBlue] forState: UIControlStateNormal];
+    [_ratingField setKeyboardType:UIKeyboardTypeNumberPad];
+    [_urgentSwitch setOnTintColor:[UIColor redColor]];
+
 }
 
 - (void)updateConstraints {
@@ -122,7 +126,7 @@
         make.leading.equalTo(@(standardMargin));
     }];
     
-    [self.urgent mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.urgentSwitch mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(topMargin));
         make.trailing.equalTo(@(-standardMargin));
     }];

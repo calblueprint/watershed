@@ -30,7 +30,6 @@
 
 -(void)loadView {
     self.view = [[WPTaskView alloc] init];
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -40,6 +39,5 @@
 - (void)addFieldReportAction {
     WPAddFieldReportViewController *addFieldReportViewController = [[WPAddFieldReportViewController alloc] init];
     [[self navigationController] pushViewController:addFieldReportViewController animated:YES];
-//    [[self.parentViewController navigationController] pushViewController:addFieldReportViewController animated:YES];
 }
 @end
