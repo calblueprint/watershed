@@ -17,7 +17,7 @@
     UIBarButtonItem *dismissButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(saveAndDismissSelf)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(dismissSelf)];
     self.navigationItem.rightBarButtonItem = dismissButton;
-    self.navigationItem.rightBarButtonItem.tintColor = [UIColor greenColor];
+    self.navigationItem.rightBarButtonItem.tintColor = [UIColor wp_lightGreen];
     self.navigationItem.leftBarButtonItem = cancelButton;
 }
 

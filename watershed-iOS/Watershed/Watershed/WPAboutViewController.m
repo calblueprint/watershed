@@ -55,7 +55,7 @@
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(topMargin + standardMargin));
         make.leading.equalTo(@(standardMargin));
-        make.leading.equalTo(@(-standardMargin));
+        make.trailing.equalTo(@(-standardMargin));
     }];
     
     [self.aboutLabel mas_makeConstraints:^(MASConstraintMaker *make) {
