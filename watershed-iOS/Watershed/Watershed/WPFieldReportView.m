@@ -121,14 +121,14 @@ const static float BORDER_WIDTH = 6.0f;
 - (void)updateConstraints {
     
     [self.contentScrollView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(64));
+        make.top.equalTo(@(topMargin));
         make.bottom.equalTo(@0);
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
     }];
     
     [self.reportImageView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(40));
+        make.top.equalTo(@(standardMargin * 4));
         make.height.equalTo(@(REPORT_IMAGE_SIZE));
         make.width.equalTo(@(REPORT_IMAGE_SIZE));
         make.centerX.equalTo(self.mas_centerX);
@@ -154,19 +154,19 @@ const static float BORDER_WIDTH = 6.0f;
     
     [self.userLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.reportImageView.mas_bottom)
-            .with.offset(20);
+            .with.offset(standardMargin * 2);
         make.centerX.equalTo(self.mas_centerX);
-        make.leading.equalTo([UIView wp_stylePadding]);
-        make.trailing.equalTo([UIView wp_styleNegativePadding]);
+        make.leading.equalTo(@(standardMargin));
+        make.trailing.equalTo(@(-standardMargin));
     }];
     
     [self.descriptionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.userLabel.mas_bottom)
-            .with.offset(20);
+            .with.offset(standardMargin * 2);
         make.centerX.equalTo(self.mas_centerX);
-        make.leading.equalTo([UIView wp_stylePadding]);
-        make.trailing.equalTo([UIView wp_styleNegativePadding]);
-        make.bottom.equalTo(@-20);
+        make.leading.equalTo(@(standardMargin));
+        make.trailing.equalTo(@(standardMargin));
+        make.bottom.equalTo(@(-standardMargin * 2));
     }];
     
     [super updateConstraints];
