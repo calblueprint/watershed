@@ -53,19 +53,19 @@
 }
 
 - (void)updateConstraints {
-    [_twp mas_updateConstraints:^(MASConstraintMaker *make) {
+    [self.twp mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(standardMargin));
         make.centerX.equalTo(@0);
         make.height.equalTo(@(2*standardMargin));
     }];
     
-    [_bp mas_updateConstraints:^(MASConstraintMaker *make) {
+    [self.bp mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.twp.mas_bottom);
         make.centerX.equalTo(@(-standardMargin));
         make.height.equalTo(@(2*standardMargin));
     }];
     
-    [_paw mas_updateConstraints:^(MASConstraintMaker *make) {
+    [self.paw mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.bp.mas_top);
         make.bottom.equalTo(self.bp.mas_bottom);
         make.centerX.equalTo(self.bp.mas_centerX).with.offset(68);

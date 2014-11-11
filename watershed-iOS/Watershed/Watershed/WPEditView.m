@@ -47,10 +47,7 @@
 - (void)updateConstraints {
      
     [self.infoTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@0);
-        make.leading.equalTo(@0);
-        make.trailing.equalTo(@0);
-        make.bottom.equalTo(@0);
+        make.edges.equalTo(@0);
     }];
     
     [self.statusBarView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -75,8 +72,7 @@
     return 4;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 44;
 }
 
