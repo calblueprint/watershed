@@ -24,7 +24,7 @@ public class Task {
     /** Description of task **/
     private String mDescription;
     /** site id that the action takes place at **/
-    private Integer mSiteId;
+    private String mSiteId;
     /** id of user assigned to task **/
     private Integer mAssigneeId;
     /** id of user who assigned the task **/
@@ -35,7 +35,7 @@ public class Task {
     private Date mDueDate;
 
     public Task(String title, String description,
-                Integer siteId, Integer assigneeId, Integer assignerId,
+                String siteId, Integer assigneeId, Integer assignerId,
                 Boolean taskComplete, Date dueDate) {
         mTitle = title;
         mDescription = description;
@@ -51,7 +51,7 @@ public class Task {
 
     public String getTitle() { return mTitle; }
     public String getDescription() { return mDescription; }
-    public Integer getSiteId() { return mSiteId; }
+    public String getSiteId() { return mSiteId; }
     public Integer getAssigneeId() { return mAssigneeId; }
     public Integer getAssignerId() { return mAssignerId; }
     public Boolean getTaskComplete() { return mTaskComplete; }

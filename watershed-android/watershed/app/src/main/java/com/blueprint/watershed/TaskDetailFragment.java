@@ -27,7 +27,7 @@ public class TaskDetailFragment extends Fragment {
         Bundle args = new Bundle();
         args.putString("title", task.getTitle());
         args.putString("description", task.getDescription());
-        args.putInt("siteId", task.getSiteId());
+        args.putString("siteId", task.getSiteId());
         fragment.setArguments(args);
         return fragment;
     }
