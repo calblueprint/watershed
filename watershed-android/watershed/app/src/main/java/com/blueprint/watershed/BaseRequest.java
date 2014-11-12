@@ -1,14 +1,18 @@
 package com.blueprint.watershed;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 
 import org.json.JSONArray;
@@ -24,19 +28,38 @@ import java.util.Map;
  * Created by maxwolffe on 11/2/14.
  */
 public abstract class BaseRequest extends Request{
-    private RequestHandler singletonRequestHandler;
-    private Activity mParentActivity;
-    private Map<String,String> params;
     private SharedPreferences preferences;
     private Response.Listener listener;
+    private Activity mActivity;
 
     public BaseRequest(int method, String url, JSONObject jsonRequest,
-                       Response.Listener listener, Response.ErrorListener errorListener, Activity activity){
-        super(method, url, errorListener);
+                       Response.Listener listener, final Activity activity){
+        super(method, url, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                String message;
+                if (volleyError instanceof NetworkError) {
+                    message = "Network Error. Please try again later.";
+                }
+                else {
+                    try {
+                        JSONObject response = new JSONObject(new String(volleyError.networkResponse.data));
+                        message = (String) response.get("message");
+                    } catch (Exception e) {
+                        message = "Unknown Error";
+                        e.printStackTrace();
+                    }
+                }
+                Context context = activity.getApplicationContext();
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, message, duration);
+                toast.show();
+            }});
+
         this.listener = listener;
-        this.mParentActivity = activity;
         this.preferences = activity.getSharedPreferences("LOGIN_PREFERENCES", 0);
-    }   
+    }
 
     @Override
     public HashMap<String, String> getHeaders() {

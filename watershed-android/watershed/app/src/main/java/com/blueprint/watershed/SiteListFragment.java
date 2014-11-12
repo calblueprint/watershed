@@ -133,29 +133,6 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
                             Log.e("Json exception", "in site list fragment" + e.toString());
                         }
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        String message;
-                        if (volleyError instanceof NetworkError) {
-                            message = "Network Error. Please try again later.";
-                        }
-                        else {
-                            try {
-                                JSONObject response = new JSONObject(new String(volleyError.networkResponse.data));
-                                message = (String) response.get("message");
-                            } catch (Exception e) {
-                                message = "Unknown Error";
-                                e.printStackTrace();
-                            }
-                        }
-                        Context context = getActivity().getApplicationContext();
-                        int duration = Toast.LENGTH_SHORT;
-
-                        Toast toast = Toast.makeText(context, message, duration);
-                        toast.show();
-                    }
                 }
         , getActivity()){}; //
 
