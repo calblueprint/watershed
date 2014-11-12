@@ -66,6 +66,7 @@ const static float BORDER_WIDTH = 6.0f;
         [reportImageView setContentMode:UIViewContentModeScaleAspectFill];
         reportImageView.layer.cornerRadius = REPORT_IMAGE_SIZE / 2;
         reportImageView.clipsToBounds = YES;
+        reportImageView.alpha = 0;
         reportImageView;
     }) wp_addToSuperview:self.contentScrollView];
     
@@ -88,6 +89,7 @@ const static float BORDER_WIDTH = 6.0f;
         mask.opacity = 1.0;
         
         label.layer.mask = mask;
+        label.alpha = 0;
         label;
     }) wp_addToSuperview:self.contentScrollView];
     
@@ -107,6 +109,7 @@ const static float BORDER_WIDTH = 6.0f;
         mask.opacity = 1.0;
         
         userImageView.layer.mask = mask;
+        userImageView.alpha = 0;
         userImageView;
     }) wp_addToSuperview:self.contentScrollView];
     
@@ -222,7 +225,7 @@ const static float BORDER_WIDTH = 6.0f;
     self.navbarOverlay.alpha = navbarAlpha;
 }
 
-#pragma mark - UIView Colors
+#pragma mark - UIView Modifications
 
 + (UIColor *)colorForRating:(NSInteger)rating {
     switch (rating) {
@@ -249,6 +252,22 @@ const static float BORDER_WIDTH = 6.0f;
             return [UIColor grayColor];
             break;
     }
+}
+
+- (void)showBubbles {
+    [UIView animateWithDuration:0.5 animations:^{
+        self.reportImageView.alpha = 1;
+        
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.5 animations:^{
+            self.ratingNumberLabel.alpha = 1;
+            
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.5 animations:^{
+                self.userImageView.alpha = 1;
+            }];
+        }];
+    }];
 }
 
 @end

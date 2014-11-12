@@ -27,6 +27,9 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
+    [((WPFieldReportView *)self.view) showBubbles];
+    
     if ([self isMovingToParentViewController]) {
         //view controller is being pushed on
         [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
