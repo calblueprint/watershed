@@ -9,10 +9,6 @@
 #import "WPFieldReportViewController.h"
 #import "WPFieldReportView.h"
 
-@interface WPFieldReportViewController ()
-
-@end
-
 @implementation WPFieldReportViewController
 
 - (void)viewDidLoad {
