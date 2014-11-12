@@ -55,6 +55,7 @@ public class TaskFragment extends ListFragment {
         mTaskList = new ArrayList<Task>();
         if (getArguments() != null) {
             int option = getArguments().getInt("option");
+            getTasksRequest();
             switch (option) {
                 case 0: //populates with tasks that you are assigned
                     mTaskList.add(new Task("Title 1", "Description 1 ", 1, 1, 1, true, new Date()));
@@ -144,7 +145,12 @@ public class TaskFragment extends ListFragment {
         mRequestHandler.getRequestQueue().add(request);
     }
 
-    private void setTasks(ArrayList<Task> tasks){};
+    private void setTasks(ArrayList<Task> tasks){
+        mTaskList.clear();
+        for (Task task : tasks){
+            mTaskList.add(task);
+        }
+    };
 
     public interface OnFragmentInteractionListener {
         public void onFragmentInteraction(Uri uri);
