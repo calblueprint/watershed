@@ -12,6 +12,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
@@ -53,14 +54,12 @@ public abstract class BaseRequest extends Request{
     @Override
     protected Response parseNetworkResponse(NetworkResponse response) {
         try {
-            String json = new String(
-                    response.data,
-                    HttpHeaderParser.parseCharset(response.headers));
+            JSONObject json = new JSONObject(new String(response.data));
             return Response.success(
                     json,
                     HttpHeaderParser.parseCacheHeaders(response));
-        } catch (UnsupportedEncodingException e) {
-            return Response.error(new ParseError(e));
+        } catch (JSONException je){
+            return Response.error(new ParseError(je));
         }
     }
 }
