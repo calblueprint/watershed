@@ -58,15 +58,9 @@ public class TaskFragment extends ListFragment {
             getTasksRequest();
             switch (option) {
                 case 0: //populates with tasks that you are assigned
-                    mTaskList.add(new Task("Title 1", "Description 1 ", "1", 1, 1, true, new Date()));
-                    mTaskList.add(new Task("Title 2", "Description 2 ", "1", 1, 1, true, new Date()));
-                    mTaskList.add(new Task("Title 3", "Description 3 ", "1", 1, 1, true, new Date()));
                     break;
 
                 case 1: //populates with all tasks
-                    mTaskList.add(new Task("Title 4", "Description 4 ", "1", 1, 1, true, new Date()));
-                    mTaskList.add(new Task("Title 5", "Description 5 ", "1", 1, 1, true, new Date()));
-                    mTaskList.add(new Task("Title 6", "Description 6 ", "1", 1, 1, true, new Date()));
                     break;
             }
         }

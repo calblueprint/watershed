@@ -26,17 +26,17 @@ public class Task {
     /** site id that the action takes place at **/
     private String mSiteId;
     /** id of user assigned to task **/
-    private Integer mAssigneeId;
+    private String mAssigneeId;
     /** id of user who assigned the task **/
-    private Integer mAssignerId;
+    private String mAssignerId;
     /** is the task complete? **/
-    private Boolean mTaskComplete;
+    private String mTaskComplete;
     /** task due date **/
-    private Date mDueDate;
+    private String mDueDate;
 
     public Task(String title, String description,
-                String siteId, Integer assigneeId, Integer assignerId,
-                Boolean taskComplete, Date dueDate) {
+                String siteId, String assigneeId, String assignerId,
+                String taskComplete, String dueDate) {
         mTitle = title;
         mDescription = description;
         mSiteId = siteId;
@@ -52,10 +52,10 @@ public class Task {
     public String getTitle() { return mTitle; }
     public String getDescription() { return mDescription; }
     public String getSiteId() { return mSiteId; }
-    public Integer getAssigneeId() { return mAssigneeId; }
-    public Integer getAssignerId() { return mAssignerId; }
-    public Boolean getTaskComplete() { return mTaskComplete; }
-    public Date getDueDate() { return mDueDate; }
+    public String getAssigneeId() { return mAssigneeId; }
+    public String getAssignerId() { return mAssignerId; }
+    public String getTaskComplete() { return mTaskComplete; }
+    public String getDueDate() { return mDueDate; }
 
     public void setTitle (String title){
         mTitle = title;
@@ -63,16 +63,16 @@ public class Task {
     public void setDescription(String description){
         mDescription = description;
     }
-    public void setAssigneeId(Integer assigneeId) {
+    public void setAssigneeId(String assigneeId) {
         mAssigneeId = assigneeId;
     }
-    public void setAssignerId(Integer assingerId){
-        mAssignerId = assingerId;
+    public void setAssignerId(String assignerId){
+        mAssignerId = assignerId;
     }
-    public void setTaskComplete(Boolean taskComplete){
+    public void setTaskComplete(String taskComplete){
         mTaskComplete = taskComplete;
     }
-    public void setDueDate(Date dueDate){
+    public void setDueDate(String dueDate){
         mDueDate = dueDate;
     }
 

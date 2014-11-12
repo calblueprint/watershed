@@ -28,6 +28,11 @@ public class TaskDetailFragment extends Fragment {
         args.putString("title", task.getTitle());
         args.putString("description", task.getDescription());
         args.putString("siteId", task.getSiteId());
+        args.putString("assigneeId", task.getAssigneeId());
+        args.putString("assignerId", task.getAssignerId());
+        args.putString("siteId", task.getSiteId());
+        args.putBoolean("complete", task.getTaskComplete());
+        args.putString("date", task.getDueDate().toString());
         fragment.setArguments(args);
         return fragment;
     }
