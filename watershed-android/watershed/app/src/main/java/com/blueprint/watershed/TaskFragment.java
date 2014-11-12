@@ -30,7 +30,7 @@ public class TaskFragment extends ListFragment {
 
     private OnFragmentInteractionListener mListener;
     private ListView listView1;
-    private Task mTaskList[];
+    private ArrayList<Task> mTaskList;
     private MainActivity parentActivity;
     private TaskAdapter mTaskAdapter;
     private RequestHandler mRequestHandler;
@@ -52,27 +52,21 @@ public class TaskFragment extends ListFragment {
         super.onCreate(savedInstanceState);
         mRequestHandler = RequestHandler.getInstance(getActivity().getApplicationContext());
         parentActivity = (MainActivity)getActivity();
+        mTaskList = new ArrayList<Task>();
         if (getArguments() != null) {
             int option = getArguments().getInt("option");
             switch (option) {
                 case 0: //populates with tasks that you are assigned
-                    mTaskList = new Task[]
-                            {
-                                    new Task("Title 1", "Description 1 ", 1, 1, 1, true, new Date()),
-                                    new Task("Title 2", "Description 2 ", 1, 1, 1, true, new Date()),
-                                    new Task("Title 3", "Description 3 ", 1, 1, 1, true, new Date()),
-                            };
+                    mTaskList.add(new Task("Title 1", "Description 1 ", 1, 1, 1, true, new Date()));
+                    mTaskList.add(new Task("Title 2", "Description 2 ", 1, 1, 1, true, new Date()));
+                    mTaskList.add(new Task("Title 3", "Description 3 ", 1, 1, 1, true, new Date()));
                     break;
 
                 case 1: //populates with all tasks
-                    mTaskList = new Task[]
-                            {
-                                    new Task("Title 4", "Description 1 ", 1, 1, 1, true, new Date()),
-                                    new Task("Title 5", "Description 2 ", 1, 1, 1, true, new Date()),
-                                    new Task("Title 6", "Description 3 ", 1, 1, 1, true, new Date()),
-                            };
+                    mTaskList.add(new Task("Title 4", "Description 4 ", 1, 1, 1, true, new Date()));
+                    mTaskList.add(new Task("Title 5", "Description 5 ", 1, 1, 1, true, new Date()));
+                    mTaskList.add(new Task("Title 6", "Description 6 ", 1, 1, 1, true, new Date()));
                     break;
-
             }
         }
     }
@@ -83,8 +77,8 @@ public class TaskFragment extends ListFragment {
         View finalView = inflater.inflate(R.layout.fragment_task_list, container, false);
 
         listView1 = (ListView)finalView.findViewById(android.R.id.list);
-        TaskAdapter arrayAdapter = new TaskAdapter(getActivity(),R.layout.taskview_each_item, mTaskList);
-        listView1.setAdapter(arrayAdapter);
+        mTaskAdapter = new TaskAdapter(getActivity(),R.layout.taskview_each_item, mTaskList);
+        listView1.setAdapter(mTaskAdapter);
         return finalView;
     }
 
@@ -96,7 +90,7 @@ public class TaskFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id){
-        Task taskClicked = this.mTaskList[position];
+        Task taskClicked = this.mTaskList.get(position);
         TaskDetailFragment detailFragment = TaskDetailFragment.newInstance(taskClicked);
         parentActivity.replaceFragment(detailFragment);
     }
@@ -141,7 +135,7 @@ public class TaskFragment extends ListFragment {
                             mTaskAdapter.notifyDataSetChanged();
                             Log.e("response", jsonObject.toString());
                         } catch (Exception e) {
-                            Log.e("Json exception", "in site list fragment" + e.toString());
+                            Log.e("Json exception", "in task list fragment" + e.toString());
                         }
                     }
                 }
