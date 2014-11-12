@@ -96,7 +96,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         HashMap<String, HashMap<String, String>> params = new HashMap<String, HashMap<String,String>>();
         params.put("user",user_params);
 
-        parentActivity.Login(params);
+        parentActivity.login(params);
     }
 
 

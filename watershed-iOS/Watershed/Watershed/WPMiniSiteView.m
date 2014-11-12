@@ -1,15 +1,15 @@
 //
-//  WPSiteView.m
+//  WPMiniSiteView.m
 //  Watershed
 //
-//  Created by Andrew Millman on 10/5/14.
+//  Created by Andrew Millman on 11/2/14.
 //  Copyright (c) 2014 Blueprint. All rights reserved.
 //
 
-#import "WPSiteView.h"
-#import "WPMiniSiteTableViewCell.h"
+#import "WPMiniSiteView.h"
+#import "WPFieldReportTableViewCell.h"
 
-@interface WPSiteView () <UIScrollViewDelegate>
+@interface WPMiniSiteView () <UIScrollViewDelegate>
 
 @property (nonatomic) UIImageView *coverPhotoView;
 @property (nonatomic) UIImage *originalCoverPhoto;
@@ -19,7 +19,9 @@
 @property (nonatomic) UILabel *descriptionLabel;
 @property (nonatomic) UIView *headingLineBreak;
 @property (nonatomic) WPLabeledIcon *addressLabel;
-@property (nonatomic) WPLabeledIcon *siteCountLabel;
+@property (nonatomic) WPLabeledIcon *vegetationListLabel;
+@property (nonatomic) WPLabeledIcon *currentTaskLabel;
+@property (nonatomic) WPLabeledIcon *fieldReportCountLabel;
 @property (nonatomic) UIImageView *tableViewShadowOverlay;
 @property (nonatomic) UIScrollView *miniSiteScrollView;
 
@@ -28,7 +30,7 @@
 
 @end
 
-@implementation WPSiteView
+@implementation WPMiniSiteView
 
 static const int COVER_PHOTO_HEIGHT = 184;
 static int COVER_PHOTO_TRANS = 0;
@@ -54,7 +56,7 @@ static int COVER_PHOTO_TRANS = 0;
         miniSiteScrollView;
     }) wp_addToSuperview:self];
     
-    _miniSiteTableView = [({
+    _fieldReportTableView = [({
         UITableView *miniSiteTableView = [[UITableView alloc] init];
         miniSiteTableView.backgroundColor = [UIColor whiteColor];
         [miniSiteTableView setSeparatorInset:UIEdgeInsetsZero];
@@ -70,7 +72,7 @@ static int COVER_PHOTO_TRANS = 0;
     
     _titleLabel = [({
         UILabel *titleLabel = [[UILabel alloc] init];
-        titleLabel.text = @"Watershed";
+        titleLabel.text = @"Mini Site";
         titleLabel.font = [UIFont boldSystemFontOfSize:25.0];
         titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
         titleLabel.numberOfLines = 0;
@@ -79,7 +81,7 @@ static int COVER_PHOTO_TRANS = 0;
     
     _descriptionLabel = [({
         UILabel *descriptionLabel = [[UILabel alloc] init];
-        descriptionLabel.text = @"Cal Blueprint is a student-run UC Berkeley organization devoted to matching the skills of its members to our desire to see social good enacted in our community. Each semester, teams of 4-5 students work closely with a non-profit to bring technological solutions to the problems they face every day.";
+        descriptionLabel.text = @"This is tha minisite. Tha minisite has vegetation and other stoof, like tasks and field reports.";
         descriptionLabel.font = [UIFont systemFontOfSize:14.0];
         descriptionLabel.lineBreakMode = NSLineBreakByWordWrapping;
         descriptionLabel.numberOfLines = 0;
@@ -100,10 +102,24 @@ static int COVER_PHOTO_TRANS = 0;
         addressLabel;
     }) wp_addToSuperview:self.tableHeaderView];
     
-    _siteCountLabel = [({
+    _vegetationListLabel = [({
         FAKFontAwesome *treeIcon = [FAKFontAwesome treeIconWithSize:[WPLabeledIcon viewHeight]];
         UIImage *treeImage = [treeIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
-        WPLabeledIcon *siteCountLabel = [[WPLabeledIcon alloc] initWithText:@"10 mini sites" icon:treeImage];
+        WPLabeledIcon *vegetationListLabel = [[WPLabeledIcon alloc] initWithText:@"Vegetation -- Apples, Oranges, Carrots, What am I saying" icon:treeImage];
+        vegetationListLabel;
+    }) wp_addToSuperview:self.tableHeaderView];
+    
+    _currentTaskLabel = [({
+        FAKFontAwesome *checkIcon = [FAKFontAwesome checkIconWithSize:[WPLabeledIcon viewHeight]];
+        UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
+        WPLabeledIcon *currentTaskLabel = [[WPLabeledIcon alloc] initWithText:@"Current Task -- Fix the water" icon:checkImage];
+        currentTaskLabel;
+    }) wp_addToSuperview:self.tableHeaderView];
+    
+    _fieldReportCountLabel = [({
+        FAKFontAwesome *exclamationIcon = [FAKFontAwesome exclamationTriangleIconWithSize:[WPLabeledIcon viewHeight]];
+        UIImage *exclamationImage = [exclamationIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
+        WPLabeledIcon *siteCountLabel = [[WPLabeledIcon alloc] initWithText:@"10 field reports" icon:exclamationImage];
         siteCountLabel;
     }) wp_addToSuperview:self.tableHeaderView];
     
@@ -116,7 +132,7 @@ static int COVER_PHOTO_TRANS = 0;
     }) wp_addToSuperview:self.tableHeaderView];
     
     _coverPhotoView = [({
-        UIImage *coverPhoto = [UIImage imageNamed:@"SampleCoverPhoto"];
+        UIImage *coverPhoto = [UIImage imageNamed:@"SampleCoverPhoto2"];
         _originalCoverPhoto = coverPhoto;
         UIImageView *coverPhotoView = [[UIImageView alloc] initWithImage:coverPhoto];
         [coverPhotoView setContentMode:UIViewContentModeScaleAspectFill];
@@ -174,7 +190,7 @@ static int COVER_PHOTO_TRANS = 0;
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@13);
         make.leading.equalTo(@(standardMargin));
-        make.trailing.equalTo(@(-standardMargin));
+        make.trailing.equalTo(@(standardMargin));
     }];
     
     [self.descriptionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -200,8 +216,22 @@ static int COVER_PHOTO_TRANS = 0;
         make.trailing.equalTo(@(-standardMargin));
     }];
     
-    [self.siteCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.vegetationListLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.addressLabel.mas_bottom)
+            .with.offset(standardMargin);
+        make.leading.equalTo(@(standardMargin));
+        make.trailing.equalTo(@(standardMargin));
+    }];
+    
+    [self.currentTaskLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.vegetationListLabel.mas_bottom)
+            .with.offset(standardMargin);
+        make.leading.equalTo(@(standardMargin));
+        make.trailing.equalTo(@(-standardMargin));
+    }];
+    
+    [self.fieldReportCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.currentTaskLabel.mas_bottom)
             .with.offset(standardMargin);
         make.leading.equalTo(@(standardMargin));
         make.trailing.equalTo(@(-standardMargin));
@@ -209,25 +239,25 @@ static int COVER_PHOTO_TRANS = 0;
     
     [self.tableViewShadowOverlay mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@10);
-        make.top.equalTo(self.siteCountLabel.mas_bottom)
+        make.top.equalTo(self.fieldReportCountLabel.mas_bottom)
             .with.offset(standardMargin * 2);
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
     }];
-
-    [self.miniSiteTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+    
+    [self.fieldReportTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.tableHeaderView.mas_bottom);
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
         make.bottom.equalTo(@0);
     }];
-
+    
     [super updateConstraints];
 }
 
 - (void)updateTableViewHeight:(NSInteger)cellCount {
-    [self.miniSiteTableView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@([WPMiniSiteTableViewCell cellHeight] * cellCount));
+    [self.fieldReportTableView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@([WPFieldReportTableViewCell cellHeight] * cellCount));
     }];
 }
 
@@ -281,4 +311,3 @@ static int COVER_PHOTO_TRANS = 0;
 }
 
 @end
-

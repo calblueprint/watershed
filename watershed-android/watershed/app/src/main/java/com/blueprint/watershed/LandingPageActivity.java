@@ -44,7 +44,7 @@ public class LandingPageActivity extends Activity {
     // Constants
     public  static final String PREFERENCES = "LOGIN_PREFERENCES";
     private static final String TAG         = "LandingPageActivity";
-    private static final String LOGIN_URL = "http://192.168.56.1:3000/api/v1/users/sign_in";
+    private static final String LOGIN_URL = "https://intense-reaches-1457.herokuapp.com/api/v1/users/sign_in";
 
     // UI Elements
     private ImageView mLandingPageImage;
@@ -68,9 +68,11 @@ public class LandingPageActivity extends Activity {
         // NOTE(mark): Change to !hasAuthCredentials if you want the main activity to show.
         if (hasAuthCredentials(preferences)) {
             final Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("auth_token", preferences.getString("auth_token", null));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            // intent.putExtra("auth_token", preferences.getString("auth_token", null));
             this.finish();
             startActivity(intent);
+            overridePendingTransition(0, 0);
         }
     }
 
@@ -83,8 +85,8 @@ public class LandingPageActivity extends Activity {
     }
 
     public boolean hasAuthCredentials(SharedPreferences preferences) {
-        return !preferences.getString("auth_token", "none").equals("none") &&
-               !preferences.getString("auth_email", "none").equals("none");
+        return !preferences.getString("authentication_token", "none").equals("none") &&
+               !preferences.getString("email", "none").equals("none");
     }
 
     // UI Actions
@@ -105,14 +107,14 @@ public class LandingPageActivity extends Activity {
     public void didTapSignUpLoadFragmentButton(View view) {
     }
 
-    public void Login(HashMap<String, HashMap<String, String>> params){
+    public void login(HashMap<String, HashMap<String, String>> params) {
         final Intent intent = new Intent(this, MainActivity.class);
 
-        JSONObject request_user = new JSONObject(params.get("user"));
-        HashMap<String, JSONObject> real_params = new HashMap<String, JSONObject>();
-        real_params.put("user", request_user);
+        JSONObject requestUser = new JSONObject(params.get("user"));
+        HashMap<String, JSONObject> realParams = new HashMap<String, JSONObject>();
+        realParams.put("user", requestUser);
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, LOGIN_URL, new JSONObject(real_params),
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, LOGIN_URL, new JSONObject(realParams),
                 new Response.Listener<JSONObject>() {
                     @Override
                     // presumably will receive a hash that has the auth info and user object
@@ -167,11 +169,6 @@ public class LandingPageActivity extends Activity {
         );
 
         mloginRequestHandler.getRequestQueue().add(request);
-    }
-
-    public boolean has_Credentials(){
-        return !preferences.getString("auth_token", "none").equals("none") &&
-                !preferences.getString("auth_email", "none").equals("none");
     }
 
     // Getters
