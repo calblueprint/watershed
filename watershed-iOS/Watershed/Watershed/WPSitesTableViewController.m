@@ -42,8 +42,7 @@ static NSString *cellIdentifier = @"SiteCell";
     self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, topMargin, [[UIScreen mainScreen] bounds].size.width, topMargin)];
     self.searchBar.delegate = self;
     self.searchBar.placeholder = @"Search Sites";
-    self.searchBar.alpha = 0;
-    self.searchBar.tintColor = [UIColor whiteColor];
+    self.searchBar.tintColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
     
     self.searchController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
     self.searchController.delegate = self;
@@ -124,7 +123,6 @@ static NSString *cellIdentifier = @"SiteCell";
     [self.searchController setActive:YES animated:YES];
     [self.searchBar becomeFirstResponder];
     [UIView animateWithDuration:0.2 animations:^{
-        self.searchBar.alpha = 1;
         [self.searchBar setFrame:CGRectMake(0, 10, [[UIScreen mainScreen] bounds].size.width, topMargin)];
     }];
 }
@@ -135,7 +133,6 @@ static NSString *cellIdentifier = @"SiteCell";
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     [UIView animateWithDuration:0.2 animations:^{
-        searchBar.alpha = 0;
         [self.searchBar setFrame:CGRectMake(0, topMargin, [[UIScreen mainScreen] bounds].size.width, topMargin)];
     }];
 }
