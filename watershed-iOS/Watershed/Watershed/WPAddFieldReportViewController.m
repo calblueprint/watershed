@@ -20,7 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.navigationItem.title = @"New Field Report";
+    self.navigationItem.title = @"Add Field Report";
     [self.view.addPhotoButton addTarget:self action:@selector(addPhotoButtonAction:) forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -46,7 +46,6 @@
     self.view.healthRatingPicker.dataSource = self;
     [self.view.healthRatingPicker  setShowsSelectionIndicator:YES];
     self.view.ratingField.inputView = self.view.healthRatingPicker;
-
 }
 
 
@@ -128,8 +127,6 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component;
 {
     self.view.ratingField.text = (NSString *)[_pickerData objectAtIndex:row];
-
-    
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {

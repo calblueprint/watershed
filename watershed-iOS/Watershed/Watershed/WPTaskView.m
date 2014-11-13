@@ -25,7 +25,6 @@
 - (void)createSubviews {
     _title = [({
         UILabel *title = [[UILabel alloc] init];
-        title.text = @"PLANT TREE";
         title.numberOfLines = 0;
         title.font = [UIFont boldSystemFontOfSize:20.0];
         title.textColor = [UIColor wp_darkBlue];
@@ -34,15 +33,21 @@
     
     _taskDescription = [({
         UILabel *taskDescription = [[UILabel alloc] init];
-        taskDescription.text = @"Please plant this tree in this spot by using a shovel. Dig a hole 1 meter in diameter and then yay.";
         taskDescription.numberOfLines = 0;
         taskDescription.textColor = [UIColor wp_darkBlue];
         taskDescription;
     }) wp_addToSuperview:self];
     
+    _assignee = [({
+        UILabel *assignee = [[UILabel alloc] init];
+        assignee.numberOfLines = 0;
+        assignee.font = [UIFont systemFontOfSize:12];
+        assignee.textColor = [UIColor grayColor];
+        assignee;
+    }) wp_addToSuperview:self];
+    
     _dueDate = [({
         UILabel *dueDate = [[UILabel alloc] init];
-        dueDate.text = @"Due: 09/23/14";
         dueDate.numberOfLines = 0;
         dueDate.font = [UIFont systemFontOfSize:16.6];
         dueDate.textColor = [UIColor darkGrayColor];
@@ -50,21 +55,20 @@
         dueDate;
     }) wp_addToSuperview:self];
 
-    
     _addFieldReportButton = [({
         UIButton *addFieldReportButton = [[UIButton alloc] init];
-        addFieldReportButton.layer.cornerRadius = wpCornerRadius;
-        addFieldReportButton.layer.borderColor = [UIColor wp_blue].CGColor;
-        addFieldReportButton.layer.borderWidth = wpBorderWidth;
+        addFieldReportButton.backgroundColor = [UIColor wp_darkBlue];
+        addFieldReportButton.titleLabel.numberOfLines = 0;
+        addFieldReportButton.titleLabel.textAlignment = NSTextAlignmentCenter;
         addFieldReportButton.titleLabel.font = [UIFont boldSystemFontOfSize:18];
         addFieldReportButton;
     }) wp_addToSuperview:self];
 
     _completed = [({
         UIButton *completed = [[UIButton alloc] init];
-        completed.layer.cornerRadius = wpCornerRadius;
-        completed.layer.borderColor = [UIColor wp_blue].CGColor;
-        completed.layer.borderWidth = wpBorderWidth;
+        completed.backgroundColor = [UIColor wp_lightBlue];
+        completed.titleLabel.numberOfLines = 0;
+        completed.titleLabel.textAlignment = NSTextAlignmentCenter;
         completed.titleLabel.font = [UIFont boldSystemFontOfSize:18];
         completed;
     }) wp_addToSuperview:self];
@@ -72,19 +76,18 @@
 }
 
 - (void)setUpActions {
-    [_completed setTitle:@"Mark as Complete" forState:UIControlStateNormal];
-    [_completed setTitleColor:[UIColor wp_blue] forState:UIControlStateNormal];
+    [_completed setTitle:@"Mark as\nComplete" forState:UIControlStateNormal];
+    [_completed setTitleColor:[UIColor wp_darkBlue] forState:UIControlStateNormal];
     [_completed addTarget:self action:@selector(onClick) forControlEvents:UIControlEventTouchUpInside];
-    [_addFieldReportButton setTitle:@"Add Field Report" forState:UIControlStateNormal];
-    [_addFieldReportButton setTitleColor:[UIColor wp_blue] forState:UIControlStateNormal];
+    [_addFieldReportButton setTitle:@"Add Field\nReport" forState:UIControlStateNormal];
+    [_addFieldReportButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 }
 
 -(void)onClick {
     if ([_completed.titleLabel.text isEqualToString:@"Completed"]) {
-        [_completed setTitle:@"Mark as Complete" forState:UIControlStateNormal];
-        [_completed setTitleColor:[UIColor wp_blue] forState:UIControlStateNormal];
-        _completed.backgroundColor = [UIColor whiteColor];
-        _completed.layer.borderWidth = wpBorderWidth;
+        [_completed setTitle:@"Mark as\nComplete" forState:UIControlStateNormal];
+        [_completed setTitleColor:[UIColor wp_darkBlue] forState:UIControlStateNormal];
+        _completed.backgroundColor = [UIColor wp_lightBlue];
     } else {
         [_completed setTitle:@"Completed" forState:UIControlStateNormal];
         _completed.backgroundColor = [UIColor wp_green];
@@ -95,35 +98,43 @@
 
 - (void)updateConstraints {
     [self.dueDate mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(topMargin));
+        make.top.equalTo(@(topMargin + standardMargin));
         make.width.equalTo(@125);
         make.trailing.equalTo(@(-standardMargin));
     }];
 
     [self.title mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(topMargin));
+        make.top.equalTo(@(topMargin + standardMargin));
         make.leading.equalTo(@(standardMargin));
         make.trailing.equalTo(self.dueDate.mas_left).with.offset(standardMargin);
     }];
-
-    [self.taskDescription mas_makeConstraints:^(MASConstraintMaker *make) {
+    
+    
+    [self.assignee mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.title.mas_bottom).with.offset(standardMargin);
+        make.leading.equalTo(@(standardMargin));
+        make.trailing.equalTo(@(-standardMargin));
+    }];
+    
+    [self.taskDescription mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.assignee.mas_bottom).with.offset(standardMargin);
         make.leading.equalTo(@(standardMargin));
         make.trailing.equalTo(@(-standardMargin));
     }];
 
     [self.addFieldReportButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.taskDescription.mas_bottom).with.offset(standardMargin * 2);
-        make.centerX.equalTo(self.mas_centerX);
-        make.height.equalTo(@50);
-        make.width.equalTo(@200);
+        make.bottom.equalTo(@0);
+        make.height.equalTo(@150);
+        make.leading.equalTo(@0);
+        make.trailing.equalTo(self.mas_centerX);
     }];
 
     [self.completed mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.addFieldReportButton.mas_bottom).with.offset(standardMargin * 2);
-        make.centerX.equalTo(self.mas_centerX);
-        make.height.equalTo(@50);
-        make.width.equalTo(@200);
+        make.bottom.equalTo(@0);
+        make.leading.equalTo(self.addFieldReportButton.mas_right);
+        make.height.equalTo(@150);
+        make.trailing.equalTo(@0);
+        
     }];
 
      [super updateConstraints];

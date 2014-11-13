@@ -26,7 +26,7 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
     [super viewDidLoad];
     
     _tasks = @[
-               @{@"Task": @"Water MY Tree", @"Description": @"Please", @"DueDate": @"05/11"},
+               @{@"Task": @"Water MY Tree", @"Description": @"Please. That would be very very very very very very very very very nice. You're a doll.", @"DueDate": @"05/11"},
                @{@"Task": @"Prune MY Tree", @"Description": @"Pretty please", @"DueDate": @"05/10"},
                @{@"Task": @"Keep MY Tree Alive", @"Description": @"Cherry on top"},
                @{@"Task": @"Start MY Tree", @"Description": @"Dig hole", @"DueDate": @"05/12"},
