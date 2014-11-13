@@ -5,6 +5,10 @@ class Api::V1::SitesController < Api::V1::BaseController
     render json: @sites
   end
 
+  def show
+    render json: @site
+  end
+
   def create
     if @site.save
       render json: @site
