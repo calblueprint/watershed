@@ -81,6 +81,7 @@ static NSString *cellIdentifier = @"SiteCell";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     WPSiteViewController *siteViewController = [[WPSiteViewController alloc] init];
     [self.navigationController pushViewController:siteViewController animated:YES];
 }
