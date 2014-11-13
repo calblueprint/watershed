@@ -168,11 +168,21 @@
     [_rating3.titleLabel setTextAlignment:NSTextAlignmentCenter];
     [_rating4.titleLabel setTextAlignment:NSTextAlignmentCenter];
     [_rating5.titleLabel setTextAlignment:NSTextAlignmentCenter];
+    [_rating1 setBackgroundColor:[UIColor clearColor]];
+    [_rating2 setBackgroundColor:[UIColor clearColor]];
+    [_rating3 setBackgroundColor:[UIColor clearColor]];
+    [_rating4 setBackgroundColor:[UIColor clearColor]];
+    [_rating5 setBackgroundColor:[UIColor clearColor]];
     [_rating1 setTitleColor:[UIColor wp_red] forState: UIControlStateNormal];
     [_rating2 setTitleColor:[UIColor wp_orange] forState: UIControlStateNormal];
     [_rating3 setTitleColor:[UIColor wp_yellow] forState: UIControlStateNormal];
     [_rating4 setTitleColor:[UIColor wp_lime] forState: UIControlStateNormal];
     [_rating5 setTitleColor:[UIColor wp_lightGreen] forState: UIControlStateNormal];
+    [_rating1.layer setBorderWidth:wpBorderWidth];
+    [_rating2.layer setBorderWidth:wpBorderWidth];
+    [_rating3.layer setBorderWidth:wpBorderWidth];
+    [_rating4.layer setBorderWidth:wpBorderWidth];
+    [_rating5.layer setBorderWidth:wpBorderWidth];
     [_rating1 addTarget:self action:@selector(ratingClick:) forControlEvents:UIControlEventTouchUpInside];
     [_rating2 addTarget:self action:@selector(ratingClick:) forControlEvents:UIControlEventTouchUpInside];
     [_rating3 addTarget:self action:@selector(ratingClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -181,14 +191,12 @@
 }
 
 -(void)ratingClick:(UIButton *)sender {
-    if (sender.layer.borderWidth == 1) {
+    int senderBorder = sender.layer.borderWidth;
+    [self setUpActions];
+    if (senderBorder == 1) {
         sender.backgroundColor = sender.titleLabel.textColor;
         [sender setTitleColor:[UIColor whiteColor] forState: UIControlStateNormal];
         sender.layer.borderWidth = 0;
-    } else {
-        [sender setTitleColor:sender.backgroundColor forState: UIControlStateNormal];
-        sender.backgroundColor = [UIColor clearColor];
-        sender.layer.borderWidth = 1;
     }
 }
 
