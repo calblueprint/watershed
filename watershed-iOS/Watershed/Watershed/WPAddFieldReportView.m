@@ -49,7 +49,7 @@
     _urgentLabel = [({
         UILabel *urgentLabel = [[UILabel alloc] init];
         urgentLabel.text = @"Urgent?";
-        urgentLabel.textColor = [UIColor wp_blue];
+        urgentLabel.textColor = [UIColor grayColor];
         urgentLabel;
     }) wp_addToSuperview:self];
     
@@ -61,7 +61,7 @@
     _ratingLabel = [({
         UILabel *ratingLabel = [[UILabel alloc] init];
         ratingLabel.text = @"Rating";
-        ratingLabel.textColor = [UIColor wp_blue];
+        ratingLabel.textColor = [UIColor grayColor];
         ratingLabel;
     }) wp_addToSuperview:self];
     
@@ -71,10 +71,55 @@
         rating;
     }) wp_addToSuperview:self];
     
+    _rating1 = [({
+        UIButton *rating1 = [[UIButton alloc] init];
+        rating1.layer.borderColor = [UIColor wp_red].CGColor;
+        rating1.layer.borderWidth = wpBorderWidth;
+        rating1.layer.cornerRadius = 20;
+        rating1.layer.backgroundColor = [UIColor clearColor].CGColor;
+        rating1;
+    }) wp_addToSuperview:self];
+    
+    _rating2 = [({
+        UIButton *rating2 = [[UIButton alloc] init];
+        rating2.layer.borderColor = [UIColor wp_orange].CGColor;
+        rating2.layer.borderWidth = wpBorderWidth;
+        rating2.layer.cornerRadius = 20;
+        rating2.layer.backgroundColor = [UIColor clearColor].CGColor;
+        rating2;
+    }) wp_addToSuperview:self];
+    
+    _rating3 = [({
+        UIButton *rating3 = [[UIButton alloc] init];
+        rating3.layer.borderColor = [UIColor wp_yellow].CGColor;
+        rating3.layer.borderWidth = wpBorderWidth;
+        rating3.layer.cornerRadius = 20;
+        rating3.layer.backgroundColor = [UIColor clearColor].CGColor;
+        rating3;
+    }) wp_addToSuperview:self];
+    
+    _rating4 = [({
+        UIButton *rating4 = [[UIButton alloc] init];
+        rating4.layer.borderColor = [UIColor wp_lime].CGColor;
+        rating4.layer.borderWidth = wpBorderWidth;
+        rating4.layer.cornerRadius = 20;
+        rating4.layer.backgroundColor = [UIColor clearColor].CGColor;
+        rating4;
+    }) wp_addToSuperview:self];
+    
+    _rating5 = [({
+        UIButton *rating5 = [[UIButton alloc] init];
+        rating5.layer.borderColor = [UIColor wp_lightGreen].CGColor;
+        rating5.layer.borderWidth = wpBorderWidth;
+        rating5.layer.cornerRadius = 20;
+        rating5.layer.backgroundColor = [UIColor clearColor].CGColor;
+        rating5;
+    }) wp_addToSuperview:self];
+    
     _descriptionLabel = [({
         UILabel *descriptionLabel = [[UILabel alloc] init];
         descriptionLabel.text = @"Description";
-        descriptionLabel.textColor = [UIColor wp_blue];
+        descriptionLabel.textColor = [UIColor grayColor];
         descriptionLabel;
     }) wp_addToSuperview:self];
     
@@ -85,11 +130,6 @@
         field.layer.cornerRadius = wpCornerRadius;
         field;
     }) wp_addToSuperview:self];
-    
-//    _healthRating = [({
-//        UIPickerView *health = _parentFieldReportViewController.healthPickerController.healthRatingPicker;
-//        health;
-//    }) wp_addToSuperview:self];
 
     _addPhotoButton = [({
         UIButton *addPhoto = [[UIButton alloc] init];
@@ -118,27 +158,52 @@
     [_addPhotoButton setTitleColor:[UIColor wp_darkBlue] forState: UIControlStateNormal];
     [_ratingField setKeyboardType:UIKeyboardTypeNumberPad];
     [_urgentSwitch setOnTintColor:[UIColor redColor]];
+    [_rating1 setTitle:@"1" forState:UIControlStateNormal];
+    [_rating2 setTitle:@"2" forState:UIControlStateNormal];
+    [_rating3 setTitle:@"3" forState:UIControlStateNormal];
+    [_rating4 setTitle:@"4" forState:UIControlStateNormal];
+    [_rating5 setTitle:@"5" forState:UIControlStateNormal];
+    [_rating1.titleLabel setTextAlignment:NSTextAlignmentCenter];
+    [_rating2.titleLabel setTextAlignment:NSTextAlignmentCenter];
+    [_rating3.titleLabel setTextAlignment:NSTextAlignmentCenter];
+    [_rating4.titleLabel setTextAlignment:NSTextAlignmentCenter];
+    [_rating5.titleLabel setTextAlignment:NSTextAlignmentCenter];
+    [_rating1 setTitleColor:[UIColor wp_red] forState: UIControlStateNormal];
+    [_rating2 setTitleColor:[UIColor wp_orange] forState: UIControlStateNormal];
+    [_rating3 setTitleColor:[UIColor wp_yellow] forState: UIControlStateNormal];
+    [_rating4 setTitleColor:[UIColor wp_lime] forState: UIControlStateNormal];
+    [_rating5 setTitleColor:[UIColor wp_lightGreen] forState: UIControlStateNormal];
+    [_rating1 addTarget:self action:@selector(ratingClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_rating2 addTarget:self action:@selector(ratingClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_rating3 addTarget:self action:@selector(ratingClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_rating4 addTarget:self action:@selector(ratingClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_rating5 addTarget:self action:@selector(ratingClick:) forControlEvents:UIControlEventTouchUpInside];
+}
 
+-(void)ratingClick {
+    if (_rating1.layer.borderWidth == 0 ) {
+        _rating1.backgroundColor = _rating1.titleLabel.textColor;
+        _rating1.titleLabel.textColor = [UIColor whiteColor];
+    } else {
+        _rating1.titleLabel.textColor = _rating1.backgroundColor;
+        _rating1.backgroundColor = [UIColor clearColor];
+        _rating1.layer.borderWidth = 0;
+    }
 }
 
 - (void)updateConstraints {
     [self.urgentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(topMargin));
+        make.top.equalTo(@(topMargin + standardMargin));
         make.leading.equalTo(@(standardMargin));
     }];
     
     [self.urgentSwitch mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(topMargin));
+        make.top.equalTo(@(topMargin + standardMargin));
         make.trailing.equalTo(@(-standardMargin));
     }];
     [self.ratingLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
         make.leading.equalTo(@(standardMargin));
-    }];
-    
-    [self.ratingField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
-        make.trailing.equalTo(@(-standardMargin));
     }];
     
     [self.healthRating mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -149,8 +214,50 @@
     }];
 
 
+    [self.healthRating mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.fieldDescription.mas_bottom).with.offset(standardMargin);
+        make.centerX.equalTo(self.mas_centerX);
+        make.height.equalTo(@(wpButtonHeight));
+        make.width.equalTo(@(wpButtonWidth));
+    }];
+    
+    [self.rating1 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
+        make.leading.equalTo(self.ratingLabel.mas_right).with.offset(10);
+        make.height.equalTo(@40);
+        make.width.equalTo(@40);
+    }];
+    
+    [self.rating2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
+        make.leading.equalTo(self.rating1.mas_right).with.offset(10);
+        make.height.equalTo(@40);
+        make.width.equalTo(@40);
+    }];
+
+    [self.rating3 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
+        make.leading.equalTo(self.rating2.mas_right).with.offset(10);
+        make.height.equalTo(@40);
+        make.width.equalTo(@40);
+    }];
+    
+    [self.rating4 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
+        make.leading.equalTo(self.rating3.mas_right).with.offset(10);
+        make.height.equalTo(@40);
+        make.width.equalTo(@40);
+    }];
+    
+    [self.rating5 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
+        make.leading.equalTo(self.rating4.mas_right).with.offset(10);
+        make.height.equalTo(@40);
+        make.width.equalTo(@40);
+    }];
+    
     [self.descriptionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.ratingLabel.mas_bottom).with.offset(standardMargin);
+        make.top.equalTo(self.rating5.mas_bottom).with.offset(standardMargin);
         make.leading.equalTo(@(standardMargin));
     }];
     

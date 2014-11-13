@@ -21,5 +21,10 @@
 @property (nonatomic) UIPickerView *healthRatingPicker;
 @property (nonatomic) UITextField *ratingField;
 @property (nonatomic) UIImageView *selectedImageView;
+@property (nonatomic) UIButton *rating1;
+@property (nonatomic) UIButton *rating2;
+@property (nonatomic) UIButton *rating3;
+@property (nonatomic) UIButton *rating4;
+@property (nonatomic) UIButton *rating5;
 
 @end
