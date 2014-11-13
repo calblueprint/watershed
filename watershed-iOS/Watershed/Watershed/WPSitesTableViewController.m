@@ -122,6 +122,7 @@ static NSString *cellIdentifier = @"SiteCell";
 
 - (void)openSearch {
     [self.searchController setActive:YES animated:YES];
+    [self.searchBar becomeFirstResponder];
     [UIView animateWithDuration:0.2 animations:^{
         self.searchBar.alpha = 1;
         [self.searchBar setFrame:CGRectMake(0, 10, [[UIScreen mainScreen] bounds].size.width, topMargin)];
