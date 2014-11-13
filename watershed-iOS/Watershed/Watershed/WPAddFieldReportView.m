@@ -180,14 +180,15 @@
     [_rating5 addTarget:self action:@selector(ratingClick:) forControlEvents:UIControlEventTouchUpInside];
 }
 
--(void)ratingClick {
-    if (_rating1.layer.borderWidth == 0 ) {
-        _rating1.backgroundColor = _rating1.titleLabel.textColor;
-        _rating1.titleLabel.textColor = [UIColor whiteColor];
+-(void)ratingClick:(UIButton *)sender {
+    if (sender.layer.borderWidth == 1) {
+        sender.backgroundColor = sender.titleLabel.textColor;
+        [sender setTitleColor:[UIColor whiteColor] forState: UIControlStateNormal];
+        sender.layer.borderWidth = 0;
     } else {
-        _rating1.titleLabel.textColor = _rating1.backgroundColor;
-        _rating1.backgroundColor = [UIColor clearColor];
-        _rating1.layer.borderWidth = 0;
+        [sender setTitleColor:sender.backgroundColor forState: UIControlStateNormal];
+        sender.backgroundColor = [UIColor clearColor];
+        sender.layer.borderWidth = 1;
     }
 }
 
