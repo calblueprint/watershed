@@ -19,23 +19,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.navigationItem.title = @"New Field Report";
     [self.view.addPhotoButton addTarget:self action:@selector(addPhotoButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    int ratingMax = 5; //Change this if you want higher ratings
-    _pickerData = [[NSMutableArray alloc] init];
-    for(int i = 0; i < ratingMax; i++)
-    {
-        [_pickerData addObject:[NSNumber numberWithInt:i]];
-    }
-    self.view.healthRatingPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(10, 200, 300, 200)];
-    self.view.healthRatingPicker.showsSelectionIndicator = YES;
-    self.view.healthRatingPicker.delegate = self;
-    self.view.healthRatingPicker.dataSource = self;
-//    self.view.ratingField.inputView = self.view.healthRatingPicker;
 }
 
 -(void)loadView {
     self.view = [[WPAddFieldReportView alloc] init];
-    [self.view setBackgroundColor:[UIColor whiteColor]];
 }
 
 - (void)didReceiveMemoryWarning {

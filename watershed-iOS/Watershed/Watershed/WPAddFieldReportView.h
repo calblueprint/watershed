@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "WPAddPhotoViewController.h"
+#import "UIExtensions.h"
 #import "WPAddFieldReportViewController.h"
 
 
-@interface WPAddFieldReportView : UIView
+@interface WPAddFieldReportView : WPView
 
 @property (nonatomic) UITextView *fieldDescription;
 @property (nonatomic) UIPickerView *healthRating;

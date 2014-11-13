@@ -8,8 +8,9 @@
 #import "WPTaskView.h"
 
 #import <UIKit/UIKit.h>
+#import "UIExtensions.h"
 
-@interface WPTaskViewController : UIViewController
+@interface WPTaskViewController : WPViewController
 
 @property (nonatomic) NSString *taskTitle;
 @property (nonatomic) NSString *taskDescription;

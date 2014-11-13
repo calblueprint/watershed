@@ -10,7 +10,7 @@
 #import "WPMyTasksTableViewController.h"
 #import "WPAllTasksTableViewController.h"
 
-@interface WPTasksListViewController : UIViewController
+@interface WPTasksListViewController : WPViewController
 
 @property (nonatomic) WPMyTasksTableViewController *myTasksTableController;
 @property (nonatomic) WPAllTasksTableViewController * allTasksTableController;

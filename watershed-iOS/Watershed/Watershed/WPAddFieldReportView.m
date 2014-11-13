@@ -24,8 +24,8 @@
 @implementation WPAddFieldReportView
 
 
-- (instancetype)init {
-    self = [super init];
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame visibleNavbar:YES];
     if (self) {
         [self createSubviews];
         [self updateConstraints];
@@ -34,9 +34,8 @@
     return self;
 }
 
-
 - (instancetype)initWithFrame:(CGRect)frame andPickerViewController: (WPAddFieldReportViewController *)parentViewController {
-    self = [super init];
+    self = [super initWithFrame:frame visibleNavbar:YES];
     self.parentFieldReportViewController = parentViewController;
     if (self) {
         [self createSubviews];
