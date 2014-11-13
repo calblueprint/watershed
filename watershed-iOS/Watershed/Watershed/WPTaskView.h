@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UIExtensions.h"
 
-@interface WPTaskView : UIView
+@interface WPTaskView : WPView
 
 @property (nonatomic) UILabel *title;
 @property (nonatomic) UILabel *taskDescription;

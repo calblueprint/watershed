@@ -19,11 +19,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"Task 1";
     self.view.backgroundColor = [UIColor whiteColor];
     self.view.dueDate.text = self.dueDate;
     self.view.taskDescription.text = self.taskDescription;
     self.view.title.text = self.taskTitle;
+    self.navigationItem.title = self.taskTitle;
     [self.view.addFieldReportButton addTarget:self action:@selector(addFieldReportAction) forControlEvents:UIControlEventTouchUpInside];
 
 }
