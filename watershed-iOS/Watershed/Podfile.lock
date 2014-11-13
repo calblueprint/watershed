@@ -1,5 +1,8 @@
 PODS:
   - AFNetworking (1.3.4)
+  - Bolts (1.1.3)
+  - Facebook-iOS-SDK (3.20.0):
+    - Bolts (~> 1.0)
   - FontAwesomeKit (2.1.8):
     - FontAwesomeKit/Core
     - FontAwesomeKit/FontAwesome
@@ -15,49 +18,22 @@ PODS:
     - FontAwesomeKit/Core
   - FontAwesomeKit/Zocial (2.1.8):
     - FontAwesomeKit/Core
-  - ISO8601DateFormatterValueTransformer (0.6.0):
-    - RKValueTransformers (~> 1.1.0)
   - Masonry (0.5.3)
-  - RestKit (0.23.3):
-    - RestKit/Core
-  - RestKit/Core (0.23.3):
-    - RestKit/CoreData
-    - RestKit/Network
-    - RestKit/ObjectMapping
-  - RestKit/CoreData (0.23.3):
-    - RestKit/ObjectMapping
-  - RestKit/Network (0.23.3):
-    - AFNetworking (~> 1.3.0)
-    - RestKit/ObjectMapping
-    - RestKit/Support
-    - SOCKit
-  - RestKit/ObjectMapping (0.23.3):
-    - ISO8601DateFormatterValueTransformer (~> 0.6.0)
-    - RestKit/Support
-    - RKValueTransformers (~> 1.1.0)
-  - RestKit/Support (0.23.3):
-    - TransitionKit (= 2.1.0)
-  - RKValueTransformers (1.1.0)
-  - SOCKit (1.1)
-  - TransitionKit (2.1.0)
   - UIImage+BlurredFrame (0.0.4)
 
 DEPENDENCIES:
   - AFNetworking
+  - Facebook-iOS-SDK
   - FontAwesomeKit
   - Masonry
-  - RestKit
   - UIImage+BlurredFrame
 
 SPEC CHECKSUMS:
   AFNetworking: 80c4e0652b08eb34e25b9c0ff3c82556fe5967b4
+  Bolts: 3db0a875235e0c9042b013af13af0f00f79b102c
+  Facebook-iOS-SDK: 5854404b4b651f612a8ef79ca06d766858f4cb8e
   FontAwesomeKit: a2edea3111dab107b4cc43b85881b404eb063385
-  ISO8601DateFormatterValueTransformer: a705384ea6531255258e25b6480ba1180db703a0
   Masonry: 35368c2ca9577ca87722c12fc52c4bad9b1c1516
-  RestKit: 193a35cddae5198388977abaedad129f8acb978b
-  RKValueTransformers: b705e7b4651b9206b94600408462b74554bba969
-  SOCKit: d8d0dd3688ae1026c12367570da8fa8e1a6980fb
-  TransitionKit: 6a6f3ddda38ae758778aa889dcb930e4f8d64edc
   UIImage+BlurredFrame: 0c38f5760d72125c47d16001a88faaac573bd35d
 
 COCOAPODS: 0.34.4

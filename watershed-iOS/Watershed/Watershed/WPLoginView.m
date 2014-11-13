@@ -8,9 +8,22 @@
 
 #import "WPLoginView.h"
 
+@interface WPLoginView ()
+
+@property (nonatomic) FBLoginView *fbLoginView;
+
+@end
 
 
 @implementation WPLoginView
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        
+    }
+    return self;
+}
 
 @end
 
