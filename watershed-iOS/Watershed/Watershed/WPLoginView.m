@@ -16,6 +16,9 @@
 @property (nonatomic) UIImageView *emailIconView;
 @property (nonatomic) UIImageView *appIconView;
 @property (nonatomic) UILabel *appTitleLabel;
+@property (nonatomic) UITextField *emailTextField;
+@property (nonatomic) UITextField *passwordTextField;
+
 
 @end
 
@@ -38,9 +41,23 @@
     [_emailButton addTarget:self action:@selector(emailSignup) forControlEvents:UIControlEventTouchUpInside];
 }
 
+//http://stackoverflow.com/questions/6972092/ios-how-to-store-username-password-within-an-app
 - (void)emailSignup {
-    //hi
+    //animate email
     
+    _emailTextField = [[UITextField alloc] init];
+    _emailTextField.font = [UIFont fontWithName:@"Helvetica" size:10];
+    _emailTextField.textColor = [UIColor whiteColor];
+    _emailTextField.text = @"Email";
+    [self addSubview:_emailTextField];
+    
+    _passwordTextField = [[UITextField alloc] init];
+    _passwordTextField.font = [UIFont fontWithName:@"Helvetica" size:10];
+    _passwordTextField.textColor = [UIColor whiteColor];
+    _passwordTextField.text = @"Password";
+    [self addSubview:_passwordTextField];
+    
+    [self updateConstraints];
 }
 
 - (void)createSubviews {
@@ -101,6 +118,21 @@
     [self.emailIconView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.emailButton.mas_centerY);
         make.leading.equalTo(@7);
+    }];
+    
+    [self.emailTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.emailButton.mas_bottom);
+        make.centerX.equalTo(self.mas_centerX);
+        make.height.equalTo(@15);
+        make.width.equalTo(self.fbLoginView.mas_width);
+    }];
+    
+    [self.passwordTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.emailTextField.mas_bottom);
+        make.centerX.equalTo(self.mas_centerX);
+        make.height.equalTo(@15);
+        make.width.equalTo(self.fbLoginView.mas_width);
+
     }];
     
     [super updateConstraints];
