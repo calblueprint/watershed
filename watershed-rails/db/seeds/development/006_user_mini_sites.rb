@@ -1,4 +1,4 @@
-mini_site = MiniSite.first
+mini_site = MiniSite.last
 
 User.all.each do |user|
   user.add_mini_site(mini_site)
