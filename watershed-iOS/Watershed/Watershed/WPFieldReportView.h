@@ -10,7 +10,6 @@
 
 @interface WPFieldReportView : WPView
 
-+ (UIColor *)colorForRating:(NSInteger)rating;
 - (void)showBubbles;
 
 @end

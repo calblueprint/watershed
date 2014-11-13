@@ -35,7 +35,7 @@ const static float BORDER_WIDTH = 6.0f;
     self = [super initWithFrame:frame];
     if (self) {
         _rating = arc4random() % 5 + 1;
-        _ratingColor = [WPFieldReportView colorForRating:self.rating];
+        _ratingColor = [UIColor colorForRating:self.rating];
         self.backgroundColor = self.ratingColor;
         [self createSubviews];
         [self setNeedsUpdateConstraints];
@@ -226,33 +226,6 @@ const static float BORDER_WIDTH = 6.0f;
 }
 
 #pragma mark - UIView Modifications
-
-+ (UIColor *)colorForRating:(NSInteger)rating {
-    switch (rating) {
-        case 1:
-            return [UIColor wp_red];
-            break;
-            
-        case 2:
-            return [UIColor wp_orange];
-            break;
-            
-        case 3:
-            return [UIColor wp_yellow];
-            break;
-            
-        case 4:
-            return [UIColor wp_lime];
-            break;
-            
-        case 5:
-            return [UIColor wp_lightGreen];
-            break;
-        default:
-            return [UIColor grayColor];
-            break;
-    }
-}
 
 - (void)showBubbles {
     [UIView animateWithDuration:0.5 animations:^{

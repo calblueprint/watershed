@@ -21,5 +21,7 @@
 + (UIColor *)wp_lime;
 + (UIColor *)wp_lightGreen;
 + (UIColor *)wp_green;
+
++ (UIColor *)colorForRating:(NSInteger)rating;
 @end
 
