@@ -34,6 +34,18 @@
 }
 
 - (void)createSubviews {
+    
+    _appIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Logo"]];
+    _appIconView.contentMode = UIViewContentModeScaleAspectFit;
+    [self addSubview:_appIconView];
+    
+    _appTitleLabel = [[UILabel alloc] init];
+    _appTitleLabel.text = @"Watershed";
+    _appTitleLabel.textColor = [UIColor whiteColor];
+    _appTitleLabel.font = [UIFont systemFontOfSize:27.0];
+    _appTitleLabel.textAlignment = NSTextAlignmentCenter;
+    [self addSubview:_appTitleLabel];
+    
     _fbLoginView = [[FBLoginView alloc] init];
     [self addSubview:_fbLoginView];
     
@@ -46,17 +58,9 @@
     _emailIconView = [[UIImageView alloc] initWithImage:[mailIcon imageWithSize:CGSizeMake(30, 30)]];
     [_emailButton addSubview:_emailIconView];
     [self addSubview:_emailButton];
+
     
-    _appIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Logo"]];
-    _appIconView.contentMode = UIViewContentModeScaleAspectFit;
-    [self addSubview:_appIconView];
-    
-    _appTitleLabel = [[UILabel alloc] init];
-    _appTitleLabel.text = @"Watershed";
-    _appTitleLabel.textColor = [UIColor whiteColor];
-    _appTitleLabel.font = [UIFont systemFontOfSize:27.0];
-    _appTitleLabel.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:_appTitleLabel];
+
 }
 
 - (void)updateConstraints {
@@ -74,12 +78,13 @@
     [self.fbLoginView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.appTitleLabel.mas_bottom).with.offset(20);
         make.centerX.equalTo(self.mas_centerX);
+        make.width.equalTo(@300);
     }];
     
     [self.emailButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.mas_centerX);
         make.top.equalTo(self.fbLoginView.mas_bottom).with.offset(10);
-        make.width.equalTo(self.fbLoginView.mas_width);
+        make.leading.equalTo(self.fbLoginView.mas_leading);
     }];
     
     [self.emailIconView mas_makeConstraints:^(MASConstraintMaker *make) {
