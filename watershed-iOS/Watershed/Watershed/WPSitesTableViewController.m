@@ -33,21 +33,7 @@ static NSString *cellIdentifier = @"SiteCell";
     [super viewDidLoad];
     self.navigationItem.title = @"Sites";
     
-    FAKFontAwesome *searchIcon = [FAKFontAwesome searchIconWithSize:18];
-    UIImage *searchImage = [searchIcon imageWithSize:CGSizeMake(20, 20)];
-    UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithImage:searchImage style:UIBarButtonItemStylePlain target:self action:@selector(openSearch)];
-    searchButtonItem.tintColor = [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = searchButtonItem;
-
-    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, topMargin, [[UIScreen mainScreen] bounds].size.width, topMargin)];
-    self.searchBar.delegate = self;
-    self.searchBar.placeholder = @"Search Sites";
-    self.searchBar.tintColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
-    
-    self.searchController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
-    self.searchController.delegate = self;
-    self.searchController.searchResultsDataSource = self;
-    [self.view addSubview:self.searchBar];
+    [self setUpSearchBar];
     
     [self loadSiteData];
     self.sitesTableView.delegate = self;
@@ -119,6 +105,24 @@ static NSString *cellIdentifier = @"SiteCell";
 }
 
 #pragma mark - Search / Search Delegate Methods
+
+- (void)setUpSearchBar {
+    FAKFontAwesome *searchIcon = [FAKFontAwesome searchIconWithSize:18];
+    UIImage *searchImage = [searchIcon imageWithSize:CGSizeMake(20, 20)];
+    UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithImage:searchImage style:UIBarButtonItemStylePlain target:self action:@selector(openSearch)];
+    searchButtonItem.tintColor = [UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem = searchButtonItem;
+    
+    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, topMargin, [[UIScreen mainScreen] bounds].size.width, topMargin)];
+    self.searchBar.delegate = self;
+    self.searchBar.placeholder = @"Search Sites";
+    self.searchBar.tintColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
+    [self.view addSubview:self.searchBar];
+    
+    self.searchController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
+    self.searchController.delegate = self;
+    self.searchController.searchResultsDataSource = self;
+}
 
 - (void)openSearch {
     [self.searchController setActive:YES animated:YES];
