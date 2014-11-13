@@ -22,6 +22,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = @"Add Field Report";
     [self.view.addPhotoButton addTarget:self action:@selector(addPhotoButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view.urgentSwitch addTarget:self action:@selector(changeSwitch:) forControlEvents:UIControlEventValueChanged];
 }
 
 -(void)loadView {
@@ -48,6 +49,11 @@
     self.view.ratingField.inputView = self.view.healthRatingPicker;
 }
 
+- (void)changeSwitch:(UISwitch *) sender {
+    if ([sender isOn]) {
+        //MIGHT USE LATER
+    }
+}
 
 - (void)addPhotoButtonAction:(UIButton *) sender {
     UIAlertController *addPhotoActionSheet = [UIAlertController alertControllerWithTitle:nil
