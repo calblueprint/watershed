@@ -134,7 +134,7 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
                         }
                     }
                 }
-        , getActivity()){}; //
+        , getActivity()){};
 
         mRequestHandler.getRequestQueue().add(request);
     }

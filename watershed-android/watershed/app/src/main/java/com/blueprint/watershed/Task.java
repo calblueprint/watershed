@@ -19,76 +19,49 @@ public class Task {
 
     private ObjectMapper mMapper = new ObjectMapper();
 
-    /** The title of the task**/
+    private Integer mId;
     private String mTitle;
-    /** Description of task **/
     private String mDescription;
-    /** site id that the action takes place at **/
-    private String mSiteId;
-    /** id of user assigned to task **/
-    private String mAssigneeId;
-    /** id of user who assigned the task **/
-    private String mAssignerId;
-    /** is the task complete? **/
-    private String mTaskComplete;
-    /** task due date **/
-    private String mDueDate;
-
-    public Task(String title, String description,
-                String siteId, String assigneeId, String assignerId,
-                String taskComplete, String dueDate) {
-        mTitle = title;
-        mDescription = description;
-        mSiteId = siteId;
-        mAssigneeId = assigneeId;
-        mAssignerId = assignerId;
-        mTaskComplete = taskComplete;
-        mDueDate = dueDate;
-    }
+    private Integer mSiteId;
+    private Integer mAssigneeId;
+    private Integer mAssignerId;
+    private Boolean mComplete;
+    private Date mDueDate;
+    private Date mUpdatedAt;
+    private Date mCreatedAt;
 
     public Task(){
     }
 
+    public Integer getId() {return mId;}
     public String getTitle() { return mTitle; }
     public String getDescription() { return mDescription; }
-    public String getSiteId() { return mSiteId; }
-    public String getAssigneeId() { return mAssigneeId; }
-    public String getAssignerId() { return mAssignerId; }
-    public String getTaskComplete() { return mTaskComplete; }
-    public String getDueDate() { return mDueDate; }
+    public Integer getSiteId() { return mSiteId; }
+    public Integer getAssigneeId() { return mAssigneeId; }
+    public Integer getAssignerId() { return mAssignerId; }
+    public Boolean getComplete() { return mComplete; }
+    public Date getDueDate() { return mDueDate; }
+    public Date getUpdatedAt() { return mUpdatedAt; }
+    public Date getCreatedAt() {return mCreatedAt;}
 
+    public void setId(Integer Id){ mId = Id;}
     public void setTitle (String title){
         mTitle = title;
     }
     public void setDescription(String description){
         mDescription = description;
     }
-    public void setAssigneeId(String assigneeId) {
+    public void setSiteId(Integer siteId){ mSiteId = siteId; }
+    public void setAssigneeId(Integer assigneeId) {
         mAssigneeId = assigneeId;
     }
-    public void setAssignerId(String assignerId){
+    public void setAssignerId(Integer assignerId){
         mAssignerId = assignerId;
     }
-    public void setTaskComplete(String taskComplete){
-        mTaskComplete = taskComplete;
-    }
-    public void setDueDate(String dueDate){
+    public void setComplete(Boolean taskComplete){mComplete = taskComplete;}
+    public void setDueDate(Date dueDate){
         mDueDate = dueDate;
     }
-
-    //probably doesn't work yet. Should serialize the Task to JSON
-//    public void Serializer(){
-//        try {
-//            mMapper.writeValue(new File("task.json"), this);
-//        }
-//        catch (JsonGenerationException ex) {
-//            //handle exception
-//        }
-//        catch (JsonMappingException ex2) {
-//            //handle exception
-//        }
-//        catch (IOException ex3) {
-//            //handle exception
-//        }
-//    }
+    public void setUpdatedAt(Date updatedAt) { mUpdatedAt = updatedAt;}
+    public void setCreatedAt(Date createdAt) { mCreatedAt = createdAt;}
 }

@@ -27,12 +27,17 @@ public class TaskDetailFragment extends Fragment {
         Bundle args = new Bundle();
         args.putString("title", task.getTitle());
         args.putString("description", task.getDescription());
-        args.putString("siteId", task.getSiteId());
-        args.putString("assigneeId", task.getAssigneeId());
-        args.putString("assignerId", task.getAssignerId());
-        args.putString("siteId", task.getSiteId());
-        args.putBoolean("complete", task.getTaskComplete());
-        args.putString("date", task.getDueDate().toString());
+        args.putInt("siteId", task.getSiteId());
+        args.putInt("assigneeId", task.getAssigneeId());
+        args.putInt("assignerId", task.getAssignerId());
+        args.putInt("siteId", task.getSiteId());
+        args.putBoolean("complete", task.getComplete());
+        //args.put("date", task.getDueDate());
+        Log.e("title", task.getTitle());
+        Log.e("description", task.getDescription());
+        Log.e("siteId", task.getSiteId().toString());
+        Log.e("complete", task.getComplete().toString());
+        Log.e("date", task.getDueDate().toString());
         fragment.setArguments(args);
         return fragment;
     }
