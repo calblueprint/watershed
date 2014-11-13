@@ -11,10 +11,12 @@
 #import "WPSiteTableViewCell.h"
 #import "WPSiteViewController.h"
 
-@interface WPSitesTableViewController ()
+@interface WPSitesTableViewController () <UISearchDisplayDelegate, UISearchBarDelegate>
 
 @property (nonatomic) WPSitesTableView *sitesTableView;
 @property (nonatomic) NSMutableArray *siteList;
+@property (nonatomic) UISearchDisplayController *searchController;
+@property (nonatomic) UISearchBar *searchBar;
 
 @end
 
@@ -33,9 +35,19 @@ static NSString *cellIdentifier = @"SiteCell";
     
     FAKFontAwesome *searchIcon = [FAKFontAwesome searchIconWithSize:18];
     UIImage *searchImage = [searchIcon imageWithSize:CGSizeMake(18, 18)];
-    UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithImage:searchImage style:UIBarButtonItemStylePlain target:self action:nil];
+    UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithImage:searchImage style:UIBarButtonItemStylePlain target:self action:@selector(openSearch)];
     searchButtonItem.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = searchButtonItem;
+
+    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, topMargin, [[UIScreen mainScreen] bounds].size.width, topMargin)];
+    self.searchBar.delegate = self;
+    self.searchBar.placeholder = @"Search Sites";
+    self.searchBar.alpha = 0;
+    self.searchBar.tintColor = [UIColor whiteColor];
+    
+    self.searchController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
+    self.searchController.delegate = self;
+    [self.view addSubview:self.searchBar];
     
     [self loadSiteData];
     self.sitesTableView.delegate = self;
@@ -104,6 +116,27 @@ static NSString *cellIdentifier = @"SiteCell";
 - (void)updatePhotoOffset:(CGFloat)contentOffset {
     [self.sitesTableView.visibleCells makeObjectsPerformSelector:@selector(updatePhotoPosition:)
                                                       withObject:@(contentOffset)];
+}
+
+#pragma mark - Search / Search Delegate Methods
+
+- (void)openSearch {
+    [self.searchController setActive:YES animated:YES];
+    [UIView animateWithDuration:0.2 animations:^{
+        self.searchBar.alpha = 1;
+        [self.searchBar setFrame:CGRectMake(0, 10, [[UIScreen mainScreen] bounds].size.width, topMargin)];
+    }];
+}
+
+- (void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller {
+    [self searchBarCancelButtonClicked:self.searchBar];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    [UIView animateWithDuration:0.2 animations:^{
+        searchBar.alpha = 0;
+        [self.searchBar setFrame:CGRectMake(0, topMargin, [[UIScreen mainScreen] bounds].size.width, topMargin)];
+    }];
 }
 
 #pragma mark - Lazy instantiation
