@@ -32,6 +32,9 @@ class User < ActiveRecord::Base
   has_many :assigned_tasks, class_name: "Task", foreign_key: "assigner_id"
   has_many :tasks, class_name: "Task", foreign_key: "assignee_id"
 
+  has_many :user_mini_sites
+  has_many :mini_sites, through: :user_mini_sites
+
   # Token Authentication
   def ensure_authentication_token
     if authentication_token.blank?

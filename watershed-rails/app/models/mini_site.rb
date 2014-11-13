@@ -17,6 +17,10 @@
 #
 
 class MiniSite < ActiveRecord::Base
-  has_many :field_reports, dependent: :destroy
   belongs_to :site
+
+  has_many :field_reports, dependent: :destroy
+
+  has_many :user_mini_sites
+  has_many :users, through: :user_mini_sites
 end
