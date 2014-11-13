@@ -36,6 +36,14 @@ class User < ActiveRecord::Base
   has_many :mini_sites, through: :user_mini_sites
 
   #
+  # Search
+  #
+  include PgSearch
+  pg_search_scope :search,
+                  against: [[:name, "A"], [:email, "A"], [:role, "B"]],
+                  using: { tsearch: { prefix: true, normalization: 2 } }
+
+  #
   # Mini Sites
   #
   def has_mini_site?(mini_site)
