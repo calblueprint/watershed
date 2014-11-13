@@ -94,6 +94,7 @@ static NSString *cellIdentifier = @"FieldReportCell";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     WPFieldReportViewController *fieldReportController = [[WPFieldReportViewController alloc] init];
     [self.navigationController pushViewController:fieldReportController animated:YES];
 }
