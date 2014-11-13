@@ -25,11 +25,11 @@ static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
     [super viewDidLoad];
     
     _allTasks = @[
-               @{@"Task": @"Water Tree", @"Description": @"Please", @"DueDate": @"05/11"},
-               @{@"Task": @"Prune Tree", @"Description": @"Pretty please", @"DueDate": @"05/10"},
-               @{@"Task": @"Keep Tree Alive", @"Description": @"Cherry on top"},
-               @{@"Task": @"Start Tree", @"Description": @"Dig hole", @"DueDate": @"05/12"},
-               @{@"Task": @"Put Tree in Hole", @"Description": @"Place it in", @"DueDate": @"05/12"}
+               @{@"Task": @"Water Tree", @"Description": @"Please", @"DueDate": @"05/11", @"Assigner": @"Derek", @"Assignee": @"Lala"},
+               @{@"Task": @"Prune Tree", @"Description": @"Pretty please", @"DueDate": @"05/10", @"Assigner": @"Derek", @"Assignee": @"Lala"},
+               @{@"Task": @"Keep Tree Alive Lot of text. Lot of Text. Lot of Text. Lot of Text.", @"Description": @"Cherry on top. Hello lots of text. Wow that's a lot of text. A lot of text. A lot of Text. A Lot of Text. A Lot Of Text. Lot of text. Lot of text. Lot of text. ", @"Assigner": @"Derek", @"Assignee": @"Lala"},
+               @{@"Task": @"Start Tree", @"Description": @"Dig hole", @"DueDate": @"05/12", @"Assigner": @"Derek", @"Assignee": @"Lala"},
+               @{@"Task": @"Put Tree in Hole", @"Description": @"Place it in", @"DueDate": @"05/12", @"Assigner": @"Derek", @"Assignee": @"Lala"}
                ];
     self.tableView = [[UITableView alloc] init];
     [self.tableView registerClass:[WPTasksTableViewCell class] forCellReuseIdentifier:allTasksIdentifier];
@@ -72,6 +72,9 @@ static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
     taskViewController.taskTitle = self.allTasks[indexPath.row][@"Task"];
     taskViewController.taskDescription = self.allTasks[indexPath.row][@"Description"];
     taskViewController.dueDate = self.allTasks[indexPath.row][@"DueDate"];
+    taskViewController.assignee = self.allTasks[indexPath.row][@"Assignee"];
+    taskViewController.assigner = self.allTasks[indexPath.row][@"Assigner"];
+
     [[self.parentViewController navigationController] pushViewController:taskViewController animated:YES];
 }
 
