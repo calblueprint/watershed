@@ -56,6 +56,7 @@
     
     FAKIonIcons *mailIcon = [FAKIonIcons ios7EmailOutlineIconWithSize:30];
     _emailIconView = [[UIImageView alloc] initWithImage:[mailIcon imageWithSize:CGSizeMake(30, 30)]];
+    _emailIconView.tintColor = [UIColor whiteColor];
     [_emailButton addSubview:_emailIconView];
     [self addSubview:_emailButton];
 
@@ -79,6 +80,7 @@
         make.top.equalTo(self.appTitleLabel.mas_bottom).with.offset(20);
         make.centerX.equalTo(self.mas_centerX);
         make.width.equalTo(@300);
+        make.height.equalTo(@50);
     }];
     
     [self.emailButton mas_makeConstraints:^(MASConstraintMaker *make) {
