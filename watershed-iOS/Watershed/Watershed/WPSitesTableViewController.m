@@ -46,6 +46,7 @@ static NSString *cellIdentifier = @"SiteCell";
     
     self.searchController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
     self.searchController.delegate = self;
+    self.searchController.searchResultsDataSource = self;
     [self.view addSubview:self.searchBar];
     
     [self loadSiteData];
