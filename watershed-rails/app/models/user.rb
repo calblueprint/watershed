@@ -35,7 +35,22 @@ class User < ActiveRecord::Base
   has_many :user_mini_sites
   has_many :mini_sites, through: :user_mini_sites
 
+  #
+  # Mini Sites
+  #
+  def has_mini_site?(mini_site)
+    !user_mini_sites.find_by(mini_site: mini_site).nil?
+  end
+
+  def add_mini_site(mini_site)
+    unless has_mini_site?(mini_site)
+      mini_sites << mini_site
+    end
+  end
+
+  #
   # Token Authentication
+  #
   def ensure_authentication_token
     if authentication_token.blank?
       self.authentication_token = generate_authentication_token
