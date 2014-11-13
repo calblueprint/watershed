@@ -34,7 +34,7 @@ static NSString *cellIdentifier = @"SiteCell";
     self.navigationItem.title = @"Sites";
     
     FAKFontAwesome *searchIcon = [FAKFontAwesome searchIconWithSize:18];
-    UIImage *searchImage = [searchIcon imageWithSize:CGSizeMake(18, 18)];
+    UIImage *searchImage = [searchIcon imageWithSize:CGSizeMake(20, 20)];
     UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithImage:searchImage style:UIBarButtonItemStylePlain target:self action:@selector(openSearch)];
     searchButtonItem.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = searchButtonItem;
