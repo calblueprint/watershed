@@ -27,10 +27,20 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self createSubviews];
+        [self setupActions];
         [self setNeedsUpdateConstraints];
         self.backgroundColor = [UIColor wp_blue];
     }
     return self;
+}
+         
+- (void)setupActions {
+    [_emailButton addTarget:self action:@selector(emailSignup) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)emailSignup {
+    //hi
+    
 }
 
 - (void)createSubviews {
@@ -60,14 +70,12 @@
     [_emailButton addSubview:_emailIconView];
     [self addSubview:_emailButton];
 
-    
-
 }
 
 - (void)updateConstraints {
 
     [self.appIconView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.mas_centerY).with.offset(-150);
+        make.top.equalTo(self.mas_centerY).with.offset(-180);
         make.centerX.equalTo(self.mas_centerX);
     }];
     
