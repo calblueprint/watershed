@@ -67,7 +67,8 @@
 }
 
 - (void)emailSignup {
-    
+    NSString *email = _emailTextField.text;
+    NSString *password = _passwordTextField.text;
 }
 
 - (void)createSubviews {
