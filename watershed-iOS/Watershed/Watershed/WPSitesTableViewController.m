@@ -30,6 +30,13 @@ static NSString *cellIdentifier = @"SiteCell";
     
     [super viewDidLoad];
     self.navigationItem.title = @"Sites";
+    
+    FAKFontAwesome *searchIcon = [FAKFontAwesome searchIconWithSize:18];
+    UIImage *searchImage = [searchIcon imageWithSize:CGSizeMake(18, 18)];
+    UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithImage:searchImage style:UIBarButtonItemStylePlain target:self action:nil];
+    searchButtonItem.tintColor = [UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem = searchButtonItem;
+    
     [self loadSiteData];
     self.sitesTableView.delegate = self;
     self.sitesTableView.dataSource = self;
