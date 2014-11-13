@@ -18,6 +18,7 @@
 @property (nonatomic) UILabel *appTitleLabel;
 @property (nonatomic) UITextField *emailTextField;
 @property (nonatomic) UITextField *passwordTextField;
+@property (nonatomic) UIButton *signupButton;
 
 
 @end
@@ -38,11 +39,11 @@
 }
          
 - (void)setupActions {
-    [_emailButton addTarget:self action:@selector(emailSignup) forControlEvents:UIControlEventTouchUpInside];
+    [_emailButton addTarget:self action:@selector(showEmailInput) forControlEvents:UIControlEventTouchUpInside];
 }
 
 //http://stackoverflow.com/questions/6972092/ios-how-to-store-username-password-within-an-app
-- (void)emailSignup {
+- (void)showEmailInput {
     //animate email
     
     _emailTextField = [[UITextField alloc] init];
@@ -57,7 +58,16 @@
     _passwordTextField.text = @"Password";
     [self addSubview:_passwordTextField];
     
+    _signupButton = [[UIButton alloc] init];
+    [_signupButton setTitle:@"Sign up" forState:UIControlStateNormal];
+    [_signupButton addTarget:self action:@selector(emailSignup) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:_signupButton];
+    
     [self updateConstraints];
+}
+
+- (void)emailSignup {
+    
 }
 
 - (void)createSubviews {
@@ -132,9 +142,14 @@
         make.centerX.equalTo(self.mas_centerX);
         make.height.equalTo(@15);
         make.width.equalTo(self.fbLoginView.mas_width);
-
     }];
     
+    [self.signupButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.passwordTextField.mas_bottom);
+        make.width.equalTo(self.fbLoginView.mas_width);
+        make.height.equalTo(@50);
+    }];
+
     [super updateConstraints];
 }
 @end
