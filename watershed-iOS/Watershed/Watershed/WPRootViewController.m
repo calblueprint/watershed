@@ -22,22 +22,33 @@
     
 //    UIViewController *launchingViewController = [self newInitialViewController];
     UIViewController *launchingViewController = [self newLoginViewController];
-    
-    [self showInitialViewController:launchingViewController];
+    [self showViewController:launchingViewController];
 }
 
 - (UIViewController *)newInitialViewController {
     return [[WPTabBarController alloc] init];
 }
 
-- (WPLoginViewController *)newLoginViewController {
+- (UIViewController *)newLoginViewController {
     return [[WPLoginViewController alloc] init];
 }
 
-- (void)showInitialViewController:(UIViewController *)initialViewController {
+- (void)showViewController:(UIViewController *)initialViewController {
     [self addChildViewController:initialViewController];
     [self.view addSubview:initialViewController.view];
     self.currentViewController = initialViewController;
+}
+
+- (void)pushNewTabBarController {
+    UIViewController *launchingViewController = [self newInitialViewController];
+    [self showViewController:launchingViewController];
+
+}
+
+- (void)pushNewLoginController {
+    UIViewController *launchingViewController = [self newLoginViewController];
+    [self showViewController:launchingViewController];
+    
 }
 
 - (void)didReceiveMemoryWarning {

@@ -11,6 +11,7 @@
 #import "AFNetworking.h"
 #import "WPAppDelegate.h"
 #import "UICKeyChainStore.h"
+#import "WPRootViewController.h"
 
 static NSString * const SIGNIN_URL = @"users/sign_in";
 
@@ -42,6 +43,7 @@ static NSString * const SIGNIN_URL = @"users/sign_in";
     [manager POST:loginString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
         [self parseResponse:responseObject];
+        [self pushTabBarController];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
@@ -56,6 +58,11 @@ static NSString * const SIGNIN_URL = @"users/sign_in";
     UICKeyChainStore *store = [_appDelegate getKeyChainStore];
     [store setString:authToken forKey:@"auth_token"];
     [store synchronize];
+}
+
+- (void)pushTabBarController {
+    WPRootViewController *parentVC = (WPRootViewController *)self.parentViewController;
+    [parentVC pushNewTabBarController];
 }
 
 @end
