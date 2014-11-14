@@ -23,7 +23,7 @@ static NSString * const SIGNIN_URL = @"users/sign_in";
     [super viewDidLoad];
 }
 
--(void)loadView {
+- (void)loadView {
     self.view = [[WPLoginView alloc] init];
     [self.view setParentViewController:self];
 }
@@ -39,10 +39,17 @@ static NSString * const SIGNIN_URL = @"users/sign_in";
     NSString *loginString = [manager.baseURL.absoluteString stringByAppendingString:SIGNIN_URL];
     [manager POST:loginString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
+        [self parseResponse:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
     
+}
+
+- (void)parseResponse:(id)responseObject {
+    NSDictionary *responseDictionary = responseObject;
+    NSString *authToken = [responseDictionary objectForKey:@"authentication_token"];
+    NSString *name = [[responseDictionary objectForKey:@"user"] objectForKey:@"name"];
 }
 
 @end
