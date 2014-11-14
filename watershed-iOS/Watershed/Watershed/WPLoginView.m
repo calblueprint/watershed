@@ -8,10 +8,6 @@
 
 #import "WPLoginView.h"
 #import "FontAwesomeKit/FontAwesomeKit.h"
-#import "AFNetworking.h"
-#import "WPAppDelegate.h"
-
-static NSString * const SIGNIN_URL = @"users/sign_in";
 
 @interface WPLoginView ()
 
@@ -20,8 +16,6 @@ static NSString * const SIGNIN_URL = @"users/sign_in";
 @property (nonatomic) UIImageView *emailIconView;
 @property (nonatomic) UIImageView *appIconView;
 @property (nonatomic) UILabel *appTitleLabel;
-@property (nonatomic) UITextField *emailTextField;
-@property (nonatomic) UITextField *passwordTextField;
 @property (nonatomic) UIButton *signupButton;
 
 @end
@@ -64,28 +58,12 @@ static NSString * const SIGNIN_URL = @"users/sign_in";
     
     _signupButton = [[UIButton alloc] init];
     [_signupButton setTitle:@"Sign up" forState:UIControlStateNormal];
-    [_signupButton addTarget:self action:@selector(emailSignup) forControlEvents:UIControlEventTouchUpInside];
+    [_signupButton addTarget:_parentViewController action:@selector(emailSignup) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_signupButton];
     
     [self updateConstraints];
 }
 
-- (void)emailSignup {
-    NSString *email = _emailTextField.text;
-    NSString *password = _passwordTextField.text;
-
-    WPAppDelegate *appDelegate = [WPAppDelegate instance];
-    AFHTTPRequestOperationManager *manager = appDelegate.getAFManager;
-    NSDictionary *parameters = @{@"user" : @{@"email": email, @"password": password}};
-
-    NSString *loginString = [manager.baseURL.absoluteString stringByAppendingString:SIGNIN_URL];
-    [manager POST:loginString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-    }];
-    
-}
 
 - (void)createSubviews {
     

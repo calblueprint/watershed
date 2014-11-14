@@ -10,6 +10,12 @@
 #import "WPView.h"
 #import <FacebookSDK/FacebookSDK.h>
 
+@class WPLoginViewController;
+
 @interface WPLoginView : WPView
 
+@property (nonatomic) WPLoginViewController *parentViewController;
+
+@property (nonatomic) UITextField *emailTextField;
+@property (nonatomic) UITextField *passwordTextField;
 @end
