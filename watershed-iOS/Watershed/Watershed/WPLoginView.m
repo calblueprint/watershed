@@ -9,7 +9,8 @@
 #import "WPLoginView.h"
 #import "FontAwesomeKit/FontAwesomeKit.h"
 #import "AFNetworking.h"
-static NSString * const BaseURLString = @"https://intense-reaches-1457.herokuapp.com/api/v1/users/sign_in";
+#import "WPAppDelegate.h"
+static NSString * const SIGNIN_URL = @"users/sign_in";
 
 @interface WPLoginView ()
 
@@ -72,9 +73,14 @@ static NSString * const BaseURLString = @"https://intense-reaches-1457.herokuapp
     NSString *email = _emailTextField.text;
     NSString *password = _passwordTextField.text;
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     NSDictionary *parameters = @{@"user" : @{@"email": email, @"password": password}};
-    [manager POST:BaseURLString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    WPAppDelegate *appDelegate = [WPAppDelegate instance];
+    
+    AFHTTPRequestOperationManager *manager = appDelegate.getAFManager;
+
+    NSString *loginString = [manager.baseURL.absoluteString stringByAppendingString:SIGNIN_URL];
+    [manager POST:loginString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);

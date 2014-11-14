@@ -7,12 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AFNetworking.h"
 
 @interface WPAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 + (WPAppDelegate *)instance;
-
+- (AFHTTPRequestOperationManager *)getAFManager;
 
 @end
     

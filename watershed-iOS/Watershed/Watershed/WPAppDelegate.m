@@ -14,6 +14,14 @@
 #import "WPTaskViewController.h"
 #import "AFNetworkActivityIndicatorManager.h"
 
+static NSString * const BASE_URL = @"https://intense-reaches-1457.herokuapp.com/api/v1/";
+
+@interface WPAppDelegate ()
+
+@property (nonatomic) AFHTTPRequestOperationManager *manager;
+
+@end
+
 @implementation WPAppDelegate
 
 + (WPAppDelegate *)instance {
@@ -27,6 +35,9 @@
     [self.window makeKeyAndVisible];
     
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
+    NSURL *baseURL = [[NSURL alloc] initWithString:BASE_URL];
+    _manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
+    _manager.responseSerializer = [AFJSONResponseSerializer serializer];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
@@ -46,6 +57,10 @@
     [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"BackButton" ]];
 
     return YES;
+}
+
+- (AFHTTPRequestOperationManager *)getAFManager {
+    return _manager;
 }
 							
 - (void)applicationWillResignActive:(UIApplication *)application
