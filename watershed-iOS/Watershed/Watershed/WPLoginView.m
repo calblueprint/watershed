@@ -23,7 +23,6 @@ static NSString * const SIGNIN_URL = @"users/sign_in";
 @property (nonatomic) UITextField *passwordTextField;
 @property (nonatomic) UIButton *signupButton;
 
-
 @end
 
 
@@ -73,11 +72,9 @@ static NSString * const SIGNIN_URL = @"users/sign_in";
     NSString *email = _emailTextField.text;
     NSString *password = _passwordTextField.text;
     
-    NSDictionary *parameters = @{@"user" : @{@"email": email, @"password": password}};
-    
     WPAppDelegate *appDelegate = [WPAppDelegate instance];
-    
     AFHTTPRequestOperationManager *manager = appDelegate.getAFManager;
+    NSDictionary *parameters = @{@"user" : @{@"email": email, @"password": password}};
 
     NSString *loginString = [manager.baseURL.absoluteString stringByAppendingString:SIGNIN_URL];
     [manager POST:loginString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
