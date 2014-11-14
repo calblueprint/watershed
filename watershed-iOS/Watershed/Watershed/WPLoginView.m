@@ -41,7 +41,23 @@
 
 //http://stackoverflow.com/questions/6972092/ios-how-to-store-username-password-within-an-app
 - (void)showEmailInput {
-    //animate email
+
+    [UIView animateWithDuration:.5 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        [self.emailButton removeConstraints:self.emailButton.constraints];
+        CGRect origFrame = (CGRect)[self.emailButton frame];
+        origFrame.origin.y = origFrame.origin.y -= 100;
+        self.emailButton.frame = origFrame;
+        
+    } completion:^(BOOL finished) {
+        [self.emailButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self.mas_centerX);
+            make.top.equalTo(self.fbLoginView.mas_bottom).with.offset(100);
+            make.leading.equalTo(self.fbLoginView.mas_leading);
+            make.height.equalTo(self.fbLoginView.mas_height);
+        }];
+
+    }];
+
     
     _emailTextField = [[UITextField alloc] init];
     _emailTextField.font = [UIFont fontWithName:@"Helvetica" size:10];
@@ -57,7 +73,7 @@
     [self addSubview:_passwordTextField];
     
     _signupButton = [[UIButton alloc] init];
-    [_signupButton setTitle:@"Sign up" forState:UIControlStateNormal];
+    [_signupButton setTitle:@"Sign in" forState:UIControlStateNormal];
     
     SEL emailSignupSelector = sel_registerName("emailSignup");
     [_signupButton addTarget:_parentViewController action:emailSignupSelector forControlEvents:UIControlEventTouchUpInside];
