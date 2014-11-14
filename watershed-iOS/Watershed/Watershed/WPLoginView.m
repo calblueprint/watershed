@@ -8,6 +8,8 @@
 
 #import "WPLoginView.h"
 #import "FontAwesomeKit/FontAwesomeKit.h"
+#import "AFNetworking.h"
+static NSString * const BaseURLString = @"https://intense-reaches-1457.herokuapp.com/api/v1/users/sign_in";
 
 @interface WPLoginView ()
 
@@ -49,13 +51,13 @@
     _emailTextField = [[UITextField alloc] init];
     _emailTextField.font = [UIFont fontWithName:@"Helvetica" size:10];
     _emailTextField.textColor = [UIColor whiteColor];
-    _emailTextField.text = @"Email";
+    _emailTextField.placeholder = @"Email";
     [self addSubview:_emailTextField];
     
     _passwordTextField = [[UITextField alloc] init];
     _passwordTextField.font = [UIFont fontWithName:@"Helvetica" size:10];
     _passwordTextField.textColor = [UIColor whiteColor];
-    _passwordTextField.text = @"Password";
+    _passwordTextField.placeholder = @"Password";
     [self addSubview:_passwordTextField];
     
     _signupButton = [[UIButton alloc] init];
@@ -69,6 +71,15 @@
 - (void)emailSignup {
     NSString *email = _emailTextField.text;
     NSString *password = _passwordTextField.text;
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    NSDictionary *parameters = @{@"user" : @{@"email": email, @"password": password}};
+    [manager POST:BaseURLString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"JSON: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+    
 }
 
 - (void)createSubviews {

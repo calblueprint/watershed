@@ -12,6 +12,7 @@
 #import "WPRootViewController.h"
 #import "WPSiteViewController.h"
 #import "WPTaskViewController.h"
+#import "AFNetworkActivityIndicatorManager.h"
 
 @implementation WPAppDelegate
 
@@ -25,7 +26,7 @@
     self.window.rootViewController = [[WPRootViewController alloc] init];
     [self.window makeKeyAndVisible];
     
-    //[AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
+    [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     

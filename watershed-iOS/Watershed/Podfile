@@ -1,7 +1,7 @@
 platform :ios, '7.0'
 
 pod 'Masonry'
-pod 'AFNetworking'
+pod 'AFNetworking', '~> 2.0'
 pod 'FontAwesomeKit'
 pod 'UIImage+BlurredFrame'
 pod 'Facebook-iOS-SDK'
