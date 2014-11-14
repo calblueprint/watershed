@@ -39,7 +39,6 @@ PODS:
   - FontAwesomeKit/Zocial (2.1.8):
     - FontAwesomeKit/Core
   - Masonry (0.5.3)
-  - SSKeychain (1.2.2)
   - UIImage+BlurredFrame (0.0.4)
 
 DEPENDENCIES:
@@ -47,7 +46,6 @@ DEPENDENCIES:
   - Facebook-iOS-SDK
   - FontAwesomeKit
   - Masonry
-  - SSKeychain
   - UIImage+BlurredFrame
 
 SPEC CHECKSUMS:
@@ -56,7 +54,6 @@ SPEC CHECKSUMS:
   Facebook-iOS-SDK: 5854404b4b651f612a8ef79ca06d766858f4cb8e
   FontAwesomeKit: a2edea3111dab107b4cc43b85881b404eb063385
   Masonry: 35368c2ca9577ca87722c12fc52c4bad9b1c1516
-  SSKeychain: cc48bd3ad24fcd9125adb9e0d23dd50b8bbd08b9
   UIImage+BlurredFrame: 0c38f5760d72125c47d16001a88faaac573bd35d
 
 COCOAPODS: 0.34.4

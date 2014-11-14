@@ -10,6 +10,7 @@
 #import "FontAwesomeKit/FontAwesomeKit.h"
 #import "AFNetworking.h"
 #import "WPAppDelegate.h"
+
 static NSString * const SIGNIN_URL = @"users/sign_in";
 
 @interface WPLoginView ()
@@ -58,6 +59,7 @@ static NSString * const SIGNIN_URL = @"users/sign_in";
     _passwordTextField.font = [UIFont fontWithName:@"Helvetica" size:10];
     _passwordTextField.textColor = [UIColor whiteColor];
     _passwordTextField.placeholder = @"Password";
+    _passwordTextField.secureTextEntry = YES;
     [self addSubview:_passwordTextField];
     
     _signupButton = [[UIButton alloc] init];
@@ -71,7 +73,7 @@ static NSString * const SIGNIN_URL = @"users/sign_in";
 - (void)emailSignup {
     NSString *email = _emailTextField.text;
     NSString *password = _passwordTextField.text;
-    
+
     WPAppDelegate *appDelegate = [WPAppDelegate instance];
     AFHTTPRequestOperationManager *manager = appDelegate.getAFManager;
     NSDictionary *parameters = @{@"user" : @{@"email": email, @"password": password}};

@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "AFNetworking.h"
-#import <Security/Security.h>
 
 @interface WPAppDelegate : UIResponder <UIApplicationDelegate>
 

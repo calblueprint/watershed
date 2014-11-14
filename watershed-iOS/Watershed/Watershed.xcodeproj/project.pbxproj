@@ -42,7 +42,6 @@
 		27F0B70419E249CE00E848C3 /* WPSiteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F0B70319E249CE00E848C3 /* WPSiteViewController.m */; };
 		BA24044519DCF06C00E9DB2F /* WPRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA24044419DCF06C00E9DB2F /* WPRootViewController.m */; };
 		BA24044F19E2477000E9DB2F /* WPProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA24044E19E2477000E9DB2F /* WPProfileViewController.m */; };
-		BA3487A41A159D680015D127 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA3487A31A159D680015D127 /* Security.framework */; };
 		BA38117E1A106B9A00019447 /* WPAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA38117D1A106B9A00019447 /* WPAboutViewController.m */; };
 		BA3811821A107C4700019447 /* WPTermsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3811811A107C4700019447 /* WPTermsViewController.m */; };
 		BA4588B21A146DE200F91275 /* WPLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4588B11A146DE200F91275 /* WPLoginView.m */; };
@@ -173,7 +172,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BA3487A41A159D680015D127 /* Security.framework in Frameworks */,
 				BA4F8DD219C7739300C816E3 /* CoreGraphics.framework in Frameworks */,
 				BA4F8DD419C7739300C816E3 /* UIKit.framework in Frameworks */,
 				BA4F8DD019C7739300C816E3 /* Foundation.framework in Frameworks */,
