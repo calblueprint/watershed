@@ -10,17 +10,20 @@
 #import "WPLoginView.h"
 #import "AFNetworking.h"
 #import "WPAppDelegate.h"
+#import "UICKeyChainStore.h"
 
 static NSString * const SIGNIN_URL = @"users/sign_in";
 
 @interface WPLoginViewController ()
 @property (nonatomic) WPLoginView *view;
+@property (nonatomic) WPAppDelegate *appDelegate;
 @end
 
 @implementation WPLoginViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _appDelegate = [WPAppDelegate instance];
 }
 
 - (void)loadView {
@@ -32,8 +35,7 @@ static NSString * const SIGNIN_URL = @"users/sign_in";
     NSString *email = self.view.emailTextField.text;
     NSString *password = self.view.passwordTextField.text;
     
-    WPAppDelegate *appDelegate = [WPAppDelegate instance];
-    AFHTTPRequestOperationManager *manager = appDelegate.getAFManager;
+    AFHTTPRequestOperationManager *manager = _appDelegate.getAFManager;
     NSDictionary *parameters = @{@"user" : @{@"email": email, @"password": password}};
     
     NSString *loginString = [manager.baseURL.absoluteString stringByAppendingString:SIGNIN_URL];
@@ -49,7 +51,11 @@ static NSString * const SIGNIN_URL = @"users/sign_in";
 - (void)parseResponse:(id)responseObject {
     NSDictionary *responseDictionary = responseObject;
     NSString *authToken = [responseDictionary objectForKey:@"authentication_token"];
-    NSString *name = [[responseDictionary objectForKey:@"user"] objectForKey:@"name"];
+    //NSString *name = [[responseDictionary objectForKey:@"user"] objectForKey:@"name"];
+    
+    UICKeyChainStore *store = [_appDelegate getKeyChainStore];
+    [store setString:authToken forKey:@"auth_token"];
+    [store synchronize];
 }
 
 @end
