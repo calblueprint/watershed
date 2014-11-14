@@ -58,7 +58,9 @@
     
     _signupButton = [[UIButton alloc] init];
     [_signupButton setTitle:@"Sign up" forState:UIControlStateNormal];
-    [_signupButton addTarget:_parentViewController action:@selector(emailSignup) forControlEvents:UIControlEventTouchUpInside];
+    
+    SEL emailSignupSelector = sel_registerName("emailSignup");
+    [_signupButton addTarget:_parentViewController action:emailSignupSelector forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_signupButton];
     
     [self updateConstraints];

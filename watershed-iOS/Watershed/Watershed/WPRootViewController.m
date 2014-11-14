@@ -7,8 +7,6 @@
 //
 
 #import "WPRootViewController.h"
-#import "WPTabBarController.h"
-#import "WPLoginViewController.h"
 
 @interface WPRootViewController ()
 
