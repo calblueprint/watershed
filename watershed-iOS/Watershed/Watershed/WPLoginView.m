@@ -17,16 +17,19 @@
 @property (nonatomic) UIImageView *appIconView;
 @property (nonatomic) UILabel *appTitleLabel;
 @property (nonatomic) UIButton *signupButton;
+@property (nonatomic) MASConstraint *emailButtonTopConstraint;
 
 @end
 
 
 @implementation WPLoginView
+Boolean isFirstTime;
 
 - (instancetype)initWithFrame:(CGRect)frame {
     frame =  UIScreen.mainScreen.bounds;
     self = [super initWithFrame:frame];
     if (self) {
+        isFirstTime = TRUE;
         [self createSubviews];
         [self setupActions];
         [self setNeedsUpdateConstraints];
@@ -41,20 +44,11 @@
 
 //http://stackoverflow.com/questions/6972092/ios-how-to-store-username-password-within-an-app
 - (void)showEmailInput {
-
+    self.emailButtonTopConstraint.offset = 90;
+    [self.emailButton setNeedsUpdateConstraints];
     [UIView animateWithDuration:.5 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
-        [self.emailButton removeConstraints:self.emailButton.constraints];
-        CGRect origFrame = (CGRect)[self.emailButton frame];
-        origFrame.origin.y = origFrame.origin.y -= 100;
-        self.emailButton.frame = origFrame;
-        
+        [self.emailButton layoutIfNeeded];
     } completion:^(BOOL finished) {
-        [self.emailButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.equalTo(self.mas_centerX);
-            make.top.equalTo(self.fbLoginView.mas_bottom).with.offset(100);
-            make.leading.equalTo(self.fbLoginView.mas_leading);
-            make.height.equalTo(self.fbLoginView.mas_height);
-        }];
 
     }];
 
@@ -113,55 +107,57 @@
 }
 
 - (void)updateConstraints {
-
-    [self.appIconView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.mas_centerY).with.offset(-180);
-        make.centerX.equalTo(self.mas_centerX);
-    }];
-    
-    [self.appTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.mas_centerX);
-        make.top.equalTo(self.appIconView.mas_bottom).with.offset(10);
-    }];
-    
-    [self.fbLoginView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.appTitleLabel.mas_bottom).with.offset(20);
-        make.centerX.equalTo(self.mas_centerX);
-        make.width.equalTo(@300);
-        make.height.equalTo(@45);
-    }];
-    
-    [self.emailButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.mas_centerX);
-        make.top.equalTo(self.fbLoginView.mas_bottom).with.offset(10);
-        make.leading.equalTo(self.fbLoginView.mas_leading);
-        make.height.equalTo(self.fbLoginView.mas_height);
-    }];
-    
-    [self.emailIconView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.emailButton.mas_centerY);
-        make.leading.equalTo(@7);
-    }];
-    
-    [self.emailTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.emailButton.mas_bottom);
-        make.centerX.equalTo(self.mas_centerX);
-        make.height.equalTo(@15);
-        make.width.equalTo(self.fbLoginView.mas_width);
-    }];
-    
-    [self.passwordTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.emailTextField.mas_bottom);
-        make.centerX.equalTo(self.mas_centerX);
-        make.height.equalTo(@15);
-        make.width.equalTo(self.fbLoginView.mas_width);
-    }];
-    
-    [self.signupButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.passwordTextField.mas_bottom);
-        make.width.equalTo(self.fbLoginView.mas_width);
-        make.height.equalTo(@50);
-    }];
+    if (isFirstTime) {
+        [self.appIconView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.mas_centerY).with.offset(-180);
+            make.centerX.equalTo(self.mas_centerX);
+        }];
+        
+        [self.appTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self.mas_centerX);
+            make.top.equalTo(self.appIconView.mas_bottom).with.offset(10);
+        }];
+        
+        [self.fbLoginView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.appTitleLabel.mas_bottom).with.offset(20);
+            make.centerX.equalTo(self.mas_centerX);
+            make.width.equalTo(@300);
+            make.height.equalTo(@45);
+        }];
+        
+        [self.emailButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self.mas_centerX);
+            self.emailButtonTopConstraint = make.top.equalTo(self.fbLoginView.mas_bottom).with.offset(10);
+            make.leading.equalTo(self.fbLoginView.mas_leading);
+            make.height.equalTo(self.fbLoginView.mas_height);
+        }];
+        
+        [self.emailIconView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(self.emailButton.mas_centerY);
+            make.leading.equalTo(@7);
+        }];
+        
+        [self.emailTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.emailButton.mas_bottom);
+            make.centerX.equalTo(self.mas_centerX);
+            make.height.equalTo(@15);
+            make.width.equalTo(self.fbLoginView.mas_width);
+        }];
+        
+        [self.passwordTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.emailTextField.mas_bottom);
+            make.centerX.equalTo(self.mas_centerX);
+            make.height.equalTo(@15);
+            make.width.equalTo(self.fbLoginView.mas_width);
+        }];
+        
+        [self.signupButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.passwordTextField.mas_bottom);
+            make.width.equalTo(self.fbLoginView.mas_width);
+            make.height.equalTo(@50);
+        }];
+        isFirstTime = FALSE;
+    }
 
     [super updateConstraints];
 }
