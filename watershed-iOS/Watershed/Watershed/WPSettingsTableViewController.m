@@ -134,7 +134,7 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
         if (indexPath.row == 0) {
             // implement log out logic (erase keychain)
             WPRootViewController *parentVC = (WPRootViewController *)self.parentViewController.parentViewController.parentViewController;
-            [parentVC pushNewLoginController];
+            [parentVC pushNewLoginControllerFromLogin:(WPTabBarController *)self.parentViewController];
         }
     }
 }

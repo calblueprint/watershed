@@ -39,15 +39,39 @@
     self.currentViewController = initialViewController;
 }
 
-- (void)pushNewTabBarController {
+- (void) cycleFromViewController: (UIViewController*) oldC
+                toViewController: (UIViewController*) newC
+{
+    [oldC willMoveToParentViewController:nil];                        // 1
+    [self addChildViewController:newC];
+    
+    newC.view.frame = newC.view.frame;                      // 2
+    CGRect endFrame = oldC.view.frame;
+    
+    [self transitionFromViewController: oldC toViewController: newC   // 3
+                              duration: 1 options:0
+                            animations:^{
+                                newC.view.frame = oldC.view.frame;                       // 4
+                                oldC.view.frame = endFrame;
+                            }
+                            completion:^(BOOL finished) {
+                                [oldC removeFromParentViewController];                   // 5
+                                [newC didMoveToParentViewController:self];
+                            }];
+}
+
+- (void)pushNewTabBarControllerFromLogin: (WPLoginViewController *)oldC {
     UIViewController *launchingViewController = [self newInitialViewController];
-    [self showViewController:launchingViewController];
+//    [self showViewController:launchingViewController];
+    [self cycleFromViewController:oldC toViewController:launchingViewController];
 
 }
 
-- (void)pushNewLoginController {
+- (void)pushNewLoginControllerFromTab: (WPTabBarController *)oldC {
     UIViewController *launchingViewController = [self newLoginViewController];
-    [self showViewController:launchingViewController];
+//    [self showViewController:launchingViewController];
+    [self cycleFromViewController:oldC toViewController:launchingViewController];
+
     
 }
 

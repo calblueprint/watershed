@@ -13,7 +13,7 @@
 
 @interface WPRootViewController : UIViewController
 
-- (void)pushNewTabBarController;
-- (void)pushNewLoginController;
+- (void)pushNewTabBarControllerFromLogin: (WPLoginViewController *)oldC;
+- (void)pushNewLoginControllerFromLogin: (WPTabBarController *)oldC;
 
 @end

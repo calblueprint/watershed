@@ -62,7 +62,7 @@ static NSString * const SIGNIN_URL = @"users/sign_in";
 
 - (void)pushTabBarController {
     WPRootViewController *parentVC = (WPRootViewController *)self.parentViewController;
-    [parentVC pushNewTabBarController];
+    [parentVC pushNewTabBarControllerFromLogin:self];
 }
 
 @end
