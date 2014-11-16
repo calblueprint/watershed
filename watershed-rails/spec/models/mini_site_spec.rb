@@ -8,11 +8,12 @@
 #  street      :text
 #  city        :string(255)
 #  state       :string(255)
-#  zipcode     :integer
+#  zip_code    :integer
 #  latitude    :decimal(, )
 #  longitude   :decimal(, )
 #  created_at  :datetime
 #  updated_at  :datetime
+#  site_id     :integer
 #
 
 require 'spec_helper'
