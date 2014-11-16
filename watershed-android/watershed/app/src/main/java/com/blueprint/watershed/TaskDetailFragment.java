@@ -52,7 +52,6 @@ public class TaskDetailFragment extends Fragment {
          View view = inflater.inflate(R.layout.fragment_task_detail, container, false);
         ((TextView)view.findViewById(R.id.task_detail_title)).setText(mTitleData);
         ((TextView)view.findViewById(R.id.task_detail_description)).setText(mDescriptionData);
-        ((TextView)view.findViewById(R.id.task_detail_site_id)).setText(mSiteIdData);
         return view;
     }
 
