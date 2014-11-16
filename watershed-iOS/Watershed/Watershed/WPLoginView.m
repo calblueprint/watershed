@@ -50,7 +50,11 @@ Boolean emailClicked;
     _emailTextField = [[UITextField alloc] init];
     _emailTextField.font = [UIFont fontWithName:@"Helvetica" size:12];
     _emailTextField.textColor = [UIColor whiteColor];
-    _emailTextField.placeholder = @"Email address";
+    NSAttributedString *mailIcon = [[FAKIonIcons ios7EmailOutlineIconWithSize:12] attributedString];
+    NSAttributedString *email =[[NSAttributedString alloc] initWithString:@" Email Address"];
+    NSMutableAttributedString *placeholder = [[NSMutableAttributedString alloc] initWithAttributedString:mailIcon];
+    [placeholder appendAttributedString:email];
+    _emailTextField.attributedPlaceholder = placeholder;
     [self addSubview:_emailTextField];
     
     _emailLine = [[UIView alloc] init];
@@ -106,8 +110,9 @@ Boolean emailClicked;
     _emailButton.layer.cornerRadius = 5.0;
     
     FAKIonIcons *mailIcon = [FAKIonIcons ios7EmailOutlineIconWithSize:30];
+    [mailIcon addAttribute:NSForegroundColorAttributeName
+                     value:[UIColor whiteColor]];
     _emailIconView = [[UIImageView alloc] initWithImage:[mailIcon imageWithSize:CGSizeMake(30, 30)]];
-    _emailIconView.tintColor = [UIColor whiteColor];
     [_emailButton addSubview:_emailIconView];
     [self addSubview:_emailButton];
 
