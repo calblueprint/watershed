@@ -48,6 +48,8 @@ static NSString * const SIGNIN_URL = @"users/sign_in";
         [self parseResponse:responseObject];
         [self pushTabBarController];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Incorrect email or password." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
         NSLog(@"Error: %@", error);
     }];
     
