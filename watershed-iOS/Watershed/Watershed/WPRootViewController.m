@@ -40,36 +40,35 @@
 }
 
 - (void) cycleFromViewController: (UIViewController*) oldC
-                toViewController: (UIViewController*) newC
-{
-    [oldC willMoveToParentViewController:nil];                        // 1
+                toViewController: (UIViewController*) newC {
+    [oldC willMoveToParentViewController:nil];
     [self addChildViewController:newC];
     
-    newC.view.frame = newC.view.frame;                      // 2
+    newC.view.frame = newC.view.frame;
     CGRect endFrame = oldC.view.frame;
     
-    [self transitionFromViewController: oldC toViewController: newC   // 3
-                              duration: 1 options:0
+    [self transitionFromViewController: oldC
+                      toViewController: newC
+                              duration: 0.25
+                               options:0
                             animations:^{
-                                newC.view.frame = oldC.view.frame;                       // 4
+                                newC.view.frame = oldC.view.frame;
                                 oldC.view.frame = endFrame;
                             }
                             completion:^(BOOL finished) {
-                                [oldC removeFromParentViewController];                   // 5
+                                [oldC removeFromParentViewController];
                                 [newC didMoveToParentViewController:self];
                             }];
 }
 
 - (void)pushNewTabBarControllerFromLogin: (WPLoginViewController *)oldC {
     UIViewController *launchingViewController = [self newInitialViewController];
-//    [self showViewController:launchingViewController];
     [self cycleFromViewController:oldC toViewController:launchingViewController];
 
 }
 
 - (void)pushNewLoginControllerFromTab: (WPTabBarController *)oldC {
     UIViewController *launchingViewController = [self newLoginViewController];
-//    [self showViewController:launchingViewController];
     [self cycleFromViewController:oldC toViewController:launchingViewController];
 
     
@@ -77,7 +76,6 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 
