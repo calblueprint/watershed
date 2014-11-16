@@ -46,36 +46,33 @@ Boolean emailClicked;
 
 //http://stackoverflow.com/questions/6972092/ios-how-to-store-username-password-within-an-app
 - (void)showEmailInput {
-    self.emailButtonTopConstraint.offset = 90;
+
+    self.emailButtonTopConstraint.offset = 50;
     [self.emailButton setNeedsUpdateConstraints];
-    [UIView animateWithDuration:.5 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+
+    [UIView animateWithDuration:.25 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         [self.emailButton layoutIfNeeded];
     } completion:^(BOOL finished) {
-
+        _emailTextField = [[UITextField alloc] init];
+        _emailTextField.font = [UIFont fontWithName:@"Helvetica" size:12];
+        _emailTextField.textColor = [UIColor whiteColor];
+        _emailTextField.placeholder = @"Email";
+        [self addSubview:_emailTextField];
+        
+        _passwordTextField = [[UITextField alloc] init];
+        _passwordTextField.font = [UIFont fontWithName:@"Helvetica" size:12];
+        _passwordTextField.textColor = [UIColor whiteColor];
+        _passwordTextField.placeholder = @"Password";
+        _passwordTextField.secureTextEntry = YES;
+        [self addSubview:_passwordTextField];
+        
+        SEL emailSignupSelector = sel_registerName("emailSignup");
+        [_emailButton addTarget:_parentViewController action:emailSignupSelector forControlEvents:UIControlEventTouchUpInside];
+        
+        emailClicked = TRUE;
+        [self setNeedsUpdateConstraints];
     }];
 
-    
-    _emailTextField = [[UITextField alloc] init];
-    _emailTextField.font = [UIFont fontWithName:@"Helvetica" size:10];
-    _emailTextField.textColor = [UIColor whiteColor];
-    _emailTextField.placeholder = @"Email";
-    [self addSubview:_emailTextField];
-    
-    _passwordTextField = [[UITextField alloc] init];
-    _passwordTextField.font = [UIFont fontWithName:@"Helvetica" size:10];
-    _passwordTextField.textColor = [UIColor whiteColor];
-    _passwordTextField.placeholder = @"Password";
-    _passwordTextField.secureTextEntry = YES;
-    [self addSubview:_passwordTextField];
-    
-    _signupButton = [[UIButton alloc] init];
-    [_signupButton setTitle:@"Sign in" forState:UIControlStateNormal];
-    
-    SEL emailSignupSelector = sel_registerName("emailSignup");
-    [_signupButton addTarget:_parentViewController action:emailSignupSelector forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:_signupButton];
-    emailClicked = TRUE;
-    [self setNeedsUpdateConstraints];
 }
 
 
@@ -143,24 +140,24 @@ Boolean emailClicked;
         
     } else if (emailClicked) {
         [self.emailTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.emailButton.mas_bottom);
+            make.top.equalTo(self.fbLoginView.mas_bottom).with.offset(5);
             make.centerX.equalTo(self.mas_centerX);
             make.height.equalTo(@15);
             make.width.equalTo(self.fbLoginView.mas_width);
         }];
         
         [self.passwordTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.emailTextField.mas_bottom);
+            make.top.equalTo(self.emailTextField.mas_bottom).with.offset(5);
             make.centerX.equalTo(self.mas_centerX);
             make.height.equalTo(@15);
             make.width.equalTo(self.fbLoginView.mas_width);
         }];
         
-        [self.signupButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.passwordTextField.mas_bottom);
-            make.width.equalTo(self.fbLoginView.mas_width);
-            make.height.equalTo(@50);
-        }];
+//        [self.signupButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.top.equalTo(self.passwordTextField.mas_bottom);
+//            make.width.equalTo(self.fbLoginView.mas_width);
+//            make.height.equalTo(@50);
+//        }];
         
         emailClicked = FALSE;
         
