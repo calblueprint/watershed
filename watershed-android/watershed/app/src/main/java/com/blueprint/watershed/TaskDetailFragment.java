@@ -10,17 +10,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Date;
+
 
 public class TaskDetailFragment extends Fragment {
 
     private Task mTask;
     private OnFragmentInteractionListener mListener;
-    private TextView mTitle;
-    private TextView mDescription;
-    private TextView mSiteId;
-    private String mTitleData;
-    private String mDescriptionData;
-    private String mSiteIdData;
+    private String mTitle;
+    private String mDescription;
+    private Integer mSiteId;
+    private Integer mAssignerId;
+    private Integer mAssigneeId;
+    private Boolean mComplete;
+    private Date mDueDate;
+
 
     public static TaskDetailFragment newInstance(Task task) {
         TaskDetailFragment fragment = new TaskDetailFragment();
@@ -32,12 +36,7 @@ public class TaskDetailFragment extends Fragment {
         args.putInt("assignerId", task.getAssignerId());
         args.putInt("siteId", task.getSiteId());
         args.putBoolean("complete", task.getComplete());
-        //args.put("date", task.getDueDate());
-        Log.e("title", task.getTitle());
-        Log.e("description", task.getDescription());
-        Log.e("siteId", task.getSiteId().toString());
-        Log.e("complete", task.getComplete().toString());
-        Log.e("date", task.getDueDate().toString());
+        args.putString("date", task.getDueDate().toString());
         fragment.setArguments(args);
         return fragment;
     }
@@ -49,10 +48,13 @@ public class TaskDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-
-            mTitleData = getArguments().getString("title");
-            mDescriptionData = getArguments().getString("description");
-            mSiteIdData = getArguments().getString("siteId");
+            mTitle = getArguments().getString("title");
+            mDescription = getArguments().getString("description");
+            mSiteId = getArguments().getInt("siteId");
+            mAssignerId = getArguments().getInt("assignerId");
+            mAssigneeId = getArguments().getInt("assigneeId");
+            mComplete = getArguments().getBoolean("complete");
+            String dueDate = getArguments().getString("date");
         }
     }
 
@@ -60,9 +62,8 @@ public class TaskDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
          View view = inflater.inflate(R.layout.fragment_task_detail, container, false);
-        ((TextView)view.findViewById(R.id.task_detail_title)).setText(mTitleData);
-        ((TextView)view.findViewById(R.id.task_detail_description)).setText(mDescriptionData);
-        ((TextView)view.findViewById(R.id.task_detail_site_id)).setText(mSiteIdData);
+        ((TextView)view.findViewById(R.id.task_detail_title)).setText(mTitle);
+        ((TextView)view.findViewById(R.id.task_detail_description)).setText(mDescription);
         return view;
     }
 
