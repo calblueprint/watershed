@@ -20,6 +20,8 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 /*
 Singleton Request Handler to interface with Network.
  */
@@ -142,13 +144,6 @@ public class RequestHandler {
         return response[0];
     }
 
-    /**
-     * returns a bitmap response from an image request
-     *
-     * @param url
-     * @param params
-     * @return
-     */
     public Bitmap imageRequest(String url, JSONObject params) {
         final Bitmap[] returnedImage = new Bitmap[1];
         ImageRequest request = new ImageRequest(url,

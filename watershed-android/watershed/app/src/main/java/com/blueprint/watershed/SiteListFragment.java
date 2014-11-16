@@ -117,7 +117,7 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
         final ObjectMapper mapper = new ObjectMapper();
         mapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, new JSONObject(params),
+        BaseRequest request = new BaseRequest(Request.Method.GET, url, new JSONObject(params),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {
@@ -133,40 +133,8 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
                             Log.e("Json exception", "in site list fragment" + e.toString());
                         }
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        String message;
-                        if (volleyError instanceof NetworkError) {
-                            message = "Network Error. Please try again later.";
-                        }
-                        else {
-                            try {
-                                JSONObject response = new JSONObject(new String(volleyError.networkResponse.data));
-                                message = (String) response.get("message");
-                            } catch (Exception e) {
-                                message = "Unknown Error";
-                                e.printStackTrace();
-                            }
-                        }
-                        Context context = getActivity().getApplicationContext();
-                        int duration = Toast.LENGTH_SHORT;
-
-                        Toast toast = Toast.makeText(context, message, duration);
-                        toast.show();
-                    }
                 }
-        ) {
-            // Header params should be generalized into our BaseRequest class
-            @Override
-            public HashMap<String, String> getHeaders() {
-                HashMap<String, String> params = new HashMap<String, String>();
-                params.put("X-AUTH-TOKEN", preferences.getString("authentication_token", "none"));
-                params.put("X-AUTH-EMAIL", preferences.getString("email", "none"));
-                return params;
-            }
-        };
+        , getActivity()){};
 
         mRequestHandler.getRequestQueue().add(request);
     }

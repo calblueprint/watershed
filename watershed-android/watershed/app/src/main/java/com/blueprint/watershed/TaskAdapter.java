@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 /**
  * A Custom Adapter for the Task Object
  * Code heavily reference from http://www.ezzylearning.com/tutorial/customizing-android-listview-items-with-custom-arrayadapter
@@ -16,9 +18,9 @@ import android.widget.TextView;
 public class TaskAdapter extends ArrayAdapter<Task> {
     Context context;
     int layoutResourceId;
-    Task data[] = null;
+    ArrayList<Task> data = null;
 
-    public TaskAdapter(Context context, int layoutResourceId, Task[] data){
+    public TaskAdapter(Context context, int layoutResourceId, ArrayList<Task> data){
         super(context, layoutResourceId, data);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
@@ -46,7 +48,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
             holder = (TaskHolder)row.getTag();
         }
 
-        Task task = data[position];
+        Task task = data.get(position);
         holder.title.setText(task.getTitle());
         holder.description.setText(task.getDescription());
         holder.due_date.setText(task.getDescription());
