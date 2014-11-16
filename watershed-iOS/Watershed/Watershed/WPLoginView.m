@@ -24,12 +24,14 @@
 
 @implementation WPLoginView
 Boolean isFirstTime;
+Boolean emailClicked;
 
 - (instancetype)initWithFrame:(CGRect)frame {
     frame =  UIScreen.mainScreen.bounds;
     self = [super initWithFrame:frame];
     if (self) {
         isFirstTime = TRUE;
+        emailClicked = FALSE;
         [self createSubviews];
         [self setupActions];
         [self setNeedsUpdateConstraints];
@@ -72,8 +74,8 @@ Boolean isFirstTime;
     SEL emailSignupSelector = sel_registerName("emailSignup");
     [_signupButton addTarget:_parentViewController action:emailSignupSelector forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_signupButton];
-    
-    [self updateConstraints];
+    emailClicked = TRUE;
+    [self setNeedsUpdateConstraints];
 }
 
 
@@ -137,6 +139,9 @@ Boolean isFirstTime;
             make.leading.equalTo(@7);
         }];
         
+        isFirstTime = FALSE;
+        
+    } else if (emailClicked) {
         [self.emailTextField mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.emailButton.mas_bottom);
             make.centerX.equalTo(self.mas_centerX);
@@ -156,7 +161,9 @@ Boolean isFirstTime;
             make.width.equalTo(self.fbLoginView.mas_width);
             make.height.equalTo(@50);
         }];
-        isFirstTime = FALSE;
+        
+        emailClicked = FALSE;
+        
     }
 
     [super updateConstraints];
