@@ -10,4 +10,9 @@
 
 @interface WPFieldReport : NSObject
 
+@property (nonatomic) NSString *creationDate;
+@property (nonatomic) NSString *info;
+@property (nonatomic) NSInteger rating;
+@property (nonatomic) BOOL urgent;
+
 @end
