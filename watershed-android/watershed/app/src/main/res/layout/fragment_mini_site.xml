@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.blueprint.watershed.Sites.SiteFragment">
+    tools:context="com.blueprint.watershed.MiniSites.MiniSiteFragment">
 
 
     <ScrollView
@@ -29,40 +29,33 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/site_name"
+                    android:id="@+id/mini_site_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/tight_margin"
                     android:textSize="30sp"
-                    android:text="Site Name"
+                    android:text="Mini Site Name"
                     />
 
                 <TextView
-                    android:id="@+id/site_description"
+                    android:id="@+id/mini_site_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/tight_margin"
                     android:textSize="14sp"
-                    android:text="Site Description"
+                    android:text="Mini Site Description"
                     />
 
                 <TextView
-                    android:id="@+id/site_location"
+                    android:id="@+id/mini_site_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/tight_margin"
                     android:textSize="14sp"
-                    android:text="Location"
+                    android:text="Mini Site Location"
                     />
 
             </LinearLayout>
-
-            <ListView
-                android:id="@+id/mini_sites_table"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/tight_margin">
-            </ListView>
 
         </LinearLayout>
     </ScrollView>
