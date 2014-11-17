@@ -3,6 +3,6 @@ class MiniSiteSerializer < ActiveModel::Serializer
              :state, :zip_code, :latitude, :longitude
 
   # has_one :site
-  has_many :users
-  has_many :field_reports
+  # has_many :users
+  # has_many :field_reports
 end
