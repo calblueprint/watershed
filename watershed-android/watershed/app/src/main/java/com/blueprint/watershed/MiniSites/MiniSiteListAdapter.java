@@ -20,42 +20,42 @@ public class MiniSiteListAdapter extends ArrayAdapter<MiniSite> {
 
     Context context;
     int layoutResourceId;
-    ArrayList<Site> sites;
+    ArrayList<MiniSite> miniSites;
 
-    public MiniSiteListAdapter(Context context, int layoutResourceId, ArrayList<Site> sites) {
-        super(context, layoutResourceId, sites);
+    public MiniSiteListAdapter(Context context, int layoutResourceId, ArrayList<MiniSite> miniSites) {
+        super(context, layoutResourceId, miniSites);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
-        this.sites = sites;
+        this.miniSites = miniSites;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
-        SiteHolder holder = null;
+        MiniSiteHolder holder = null;
 
         if (row == null) {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             row = inflater.inflate(layoutResourceId, parent, false);
 
-            holder = new SiteHolder();
-            holder.name = (TextView) row.findViewById(R.id.primary_label);
-            holder.description = (TextView) row.findViewById(R.id.secondary_label);
+            holder = new MiniSiteHolder();
+            //holder.name = (TextView) row.findViewById(R.id.primary_label);
+            //holder.description = (TextView) row.findViewById(R.id.secondary_label);
 
             row.setTag(holder);
         } else {
-            holder = (SiteHolder)row.getTag();
+            holder = (MiniSiteHolder)row.getTag();
         }
 
-        Site site = sites.get(position);
+        MiniSite miniSite = miniSites.get(position);
 
-        holder.name.setText(site.getName());
+        holder.name.setText(miniSite.getName());
         holder.description.setText("");
 
         return row;
     }
 
-    static class SiteHolder {
+    static class MiniSiteHolder {
         TextView name;
         TextView description;
     }

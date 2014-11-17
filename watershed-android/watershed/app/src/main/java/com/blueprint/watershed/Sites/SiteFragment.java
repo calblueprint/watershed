@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Response;
+import com.blueprint.watershed.MiniSites.MiniSiteListAdapter;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.SiteListRequest;
 import com.blueprint.watershed.Networking.SiteRequest;
@@ -29,7 +30,7 @@ public class SiteFragment extends Fragment {
     private Site mSite;
     private NetworkManager mNetworkManager;
     private ListView mMiniSiteListView;
-    private MiniSiteListAdapter mAdapter;
+    private MiniSiteListAdapter mMiniSiteAdapter;
 
 
     public static SiteFragment newInstance(Site site) {
@@ -65,7 +66,7 @@ public class SiteFragment extends Fragment {
         configureViewWithSite(view, mSite);
 
         mMiniSiteListView = (ListView) view.findViewById(R.id.mini_sites_table);
-        mMiniSiteAdapter = new MiniSiteListAdapter(getActivity(), R.layout.mini_site_row, mSite.getMiniSites());
+        mMiniSiteAdapter = new MiniSiteListAdapter(getActivity(), R.layout.mini_site_list_row, mSite.getMiniSites());
         mMiniSiteListView.setAdapter(mMiniSiteAdapter);
 
         mMiniSiteListView.setOnItemClickListener(this);
