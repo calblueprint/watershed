@@ -76,6 +76,7 @@ public class MainActivity extends ActionBarActivity
     private ActionBar actionBar;
     private ViewPager viewPager;
     private TabsPagerAdapter mAdapter;
+    private View mContainer;
     private int mBackStackSize = 0;
 
     //Networking
@@ -91,6 +92,7 @@ public class MainActivity extends ActionBarActivity
         setTitle("Tasks");
         mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
         viewPager = (ViewPager) findViewById(R.id.pager);
+        mContainer = findViewById(R.id.container);
         initializeFragments();
         initializeTabs(0);
 
@@ -170,18 +172,20 @@ public class MainActivity extends ActionBarActivity
         if (toggle){
             actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
             viewPager.setVisibility(View.VISIBLE);
+            mContainer.setVisibility(View.INVISIBLE);
         }
         else {
             actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
             viewPager.setVisibility(View.INVISIBLE);
+            mContainer.setVisibility(View.VISIBLE);
         }
     }
 
     public void replaceFragment(Fragment newFragment) {
         android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();
         if(!newFragment.isAdded()){
-            updateTitle(newFragment);
             ft.replace(R.id.container, newFragment);
+            updateTitle(newFragment);
             ft.addToBackStack(null);
             ft.commit();
         }
@@ -192,21 +196,19 @@ public class MainActivity extends ActionBarActivity
         fragmentManager = getSupportFragmentManager();
         fragmentManager.addOnBackStackChangedListener(
                 new FragmentManager.OnBackStackChangedListener() {
-
                     @Override
                     public void onBackStackChanged() {
                         Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
                         if (f != null){
-                            Log.e("fragment",f.toString());
                             updateTitle(f);
                         }
                     }
                 });
+        updateTitle(mtaskFragment);
         android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.add(R.id.container, mtaskFragment);
-        ft.show(mtaskFragment);
+        //ft.show(mtaskFragment);
         ft.commit();
-        currentFragment = mtaskFragment;
     }
 
     public void onFragmentInteraction(String id){
@@ -269,7 +271,7 @@ public class MainActivity extends ActionBarActivity
                 replaceFragment(taskFragment);
                 break;
             case 1:
-                displayTaskView(false);
+                //displayTaskView(false);
                 siteListFragment = new SiteListFragment();
                 replaceFragment(siteListFragment);
                 break;

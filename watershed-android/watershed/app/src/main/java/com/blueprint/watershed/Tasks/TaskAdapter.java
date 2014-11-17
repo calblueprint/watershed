@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.blueprint.watershed.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * A Custom Adapter for the Task Object
@@ -41,6 +43,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
             holder = new TaskHolder();
             holder.title = (TextView)row.findViewById(R.id.title);
             holder.description = (TextView)row.findViewById(R.id.description);
+            holder.site = (TextView) row.findViewById(R.id.site);
             holder.due_date = (TextView)row.findViewById(R.id.due_date);
 
             row.setTag(holder);
@@ -49,13 +52,21 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         {
             holder = (TaskHolder)row.getTag();
         }
-
         Task task = data.get(position);
         holder.title.setText(task.getTitle());
         holder.description.setText(task.getDescription());
-        holder.due_date.setText(task.getDescription());
+        holder.due_date.setText(parseDate(task.getDueDate()));
+        holder.site.setText(task.getSiteId().toString());
 
         return row;
+    }
+
+    private String parseDate(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int month = cal.get(Calendar.MONTH) + 1;
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        return month + "/" + day;
     }
 
     static class TaskHolder
@@ -63,5 +74,6 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         TextView title;
         TextView description;
         TextView due_date;
+        TextView site;
     }
 }
