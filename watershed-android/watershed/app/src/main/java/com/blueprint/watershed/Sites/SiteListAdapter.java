@@ -1,4 +1,4 @@
-package com.blueprint.watershed;
+package com.blueprint.watershed.Sites;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,8 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.blueprint.watershed.R;
+
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Mark Miyashita on 10/14/14.

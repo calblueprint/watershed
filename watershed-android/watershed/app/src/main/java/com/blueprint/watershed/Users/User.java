@@ -1,4 +1,4 @@
-package com.blueprint.watershed;
+package com.blueprint.watershed.Users;
 
 /**
  * Created by maxwolffe on 10/29/14.

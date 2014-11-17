@@ -1,31 +1,20 @@
-package com.blueprint.watershed;
+package com.blueprint.watershed.Activities;
 
 import android.app.Activity;
-import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.os.Handler;
 
 import android.widget.ImageView;
-import android.widget.EditText;
 import android.widget.Button;
-import android.widget.LinearLayout;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
-import android.content.SharedPreferences;
 import android.widget.Toast;
 
 import com.android.volley.NetworkError;
@@ -33,6 +22,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.blueprint.watershed.LoginFragment;
+import com.blueprint.watershed.R;
+import com.blueprint.watershed.Networking.RequestHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONException;
