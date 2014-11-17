@@ -20,7 +20,6 @@
 		064463031A073A6100C6FE8B /* WPUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 064463021A073A6100C6FE8B /* WPUser.m */; };
 		064463041A073E3700C6FE8B /* WPTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA24044719DCF35300E9DB2F /* WPTabBarController.m */; };
 		064463051A073E3700C6FE8B /* WPTasksTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A039BD19EB973800EB83CC /* WPTasksTableViewCell.m */; };
-		069A4E341A1071FF00E0AEC0 /* WPHealthPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 069A4E331A1071FF00E0AEC0 /* WPHealthPickerViewController.m */; };
 		06A8139519D911C900E3EB05 /* WPTasksListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A8139419D911C900E3EB05 /* WPTasksListViewController.m */; };
 		06A8139819D91A7500E3EB05 /* WPTasksListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A8139719D91A7500E3EB05 /* WPTasksListView.m */; };
 		06A8139B19D91D8600E3EB05 /* UIColor+WPColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A8139A19D91D8600E3EB05 /* UIColor+WPColors.m */; };
@@ -91,8 +90,6 @@
 		064463001A073A5100C6FE8B /* UIExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIExtensions.h; sourceTree = "<group>"; };
 		064463011A073A6100C6FE8B /* WPUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPUser.h; sourceTree = "<group>"; };
 		064463021A073A6100C6FE8B /* WPUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPUser.m; sourceTree = "<group>"; };
-		069A4E321A1071FF00E0AEC0 /* WPHealthPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPHealthPickerViewController.h; sourceTree = "<group>"; };
-		069A4E331A1071FF00E0AEC0 /* WPHealthPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPHealthPickerViewController.m; sourceTree = "<group>"; };
 		06A039BC19EB973800EB83CC /* WPTasksTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPTasksTableViewCell.h; sourceTree = "<group>"; };
 		06A039BD19EB973800EB83CC /* WPTasksTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPTasksTableViewCell.m; sourceTree = "<group>"; };
 		06A8139319D911C900E3EB05 /* WPTasksListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPTasksListViewController.h; sourceTree = "<group>"; };
@@ -208,8 +205,6 @@
 				06A8406C1A0B20B500F70D3B /* WPAddFieldReportView.m */,
 				06A8406D1A0B20B500F70D3B /* WPAddFieldReportViewController.h */,
 				06A8406E1A0B20B500F70D3B /* WPAddFieldReportViewController.m */,
-				069A4E321A1071FF00E0AEC0 /* WPHealthPickerViewController.h */,
-				069A4E331A1071FF00E0AEC0 /* WPHealthPickerViewController.m */,
 			);
 			name = "Field Report";
 			sourceTree = "<group>";
@@ -573,7 +568,6 @@
 				064462F61A073A0F00C6FE8B /* WPSettingsTableViewCell.m in Sources */,
 				27714CAC19D9182D005344B0 /* WPLoginView.m in Sources */,
 				064463031A073A6100C6FE8B /* WPUser.m in Sources */,
-				069A4E341A1071FF00E0AEC0 /* WPHealthPickerViewController.m in Sources */,
 				06A8406F1A0B20B500F70D3B /* WPAddFieldReportView.m in Sources */,
 				064462EA1A0739A500C6FE8B /* WPTaskView.m in Sources */,
 				064462FC1A073A3000C6FE8B /* WPProfileTableViewCell.m in Sources */,
