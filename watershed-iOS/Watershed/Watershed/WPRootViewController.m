@@ -7,8 +7,6 @@
 //
 
 #import "WPRootViewController.h"
-#import "WPTabBarController.h"
-#import "WPLoginViewController.h"
 
 @interface WPRootViewController ()
 
@@ -22,28 +20,61 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIViewController *launchingViewController = [self newInitialViewController];
-    
-    [self showInitialViewController:launchingViewController];
+    UIViewController *launchingViewController = [self newLoginViewController];
+    [self showViewController:launchingViewController];
 }
 
 - (UIViewController *)newInitialViewController {
     return [[WPTabBarController alloc] init];
 }
 
-- (WPLoginViewController *)newLoginViewController {
+- (UIViewController *)newLoginViewController {
     return [[WPLoginViewController alloc] init];
 }
 
-- (void)showInitialViewController:(UIViewController *)initialViewController {
+- (void)showViewController:(UIViewController *)initialViewController {
     [self addChildViewController:initialViewController];
     [self.view addSubview:initialViewController.view];
     self.currentViewController = initialViewController;
 }
 
+- (void)cycleFromViewController: (UIViewController*) oldVC
+               toViewController: (UIViewController*) newVC {
+    [oldVC willMoveToParentViewController:nil];
+    [self addChildViewController:newVC];
+    
+    newVC.view.frame = newVC.view.frame;
+    CGRect endFrame = oldVC.view.frame;
+    
+    [self transitionFromViewController: oldVC
+                      toViewController: newVC
+                              duration: 0.1
+                               options:0
+                            animations:^{
+                                newVC.view.frame = oldVC.view.frame;
+                                oldVC.view.frame = endFrame;
+                            }
+                            completion:^(BOOL finished) {
+                                [oldVC removeFromParentViewController];
+                                [newVC didMoveToParentViewController:self];
+                            }];
+}
+
+- (void)pushNewTabBarControllerFromLogin: (WPLoginViewController *)oldVC {
+    UIViewController *launchingViewController = [self newInitialViewController];
+    [self cycleFromViewController:oldVC toViewController:launchingViewController];
+
+}
+
+- (void)pushNewLoginControllerFromTab: (WPTabBarController *)oldVC {
+    UIViewController *launchingViewController = [self newLoginViewController];
+    [self cycleFromViewController:oldVC toViewController:launchingViewController];
+
+    
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 
