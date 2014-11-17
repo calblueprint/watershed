@@ -2,6 +2,7 @@ package com.blueprint.watershed.MiniSites;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,7 @@ import com.blueprint.watershed.Sites.Site;
 import java.util.ArrayList;
 
 /**
- * Created by mark on 11/16/14.
+ * Created by Mark Miyashita on 11/16/14.
  */
 public class MiniSiteListAdapter extends ArrayAdapter<MiniSite> {
 
@@ -39,8 +40,8 @@ public class MiniSiteListAdapter extends ArrayAdapter<MiniSite> {
             row = inflater.inflate(layoutResourceId, parent, false);
 
             holder = new MiniSiteHolder();
-            //holder.name = (TextView) row.findViewById(R.id.primary_label);
-            //holder.description = (TextView) row.findViewById(R.id.secondary_label);
+            holder.name = (TextView) row.findViewById(R.id.primary_label);
+            holder.description = (TextView) row.findViewById(R.id.secondary_label);
 
             row.setTag(holder);
         } else {

@@ -33,11 +33,12 @@ public class SiteFragment extends Fragment
                           implements AbsListView.OnItemClickListener {
 
     private OnFragmentInteractionListener mListener;
-    private Site mSite;
     private NetworkManager mNetworkManager;
     private MainActivity mMainActivity;
     private ListView mMiniSiteListView;
     private MiniSiteListAdapter mMiniSiteAdapter;
+    private Site mSite;
+    private ArrayList<MiniSite> mMiniSites;
 
 
     public static SiteFragment newInstance(Site site) {
@@ -73,7 +74,7 @@ public class SiteFragment extends Fragment
         configureViewWithSite(view, mSite);
 
         mMiniSiteListView = (ListView) view.findViewById(R.id.mini_sites_table);
-        mMiniSiteAdapter = new MiniSiteListAdapter(getActivity(), R.layout.mini_site_list_row, mSite.getMiniSites());
+        mMiniSiteAdapter = new MiniSiteListAdapter(getActivity(), R.layout.mini_site_list_row, getMiniSites());
         mMiniSiteListView.setAdapter(mMiniSiteAdapter);
 
         mMiniSiteListView.setOnItemClickListener(this);
@@ -116,7 +117,7 @@ public class SiteFragment extends Fragment
             // Load MiniSite
             MiniSite miniSite = getMiniSite(position);
             MiniSiteFragment miniSiteFragment = new MiniSiteFragment();
-            //miniSiteFragment.configureViewWithMiniSite(miniSite);
+            miniSiteFragment.configureWithMiniSite(miniSite);
 
             mMainActivity.replaceFragment(miniSiteFragment);
         }
@@ -134,13 +135,31 @@ public class SiteFragment extends Fragment
             @Override
             public void onResponse(Site site) {
                 setSite(site);
+                mMiniSiteAdapter.notifyDataSetChanged();
             }
         });
 
         mNetworkManager.getRequestQueue().add(siteRequest);
     }
 
-    public void setSite(Site site) { mSite = site; }
+    public void setSite(Site site) {
+        mSite = site;
+        setMiniSites(site.getMiniSites());
+    }
 
-    public MiniSite getMiniSite(int position) { return mSite.getMiniSite(position); }
+    public MiniSite getMiniSite(int position) { return mMiniSites.get(position); }
+
+    public ArrayList<MiniSite> getMiniSites() {
+        if (mMiniSites == null) {
+            mMiniSites = new ArrayList<MiniSite>();
+        }
+        return mMiniSites;
+    }
+
+    public void setMiniSites(ArrayList<MiniSite> miniSites) {
+        mMiniSites.clear();
+        for (MiniSite miniSite : miniSites) {
+            mMiniSites.add(miniSite);
+        }
+    }
 }
