@@ -127,7 +127,7 @@
         rating5.layer.backgroundColor = [UIColor clearColor].CGColor;
         rating5;
     }) wp_addToSuperview:self];
-    
+
     _descriptionLabel = [({
         UILabel *descriptionLabel = [[UILabel alloc] init];
         descriptionLabel.text = @"Description";
@@ -137,10 +137,12 @@
     
     _fieldDescription = [({
         UITextView *field = [[UITextView alloc] init];
-        field.layer.borderColor = [UIColor whiteColor].CGColor;
+        field.layer.borderColor = [UIColor grayColor].CGColor;
         field.layer.borderWidth = wpBorderWidth;
         field.textColor = [UIColor whiteColor];
-//        field.layer.cornerRadius = wpCornerRadius;
+        field.backgroundColor = [UIColor clearColor];
+        field.layer.cornerRadius = wpCornerRadius;
+        field.font = [UIFont systemFontOfSize:14.0];
         field;
     }) wp_addToSuperview:self];
 

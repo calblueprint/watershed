@@ -92,7 +92,6 @@
     [_addFieldReportButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_siteLinkButton setTitle:@"Site whatever" forState:UIControlStateNormal];
     [_siteLinkButton setTitleColor:[UIColor wp_darkBlue] forState:UIControlStateNormal];
-    [_siteLinkButton.titleLabel setTextAlignment:NSTextAlignmentLeft];
 }
 
 -(void)onClick {
