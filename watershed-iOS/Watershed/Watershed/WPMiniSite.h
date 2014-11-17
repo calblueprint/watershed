@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WPSite.h"
 
 @interface WPMiniSite : NSObject
 
@@ -19,5 +20,7 @@
 @property (nonatomic) NSString *city;
 @property (nonatomic) NSString *state;
 @property (nonatomic) NSNumber *zipCode;
+@property (nonatomic) WPSite *site;
+@property (nonatomic) NSMutableArray *users; //of WPUser's
 
 @end
