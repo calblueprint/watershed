@@ -55,20 +55,13 @@
                     android:text="Location"
                     />
 
-                <TextView
-                    android:id="@+id/site_mini_sites_count"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/tight_margin"
-                    android:textSize="14sp"
-                    android:text="Mini Sites"
-                    />
             </LinearLayout>
 
             <ListView
                 android:id="@+id/mini_sites_table"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/tight_margin">
             </ListView>
 
         </LinearLayout>
