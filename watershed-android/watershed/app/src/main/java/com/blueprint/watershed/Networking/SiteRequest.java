@@ -20,7 +20,7 @@ import java.util.HashMap;
 public class SiteRequest extends BaseRequest {
 
     public SiteRequest(final Activity activity, Site site, HashMap<String, JSONObject> params, final Response.Listener<Site> listener) {
-        super(Request.Method.GET, makeObjectURL("site", site), new JSONObject(params),
+        super(Request.Method.GET, makeObjectURL("sites", site), new JSONObject(params),
             new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject jsonObject) {

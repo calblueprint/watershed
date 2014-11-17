@@ -2,6 +2,7 @@ package com.blueprint.watershed.Tasks;
 
 import android.util.Log;
 
+import com.blueprint.watershed.APIObject;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,7 +16,7 @@ import org.json.JSONObject;
  * Object to represent Tasks in Watershed Project application
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Task {
+public class Task implements APIObject {
 
     private ObjectMapper mMapper = new ObjectMapper();
 

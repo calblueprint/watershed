@@ -1,10 +1,12 @@
 package com.blueprint.watershed.Sites;
 
 import com.blueprint.watershed.APIObject;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Created by Mark Miyashita on 10/14/14.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Site implements APIObject {
 
     private Integer mId;
