@@ -11,6 +11,8 @@
 #import "UIExtensions.h"
 #import "WPAddFieldReportViewController.h"
 #import "FontAwesomeKit/FontAwesomeKit.h"
+#import "UIImage+ImageEffects.h"
+
 
 @interface WPAddFieldReportView()
 
@@ -18,6 +20,7 @@
 @property (nonatomic) UILabel *descriptionLabel;
 @property (nonatomic) UILabel *urgentLabel;
 @property (nonatomic) UILabel *ratingLabel;
+@property (nonatomic) UIView *blackOverlay;
 
 @end
 
@@ -45,11 +48,26 @@
     return self;
 }
 - (void)createSubviews {
+    _selectedImageView = [({
+        UIImage *coverPhoto = [UIImage imageNamed:@"SampleCoverPhoto"];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:coverPhoto];
+        imageView.layer.borderColor = [UIColor wp_blue].CGColor;
+        imageView.layer.borderWidth = wpBorderWidth;
+        imageView.layer.cornerRadius = wpCornerRadius;
+        imageView;
+    }) wp_addToSuperview:self];
+    
+    _blackOverlay = [({
+        UIView *blackOverlay = [[UIView alloc] init];
+        blackOverlay.backgroundColor = [UIColor blackColor];
+        blackOverlay.alpha = 0.3;
+        blackOverlay;
+    }) wp_addToSuperview:self];
 
     _urgentLabel = [({
         UILabel *urgentLabel = [[UILabel alloc] init];
         urgentLabel.text = @"Urgent?";
-        urgentLabel.textColor = [UIColor grayColor];
+        urgentLabel.textColor = [UIColor whiteColor];
         urgentLabel;
     }) wp_addToSuperview:self];
     
@@ -61,14 +79,8 @@
     _ratingLabel = [({
         UILabel *ratingLabel = [[UILabel alloc] init];
         ratingLabel.text = @"Rating";
-        ratingLabel.textColor = [UIColor grayColor];
+        ratingLabel.textColor = [UIColor whiteColor];
         ratingLabel;
-    }) wp_addToSuperview:self];
-    
-    _ratingField = [({
-        UITextField *rating = [[UITextField alloc] init];
-        rating.placeholder = @"1-5";
-        rating;
     }) wp_addToSuperview:self];
     
     _rating1 = [({
@@ -119,15 +131,17 @@
     _descriptionLabel = [({
         UILabel *descriptionLabel = [[UILabel alloc] init];
         descriptionLabel.text = @"Description";
-        descriptionLabel.textColor = [UIColor grayColor];
+        descriptionLabel.textColor = [UIColor whiteColor];
         descriptionLabel;
     }) wp_addToSuperview:self];
     
     _fieldDescription = [({
         UITextView *field = [[UITextView alloc] init];
-        field.layer.borderColor = [UIColor wp_blue].CGColor;
+        field.layer.borderColor = [UIColor whiteColor].CGColor;
         field.layer.borderWidth = wpBorderWidth;
-        field.layer.cornerRadius = wpCornerRadius;
+        field.layer.opacity = 0.3;
+        field.textColor = [UIColor whiteColor];
+//        field.layer.cornerRadius = wpCornerRadius;
         field;
     }) wp_addToSuperview:self];
 
@@ -142,22 +156,17 @@
         addPhoto.titleLabel.textColor = [UIColor wp_blue];
         addPhoto;
     }) wp_addToSuperview:self];
-    
-    _selectedImageView = [({
-        UIImageView *imageView = [[UIImageView alloc] init];
-        imageView.layer.borderColor = [UIColor wp_blue].CGColor;
-        imageView.layer.borderWidth = wpBorderWidth;
-        imageView.layer.cornerRadius = wpCornerRadius;
-        imageView;
-    }) wp_addToSuperview:self];
-
 }
 
 - (void)setUpActions {
     [_addPhotoButton setTitle:@"Add Picture" forState:UIControlStateNormal];
     [_addPhotoButton setTitleColor:[UIColor wp_darkBlue] forState: UIControlStateNormal];
     [_ratingField setKeyboardType:UIKeyboardTypeNumberPad];
-    [_urgentSwitch setOnTintColor:[UIColor redColor]];
+    [_urgentSwitch setOnTintColor:[UIColor wp_red]];
+    _selectedImageView.image = [_selectedImageView.image applyBlurWithRadius:5 tintColor:[UIColor clearColor] saturationDeltaFactor:1 maskImage:nil];
+    [self setUpButtons];
+}
+- (void)setUpButtons {
     [_rating1 setTitle:@"1" forState:UIControlStateNormal];
     [_rating2 setTitle:@"2" forState:UIControlStateNormal];
     [_rating3 setTitle:@"3" forState:UIControlStateNormal];
@@ -192,7 +201,7 @@
 
 -(void)ratingClick:(UIButton *)sender {
     int senderBorder = sender.layer.borderWidth;
-    [self setUpActions];
+    [self setUpButtons];
     if (senderBorder == 1) {
         sender.backgroundColor = sender.titleLabel.textColor;
         [sender setTitleColor:[UIColor whiteColor] forState: UIControlStateNormal];
@@ -202,7 +211,7 @@
 
 - (void)updateConstraints {
     [self.urgentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(topMargin + standardMargin));
+        make.top.equalTo(@(topMargin + standardMargin * 2));
         make.leading.equalTo(@(standardMargin));
     }];
     
@@ -211,25 +220,10 @@
         make.trailing.equalTo(@(-standardMargin));
     }];
     [self.ratingLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
+        make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin * 1.5);
         make.leading.equalTo(@(standardMargin));
     }];
-    
-    [self.healthRating mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.fieldDescription.mas_bottom).with.offset(standardMargin);
-        make.centerX.equalTo(self.mas_centerX);
-        make.height.equalTo(@(wpButtonHeight));
-        make.width.equalTo(@(wpButtonWidth));
-    }];
 
-
-    [self.healthRating mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.fieldDescription.mas_bottom).with.offset(standardMargin);
-        make.centerX.equalTo(self.mas_centerX);
-        make.height.equalTo(@(wpButtonHeight));
-        make.width.equalTo(@(wpButtonWidth));
-    }];
-    
     [self.rating1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
         make.leading.equalTo(self.ratingLabel.mas_right).with.offset(10);
@@ -279,11 +273,10 @@
     }];
     
     [self.selectedImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.addPhotoButton.mas_bottom).with.offset(standardMargin);
-        make.bottom.equalTo(@(-standardMargin));
-//        make.left.equalTo(self.addPhotoButton.mas_right).with.offset(standardMargin);
-        make.leading.equalTo(@(standardMargin));
-        make.trailing.equalTo(@(-standardMargin));
+        make.top.equalTo(@(topMargin));
+        make.bottom.equalTo(@0);
+        make.leading.equalTo(@0);
+        make.trailing.equalTo(@0);
     }];
     
     [self.addPhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -293,6 +286,13 @@
 //        make.leading.equalTo(@(standardMargin));
         make.height.equalTo(@(wpButtonHeight));
         make.width.equalTo(@(wpButtonWidth));
+    }];
+    
+    [self.blackOverlay mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@0);
+        make.leading.equalTo(@0);
+        make.trailing.equalTo(@0);
+        make.bottom.equalTo(@0);
     }];
     
     [super updateConstraints];
