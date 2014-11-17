@@ -1,6 +1,3 @@
-class SiteSerializer < ActiveModel::Serializer
-  attributes :id, :name, :description, :street, :city,
-             :state, :zip_code, :latitude, :longitude
-
+class SiteSerializer < BaseSiteSerializer
   has_many :mini_sites
 end

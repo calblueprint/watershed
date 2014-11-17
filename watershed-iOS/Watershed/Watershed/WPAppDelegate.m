@@ -12,6 +12,16 @@
 #import "WPRootViewController.h"
 #import "WPSiteViewController.h"
 #import "WPTaskViewController.h"
+#import "AFNetworkActivityIndicatorManager.h"
+
+static NSString * const BASE_URL = @"https://intense-reaches-1457.herokuapp.com/api/v1/";
+
+@interface WPAppDelegate ()
+
+@property (nonatomic) AFHTTPRequestOperationManager *manager;
+@property (nonatomic) UICKeyChainStore *store;
+
+@end
 
 @implementation WPAppDelegate
 
@@ -25,7 +35,12 @@
     self.window.rootViewController = [[WPRootViewController alloc] init];
     [self.window makeKeyAndVisible];
     
-    //[AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
+    [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
+    NSURL *baseURL = [[NSURL alloc] initWithString:BASE_URL];
+    _manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
+    _manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    _store = [UICKeyChainStore keyChainStore];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
@@ -46,7 +61,15 @@
 
     return YES;
 }
-							
+
+- (AFHTTPRequestOperationManager *)getAFManager {
+    return _manager;
+}
+
+- (UICKeyChainStore *)getKeyChainStore {
+    return _store;
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

@@ -2,11 +2,11 @@ class Api::V1::SitesController < Api::V1::BaseController
   load_and_authorize_resource param_method: :site_params
 
   def index
-    render json: @sites
+    render json: @sites, each_serializer: SiteListSerializer
   end
 
   def show
-    render json: @site
+    render json: @site, serializer: SiteSerializer
   end
 
   def search

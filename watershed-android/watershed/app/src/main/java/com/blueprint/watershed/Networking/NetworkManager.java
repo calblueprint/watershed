@@ -15,6 +15,8 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -22,23 +24,27 @@ import org.json.JSONObject;
 /*
 Singleton Request Handler to interface with Network.
  */
-public class RequestHandler {
+public class NetworkManager {
     /**
      * An object to handle API calls at the HTTP request level.
      */
-    private static RequestHandler mInstance;
+    private static NetworkManager mInstance;
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
-    private static Context mCtx;
+    private static Context mContext;
+
+    private static ObjectMapper mObjectMapper;
+
 
     /**
      * Returns a RequestHandler by assigning CONTEXT, an applicaiton
      * context set by the caller, to a RequestQueue object, which
      * handles background threading of HTTP requests.
      */
-    private RequestHandler(Context context) {
-        mCtx = context;
-        mRequestQueue = Volley.newRequestQueue(mCtx);
+    private NetworkManager(Context context) {
+        mContext = context;
+        mRequestQueue = Volley.newRequestQueue(mContext);
+        getObjectMapper();
 
         mImageLoader = new ImageLoader(mRequestQueue,
                 new ImageLoader.ImageCache() {
@@ -58,15 +64,15 @@ public class RequestHandler {
     }
 
     /**
-     * Ensures singleton requestHandler that survies the duration of the Application
+     * Ensures singleton networkManager that survives the duration of the Application
      * Lifecycle.
      *
      * @param context
      * @return
      */
-    public static synchronized RequestHandler getInstance(Context context) {
+    public static synchronized NetworkManager getInstance(Context context) {
         if (mInstance == null) {
-            mInstance = new RequestHandler(context);
+            mInstance = new NetworkManager(context);
         }
         return mInstance;
     }
@@ -180,7 +186,24 @@ public class RequestHandler {
         return Stringresponse[0];
     }
 
-    //Getters
-    public RequestQueue getRequestQueue() {return mRequestQueue;}
+    // Request Queue
+    public RequestQueue getRequestQueue() { return mRequestQueue; }
 
+    // Object Mapper
+    public ObjectMapper getObjectMapper() {
+        if (mObjectMapper == null) {
+            mObjectMapper = createObjectMapper();
+        }
+        return mObjectMapper;
+    }
+
+    public void setObjectMapper(ObjectMapper objectMapper) {
+        mObjectMapper = objectMapper;
+    }
+
+    public ObjectMapper createObjectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
+        return objectMapper;
+    }
 }

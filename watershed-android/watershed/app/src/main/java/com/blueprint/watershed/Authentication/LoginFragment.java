@@ -1,4 +1,4 @@
-package com.blueprint.watershed;
+package com.blueprint.watershed.Authentication;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Button;
 
 import com.blueprint.watershed.Activities.LandingPageActivity;
+import com.blueprint.watershed.R;
 
 import java.util.HashMap;
 

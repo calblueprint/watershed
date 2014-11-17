@@ -54,12 +54,16 @@
     [super updateConstraints];
 }
 
-+ (CGFloat)screenWidth {
++ (CGFloat)getScreenWidth {
     return [[UIScreen mainScreen] bounds].size.width;
 }
 
-+ (CGFloat)screenHeight {
++ (CGFloat)getScreenHeight {
     return [[UIScreen mainScreen] bounds].size.height;
+}
+
++ (CGRect)getScreenFrame {
+    return [[UIScreen mainScreen] bounds];
 }
 
 @end

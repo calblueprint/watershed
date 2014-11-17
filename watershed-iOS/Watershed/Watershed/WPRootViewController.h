@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WPTabBarController.h"
+
+#import "WPLoginViewController.h"
 
 @interface WPRootViewController : UIViewController
+
+- (void)pushNewTabBarControllerFromLogin: (WPLoginViewController *)oldC;
+- (void)pushNewLoginControllerFromTab: (WPTabBarController *)oldC;
 
 @end
