@@ -1,10 +1,13 @@
 package com.blueprint.watershed.Sites;
 
+import com.blueprint.watershed.APIObject;
+
 /**
  * Created by Mark Miyashita on 10/14/14.
  */
-public class Site {
+public class Site implements APIObject {
 
+    private Integer mId;
     private String mName;
     private String mDescription;
     private String mStreet;
@@ -18,6 +21,7 @@ public class Site {
     }
 
     // Getters
+    public String getId() { return mId; }
     public String getName() { return mName; }
     public String getDescription() { return mDescription; }
     public String getStreet() { return mStreet; }
@@ -28,6 +32,7 @@ public class Site {
     public String getLongitude() { return mLongitude; }
 
     // Setters
+    public void setId(Integer id) { mId = id; }
     public void setName(String name) { mName = name; }
     public void setDescription(String description) { mDescription = description; }
     public void setStreet(String street) { mStreet = street; }

@@ -14,6 +14,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.blueprint.watershed.APIObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,6 +65,9 @@ public abstract class BaseRequest extends Request {
 
     public static String makeURL(String endpoint) {
         return baseURL + endpoint;
+    }
+    public static String makeObjectURL(String endpoint, APIObject object) {
+        return baseURL + endpoint + object.getId().toString();
     }
 
     public static NetworkManager getNetworkManager(Context context) {

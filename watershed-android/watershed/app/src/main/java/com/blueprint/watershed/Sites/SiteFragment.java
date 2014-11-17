@@ -52,7 +52,6 @@ public class SiteFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_site, container, false);
-
         return view;
     }
 
@@ -76,7 +75,7 @@ public class SiteFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        getSiteRequest();
+        getSiteRequest(mSite);
     }
 
     @Override
@@ -90,10 +89,10 @@ public class SiteFragment extends Fragment {
     }
 
     // Networking
-    public void getSiteRequest() {
+    public void getSiteRequest(Site site) {
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
 
-        SiteRequest siteRequest = new SiteRequest(getActivity(), params, new Response.Listener<Site>() {
+        SiteRequest siteRequest = new SiteRequest(getActivity(), site, params, new Response.Listener<Site>() {
             @Override
             public void onResponse(Site site) {
                 Log.e("site", site.toString());
