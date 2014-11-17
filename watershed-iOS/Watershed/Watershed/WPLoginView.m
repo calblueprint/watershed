@@ -43,7 +43,20 @@
     }
     return self;
 }
-         
+
+- (void)viewDidLoad {
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:self
+                                   action:@selector(dismissKeyboard)];
+    
+    [self addGestureRecognizer:tap];
+}
+
+-(void)dismissKeyboard {
+    [_emailTextField resignFirstResponder];
+    [_passwordTextField resignFirstResponder];
+}
+
 - (void)setupActions {
     [_emailButton addTarget:self action:@selector(showEmailInput) forControlEvents:UIControlEventTouchUpInside];
 }
@@ -75,6 +88,7 @@
         NSMutableAttributedString *placeholder = [[NSMutableAttributedString alloc] initWithAttributedString:mailIcon];
         [placeholder appendAttributedString:email];
         _emailTextField.attributedPlaceholder = placeholder;
+        _emailTextField.delegate = self;
         [self addSubview:_emailTextField];
         
         _passwordTextField = [[UITextField alloc] init];
@@ -86,6 +100,8 @@
         [passwordPlaceholder appendAttributedString:pw];
         _passwordTextField.attributedPlaceholder = passwordPlaceholder;
         _passwordTextField.secureTextEntry = YES;
+        _passwordTextField.delegate = self;
+
         [self addSubview:_passwordTextField];
         _emailClicked = YES;
         
@@ -130,7 +146,7 @@
 - (void)updateConstraints {
     if (_isFirstTime) {
         [self.appIconView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.mas_centerY).with.offset(-180);
+            make.top.equalTo(self.mas_centerY).with.offset(-200);
             make.centerX.equalTo(self.mas_centerX);
         }];
         

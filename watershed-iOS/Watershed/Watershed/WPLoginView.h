@@ -12,7 +12,7 @@
 
 @class WPLoginViewController;
 
-@interface WPLoginView : WPView
+@interface WPLoginView : WPView <UITextFieldDelegate>
 
 @property (nonatomic) WPLoginViewController *parentViewController;
 
