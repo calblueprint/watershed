@@ -50,9 +50,6 @@
     _selectedImageView = [({
         _originalImage = [UIImage imageNamed:@"SampleCoverPhoto"];
         UIImageView *imageView = [[UIImageView alloc] initWithImage:_originalImage];
-        imageView.layer.borderColor = [UIColor wp_blue].CGColor;
-        imageView.layer.borderWidth = wpBorderWidth;
-        imageView.layer.cornerRadius = wpCornerRadius;
         imageView;
     }) wp_addToSuperview:self];
     
@@ -147,32 +144,24 @@
 
     _addPhotoButton = [({
         UIButton *addPhoto = [[UIButton alloc] init];
-        addPhoto.layer.borderColor = [UIColor wp_blue].CGColor;
-        addPhoto.layer.borderWidth = wpBorderWidth;
-        addPhoto.layer.cornerRadius = wpCornerRadius;
+        addPhoto.layer.backgroundColor = [UIColor wp_transDarkBlue].CGColor;
         addPhoto.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-//        FAKIonIcons *photoIcon = [FAKIonIcons ios7PhotosIconWithSize:30];
-//        [addPhoto setImage:[[UIImageView alloc] initWithImage:[photoIcon imageWithSize:CGSizeMake(30,30)]] forState:UIControlStateNormal];
-        addPhoto.titleLabel.textColor = [UIColor wp_blue];
         addPhoto;
     }) wp_addToSuperview:self];
     
     _viewImageButton = [({
         UIButton *addPhoto = [[UIButton alloc] init];
-        addPhoto.layer.borderColor = [UIColor wp_blue].CGColor;
-        addPhoto.layer.borderWidth = wpBorderWidth;
-        addPhoto.layer.cornerRadius = wpCornerRadius;
+        addPhoto.layer.backgroundColor = [UIColor wp_transBlue].CGColor;
         addPhoto.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-        addPhoto.titleLabel.textColor = [UIColor wp_blue];
         addPhoto;
     }) wp_addToSuperview:self];
 }
 
 - (void)setUpActions {
     [_addPhotoButton setTitle:@"Add Picture" forState:UIControlStateNormal];
-    [_addPhotoButton setTitleColor:[UIColor wp_darkBlue] forState: UIControlStateNormal];
+    [_addPhotoButton setTitleColor:[UIColor wp_lightBlue] forState: UIControlStateNormal];
     [_viewImageButton setTitle:@"View Image" forState:UIControlStateNormal];
-    [_viewImageButton setTitleColor:[UIColor wp_darkBlue] forState: UIControlStateNormal];
+    [_viewImageButton setTitleColor:[UIColor wp_lightBlue] forState: UIControlStateNormal];
     [_ratingField setKeyboardType:UIKeyboardTypeNumberPad];
     [_urgentSwitch setOnTintColor:[UIColor wp_red]];
     _blurredImage = [_originalImage applyBlurWithRadius:5 tintColor:[UIColor clearColor] saturationDeltaFactor:1 maskImage:nil];
@@ -282,7 +271,7 @@
         make.centerX.equalTo(self.mas_centerX);
         make.leading.equalTo(@10);
         make.trailing.equalTo(@(-10));
-        make.height.equalTo(@150);
+        make.bottom.equalTo(self.addPhotoButton.mas_top).with.offset(-standardMargin);
     }];
     
     [self.selectedImageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -291,21 +280,20 @@
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
     }];
-    
-    [self.addPhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.fieldDescription.mas_bottom).with.offset(standardMargin);
-        make.centerX.equalTo(self.mas_centerX);
-//        make.leading.equalTo(@(standardMargin));
-        make.height.equalTo(@(wpButtonHeight));
-        make.width.equalTo(@(wpButtonWidth));
-    }];
 
+    [self.addPhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(@0);
+        make.height.equalTo(@150);
+        make.leading.equalTo(@0);
+        make.trailing.equalTo(self.mas_centerX);
+    }];
+    
     [self.viewImageButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.addPhotoButton.mas_bottom).with.offset(standardMargin);
-        make.centerX.equalTo(self.mas_centerX);
-        //        make.leading.equalTo(@(standardMargin));
-        make.height.equalTo(@(wpButtonHeight));
-        make.width.equalTo(@(wpButtonWidth));
+        make.bottom.equalTo(@0);
+        make.leading.equalTo(self.addPhotoButton.mas_right);
+        make.height.equalTo(@150);
+        make.trailing.equalTo(@0);
+        
     }];
     
     [self.blackOverlay mas_makeConstraints:^(MASConstraintMaker *make) {
