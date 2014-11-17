@@ -27,10 +27,11 @@ import java.util.Map;
 /**
  * Created by maxwolffe on 11/2/14.
  */
-public abstract class BaseRequest extends Request{
+public abstract class BaseRequest extends Request {
     private SharedPreferences preferences;
     private Response.Listener listener;
-    private Activity mActivity;
+
+    private static final String baseURL = "https://intense-reaches-1457.herokuapp.com/api/v1/";
 
     public BaseRequest(int method, String url, JSONObject jsonRequest,
                        Response.Listener listener, final Activity activity){
@@ -59,6 +60,14 @@ public abstract class BaseRequest extends Request{
 
         this.listener = listener;
         this.preferences = activity.getSharedPreferences("LOGIN_PREFERENCES", 0);
+    }
+
+    public static String url(String endpoint) {
+        return baseURL + endpoint;
+    }
+
+    public static NetworkManager getNetworkManager(Context context) {
+        return NetworkManager.getInstance(context);
     }
 
     @Override
