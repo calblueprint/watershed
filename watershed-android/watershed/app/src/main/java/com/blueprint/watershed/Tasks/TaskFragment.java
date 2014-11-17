@@ -14,8 +14,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Networking.BaseRequest;
+import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.R;
-import com.blueprint.watershed.Networking.RequestHandler;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
@@ -32,7 +32,7 @@ public class TaskFragment extends ListFragment {
     private ArrayList<Task> mTaskList;
     private MainActivity parentActivity;
     private TaskAdapter mTaskAdapter;
-    private RequestHandler mRequestHandler;
+    private NetworkManager mNetworkManager;
 
 
     public static TaskFragment newInstance(int option) {
@@ -49,7 +49,7 @@ public class TaskFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mRequestHandler = RequestHandler.getInstance(getActivity().getApplicationContext());
+        mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
         parentActivity = (MainActivity)getActivity();
         mTaskList = new ArrayList<Task>();
         if (getArguments() != null) {
@@ -135,7 +135,7 @@ public class TaskFragment extends ListFragment {
                 }
                 , getActivity()){};
 
-        mRequestHandler.getRequestQueue().add(request);
+        mNetworkManager.getRequestQueue().add(request);
     }
 
     private void setTasks(ArrayList<Task> tasks){

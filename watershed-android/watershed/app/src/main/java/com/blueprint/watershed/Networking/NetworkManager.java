@@ -22,11 +22,11 @@ import org.json.JSONObject;
 /*
 Singleton Request Handler to interface with Network.
  */
-public class RequestHandler {
+public class NetworkManager {
     /**
      * An object to handle API calls at the HTTP request level.
      */
-    private static RequestHandler mInstance;
+    private static NetworkManager mInstance;
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
     private static Context mCtx;
@@ -36,7 +36,7 @@ public class RequestHandler {
      * context set by the caller, to a RequestQueue object, which
      * handles background threading of HTTP requests.
      */
-    private RequestHandler(Context context) {
+    private NetworkManager(Context context) {
         mCtx = context;
         mRequestQueue = Volley.newRequestQueue(mCtx);
 
@@ -64,9 +64,9 @@ public class RequestHandler {
      * @param context
      * @return
      */
-    public static synchronized RequestHandler getInstance(Context context) {
+    public static synchronized NetworkManager getInstance(Context context) {
         if (mInstance == null) {
-            mInstance = new RequestHandler(context);
+            mInstance = new NetworkManager(context);
         }
         return mInstance;
     }

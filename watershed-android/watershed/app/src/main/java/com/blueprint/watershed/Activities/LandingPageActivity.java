@@ -23,8 +23,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.blueprint.watershed.Authentication.LoginFragment;
+import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.R;
-import com.blueprint.watershed.Networking.RequestHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONException;
@@ -43,7 +43,7 @@ public class LandingPageActivity extends Activity {
     private Button mLoginButton;
     private Button mFacebookButton;
     private Button mSignUpButton;
-    private RequestHandler mloginRequestHandler;
+    private NetworkManager mloginNetworkManager;
     private SharedPreferences preferences;
     private ObjectMapper mMapper;
 
@@ -51,7 +51,7 @@ public class LandingPageActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing_page);
-        mloginRequestHandler = RequestHandler.getInstance(this.getApplicationContext());
+        mloginNetworkManager = NetworkManager.getInstance(this.getApplicationContext());
 
         initializeViews();
 
@@ -160,7 +160,7 @@ public class LandingPageActivity extends Activity {
                 }
         );
 
-        mloginRequestHandler.getRequestQueue().add(request);
+        mloginNetworkManager.getRequestQueue().add(request);
     }
 
     // Getters
@@ -168,7 +168,7 @@ public class LandingPageActivity extends Activity {
     public Button getLoginButton() { return mLoginButton; }
     public Button getFacebookButton() { return mFacebookButton; }
     public Button getSignUpButton() { return mSignUpButton; }
-    public RequestHandler getRequestHandler(){return mloginRequestHandler;}
+    public NetworkManager getRequestHandler(){return mloginNetworkManager;}
 
     // Setters
     public void setLandingPageImage(ImageView imageView) { mLandingPageImage = imageView; }

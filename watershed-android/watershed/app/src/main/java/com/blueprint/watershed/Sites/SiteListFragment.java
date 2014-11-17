@@ -17,8 +17,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Networking.BaseRequest;
+import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.R;
-import com.blueprint.watershed.Networking.RequestHandler;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
@@ -35,7 +35,7 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
     private ListView mSiteListView;
     private SiteListAdapter mAdapter;
     private SharedPreferences preferences;
-    private RequestHandler mRequestHandler;
+    private NetworkManager mNetworkManager;
     private MainActivity mMainActivity;
     private ArrayList<Site> mSites;
 
@@ -52,7 +52,7 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         preferences = getActivity().getSharedPreferences("LOGIN_PREFERENCES", 0);
-        mRequestHandler = RequestHandler.getInstance(getActivity().getApplicationContext());
+        mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
         makeGetSitesRequest();
     }
 
@@ -128,7 +128,7 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
                 }
         , getActivity()){};
 
-        mRequestHandler.getRequestQueue().add(request);
+        mNetworkManager.getRequestQueue().add(request);
     }
 
     public void setEmptyText(CharSequence emptyText) {

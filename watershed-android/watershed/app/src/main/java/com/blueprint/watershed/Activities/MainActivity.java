@@ -15,8 +15,8 @@ import android.view.MenuItem;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 
+import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.R;
-import com.blueprint.watershed.Networking.RequestHandler;
 import com.blueprint.watershed.Utilities.ResideMenu;
 import com.blueprint.watershed.Utilities.ResideMenuItem;
 import com.blueprint.watershed.Sites.SiteFragment;
@@ -79,7 +79,7 @@ public class MainActivity extends ActionBarActivity
     private int mBackStackSize = 0;
 
     //Networking
-    private RequestHandler mMainRequestHandler;
+    private NetworkManager mMainNetworkManager;
 
 
     @Override
@@ -102,7 +102,7 @@ public class MainActivity extends ActionBarActivity
         mTitle = "Tasks";
 
 
-        mMainRequestHandler = RequestHandler.getInstance(this.getApplicationContext());
+        mMainNetworkManager = NetworkManager.getInstance(this.getApplicationContext());
     }
 
     public void initializeTabs(int option){
