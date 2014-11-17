@@ -29,7 +29,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/site_name"
+                    android:id="@+id/mini_site_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/tight_margin"
@@ -38,7 +38,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/site_description"
+                    android:id="@+id/mini_site_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/tight_margin"
@@ -47,7 +47,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/site_location"
+                    android:id="@+id/mini_site_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/tight_margin"

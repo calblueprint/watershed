@@ -50,6 +50,10 @@ public class MiniSiteFragment extends Fragment {
     }
 
     public void configureViewWithMiniSite(View view, MiniSite miniSite) {
+        ((TextView)view.findViewById(R.id.primary_label)).setText("");
+        ((TextView)view.findViewById(R.id.secondary_label)).setText("");
+        ((TextView)view.findViewById(R.id.mini_site_name)).setText(miniSite.getName());
+        ((TextView)view.findViewById(R.id.mini_site_description)).setText(miniSite.getDescription());
     }
 
     @Override
@@ -62,7 +66,7 @@ public class MiniSiteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mini_site, container, false);
-        //configureViewWithSite(view, mSite);
+        configureViewWithMiniSite(view, mMiniSite);
 
         return view;
     }
