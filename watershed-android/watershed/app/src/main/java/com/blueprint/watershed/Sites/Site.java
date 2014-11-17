@@ -1,7 +1,10 @@
 package com.blueprint.watershed.Sites;
 
 import com.blueprint.watershed.APIObject;
+import com.blueprint.watershed.MiniSites.MiniSite;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.util.ArrayList;
 
 /**
  * Created by Mark Miyashita on 10/14/14.
@@ -9,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Site implements APIObject {
 
+    // Attributes
     private Integer mId;
     private String mName;
     private String mDescription;
@@ -19,12 +23,18 @@ public class Site implements APIObject {
     private String mLatitude;
     private String mLongitude;
 
+    // Relationships
+    private ArrayList<MiniSite> mMiniSites;
+
     public Site() {
     }
 
     public String toString() {
         return "Site: " + getName();
     }
+
+    // Relationships
+    public ArrayList<MiniSite> getMiniSites() { return mMiniSites; }
 
     // Getters
     public Integer getId() { return mId; }

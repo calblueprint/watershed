@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.app.Fragment;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Response;
@@ -27,6 +28,8 @@ public class SiteFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private Site mSite;
     private NetworkManager mNetworkManager;
+    private ListView mMiniSiteListView;
+    private MiniSiteListAdapter mAdapter;
 
 
     public static SiteFragment newInstance(Site site) {
@@ -60,6 +63,12 @@ public class SiteFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_site, container, false);
         configureViewWithSite(view, mSite);
+
+        mMiniSiteListView = (ListView) view.findViewById(R.id.mini_sites_table);
+        mMiniSiteAdapter = new MiniSiteListAdapter(getActivity(), R.layout.mini_site_row, mSite.getMiniSites());
+        mMiniSiteListView.setAdapter(mMiniSiteAdapter);
+
+        mMiniSiteListView.setOnItemClickListener(this);
         return view;
     }
 
