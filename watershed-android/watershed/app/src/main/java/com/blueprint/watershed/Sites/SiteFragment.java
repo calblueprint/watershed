@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.app.Fragment;
+import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Networking.NetworkManager;
@@ -41,6 +42,13 @@ public class SiteFragment extends Fragment {
         mSite = site;
     }
 
+    public void configureViewWithSite(View view, Site site) {
+        ((TextView)view.findViewById(R.id.primary_label)).setText("");
+        ((TextView)view.findViewById(R.id.secondary_label)).setText("");
+        ((TextView)view.findViewById(R.id.site_name)).setText(site.getName());
+        ((TextView)view.findViewById(R.id.site_description)).setText(site.getDescription());
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,8 +58,9 @@ public class SiteFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        Log.e("on create view", "called");
         View view = inflater.inflate(R.layout.fragment_site, container, false);
+        configureViewWithSite(view, mSite);
         return view;
     }
 
