@@ -116,7 +116,7 @@ public class SiteFragment extends Fragment
             // Load MiniSite
             MiniSite miniSite = getMiniSite(position);
             MiniSiteFragment miniSiteFragment = new MiniSiteFragment();
-            miniSiteFragment.configureViewWithMiniSite(miniSite);
+            //miniSiteFragment.configureViewWithMiniSite(miniSite);
 
             mMainActivity.replaceFragment(miniSiteFragment);
         }

@@ -65,11 +65,11 @@
                     />
             </LinearLayout>
 
-            <FrameLayout
+            <ListView
                 android:id="@+id/mini_sites_table"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            </FrameLayout>
+            </ListView>
 
         </LinearLayout>
     </ScrollView>
