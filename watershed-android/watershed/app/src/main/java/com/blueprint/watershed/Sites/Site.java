@@ -20,8 +20,12 @@ public class Site implements APIObject {
     public Site() {
     }
 
+    public String toString() {
+        return "Site: " + getName();
+    }
+
     // Getters
-    public String getId() { return mId; }
+    public Integer getId() { return mId; }
     public String getName() { return mName; }
     public String getDescription() { return mDescription; }
     public String getStreet() { return mStreet; }

@@ -66,7 +66,9 @@ public abstract class BaseRequest extends Request {
     public static String makeURL(String endpoint) {
         return baseURL + endpoint;
     }
+
     public static String makeObjectURL(String endpoint, APIObject object) {
+        Log.i("object id:", object.getId().toString());
         return baseURL + endpoint + object.getId().toString();
     }
 
