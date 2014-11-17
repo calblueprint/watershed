@@ -7,7 +7,6 @@
 //
 
 #import "WPAddFieldReportView.h"
-#import "WPHealthPickerViewController.h"
 #import "UIExtensions.h"
 #import "WPAddFieldReportViewController.h"
 #import "FontAwesomeKit/FontAwesomeKit.h"

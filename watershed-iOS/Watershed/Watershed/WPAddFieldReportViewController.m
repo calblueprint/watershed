@@ -40,57 +40,95 @@
 }
 
 - (void)addPhotoButtonAction:(UIButton *) sender {
-    UIAlertController *addPhotoActionSheet = [UIAlertController alertControllerWithTitle:nil
-                                                                                 message:nil
-                                                                          preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    UIAlertAction *takePhoto = [UIAlertAction
-                         actionWithTitle:@"Take Photo"
-                         style:UIAlertActionStyleDefault
-                         handler:^(UIAlertAction * action)
-                         {
-                             [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
-                                 if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-                                     UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Device has no camera" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-                                     [myAlertView show];
-                                 } else {
+    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
+        UIAlertController *addPhotoActionSheet = [UIAlertController alertControllerWithTitle:nil
+                                                                                     message:nil
+                                                                              preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertAction *takePhoto = [UIAlertAction
+                                    actionWithTitle:@"Take Photo"
+                                    style:UIAlertActionStyleDefault
+                                    handler:^(UIAlertAction * action)
+                                    {
+                                        [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
+                                        if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+                                            UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Device has no camera" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                                            [myAlertView show];
+                                        } else {
+                                            
+                                            UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+                                            picker.delegate = self;
+                                            picker.allowsEditing = YES;
+                                            picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+                                            
+                                            [self presentViewController:picker animated:YES completion:NULL];
+                                        }
+                                        
+                                    }];
+        UIAlertAction *selectPhoto = [UIAlertAction
+                                      actionWithTitle:@"Choose Existing"
+                                      style:UIAlertActionStyleDefault
+                                      handler:^(UIAlertAction * action)
+                                      {
+                                          [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
+                                          UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+                                          picker.delegate = self;
+                                          picker.allowsEditing = YES;
+                                          picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                                          
+                                          [self presentViewController:picker animated:YES completion:NULL];
+                                      }];
+        UIAlertAction *cancel = [UIAlertAction
+                                 actionWithTitle:@"Cancel"
+                                 style:UIAlertActionStyleCancel
+                                 handler:^(UIAlertAction * action)
+                                 {
+                                     [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
                                      
-                                     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-                                     picker.delegate = self;
-                                     picker.allowsEditing = YES;
-                                     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-                                     
-                                     [self presentViewController:picker animated:YES completion:NULL]; 
-                                 }
+                                 }];
+        
+        
+        [addPhotoActionSheet addAction:takePhoto];
+        [addPhotoActionSheet addAction:selectPhoto];
+        [addPhotoActionSheet addAction:cancel];
+        [self presentViewController:addPhotoActionSheet animated:YES completion:nil];
+    } else {
+        UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
+                                @"Take Photo",
+                                @"Choose Existing",
+                                nil];
+        popup.tag = 1;
+        [popup showInView:[UIApplication sharedApplication].keyWindow];
+    }
+}
 
-                         }];
-    UIAlertAction *selectPhoto = [UIAlertAction
-                                actionWithTitle:@"Choose Existing"
-                                style:UIAlertActionStyleDefault
-                                handler:^(UIAlertAction * action)
-                                {
-                                    [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
-                                    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-                                    picker.delegate = self;
-                                    picker.allowsEditing = YES;
-                                    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-                                    
-                                    [self presentViewController:picker animated:YES completion:NULL];
-                                }];
-    UIAlertAction *cancel = [UIAlertAction
-                             actionWithTitle:@"Cancel"
-                             style:UIAlertActionStyleCancel
-                             handler:^(UIAlertAction * action)
-                             {
-                                 [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
-                                 
-                             }];
+- (void)actionSheet:(UIActionSheet *)popup clickedButtonAtIndex:(NSInteger)buttonIndex {
     
-    
-    [addPhotoActionSheet addAction:takePhoto];
-    [addPhotoActionSheet addAction:selectPhoto];
-    [addPhotoActionSheet addAction:cancel];
-    [self presentViewController:addPhotoActionSheet animated:YES completion:nil];
+//    switch (popup.tag) {
+//        case 1: {
+//            switch (buttonIndex) {
+//                case 0:
+//                    [self FBShare];
+//                    break;
+//                case 1:
+//                    [self TwitterShare];
+//                    break;
+//                case 2:
+//                    [self emailContent];
+//                    break;
+//                case 3:
+//                    [self saveContent];
+//                    break;
+//                case 4:
+//                    [self rateAppYes];
+//                    break;
+//                default:
+//                    break;
+//            }
+//            break;
+//        }
+//        default:
+//            break;
+//    }
 }
 
 
