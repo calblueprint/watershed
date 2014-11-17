@@ -61,7 +61,7 @@ public class MiniSiteFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_site, container, false);
+        View view = inflater.inflate(R.layout.fragment_mini_site, container, false);
         //configureViewWithSite(view, mSite);
 
         return view;

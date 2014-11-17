@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 
+import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Utilities.ResideMenu;
@@ -37,9 +38,10 @@ public class MainActivity extends ActionBarActivity
                           implements ActionBar.TabListener,
                                      View.OnClickListener,
                                      TaskFragment.OnFragmentInteractionListener,
-                                     SiteListFragment.OnFragmentInteractionListener,
                                      TaskDetailFragment.OnFragmentInteractionListener,
-                                     SiteFragment.OnFragmentInteractionListener {
+                                     SiteListFragment.OnFragmentInteractionListener,
+                                     SiteFragment.OnFragmentInteractionListener,
+                                     MiniSiteFragment.OnFragmentInteractionListener {
 
     // Constants
     public  static final String PREFERENCES = "LOGIN_PREFERENCES";
