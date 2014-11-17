@@ -139,7 +139,6 @@
         UITextView *field = [[UITextView alloc] init];
         field.layer.borderColor = [UIColor whiteColor].CGColor;
         field.layer.borderWidth = wpBorderWidth;
-        field.layer.opacity = 0.3;
         field.textColor = [UIColor whiteColor];
 //        field.layer.cornerRadius = wpCornerRadius;
         field;
