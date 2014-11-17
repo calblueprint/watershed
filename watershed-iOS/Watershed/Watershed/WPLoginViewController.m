@@ -33,8 +33,6 @@ static NSString * const SIGNIN_URL = @"users/sign_in";
 }
 
 - (void)emailSignup {
-    self.view.emailTextField.placeholder = nil;
-    self.view.passwordTextField.placeholder = nil;
     
     NSString *email = self.view.emailTextField.text;
     NSString *password = self.view.passwordTextField.text;

@@ -45,34 +45,14 @@ Boolean emailClicked;
     [_emailButton addTarget:self action:@selector(showEmailInput) forControlEvents:UIControlEventTouchUpInside];
 }
 
+
 //http://stackoverflow.com/questions/6972092/ios-how-to-store-username-password-within-an-app
 - (void)showEmailInput {
-    _emailTextField = [[UITextField alloc] init];
-    _emailTextField.font = [UIFont fontWithName:@"Helvetica" size:14];
-    _emailTextField.textColor = [UIColor whiteColor];
-    NSAttributedString *mailIcon = [[FAKIonIcons ios7EmailOutlineIconWithSize:15] attributedString];
-    NSAttributedString *email =[[NSAttributedString alloc] initWithString:@"   Email Address"];
-    NSMutableAttributedString *placeholder = [[NSMutableAttributedString alloc] initWithAttributedString:mailIcon];
-    [placeholder appendAttributedString:email];
-    _emailTextField.attributedPlaceholder = placeholder;
-    [self addSubview:_emailTextField];
     
     _emailLine = [[UIView alloc] init];
     _emailLine.backgroundColor = [UIColor whiteColor];
     [self addSubview:_emailLine];
-    
-    _passwordTextField = [[UITextField alloc] init];
-    _passwordTextField.font = [UIFont fontWithName:@"Helvetica" size:14];
-    _passwordTextField.textColor = [UIColor whiteColor];
-    NSAttributedString *lockIcon = [[FAKIonIcons ios7LockedIconWithSize:15] attributedString];
-    NSAttributedString *pw =[[NSAttributedString alloc] initWithString:@"   Password"];
-    NSMutableAttributedString *passwordPlaceholder = [[NSMutableAttributedString alloc] initWithAttributedString:lockIcon];
-    [passwordPlaceholder appendAttributedString:pw];
-    _passwordTextField.attributedPlaceholder = passwordPlaceholder;
-    _passwordTextField.secureTextEntry = YES;
-    [self addSubview:_passwordTextField];
-    emailClicked = YES;
-    
+
     _passwordLine = [[UIView alloc] init];
     _passwordLine.backgroundColor = [UIColor whiteColor];
     [self addSubview:_passwordLine];
@@ -84,6 +64,28 @@ Boolean emailClicked;
         self.emailButton.backgroundColor = [UIColor wp_lightGreen];
         [self.emailButton layoutIfNeeded];
     } completion:^(BOOL finished) {
+        _emailTextField = [[UITextField alloc] init];
+        _emailTextField.font = [UIFont fontWithName:@"Helvetica" size:14];
+        _emailTextField.textColor = [UIColor whiteColor];
+        NSAttributedString *mailIcon = [[FAKIonIcons ios7EmailOutlineIconWithSize:15] attributedString];
+        NSAttributedString *email =[[NSAttributedString alloc] initWithString:@"   Email Address"];
+        NSMutableAttributedString *placeholder = [[NSMutableAttributedString alloc] initWithAttributedString:mailIcon];
+        [placeholder appendAttributedString:email];
+        _emailTextField.attributedPlaceholder = placeholder;
+        [self addSubview:_emailTextField];
+        
+        _passwordTextField = [[UITextField alloc] init];
+        _passwordTextField.font = [UIFont fontWithName:@"Helvetica" size:14];
+        _passwordTextField.textColor = [UIColor whiteColor];
+        NSAttributedString *lockIcon = [[FAKIonIcons ios7LockedIconWithSize:15] attributedString];
+        NSAttributedString *pw =[[NSAttributedString alloc] initWithString:@"   Password"];
+        NSMutableAttributedString *passwordPlaceholder = [[NSMutableAttributedString alloc] initWithAttributedString:lockIcon];
+        [passwordPlaceholder appendAttributedString:pw];
+        _passwordTextField.attributedPlaceholder = passwordPlaceholder;
+        _passwordTextField.secureTextEntry = YES;
+        [self addSubview:_passwordTextField];
+        emailClicked = YES;
+        
         SEL emailSignupSelector = sel_registerName("emailSignup");
         [_emailButton addTarget:_parentViewController action:emailSignupSelector forControlEvents:UIControlEventTouchUpInside];
         [self setNeedsUpdateConstraints];
