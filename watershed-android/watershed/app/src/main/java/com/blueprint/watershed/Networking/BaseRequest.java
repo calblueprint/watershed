@@ -62,7 +62,7 @@ public abstract class BaseRequest extends Request {
         this.preferences = activity.getSharedPreferences("LOGIN_PREFERENCES", 0);
     }
 
-    public static String url(String endpoint) {
+    public static String makeURL(String endpoint) {
         return baseURL + endpoint;
     }
 

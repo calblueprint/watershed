@@ -105,13 +105,13 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
     public void makeGetSitesRequest() {
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
 
-        SiteListRequest siteListRequest = new SiteListRequest(params, new Response.Listener<ArrayList<Site>>() {
+        SiteListRequest siteListRequest = new SiteListRequest(getActivity(), params, new Response.Listener<ArrayList<Site>>() {
             @Override
             public void onResponse(ArrayList<Site> sites) {
                 setSites(sites);
                 mAdapter.notifyDataSetChanged();
             }
-        }, getActivity());
+        });
 
         mNetworkManager.getRequestQueue().add(siteListRequest);
     }
