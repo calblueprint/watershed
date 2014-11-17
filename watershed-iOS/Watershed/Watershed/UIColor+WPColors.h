@@ -21,5 +21,6 @@
 + (UIColor *)wp_lime;
 + (UIColor *)wp_lightGreen;
 + (UIColor *)wp_green;
++ (UIColor *)wp_transBlue;
++ (UIColor *)wp_transDarkBlue;
 @end
-
