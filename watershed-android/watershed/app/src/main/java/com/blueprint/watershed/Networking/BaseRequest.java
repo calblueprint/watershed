@@ -69,7 +69,7 @@ public abstract class BaseRequest extends Request {
 
     public static String makeObjectURL(String endpoint, APIObject object) {
         Log.i("object id:", object.getId().toString());
-        return baseURL + endpoint + object.getId().toString();
+        return String.format("%s/%s", makeURL(endpoint), object.getId().toString());
     }
 
     public static NetworkManager getNetworkManager(Context context) {
