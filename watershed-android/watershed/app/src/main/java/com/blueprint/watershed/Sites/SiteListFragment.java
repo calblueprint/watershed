@@ -54,7 +54,6 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
         super.onCreate(savedInstanceState);
         preferences = getActivity().getSharedPreferences("LOGIN_PREFERENCES", 0);
         mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
-        makeGetSitesRequest();
     }
 
     @Override
@@ -84,6 +83,12 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        getSitesRequest();
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
@@ -102,7 +107,7 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
         }
     }
 
-    public void makeGetSitesRequest() {
+    public void getSitesRequest() {
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
 
         SiteListRequest siteListRequest = new SiteListRequest(getActivity(), params, new Response.Listener<ArrayList<Site>>() {

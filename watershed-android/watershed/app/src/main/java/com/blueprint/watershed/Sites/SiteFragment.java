@@ -3,18 +3,29 @@ package com.blueprint.watershed.Sites;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.app.Fragment;
 
+import com.android.volley.Response;
+import com.blueprint.watershed.Networking.NetworkManager;
+import com.blueprint.watershed.Networking.SiteListRequest;
+import com.blueprint.watershed.Networking.SiteRequest;
 import com.blueprint.watershed.R;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class SiteFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private Site mSite;
+    private NetworkManager mNetworkManager;
 
 
     public static SiteFragment newInstance(Site site) {
@@ -33,6 +44,7 @@ public class SiteFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
     }
 
     @Override
@@ -40,7 +52,6 @@ public class SiteFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_site, container, false);
-
         return view;
     }
 
@@ -62,6 +73,12 @@ public class SiteFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        getSiteRequest(mSite);
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
@@ -69,6 +86,20 @@ public class SiteFragment extends Fragment {
 
     public interface OnFragmentInteractionListener {
         public void onFragmentInteraction(Uri uri);
+    }
+
+    // Networking
+    public void getSiteRequest(Site site) {
+        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
+
+        SiteRequest siteRequest = new SiteRequest(getActivity(), site, params, new Response.Listener<Site>() {
+            @Override
+            public void onResponse(Site site) {
+                Log.e("site", site.toString());
+            }
+        });
+
+        mNetworkManager.getRequestQueue().add(siteRequest);
     }
 
 }
