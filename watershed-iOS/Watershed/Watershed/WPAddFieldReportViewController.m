@@ -25,12 +25,12 @@
     [self.view.addPhotoButton addTarget:self action:@selector(addPhotoButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view.viewImageButton addTarget:self action:@selector(viewImageButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view.urgentSwitch addTarget:self action:@selector(changeSwitch:) forControlEvents:UIControlEventValueChanged];
-    UIBarButtonItem *flipButton = [[UIBarButtonItem alloc]
+    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc]
                                    initWithTitle:@"Save"
                                    style:UIBarButtonItemStyleBordered
                                    target:self
-                                   action:@selector(flipView:)];
-    self.navigationItem.rightBarButtonItem = flipButton;
+                                   action:@selector(saveForm:)];
+    self.navigationItem.rightBarButtonItem = saveButton;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self.view
                 action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
@@ -54,7 +54,7 @@
     [self.view endEditing:YES];
 }
 
-- (void)flipView:(UIButton *) sender {
+- (void)saveForm:(UIButton *) sender {
     
 }
 
@@ -78,6 +78,11 @@
 
 - (void) dismissModalView {
     [self.viewPhotoModal dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void) setBlurredImage {
+    self.view.blurredImage = [self.view.originalImage applyBlurWithRadius:5 tintColor:[UIColor clearColor] saturationDeltaFactor:1 maskImage:nil];
+    self.view.selectedImageView.image = self.view.blurredImage;
 }
 
 - (void)addPhotoButtonAction:(UIButton *) sender {
@@ -167,7 +172,7 @@
     picker.delegate = self;
     picker.allowsEditing = NO;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    
+
     [self presentViewController:picker animated:YES completion:NULL];
 }
 
@@ -175,10 +180,10 @@
 #pragma mark - Image Picker Controller delegate methods
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    
+
     UIImage *chosenImage = info[UIImagePickerControllerOriginalImage];
-    self.view.selectedImageView.image = chosenImage;
-    
+    self.view.originalImage = chosenImage;
+    [self setBlurredImage];
     [picker dismissViewControllerAnimated:YES completion:NULL];
 
 }

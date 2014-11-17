@@ -164,8 +164,6 @@
     [_viewImageButton setTitleColor:[UIColor wp_lightBlue] forState: UIControlStateNormal];
     [_ratingField setKeyboardType:UIKeyboardTypeNumberPad];
     [_urgentSwitch setOnTintColor:[UIColor wp_red]];
-    _blurredImage = [_originalImage applyBlurWithRadius:5 tintColor:[UIColor clearColor] saturationDeltaFactor:1 maskImage:nil];
-    _selectedImageView.image = _blurredImage;
     [self setUpButtons];
 }
 - (void)setUpButtons {
