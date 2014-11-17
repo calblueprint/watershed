@@ -57,17 +57,7 @@
                                     handler:^(UIAlertAction * action)
                                     {
                                         [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
-                                        if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-                                            UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Device has no camera" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-                                            [myAlertView show];
-                                        } else {
-                                            UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-                                            picker.delegate = self;
-                                            picker.allowsEditing = YES;
-                                            picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-                                            
-                                            [self presentViewController:picker animated:YES completion:NULL];
-                                        }
+                                        [self takePhoto];
                                         
                                     }];
         UIAlertAction *selectPhoto = [UIAlertAction
@@ -76,12 +66,8 @@
                                       handler:^(UIAlertAction * action)
                                       {
                                           [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
-                                          UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-                                          picker.delegate = self;
-                                          picker.allowsEditing = YES;
-                                          picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                                          [self chooseExisting];
                                           
-                                          [self presentViewController:picker animated:YES completion:NULL];
                                       }];
         UIAlertAction *cancel = [UIAlertAction
                                  actionWithTitle:@"Cancel"
@@ -109,7 +95,7 @@
                     [self takePhoto];
                     break;
                 case 1:
-                    [self selectPhoto];
+                    [self chooseExisting];
                     break;
                 default:
                     break;
@@ -135,7 +121,7 @@
     }
 }
 
-- (void) selectPhoto {
+- (void) chooseExisting {
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     picker.allowsEditing = NO;
