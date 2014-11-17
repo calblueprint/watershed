@@ -36,10 +36,10 @@ import java.util.ArrayList;
 public class MainActivity extends ActionBarActivity
                           implements ActionBar.TabListener,
                                      View.OnClickListener,
-        TaskFragment.OnFragmentInteractionListener,
-        SiteListFragment.OnFragmentInteractionListener,
-        TaskDetailFragment.OnFragmentInteractionListener,
-        SiteFragment.OnFragmentInteractionListener {
+                                     TaskFragment.OnFragmentInteractionListener,
+                                     SiteListFragment.OnFragmentInteractionListener,
+                                     TaskDetailFragment.OnFragmentInteractionListener,
+                                     SiteFragment.OnFragmentInteractionListener {
 
     // Constants
     public  static final String PREFERENCES = "LOGIN_PREFERENCES";
@@ -58,7 +58,6 @@ public class MainActivity extends ActionBarActivity
     private SiteListFragment siteListFragment;
     private FragmentManager fragmentManager;
 
-
     // Navigation Drawer
     private ResideMenu resideMenu;
     private ArrayList<ResideMenuItem> menuItems;
@@ -69,18 +68,16 @@ public class MainActivity extends ActionBarActivity
     // UI Elements
     public Typeface watershedFont;
 
-    //Adapters
+    // Adapters
     public TaskAdapter arrayAdapter;
 
-    //Action Bar Elements
+    // Action Bar Elements
     private ActionBar actionBar;
     private ViewPager viewPager;
     private TabsPagerAdapter mAdapter;
-    private int mBackStackSize = 0;
 
-    //Networking
-    private NetworkManager mMainNetworkManager;
-
+    // Networking
+    private NetworkManager mNetworkManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,8 +98,7 @@ public class MainActivity extends ActionBarActivity
         authEmail = prefs.getString("auth_email", "none");
         mTitle = "Tasks";
 
-
-        mMainNetworkManager = NetworkManager.getInstance(this.getApplicationContext());
+        setNetworkManager(NetworkManager.getInstance(this.getApplicationContext()));
     }
 
     public void initializeTabs(int option){
@@ -306,4 +302,8 @@ public class MainActivity extends ActionBarActivity
             throw new RuntimeException("Could not get package name: " + e);
         }
     }
+
+    // Networking
+    public NetworkManager getNetworkManager() { return mNetworkManager; }
+    public void setNetworkManager(NetworkManager networkManager) { mNetworkManager = networkManager; }
 }
