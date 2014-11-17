@@ -116,7 +116,7 @@ static NSString *cellIdentifier = @"SiteCell";
     searchButtonItem.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = searchButtonItem;
     
-    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, topMargin, [WPView screenWidth], topMargin)];
+    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, topMargin, [WPView getScreenWidth], topMargin)];
     self.searchBar.delegate = self;
     self.searchBar.placeholder = @"Search Sites";
     self.searchBar.tintColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
@@ -131,7 +131,7 @@ static NSString *cellIdentifier = @"SiteCell";
     [self.searchController setActive:YES animated:YES];
     [self.searchBar becomeFirstResponder];
     [UIView animateWithDuration:0.2 animations:^{
-        [self.searchBar setFrame:CGRectMake(0, 10, [WPView screenWidth], topMargin)];
+        [self.searchBar setFrame:CGRectMake(0, 10, [WPView getScreenWidth], topMargin)];
     }];
 }
 
@@ -141,7 +141,7 @@ static NSString *cellIdentifier = @"SiteCell";
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     [UIView animateWithDuration:0.2 animations:^{
-        [self.searchBar setFrame:CGRectMake(0, topMargin, [WPView screenWidth], topMargin)];
+        [self.searchBar setFrame:CGRectMake(0, topMargin, [WPView getScreenWidth], topMargin)];
     }];
 }
 

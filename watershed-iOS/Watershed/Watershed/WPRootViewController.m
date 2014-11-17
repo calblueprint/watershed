@@ -20,7 +20,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    UIViewController *launchingViewController = [self newInitialViewController];
     UIViewController *launchingViewController = [self newLoginViewController];
     [self showViewController:launchingViewController];
 }
@@ -39,37 +38,37 @@
     self.currentViewController = initialViewController;
 }
 
-- (void) cycleFromViewController: (UIViewController*) oldC
-                toViewController: (UIViewController*) newC {
-    [oldC willMoveToParentViewController:nil];
-    [self addChildViewController:newC];
+- (void)cycleFromViewController: (UIViewController*) oldVC
+               toViewController: (UIViewController*) newVC {
+    [oldVC willMoveToParentViewController:nil];
+    [self addChildViewController:newVC];
     
-    newC.view.frame = newC.view.frame;
-    CGRect endFrame = oldC.view.frame;
+    newVC.view.frame = newVC.view.frame;
+    CGRect endFrame = oldVC.view.frame;
     
-    [self transitionFromViewController: oldC
-                      toViewController: newC
-                              duration: 0.25
+    [self transitionFromViewController: oldVC
+                      toViewController: newVC
+                              duration: 0.1
                                options:0
                             animations:^{
-                                newC.view.frame = oldC.view.frame;
-                                oldC.view.frame = endFrame;
+                                newVC.view.frame = oldVC.view.frame;
+                                oldVC.view.frame = endFrame;
                             }
                             completion:^(BOOL finished) {
-                                [oldC removeFromParentViewController];
-                                [newC didMoveToParentViewController:self];
+                                [oldVC removeFromParentViewController];
+                                [newVC didMoveToParentViewController:self];
                             }];
 }
 
-- (void)pushNewTabBarControllerFromLogin: (WPLoginViewController *)oldC {
+- (void)pushNewTabBarControllerFromLogin: (WPLoginViewController *)oldVC {
     UIViewController *launchingViewController = [self newInitialViewController];
-    [self cycleFromViewController:oldC toViewController:launchingViewController];
+    [self cycleFromViewController:oldVC toViewController:launchingViewController];
 
 }
 
-- (void)pushNewLoginControllerFromTab: (WPTabBarController *)oldC {
+- (void)pushNewLoginControllerFromTab: (WPTabBarController *)oldVC {
     UIViewController *launchingViewController = [self newLoginViewController];
-    [self cycleFromViewController:oldC toViewController:launchingViewController];
+    [self cycleFromViewController:oldVC toViewController:launchingViewController];
 
     
 }

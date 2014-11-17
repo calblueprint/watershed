@@ -20,19 +20,22 @@
 @property (nonatomic) UIView *emailLine;
 @property (nonatomic) UIView *passwordLine;
 
+@property (nonatomic) BOOL isFirstTime;
+@property (nonatomic) BOOL emailClicked;
+
 @end
 
 
 @implementation WPLoginView
-Boolean isFirstTime;
-Boolean emailClicked;
+
 
 - (instancetype)initWithFrame:(CGRect)frame {
-    frame =  UIScreen.mainScreen.bounds;
+    
+    frame = [WPView getScreenFrame];
     self = [super initWithFrame:frame];
     if (self) {
-        isFirstTime = YES;
-        emailClicked = NO;
+        _isFirstTime = YES;
+        _emailClicked = NO;
         [self createSubviews];
         [self setupActions];
         [self setNeedsUpdateConstraints];
@@ -84,7 +87,7 @@ Boolean emailClicked;
         _passwordTextField.attributedPlaceholder = passwordPlaceholder;
         _passwordTextField.secureTextEntry = YES;
         [self addSubview:_passwordTextField];
-        emailClicked = YES;
+        _emailClicked = YES;
         
         SEL emailSignupSelector = sel_registerName("emailSignup");
         [_emailButton addTarget:_parentViewController action:emailSignupSelector forControlEvents:UIControlEventTouchUpInside];
@@ -125,7 +128,7 @@ Boolean emailClicked;
 }
 
 - (void)updateConstraints {
-    if (isFirstTime) {
+    if (_isFirstTime) {
         [self.appIconView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.mas_centerY).with.offset(-180);
             make.centerX.equalTo(self.mas_centerX);
@@ -155,9 +158,9 @@ Boolean emailClicked;
             make.leading.equalTo(@7);
         }];
         
-        isFirstTime = NO;
+        _isFirstTime = NO;
         
-    } else if (emailClicked) {
+    } else if (_emailClicked) {
         [self.emailTextField mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.fbLoginView.mas_bottom).with.offset(15);
             make.centerX.equalTo(self.mas_centerX);
@@ -186,7 +189,7 @@ Boolean emailClicked;
             make.left.equalTo(self.fbLoginView.mas_left);
         }];
         
-        emailClicked = NO;
+        _emailClicked = NO;
         
     }
 
