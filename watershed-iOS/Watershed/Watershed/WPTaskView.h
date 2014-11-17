@@ -17,5 +17,6 @@
 @property (nonatomic) UILabel *assignee;
 @property (nonatomic) UIButton *completed;
 @property (nonatomic) UIButton *addFieldReportButton;
+@property (nonatomic) UIButton *siteLinkButton;
 
 @end

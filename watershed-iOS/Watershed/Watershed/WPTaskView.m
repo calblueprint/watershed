@@ -31,6 +31,14 @@
         title;
     }) wp_addToSuperview:self];
     
+    _siteLinkButton = [({
+        UIButton *siteLinkButton = [[UIButton alloc] init];
+        siteLinkButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        siteLinkButton.titleLabel.font = [UIFont systemFontOfSize:14.0];
+        siteLinkButton.titleLabel.textColor = [UIColor grayColor];
+        siteLinkButton;
+    }) wp_addToSuperview:self];
+    
     _taskDescription = [({
         UILabel *taskDescription = [[UILabel alloc] init];
         taskDescription.numberOfLines = 0;
@@ -43,6 +51,7 @@
         assignee.numberOfLines = 0;
         assignee.font = [UIFont systemFontOfSize:12];
         assignee.textColor = [UIColor grayColor];
+        assignee.textAlignment = NSTextAlignmentRight;
         assignee;
     }) wp_addToSuperview:self];
     
@@ -81,6 +90,9 @@
     [_completed addTarget:self action:@selector(onClick) forControlEvents:UIControlEventTouchUpInside];
     [_addFieldReportButton setTitle:@"Add Field\nReport" forState:UIControlStateNormal];
     [_addFieldReportButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_siteLinkButton setTitle:@"Site whatever" forState:UIControlStateNormal];
+    [_siteLinkButton setTitleColor:[UIColor wp_darkBlue] forState:UIControlStateNormal];
+    [_siteLinkButton.titleLabel setTextAlignment:NSTextAlignmentLeft];
 }
 
 -(void)onClick {
@@ -109,17 +121,24 @@
         make.trailing.equalTo(self.dueDate.mas_left).with.offset(standardMargin);
     }];
     
-    
-    [self.assignee mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.siteLinkButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.title.mas_bottom).with.offset(standardMargin);
+        make.leading.equalTo(@(standardMargin));
+        make.trailing.equalTo(@(-standardMargin));
+        make.height.equalTo(@(wpButtonHeight / 2));
+    }];
+    
+    [self.taskDescription mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.siteLinkButton.mas_bottom).with.offset(standardMargin);
         make.leading.equalTo(@(standardMargin));
         make.trailing.equalTo(@(-standardMargin));
     }];
     
-    [self.taskDescription mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.assignee.mas_bottom).with.offset(standardMargin);
-        make.leading.equalTo(@(standardMargin));
+    [self.assignee mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.addFieldReportButton.mas_top).with.offset(-standardMargin);
+        make.leading.equalTo(@0);
         make.trailing.equalTo(@(-standardMargin));
+        make.height.equalTo(@20);
     }];
 
     [self.addFieldReportButton mas_makeConstraints:^(MASConstraintMaker *make) {
