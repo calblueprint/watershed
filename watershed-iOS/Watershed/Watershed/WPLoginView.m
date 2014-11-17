@@ -31,8 +31,8 @@ Boolean emailClicked;
     frame =  UIScreen.mainScreen.bounds;
     self = [super initWithFrame:frame];
     if (self) {
-        isFirstTime = TRUE;
-        emailClicked = FALSE;
+        isFirstTime = YES;
+        emailClicked = NO;
         [self createSubviews];
         [self setupActions];
         [self setNeedsUpdateConstraints];
@@ -71,7 +71,7 @@ Boolean emailClicked;
     _passwordTextField.attributedPlaceholder = passwordPlaceholder;
     _passwordTextField.secureTextEntry = YES;
     [self addSubview:_passwordTextField];
-    emailClicked = TRUE;
+    emailClicked = YES;
     
     _passwordLine = [[UIView alloc] init];
     _passwordLine.backgroundColor = [UIColor whiteColor];
@@ -153,7 +153,7 @@ Boolean emailClicked;
             make.leading.equalTo(@7);
         }];
         
-        isFirstTime = FALSE;
+        isFirstTime = NO;
         
     } else if (emailClicked) {
         [self.emailTextField mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -184,7 +184,7 @@ Boolean emailClicked;
             make.left.equalTo(self.fbLoginView.mas_left);
         }];
         
-        emailClicked = FALSE;
+        emailClicked = NO;
         
     }
 
