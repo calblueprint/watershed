@@ -26,6 +26,7 @@
     if (self) {
         [self createSubviews];
         [self setNeedsUpdateConstraints];
+        self.scrollEnabled = NO;
     }
     return self;
 }

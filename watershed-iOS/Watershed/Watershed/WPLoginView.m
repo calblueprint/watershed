@@ -170,7 +170,7 @@
         }];
         
         [self.fbLoginView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.appTitleLabel.mas_bottom).with.offset(20);
+            make.top.equalTo(self.emailButton.mas_bottom).with.offset(10);
             make.centerX.equalTo(self.mas_centerX);
             make.width.equalTo(@300);
             make.height.equalTo(@45);
@@ -178,7 +178,7 @@
         
         [self.emailButton mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(self.mas_centerX);
-            self.emailButtonTopConstraint = make.top.equalTo(self.fbLoginView.mas_bottom).with.offset(10);
+            self.emailButtonTopConstraint = make.top.equalTo(self.appTitleLabel.mas_bottom).with.offset(20);
             make.leading.equalTo(self.fbLoginView.mas_leading);
             make.height.equalTo(self.fbLoginView.mas_height);
         }];
@@ -192,7 +192,7 @@
         
     } else if (_emailClicked) {
         [self.emailTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.fbLoginView.mas_bottom).with.offset(15);
+            make.top.equalTo(self.appTitleLabel.mas_bottom).with.offset(15);
             make.centerX.equalTo(self.mas_centerX);
             make.height.equalTo(@15);
             make.width.equalTo(self.fbLoginView.mas_width);
