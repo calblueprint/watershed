@@ -22,7 +22,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.blueprint.watershed.LoginFragment;
+import com.blueprint.watershed.Authentication.LoginFragment;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Networking.RequestHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;

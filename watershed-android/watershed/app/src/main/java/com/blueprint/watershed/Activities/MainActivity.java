@@ -17,11 +17,11 @@ import android.graphics.Typeface;
 
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Networking.RequestHandler;
-import com.blueprint.watershed.ResideMenu;
-import com.blueprint.watershed.ResideMenuItem;
+import com.blueprint.watershed.Utilities.ResideMenu;
+import com.blueprint.watershed.Utilities.ResideMenuItem;
 import com.blueprint.watershed.Sites.SiteFragment;
 import com.blueprint.watershed.Sites.SiteListFragment;
-import com.blueprint.watershed.TabsPagerAdapter;
+import com.blueprint.watershed.Utilities.TabsPagerAdapter;
 import com.blueprint.watershed.Tasks.TaskAdapter;
 import com.blueprint.watershed.Tasks.TaskDetailFragment;
 import com.blueprint.watershed.Tasks.TaskFragment;
