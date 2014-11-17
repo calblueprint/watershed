@@ -13,6 +13,7 @@
 
 @property (nonatomic) NSMutableArray *pickerData;
 @property (nonatomic) WPAddFieldReportView *view;
+@property (nonatomic) UIViewController *viewPhotoModal;
 @end
 
 @implementation WPAddFieldReportViewController
@@ -22,6 +23,7 @@
     self.view.backgroundColor = [UIColor blackColor];
     self.navigationItem.title = @"Add Field Report";
     [self.view.addPhotoButton addTarget:self action:@selector(addPhotoButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view.viewImageButton addTarget:self action:@selector(viewImageButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view.urgentSwitch addTarget:self action:@selector(changeSwitch:) forControlEvents:UIControlEventValueChanged];
 }
 
@@ -37,6 +39,28 @@
     if ([sender isOn]) {
         //MIGHT USE LATER
     }
+}
+
+- (void)viewImageButtonAction:(UIButton *) sender {
+    self.viewPhotoModal = [[UIViewController alloc] init];
+    self.viewPhotoModal.view.backgroundColor=[UIColor blackColor];
+    self.viewPhotoModal.view.userInteractionEnabled=YES;
+
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.viewPhotoModal.view.frame];
+    imageView.contentMode=UIViewContentModeScaleAspectFit;
+    imageView.image = self.view.originalImage;
+
+    [self.viewPhotoModal.view addSubview:imageView];
+    
+    UITapGestureRecognizer *modalTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissModalView)];
+    [self.viewPhotoModal.view addGestureRecognizer:modalTap];
+    self.viewPhotoModal.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+
+    [self presentViewController:self.viewPhotoModal animated:YES completion:nil];
+}
+
+- (void) dismissModalView {
+    [self.viewPhotoModal dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)addPhotoButtonAction:(UIButton *) sender {

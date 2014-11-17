@@ -26,5 +26,8 @@
 @property (nonatomic) UIButton *rating3;
 @property (nonatomic) UIButton *rating4;
 @property (nonatomic) UIButton *rating5;
+@property (nonatomic) UIButton *viewImageButton;
+@property (nonatomic) UIImage *originalImage;
+@property (nonatomic) UIImage *blurredImage;
 
 @end

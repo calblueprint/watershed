@@ -48,8 +48,8 @@
 }
 - (void)createSubviews {
     _selectedImageView = [({
-        UIImage *coverPhoto = [UIImage imageNamed:@"SampleCoverPhoto"];
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:coverPhoto];
+        _originalImage = [UIImage imageNamed:@"SampleCoverPhoto"];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:_originalImage];
         imageView.layer.borderColor = [UIColor wp_blue].CGColor;
         imageView.layer.borderWidth = wpBorderWidth;
         imageView.layer.cornerRadius = wpCornerRadius;
@@ -156,14 +156,27 @@
         addPhoto.titleLabel.textColor = [UIColor wp_blue];
         addPhoto;
     }) wp_addToSuperview:self];
+    
+    _viewImageButton = [({
+        UIButton *addPhoto = [[UIButton alloc] init];
+        addPhoto.layer.borderColor = [UIColor wp_blue].CGColor;
+        addPhoto.layer.borderWidth = wpBorderWidth;
+        addPhoto.layer.cornerRadius = wpCornerRadius;
+        addPhoto.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+        addPhoto.titleLabel.textColor = [UIColor wp_blue];
+        addPhoto;
+    }) wp_addToSuperview:self];
 }
 
 - (void)setUpActions {
     [_addPhotoButton setTitle:@"Add Picture" forState:UIControlStateNormal];
     [_addPhotoButton setTitleColor:[UIColor wp_darkBlue] forState: UIControlStateNormal];
+    [_viewImageButton setTitle:@"View Image" forState:UIControlStateNormal];
+    [_viewImageButton setTitleColor:[UIColor wp_darkBlue] forState: UIControlStateNormal];
     [_ratingField setKeyboardType:UIKeyboardTypeNumberPad];
     [_urgentSwitch setOnTintColor:[UIColor wp_red]];
-    _selectedImageView.image = [_selectedImageView.image applyBlurWithRadius:5 tintColor:[UIColor clearColor] saturationDeltaFactor:1 maskImage:nil];
+    _blurredImage = [_originalImage applyBlurWithRadius:5 tintColor:[UIColor clearColor] saturationDeltaFactor:1 maskImage:nil];
+    _selectedImageView.image = _blurredImage;
     [self setUpButtons];
 }
 - (void)setUpButtons {
@@ -281,15 +294,22 @@
     
     [self.addPhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.fieldDescription.mas_bottom).with.offset(standardMargin);
-//        make.bottom.equalTo(@(-60));
         make.centerX.equalTo(self.mas_centerX);
 //        make.leading.equalTo(@(standardMargin));
         make.height.equalTo(@(wpButtonHeight));
         make.width.equalTo(@(wpButtonWidth));
     }];
+
+    [self.viewImageButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.addPhotoButton.mas_bottom).with.offset(standardMargin);
+        make.centerX.equalTo(self.mas_centerX);
+        //        make.leading.equalTo(@(standardMargin));
+        make.height.equalTo(@(wpButtonHeight));
+        make.width.equalTo(@(wpButtonWidth));
+    }];
     
     [self.blackOverlay mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@0);
+        make.top.equalTo(@(topMargin));
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
         make.bottom.equalTo(@0);
