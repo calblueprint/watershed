@@ -1,10 +1,12 @@
-package com.blueprint.watershed;
+package com.blueprint.watershed.Utilities;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.blueprint.watershed.R;
 
 /**
  * User: special

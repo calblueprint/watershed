@@ -17,8 +17,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Networking.BaseRequest;
+import com.blueprint.watershed.Networking.NetworkManager;
+import com.blueprint.watershed.Networking.SiteListRequest;
 import com.blueprint.watershed.R;
-import com.blueprint.watershed.Networking.RequestHandler;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
@@ -35,7 +36,7 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
     private ListView mSiteListView;
     private SiteListAdapter mAdapter;
     private SharedPreferences preferences;
-    private RequestHandler mRequestHandler;
+    private NetworkManager mNetworkManager;
     private MainActivity mMainActivity;
     private ArrayList<Site> mSites;
 
@@ -52,7 +53,7 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         preferences = getActivity().getSharedPreferences("LOGIN_PREFERENCES", 0);
-        mRequestHandler = RequestHandler.getInstance(getActivity().getApplicationContext());
+        mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
         makeGetSitesRequest();
     }
 
@@ -104,31 +105,15 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
     public void makeGetSitesRequest() {
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
 
-        // TODO(mark): URL and mapper should be generalized
-        String url = "https://intense-reaches-1457.herokuapp.com/api/v1/sites";
-        final ObjectMapper mapper = new ObjectMapper();
-        mapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
+        SiteListRequest siteListRequest = new SiteListRequest(getActivity(), params, new Response.Listener<ArrayList<Site>>() {
+            @Override
+            public void onResponse(ArrayList<Site> sites) {
+                setSites(sites);
+                mAdapter.notifyDataSetChanged();
+            }
+        });
 
-        BaseRequest request = new BaseRequest(Request.Method.GET, url, new JSONObject(params),
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject jsonObject) {
-                        try {
-                            String sitesJson = jsonObject.get("sites").toString();
-                            ArrayList<Site> sites = mapper.readValue(sitesJson, new TypeReference<ArrayList<Site>>() {
-                            });
-                            setSites(sites);
-                            Log.i("sites count", Integer.toString(sites.size()));
-                            mAdapter.notifyDataSetChanged();
-                            Log.e("response", jsonObject.toString());
-                        } catch (Exception e) {
-                            Log.e("Json exception", "in site list fragment" + e.toString());
-                        }
-                    }
-                }
-        , getActivity()){};
-
-        mRequestHandler.getRequestQueue().add(request);
+        mNetworkManager.getRequestQueue().add(siteListRequest);
     }
 
     public void setEmptyText(CharSequence emptyText) {

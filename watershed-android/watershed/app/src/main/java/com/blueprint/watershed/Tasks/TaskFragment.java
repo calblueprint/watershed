@@ -14,8 +14,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Networking.BaseRequest;
+import com.blueprint.watershed.Networking.NetworkManager;
+import com.blueprint.watershed.Networking.TaskListRequest;
 import com.blueprint.watershed.R;
-import com.blueprint.watershed.Networking.RequestHandler;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
@@ -32,7 +33,7 @@ public class TaskFragment extends ListFragment {
     private ArrayList<Task> mTaskList;
     private MainActivity parentActivity;
     private TaskAdapter mTaskAdapter;
-    private RequestHandler mRequestHandler;
+    private NetworkManager mNetworkManager;
 
 
     public static TaskFragment newInstance(int option) {
@@ -49,7 +50,7 @@ public class TaskFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mRequestHandler = RequestHandler.getInstance(getActivity().getApplicationContext());
+        mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
         parentActivity = (MainActivity)getActivity();
         mTaskList = new ArrayList<Task>();
         if (getArguments() != null) {
@@ -111,31 +112,15 @@ public class TaskFragment extends ListFragment {
     private void getTasksRequest(){
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
 
-        // TODO(mark): URL and mapper should be generalized
-        String url = "https://intense-reaches-1457.herokuapp.com/api/v1/tasks";
-        final ObjectMapper mapper = new ObjectMapper();
-        mapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
+        TaskListRequest taskListRequest = new TaskListRequest(getActivity(), params, new Response.Listener<ArrayList<Task>>() {
+            @Override
+            public void onResponse(ArrayList<Task> tasks) {
+                setTasks(tasks);
+                mTaskAdapter.notifyDataSetChanged();
+            }
+        });
 
-        BaseRequest request = new BaseRequest(Request.Method.GET, url, new JSONObject(params),
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject jsonObject) {
-                        try {
-                            String sitesJson = jsonObject.get("tasks").toString();
-                            ArrayList<Task> tasks = mapper.readValue(sitesJson, new TypeReference<ArrayList<Task>>() {
-                            });
-                            setTasks(tasks);
-                            Log.i("task count", Integer.toString(tasks.size()));
-                            mTaskAdapter.notifyDataSetChanged();
-                            Log.e("response", jsonObject.toString());
-                        } catch (Exception e) {
-                            Log.e("Json exception", "in task list fragment" + e.toString());
-                        }
-                    }
-                }
-                , getActivity()){};
-
-        mRequestHandler.getRequestQueue().add(request);
+        mNetworkManager.getRequestQueue().add(taskListRequest);
     }
 
     private void setTasks(ArrayList<Task> tasks){
