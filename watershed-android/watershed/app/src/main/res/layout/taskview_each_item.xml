@@ -2,46 +2,55 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="96dp"
     android:background="@color/white"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/title"
-        android:textSize="20dp"
-        android:textStyle="bold"
+        android:textSize="20sp"
         android:textColor="#000000"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="28dp"
-        android:layout_centerVertical="true"
+        android:text="Title"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="16dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
     <TextView
         android:id="@+id/due_date"
-        android:textSize="20dp"
-        android:textStyle="bold"
+        android:textSize="20sp"
         android:textColor="#000000"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Due"
-        android:layout_alignTop="@+id/title"
+        android:layout_alignBottom="@+id/site"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="43dp" />
+        android:layout_marginRight="32dp" />
 
-        <TextView
-        android:id="@+id/description"
-        android:paddingLeft="5dp"
+    <TextView
+        android:id="@+id/site"
         android:textColor="#000000"
-        android:textSize="17dp"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="Site"
         android:layout_below="@+id/title"
         android:layout_alignLeft="@+id/title"
         android:layout_alignStart="@+id/title" />
+
+    <TextView
+            android:id="@+id/description"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:layout_below="@+id/site"
+            android:layout_alignLeft="@+id/title"
+            android:layout_alignStart="@+id/title" />
 
 </RelativeLayout>
