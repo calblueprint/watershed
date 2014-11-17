@@ -8,6 +8,7 @@
 
 #import "WPLoginView.h"
 #import "FontAwesomeKit/FontAwesomeKit.h"
+#import "WPLoginViewController.h"
 
 @interface WPLoginView ()
 
@@ -43,13 +44,16 @@
     }
     return self;
 }
-         
+
+-(void)dismissKeyboard {
+    [self.emailTextField resignFirstResponder];
+    [self.passwordTextField resignFirstResponder];
+}
+
 - (void)setupActions {
     [_emailButton addTarget:self action:@selector(showEmailInput) forControlEvents:UIControlEventTouchUpInside];
 }
 
-
-//http://stackoverflow.com/questions/6972092/ios-how-to-store-username-password-within-an-app
 - (void)showEmailInput {
     
     _emailLine = [[UIView alloc] init];
@@ -67,26 +71,41 @@
         self.emailButton.backgroundColor = [UIColor wp_lightGreen];
         [self.emailButton layoutIfNeeded];
     } completion:^(BOOL finished) {
-        _emailTextField = [[UITextField alloc] init];
-        _emailTextField.font = [UIFont fontWithName:@"Helvetica" size:14];
-        _emailTextField.textColor = [UIColor whiteColor];
-        NSAttributedString *mailIcon = [[FAKIonIcons ios7EmailOutlineIconWithSize:15] attributedString];
-        NSAttributedString *email =[[NSAttributedString alloc] initWithString:@"   Email Address"];
-        NSMutableAttributedString *placeholder = [[NSMutableAttributedString alloc] initWithAttributedString:mailIcon];
-        [placeholder appendAttributedString:email];
-        _emailTextField.attributedPlaceholder = placeholder;
-        [self addSubview:_emailTextField];
-        
-        _passwordTextField = [[UITextField alloc] init];
-        _passwordTextField.font = [UIFont fontWithName:@"Helvetica" size:14];
-        _passwordTextField.textColor = [UIColor whiteColor];
-        NSAttributedString *lockIcon = [[FAKIonIcons ios7LockedIconWithSize:15] attributedString];
-        NSAttributedString *pw =[[NSAttributedString alloc] initWithString:@"   Password"];
-        NSMutableAttributedString *passwordPlaceholder = [[NSMutableAttributedString alloc] initWithAttributedString:lockIcon];
-        [passwordPlaceholder appendAttributedString:pw];
-        _passwordTextField.attributedPlaceholder = passwordPlaceholder;
-        _passwordTextField.secureTextEntry = YES;
-        [self addSubview:_passwordTextField];
+        if (!_emailClicked) {
+            _emailTextField = [[UITextField alloc] init];
+            _emailTextField.font = [UIFont fontWithName:@"Helvetica" size:14];
+            _emailTextField.textColor = [UIColor whiteColor];
+            NSAttributedString *mailIcon = [[FAKIonIcons ios7EmailOutlineIconWithSize:15] attributedString];
+            NSAttributedString *email =[[NSAttributedString alloc] initWithString:@"   Email Address"];
+            NSMutableAttributedString *placeholder = [[NSMutableAttributedString alloc] initWithAttributedString:mailIcon];
+            [placeholder appendAttributedString:email];
+            _emailTextField.attributedPlaceholder = placeholder;
+            _emailTextField.delegate = self;
+            [_emailTextField setReturnKeyType:UIReturnKeyNext];
+            [_emailTextField addTarget:self
+                          action:@selector(emailToPassword)
+                forControlEvents:UIControlEventEditingDidEndOnExit];
+            
+            [self addSubview:_emailTextField];
+            
+            _passwordTextField = [[UITextField alloc] init];
+            _passwordTextField.font = [UIFont fontWithName:@"Helvetica" size:14];
+            _passwordTextField.textColor = [UIColor whiteColor];
+            NSAttributedString *lockIcon = [[FAKIonIcons ios7LockedIconWithSize:15] attributedString];
+            NSAttributedString *pw =[[NSAttributedString alloc] initWithString:@"   Password"];
+            NSMutableAttributedString *passwordPlaceholder = [[NSMutableAttributedString alloc] initWithAttributedString:lockIcon];
+            [passwordPlaceholder appendAttributedString:pw];
+            _passwordTextField.attributedPlaceholder = passwordPlaceholder;
+            _passwordTextField.secureTextEntry = YES;
+            _passwordTextField.delegate = self;
+            [_passwordTextField setReturnKeyType:UIReturnKeyGo];
+            [_passwordTextField addTarget:self
+                                action:@selector(passwordToDone)
+                      forControlEvents:UIControlEventEditingDidEndOnExit];
+
+
+            [self addSubview:_passwordTextField];
+        }
         _emailClicked = YES;
         
         SEL emailSignupSelector = sel_registerName("emailSignup");
@@ -95,6 +114,17 @@
     }];
 
 }
+
+- (void)emailToPassword {
+    [self.emailTextField resignFirstResponder];
+    [self.passwordTextField becomeFirstResponder];
+}
+
+- (void)passwordToDone {
+    [self.passwordTextField becomeFirstResponder];
+    [_parentViewController emailSignup];
+}
+
 
 
 - (void)createSubviews {
@@ -130,7 +160,7 @@
 - (void)updateConstraints {
     if (_isFirstTime) {
         [self.appIconView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.mas_centerY).with.offset(-180);
+            make.top.equalTo(self.mas_centerY).with.offset(-200);
             make.centerX.equalTo(self.mas_centerX);
         }];
         
@@ -140,7 +170,7 @@
         }];
         
         [self.fbLoginView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.appTitleLabel.mas_bottom).with.offset(20);
+            make.top.equalTo(self.emailButton.mas_bottom).with.offset(10);
             make.centerX.equalTo(self.mas_centerX);
             make.width.equalTo(@300);
             make.height.equalTo(@45);
@@ -148,7 +178,7 @@
         
         [self.emailButton mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(self.mas_centerX);
-            self.emailButtonTopConstraint = make.top.equalTo(self.fbLoginView.mas_bottom).with.offset(10);
+            self.emailButtonTopConstraint = make.top.equalTo(self.appTitleLabel.mas_bottom).with.offset(20);
             make.leading.equalTo(self.fbLoginView.mas_leading);
             make.height.equalTo(self.fbLoginView.mas_height);
         }];
@@ -162,7 +192,7 @@
         
     } else if (_emailClicked) {
         [self.emailTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.fbLoginView.mas_bottom).with.offset(15);
+            make.top.equalTo(self.appTitleLabel.mas_bottom).with.offset(15);
             make.centerX.equalTo(self.mas_centerX);
             make.height.equalTo(@15);
             make.width.equalTo(self.fbLoginView.mas_width);

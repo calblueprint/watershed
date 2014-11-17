@@ -12,10 +12,13 @@
 
 @class WPLoginViewController;
 
-@interface WPLoginView : WPView
+@interface WPLoginView : WPView <UITextFieldDelegate>
 
 @property (nonatomic) WPLoginViewController *parentViewController;
 
 @property (nonatomic) UITextField *emailTextField;
 @property (nonatomic) UITextField *passwordTextField;
+
+-(void)dismissKeyboard;
+
 @end
