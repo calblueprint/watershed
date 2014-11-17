@@ -32,7 +32,7 @@ static NSString * const SIGNIN_URL = @"users/sign_in";
 #pragma mark - HTTP Request Methods
 
 - (void)requestLoginWithParameters:(NSDictionary *)parameters success:(void (^)(id))success {
-    NSString *signInString = [self.requestManager.baseURL.absoluteString stringByAppendingString:SIGNIN_URL];
+    NSString *signInString = [self createURLWithEndpoint:SIGNIN_URL];
     
     [self.requestManager POST:signInString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
@@ -42,6 +42,13 @@ static NSString * const SIGNIN_URL = @"users/sign_in";
         [incorrect show];
         NSLog(@"Error: %@", error);
     }];
+}
+
+#pragma mark - URL Creation
+
+- (NSString *)createURLWithEndpoint:(NSString *)endpoint {
+    NSString *url = [self.requestManager.baseURL.absoluteString stringByAppendingString:endpoint];
+    return url;
 }
 
 #pragma mark - Lazy Instantiation
