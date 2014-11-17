@@ -28,7 +28,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/tight_margin"
-                android:layout_marginBottom="@dimen/tight_margin"
                 android:textSize="30sp"
                 android:text="Site Name"
                 />
@@ -37,6 +36,7 @@
                 android:id="@+id/site_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/tight_margin"
                 android:textSize="14sp"
                 android:text="Site Description"
                 />
@@ -45,6 +45,7 @@
                 android:id="@+id/site_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/tight_margin"
                 android:textSize="14sp"
                 android:text="Location"
                 />
@@ -53,6 +54,7 @@
                 android:id="@+id/site_mini_sites_count"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/tight_margin"
                 android:textSize="14sp"
                 android:text="Mini Sites"
                 />
