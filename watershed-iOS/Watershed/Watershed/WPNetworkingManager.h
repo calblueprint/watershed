@@ -9,5 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface WPNetworkingManager : NSObject
-
++ (WPNetworkingManager *)sharedManager;
+- (void)requestLoginWithParameters:(NSDictionary *)parameters success:(void (^)(id))success;
 @end

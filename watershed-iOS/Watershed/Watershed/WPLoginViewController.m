@@ -8,6 +8,7 @@
 
 #import "WPLoginViewController.h"
 #import "WPLoginView.h"
+#import "WPNetworkingManager.h"
 #import "AFNetworking.h"
 #import "WPAppDelegate.h"
 #import "UICKeyChainStore.h"
@@ -43,20 +44,12 @@ static NSString * const FACEBOOK_LOGIN_URL = @"users/sign_up/facebook";
     NSString *email = self.view.emailTextField.text;
     NSString *password = self.view.passwordTextField.text;
     
-    AFHTTPRequestOperationManager *manager = _appDelegate.getAFManager;
     NSDictionary *parameters = @{@"user" : @{@"email": email, @"password": password}};
     
-    NSString *loginString = [manager.baseURL.absoluteString stringByAppendingString:SIGNIN_URL];
-    [manager POST:loginString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-        [self parseResponse:responseObject];
+    [[WPNetworkingManager sharedManager] requestLoginWithParameters:parameters success:^(id response) {
+        [self parseResponse:response];
         [self pushTabBarController];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Incorrect email or password." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [incorrect show];
-        NSLog(@"Error: %@", error);
     }];
-    
 }
 
 - (void)parseResponse:(id)responseObject {

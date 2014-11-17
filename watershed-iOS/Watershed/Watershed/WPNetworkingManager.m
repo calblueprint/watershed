@@ -16,15 +16,32 @@
 
 @implementation WPNetworkingManager
 
+static NSString * const SIGNIN_URL = @"users/sign_in";
+
 #pragma mark - Singleton Methods
 
-+ (id)sharedManager {
++ (WPNetworkingManager *)sharedManager {
     static WPNetworkingManager *sharedManager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedManager = [[self alloc] init];
     });
     return sharedManager;
+}
+
+#pragma mark - HTTP Request Methods
+
+- (void)requestLoginWithParameters:(NSDictionary *)parameters success:(void (^)(id))success {
+    NSString *signInString = [self.requestManager.baseURL.absoluteString stringByAppendingString:SIGNIN_URL];
+    
+    [self.requestManager POST:signInString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"JSON: %@", responseObject);
+        success(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Incorrect email or password." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
 }
 
 #pragma mark - Lazy Instantiation
