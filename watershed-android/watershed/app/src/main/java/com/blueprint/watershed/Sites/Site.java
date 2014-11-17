@@ -35,6 +35,7 @@ public class Site implements APIObject {
 
     // Relationships
     public ArrayList<MiniSite> getMiniSites() { return mMiniSites; }
+    public MiniSite getMiniSite(int position) { return mMiniSites.get(position); }
 
     // Getters
     public Integer getId() { return mId; }

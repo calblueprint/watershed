@@ -8,10 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.app.Fragment;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Response;
+import com.blueprint.watershed.Activities.MainActivity;
+import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.MiniSites.MiniSiteListAdapter;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.SiteListRequest;
@@ -24,11 +28,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class SiteFragment extends Fragment {
+public class SiteFragment extends Fragment
+                          implements AbsListView.OnItemClickListener {
 
     private OnFragmentInteractionListener mListener;
     private Site mSite;
     private NetworkManager mNetworkManager;
+    private MainActivity mMainActivity;
     private ListView mMiniSiteListView;
     private MiniSiteListAdapter mMiniSiteAdapter;
 
@@ -83,6 +89,7 @@ public class SiteFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
+            mMainActivity = (MainActivity)activity;
             mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
@@ -100,6 +107,18 @@ public class SiteFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (null != mListener) {
+            // Load MiniSite
+            MiniSite miniSite = getMiniSite(position);
+            SiteFragment siteFragment = new SiteFragment();
+            siteFragment.configureWithSite(miniSite);
+
+            mMainActivity.replaceFragment(siteFragment);
+        }
     }
 
     public interface OnFragmentInteractionListener {
@@ -122,4 +141,5 @@ public class SiteFragment extends Fragment {
 
     public void setSite(Site site) { mSite = site; }
 
+    public MiniSite getMiniSite(int position) { return mSite.getMiniSite(position); }
 }
