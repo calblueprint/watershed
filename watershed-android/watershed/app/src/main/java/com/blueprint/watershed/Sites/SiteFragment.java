@@ -95,11 +95,13 @@ public class SiteFragment extends Fragment {
         SiteRequest siteRequest = new SiteRequest(getActivity(), site, params, new Response.Listener<Site>() {
             @Override
             public void onResponse(Site site) {
-                Log.e("site", site.toString());
+                setSite(site);
             }
         });
 
         mNetworkManager.getRequestQueue().add(siteRequest);
     }
+
+    public void setSite(Site site) { mSite = site; }
 
 }
