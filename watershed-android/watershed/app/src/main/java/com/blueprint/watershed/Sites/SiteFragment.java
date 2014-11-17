@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.MiniSites.MiniSite;
+import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteListAdapter;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.SiteListRequest;
@@ -114,10 +115,10 @@ public class SiteFragment extends Fragment
         if (null != mListener) {
             // Load MiniSite
             MiniSite miniSite = getMiniSite(position);
-            SiteFragment siteFragment = new SiteFragment();
-            siteFragment.configureWithSite(miniSite);
+            MiniSiteFragment miniSiteFragment = new MiniSiteFragment();
+            miniSiteFragment.configureViewWithMiniSite(miniSite);
 
-            mMainActivity.replaceFragment(siteFragment);
+            mMainActivity.replaceFragment(miniSiteFragment);
         }
     }
 
