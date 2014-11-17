@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by mark on 11/16/14.
+ * Created by Mark Miyashita on 11/16/14.
  */
 public class SiteRequest extends BaseRequest {
 
