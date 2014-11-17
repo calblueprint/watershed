@@ -34,7 +34,13 @@ public class Site implements APIObject {
     }
 
     // Relationships
-    public ArrayList<MiniSite> getMiniSites() { return mMiniSites; }
+    public ArrayList<MiniSite> getMiniSites() {
+        if (mMiniSites == null) {
+            mMiniSites = new ArrayList<MiniSite>();
+        }
+        return mMiniSites;
+    }
+
     public MiniSite getMiniSite(int position) { return mMiniSites.get(position); }
 
     // Getters
