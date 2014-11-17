@@ -38,6 +38,9 @@ PODS:
     - FontAwesomeKit/Core
   - FontAwesomeKit/Zocial (2.1.8):
     - FontAwesomeKit/Core
+  - Mantle (1.5.1):
+    - Mantle/extobjc
+  - Mantle/extobjc (1.5.1)
   - Masonry (0.5.3)
   - UICKeyChainStore (1.0.5)
   - UIImage+BlurredFrame (0.0.4)
@@ -46,6 +49,7 @@ DEPENDENCIES:
   - AFNetworking (~> 2.0)
   - Facebook-iOS-SDK
   - FontAwesomeKit
+  - Mantle
   - Masonry
   - UICKeyChainStore
   - UIImage+BlurredFrame
@@ -55,6 +59,7 @@ SPEC CHECKSUMS:
   Bolts: 3db0a875235e0c9042b013af13af0f00f79b102c
   Facebook-iOS-SDK: 5854404b4b651f612a8ef79ca06d766858f4cb8e
   FontAwesomeKit: a2edea3111dab107b4cc43b85881b404eb063385
+  Mantle: d7c5ac734579ec751c58fecbf56189853056c58c
   Masonry: 35368c2ca9577ca87722c12fc52c4bad9b1c1516
   UICKeyChainStore: 4f9719600cc70025064e26f28f1210bcfc3b0c35
   UIImage+BlurredFrame: 0c38f5760d72125c47d16001a88faaac573bd35d
