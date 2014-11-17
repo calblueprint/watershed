@@ -1,4 +1,4 @@
-package com.blueprint.watershed;
+package com.blueprint.watershed.Sites;
 
 import android.app.Activity;
 import android.net.Uri;
@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.app.Fragment;
+
+import com.blueprint.watershed.R;
 
 
 public class SiteFragment extends Fragment {

@@ -1,28 +1,34 @@
-package com.blueprint.watershed;
+package com.blueprint.watershed.Activities;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Build;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Networking.RequestHandler;
+import com.blueprint.watershed.ResideMenu;
+import com.blueprint.watershed.ResideMenuItem;
+import com.blueprint.watershed.Sites.SiteFragment;
+import com.blueprint.watershed.Sites.SiteListFragment;
+import com.blueprint.watershed.TabsPagerAdapter;
+import com.blueprint.watershed.Tasks.TaskAdapter;
+import com.blueprint.watershed.Tasks.TaskDetailFragment;
+import com.blueprint.watershed.Tasks.TaskFragment;
+
 import android.view.View;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.TextView;
 import android.app.ActionBar.Tab;
 
 import java.util.ArrayList;
@@ -30,10 +36,10 @@ import java.util.ArrayList;
 public class MainActivity extends ActionBarActivity
                           implements ActionBar.TabListener,
                                      View.OnClickListener,
-                                     TaskFragment.OnFragmentInteractionListener,
-                                     SiteListFragment.OnFragmentInteractionListener,
-                                     TaskDetailFragment.OnFragmentInteractionListener,
-                                     SiteFragment.OnFragmentInteractionListener {
+        TaskFragment.OnFragmentInteractionListener,
+        SiteListFragment.OnFragmentInteractionListener,
+        TaskDetailFragment.OnFragmentInteractionListener,
+        SiteFragment.OnFragmentInteractionListener {
 
     // Constants
     public  static final String PREFERENCES = "LOGIN_PREFERENCES";

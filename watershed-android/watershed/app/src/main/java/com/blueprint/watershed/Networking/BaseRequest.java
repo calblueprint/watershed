@@ -1,4 +1,4 @@
-package com.blueprint.watershed;
+package com.blueprint.watershed.Networking;
 
 import android.app.Activity;
 import android.content.Context;

@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentManager;
  * Created by Max on 10/19/2014.
  */
 
-import android.support.v4.app.FragmentPagerAdapter;
+import com.blueprint.watershed.Tasks.TaskFragment;
 
 public class TabsPagerAdapter extends FragmentPagerAdapter {
 

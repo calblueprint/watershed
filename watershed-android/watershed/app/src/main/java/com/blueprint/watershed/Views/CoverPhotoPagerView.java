@@ -1,9 +1,11 @@
-package com.blueprint.watershed;
+package com.blueprint.watershed.Views;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+
+import com.blueprint.watershed.R;
 
 /**
  * Created by Mark Miyashita on 10/5/14.

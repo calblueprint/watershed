@@ -1,4 +1,4 @@
-package com.blueprint.watershed;
+package com.blueprint.watershed.Sites;
 
 /**
  * Created by Mark Miyashita on 10/14/14.
