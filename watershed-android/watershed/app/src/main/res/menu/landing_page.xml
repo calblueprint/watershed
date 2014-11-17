@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.blueprint.watershed.LandingPageActivity" >
+    tools:context="com.blueprint.watershed.Activities.LandingPageActivity" >
     <item android:id="@+id/container"
         android:title="@string/action_settings"
         android:orderInCategory="100"

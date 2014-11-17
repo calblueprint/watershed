@@ -3,7 +3,7 @@
     android:animateLayoutChanges="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.blueprint.watershed.LandingPageActivity"
+    tools:context="com.blueprint.watershed.Activities.LandingPageActivity"
     android:background="@drawable/landing_page_photo"
     android:orientation="vertical"
     android:id="@+id/container">
