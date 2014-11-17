@@ -8,6 +8,7 @@
 
 #import "WPLoginView.h"
 #import "FontAwesomeKit/FontAwesomeKit.h"
+#import "WPLoginViewController.h"
 
 @interface WPLoginView ()
 
@@ -44,17 +45,9 @@
     return self;
 }
 
-- (void)viewDidLoad {
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
-                                   initWithTarget:self
-                                   action:@selector(dismissKeyboard)];
-    
-    [self addGestureRecognizer:tap];
-}
-
 -(void)dismissKeyboard {
-    [_emailTextField resignFirstResponder];
-    [_passwordTextField resignFirstResponder];
+    [self.emailTextField resignFirstResponder];
+    [self.passwordTextField resignFirstResponder];
 }
 
 - (void)setupActions {
@@ -89,6 +82,11 @@
         [placeholder appendAttributedString:email];
         _emailTextField.attributedPlaceholder = placeholder;
         _emailTextField.delegate = self;
+        [_emailTextField setReturnKeyType:UIReturnKeyNext];
+        [_emailTextField addTarget:self
+                      action:@selector(emailToPassword)
+            forControlEvents:UIControlEventEditingDidEndOnExit];
+        
         [self addSubview:_emailTextField];
         
         _passwordTextField = [[UITextField alloc] init];
@@ -101,6 +99,11 @@
         _passwordTextField.attributedPlaceholder = passwordPlaceholder;
         _passwordTextField.secureTextEntry = YES;
         _passwordTextField.delegate = self;
+        [_passwordTextField setReturnKeyType:UIReturnKeyGo];
+        [_passwordTextField addTarget:self
+                            action:@selector(passwordToDone)
+                  forControlEvents:UIControlEventEditingDidEndOnExit];
+
 
         [self addSubview:_passwordTextField];
         _emailClicked = YES;
@@ -111,6 +114,17 @@
     }];
 
 }
+
+- (void)emailToPassword {
+    [self.emailTextField resignFirstResponder];
+    [self.passwordTextField becomeFirstResponder];
+}
+
+- (void)passwordToDone {
+    [self.passwordTextField becomeFirstResponder];
+    [_parentViewController emailSignup];
+}
+
 
 
 - (void)createSubviews {

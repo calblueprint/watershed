@@ -29,6 +29,11 @@ static NSString * const SIGNIN_URL = @"users/sign_in";
 
 - (void)loadView {
     self.view = [[WPLoginView alloc] init];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:self.view
+                                   action:@selector(dismissKeyboard)];
+    
+    [self.view addGestureRecognizer:tap];
     [self.view setParentViewController:self];
 }
 

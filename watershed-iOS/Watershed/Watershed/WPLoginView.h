@@ -18,4 +18,7 @@
 
 @property (nonatomic) UITextField *emailTextField;
 @property (nonatomic) UITextField *passwordTextField;
+
+-(void)dismissKeyboard;
+
 @end
