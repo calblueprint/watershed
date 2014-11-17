@@ -165,7 +165,7 @@ const static float CELL_HEIGHT = 86.0f;
         case 1:
             return [UIColor wp_red];
             break;
-            
+
         case 2:
             return [UIColor wp_orange];
             break;

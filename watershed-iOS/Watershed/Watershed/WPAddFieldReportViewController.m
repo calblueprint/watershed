@@ -19,7 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor blackColor];
     self.navigationItem.title = @"Add Field Report";
     [self.view.addPhotoButton addTarget:self action:@selector(addPhotoButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view.urgentSwitch addTarget:self action:@selector(changeSwitch:) forControlEvents:UIControlEventValueChanged];
@@ -31,22 +31,6 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-}
-
-- (void)showPickerView {
-    int ratingMax = 5; //Change this if you want higher ratings
-    _pickerData = [[NSMutableArray alloc] init];
-    for(int i = 0; i < ratingMax; i++)
-    {
-        [_pickerData addObject:[NSNumber numberWithInt:i]];
-    }
-    //    _healthRatingPicker = [[UIPickerView alloc] init];
-    self.view.healthRatingPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(10, 200, 300, 200)];
-    self.view.healthRatingPicker.showsSelectionIndicator = YES;
-    self.view.healthRatingPicker.delegate = self;
-    self.view.healthRatingPicker.dataSource = self;
-    [self.view.healthRatingPicker  setShowsSelectionIndicator:YES];
-    self.view.ratingField.inputView = self.view.healthRatingPicker;
 }
 
 - (void)changeSwitch:(UISwitch *) sender {
