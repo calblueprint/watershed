@@ -25,6 +25,15 @@
     [self.view.addPhotoButton addTarget:self action:@selector(addPhotoButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view.viewImageButton addTarget:self action:@selector(viewImageButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view.urgentSwitch addTarget:self action:@selector(changeSwitch:) forControlEvents:UIControlEventValueChanged];
+    UIBarButtonItem *flipButton = [[UIBarButtonItem alloc]
+                                   initWithTitle:@"Save"
+                                   style:UIBarButtonItemStyleBordered
+                                   target:self
+                                   action:@selector(flipView:)];
+    self.navigationItem.rightBarButtonItem = flipButton;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self.view
+                action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:tap];
 }
 
 -(void)loadView {
@@ -39,6 +48,14 @@
     if ([sender isOn]) {
         //MIGHT USE LATER
     }
+}
+
+-(void)dismissKeyboard {
+    [self.view endEditing:YES];
+}
+
+- (void)flipView:(UIButton *) sender {
+    
 }
 
 - (void)viewImageButtonAction:(UIButton *) sender {
