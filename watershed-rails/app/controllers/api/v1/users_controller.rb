@@ -5,6 +5,11 @@ class Api::V1::UsersController < Api::V1::BaseController
     render json: @users
   end
 
+  def search
+    @users = @users.search(params[:q])
+    render json: @users
+  end
+
   def show
     render json: @user
   end

@@ -51,8 +51,35 @@
 }
 
 + (UIColor *)wp_lightGreen {
-    return [UIColor colorWithRed:39/255.0 green:174/255.0 blue:96/255.0 alpha:1];
+    return [UIColor colorWithRed:46/255.0 green:204/255.0 blue:113/255.0 alpha:1];
 }
 
+
++ (UIColor *)colorForRating:(NSInteger)rating {
+    switch (rating) {
+        case 1:
+            return [UIColor wp_red];
+            break;
+            
+        case 2:
+            return [UIColor wp_orange];
+            break;
+            
+        case 3:
+            return [UIColor wp_yellow];
+            break;
+            
+        case 4:
+            return [UIColor wp_lime];
+            break;
+            
+        case 5:
+            return [UIColor wp_lightGreen];
+            break;
+        default:
+            return [UIColor grayColor];
+            break;
+    }
+}
 
 @end

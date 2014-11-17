@@ -95,6 +95,7 @@ static NSString *cellIdentifier = @"MiniSiteCell";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     WPMiniSiteViewController *miniSiteViewController = [[WPMiniSiteViewController alloc] init];
     [self.navigationController pushViewController:miniSiteViewController animated:YES];
 }

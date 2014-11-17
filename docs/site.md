@@ -75,3 +75,17 @@ Response:
 Curl Command:
 `curl -H "Content-type: application/json" --header "X-AUTH-TOKEN: kDz94MkMKtZH9QQ6iS-H" --header "X-AUTH-EMAIL: mark@mark.com" -d '{"site" : { "name": "API Site2" } }' http://localhost:3001/api/v1/sites/1 --noproxy localhost --request PATCH`
 
+### Search
+
+`GET /api/v1/sites/search?q=<search query>`
+
+Response:
+
+    {
+      "sites":[
+        ...
+      ]
+    }
+
+Curl command:
+`curl --header "X-AUTH-TOKEN: kDz94MkMKtZH9QQ6iS-H" --header "X-AUTH-EMAIL: mark@mark.com" http://localhost:3001/api/v1/sites/search\?q\=example%20site%200 --noproxy localhost --get`

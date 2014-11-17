@@ -2,6 +2,7 @@ package com.blueprint.watershed;
 
 import android.util.Log;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.*;
@@ -13,98 +14,54 @@ import org.json.JSONObject;
 /**
  * Object to represent Tasks in Watershed Project application
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Task {
 
     private ObjectMapper mMapper = new ObjectMapper();
 
-    /** The title of the task**/
-    private String mtitle;
-    /** Description of task **/
-    private String mdescription;
-    /** site id that the action takes place at **/
-    private Integer msiteId;
-    /** id of user assigned to task **/
-    private Integer massigneeId;
-    /** id of user who assigned the task **/
-    private Integer massignerId;
-    /** is the task complete? **/
-    private Boolean mtaskComplete;
-    /** task due date **/
-    private Date mdueDate;
-
-    public Task(String title, String description,
-                Integer siteId, Integer assigneeId, Integer assignerId,
-                Boolean taskComplete, Date dueDate) {
-        mtitle = title;
-        mdescription = description;
-        msiteId = siteId;
-        massigneeId = assigneeId;
-        massignerId = assignerId;
-        mtaskComplete = taskComplete;
-        mdueDate = dueDate;
-    }
+    private Integer mId;
+    private String mTitle;
+    private String mDescription;
+    private Integer mSiteId;
+    private Integer mAssigneeId;
+    private Integer mAssignerId;
+    private Boolean mComplete;
+    private Date mDueDate;
+    private Date mUpdatedAt;
+    private Date mCreatedAt;
 
     public Task(){
-        mtitle = "Sweet Title";
-        mdescription = "No description yet";
-        msiteId = 0;
-        massigneeId = 0;
-        massignerId = 0;
-        mtaskComplete = false;
-        mdueDate = new Date();
     }
 
-    public String getTitle() { return mtitle; }
+    public Integer getId() {return mId;}
+    public String getTitle() { return mTitle; }
+    public String getDescription() { return mDescription; }
+    public Integer getSiteId() { return mSiteId; }
+    public Integer getAssigneeId() { return mAssigneeId; }
+    public Integer getAssignerId() { return mAssignerId; }
+    public Boolean getComplete() { return mComplete; }
+    public Date getDueDate() { return mDueDate; }
+    public Date getUpdatedAt() { return mUpdatedAt; }
+    public Date getCreatedAt() {return mCreatedAt;}
 
-    public String getDescription() { return mdescription; }
-
-    public Integer getSiteId() { return msiteId; }
-
-    public Integer getAssigneeId() { return massigneeId; }
-
-    public Integer getAssignerId() { return massignerId; }
-
-    public Boolean getTaskComplete() { return mtaskComplete; }
-
-    public Date getDueDate() { return mdueDate; }
-
+    public void setId(Integer Id){ mId = Id;}
     public void setTitle (String title){
-        mtitle = title;
+        mTitle = title;
     }
-
     public void setDescription(String description){
-        mdescription = description;
+        mDescription = description;
     }
-
+    public void setSiteId(Integer siteId){ mSiteId = siteId; }
     public void setAssigneeId(Integer assigneeId) {
-        massigneeId = assigneeId;
+        mAssigneeId = assigneeId;
     }
-
-    public void setAssignerId(Integer assingerId){
-        massignerId = assingerId;
+    public void setAssignerId(Integer assignerId){
+        mAssignerId = assignerId;
     }
-
-    public void setTaskComplete(Boolean taskComplete){
-        mtaskComplete = taskComplete;
+    public void setComplete(Boolean taskComplete){mComplete = taskComplete;}
+    public void setDueDate(Date dueDate){
+        mDueDate = dueDate;
     }
-
-    public void setmdueDate(Date dueDate){
-        mdueDate = dueDate;
-    }
-
-    //probably doesn't work yet. Should serialize the Task to JSON
-    public void Serializer(){
-        try {
-            mMapper.writeValue(new File("task.json"), this);
-        }
-        catch (JsonGenerationException ex) {
-            //handle exception
-        }
-        catch (JsonMappingException ex2) {
-            //handle exception
-        }
-        catch (IOException ex3) {
-            //handle exception
-        }
-    }
+    public void setUpdatedAt(Date updatedAt) { mUpdatedAt = updatedAt;}
+    public void setCreatedAt(Date createdAt) { mCreatedAt = createdAt;}
 }

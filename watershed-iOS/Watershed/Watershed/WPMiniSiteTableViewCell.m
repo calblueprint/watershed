@@ -74,7 +74,7 @@ const static float CELL_HEIGHT = 86.0f;
     _ratingDotView = [({
         UIView *ratingDotView = [[UIView alloc] init];
         ratingDotView.layer.cornerRadius = 5.0;
-        ratingDotView.backgroundColor = [WPMiniSiteTableViewCell colorForRating:self.rating];
+        ratingDotView.backgroundColor = [UIColor colorForRating:self.rating];
         ratingDotView;
     }) wp_addToSuperview:content];
     
@@ -160,32 +160,5 @@ const static float CELL_HEIGHT = 86.0f;
 }
 
 + (CGFloat)cellHeight { return CELL_HEIGHT; }
-
-+ (UIColor *)colorForRating:(NSInteger)rating {
-    switch (rating) {
-        case 1:
-            return [UIColor wp_red];
-            break;
-            
-        case 2:
-            return [UIColor wp_orange];
-            break;
-            
-        case 3:
-            return [UIColor wp_yellow];
-            break;
-            
-        case 4:
-            return [UIColor wp_lime];
-            break;
-            
-        case 5:
-            return [UIColor wp_green];
-            break;
-        default:
-            return [UIColor grayColor];
-            break;
-    }
-}
 
 @end
