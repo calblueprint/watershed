@@ -49,7 +49,7 @@ public class SiteListAdapter extends ArrayAdapter<Site> {
         Site site = sites.get(position);
 
         holder.name.setText(site.getName());
-        holder.description.setText(site.getDescription());
+        holder.description.setText("");
 
         return row;
     }
