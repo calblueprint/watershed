@@ -31,9 +31,13 @@
                                    target:self
                                    action:@selector(saveForm:)];
     self.navigationItem.rightBarButtonItem = saveButton;
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self.view
-                action:@selector(dismissKeyboard)];
-    [self.view addGestureRecognizer:tap];
+    self.view.fieldDescription.delegate = self;
+//    self.view.fieldDescription
+//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self.view
+//                action:@selector(dismissKeyboard)];
+//    [self.view addGestureRecognizer:tap];
+//    tap.cancelsTouchesInView = NO;
+    // this prevents the gesture recognizers to 'block' touches
 }
 
 -(void)loadView {
@@ -51,7 +55,7 @@
 }
 
 -(void)dismissKeyboard {
-    [self.view endEditing:YES];
+    [self.view.fieldDescription resignFirstResponder];
 }
 
 - (void)saveForm:(UIButton *) sender {
@@ -192,4 +196,19 @@
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
+#pragma mark - Text Field delegate methods
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    
+    if([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+        return NO;
+    }
+    
+    return YES;
+}
+
+
 @end
+
+
