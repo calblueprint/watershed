@@ -23,6 +23,7 @@ static NSString * const BASE_URL = @"https://intense-reaches-1457.herokuapp.com/
 
 @end
 
+
 @implementation WPAppDelegate
 
 + (WPAppDelegate *)instance {
@@ -32,6 +33,11 @@ static NSString * const BASE_URL = @"https://intense-reaches-1457.herokuapp.com/
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+    // determine the initial view controller here and instantiate it with [storyboard instantiateViewControllerWithIdentifier:];
+
+    // Override point for customization after application launch.
+
+    //UIViewController *viewController = [[WPSiteViewController  alloc] init];
     self.window.rootViewController = [[WPRootViewController alloc] init];
     [self.window makeKeyAndVisible];
 
