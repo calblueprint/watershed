@@ -86,7 +86,8 @@
             android:textColor="@color/white"
             android:layout_width="0px"
             android:layout_weight="1"
-            android:layout_height="96dp" />
+            android:layout_height="96dp"
+            android:onClick="FieldReportButtonPressed"/>
         <Button
             android:id = "@+id/complete_button"
             android:text = "COMPLETE"

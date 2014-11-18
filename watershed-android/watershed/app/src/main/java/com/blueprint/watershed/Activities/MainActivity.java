@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 
+import com.blueprint.watershed.FieldReports.FieldReportFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.R;
@@ -41,7 +42,8 @@ public class MainActivity extends ActionBarActivity
                                      TaskDetailFragment.OnFragmentInteractionListener,
                                      SiteListFragment.OnFragmentInteractionListener,
                                      SiteFragment.OnFragmentInteractionListener,
-                                     MiniSiteFragment.OnFragmentInteractionListener {
+                                     MiniSiteFragment.OnFragmentInteractionListener,
+                                     FieldReportFragment.OnFragmentInteractionListener {
 
     // Constants
     public  static final String PREFERENCES = "LOGIN_PREFERENCES";
@@ -205,7 +207,6 @@ public class MainActivity extends ActionBarActivity
         updateTitle(mtaskFragment);
         android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.add(R.id.container, mtaskFragment);
-        //ft.show(mtaskFragment);
         ft.commit();
     }
 
@@ -214,8 +215,8 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void onFragmentInteraction(Uri uri){
-        // Deals with fragment interactions
     }
+
 
     @Override
     public void onTabReselected(Tab tab, FragmentTransaction ft) {
@@ -310,4 +311,12 @@ public class MainActivity extends ActionBarActivity
     // Networking
     public NetworkManager getNetworkManager() { return mNetworkManager; }
     public void setNetworkManager(NetworkManager networkManager) { mNetworkManager = networkManager; }
+
+
+    // Button Events
+
+    public void FieldReportButtonPressed(View view){
+        FieldReportFragment fieldFragment = FieldReportFragment.newInstance();
+        replaceFragment(fieldFragment);
+    }
 }
