@@ -33,7 +33,7 @@ static NSString * const SIGNIN_URL = @"users/sign_in";
 
 #pragma mark - HTTP Request Methods
 
-- (void)requestLoginWithParameters:(NSDictionary *)parameters success:(void (^)(id))success {
+- (void)requestLoginWithParameters:(NSDictionary *)parameters success:(void (^)(id response))success {
     NSString *signInString = [WPNetworkingManager createURLWithEndpoint:SIGNIN_URL];
     
     [self POST:signInString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {

@@ -15,6 +15,6 @@
 @property (nonatomic) UICKeyChainStore *keyChainStore;
 
 + (WPNetworkingManager *)sharedManager;
-- (void)requestLoginWithParameters:(NSDictionary *)parameters success:(void (^)(id))success;
+- (void)requestLoginWithParameters:(NSDictionary *)parameters success:(void (^)(id response))success;
 
 @end
