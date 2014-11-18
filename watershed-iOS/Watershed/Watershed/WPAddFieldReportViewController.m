@@ -32,12 +32,9 @@
                                    action:@selector(saveForm:)];
     self.navigationItem.rightBarButtonItem = saveButton;
     self.view.fieldDescription.delegate = self;
-//    self.view.fieldDescription
-//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self.view
-//                action:@selector(dismissKeyboard)];
-//    [self.view addGestureRecognizer:tap];
-//    tap.cancelsTouchesInView = NO;
-    // this prevents the gesture recognizers to 'block' touches
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self
+                action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:tap];
 }
 
 -(void)loadView {
@@ -55,7 +52,9 @@
 }
 
 -(void)dismissKeyboard {
-    [self.view.fieldDescription resignFirstResponder];
+    if([self.view.fieldDescription isFirstResponder]) {
+        [self.view.fieldDescription resignFirstResponder];
+    }
 }
 
 - (void)saveForm:(UIButton *) sender {
@@ -189,7 +188,6 @@
     self.view.originalImage = chosenImage;
     [self setBlurredImage];
     [picker dismissViewControllerAnimated:YES completion:NULL];
-
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
@@ -199,12 +197,10 @@
 #pragma mark - Text Field delegate methods
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    
     if([text isEqualToString:@"\n"]) {
         [textView resignFirstResponder];
         return NO;
     }
-    
     return YES;
 }
 
