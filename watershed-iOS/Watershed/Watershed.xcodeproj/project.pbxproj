@@ -266,6 +266,15 @@
 			name = "Custom Views";
 			sourceTree = "<group>";
 		};
+		27A1431A1A1AD9D700506F01 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				27B9CF801A19AD7E00CEB5A8 /* WPNetworkingManager.h */,
+				27B9CF811A19AD7F00CEB5A8 /* WPNetworkingManager.m */,
+			);
+			name = Networking;
+			sourceTree = "<group>";
+		};
 		27BABFE61A02021200F9CCCE /* Custom View Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -456,9 +465,8 @@
 				BA24044119DCF01900E9DB2F /* Sites */,
 				BA24043E19DCEFC800E9DB2F /* Tasks */,
 				27BEC6AD1A106274006CBFF6 /* Field Reports */,
+				27A1431A1A1AD9D700506F01 /* Networking */,
 				BA24043F19DCEFDB00E9DB2F /* Categories */,
-				27B9CF801A19AD7E00CEB5A8 /* WPNetworkingManager.h */,
-				27B9CF811A19AD7F00CEB5A8 /* WPNetworkingManager.m */,
 				BA4F8DEA19C7739300C816E3 /* Images.xcassets */,
 				27714CB019D93405005344B0 /* WPAppDelegate.h */,
 				27714CB119D93405005344B0 /* WPAppDelegate.m */,
