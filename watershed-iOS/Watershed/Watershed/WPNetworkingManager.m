@@ -16,6 +16,7 @@
 
 @implementation WPNetworkingManager
 
+static NSString * const BASE_URL = @"https://intense-reaches-1457.herokuapp.com/api/v1/";
 static NSString * const SIGNIN_URL = @"users/sign_in";
 
 #pragma mark - Singleton Methods
@@ -32,7 +33,7 @@ static NSString * const SIGNIN_URL = @"users/sign_in";
 #pragma mark - HTTP Request Methods
 
 - (void)requestLoginWithParameters:(NSDictionary *)parameters success:(void (^)(id))success {
-    NSString *signInString = [self createURLWithEndpoint:SIGNIN_URL];
+    NSString *signInString = [WPNetworkingManager createURLWithEndpoint:SIGNIN_URL];
     
     [self.requestManager POST:signInString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
@@ -46,16 +47,17 @@ static NSString * const SIGNIN_URL = @"users/sign_in";
 
 #pragma mark - URL Creation
 
-- (NSString *)createURLWithEndpoint:(NSString *)endpoint {
-    NSString *url = [self.requestManager.baseURL.absoluteString stringByAppendingString:endpoint];
-    return url;
++ (NSString *)createURLWithEndpoint:(NSString *)endpoint {
+    return [BASE_URL stringByAppendingString:endpoint];
 }
 
 #pragma mark - Lazy Instantiation
 
 - (AFHTTPRequestOperationManager *)requestManager {
     if (!_requestManager) {
-        _requestManager = self.appDelegate.getAFManager;
+        NSURL *baseURL = [[NSURL alloc] initWithString:BASE_URL];
+        _requestManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
+        _requestManager.responseSerializer = [AFJSONResponseSerializer serializer];
     }
     return _requestManager;
 }
@@ -65,6 +67,13 @@ static NSString * const SIGNIN_URL = @"users/sign_in";
         _appDelegate = [WPAppDelegate instance];
     }
     return _appDelegate;
+}
+
+- (UICKeyChainStore *)keyChainStore {
+    if (!_keyChainStore) {
+        _keyChainStore = [UICKeyChainStore keyChainStore];
+    }
+    return _keyChainStore;
 }
 
 @end

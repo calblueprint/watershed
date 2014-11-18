@@ -57,7 +57,7 @@ static NSString * const FACEBOOK_LOGIN_URL = @"users/sign_up/facebook";
     NSString *authToken = [responseDictionary objectForKey:@"authentication_token"];
     //NSString *name = [[responseDictionary objectForKey:@"user"] objectForKey:@"name"];
     
-    UICKeyChainStore *store = [_appDelegate getKeyChainStore];
+    UICKeyChainStore *store = [[WPNetworkingManager sharedManager] keyChainStore];
     [store setString:authToken forKey:@"auth_token"];
     [store synchronize];
 }
