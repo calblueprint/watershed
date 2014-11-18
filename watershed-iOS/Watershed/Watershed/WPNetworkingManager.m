@@ -10,7 +10,6 @@
 #import "WPAppDelegate.h"
 
 @interface WPNetworkingManager ()
-@property (nonatomic) AFHTTPRequestOperationManager *requestManager;
 @property (nonatomic) WPAppDelegate *appDelegate;
 @end
 
@@ -25,7 +24,9 @@ static NSString * const SIGNIN_URL = @"users/sign_in";
     static WPNetworkingManager *sharedManager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedManager = [[self alloc] init];
+        NSURL *baseURL = [[NSURL alloc] initWithString:BASE_URL];
+        sharedManager = [[self alloc] initWithBaseURL:baseURL];
+        sharedManager.responseSerializer = [AFJSONResponseSerializer serializer];
     });
     return sharedManager;
 }
@@ -35,7 +36,7 @@ static NSString * const SIGNIN_URL = @"users/sign_in";
 - (void)requestLoginWithParameters:(NSDictionary *)parameters success:(void (^)(id))success {
     NSString *signInString = [WPNetworkingManager createURLWithEndpoint:SIGNIN_URL];
     
-    [self.requestManager POST:signInString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self POST:signInString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
         success(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -52,15 +53,6 @@ static NSString * const SIGNIN_URL = @"users/sign_in";
 }
 
 #pragma mark - Lazy Instantiation
-
-- (AFHTTPRequestOperationManager *)requestManager {
-    if (!_requestManager) {
-        NSURL *baseURL = [[NSURL alloc] initWithString:BASE_URL];
-        _requestManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
-        _requestManager.responseSerializer = [AFJSONResponseSerializer serializer];
-    }
-    return _requestManager;
-}
 
 - (WPAppDelegate *)appDelegate {
     if (!_appDelegate) {

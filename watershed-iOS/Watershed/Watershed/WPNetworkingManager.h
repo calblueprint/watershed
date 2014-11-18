@@ -7,9 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AFNetworking.h"
 #import "UICKeyChainStore.h"
 
-@interface WPNetworkingManager : NSObject
+@interface WPNetworkingManager : AFHTTPRequestOperationManager
 
 @property (nonatomic) UICKeyChainStore *keyChainStore;
 
