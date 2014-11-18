@@ -25,5 +25,7 @@
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
     <uses-feature android:name="android.hardware.camera" android:required="true" />
 </manifest>

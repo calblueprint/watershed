@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -34,7 +35,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.app.ActionBar.Tab;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends ActionBarActivity
                           implements ActionBar.TabListener,
@@ -324,7 +329,39 @@ public class MainActivity extends ActionBarActivity
     public void HandleTakePhotoButton(View view){
          Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
          if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, 1);
+             File photoFile = null;
+             try {
+                 photoFile = createImageFile();
+             } catch (IOException ex) {
+                Log.e("Field Report Photo", "Error");
+             }
+             if (photoFile != null) {
+                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                         Uri.fromFile(photoFile));
+                 startActivityForResult(takePictureIntent, 1);
+             }
         }
+    }
+
+
+    // Image Handling
+
+    String mCurrentPhotoPath;
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+        return image;
     }
 }
