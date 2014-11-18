@@ -25,4 +25,5 @@
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
 </manifest>

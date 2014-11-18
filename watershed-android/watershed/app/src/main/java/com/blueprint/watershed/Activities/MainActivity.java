@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
@@ -318,5 +319,12 @@ public class MainActivity extends ActionBarActivity
     public void FieldReportButtonPressed(View view){
         FieldReportFragment fieldFragment = FieldReportFragment.newInstance();
         replaceFragment(fieldFragment);
+    }
+
+    public void HandleTakePhotoButton(View view){
+         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, 1);
+        }
     }
 }
