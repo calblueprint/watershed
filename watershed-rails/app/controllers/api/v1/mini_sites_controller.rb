@@ -2,7 +2,7 @@ class Api::V1::MiniSitesController < Api::V1::BaseController
   load_and_authorize_resource param_method: :mini_site_params
 
   def index
-    render json: @mini_sites, eash_serializer: MiniSiteListSerializer
+    render json: @mini_sites, each_serializer: MiniSiteListSerializer
   end
 
   def show
