@@ -13,6 +13,7 @@
 #import "UIImage+ImageEffects.h"
 
 int WPRatingButtonHeight = 40;
+int WPPhotoButtonHeight = 75;
 
 @interface WPAddFieldReportView()
 
@@ -269,8 +270,8 @@ int WPRatingButtonHeight = 40;
     [self.fieldDescription mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.descriptionLabel.mas_bottom).with.offset(standardMargin);
         make.centerX.equalTo(self.mas_centerX);
-        make.leading.equalTo(@10);
-        make.trailing.equalTo(@(-10));
+        make.leading.equalTo(@(standardMargin));
+        make.trailing.equalTo(@(-standardMargin));
         make.bottom.equalTo(self.addPhotoButton.mas_top).with.offset(-standardMargin);
     }];
     
@@ -283,7 +284,7 @@ int WPRatingButtonHeight = 40;
 
     [self.addPhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(@0);
-        make.height.equalTo(@75);
+        make.height.equalTo(@(WPPhotoButtonHeight));
         make.leading.equalTo(@0);
         make.trailing.equalTo(self.mas_centerX);
     }];
@@ -291,7 +292,7 @@ int WPRatingButtonHeight = 40;
     [self.viewImageButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(@0);
         make.leading.equalTo(self.addPhotoButton.mas_right);
-        make.height.equalTo(@75);
+        make.height.equalTo(@(WPPhotoButtonHeight));
         make.trailing.equalTo(@0);
         
     }];

@@ -9,8 +9,9 @@
 #import "WPTaskView.h"
 #import "UIExtensions.h"
 
-@implementation WPTaskView
+int WPButtonHeight = 75;
 
+@implementation WPTaskView
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame visibleNavbar:YES];
@@ -142,7 +143,7 @@
 
     [self.addFieldReportButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(@0);
-        make.height.equalTo(@75);
+        make.height.equalTo(@(WPButtonHeight));
         make.leading.equalTo(@0);
         make.trailing.equalTo(self.mas_centerX);
     }];
@@ -150,7 +151,7 @@
     [self.completed mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(@0);
         make.leading.equalTo(self.addFieldReportButton.mas_right);
-        make.height.equalTo(@75);
+        make.height.equalTo(@(WPButtonHeight));
         make.trailing.equalTo(@0);
         
     }];

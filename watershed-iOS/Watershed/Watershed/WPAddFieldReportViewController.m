@@ -19,6 +19,10 @@
 
 @implementation WPAddFieldReportViewController
 
+-(void)loadView {
+    self.view = [[WPAddFieldReportView alloc] init];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor blackColor];
@@ -36,10 +40,6 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self
                 action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
-}
-
--(void)loadView {
-    self.view = [[WPAddFieldReportView alloc] init];
 }
 
 - (void)didReceiveMemoryWarning {
