@@ -2,12 +2,16 @@ class Api::V1::TasksController < Api::V1::BaseController
   load_and_authorize_resource param_method: :task_params
 
   def index
-    render json: @tasks
+    render json: @tasks, each_serializer: TaskListSerializer
+  end
+
+  def show
+    render json: @task, serializer: TaskSerializer
   end
 
   def create
     if @task.save
-      render json: @task
+      render json: @task, serializer: TaskSerializer
     else
       render json: { errors: @task.errors }, status: 422
     end
@@ -15,7 +19,7 @@ class Api::V1::TasksController < Api::V1::BaseController
 
   def update
     if @task.update(task_params)
-      render json: @task
+      render json: @task, serializer: TaskSerializer
     else
       render json: { errors: @task.errors }, status: 422
     end
