@@ -56,6 +56,9 @@ const static float PARALLAX_REDUCTION = 3.5;
         UILabel *label = [[UILabel alloc] init];
         label.textColor = [UIColor whiteColor];
         label.font = [UIFont systemFontOfSize:20.0];
+        label.lineBreakMode = NSLineBreakByWordWrapping;
+        label.numberOfLines = 0;
+        label.textAlignment = NSTextAlignmentCenter;
         [self addTextShadow:label];
         label;
     }) wp_addToSuperview:content];
@@ -95,13 +98,15 @@ const static float PARALLAX_REDUCTION = 3.5;
     }];
     
     [self.nameLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.contentView.mas_centerX);
-        make.centerY.equalTo(self.contentView.mas_centerY);
+        make.top.equalTo(@(standardMargin));
+        make.leading.equalTo(@(standardMargin));
+        make.trailing.equalTo(@(-standardMargin));
+        make.bottom.equalTo(@(-standardMargin));
     }];
     
     [self.miniSiteLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo([UIView wp_styleNegativePadding]);
-        make.trailing.equalTo([UIView wp_styleNegativePadding]);
+        make.bottom.equalTo(@(-standardMargin));
+        make.trailing.equalTo(@(-standardMargin));
     }];
 
     
