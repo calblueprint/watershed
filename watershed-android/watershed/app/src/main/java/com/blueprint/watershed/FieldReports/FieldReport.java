@@ -2,13 +2,18 @@ package com.blueprint.watershed.FieldReports;
 
 import android.graphics.Bitmap;
 
+import com.blueprint.watershed.APIObject;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.lang.reflect.Field;
 
 /**
  * Created by maxwolffe on 11/18/14.
  */
-public class FieldReport {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class FieldReport implements APIObject {
 
+    private Integer mId;
     private Integer mUserId;
     private Integer mMinisiteId;
     private String mDescription;
@@ -29,6 +34,7 @@ public class FieldReport {
     }
 
     // Getters
+    public Integer getId() { return mId; }
     public Integer getUserId() {
         return mUserId;
     }
@@ -48,22 +54,20 @@ public class FieldReport {
         return mPhoto;
     }
 
-    //Setters
+    // Setters
+    public void setId(Integer id) { mId = id; }
     public void setUserId(Integer userId) {
         mUserId = userId;
     }
     public void setMinisiteId(Integer minisiteId) {
         mMinisiteId = minisiteId;
     }
-
     public void setDescription(String description) {
         mDescription = description;
     }
-
     public void setHealth(Integer health) {
         mHealth = health;
     }
-
     public void setUrgent(Boolean urgent) {
         mUrgent = urgent;
     }
