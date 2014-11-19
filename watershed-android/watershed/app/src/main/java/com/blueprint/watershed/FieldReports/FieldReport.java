@@ -3,6 +3,7 @@ package com.blueprint.watershed.FieldReports;
 import android.graphics.Bitmap;
 
 import com.blueprint.watershed.APIObject;
+import com.blueprint.watershed.MiniSites.MiniSite;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.lang.reflect.Field;
@@ -15,18 +16,18 @@ public class FieldReport implements APIObject {
 
     private Integer mId;
     private Integer mUserId;
-    private Integer mMinisiteId;
     private String mDescription;
     private Integer mHealth;
     private Boolean mUrgent;
     private Bitmap mPhoto;
+    private MiniSite mMiniSite;
 
     public FieldReport() {
     }
 
-    public FieldReport(Integer userId, Integer miniSiteId, String description, Integer health, Boolean urgent, Bitmap photo ){
+    public FieldReport(Integer userId, String description,
+                       Integer health, Boolean urgent, Bitmap photo) {
         mUserId = userId;
-        mMinisiteId = miniSiteId;
         mDescription = description;
         mHealth = health;
         mUrgent = urgent;
@@ -37,9 +38,6 @@ public class FieldReport implements APIObject {
     public Integer getId() { return mId; }
     public Integer getUserId() {
         return mUserId;
-    }
-    public Integer getMinisiteId() {
-        return mMinisiteId;
     }
     public String getDescription() {
         return mDescription;
@@ -59,9 +57,6 @@ public class FieldReport implements APIObject {
     public void setUserId(Integer userId) {
         mUserId = userId;
     }
-    public void setMinisiteId(Integer minisiteId) {
-        mMinisiteId = minisiteId;
-    }
     public void setDescription(String description) {
         mDescription = description;
     }
@@ -74,5 +69,4 @@ public class FieldReport implements APIObject {
     public void setPhoto(Bitmap photo){
         mPhoto = photo;
     }
-
 }
