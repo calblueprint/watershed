@@ -130,6 +130,19 @@ public class MiniSiteFragment extends Fragment
     }
 
     // Networking
+    public void getMiniSiteRequest(MiniSite miniSite) {
+        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
+
+        SiteRequest siteRequest = new SiteRequest(getActivity(), site, params, new Response.Listener<Site>() {
+            @Override
+            public void onResponse(Site site) {
+                setSite(site);
+                mMiniSiteAdapter.notifyDataSetChanged();
+            }
+        });
+
+        mNetworkManager.getRequestQueue().add(siteRequest);
+    }
 
     // Objects
     public void setMiniSite(MiniSite miniSite) {
