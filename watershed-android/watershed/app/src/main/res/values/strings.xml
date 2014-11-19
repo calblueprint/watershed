@@ -26,4 +26,9 @@
     <string name="login_fragment_login_button">Log In</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!--Field Report -->
+    <string name="field_report_title">Field Report</string>
+    <string name="urgent">Urgent</string>
+    <string name="not_urgent">Not</string>
+
 </resources>
