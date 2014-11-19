@@ -46,11 +46,6 @@ static NSString *cellIdentifier = @"SiteCell";
     }];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    [self updatePhotoOffset:self.sitesTableView.contentOffset.y];
-}
-
 - (void)loadSiteData:(NSDictionary *)data {
     NSArray *sitesJSON = data[@"sites"];
     for (NSDictionary *siteData in sitesJSON) {
@@ -100,6 +95,8 @@ static NSString *cellIdentifier = @"SiteCell";
         cellView.nameLabel.text = site.name;
         cellView.photoView.image = site.image;
         cellView.miniSiteLabel.text = [NSString stringWithFormat: @"%ld mini sites", site.miniSitesCount];
+        
+        [self updatePhotoOffset:self.sitesTableView.contentOffset.y];
     }
     return cellView;
 }
