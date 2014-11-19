@@ -42,6 +42,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -359,6 +360,11 @@ public class MainActivity extends ActionBarActivity
 
         RadioGroup healthGroup = (RadioGroup) findViewById(R.id.health_group);
         Integer selectId = healthGroup.getCheckedRadioButtonId();
+        if (selectId == -1){
+            Toast toast = Toast.makeText(getApplicationContext(), "Please select a health rating", Toast.LENGTH_SHORT);
+            toast.show();
+            return;
+        }
         String fieldReportHealth = ((RadioButton) findViewById(selectId)).getText().toString();
         Integer fieldReportHealthInt = Integer.parseInt(fieldReportHealth);
 
