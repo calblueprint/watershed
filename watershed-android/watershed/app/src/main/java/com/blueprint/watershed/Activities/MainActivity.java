@@ -2,6 +2,7 @@ package com.blueprint.watershed.Activities;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.content.pm.PackageInfo;
@@ -34,6 +35,7 @@ import android.view.View;
 import android.content.Context;
 import android.content.Intent;
 import android.app.ActionBar.Tab;
+import android.widget.ImageView;
 
 import java.io.File;
 import java.io.IOException;
@@ -89,6 +91,9 @@ public class MainActivity extends ActionBarActivity
 
     // Networking
     private NetworkManager mNetworkManager;
+
+    // Camera Stuff
+    private static final int CAMERA_REQUEST = 1888;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -336,9 +341,9 @@ public class MainActivity extends ActionBarActivity
                 Log.e("Field Report Photo", "Error");
              }
              if (photoFile != null) {
-                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
-                         Uri.fromFile(photoFile));
-                 startActivityForResult(takePictureIntent, 1);
+                 //takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                         //Uri.fromFile(photoFile));
+                 startActivityForResult(takePictureIntent, 1888);
              }
         }
     }
@@ -363,5 +368,16 @@ public class MainActivity extends ActionBarActivity
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = "file:" + image.getAbsolutePath();
         return image;
+    }
+
+    //
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        ImageView fieldReportImageView = (ImageView)findViewById(R.id.field_report_image);
+        if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+            Log.e("Great Success!", "BLUEPRINT");
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            fieldReportImageView.setImageBitmap(photo);
+        }
     }
 }

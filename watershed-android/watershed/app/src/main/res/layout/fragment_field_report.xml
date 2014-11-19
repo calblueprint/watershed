@@ -38,6 +38,11 @@
                 android:textSize="20sp" />
         </LinearLayout>
 
+        <ImageView
+            android:id = "@+id/field_report_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+
         <EditText
             android:id = "@+id/field_report_health"
             android:layout_height="wrap_content"
