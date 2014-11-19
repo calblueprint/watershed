@@ -57,6 +57,13 @@
 
             </LinearLayout>
 
+            <ListView
+                android:id="@+id/field_reports_table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/tight_margin">
+            </ListView>
+
         </LinearLayout>
     </ScrollView>
 

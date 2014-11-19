@@ -77,7 +77,7 @@ public class MiniSiteFragment extends Fragment
         configureViewWithMiniSite(view, mMiniSite);
 
         mFieldReportListView = (ListView) view.findViewById(R.id.field_reports_table);
-        mFieldReportAdapter = new MiniSiteListAdapter(getActivity(), R.layout.field_report_list_row, getFieldReports());
+        mFieldReportAdapter = new FieldReportListAdapter(getActivity(), R.layout.field_report_list_row, getFieldReports());
         mFieldReportListView.setAdapter(mFieldReportAdapter);
 
         mFieldReportListView.setOnItemClickListener(this);
