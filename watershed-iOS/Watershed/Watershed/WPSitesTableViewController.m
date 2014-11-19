@@ -28,23 +28,22 @@ static NSString *cellIdentifier = @"SiteCell";
 
 - (void)loadView {
     self.view = [[WPView alloc] initWithFrame:[[UIScreen mainScreen] bounds] visibleNavbar:YES];
-    [[WPNetworkingManager sharedManager] requestSitesListWithParameters:[[NSMutableDictionary alloc] init] success:^(id response) {
-        UIAlertView *loaded = [[UIAlertView alloc] initWithTitle:@"SUCCESS" message:@"SITES LOADED" delegate:nil cancelButtonTitle:@"K" otherButtonTitles:nil];
-        [loaded show];
-        [self loadSiteData:(NSDictionary *)response];
-    }];
 }
 
 - (void)viewDidLoad {
     
     [super viewDidLoad];
     self.navigationItem.title = @"Sites";
-    
     [self setUpSearchBar];
     
-    //09[self loadSiteData];
     self.sitesTableView.delegate = self;
     self.sitesTableView.dataSource = self;
+    
+    [[WPNetworkingManager sharedManager] requestSitesListWithParameters:[[NSMutableDictionary alloc] init] success:^(id response) {
+        UIAlertView *loaded = [[UIAlertView alloc] initWithTitle:@"SUCCESS" message:@"SITES LOADED" delegate:nil cancelButtonTitle:@"K" otherButtonTitles:nil];
+        [loaded show];
+        [self loadSiteData:(NSDictionary *)response];
+    }];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
