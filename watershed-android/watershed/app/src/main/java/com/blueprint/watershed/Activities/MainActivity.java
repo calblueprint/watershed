@@ -3,6 +3,7 @@ package com.blueprint.watershed.Activities;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.content.pm.PackageInfo;
@@ -18,6 +19,7 @@ import android.view.MenuItem;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 
+import com.blueprint.watershed.FieldReports.FieldReport;
 import com.blueprint.watershed.FieldReports.FieldReportFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
@@ -35,7 +37,11 @@ import android.view.View;
 import android.content.Context;
 import android.content.Intent;
 import android.app.ActionBar.Tab;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Switch;
 
 import java.io.File;
 import java.io.IOException;
@@ -346,6 +352,27 @@ public class MainActivity extends ActionBarActivity
                  startActivityForResult(takePictureIntent, 1888);
              }
         }
+    }
+
+    public void createFieldReport(View fieldReportButton){
+        String fieldReportDescription = ((EditText)findViewById(R.id.field_report_description)).getText().toString();
+
+        RadioGroup healthGroup = (RadioGroup) findViewById(R.id.health_group);
+        Integer selectId = healthGroup.getCheckedRadioButtonId();
+        String fieldReportHealth = ((RadioButton) findViewById(selectId)).getText().toString();
+        Integer fieldReportHealthInt = Integer.parseInt(fieldReportHealth);
+
+        ImageView image = (ImageView) findViewById(R.id.field_report_image);
+        Bitmap fieldReportPhoto = ((BitmapDrawable)image.getDrawable()).getBitmap();
+
+        Boolean urgency = ((Switch)findViewById(R.id.field_report_urgent)).isChecked();
+
+        FieldReport fieldReport = new FieldReport(1, 1, fieldReportDescription, fieldReportHealthInt, urgency, fieldReportPhoto);
+
+        // Go back to Task to mark complete instead of returning to Task List.
+        // How to keep state of which task made the call to create field report?
+        TaskFragment taskFragment = TaskFragment.newInstance(0);
+        replaceFragment(taskFragment);
     }
 
 

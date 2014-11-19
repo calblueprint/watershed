@@ -40,6 +40,7 @@
                     android:layout_gravity="start|top"
                     android:textSize="20sp" />
                 <Switch
+                    android:id="@+id/field_report_urgent"
                     android:textOn="@string/urgent"
                     android:textOff="@string/not_urgent"
                     android:layout_weight="1"
@@ -48,6 +49,7 @@
             </LinearLayout>
 
             <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/health_group"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -114,6 +116,7 @@
                     android:layout_height="48dp"
                     android:layout_marginTop="8dp"
                     android:background="@color/ws_blue"
+                    android:onClick="createFieldReport"
                     android:text = "Submit"
                     />
             </LinearLayout>

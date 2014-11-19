@@ -1,5 +1,9 @@
 package com.blueprint.watershed.FieldReports;
 
+import android.graphics.Bitmap;
+
+import java.lang.reflect.Field;
+
 /**
  * Created by maxwolffe on 11/18/14.
  */
@@ -10,10 +14,21 @@ public class FieldReport {
     private String mDescription;
     private Integer mHealth;
     private Boolean mUrgent;
+    private Bitmap mPhoto;
 
     public FieldReport() {
     }
 
+    public FieldReport(Integer userId, Integer miniSiteId, String description, Integer health, Boolean urgent, Bitmap photo ){
+        mUserId = userId;
+        mMinisiteId = miniSiteId;
+        mDescription = description;
+        mHealth = health;
+        mUrgent = urgent;
+        mPhoto = photo;
+    }
+
+    // Getters
     public Integer getUserId() {
         return mUserId;
     }
@@ -29,7 +44,11 @@ public class FieldReport {
     public Boolean getUrgent() {
         return mUrgent;
     }
+    public Bitmap getPhoto(){
+        return mPhoto;
+    }
 
+    //Setters
     public void setUserId(Integer userId) {
         mUserId = userId;
     }
@@ -47,6 +66,9 @@ public class FieldReport {
 
     public void setUrgent(Boolean urgent) {
         mUrgent = urgent;
+    }
+    public void setPhoto(Bitmap photo){
+        mPhoto = photo;
     }
 
 }
