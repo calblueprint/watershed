@@ -1,2 +1,2 @@
-class UserListSeralizer < BaseUserSerializer
+class UserListSerializer < BaseUserSerializer
 end
