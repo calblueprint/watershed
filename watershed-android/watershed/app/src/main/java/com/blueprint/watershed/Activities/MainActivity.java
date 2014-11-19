@@ -370,8 +370,6 @@ public class MainActivity extends ActionBarActivity
         return image;
     }
 
-    //
-
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         ImageView fieldReportImageView = (ImageView)findViewById(R.id.field_report_image);
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
