@@ -20,6 +20,7 @@ import com.blueprint.watershed.FieldReports.FieldReportFragment;
 import com.blueprint.watershed.FieldReports.FieldReportListAdapter;
 import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.MiniSites.MiniSiteListAdapter;
+import com.blueprint.watershed.Networking.MiniSiteRequest;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.SiteListRequest;
 import com.blueprint.watershed.Networking.SiteRequest;
@@ -105,7 +106,7 @@ public class MiniSiteFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
-        //getSiteRequest(mSite);
+        getMiniSiteRequest(mMiniSite);
     }
 
     @Override
@@ -133,15 +134,15 @@ public class MiniSiteFragment extends Fragment
     public void getMiniSiteRequest(MiniSite miniSite) {
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
 
-        SiteRequest siteRequest = new SiteRequest(getActivity(), site, params, new Response.Listener<Site>() {
+        MiniSiteRequest miniSiteRequest = new MiniSiteRequest(getActivity(), miniSite, params, new Response.Listener<MiniSite>() {
             @Override
-            public void onResponse(Site site) {
-                setSite(site);
-                mMiniSiteAdapter.notifyDataSetChanged();
+            public void onResponse(MiniSite miniSite) {
+                setMiniSite(miniSite);
+                mFieldReportAdapter.notifyDataSetChanged();
             }
         });
 
-        mNetworkManager.getRequestQueue().add(siteRequest);
+        mNetworkManager.getRequestQueue().add(miniSiteRequest);
     }
 
     // Objects
