@@ -46,7 +46,7 @@
         taskDescription;
     }) wp_addToSuperview:self];
     
-    _assignee = [({
+    _assigneeLabel = [({
         UILabel *assignee = [[UILabel alloc] init];
         assignee.numberOfLines = 0;
         assignee.font = [UIFont systemFontOfSize:12];
@@ -133,7 +133,7 @@
         make.trailing.equalTo(@(-standardMargin));
     }];
     
-    [self.assignee mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.assigneeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.addFieldReportButton.mas_top).with.offset(-standardMargin);
         make.leading.equalTo(@0);
         make.trailing.equalTo(@(-standardMargin));

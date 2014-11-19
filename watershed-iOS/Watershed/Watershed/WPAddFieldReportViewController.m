@@ -14,6 +14,7 @@
 @property (nonatomic) NSMutableArray *pickerData;
 @property (nonatomic) WPAddFieldReportView *view;
 @property (nonatomic) UIViewController *viewPhotoModal;
+
 @end
 
 @implementation WPAddFieldReportViewController
@@ -45,7 +46,7 @@
     [super didReceiveMemoryWarning];
 }
 
-- (void)changeSwitch:(UISwitch *) sender {
+- (void)changeSwitch:(UISwitch *)sender {
     if ([sender isOn]) {
         //MIGHT USE LATER
     }
@@ -57,14 +58,14 @@
     }
 }
 
-- (void)saveForm:(UIButton *) sender {
+- (void)saveForm:(UIButton *)sender {
     
 }
 
-- (void)viewImageButtonAction:(UIButton *) sender {
+- (void)viewImageButtonAction:(UIButton *)sender {
     self.viewPhotoModal = [[UIViewController alloc] init];
-    self.viewPhotoModal.view.backgroundColor=[UIColor blackColor];
-    self.viewPhotoModal.view.userInteractionEnabled=YES;
+    self.viewPhotoModal.view.backgroundColor = [UIColor blackColor];
+    self.viewPhotoModal.view.userInteractionEnabled = YES;
 
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.viewPhotoModal.view.frame];
     imageView.contentMode=UIViewContentModeScaleAspectFit;
@@ -79,16 +80,16 @@
     [self presentViewController:self.viewPhotoModal animated:YES completion:nil];
 }
 
-- (void) dismissModalView {
+- (void)dismissModalView {
     [self.viewPhotoModal dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void) setBlurredImage {
+- (void)setBlurredImage {
     self.view.blurredImage = [self.view.originalImage applyBlurWithRadius:5 tintColor:[UIColor clearColor] saturationDeltaFactor:1 maskImage:nil];
     self.view.selectedImageView.image = self.view.blurredImage;
 }
 
-- (void)addPhotoButtonAction:(UIButton *) sender {
+- (void)addPhotoButtonAction:(UIButton *)sender {
     if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
         UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
                                 @"Take Photo",
@@ -135,8 +136,8 @@
     }
 }
 
-- (void)actionSheet:(UIActionSheet *)popup clickedButtonAtIndex:(NSInteger)buttonIndex {
-    
+- (void)actionSheet:(UIActionSheet *)popup
+clickedButtonAtIndex:(NSInteger)buttonIndex {
     switch (popup.tag) {
         case 1: {
             switch (buttonIndex) {
@@ -156,7 +157,7 @@
     }
 }
 
-- (void) takePhoto {
+- (void)takePhoto {
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Device has no camera" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [myAlertView show];
@@ -165,12 +166,11 @@
         picker.delegate = self;
         picker.allowsEditing = NO;
         picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-        
         [self presentViewController:picker animated:YES completion:NULL];
     }
 }
 
-- (void) chooseExisting {
+- (void)chooseExisting {
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     picker.allowsEditing = NO;

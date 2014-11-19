@@ -12,6 +12,7 @@
 #import "FontAwesomeKit/FontAwesomeKit.h"
 #import "UIImage+ImageEffects.h"
 
+int WPRatingButtonHeight = 40;
 
 @interface WPAddFieldReportView()
 
@@ -36,10 +37,11 @@
     return self;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame andPickerViewController: (WPAddFieldReportViewController *)parentViewController {
+- (instancetype)initWithFrame:(CGRect)frame
+      andPickerViewController: (WPAddFieldReportViewController *)parentViewController {
     self = [super initWithFrame:frame visibleNavbar:YES];
-    self.parentFieldReportViewController = parentViewController;
     if (self) {
+        self.parentFieldReportViewController = parentViewController;
         [self createSubviews];
         [self updateConstraints];
         [self setUpActions];
@@ -83,7 +85,7 @@
         UIButton *rating1 = [[UIButton alloc] init];
         rating1.layer.borderColor = [UIColor wp_red].CGColor;
         rating1.layer.borderWidth = wpBorderWidth;
-        rating1.layer.cornerRadius = 20;
+        rating1.layer.cornerRadius = WPRatingButtonHeight/2;
         rating1.layer.backgroundColor = [UIColor clearColor].CGColor;
         rating1;
     }) wp_addToSuperview:self];
@@ -92,7 +94,7 @@
         UIButton *rating2 = [[UIButton alloc] init];
         rating2.layer.borderColor = [UIColor wp_orange].CGColor;
         rating2.layer.borderWidth = wpBorderWidth;
-        rating2.layer.cornerRadius = 20;
+        rating2.layer.cornerRadius = WPRatingButtonHeight/2;
         rating2.layer.backgroundColor = [UIColor clearColor].CGColor;
         rating2;
     }) wp_addToSuperview:self];
@@ -101,7 +103,7 @@
         UIButton *rating3 = [[UIButton alloc] init];
         rating3.layer.borderColor = [UIColor wp_yellow].CGColor;
         rating3.layer.borderWidth = wpBorderWidth;
-        rating3.layer.cornerRadius = 20;
+        rating3.layer.cornerRadius = WPRatingButtonHeight/2;
         rating3.layer.backgroundColor = [UIColor clearColor].CGColor;
         rating3;
     }) wp_addToSuperview:self];
@@ -110,7 +112,7 @@
         UIButton *rating4 = [[UIButton alloc] init];
         rating4.layer.borderColor = [UIColor wp_lime].CGColor;
         rating4.layer.borderWidth = wpBorderWidth;
-        rating4.layer.cornerRadius = 20;
+        rating4.layer.cornerRadius = WPRatingButtonHeight/2;
         rating4.layer.backgroundColor = [UIColor clearColor].CGColor;
         rating4;
     }) wp_addToSuperview:self];
@@ -119,7 +121,7 @@
         UIButton *rating5 = [[UIButton alloc] init];
         rating5.layer.borderColor = [UIColor wp_lightGreen].CGColor;
         rating5.layer.borderWidth = wpBorderWidth;
-        rating5.layer.cornerRadius = 20;
+        rating5.layer.cornerRadius = WPRatingButtonHeight/2;
         rating5.layer.backgroundColor = [UIColor clearColor].CGColor;
         rating5;
     }) wp_addToSuperview:self];
@@ -144,14 +146,14 @@
 
     _addPhotoButton = [({
         UIButton *addPhoto = [[UIButton alloc] init];
-        addPhoto.layer.backgroundColor = [UIColor wp_transDarkBlue].CGColor;
+        addPhoto.layer.backgroundColor = [UIColor wp_transparentDarkBlue].CGColor;
         addPhoto.titleLabel.font = [UIFont boldSystemFontOfSize:18];
         addPhoto;
     }) wp_addToSuperview:self];
     
     _viewImageButton = [({
         UIButton *addPhoto = [[UIButton alloc] init];
-        addPhoto.layer.backgroundColor = [UIColor wp_transBlue].CGColor;
+        addPhoto.layer.backgroundColor = [UIColor wp_transparentBlue].CGColor;
         addPhoto.titleLabel.font = [UIFont boldSystemFontOfSize:18];
         addPhoto;
     }) wp_addToSuperview:self];
@@ -227,36 +229,36 @@
     [self.rating1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
         make.leading.equalTo(self.ratingLabel.mas_right).with.offset(10);
-        make.height.equalTo(@40);
-        make.width.equalTo(@40);
+        make.height.equalTo(@(WPRatingButtonHeight));
+        make.width.equalTo(@(WPRatingButtonHeight));
     }];
     
     [self.rating2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
         make.leading.equalTo(self.rating1.mas_right).with.offset(10);
-        make.height.equalTo(@40);
-        make.width.equalTo(@40);
+        make.height.equalTo(@(WPRatingButtonHeight));
+        make.width.equalTo(@(WPRatingButtonHeight));
     }];
 
     [self.rating3 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
         make.leading.equalTo(self.rating2.mas_right).with.offset(10);
-        make.height.equalTo(@40);
-        make.width.equalTo(@40);
+        make.height.equalTo(@(WPRatingButtonHeight));
+        make.width.equalTo(@(WPRatingButtonHeight));
     }];
     
     [self.rating4 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
         make.leading.equalTo(self.rating3.mas_right).with.offset(10);
-        make.height.equalTo(@40);
-        make.width.equalTo(@40);
+        make.height.equalTo(@(WPRatingButtonHeight));
+        make.width.equalTo(@(WPRatingButtonHeight));
     }];
     
     [self.rating5 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
         make.leading.equalTo(self.rating4.mas_right).with.offset(10);
-        make.height.equalTo(@40);
-        make.width.equalTo(@40);
+        make.height.equalTo(@(WPRatingButtonHeight));
+        make.width.equalTo(@(WPRatingButtonHeight));
     }];
     
     [self.descriptionLabel mas_makeConstraints:^(MASConstraintMaker *make) {

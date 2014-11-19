@@ -23,7 +23,7 @@
     self.view.dueDate.text = self.dueDate;
     self.view.taskDescription.text = self.taskDescription;
     self.view.title.text = self.taskTitle;
-    self.view.assignee.text = [NSString stringWithFormat:@"Assigned to %@ by %@", self.assignee, self.assigner];
+    self.view.assigneeLabel.text = [NSString stringWithFormat:@"Assigned to %@ by %@", self.assignee, self.assigner];
     self.navigationItem.title = @"Task";
     [self.view.addFieldReportButton addTarget:self action:@selector(addFieldReportAction) forControlEvents:UIControlEventTouchUpInside];
 

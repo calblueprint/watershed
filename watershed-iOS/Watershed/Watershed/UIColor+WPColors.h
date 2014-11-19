@@ -22,6 +22,6 @@
 + (UIColor *)wp_lightGreen;
 + (UIColor *)wp_green;
 + (UIColor *)colorForRating:(NSInteger)rating;
-+ (UIColor *)wp_transBlue;
-+ (UIColor *)wp_transDarkBlue;
++ (UIColor *)wp_transparentBlue;
++ (UIColor *)wp_transparentDarkBlue;
 @end
