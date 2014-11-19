@@ -15,12 +15,17 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
+import com.blueprint.watershed.FieldReports.FieldReport;
+import com.blueprint.watershed.FieldReports.FieldReportFragment;
+import com.blueprint.watershed.FieldReports.FieldReportListAdapter;
 import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.MiniSites.MiniSiteListAdapter;
+import com.blueprint.watershed.Networking.MiniSiteRequest;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.SiteListRequest;
 import com.blueprint.watershed.Networking.SiteRequest;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Sites.Site;
 
 import org.json.JSONObject;
 
@@ -28,12 +33,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class MiniSiteFragment extends Fragment {
+public class MiniSiteFragment extends Fragment
+                              implements AbsListView.OnItemClickListener {
 
     private OnFragmentInteractionListener mListener;
-    private MiniSite mMiniSite;
     private NetworkManager mNetworkManager;
     private MainActivity mMainActivity;
+    private ListView mFieldReportListView;
+    private FieldReportListAdapter mFieldReportAdapter;
+    private MiniSite mMiniSite;
+    private ArrayList<FieldReport> mFieldReports;
 
 
     public static MiniSiteFragment newInstance(MiniSite miniSite) {
@@ -68,6 +77,11 @@ public class MiniSiteFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_mini_site, container, false);
         configureViewWithMiniSite(view, mMiniSite);
 
+        mFieldReportListView = (ListView) view.findViewById(R.id.field_reports_table);
+        mFieldReportAdapter = new FieldReportListAdapter(getActivity(), R.layout.field_report_list_row, getFieldReports());
+        mFieldReportListView.setAdapter(mFieldReportAdapter);
+
+        mFieldReportListView.setOnItemClickListener(this);
         return view;
     }
 
@@ -92,7 +106,7 @@ public class MiniSiteFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //getSiteRequest(mSite);
+        getMiniSiteRequest(mMiniSite);
     }
 
     @Override
@@ -101,10 +115,55 @@ public class MiniSiteFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (null != mListener) {
+            // Load Field Report
+            FieldReport fieldReport = getFieldReport(position);
+            FieldReportFragment fieldReportFragment = new FieldReportFragment();
+            fieldReportFragment.configureWithFieldReport(fieldReport);
+            mMainActivity.replaceFragment(fieldReportFragment);
+        }
+    }
+
     public interface OnFragmentInteractionListener {
         public void onFragmentInteraction(Uri uri);
     }
 
     // Networking
+    public void getMiniSiteRequest(MiniSite miniSite) {
+        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
 
+        MiniSiteRequest miniSiteRequest = new MiniSiteRequest(getActivity(), miniSite, params, new Response.Listener<MiniSite>() {
+            @Override
+            public void onResponse(MiniSite miniSite) {
+                setMiniSite(miniSite);
+                mFieldReportAdapter.notifyDataSetChanged();
+            }
+        });
+
+        mNetworkManager.getRequestQueue().add(miniSiteRequest);
+    }
+
+    // Objects
+    public void setMiniSite(MiniSite miniSite) {
+        mMiniSite = miniSite;
+        setFieldReports(miniSite.getFieldReports());
+    }
+
+    public FieldReport getFieldReport(int position) { return mFieldReports.get(position); }
+
+    public ArrayList<FieldReport> getFieldReports() {
+        if (mFieldReports == null) {
+            mFieldReports = new ArrayList<FieldReport>();
+        }
+        return mFieldReports;
+    }
+
+    public void setFieldReports(ArrayList<FieldReport> fieldReports) {
+        mFieldReports.clear();
+        for (FieldReport fieldReport : fieldReports) {
+            mFieldReports.add(fieldReport);
+        }
+    }
 }

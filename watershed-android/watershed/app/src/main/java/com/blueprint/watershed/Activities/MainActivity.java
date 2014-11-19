@@ -21,9 +21,11 @@ import android.graphics.Typeface;
 
 import com.blueprint.watershed.FieldReports.FieldReport;
 import com.blueprint.watershed.FieldReports.FieldReportFragment;
+import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Utilities.ResideMenu;
 import com.blueprint.watershed.Utilities.ResideMenuItem;
 import com.blueprint.watershed.Sites.SiteFragment;
@@ -373,7 +375,7 @@ public class MainActivity extends ActionBarActivity
 
         Boolean urgency = ((Switch)findViewById(R.id.field_report_urgent)).isChecked();
 
-        FieldReport fieldReport = new FieldReport(1, 1, fieldReportDescription, fieldReportHealthInt, urgency, fieldReportPhoto);
+        FieldReport fieldReport = new FieldReport(fieldReportDescription, fieldReportHealthInt, urgency, fieldReportPhoto, new User(), new MiniSite());
 
         // Go back to Task to mark complete instead of returning to Task List.
         // How to keep state of which task made the call to create field report?

@@ -12,18 +12,19 @@ import com.blueprint.watershed.R;
 
 public class FieldReportFragment extends Fragment {
 
-
     private OnFragmentInteractionListener mListener;
 
 
     public static FieldReportFragment newInstance() {
-        FieldReportFragment fragment = new FieldReportFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+        FieldReportFragment fieldReportFragment = new FieldReportFragment();
+        return fieldReportFragment;
     }
+
     public FieldReportFragment() {
         // Required empty public constructor
+    }
+
+    public void configureWithFieldReport(FieldReport fieldReport) {
     }
 
     @Override
@@ -55,7 +56,6 @@ public class FieldReportFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
-
 
     public interface OnFragmentInteractionListener {
         public void onFragmentInteraction(Uri uri);
