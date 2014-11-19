@@ -86,22 +86,20 @@ static NSString *cellIdentifier = @"SiteCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    UITableViewCell *cellView = nil;
+    WPSiteTableViewCell *cellView = nil;
     
     if ([tableView isEqual:self.sitesTableView]) {
         
         cellView = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         
         if (!cellView) {
-            WPSite *site = self.sitesList[indexPath.row];
-            
             cellView = [[WPSiteTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                  reuseIdentifier:cellIdentifier
-                                                             name:site.name
-                                                            image:[UIImage imageNamed:@"SampleCoverPhoto"]
-                                                    miniSiteCount:site.miniSitesCount
-                        ];
+                                                  reuseIdentifier:cellIdentifier];
         }
+        WPSite *site = self.sitesList[indexPath.row];
+        cellView.nameLabel.text = site.name;
+        cellView.photoView.image = [UIImage imageNamed:@"SampleCoverPhoto"];
+        cellView.miniSiteLabel.text = [NSString stringWithFormat: @"%ld mini sites", site.miniSitesCount];
     }
     return cellView;
 }
