@@ -40,8 +40,6 @@ static NSString *cellIdentifier = @"SiteCell";
     self.sitesTableView.dataSource = self;
     
     [[WPNetworkingManager sharedManager] requestSitesListWithParameters:[[NSMutableDictionary alloc] init] success:^(id response) {
-        UIAlertView *loaded = [[UIAlertView alloc] initWithTitle:@"SUCCESS" message:@"SITES LOADED" delegate:nil cancelButtonTitle:@"K" otherButtonTitles:nil];
-        [loaded show];
         [self loadSiteData:(NSDictionary *)response];
     }];
 }
