@@ -17,6 +17,7 @@
 
 static NSString * const BASE_URL = @"https://intense-reaches-1457.herokuapp.com/api/v1/";
 static NSString * const SIGNIN_URL = @"users/sign_in";
+static NSString * const SITES_LIST_URL = @"sites";
 
 #pragma mark - Singleton Methods
 
@@ -46,10 +47,31 @@ static NSString * const SIGNIN_URL = @"users/sign_in";
     }];
 }
 
+- (void)requestSitesListWithParameters:(NSMutableDictionary *)parameters success:(void (^)(id response))success {
+    NSString *sitesListString = [WPNetworkingManager createURLWithEndpoint:SITES_LIST_URL];
+    [self addAuthenticationParameters:parameters];
+    
+    [self GET:sitesListString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"JSON: %@", responseObject);
+        success(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load sites." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
+}
+
 #pragma mark - URL Creation
 
 + (NSString *)createURLWithEndpoint:(NSString *)endpoint {
     return [BASE_URL stringByAppendingString:endpoint];
+}
+
+#pragma mark - Authentication Params
+
+- (void)addAuthenticationParameters:(NSMutableDictionary *)parameters {
+    parameters[@"auth_token"] = self.keyChainStore[@"auth_token"];
+    parameters[@"email"] = @"mark@mark.com";
 }
 
 #pragma mark - Lazy Instantiation

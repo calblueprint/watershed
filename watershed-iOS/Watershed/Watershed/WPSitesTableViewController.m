@@ -10,6 +10,7 @@
 #import "WPSitesTableView.h"
 #import "WPSiteTableViewCell.h"
 #import "WPSiteViewController.h"
+#import "WPNetworkingManager.h"
 
 @interface WPSitesTableViewController () <UISearchDisplayDelegate, UISearchBarDelegate>
 
@@ -26,6 +27,10 @@ static NSString *cellIdentifier = @"SiteCell";
 
 - (void)loadView {
     self.view = [[WPView alloc] initWithFrame:[[UIScreen mainScreen] bounds] visibleNavbar:YES];
+    [[WPNetworkingManager sharedManager] requestSitesListWithParameters:[[NSMutableDictionary alloc] init] success:^(id response) {
+        UIAlertView *loaded = [[UIAlertView alloc] initWithTitle:@"SUCCESS" message:@"SITES LOADED" delegate:nil cancelButtonTitle:@"K" otherButtonTitles:nil];
+        [loaded show];
+    }];
 }
 
 - (void)viewDidLoad {
