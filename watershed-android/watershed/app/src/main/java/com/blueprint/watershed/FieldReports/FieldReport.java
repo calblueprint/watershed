@@ -15,6 +15,7 @@ import java.lang.reflect.Field;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FieldReport implements APIObject {
 
+    // Attributes
     private Integer mId;
     private String mDescription;
     private Integer mHealth;
@@ -28,13 +29,14 @@ public class FieldReport implements APIObject {
     public FieldReport() {
     }
 
-    public FieldReport(Integer userId, String description,
-                       Integer health, Boolean urgent, Bitmap photo) {
-        mUserId = userId;
+    public FieldReport(String description, Integer health, Boolean urgent, Bitmap photo,
+                       User user, MiniSite miniSite) {
         mDescription = description;
         mHealth = health;
         mUrgent = urgent;
         mPhoto = photo;
+        mUser = user;
+        mMiniSite = miniSite;
     }
 
     /*
