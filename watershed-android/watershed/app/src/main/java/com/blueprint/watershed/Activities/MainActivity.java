@@ -354,18 +354,15 @@ public class MainActivity extends ActionBarActivity
     String mCurrentPhotoPath;
 
     private File createImageFile() throws IOException {
-        // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
+                imageFileName,
+                ".jpg",
+                storageDir
         );
-
-        // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = "file:" + image.getAbsolutePath();
         return image;
     }
@@ -373,7 +370,6 @@ public class MainActivity extends ActionBarActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         ImageView fieldReportImageView = (ImageView)findViewById(R.id.field_report_image);
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
-            Log.e("Great Success!", "BLUEPRINT");
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             fieldReportImageView.setImageBitmap(photo);
         }

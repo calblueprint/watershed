@@ -35,13 +35,13 @@
                     android:layout_height="match_parent"
                     android:layout_width="0px"
                     android:layout_weight="1"
-                    android:text="FightClub"
+                    android:text="@string/field_report_title"
                     android:padding="4dp"
                     android:layout_gravity="start|top"
                     android:textSize="20sp" />
                 <Switch
-                    android:textOn="Urgent"
-                    android:textOff="Not"
+                    android:textOn="@string/urgent"
+                    android:textOff="@string/not_urgent"
                     android:layout_weight="1"
                     android:layout_width="0px"
                     android:layout_height="16dp" />

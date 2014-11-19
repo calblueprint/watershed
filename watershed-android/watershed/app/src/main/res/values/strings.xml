@@ -28,5 +28,7 @@
 
     <!--Field Report -->
     <string name="field_report_title">Field Report</string>
+    <string name="urgent">Urgent</string>
+    <string name="not_urgent">Not</string>
 
 </resources>
