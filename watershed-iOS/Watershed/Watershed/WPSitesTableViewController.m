@@ -10,12 +10,13 @@
 #import "WPSitesTableView.h"
 #import "WPSiteTableViewCell.h"
 #import "WPSiteViewController.h"
+#import "WPSite.h"
 #import "WPNetworkingManager.h"
 
 @interface WPSitesTableViewController () <UISearchDisplayDelegate, UISearchBarDelegate>
 
 @property (nonatomic) WPSitesTableView *sitesTableView;
-@property (nonatomic) NSMutableArray *siteList;
+@property (nonatomic) NSMutableArray *sitesList;
 @property (nonatomic) UISearchDisplayController *searchController;
 @property (nonatomic) UISearchBar *searchBar;
 
@@ -30,6 +31,7 @@ static NSString *cellIdentifier = @"SiteCell";
     [[WPNetworkingManager sharedManager] requestSitesListWithParameters:[[NSMutableDictionary alloc] init] success:^(id response) {
         UIAlertView *loaded = [[UIAlertView alloc] initWithTitle:@"SUCCESS" message:@"SITES LOADED" delegate:nil cancelButtonTitle:@"K" otherButtonTitles:nil];
         [loaded show];
+        [self loadSiteData:(NSDictionary *)response];
     }];
 }
 
@@ -40,7 +42,7 @@ static NSString *cellIdentifier = @"SiteCell";
     
     [self setUpSearchBar];
     
-    [self loadSiteData];
+    //09[self loadSiteData];
     self.sitesTableView.delegate = self;
     self.sitesTableView.dataSource = self;
 }
@@ -50,8 +52,24 @@ static NSString *cellIdentifier = @"SiteCell";
     [self updatePhotoOffset:self.sitesTableView.contentOffset.y];
 }
 
-- (void)loadSiteData {
-    self.siteList = @[@1, @3, @4, @2, @5, @1, @5, @2, @2, @3, @4, @0].mutableCopy;
+- (void)loadSiteData:(NSDictionary *)data {
+    NSArray *sitesJSON = data[@"sites"];
+    for (NSDictionary *siteData in sitesJSON) {
+        WPSite *site = [[WPSite alloc] init];
+        site.siteId = siteData[@"id"];
+        site.name = siteData[@"name"];
+        site.info = siteData[@"description"];
+        site.latitude = [siteData[@"latitude"] floatValue];
+        site.longitude = [siteData[@"longitude"] floatValue];
+        site.street = siteData[@"street"];
+        site.city = siteData[@"city"];
+        site.state = siteData[@"state"];
+        site.zipCode = siteData[@"zip_code"];
+        site.miniSitesCount = [siteData[@"mini_sites_count"] intValue];
+        
+        [self.sitesList addObject:site];
+    }
+    [self.sitesTableView reloadData];
 }
 
 #pragma mark - TableView Delegate/DataSource Methods
@@ -61,7 +79,7 @@ static NSString *cellIdentifier = @"SiteCell";
 
     NSInteger rowCount = 0;
     
-    if ([tableView isEqual:self.sitesTableView]) rowCount = self.siteList.count;
+    if ([tableView isEqual:self.sitesTableView]) rowCount = self.sitesList.count;
     return rowCount;
 }
 
@@ -73,13 +91,15 @@ static NSString *cellIdentifier = @"SiteCell";
     if ([tableView isEqual:self.sitesTableView]) {
         
         cellView = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        
         if (!cellView) {
+            WPSite *site = self.sitesList[indexPath.row];
             
             cellView = [[WPSiteTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                      reuseIdentifier:cellIdentifier
-                                                                 name:@"Sample Site"
-                                                                image:[UIImage imageNamed:@"SampleCoverPhoto"]
-                                                        miniSiteCount:[self.siteList[indexPath.row] intValue]
+                                                  reuseIdentifier:cellIdentifier
+                                                             name:site.name
+                                                            image:[UIImage imageNamed:@"SampleCoverPhoto"]
+                                                    miniSiteCount:site.miniSitesCount
                         ];
         }
     }
@@ -151,6 +171,13 @@ static NSString *cellIdentifier = @"SiteCell";
 }
 
 #pragma mark - Lazy instantiation
+
+- (NSMutableArray *)sitesList {
+    if (!_sitesList) {
+        _sitesList = [[NSMutableArray alloc] init];
+    }
+    return _sitesList;
+}
 
 - (WPSitesTableView *)sitesTableView {
     if (!_sitesTableView) {

@@ -20,5 +20,6 @@
 @property (nonatomic) NSString *state;
 @property (nonatomic) NSNumber *zipCode;
 @property (nonatomic) NSMutableArray *miniSites; //of WPMiniSite's
+@property (nonatomic) NSInteger miniSitesCount;
 
 @end
