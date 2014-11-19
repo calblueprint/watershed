@@ -1,0 +1,2 @@
+class MiniSiteListSerializer < BaseMiniSiteSerializer
+end
