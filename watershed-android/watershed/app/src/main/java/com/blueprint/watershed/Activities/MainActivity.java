@@ -100,7 +100,7 @@ public class MainActivity extends ActionBarActivity
     private NetworkManager mNetworkManager;
 
     // Camera Stuff
-    private static final int CAMERA_REQUEST = 1888;
+    private static final int CAMERA_REQUEST = 1337;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -350,7 +350,7 @@ public class MainActivity extends ActionBarActivity
              if (photoFile != null) {
                  //takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
                          //Uri.fromFile(photoFile));
-                 startActivityForResult(takePictureIntent, 1888);
+                 startActivityForResult(takePictureIntent, CAMERA_REQUEST);
              }
         }
     }
