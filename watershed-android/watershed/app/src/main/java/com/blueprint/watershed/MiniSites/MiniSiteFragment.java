@@ -137,11 +137,11 @@ public class MiniSiteFragment extends Fragment
         setFieldReports(miniSite.getFieldReports());
     }
 
-    public MiniSite getFieldReport(int position) { return mFieldReports.get(position); }
+    public FieldReport getFieldReport(int position) { return mFieldReports.get(position); }
 
     public ArrayList<FieldReport> getFieldReports() {
         if (mFieldReports == null) {
-            mFieldReports = new ArrayList<MiniSite>();
+            mFieldReports = new ArrayList<FieldReport>();
         }
         return mFieldReports;
     }

@@ -24,6 +24,9 @@ public class FieldReportFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public void configureWithFieldReport(FieldReport fieldReport) {
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
