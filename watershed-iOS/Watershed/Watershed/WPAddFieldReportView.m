@@ -151,6 +151,7 @@ int highestRating = 5;
     [_urgentSwitch setOnTintColor:[UIColor wp_red]];
     [self setUpButtons];
 }
+
 - (void)setUpButtons {
     for (int i = 0; i < highestRating; i++)
     {
@@ -161,27 +162,25 @@ int highestRating = 5;
         [currButton setBackgroundColor:[UIColor clearColor]];
         [currButton.layer setBorderWidth:wpBorderWidth];
         [currButton addTarget:self action:@selector(ratingClick:) forControlEvents:UIControlEventTouchUpInside];
-
+        [currButton setTitleColor:[UIColor whiteColor] forState: UIControlStateSelected];
+        currButton.selected = NO;
     }
-    
+
     [_rating1 setTitleColor:[UIColor wp_red] forState: UIControlStateNormal];
     [_rating2 setTitleColor:[UIColor wp_orange] forState: UIControlStateNormal];
     [_rating3 setTitleColor:[UIColor wp_yellow] forState: UIControlStateNormal];
     [_rating4 setTitleColor:[UIColor wp_lime] forState: UIControlStateNormal];
     [_rating5 setTitleColor:[UIColor wp_lightGreen] forState: UIControlStateNormal];
     
-
 }
 
 -(void)ratingClick:(UIButton *)sender {
+    BOOL isButtonSelected = ![sender isSelected];
     [self setUpButtons];
-    if (!sender.selected) {
+    sender.selected = isButtonSelected;
+    if (isButtonSelected) {
         sender.backgroundColor = sender.titleLabel.textColor;
-        [sender setTitleColor:[UIColor whiteColor] forState: UIControlStateNormal];
         sender.layer.borderWidth = 0;
-        sender.selected = NO;
-    } else {
-        sender.selected = YES;
     }
 }
 
