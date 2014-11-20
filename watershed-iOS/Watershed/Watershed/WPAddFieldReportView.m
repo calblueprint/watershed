@@ -181,9 +181,6 @@ int highestRating = 5;
     if (isButtonSelected) {
         sender.backgroundColor = sender.titleLabel.textColor;
         sender.layer.borderWidth = 0;
-//        sender.selected = YES;
-    } else {
-//        sender.selected = NO;
     }
 }
 
