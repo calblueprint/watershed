@@ -26,4 +26,11 @@ class Site < ActiveRecord::Base
                   against: [[:name, "A"], [:street, "B"], [:city, "B"], [:state, "B"], [:zip_code, "B"]],
                   using: { tsearch: { prefix: true, normalization: 2 } }
 
+  #
+  # Properties
+  #
+  def mini_sites_count
+    mini_sites.count
+  end
+
 end

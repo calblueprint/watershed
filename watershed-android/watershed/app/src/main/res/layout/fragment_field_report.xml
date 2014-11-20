@@ -1,0 +1,125 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.blueprint.watershed.FieldReports.FieldReportFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            style="@style/BackGroundImageView"
+            android:id = "@+id/field_report_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            tools:ignore="ContentDescription" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/standard_margin"
+            android:layout_marginRight="@dimen/standard_margin"
+            android:layout_marginStart="@dimen/standard_margin"
+            android:layout_marginEnd="@dimen/standard_margin">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="32dp"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/field_report_title"
+                    android:layout_height="match_parent"
+                    android:layout_width="0px"
+                    android:layout_weight="1"
+                    android:text="@string/field_report_title"
+                    android:padding="4dp"
+                    android:layout_gravity="start|top"
+                    android:textSize="20sp" />
+                <Switch
+                    android:id="@+id/field_report_urgent"
+                    android:textOn="@string/urgent"
+                    android:textOff="@string/not_urgent"
+                    android:layout_weight="1"
+                    android:layout_width="0px"
+                    android:layout_height="16dp" />
+            </LinearLayout>
+
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/health_group"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioButton android:id="@+id/health_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:layout_marginLeft="12dp"
+                    />
+                <RadioButton android:id="@+id/health_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:text="2"
+                    />
+                <RadioButton android:id="@+id/health_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:text="3"
+                    />
+                <RadioButton android:id="@+id/health_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:text="4"
+                    />
+                <RadioButton android:id="@+id/health_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:text="5"
+                   />
+            </RadioGroup>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical">
+
+                <EditText
+                    android:gravity="top|left"
+                    android:hint="Description"
+                    android:id="@+id/field_report_description"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:padding="4dp"
+                    android:layout_gravity="start|top"
+                    android:textSize="15sp"
+                    android:lines="10"/>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:onClick="HandleTakePhotoButton"
+                    android:text = "Take Photo"
+                    />
+                <Button
+                    android:id="@+id/submit_field_report"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/ws_blue"
+                    android:onClick="createFieldReport"
+                    android:text = "Submit"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</FrameLayout>

@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:text="Title"
         android:layout_marginTop="8dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="@dimen/standard_margin"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
     <TextView

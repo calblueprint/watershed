@@ -15,6 +15,9 @@ public class User {
         // mRole = role;
     }
 
+    public User() {
+    }
+
     public String getName() { return mName; }
     // public Integer getRole() { return mRole; }
     public String getEmail() { return mEmail; }
