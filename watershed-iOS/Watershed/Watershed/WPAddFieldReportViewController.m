@@ -69,7 +69,7 @@
 
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.viewPhotoModal.view.frame];
     imageView.contentMode=UIViewContentModeScaleAspectFit;
-    imageView.image = self.view.originalImage;
+    imageView.image = self.view.selectedImageView.image;
 
     [self.viewPhotoModal.view addSubview:imageView];
     
@@ -183,10 +183,10 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 #pragma mark - Image Picker Controller delegate methods
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-
-    UIImage *chosenImage = info[UIImagePickerControllerOriginalImage];
-    self.view.originalImage = chosenImage;
-    [self setBlurredImage];
+    self.view.selectedImageView.image = info[UIImagePickerControllerOriginalImage];
+//    UIImage *chosenImage = info[UIImagePickerControllerOriginalImage];
+//    self.view.originalImage = chosenImage;
+//    [self setBlurredImage];
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 

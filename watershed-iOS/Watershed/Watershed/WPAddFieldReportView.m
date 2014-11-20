@@ -53,8 +53,9 @@ int highestRating = 5;
 }
 - (void)createSubviews {
     _selectedImageView = [({
-        _originalImage = [UIImage imageNamed:@"SampleCoverPhoto"];
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:_originalImage];
+//        _originalImage = [UIImage imageNamed:@"SampleCoverPhoto"];
+//        UIImageView *imageView = [[UIImageView alloc] initWithImage:_originalImage];
+        UIImageView *imageView = [[UIImageView alloc] init];
         imageView;
     }) wp_addToSuperview:self];
     

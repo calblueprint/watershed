@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WPAddPhotoViewController.h"
 #import "UIExtensions.h"
 #import "WPAddFieldReportViewController.h"
 
