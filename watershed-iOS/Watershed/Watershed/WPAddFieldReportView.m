@@ -14,6 +14,7 @@
 
 int WPRatingButtonHeight = 40;
 int WPPhotoButtonHeight = 75;
+int highestRating = 5;
 
 @interface WPAddFieldReportView()
 
@@ -22,6 +23,7 @@ int WPPhotoButtonHeight = 75;
 @property (nonatomic) UILabel *urgentLabel;
 @property (nonatomic) UILabel *ratingLabel;
 @property (nonatomic) UIView *blackOverlay;
+@property (nonatomic) NSMutableArray *ratingButtonArray;
 
 @end
 
@@ -82,51 +84,30 @@ int WPPhotoButtonHeight = 75;
         ratingLabel;
     }) wp_addToSuperview:self];
     
-    _rating1 = [({
-        UIButton *rating1 = [[UIButton alloc] init];
-        rating1.layer.borderColor = [UIColor wp_red].CGColor;
-        rating1.layer.borderWidth = wpBorderWidth;
-        rating1.layer.cornerRadius = WPRatingButtonHeight/2;
-        rating1.layer.backgroundColor = [UIColor clearColor].CGColor;
-        rating1;
-    }) wp_addToSuperview:self];
-    
-    _rating2 = [({
-        UIButton *rating2 = [[UIButton alloc] init];
-        rating2.layer.borderColor = [UIColor wp_orange].CGColor;
-        rating2.layer.borderWidth = wpBorderWidth;
-        rating2.layer.cornerRadius = WPRatingButtonHeight/2;
-        rating2.layer.backgroundColor = [UIColor clearColor].CGColor;
-        rating2;
-    }) wp_addToSuperview:self];
-    
-    _rating3 = [({
-        UIButton *rating3 = [[UIButton alloc] init];
-        rating3.layer.borderColor = [UIColor wp_yellow].CGColor;
-        rating3.layer.borderWidth = wpBorderWidth;
-        rating3.layer.cornerRadius = WPRatingButtonHeight/2;
-        rating3.layer.backgroundColor = [UIColor clearColor].CGColor;
-        rating3;
-    }) wp_addToSuperview:self];
-    
-    _rating4 = [({
-        UIButton *rating4 = [[UIButton alloc] init];
-        rating4.layer.borderColor = [UIColor wp_lime].CGColor;
-        rating4.layer.borderWidth = wpBorderWidth;
-        rating4.layer.cornerRadius = WPRatingButtonHeight/2;
-        rating4.layer.backgroundColor = [UIColor clearColor].CGColor;
-        rating4;
-    }) wp_addToSuperview:self];
-    
-    _rating5 = [({
-        UIButton *rating5 = [[UIButton alloc] init];
-        rating5.layer.borderColor = [UIColor wp_lightGreen].CGColor;
-        rating5.layer.borderWidth = wpBorderWidth;
-        rating5.layer.cornerRadius = WPRatingButtonHeight/2;
-        rating5.layer.backgroundColor = [UIColor clearColor].CGColor;
-        rating5;
-    }) wp_addToSuperview:self];
+    _rating1 = [[UIButton alloc] init];
+    _rating2 = [[UIButton alloc] init];
+    _rating3 = [[UIButton alloc] init];
+    _rating4 = [[UIButton alloc] init];
+    _rating5 = [[UIButton alloc] init];
 
+    _ratingButtonArray = [[NSMutableArray alloc] initWithObjects:_rating1, _rating2, _rating3, _rating4, _rating5, nil];
+
+    for (int i = 0; i < highestRating; i++)
+    {
+        UIButton *currButton = _ratingButtonArray[i];
+        currButton.layer.borderWidth = wpBorderWidth;
+        currButton.layer.borderColor = [UIColor wp_red].CGColor;
+        currButton.layer.cornerRadius = WPRatingButtonHeight/2;
+        currButton.layer.backgroundColor = [UIColor clearColor].CGColor;
+        [currButton wp_addToSuperview:self];
+    }
+    
+    _rating1.layer.borderColor = [UIColor wp_red].CGColor;
+    _rating2.layer.borderColor = [UIColor wp_orange].CGColor;
+    _rating3.layer.borderColor = [UIColor wp_yellow].CGColor;
+    _rating4.layer.borderColor = [UIColor wp_lime].CGColor;
+    _rating5.layer.borderColor = [UIColor wp_lightGreen].CGColor;
+    
     _descriptionLabel = [({
         UILabel *descriptionLabel = [[UILabel alloc] init];
         descriptionLabel.text = @"Description";
@@ -170,45 +151,36 @@ int WPPhotoButtonHeight = 75;
     [self setUpButtons];
 }
 - (void)setUpButtons {
-    [_rating1 setTitle:@"1" forState:UIControlStateNormal];
-    [_rating2 setTitle:@"2" forState:UIControlStateNormal];
-    [_rating3 setTitle:@"3" forState:UIControlStateNormal];
-    [_rating4 setTitle:@"4" forState:UIControlStateNormal];
-    [_rating5 setTitle:@"5" forState:UIControlStateNormal];
-    [_rating1.titleLabel setTextAlignment:NSTextAlignmentCenter];
-    [_rating2.titleLabel setTextAlignment:NSTextAlignmentCenter];
-    [_rating3.titleLabel setTextAlignment:NSTextAlignmentCenter];
-    [_rating4.titleLabel setTextAlignment:NSTextAlignmentCenter];
-    [_rating5.titleLabel setTextAlignment:NSTextAlignmentCenter];
-    [_rating1 setBackgroundColor:[UIColor clearColor]];
-    [_rating2 setBackgroundColor:[UIColor clearColor]];
-    [_rating3 setBackgroundColor:[UIColor clearColor]];
-    [_rating4 setBackgroundColor:[UIColor clearColor]];
-    [_rating5 setBackgroundColor:[UIColor clearColor]];
+    for (int i = 0; i < highestRating; i++)
+    {
+        UIButton *currButton = _ratingButtonArray[i];
+        NSString* title = [NSString stringWithFormat:@"%i", i + 1];
+        [currButton setTitle:title forState:UIControlStateNormal];
+        [currButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
+        [currButton setBackgroundColor:[UIColor clearColor]];
+        [currButton.layer setBorderWidth:wpBorderWidth];
+        [currButton addTarget:self action:@selector(ratingClick:) forControlEvents:UIControlEventTouchUpInside];
+
+    }
+    
     [_rating1 setTitleColor:[UIColor wp_red] forState: UIControlStateNormal];
     [_rating2 setTitleColor:[UIColor wp_orange] forState: UIControlStateNormal];
     [_rating3 setTitleColor:[UIColor wp_yellow] forState: UIControlStateNormal];
     [_rating4 setTitleColor:[UIColor wp_lime] forState: UIControlStateNormal];
     [_rating5 setTitleColor:[UIColor wp_lightGreen] forState: UIControlStateNormal];
-    [_rating1.layer setBorderWidth:wpBorderWidth];
-    [_rating2.layer setBorderWidth:wpBorderWidth];
-    [_rating3.layer setBorderWidth:wpBorderWidth];
-    [_rating4.layer setBorderWidth:wpBorderWidth];
-    [_rating5.layer setBorderWidth:wpBorderWidth];
-    [_rating1 addTarget:self action:@selector(ratingClick:) forControlEvents:UIControlEventTouchUpInside];
-    [_rating2 addTarget:self action:@selector(ratingClick:) forControlEvents:UIControlEventTouchUpInside];
-    [_rating3 addTarget:self action:@selector(ratingClick:) forControlEvents:UIControlEventTouchUpInside];
-    [_rating4 addTarget:self action:@selector(ratingClick:) forControlEvents:UIControlEventTouchUpInside];
-    [_rating5 addTarget:self action:@selector(ratingClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+
 }
 
 -(void)ratingClick:(UIButton *)sender {
-    int senderBorder = sender.layer.borderWidth;
     [self setUpButtons];
-    if (senderBorder == 1) {
+    if (!sender.selected) {
         sender.backgroundColor = sender.titleLabel.textColor;
         [sender setTitleColor:[UIColor whiteColor] forState: UIControlStateNormal];
         sender.layer.borderWidth = 0;
+        sender.selected = NO;
+    } else {
+        sender.selected = YES;
     }
 }
 
