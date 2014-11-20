@@ -16,7 +16,6 @@
 @interface WPSitesTableViewController () <UISearchDisplayDelegate, UISearchBarDelegate>
 
 @property (nonatomic) WPSitesTableView *sitesTableView;
-@property (nonatomic) NSMutableArray *sitesList;
 @property (nonatomic) UISearchDisplayController *searchController;
 @property (nonatomic) UISearchBar *searchBar;
 
