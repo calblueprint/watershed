@@ -23,6 +23,7 @@ static NSString * const BASE_URL = @"https://intense-reaches-1457.herokuapp.com/
 
 @end
 
+
 @implementation WPAppDelegate
 
 + (WPAppDelegate *)instance {
@@ -32,30 +33,31 @@ static NSString * const BASE_URL = @"https://intense-reaches-1457.herokuapp.com/
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+
     self.window.rootViewController = [[WPRootViewController alloc] init];
     [self.window makeKeyAndVisible];
-    
+
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     NSURL *baseURL = [[NSURL alloc] initWithString:BASE_URL];
     _manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
     _manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    
+
     _store = [UICKeyChainStore keyChainStore];
-    
+
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    
+
     //clear navbar
     [[UINavigationBar appearance] setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-    
+
     //no borderline for navbar
     [[UINavigationBar appearance] setShadowImage:[UIImage new]];
-    
+
     //white text
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-    
+
     //white navigation items
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    
+
     [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"BackButton" ]];
     [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"BackButton" ]];
 
@@ -78,7 +80,7 @@ static NSString * const BASE_URL = @"https://intense-reaches-1457.herokuapp.com/
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 

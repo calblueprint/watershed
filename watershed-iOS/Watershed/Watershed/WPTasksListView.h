@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WPView.h"
+#import "UIExtensions.h"
 #import "WPTasksListViewController.h"
+
 @class WPTasksListViewController;
 
 @interface WPTasksListView : WPView
