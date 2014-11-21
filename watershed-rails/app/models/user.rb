@@ -77,7 +77,14 @@ class User < ActiveRecord::Base
   #
   # Facebook Authentication
   #
-  def invalid_facebook_token?(token)
-    !facebook_auth_token.blank? && facebook_auth_token != token
+  def valid_facebook_token?(token)
+    !facebook_auth_token.blank? && facebook_auth_token == token
+  end
+
+  def create_with_facebook_info(facebook_params)
+    self.name = facebook_params[:name]
+    self.password = Devise.friendly_token
+
+    # TODO(mark): More configuration with the facebook params (photo, etc)
   end
 end
