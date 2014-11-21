@@ -38,7 +38,8 @@ static NSString *cellIdentifier = @"MiniSiteCell";
 - (void)loadView {
     WPSiteView *siteView = [[WPSiteView alloc] init];
     self.view = siteView;
-    siteView.coverPhotoView.image = [UIImage imageNamed:@"SampleCoverPhoto2"];
+    siteView.originalCoverPhoto = self.site.image;
+    siteView.coverPhotoView.image = siteView.originalCoverPhoto;
     siteView.titleLabel.text = self.site.name;
     siteView.descriptionLabel.text = self.site.info;
     siteView.addressLabel.label.text = [NSString stringWithFormat:@"%@, %@, %@ %@", self.site.street, self.site.city, self.site.state, self.site.zipCode];
