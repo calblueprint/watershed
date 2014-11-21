@@ -2,6 +2,7 @@ package com.blueprint.watershed.Activities;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.content.pm.PackageInfo;
@@ -13,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -33,6 +35,7 @@ import android.view.View;
 import android.content.Context;
 import android.content.Intent;
 import android.app.ActionBar.Tab;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -67,7 +70,7 @@ public class MainActivity extends ActionBarActivity
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
-    private ArrayList<ResideMenuItem> menuItems;
+    private ArrayList<String> menuItems;
 
     // View Elements
     public CharSequence mTitle;
@@ -244,6 +247,9 @@ public class MainActivity extends ActionBarActivity
                 //TODO
                 //resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
         }
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -251,14 +257,51 @@ public class MainActivity extends ActionBarActivity
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         String titles[] = { "Tasks", "Sites", "Activity Log", "Profile", "About", "Logout" };
-        int icon[] = { R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo };
-        menuItems = new ArrayList<ResideMenuItem>();
-        for (int i = 0; i < titles.length; i++) {
-            ResideMenuItem item = new ResideMenuItem(this, icon[i], titles[i]);
-            item.setOnClickListener(this);
-            resideMenu.addMenuItem(item, ResideMenu.DIRECTION_LEFT);
-            menuItems.add(item);
+
+        menuItems = new ArrayList<String>();
+        for (String title : titles) {
+            menuItems.add(title);
         }
+
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
+                R.layout.residemenu_item, R.id.tv_title, titles));
+
+        int icon[] = { R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo };
+
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                R.drawable.watershed_logo, R.string.draw_open_close , R.string.draw_open_close) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getActionBar().setTitle(mTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getActionBar().setTitle("Cats");
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
     // View on click listener
@@ -294,7 +337,7 @@ public class MainActivity extends ActionBarActivity
                 startActivity(intent);
                 break;
         }
-        resideMenu.closeMenu();
+        //resideMenu.closeMenu();
     }
 
     // System level attributes
@@ -312,4 +355,7 @@ public class MainActivity extends ActionBarActivity
     // Networking
     public NetworkManager getNetworkManager() { return mNetworkManager; }
     public void setNetworkManager(NetworkManager networkManager) { mNetworkManager = networkManager; }
+
+
+
 }
