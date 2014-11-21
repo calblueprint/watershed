@@ -22,6 +22,10 @@ class Api::V1::UsersController < Api::V1::BaseController
     end
   end
 
+  def facebook_sign_up
+
+  end
+
   def update
     if @user.update(user_params)
       render json: @user, serializer: UserSerializer
