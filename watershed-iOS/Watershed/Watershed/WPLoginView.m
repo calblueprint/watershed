@@ -65,20 +65,7 @@
     _passwordLine = [[UIView alloc] init];
     _passwordLine.backgroundColor = [UIColor whiteColor];
     [self addSubview:_passwordLine];
-    
-    FAKIonIcons *emailIcon = [FAKIonIcons ios7EmailOutlineIconWithSize:20];
-    [emailIcon addAttribute:NSForegroundColorAttributeName
-                     value:[UIColor whiteColor]];
-    _signInEmailIconView = [[UIImageView alloc] initWithImage:[emailIcon imageWithSize:CGSizeMake(20, 20)]];
-    [self addSubview:_signInEmailIconView];
-    
-    FAKIonIcons *lockIcon = [FAKIonIcons ios7LockedIconWithSize:20];
-    [lockIcon addAttribute:NSForegroundColorAttributeName
-                      value:[UIColor whiteColor]];
-    _signInPasswordIconView = [[UIImageView alloc] initWithImage:[lockIcon imageWithSize:CGSizeMake(20, 20)]];
-    [self addSubview:_signInPasswordIconView];
-    
-    
+ 
     self.emailButtonTopConstraint.offset = 90;
     [self.emailButton setNeedsUpdateConstraints];
 
@@ -87,6 +74,18 @@
         [self.emailButton layoutIfNeeded];
     } completion:^(BOOL finished) {
         if (!_emailClicked) {
+            FAKIonIcons *emailIcon = [FAKIonIcons ios7EmailOutlineIconWithSize:20];
+            [emailIcon addAttribute:NSForegroundColorAttributeName
+                              value:[UIColor whiteColor]];
+            _signInEmailIconView = [[UIImageView alloc] initWithImage:[emailIcon imageWithSize:CGSizeMake(20, 20)]];
+            [self addSubview:_signInEmailIconView];
+            
+            FAKIonIcons *lockIcon = [FAKIonIcons ios7LockedIconWithSize:20];
+            [lockIcon addAttribute:NSForegroundColorAttributeName
+                             value:[UIColor whiteColor]];
+            _signInPasswordIconView = [[UIImageView alloc] initWithImage:[lockIcon imageWithSize:CGSizeMake(20, 20)]];
+            [self addSubview:_signInPasswordIconView];
+            
             _emailTextField = [[UITextField alloc] init];
             _emailTextField.font = [UIFont fontWithName:@"Helvetica" size:14];
             _emailTextField.textColor = [UIColor whiteColor];
@@ -96,7 +95,6 @@
             [_emailTextField addTarget:self
                           action:@selector(emailToPassword)
                 forControlEvents:UIControlEventEditingDidEndOnExit];
-            
             [self addSubview:_emailTextField];
             
             _passwordTextField = [[UITextField alloc] init];
@@ -109,8 +107,6 @@
             [_passwordTextField addTarget:self
                                 action:@selector(passwordToDone)
                       forControlEvents:UIControlEventEditingDidEndOnExit];
-
-
             [self addSubview:_passwordTextField];
         }
         _emailClicked = YES;
@@ -236,8 +232,6 @@
             make.bottom.equalTo(self.passwordTextField.mas_bottom).with.offset(5);
             make.left.equalTo(self.passwordTextField.mas_left);
         }];
-        
-        _emailClicked = NO;
         
     }
 
