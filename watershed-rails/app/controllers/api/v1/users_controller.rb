@@ -23,7 +23,6 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def facebook_sign_up
-
   end
 
   def update
@@ -37,7 +36,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   private
 
   def user_params
-    params.require(:user).permit(:email, :name, :role)
+    params.require(:user).permit(:email, :name, :role, :facebook_auth_token)
   end
 
 end
