@@ -12,6 +12,7 @@
 #  due_date    :datetime
 #  created_at  :datetime
 #  updated_at  :datetime
+#  urgent      :boolean          default(FALSE)
 #
 
 # Read about factories at https://github.com/thoughtbot/factory_girl
