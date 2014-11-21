@@ -28,13 +28,12 @@ static NSString * const SIGNIN_URL = @"users/sign_in";
 }
 
 - (void)loadView {
-    self.view = [[WPLoginView alloc] init];
+    self.view = [[WPLoginView alloc] initWithParentController:self];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
                                    initWithTarget:self.view
                                    action:@selector(dismissKeyboard)];
     
     [self.view addGestureRecognizer:tap];
-    [self.view setParentViewController:self];
 }
 
 - (void)emailSignup {

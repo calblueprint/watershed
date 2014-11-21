@@ -18,6 +18,7 @@
 @property (nonatomic) UITextField *emailTextField;
 @property (nonatomic) UITextField *passwordTextField;
 
+- (instancetype)initWithParentController:(WPLoginViewController *)parentVC;
 -(void)dismissKeyboard;
 
 @end

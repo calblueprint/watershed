@@ -32,10 +32,9 @@
 @implementation WPLoginView
 
 
-- (instancetype)initWithFrame:(CGRect)frame {
-    
-    frame = [WPView getScreenFrame];
-    self = [super initWithFrame:frame];
+- (instancetype)initWithParentController:(WPLoginViewController *)parentVC {
+    self.parentViewController = parentVC;
+    self = [super initWithFrame:[WPView getScreenFrame]];
     if (self) {
         _isFirstTime = YES;
         _emailClicked = NO;
