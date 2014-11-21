@@ -100,4 +100,13 @@ static NSString *cellIdentifier = @"MiniSiteCell";
     [self.navigationController pushViewController:miniSiteViewController animated:YES];
 }
 
+#pragma mark - Lazy Instantiation
+
+- (WPSite *)site {
+    if (!_site) {
+        _site = [[WPSite alloc] init];
+    }
+    return _site;
+}
+
 @end
