@@ -20,7 +20,10 @@
 @property (nonatomic) NSString *city;
 @property (nonatomic) NSString *state;
 @property (nonatomic) NSNumber *zipCode;
+@property (nonatomic) UIImage *image;
+
 @property (nonatomic) WPSite *site;
 @property (nonatomic) NSMutableArray *users; //of WPUser's
+@property (nonatomic) NSMutableArray *fieldReports;
 
 @end

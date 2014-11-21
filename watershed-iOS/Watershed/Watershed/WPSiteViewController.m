@@ -8,6 +8,7 @@
 
 #import "WPSiteViewController.h"
 #import "WPSiteView.h"
+#import "WPMiniSite.h"
 #import "WPMiniSiteTableViewCell.h"
 #import "WPMiniSiteViewController.h"
 #import "WPNetworkingManager.h"
@@ -26,11 +27,11 @@ static NSString *cellIdentifier = @"MiniSiteCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = self.site.name;
-    [self loadMiniSiteData];
     self.miniSiteTableView.delegate = self;
     self.miniSiteTableView.dataSource = self;
 
     [[WPNetworkingManager sharedManager] requestSiteWithSite:self.site parameters:[[NSMutableDictionary alloc] init] success:^(id response) {
+        [self loadMiniSiteData:(NSMutableDictionary *)response];
     }];
 }
 
@@ -40,8 +41,26 @@ static NSString *cellIdentifier = @"MiniSiteCell";
     self.miniSiteTableView = siteView.miniSiteTableView;
 }
 
-- (void)loadMiniSiteData {
-    self.miniSiteList = @[@1, @3, @4, @2, @5, @1, @5, @2, @2, @3, @4, @0].mutableCopy;
+- (void)loadMiniSiteData:(NSMutableDictionary *)data {
+    NSArray *miniSites = data[@"site"][@"mini_sites"];
+    
+    for (NSDictionary *miniSiteData in miniSites) {
+        WPMiniSite *miniSite = [[WPMiniSite alloc] init];
+        miniSite.miniSiteId = miniSiteData[@"id"];
+        miniSite.name = miniSiteData[@"name"];
+        miniSite.info = miniSiteData[@"info"];
+        miniSite.latitude = [miniSiteData[@"latitude"] floatValue];
+        miniSite.longitude = [miniSiteData[@"longitude"] floatValue];
+        miniSite.street = miniSiteData[@"street"];
+        miniSite.city = miniSiteData[@"city"];
+        miniSite.state = miniSiteData[@"state"];
+        miniSite.zipCode = miniSiteData[@"zip_code"];
+        miniSite.image = [UIImage imageNamed:@"SampleCoverPhoto2"];
+        miniSite.site = self.site;
+        
+        [self.miniSiteList addObject:miniSite];
+    }
+    [self.miniSiteTableView reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
