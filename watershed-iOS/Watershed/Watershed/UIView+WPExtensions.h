@@ -14,7 +14,5 @@
 
 + (NSNumber *)wp_stylePadding;
 + (NSNumber *)wp_styleMorePadding;
-+ (NSNumber *)wp_styleNegativePadding;
-+ (NSNumber *)wp_styleMoreNegativePadding;
 
 @end
