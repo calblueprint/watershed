@@ -23,8 +23,14 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def facebook_login
-    # Find or create a user with email + facebook_auth_token
-    # Return the user + email + devise auth_token
+    @user = User.where(email: params[:user][:email]).first_or_initialize
+    return successful_login(@user) if @user.valid_facebook_token?(params[:user][:facebook_auth_token])
+
+    if @user.create_with_facebook_info(params[:user])
+      successful_login(@user)
+    else
+      invalid_facebook_login_attempt
+    end
   end
 
   def update
@@ -39,6 +45,20 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def user_params
     params.require(:user).permit(:email, :name, :role, :facebook_auth_token)
+  end
+
+  def invalid_facebook_login_attempt
+    render json: { message: "There was a problem signing in with Facebook." }, status: 401
+  end
+
+  def successful_login(user)
+    sign_in(:user, user)
+    user.ensure_authentication_token
+
+    render json: {
+      authentication_token: @user.authentication_token,
+      email: @user.email,
+    }.merge(JSON.parse(user.to_json)), status: :ok
   end
 
 end
