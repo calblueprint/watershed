@@ -144,7 +144,7 @@
     [self addSubview:_appTitleLabel];
     
     _fbLoginView = [[FBLoginView alloc] initWithReadPermissions:@[@"public_profile", @"email"]];
-
+    _fbLoginView.delegate = self.parentViewController;
     [self addSubview:_fbLoginView];
     
     _emailButton = [[UIButton alloc] init];
