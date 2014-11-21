@@ -17,6 +17,8 @@
 }
 
 + (NSNumber *)wp_stylePadding { return @10; }
++ (NSNumber *)wp_styleMorePadding { return @15; }
 + (NSNumber *)wp_styleNegativePadding { return [[NSNumber alloc] initWithFloat: -1.0 * [[UIView wp_stylePadding] floatValue]]; }
++ (NSNumber *)wp_styleMoreNegativePadding { return [[NSNumber alloc] initWithFloat: -1.0 * [[UIView wp_styleMorePadding] floatValue]]; }
 
 @end
