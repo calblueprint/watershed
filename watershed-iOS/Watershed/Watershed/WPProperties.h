@@ -11,6 +11,8 @@
 //Margins
 static const CGFloat standardMargin = 10;
 
+static const CGFloat wideMargin = 15;
+
 static const CGFloat topMargin = 64;
 
 static const CGFloat wpCornerRadius = 3;
