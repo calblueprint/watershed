@@ -21,6 +21,6 @@
 @property (nonatomic) NSNumber *zipCode;
 @property (nonatomic) UIImage *image;
 @property (nonatomic) NSMutableArray *miniSites; //of WPMiniSite's
-@property (nonatomic) NSInteger miniSitesCount;
+@property (nonatomic) NSNumber *miniSitesCount;
 
 @end

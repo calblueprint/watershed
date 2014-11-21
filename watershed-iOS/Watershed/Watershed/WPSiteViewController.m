@@ -42,7 +42,7 @@ static NSString *cellIdentifier = @"MiniSiteCell";
     siteView.titleLabel.text = self.site.name;
     siteView.descriptionLabel.text = self.site.info;
     siteView.addressLabel.label.text = [NSString stringWithFormat:@"%@, %@, %@ %@", self.site.street, self.site.city, self.site.state, self.site.zipCode];
-    siteView.siteCountLabel.label.text = [[@(self.site.miniSitesCount) stringValue] stringByAppendingString:@" mini sites"];
+    siteView.siteCountLabel.label.text = [[self.site.miniSitesCount stringValue] stringByAppendingString:@" mini sites"];
     
     self.miniSiteTableView = siteView.miniSiteTableView;
 }

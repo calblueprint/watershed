@@ -57,7 +57,7 @@ static NSString *cellIdentifier = @"SiteCell";
         site.state = siteData[@"state"];
         site.zipCode = siteData[@"zip_code"];
         site.image = [UIImage imageNamed:@"SampleCoverPhoto"];
-        site.miniSitesCount = [siteData[@"mini_sites_count"] intValue];
+        site.miniSitesCount = siteData[@"mini_sites_count"];
         
         [self.sitesList addObject:site];
     }
@@ -91,7 +91,7 @@ static NSString *cellIdentifier = @"SiteCell";
         WPSite *site = self.sitesList[indexPath.row];
         cellView.nameLabel.text = site.name;
         cellView.photoView.image = site.image;
-        cellView.miniSiteLabel.text = [NSString stringWithFormat: @"%ld mini sites", site.miniSitesCount];
+        cellView.miniSiteLabel.text = [[site.miniSitesCount stringValue] stringByAppendingString:@" mini sites"];
         
         [self updatePhotoOffset:self.sitesTableView.contentOffset.y];
     }

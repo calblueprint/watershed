@@ -25,5 +25,6 @@
 @property (nonatomic) WPSite *site;
 @property (nonatomic) NSMutableArray *users; //of WPUser's
 @property (nonatomic) NSMutableArray *fieldReports;
+@property (nonatomic) NSNumber *fieldReportCount;
 
 @end
