@@ -143,7 +143,8 @@
     _appTitleLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:_appTitleLabel];
     
-    _fbLoginView = [[FBLoginView alloc] init];
+    _fbLoginView = [[FBLoginView alloc] initWithReadPermissions:@[@"public_profile", @"email"]];
+
     [self addSubview:_fbLoginView];
     
     _emailButton = [[UIButton alloc] init];
