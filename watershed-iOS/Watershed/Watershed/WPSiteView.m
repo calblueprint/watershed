@@ -64,7 +64,6 @@ static int COVER_PHOTO_TRANS = 0;
     
     _titleLabel = [({
         UILabel *titleLabel = [[UILabel alloc] init];
-        titleLabel.text = @"Watershed";
         titleLabel.font = [UIFont boldSystemFontOfSize:25.0];
         titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
         titleLabel.numberOfLines = 0;
@@ -73,7 +72,6 @@ static int COVER_PHOTO_TRANS = 0;
     
     _descriptionLabel = [({
         UILabel *descriptionLabel = [[UILabel alloc] init];
-        descriptionLabel.text = @"Cal Blueprint is a student-run UC Berkeley organization devoted to matching the skills of its members to our desire to see social good enacted in our community. Each semester, teams of 4-5 students work closely with a non-profit to bring technological solutions to the problems they face every day.";
         descriptionLabel.font = [UIFont systemFontOfSize:14.0];
         descriptionLabel.lineBreakMode = NSLineBreakByWordWrapping;
         descriptionLabel.numberOfLines = 0;
@@ -90,14 +88,14 @@ static int COVER_PHOTO_TRANS = 0;
     _addressLabel = [({
         FAKFontAwesome *mapMarkerIcon = [FAKFontAwesome mapMarkerIconWithSize:[WPLabeledIcon viewHeight]];
         UIImage *mapMarkerImage = [mapMarkerIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
-        WPLabeledIcon *addressLabel = [[WPLabeledIcon alloc] initWithText:@"123 Mark Miyashita Drive, Berkeley, CA 94720" icon:mapMarkerImage];
+        WPLabeledIcon *addressLabel = [[WPLabeledIcon alloc] initWithText:@"" icon:mapMarkerImage];
         addressLabel;
     }) wp_addToSuperview:self.tableHeaderView];
     
     _siteCountLabel = [({
         FAKFontAwesome *treeIcon = [FAKFontAwesome treeIconWithSize:[WPLabeledIcon viewHeight]];
         UIImage *treeImage = [treeIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
-        WPLabeledIcon *siteCountLabel = [[WPLabeledIcon alloc] initWithText:@"10 mini sites" icon:treeImage];
+        WPLabeledIcon *siteCountLabel = [[WPLabeledIcon alloc] initWithText:@"" icon:treeImage];
         siteCountLabel;
     }) wp_addToSuperview:self.tableHeaderView];
     
@@ -110,9 +108,7 @@ static int COVER_PHOTO_TRANS = 0;
     }) wp_addToSuperview:self.tableHeaderView];
     
     _coverPhotoView = [({
-        UIImage *coverPhoto = [UIImage imageNamed:@"SampleCoverPhoto"];
-        _originalCoverPhoto = coverPhoto;
-        UIImageView *coverPhotoView = [[UIImageView alloc] initWithImage:coverPhoto];
+        UIImageView *coverPhotoView = [[UIImageView alloc] init];
         [coverPhotoView setContentMode:UIViewContentModeScaleAspectFill];
         [coverPhotoView setClipsToBounds:YES];
         coverPhotoView;
