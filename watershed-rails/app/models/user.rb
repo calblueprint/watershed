@@ -73,4 +73,11 @@ class User < ActiveRecord::Base
       break token unless self.class.unscoped.where(authentication_token: token).first
     end
   end
+
+  #
+  # Facebook Authentication
+  #
+  def invalid_facebook_token?(token)
+    !facebook_auth_token.blank? && facebook_auth_token != token
+  end
 end
