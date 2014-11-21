@@ -198,9 +198,21 @@
         _isFirstTime = NO;
         
     } else if (_emailClicked) {
+        [self.signInEmailIconView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.appTitleLabel.mas_bottom).with.offset(15);
+            make.leading.equalTo(self.fbLoginView.mas_leading);
+            make.height.equalTo(@15);
+        }];
+        
+        [self.signInPasswordIconView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.emailLine.mas_bottom).with.offset(15);
+            make.leading.equalTo(self.fbLoginView.mas_leading);
+            make.height.equalTo(@15);
+        }];
+        
         [self.emailTextField mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.appTitleLabel.mas_bottom).with.offset(15);
-            make.centerX.equalTo(self.mas_centerX);
+            make.leading.equalTo(self.signInEmailIconView.mas_right).with.offset(5);
             make.height.equalTo(@15);
             make.width.equalTo(self.fbLoginView.mas_width);
         }];
@@ -209,12 +221,12 @@
             make.height.equalTo(@0.5);
             make.width.equalTo(self.fbLoginView.mas_width);
             make.bottom.equalTo(self.emailTextField.mas_bottom).with.offset(5);
-            make.left.equalTo(self.fbLoginView.mas_left);
+            make.left.equalTo(self.emailTextField.mas_left);
         }];
         
         [self.passwordTextField mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.emailLine.mas_bottom).with.offset(15);
-            make.centerX.equalTo(self.mas_centerX);
+            make.leading.equalTo(self.signInPasswordIconView.mas_right).with.offset(5);
             make.height.equalTo(@15);
             make.width.equalTo(self.fbLoginView.mas_width);
         }];
@@ -223,7 +235,7 @@
             make.height.equalTo(@0.5);
             make.width.equalTo(self.fbLoginView.mas_width);
             make.bottom.equalTo(self.passwordTextField.mas_bottom).with.offset(5);
-            make.left.equalTo(self.fbLoginView.mas_left);
+            make.left.equalTo(self.passwordTextField.mas_left);
         }];
         
         _emailClicked = NO;
