@@ -6,8 +6,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -31,6 +33,7 @@ import android.view.View;
 import android.content.Context;
 import android.content.Intent;
 import android.app.ActionBar.Tab;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 
@@ -61,7 +64,9 @@ public class MainActivity extends ActionBarActivity
     private FragmentManager fragmentManager;
 
     // Navigation Drawer
-    private ResideMenu resideMenu;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private ActionBarDrawerToggle mDrawerToggle;
     private ArrayList<ResideMenuItem> menuItems;
 
     // View Elements
@@ -236,18 +241,15 @@ public class MainActivity extends ActionBarActivity
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
+                //TODO
+                //resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void initializeNavigationDrawer() {
-        resideMenu = new ResideMenu(this);
-        resideMenu.attachToActivity(this);
-        resideMenu.setShadowVisible(false);
-        resideMenu.setDirectionDisable(ResideMenu.DIRECTION_RIGHT);
-        resideMenu.setDirectionDisable(ResideMenu.DIRECTION_LEFT);
-        resideMenu.setBackground(R.drawable.golden_gate_bridge);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
         String titles[] = { "Tasks", "Sites", "Activity Log", "Profile", "About", "Logout" };
         int icon[] = { R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo };
         menuItems = new ArrayList<ResideMenuItem>();
