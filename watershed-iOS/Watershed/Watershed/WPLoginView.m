@@ -66,16 +66,16 @@
     _passwordLine.backgroundColor = [UIColor whiteColor];
     [self addSubview:_passwordLine];
     
-    FAKIonIcons *emailIcon = [FAKIonIcons ios7LocationOutlineIconWithSize:15];
+    FAKIonIcons *emailIcon = [FAKIonIcons ios7EmailOutlineIconWithSize:20];
     [emailIcon addAttribute:NSForegroundColorAttributeName
-                     value:[UIColor lightGrayColor]];
-    _signInEmailIconView = [[UIImageView alloc] initWithImage:[emailIcon imageWithSize:CGSizeMake(15, 15)]];
+                     value:[UIColor whiteColor]];
+    _signInEmailIconView = [[UIImageView alloc] initWithImage:[emailIcon imageWithSize:CGSizeMake(20, 20)]];
     [self addSubview:_signInEmailIconView];
     
-    FAKIonIcons *lockIcon = [FAKIonIcons ios7LockedIconWithSize:15];
+    FAKIonIcons *lockIcon = [FAKIonIcons ios7LockedIconWithSize:20];
     [lockIcon addAttribute:NSForegroundColorAttributeName
-                      value:[UIColor lightGrayColor]];
-    _signInPasswordIconView = [[UIImageView alloc] initWithImage:[lockIcon imageWithSize:CGSizeMake(15, 15)]];
+                      value:[UIColor whiteColor]];
+    _signInPasswordIconView = [[UIImageView alloc] initWithImage:[lockIcon imageWithSize:CGSizeMake(20, 20)]];
     [self addSubview:_signInPasswordIconView];
     
     
@@ -178,8 +178,9 @@
         
         [self.fbLoginView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.emailButton.mas_bottom).with.offset(10);
-            make.centerX.equalTo(self.mas_centerX);
-            make.width.equalTo(@300);
+//            make.centerX.equalTo(self.mas_centerX);
+            make.leading.equalTo(@15);
+            make.trailing.equalTo(@-15);
             make.height.equalTo(@45);
         }];
         
@@ -201,13 +202,11 @@
         [self.signInEmailIconView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.appTitleLabel.mas_bottom).with.offset(15);
             make.leading.equalTo(self.fbLoginView.mas_leading);
-            make.height.equalTo(@15);
         }];
         
         [self.signInPasswordIconView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.emailLine.mas_bottom).with.offset(15);
             make.leading.equalTo(self.fbLoginView.mas_leading);
-            make.height.equalTo(@15);
         }];
         
         [self.emailTextField mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -219,7 +218,7 @@
         
         [self.emailLine mas_makeConstraints:^(MASConstraintMaker *make) {
             make.height.equalTo(@0.5);
-            make.width.equalTo(self.fbLoginView.mas_width);
+            make.trailing.equalTo(self.fbLoginView.mas_trailing);
             make.bottom.equalTo(self.emailTextField.mas_bottom).with.offset(5);
             make.left.equalTo(self.emailTextField.mas_left);
         }];
@@ -233,7 +232,7 @@
         
         [self.passwordLine mas_makeConstraints:^(MASConstraintMaker *make) {
             make.height.equalTo(@0.5);
-            make.width.equalTo(self.fbLoginView.mas_width);
+            make.trailing.equalTo(self.fbLoginView.mas_trailing);
             make.bottom.equalTo(self.passwordTextField.mas_bottom).with.offset(5);
             make.left.equalTo(self.passwordTextField.mas_left);
         }];
