@@ -78,11 +78,12 @@ static NSString * const SIGNIN_URL = @"users/sign_in";
 - (void)loginViewFetchedUserInfo:(FBLoginView *)loginView
                             user:(id<FBGraphUser>)user {
     WPUser *fbUser = [[WPUser alloc] initWithFacebookUser:user];
-    NSLog(@"%@", @"hey");
+    NSString *fbAccessToken = [FBSession activeSession].accessTokenData.accessToken;
+    
 }
 
 - (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
-    NSLog(@"%@", @"hi");
+    //do something with logged in user
 }
 
 // Handle possible errors that can occur during login
