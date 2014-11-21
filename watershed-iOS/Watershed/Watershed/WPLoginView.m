@@ -169,14 +169,14 @@
         
         [self.appTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(self.mas_centerX);
-            make.top.equalTo(self.appIconView.mas_bottom).with.offset(10);
+            make.top.equalTo(self.appIconView.mas_bottom).with.offset(standardMargin);
         }];
         
         [self.fbLoginView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.emailButton.mas_bottom).with.offset(10);
+            make.top.equalTo(self.emailButton.mas_bottom).with.offset(standardMargin);
 //            make.centerX.equalTo(self.mas_centerX);
-            make.leading.equalTo(@15);
-            make.trailing.equalTo(@-15);
+            make.leading.equalTo(@(wideMargin));
+            make.trailing.equalTo(@(-wideMargin));
             make.height.equalTo(@45);
         }];
         
@@ -196,17 +196,17 @@
         
     } else if (_emailClicked) {
         [self.signInEmailIconView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.appTitleLabel.mas_bottom).with.offset(15);
+            make.top.equalTo(self.appTitleLabel.mas_bottom).with.offset(wideMargin);
             make.leading.equalTo(self.fbLoginView.mas_leading);
         }];
         
         [self.signInPasswordIconView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.emailLine.mas_bottom).with.offset(15);
+            make.top.equalTo(self.emailLine.mas_bottom).with.offset(wideMargin);
             make.leading.equalTo(self.fbLoginView.mas_leading);
         }];
         
         [self.emailTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.appTitleLabel.mas_bottom).with.offset(15);
+            make.top.equalTo(self.appTitleLabel.mas_bottom).with.offset(wideMargin);
             make.leading.equalTo(self.signInEmailIconView.mas_right).with.offset(5);
             make.height.equalTo(@15);
             make.width.equalTo(self.fbLoginView.mas_width);
@@ -220,9 +220,9 @@
         }];
         
         [self.passwordTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.emailLine.mas_bottom).with.offset(15);
+            make.top.equalTo(self.emailLine.mas_bottom).with.offset(wideMargin);
             make.leading.equalTo(self.signInPasswordIconView.mas_right).with.offset(5);
-            make.height.equalTo(@15);
+            make.height.equalTo(@(wideMargin));
             make.width.equalTo(self.fbLoginView.mas_width);
         }];
         
