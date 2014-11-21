@@ -10,6 +10,7 @@
 #import "WPSiteView.h"
 #import "WPMiniSiteTableViewCell.h"
 #import "WPMiniSiteViewController.h"
+#import "WPNetworkingManager.h"
 
 @interface WPSiteViewController ()
 
@@ -24,10 +25,13 @@ static NSString *cellIdentifier = @"MiniSiteCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"Watershed";
+    self.navigationItem.title = self.site.name;
     [self loadMiniSiteData];
     self.miniSiteTableView.delegate = self;
     self.miniSiteTableView.dataSource = self;
+
+    [[WPNetworkingManager sharedManager] requestSiteWithSite:self.site parameters:[[NSMutableDictionary alloc] init] success:^(id response) {
+    }];
 }
 
 - (void)loadView {

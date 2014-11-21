@@ -61,8 +61,9 @@ static NSString * const SITES_URL = @"sites";
     }];
 }
 
-- (void)requestSiteWithParameters:(NSMutableDictionary *)parameters success:(void (^)(id response))success {
-    NSString *SITE_URL = [SITES_URL stringByAppendingString:parameters[@"id"]];
+- (void)requestSiteWithSite:(WPSite *)site parameters:(NSMutableDictionary *)parameters success:(void (^)(id response))success {
+    NSString *siteEndpoint = [@"/" stringByAppendingString:[site.siteId stringValue]];
+    NSString *SITE_URL = [SITES_URL stringByAppendingString:siteEndpoint];
     NSString *siteString = [WPNetworkingManager createURLWithEndpoint:SITE_URL];
     [self addAuthenticationParameters:parameters];
     
