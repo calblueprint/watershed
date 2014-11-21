@@ -12,6 +12,7 @@
 #  due_date    :datetime
 #  created_at  :datetime
 #  updated_at  :datetime
+#  urgent      :boolean          default(FALSE)
 #
 
 class Task < ActiveRecord::Base
