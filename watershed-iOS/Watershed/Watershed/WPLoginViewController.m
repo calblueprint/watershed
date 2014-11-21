@@ -12,6 +12,7 @@
 #import "WPAppDelegate.h"
 #import "UICKeyChainStore.h"
 #import "WPRootViewController.h"
+#import "WPUser.h"
 
 static NSString * const SIGNIN_URL = @"users/sign_in";
 
@@ -76,7 +77,7 @@ static NSString * const SIGNIN_URL = @"users/sign_in";
 
 - (void)loginViewFetchedUserInfo:(FBLoginView *)loginView
                             user:(id<FBGraphUser>)user {
-    
+    WPUser *fbUser = [[WPUser alloc] initWithFacebookUser:user];
     NSLog(@"%@", @"hey");
 }
 
