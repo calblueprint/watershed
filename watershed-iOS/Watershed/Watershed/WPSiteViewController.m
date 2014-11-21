@@ -94,6 +94,7 @@ static NSString *cellIdentifier = @"MiniSiteCell";
     
     if ([tableView isEqual:self.miniSiteTableView]) rowCount = self.miniSiteList.count;
     [(WPSiteView *)self.view updateTableViewHeight:self.miniSiteList.count];
+    NSLog(@"%d", (int)rowCount);
     return rowCount;
 }
 
@@ -111,7 +112,7 @@ static NSString *cellIdentifier = @"MiniSiteCell";
                                                       reuseIdentifier:cellIdentifier
                                                                  name:@"Yes"
                                                                 image:[UIImage imageNamed:@"SampleCoverPhoto2"]
-                                                               rating:[self.miniSiteList[indexPath.row] intValue]
+                                                               rating:3
                                                             taskCount:5
                                                      fieldReportCount:5];
         }
@@ -130,6 +131,13 @@ static NSString *cellIdentifier = @"MiniSiteCell";
 }
 
 #pragma mark - Lazy Instantiation
+
+- (NSMutableArray *)miniSiteList {
+    if (!_miniSiteList) {
+        _miniSiteList = [[NSMutableArray alloc] init];
+    }
+    return _miniSiteList;
+}
 
 - (WPSite *)site {
     if (!_site) {
