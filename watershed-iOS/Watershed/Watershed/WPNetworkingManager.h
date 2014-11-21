@@ -17,5 +17,6 @@
 + (WPNetworkingManager *)sharedManager;
 - (void)requestLoginWithParameters:(NSDictionary *)parameters success:(void (^)(id response))success;
 - (void)requestSitesListWithParameters:(NSMutableDictionary *)parameters success:(void (^)(id response))success;
+- (void)requestSiteWithParameters:(NSMutableDictionary *)parameters success:(void (^)(id response))success;
 
 @end

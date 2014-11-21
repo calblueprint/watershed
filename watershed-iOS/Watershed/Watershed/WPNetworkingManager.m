@@ -17,7 +17,7 @@
 
 static NSString * const BASE_URL = @"https://intense-reaches-1457.herokuapp.com/api/v1/";
 static NSString * const SIGNIN_URL = @"users/sign_in";
-static NSString * const SITES_LIST_URL = @"sites";
+static NSString * const SITES_URL = @"sites";
 
 #pragma mark - Singleton Methods
 
@@ -38,7 +38,7 @@ static NSString * const SITES_LIST_URL = @"sites";
     NSString *signInString = [WPNetworkingManager createURLWithEndpoint:SIGNIN_URL];
     
     [self POST:signInString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
+        NSLog(@"SIGN IN RESPONSE: %@", responseObject);
         success(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Incorrect email or password." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -48,14 +48,29 @@ static NSString * const SITES_LIST_URL = @"sites";
 }
 
 - (void)requestSitesListWithParameters:(NSMutableDictionary *)parameters success:(void (^)(id response))success {
-    NSString *sitesListString = [WPNetworkingManager createURLWithEndpoint:SITES_LIST_URL];
+    NSString *sitesString = [WPNetworkingManager createURLWithEndpoint:SITES_URL];
     [self addAuthenticationParameters:parameters];
     
-    [self GET:sitesListString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
+    [self GET:sitesString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"SITES LIST: %@", responseObject);
         success(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load sites." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+- (void)requestSiteWithParameters:(NSMutableDictionary *)parameters success:(void (^)(id response))success {
+    NSString *SITE_URL = [SITES_URL stringByAppendingString:parameters[@"id"]];
+    NSString *siteString = [WPNetworkingManager createURLWithEndpoint:SITE_URL];
+    [self addAuthenticationParameters:parameters];
+    
+    [self GET:siteString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"SINGLE SITE: %@", responseObject);
+        success(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load site." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [incorrect show];
         NSLog(@"Error: %@", error);
     }];
