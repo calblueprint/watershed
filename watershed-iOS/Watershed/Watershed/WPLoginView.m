@@ -15,6 +15,8 @@
 @property (nonatomic) FBLoginView *fbLoginView;
 @property (nonatomic) UIButton *emailButton;
 @property (nonatomic) UIImageView *emailIconView;
+@property (nonatomic) UIImageView *signInEmailIconView;
+@property (nonatomic) UIImageView *signInPasswordIconView;
 @property (nonatomic) UIImageView *appIconView;
 @property (nonatomic) UILabel *appTitleLabel;
 @property (nonatomic) MASConstraint *emailButtonTopConstraint;
@@ -64,6 +66,19 @@
     _passwordLine.backgroundColor = [UIColor whiteColor];
     [self addSubview:_passwordLine];
     
+    FAKIonIcons *emailIcon = [FAKIonIcons ios7LocationOutlineIconWithSize:15];
+    [emailIcon addAttribute:NSForegroundColorAttributeName
+                     value:[UIColor lightGrayColor]];
+    _signInEmailIconView = [[UIImageView alloc] initWithImage:[emailIcon imageWithSize:CGSizeMake(15, 15)]];
+    [self addSubview:_signInEmailIconView];
+    
+    FAKIonIcons *lockIcon = [FAKIonIcons ios7LockedIconWithSize:15];
+    [lockIcon addAttribute:NSForegroundColorAttributeName
+                      value:[UIColor lightGrayColor]];
+    _signInPasswordIconView = [[UIImageView alloc] initWithImage:[lockIcon imageWithSize:CGSizeMake(15, 15)]];
+    [self addSubview:_signInPasswordIconView];
+    
+    
     self.emailButtonTopConstraint.offset = 90;
     [self.emailButton setNeedsUpdateConstraints];
 
@@ -75,11 +90,7 @@
             _emailTextField = [[UITextField alloc] init];
             _emailTextField.font = [UIFont fontWithName:@"Helvetica" size:14];
             _emailTextField.textColor = [UIColor whiteColor];
-            NSAttributedString *mailIcon = [[FAKIonIcons ios7EmailOutlineIconWithSize:15] attributedString];
-            NSAttributedString *email =[[NSAttributedString alloc] initWithString:@"   Email Address"];
-            NSMutableAttributedString *placeholder = [[NSMutableAttributedString alloc] initWithAttributedString:mailIcon];
-            [placeholder appendAttributedString:email];
-            _emailTextField.attributedPlaceholder = placeholder;
+            _emailTextField.placeholder = @"Email Address";
             _emailTextField.delegate = self;
             [_emailTextField setReturnKeyType:UIReturnKeyNext];
             [_emailTextField addTarget:self
@@ -91,11 +102,7 @@
             _passwordTextField = [[UITextField alloc] init];
             _passwordTextField.font = [UIFont fontWithName:@"Helvetica" size:14];
             _passwordTextField.textColor = [UIColor whiteColor];
-            NSAttributedString *lockIcon = [[FAKIonIcons ios7LockedIconWithSize:15] attributedString];
-            NSAttributedString *pw =[[NSAttributedString alloc] initWithString:@"   Password"];
-            NSMutableAttributedString *passwordPlaceholder = [[NSMutableAttributedString alloc] initWithAttributedString:lockIcon];
-            [passwordPlaceholder appendAttributedString:pw];
-            _passwordTextField.attributedPlaceholder = passwordPlaceholder;
+            _passwordTextField.placeholder = @"Password";
             _passwordTextField.secureTextEntry = YES;
             _passwordTextField.delegate = self;
             [_passwordTextField setReturnKeyType:UIReturnKeyGo];
