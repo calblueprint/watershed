@@ -22,7 +22,9 @@ class Api::V1::UsersController < Api::V1::BaseController
     end
   end
 
-  def facebook_sign_up
+  def facebook_login
+    # Find or create a user with email + facebook_auth_token
+    # Return the user + email + devise auth_token
   end
 
   def update
