@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <Facebook-iOS-SDK/FacebookSDK/FBLoginView.h>
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface WPLoginViewController : UIViewController <FBLoginViewDelegate>
 

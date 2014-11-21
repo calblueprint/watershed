@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "WPView.h"
-#import <FacebookSDK/FacebookSDK.h>
 
 @class WPLoginViewController;
 

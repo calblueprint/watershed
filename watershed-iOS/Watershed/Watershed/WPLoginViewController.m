@@ -78,11 +78,11 @@ static NSString * const SIGNIN_URL = @"users/sign_in";
 - (void)loginViewFetchedUserInfo:(FBLoginView *)loginView
                             user:(id<FBGraphUser>)user {
     
-    //blah
+    NSLog(@"%@", @"hey");
 }
 
 - (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
-    //blah
+    NSLog(@"%@", @"hi");
 }
 
 // Handle possible errors that can occur during login
