@@ -25,6 +25,9 @@ public class User {
     }
 
     public User() {
+        mName = "Mark Millman";
+        mEmail = "mark@mark.com";
+        mRole = "Manager";
     }
 
     public String getName() { return mName; }
@@ -37,4 +40,5 @@ public class User {
     public void setRole(String role) { mRole = role;}
     public void setEmail(String email) { mEmail = email;}
     public void setFieldReports(ArrayList<FieldReport> fieldReports) { mfieldReports = fieldReports;}
+
 }

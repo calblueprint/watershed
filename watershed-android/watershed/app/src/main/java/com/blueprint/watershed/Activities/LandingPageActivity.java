@@ -61,6 +61,7 @@ public class LandingPageActivity extends Activity {
 
         // NOTE(mark): Change to !hasAuthCredentials if you want the main activity to show.
         if (hasAuthCredentials(preferences)) {
+            // Ideally we could request the user object from the server again here and then pass them to the main activity.
             final Intent intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             // intent.putExtra("auth_token", preferences.getString("auth_token", null));
@@ -116,14 +117,11 @@ public class LandingPageActivity extends Activity {
                         SharedPreferences.Editor editor = preferences.edit();
 
                         try {
-
-                            /* This will be broken into a user object and auth info later.
-                            JSONObject auth_info = jsonObject.getJSONObject("auth_info");
-                            */
                             String token = jsonObject.getString("authentication_token");
                             String email = jsonObject.getString("email");
                             String userJson = jsonObject.getString("user");
                             try {
+                                //Does it make sense to get the user here? Or should we make an extra request
                                 ObjectMapper mapper = mloginNetworkManager.getObjectMapper();
                                 User user = mapper.readValue(userJson, new TypeReference<User>() {});
                             }

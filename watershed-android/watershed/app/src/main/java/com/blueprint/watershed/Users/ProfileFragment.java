@@ -1,4 +1,4 @@
-package com.blueprint.watershed;
+package com.blueprint.watershed.Users;
 
 import android.app.Activity;
 import android.net.Uri;
@@ -7,13 +7,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import com.blueprint.watershed.Users.User;
+import com.blueprint.watershed.R;
 
 public class ProfileFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
+    private User mUser;
 
-    public static ProfileFragment newInstance(User user) {
+    public static ProfileFragment newInstance() {
         ProfileFragment fragment = new ProfileFragment();
         return fragment;
     }
@@ -24,6 +26,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mUser = new User();
         if (getArguments() != null) {
         }
     }
@@ -32,7 +35,11 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        ((TextView)view.findViewById(R.id.profile_name)).setText(mUser.getName());
+        ((TextView)view.findViewById(R.id.profile_email)).setText(mUser.getEmail());
+        ((TextView)view.findViewById(R.id.profile_role)).setText(mUser.getRole());
+        return view;
     }
 
     @Override

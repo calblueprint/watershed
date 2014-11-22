@@ -25,7 +25,7 @@ import com.blueprint.watershed.FieldReports.FieldReportFragment;
 import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
-import com.blueprint.watershed.ProfileFragment;
+import com.blueprint.watershed.Users.ProfileFragment;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Utilities.ResideMenu;
