@@ -184,7 +184,7 @@ public class MainActivity extends ActionBarActivity
         });
     }
 
-    public void updateTitle(Fragment f){
+    public void updateTitle(Fragment f) {
         if (f instanceof TaskFragment){
             setTitle("Tasks");
             displayTaskView(true);
@@ -197,7 +197,7 @@ public class MainActivity extends ActionBarActivity
 
     }
 
-    public void displayTaskView(boolean toggle){
+    public void displayTaskView(boolean toggle) {
         if (toggle){
             actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
             viewPager.setVisibility(View.VISIBLE);
@@ -239,11 +239,11 @@ public class MainActivity extends ActionBarActivity
         ft.commit();
     }
 
-    public void onFragmentInteraction(String id){
+    public void onFragmentInteraction(String id) {
         // Deals with fragment interactions
     }
 
-    public void onFragmentInteraction(Uri uri){
+    public void onFragmentInteraction(Uri uri) {
     }
 
 
@@ -266,8 +266,7 @@ public class MainActivity extends ActionBarActivity
         switch (item.getItemId()) {
             case android.R.id.home:
                 Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
-                Log.e("fudge", f.toString());
-                if (!(f instanceof TaskFragment) && !(f instanceof SiteListFragment)){
+                if (!(f instanceof TaskFragment) && !(f instanceof SiteListFragment)) {
                     getSupportFragmentManager().popBackStack();
                     return false;
                 }
@@ -291,8 +290,6 @@ public class MainActivity extends ActionBarActivity
 
         mDrawerList.setAdapter(new ArrayAdapter<String>(this,
                 R.layout.menu_list_item, R.id.menu_title, titles));
-
-        //int icon[] = { R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo };
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
                 R.drawable.ic_drawer, R.string.draw_open_close , R.string.draw_open_close) {
@@ -430,8 +427,6 @@ public class MainActivity extends ActionBarActivity
 
         FieldReport fieldReport = new FieldReport(fieldReportDescription, fieldReportHealthInt, urgency, fieldReportPhoto, new User(), new MiniSite());
 
-        // Go back to Task to mark complete instead of returning to Task List.
-        // How to keep state of which task made the call to create field report?
         TaskFragment taskFragment = TaskFragment.newInstance(0);
         replaceFragment(taskFragment);
     }
