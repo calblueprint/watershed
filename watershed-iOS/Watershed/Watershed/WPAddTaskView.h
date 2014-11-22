@@ -11,4 +11,6 @@
 
 @interface WPAddTaskView : WPView
 
+@property (nonatomic) UITableView *taskFormTableView;
+
 @end
