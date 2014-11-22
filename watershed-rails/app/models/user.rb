@@ -19,6 +19,7 @@
 #  role                   :integer          default(0)
 #  authentication_token   :string(255)
 #  facebook_auth_token    :string(255)
+#  facebook_id            :string(255)
 #
 
 class User < ActiveRecord::Base
@@ -72,5 +73,20 @@ class User < ActiveRecord::Base
       token = Devise.friendly_token
       break token unless self.class.unscoped.where(authentication_token: token).first
     end
+  end
+
+  #
+  # Facebook Authentication
+  #
+  def valid_facebook_token?(token)
+    !facebook_auth_token.blank? && facebook_auth_token == token
+  end
+
+  def create_with_facebook_info(facebook_params)
+    self.name = facebook_params[:name]
+    self.password = Devise.friendly_token
+
+    # TODO(mark): More configuration with the facebook params (photo, etc)
+    self.save
   end
 end

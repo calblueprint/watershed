@@ -19,6 +19,7 @@
 #  role                   :integer          default(0)
 #  authentication_token   :string(255)
 #  facebook_auth_token    :string(255)
+#  facebook_id            :string(255)
 #
 
 # Read about factories at https://github.com/thoughtbot/factory_girl
