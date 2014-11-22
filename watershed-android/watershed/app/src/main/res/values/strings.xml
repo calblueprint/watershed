@@ -9,6 +9,7 @@
     <!-- Navigation Bar -->
     <string name="title_activity_landing_page">Watershed</string>
     <string name="title_image_content_description">Watershed Image</string>
+    <string name="draw_open_close">Watershed Menu</string>
 
     <!-- Menu -->
     <string name="action_settings">Settings</string>
