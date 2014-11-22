@@ -15,6 +15,7 @@
 #import "WPUser.h"
 
 static NSString * const SIGNIN_URL = @"users/sign_in";
+static NSString * const FACEBOOK_LOGIN_URL = @"users/sign_in/facebook";
 
 @interface WPLoginViewController ()
 @property (nonatomic) WPLoginView *view;
@@ -89,8 +90,8 @@ static NSString * const SIGNIN_URL = @"users/sign_in";
                                      @"facebook_id": fbUser.profilePictureId,
                                      }};
     
-    NSString *loginString = [manager.baseURL.absoluteString stringByAppendingString:SIGNIN_URL];
-    [manager POST:loginString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSString *facebookLoginURL = [manager.baseURL.absoluteString stringByAppendingString:FACEBOOK_LOGIN_URL];
+    [manager POST:facebookLoginURL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
         [self parseResponse:responseObject];
         [self pushTabBarController];
