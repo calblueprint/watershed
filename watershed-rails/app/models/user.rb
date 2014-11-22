@@ -84,6 +84,7 @@ class User < ActiveRecord::Base
 
   def create_with_facebook_info(facebook_params)
     self.name = facebook_params[:name]
+    self.facebook_id = facebook_params[:facebook_id]
     self.password = Devise.friendly_token
 
     # TODO(mark): More configuration with the facebook params (photo, etc)
