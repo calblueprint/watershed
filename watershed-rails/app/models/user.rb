@@ -16,8 +16,9 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #  name                   :string(255)
-#  role                   :integer
+#  role                   :integer          default(0)
 #  authentication_token   :string(255)
+#  facebook_auth_token    :string(255)
 #
 
 class User < ActiveRecord::Base
@@ -26,7 +27,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  enum role: [ :manager, :employee, :community_member ]
+  enum role: [ :community_member, :employee, :manager ]
 
   has_many :field_reports
   has_many :assigned_tasks, class_name: "Task", foreign_key: "assigner_id"

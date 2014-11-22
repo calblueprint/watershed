@@ -16,8 +16,9 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #  name                   :string(255)
-#  role                   :integer
+#  role                   :integer          default(0)
 #  authentication_token   :string(255)
+#  facebook_auth_token    :string(255)
 #
 
 # Read about factories at https://github.com/thoughtbot/factory_girl
