@@ -1,6 +1,9 @@
 package com.blueprint.watershed.MiniSites;
 import com.blueprint.watershed.APIObject;
+import com.blueprint.watershed.FieldReports.FieldReport;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.util.ArrayList;
 
 /**
  * Created by Mark Miyashita on 11/16/14.
@@ -18,12 +21,24 @@ public class MiniSite implements APIObject {
     private String mLatitude;
     private String mLongitude;
 
+    private ArrayList<FieldReport> mFieldReports;
+
     public MiniSite() {
     }
 
     public String toString() {
         return "MiniSite: " + getName();
     }
+
+    // Relationships
+    public ArrayList<FieldReport> getFieldReports() {
+        if (mFieldReports == null) {
+            mFieldReports = new ArrayList<FieldReport>();
+        }
+        return mFieldReports;
+    }
+
+    public FieldReport getFieldReport(int position) { return mFieldReports.get(position); }
 
     // Getters
     public Integer getId() { return mId; }

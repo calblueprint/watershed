@@ -15,3 +15,5 @@
 #import "FontAwesomeKit/FontAwesomeKit.h"
 #import "Masonry.h"
 #import "WPProperties.h"
+#import "WPView.h"
+#import "WPViewController.h"

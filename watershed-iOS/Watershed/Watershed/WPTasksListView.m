@@ -51,7 +51,7 @@
 
 - (void)createSubviews {
     _segmentedTasksTabBarView = [({
-        UIView *view = [[UIView alloc] init];
+        WPView *view = [[WPView alloc] init];
         view;
     }) wp_addToSuperview:self];
     

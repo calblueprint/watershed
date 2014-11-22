@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WPView.h"
+#import "UIExtensions.h"
 
 @interface WPTasksTableViewCell : UITableViewCell
 

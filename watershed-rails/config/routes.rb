@@ -15,9 +15,9 @@ Rails.application.routes.draw do
         end
       end
 
+      resources :mini_sites, only: [:index, :show, :create, :update]
       resources :tasks, only: [:index, :show, :create, :update]
       resources :field_reports, only: [:index, :show, :create, :update]
-
     end
   end
 

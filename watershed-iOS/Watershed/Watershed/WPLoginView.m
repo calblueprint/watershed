@@ -15,6 +15,8 @@
 @property (nonatomic) FBLoginView *fbLoginView;
 @property (nonatomic) UIButton *emailButton;
 @property (nonatomic) UIImageView *emailIconView;
+@property (nonatomic) UIImageView *signInEmailIconView;
+@property (nonatomic) UIImageView *signInPasswordIconView;
 @property (nonatomic) UIImageView *appIconView;
 @property (nonatomic) UILabel *appTitleLabel;
 @property (nonatomic) MASConstraint *emailButtonTopConstraint;
@@ -63,7 +65,7 @@
     _passwordLine = [[UIView alloc] init];
     _passwordLine.backgroundColor = [UIColor whiteColor];
     [self addSubview:_passwordLine];
-    
+ 
     self.emailButtonTopConstraint.offset = 90;
     [self.emailButton setNeedsUpdateConstraints];
 
@@ -72,38 +74,39 @@
         [self.emailButton layoutIfNeeded];
     } completion:^(BOOL finished) {
         if (!_emailClicked) {
+            FAKIonIcons *emailIcon = [FAKIonIcons ios7EmailOutlineIconWithSize:20];
+            [emailIcon addAttribute:NSForegroundColorAttributeName
+                              value:[UIColor whiteColor]];
+            _signInEmailIconView = [[UIImageView alloc] initWithImage:[emailIcon imageWithSize:CGSizeMake(20, 20)]];
+            [self addSubview:_signInEmailIconView];
+            
+            FAKIonIcons *lockIcon = [FAKIonIcons ios7LockedIconWithSize:20];
+            [lockIcon addAttribute:NSForegroundColorAttributeName
+                             value:[UIColor whiteColor]];
+            _signInPasswordIconView = [[UIImageView alloc] initWithImage:[lockIcon imageWithSize:CGSizeMake(20, 20)]];
+            [self addSubview:_signInPasswordIconView];
+            
             _emailTextField = [[UITextField alloc] init];
             _emailTextField.font = [UIFont fontWithName:@"Helvetica" size:14];
             _emailTextField.textColor = [UIColor whiteColor];
-            NSAttributedString *mailIcon = [[FAKIonIcons ios7EmailOutlineIconWithSize:15] attributedString];
-            NSAttributedString *email =[[NSAttributedString alloc] initWithString:@"   Email Address"];
-            NSMutableAttributedString *placeholder = [[NSMutableAttributedString alloc] initWithAttributedString:mailIcon];
-            [placeholder appendAttributedString:email];
-            _emailTextField.attributedPlaceholder = placeholder;
+            _emailTextField.placeholder = @"Email Address";
             _emailTextField.delegate = self;
             [_emailTextField setReturnKeyType:UIReturnKeyNext];
             [_emailTextField addTarget:self
                           action:@selector(emailToPassword)
                 forControlEvents:UIControlEventEditingDidEndOnExit];
-            
             [self addSubview:_emailTextField];
             
             _passwordTextField = [[UITextField alloc] init];
             _passwordTextField.font = [UIFont fontWithName:@"Helvetica" size:14];
             _passwordTextField.textColor = [UIColor whiteColor];
-            NSAttributedString *lockIcon = [[FAKIonIcons ios7LockedIconWithSize:15] attributedString];
-            NSAttributedString *pw =[[NSAttributedString alloc] initWithString:@"   Password"];
-            NSMutableAttributedString *passwordPlaceholder = [[NSMutableAttributedString alloc] initWithAttributedString:lockIcon];
-            [passwordPlaceholder appendAttributedString:pw];
-            _passwordTextField.attributedPlaceholder = passwordPlaceholder;
+            _passwordTextField.placeholder = @"Password";
             _passwordTextField.secureTextEntry = YES;
             _passwordTextField.delegate = self;
             [_passwordTextField setReturnKeyType:UIReturnKeyGo];
             [_passwordTextField addTarget:self
                                 action:@selector(passwordToDone)
                       forControlEvents:UIControlEventEditingDidEndOnExit];
-
-
             [self addSubview:_passwordTextField];
         }
         _emailClicked = YES;
@@ -166,13 +169,14 @@
         
         [self.appTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(self.mas_centerX);
-            make.top.equalTo(self.appIconView.mas_bottom).with.offset(10);
+            make.top.equalTo(self.appIconView.mas_bottom).with.offset(standardMargin);
         }];
         
         [self.fbLoginView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.emailButton.mas_bottom).with.offset(10);
-            make.centerX.equalTo(self.mas_centerX);
-            make.width.equalTo(@300);
+            make.top.equalTo(self.emailButton.mas_bottom).with.offset(standardMargin);
+//            make.centerX.equalTo(self.mas_centerX);
+            make.leading.equalTo(@(wideMargin));
+            make.trailing.equalTo(@(-wideMargin));
             make.height.equalTo(@45);
         }];
         
@@ -191,35 +195,43 @@
         _isFirstTime = NO;
         
     } else if (_emailClicked) {
+        [self.signInEmailIconView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.appTitleLabel.mas_bottom).with.offset(wideMargin);
+            make.leading.equalTo(self.fbLoginView.mas_leading);
+        }];
+        
+        [self.signInPasswordIconView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.emailLine.mas_bottom).with.offset(wideMargin);
+            make.leading.equalTo(self.fbLoginView.mas_leading);
+        }];
+        
         [self.emailTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.appTitleLabel.mas_bottom).with.offset(15);
-            make.centerX.equalTo(self.mas_centerX);
+            make.top.equalTo(self.appTitleLabel.mas_bottom).with.offset(wideMargin);
+            make.leading.equalTo(self.signInEmailIconView.mas_right).with.offset(5);
             make.height.equalTo(@15);
             make.width.equalTo(self.fbLoginView.mas_width);
         }];
         
         [self.emailLine mas_makeConstraints:^(MASConstraintMaker *make) {
             make.height.equalTo(@0.5);
-            make.width.equalTo(self.fbLoginView.mas_width);
+            make.trailing.equalTo(self.fbLoginView.mas_trailing);
             make.bottom.equalTo(self.emailTextField.mas_bottom).with.offset(5);
-            make.left.equalTo(self.fbLoginView.mas_left);
+            make.left.equalTo(self.emailTextField.mas_left);
         }];
         
         [self.passwordTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.emailLine.mas_bottom).with.offset(15);
-            make.centerX.equalTo(self.mas_centerX);
-            make.height.equalTo(@15);
+            make.top.equalTo(self.emailLine.mas_bottom).with.offset(wideMargin);
+            make.leading.equalTo(self.signInPasswordIconView.mas_right).with.offset(5);
+            make.height.equalTo(@(wideMargin));
             make.width.equalTo(self.fbLoginView.mas_width);
         }];
         
         [self.passwordLine mas_makeConstraints:^(MASConstraintMaker *make) {
             make.height.equalTo(@0.5);
-            make.width.equalTo(self.fbLoginView.mas_width);
+            make.trailing.equalTo(self.fbLoginView.mas_trailing);
             make.bottom.equalTo(self.passwordTextField.mas_bottom).with.offset(5);
-            make.left.equalTo(self.fbLoginView.mas_left);
+            make.left.equalTo(self.passwordTextField.mas_left);
         }];
-        
-        _emailClicked = NO;
         
     }
 

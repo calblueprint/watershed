@@ -225,6 +225,7 @@ const static float BORDER_WIDTH = 6.0f;
     self.navbarOverlay.alpha = navbarAlpha;
 }
 
+
 #pragma mark - UIView Modifications
 
 - (void)showBubbles {

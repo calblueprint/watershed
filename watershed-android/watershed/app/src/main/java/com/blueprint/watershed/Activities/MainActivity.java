@@ -3,11 +3,15 @@ package com.blueprint.watershed.Activities;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -19,11 +23,13 @@ import android.view.MenuItem;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 
+import com.blueprint.watershed.FieldReports.FieldReport;
+import com.blueprint.watershed.FieldReports.FieldReportFragment;
+import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.R;
-import com.blueprint.watershed.Utilities.ResideMenu;
-import com.blueprint.watershed.Utilities.ResideMenuItem;
+import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Sites.SiteFragment;
 import com.blueprint.watershed.Sites.SiteListFragment;
 import com.blueprint.watershed.Utilities.TabsPagerAdapter;
@@ -39,7 +45,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Switch;
+import android.widget.Toast;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends ActionBarActivity
                           implements ActionBar.TabListener,
@@ -49,7 +66,8 @@ public class MainActivity extends ActionBarActivity
                                      TaskDetailFragment.OnFragmentInteractionListener,
                                      SiteListFragment.OnFragmentInteractionListener,
                                      SiteFragment.OnFragmentInteractionListener,
-                                     MiniSiteFragment.OnFragmentInteractionListener {
+                                     MiniSiteFragment.OnFragmentInteractionListener,
+                                     FieldReportFragment.OnFragmentInteractionListener {
 
     // Constants
     public  static final String PREFERENCES = "LOGIN_PREFERENCES";
@@ -91,6 +109,9 @@ public class MainActivity extends ActionBarActivity
 
     // Networking
     private NetworkManager mNetworkManager;
+
+    // Camera Stuff
+    private static final int CAMERA_REQUEST = 1337;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -223,8 +244,8 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void onFragmentInteraction(Uri uri){
-        // Deals with fragment interactions
     }
+
 
     @Override
     public void onTabReselected(Tab tab, FragmentTransaction ft) {
@@ -243,10 +264,13 @@ public class MainActivity extends ActionBarActivity
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                //TODO
-                //resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
+                Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
+                Log.e("fudge", f.toString());
+                if (!(f instanceof TaskFragment) && !(f instanceof SiteListFragment)){
+                    getSupportFragmentManager().popBackStack();
+                    return false;
+                }
         }
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
@@ -266,7 +290,7 @@ public class MainActivity extends ActionBarActivity
         mDrawerList.setOnItemClickListener(this);
 
         mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.residemenu_item, R.id.tv_title, titles));
+                R.layout.menu_list_item, R.id.menu_title, titles));
 
         //int icon[] = { R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo };
 
@@ -362,5 +386,80 @@ public class MainActivity extends ActionBarActivity
     public void setNetworkManager(NetworkManager networkManager) { mNetworkManager = networkManager; }
 
 
+    // Button Events
 
+    public void FieldReportButtonPressed(View view){
+        FieldReportFragment fieldFragment = FieldReportFragment.newInstance();
+        replaceFragment(fieldFragment);
+    }
+
+    public void HandleTakePhotoButton(View view){
+         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+             File photoFile = null;
+             try {
+                 photoFile = createImageFile();
+             } catch (IOException ex) {
+                Log.e("Field Report Photo", "Error");
+             }
+             if (photoFile != null) {
+                 //takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                         //Uri.fromFile(photoFile));
+                 startActivityForResult(takePictureIntent, CAMERA_REQUEST);
+             }
+        }
+    }
+
+    public void createFieldReport(View fieldReportButton){
+        String fieldReportDescription = ((EditText)findViewById(R.id.field_report_description)).getText().toString();
+
+        RadioGroup healthGroup = (RadioGroup) findViewById(R.id.health_group);
+        Integer selectId = healthGroup.getCheckedRadioButtonId();
+        if (selectId == -1){
+            Toast toast = Toast.makeText(getApplicationContext(), "Please select a health rating", Toast.LENGTH_SHORT);
+            toast.show();
+            return;
+        }
+        String fieldReportHealth = ((RadioButton) findViewById(selectId)).getText().toString();
+        Integer fieldReportHealthInt = Integer.parseInt(fieldReportHealth);
+
+        ImageView image = (ImageView) findViewById(R.id.field_report_image);
+        Bitmap fieldReportPhoto = ((BitmapDrawable)image.getDrawable()).getBitmap();
+
+        Boolean urgency = ((Switch)findViewById(R.id.field_report_urgent)).isChecked();
+
+        FieldReport fieldReport = new FieldReport(fieldReportDescription, fieldReportHealthInt, urgency, fieldReportPhoto, new User(), new MiniSite());
+
+        // Go back to Task to mark complete instead of returning to Task List.
+        // How to keep state of which task made the call to create field report?
+        TaskFragment taskFragment = TaskFragment.newInstance(0);
+        replaceFragment(taskFragment);
+    }
+
+
+    // Image Handling
+
+    String mCurrentPhotoPath;
+
+    private File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,
+                ".jpg",
+                storageDir
+        );
+        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+        return image;
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        ImageView fieldReportImageView = (ImageView)findViewById(R.id.field_report_image);
+        if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            fieldReportImageView.setImageBitmap(photo);
+        }
+    }
 }
