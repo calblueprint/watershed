@@ -20,6 +20,8 @@
 		064463031A073A6100C6FE8B /* WPUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 064463021A073A6100C6FE8B /* WPUser.m */; };
 		064463041A073E3700C6FE8B /* WPTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA24044719DCF35300E9DB2F /* WPTabBarController.m */; };
 		064463051A073E3700C6FE8B /* WPTasksTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A039BD19EB973800EB83CC /* WPTasksTableViewCell.m */; };
+		0653A8EE1A206CCA0022462B /* WPAddTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0653A8ED1A206CCA0022462B /* WPAddTaskViewController.m */; };
+		0653A8F11A206CE50022462B /* WPAddTaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0653A8F01A206CE50022462B /* WPAddTaskView.m */; };
 		068AB39E1A1B4155009BB746 /* WPAddFieldReportView.m in Sources */ = {isa = PBXBuildFile; fileRef = 068AB39B1A1B4155009BB746 /* WPAddFieldReportView.m */; };
 		068AB39F1A1B4155009BB746 /* WPAddFieldReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 068AB39D1A1B4155009BB746 /* WPAddFieldReportViewController.m */; };
 		06A8139519D911C900E3EB05 /* WPTasksListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A8139419D911C900E3EB05 /* WPTasksListViewController.m */; };
@@ -102,6 +104,10 @@
 		064463001A073A5100C6FE8B /* UIExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIExtensions.h; sourceTree = "<group>"; };
 		064463011A073A6100C6FE8B /* WPUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPUser.h; sourceTree = "<group>"; };
 		064463021A073A6100C6FE8B /* WPUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPUser.m; sourceTree = "<group>"; };
+		0653A8EC1A206CCA0022462B /* WPAddTaskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPAddTaskViewController.h; sourceTree = "<group>"; };
+		0653A8ED1A206CCA0022462B /* WPAddTaskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPAddTaskViewController.m; sourceTree = "<group>"; };
+		0653A8EF1A206CE50022462B /* WPAddTaskView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPAddTaskView.h; sourceTree = "<group>"; };
+		0653A8F01A206CE50022462B /* WPAddTaskView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPAddTaskView.m; sourceTree = "<group>"; };
 		068AB39A1A1B4155009BB746 /* WPAddFieldReportView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPAddFieldReportView.h; sourceTree = "<group>"; };
 		068AB39B1A1B4155009BB746 /* WPAddFieldReportView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPAddFieldReportView.m; sourceTree = "<group>"; };
 		068AB39C1A1B4155009BB746 /* WPAddFieldReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPAddFieldReportViewController.h; sourceTree = "<group>"; };
@@ -327,6 +333,10 @@
 				06A8139719D91A7500E3EB05 /* WPTasksListView.m */,
 				06A039BC19EB973800EB83CC /* WPTasksTableViewCell.h */,
 				06A039BD19EB973800EB83CC /* WPTasksTableViewCell.m */,
+				0653A8EC1A206CCA0022462B /* WPAddTaskViewController.h */,
+				0653A8ED1A206CCA0022462B /* WPAddTaskViewController.m */,
+				0653A8EF1A206CE50022462B /* WPAddTaskView.h */,
+				0653A8F01A206CE50022462B /* WPAddTaskView.m */,
 			);
 			name = Tasks;
 			sourceTree = "<group>";
@@ -691,10 +701,12 @@
 				064462FC1A073A3000C6FE8B /* WPProfileTableViewCell.m in Sources */,
 				27B9CF821A19AD7F00CEB5A8 /* WPNetworkingManager.m in Sources */,
 				BA4F8DDC19C7739300C816E3 /* main.m in Sources */,
+				0653A8F11A206CE50022462B /* WPAddTaskView.m in Sources */,
 				064462EC1A0739A500C6FE8B /* WPAllTasksTableViewController.m in Sources */,
 				2749D18F1A0622A800D0ECA2 /* WPMiniSiteViewController.m in Sources */,
 				2766EC9819FDF2730062D358 /* WPSitesTableView.m in Sources */,
 				2766EC9519FDF2440062D358 /* WPSiteTableViewCell.m in Sources */,
+				0653A8EE1A206CCA0022462B /* WPAddTaskViewController.m in Sources */,
 				064462F71A073A0F00C6FE8B /* WPSettingsTableViewController.m in Sources */,
 				BABC5E1C1A0B2805002825E4 /* WPEditViewController.m in Sources */,
 			);
