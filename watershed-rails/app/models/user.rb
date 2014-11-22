@@ -86,5 +86,6 @@ class User < ActiveRecord::Base
     self.password = Devise.friendly_token
 
     # TODO(mark): More configuration with the facebook params (photo, etc)
+    self.save
   end
 end
