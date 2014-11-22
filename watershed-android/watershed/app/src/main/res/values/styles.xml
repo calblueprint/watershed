@@ -5,7 +5,36 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
-    <style name="AppThemeTranslucent" parent="AppTheme">
+    <style name="AppThemeTranslucent" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
     </style>
+
+    <style name="WsAppTheme" parent="Theme.AppCompat.Light">
+        <item name="android:actionBarStyle">@style/WsActionBar</item>
+        <item name="android:actionBarTabTextStyle">@style/WsActionBarTabText</item>
+        <item name="android:actionBarTabBarStyle">@style/WsActionBarTabView</item>
+    </style>
+
+    <style name="WsActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/ws_blue</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="WsActionBarTabText" parent="@android:style/Widget.Holo.ActionBar.TabText">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="WsActionBarTabView" parent="@android:style/Widget.Holo.ActionBar.TabBar">
+        <item name="android:background">@color/ws_blue</item>
+    </style>
+
+    <style name="BackGroundImageView">
+        <item name="android:alpha">0.5</item>
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:src">@drawable/landing_page_photo</item>
+    </style>
+
+
 
 </resources>

@@ -1,0 +1,65 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context="com.blueprint.watershed.MiniSites.MiniSiteFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.blueprint.watershed.Views.CoverPhotoView
+            android:id="@+id/site_photo"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/standard_margin"
+            android:layout_marginRight="@dimen/standard_margin"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/mini_site_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/tight_margin"
+                android:textSize="30sp"
+                android:text="Mini Site Name"
+                />
+
+            <TextView
+                android:id="@+id/mini_site_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/tight_margin"
+                android:textSize="14sp"
+                android:text="Mini Site Description"
+                />
+
+            <TextView
+                android:id="@+id/mini_site_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/tight_margin"
+                android:textSize="14sp"
+                android:text="Mini Site Location"
+                />
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/field_reports_table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/tight_margin">
+        </ListView>
+
+    </LinearLayout>
+
+</FrameLayout>

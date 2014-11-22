@@ -10,6 +10,7 @@
 #  urgent        :boolean          default(FALSE)
 #  created_at    :datetime
 #  updated_at    :datetime
+#  task_id       :integer
 #
 
 class FieldReport < ActiveRecord::Base

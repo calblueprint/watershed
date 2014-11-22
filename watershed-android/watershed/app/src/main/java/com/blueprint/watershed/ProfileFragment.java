@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blueprint.watershed.Users.User;
+
 public class ProfileFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 

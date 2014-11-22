@@ -8,8 +8,10 @@
 
 #import "WPTaskViewController.h"
 #import "WPTaskView.h"
+#import "WPAddFieldReportViewController.h"
 
 @interface WPTaskViewController ()
+
 
 @end
 
@@ -17,11 +19,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"Task 1";
     self.view.backgroundColor = [UIColor whiteColor];
     self.view.dueDate.text = self.dueDate;
     self.view.taskDescription.text = self.taskDescription;
     self.view.title.text = self.taskTitle;
+    self.view.assigneeLabel.text = [NSString stringWithFormat:@"Assigned to %@ by %@", self.assignee, self.assigner];
+    self.navigationItem.title = @"Task";
+    [self.view.addFieldReportButton addTarget:self action:@selector(addFieldReportAction) forControlEvents:UIControlEventTouchUpInside];
+
 }
 
 -(void)loadView {
@@ -32,4 +37,8 @@
     [super didReceiveMemoryWarning];
 }
 
+- (void)addFieldReportAction {
+    WPAddFieldReportViewController *addFieldReportViewController = [[WPAddFieldReportViewController alloc] init];
+    [[self navigationController] pushViewController:addFieldReportViewController animated:YES];
+}
 @end

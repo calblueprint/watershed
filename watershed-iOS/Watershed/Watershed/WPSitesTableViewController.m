@@ -11,10 +11,12 @@
 #import "WPSiteTableViewCell.h"
 #import "WPSiteViewController.h"
 
-@interface WPSitesTableViewController ()
+@interface WPSitesTableViewController () <UISearchDisplayDelegate, UISearchBarDelegate>
 
 @property (nonatomic) WPSitesTableView *sitesTableView;
 @property (nonatomic) NSMutableArray *siteList;
+@property (nonatomic) UISearchDisplayController *searchController;
+@property (nonatomic) UISearchBar *searchBar;
 
 @end
 
@@ -30,6 +32,9 @@ static NSString *cellIdentifier = @"SiteCell";
     
     [super viewDidLoad];
     self.navigationItem.title = @"Sites";
+    
+    [self setUpSearchBar];
+    
     [self loadSiteData];
     self.sitesTableView.delegate = self;
     self.sitesTableView.dataSource = self;
@@ -81,6 +86,7 @@ static NSString *cellIdentifier = @"SiteCell";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     WPSiteViewController *siteViewController = [[WPSiteViewController alloc] init];
     [self.navigationController pushViewController:siteViewController animated:YES];
 }
@@ -97,6 +103,46 @@ static NSString *cellIdentifier = @"SiteCell";
 - (void)updatePhotoOffset:(CGFloat)contentOffset {
     [self.sitesTableView.visibleCells makeObjectsPerformSelector:@selector(updatePhotoPosition:)
                                                       withObject:@(contentOffset)];
+}
+
+#pragma mark - Search / Search Delegate Methods
+
+- (void)setUpSearchBar {
+
+    UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc]
+                                         initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
+                                         target:self
+                                         action:@selector(openSearch) ];
+    searchButtonItem.tintColor = [UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem = searchButtonItem;
+    
+    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, topMargin, [WPView getScreenWidth], topMargin)];
+    self.searchBar.delegate = self;
+    self.searchBar.placeholder = @"Search Sites";
+    self.searchBar.tintColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
+    [self.view addSubview:self.searchBar];
+    
+    self.searchController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
+    self.searchController.delegate = self;
+    self.searchController.searchResultsDataSource = self;
+}
+
+- (void)openSearch {
+    [self.searchController setActive:YES animated:YES];
+    [self.searchBar becomeFirstResponder];
+    [UIView animateWithDuration:0.2 animations:^{
+        [self.searchBar setFrame:CGRectMake(0, 10, [WPView getScreenWidth], topMargin)];
+    }];
+}
+
+- (void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller {
+    [self searchBarCancelButtonClicked:self.searchBar];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    [UIView animateWithDuration:0.2 animations:^{
+        [self.searchBar setFrame:CGRectMake(0, topMargin, [WPView getScreenWidth], topMargin)];
+    }];
 }
 
 #pragma mark - Lazy instantiation

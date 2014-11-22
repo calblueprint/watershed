@@ -12,6 +12,7 @@
 #import "WPEditViewController.h"
 #import "WPAboutViewController.h"
 #import "WPTermsViewController.h"
+#import "WPRootViewController.h"
 
 @interface WPSettingsTableViewController ()
 
@@ -128,6 +129,12 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
         } else if (indexPath.row == 1) {
             WPTermsViewController *termsViewController = [[WPTermsViewController alloc] init];
             [self.navigationController pushViewController:termsViewController animated:YES];
+        }
+    } else if (indexPath.section == 2) {
+        if (indexPath.row == 0) {
+            // implement log out logic (erase keychain)
+            WPRootViewController *parentVC = (WPRootViewController *)self.parentViewController.parentViewController.parentViewController;
+            [parentVC pushNewLoginControllerFromTab:(WPTabBarController *)self.parentViewController.parentViewController];
         }
     }
 }

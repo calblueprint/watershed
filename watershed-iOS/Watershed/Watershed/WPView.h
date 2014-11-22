@@ -14,4 +14,8 @@
 - (instancetype)initWithFrame:(CGRect)frame
                 visibleNavbar:(BOOL)visible;
 
++ (CGFloat)getScreenWidth;
++ (CGFloat)getScreenHeight;
++ (CGRect)getScreenFrame;
+
 @end

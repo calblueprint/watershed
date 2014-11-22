@@ -43,7 +43,20 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>FacebookAppID</key>
+	<string>659252624187753</string>
+	<key>FacebookDisplayName</key>
+	<string>Watershed</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>URL schemes</key>
+			<array>
+				<string>fb659252624187753</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

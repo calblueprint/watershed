@@ -1,0 +1,2 @@
+class FieldReportListSerializer < BaseFieldReportSerializer
+end

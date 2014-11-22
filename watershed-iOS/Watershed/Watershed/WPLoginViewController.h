@@ -10,4 +10,6 @@
 
 @interface WPLoginViewController : UIViewController
 
+- (void)emailSignup;
+
 @end

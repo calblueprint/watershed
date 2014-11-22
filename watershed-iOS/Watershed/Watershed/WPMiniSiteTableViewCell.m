@@ -34,17 +34,17 @@ const static float CELL_HEIGHT = 86.0f;
              rating:(NSInteger)rating
           taskCount:(NSInteger)taskCount
    fieldReportCount:(NSInteger)fieldReportCount {
-    
+
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.backgroundColor = [UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:1];
-        
+
         _name = name;
         _image = image;
         _rating = rating;
         _taskCount = taskCount;
         _fieldReportCount = fieldReportCount;
-       
+
         [self createSubviews];
         [self setNeedsUpdateConstraints];
     }
@@ -56,13 +56,13 @@ const static float CELL_HEIGHT = 86.0f;
 - (void)createSubviews {
     UIView *content = self.contentView;
     content.backgroundColor = [UIColor whiteColor];
-    
+
     _nameLabel = [({
         UILabel *label = [[UILabel alloc] init];
         label.text = self.name;
         label;
     }) wp_addToSuperview:content];
-    
+
     _photoView = [({
         UIImageView *photoView = [[UIImageView alloc] initWithImage:self.image];
         [photoView setContentMode:UIViewContentModeScaleAspectFill];
@@ -70,29 +70,29 @@ const static float CELL_HEIGHT = 86.0f;
         photoView.layer.cornerRadius = 3.0;
         photoView;
     }) wp_addToSuperview:content];
-    
+
     _ratingDotView = [({
         UIView *ratingDotView = [[UIView alloc] init];
         ratingDotView.layer.cornerRadius = 5.0;
-        ratingDotView.backgroundColor = [WPMiniSiteTableViewCell colorForRating:self.rating];
+        ratingDotView.backgroundColor = [UIColor colorForRating:self.rating];
         ratingDotView;
     }) wp_addToSuperview:content];
-    
+
     _taskCountLabel = [({
         FAKFontAwesome *checkIcon = [FAKFontAwesome checkIconWithSize:[WPLabeledIcon viewHeight]];
         UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
-        
+
         NSString *taskText = [NSString stringWithFormat:@"%d tasks", (int) self.taskCount];
         WPLabeledIcon *taskCountLabel = [[WPLabeledIcon alloc] initWithText:taskText
                                                                        icon:checkImage];
         taskCountLabel.alpha = 0.3;
         taskCountLabel;
     }) wp_addToSuperview:content];
-    
+
     _fieldReportCountLabel = [({
         FAKFontAwesome *exclamationIcon = [FAKFontAwesome exclamationTriangleIconWithSize:[WPLabeledIcon viewHeight]];
         UIImage *exclamationImage = [exclamationIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
-        
+
         NSString *fieldReportText = [NSString stringWithFormat:@"%d reports", (int) self.fieldReportCount];
         WPLabeledIcon *fieldReportCountLabel = [[WPLabeledIcon alloc] initWithText:fieldReportText
                                                                               icon:exclamationImage];
@@ -102,7 +102,7 @@ const static float CELL_HEIGHT = 86.0f;
 }
 
 - (void)updateConstraints {
-    
+
     [self.contentView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@0);
         make.leading.equalTo(@0);
@@ -111,14 +111,14 @@ const static float CELL_HEIGHT = 86.0f;
         make.centerX.equalTo(self.mas_centerX);
         make.centerY.equalTo(self.mas_centerY);
     }];
-    
+
     [self.photoView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@40);
         make.width.equalTo(@40);
         make.top.equalTo(@(standardMargin));
         make.leading.equalTo(@(standardMargin));
     }];
-    
+
     [self.nameLabel mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.greaterThanOrEqualTo(@40);
         make.top.equalTo(self.photoView.mas_top);
@@ -127,27 +127,27 @@ const static float CELL_HEIGHT = 86.0f;
         make.trailing.equalTo(self.ratingDotView.mas_leading)
             .with.offset(-standardMargin);
     }];
-    
+
     [self.ratingDotView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(standardMargin));
         make.width.equalTo(@(standardMargin));
         make.top.equalTo(@(standardMargin));
         make.trailing.equalTo(@(-standardMargin));
     }];
-    
+
     [self.taskCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.nameLabel.mas_bottom)
             .with.offset(standardMargin);
         make.leading.equalTo(self.photoView.mas_leading);
     }];
-    
+
     [self.fieldReportCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.nameLabel.mas_bottom)
             .with.offset(standardMargin);
         make.leading.equalTo(self.taskCountLabel.mas_trailing)
             .with.offset(standardMargin);
     }];
-    
+
     [super updateConstraints];
 }
 
@@ -160,32 +160,5 @@ const static float CELL_HEIGHT = 86.0f;
 }
 
 + (CGFloat)cellHeight { return CELL_HEIGHT; }
-
-+ (UIColor *)colorForRating:(NSInteger)rating {
-    switch (rating) {
-        case 1:
-            return [UIColor wp_red];
-            break;
-            
-        case 2:
-            return [UIColor wp_orange];
-            break;
-            
-        case 3:
-            return [UIColor wp_yellow];
-            break;
-            
-        case 4:
-            return [UIColor wp_lime];
-            break;
-            
-        case 5:
-            return [UIColor wp_green];
-            break;
-        default:
-            return [UIColor grayColor];
-            break;
-    }
-}
 
 @end

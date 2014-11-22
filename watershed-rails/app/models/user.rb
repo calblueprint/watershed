@@ -32,7 +32,33 @@ class User < ActiveRecord::Base
   has_many :assigned_tasks, class_name: "Task", foreign_key: "assigner_id"
   has_many :tasks, class_name: "Task", foreign_key: "assignee_id"
 
+  has_many :user_mini_sites
+  has_many :mini_sites, through: :user_mini_sites
+
+  #
+  # Search
+  #
+  include PgSearch
+  pg_search_scope :search,
+                  against: [[:name, "A"], [:email, "A"], [:role, "B"]],
+                  using: { tsearch: { prefix: true, normalization: 2 } }
+
+  #
+  # Mini Sites
+  #
+  def has_mini_site?(mini_site)
+    !user_mini_sites.find_by(mini_site: mini_site).nil?
+  end
+
+  def add_mini_site(mini_site)
+    unless has_mini_site?(mini_site)
+      mini_sites << mini_site
+    end
+  end
+
+  #
   # Token Authentication
+  #
   def ensure_authentication_token
     if authentication_token.blank?
       self.authentication_token = generate_authentication_token

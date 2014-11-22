@@ -17,4 +17,20 @@
 
 class Site < ActiveRecord::Base
   has_many :mini_sites
+
+  #
+  # Search
+  #
+  include PgSearch
+  pg_search_scope :search,
+                  against: [[:name, "A"], [:street, "B"], [:city, "B"], [:state, "B"], [:zip_code, "B"]],
+                  using: { tsearch: { prefix: true, normalization: 2 } }
+
+  #
+  # Properties
+  #
+  def mini_sites_count
+    mini_sites.count
+  end
+
 end

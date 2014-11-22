@@ -2,13 +2,23 @@
 //  WPLoginView.h
 //  Watershed
 //
-//  Created by Andrew Millman on 9/28/14.
+//  Created by Melissa Huang on 11/12/14.
 //  Copyright (c) 2014 Blueprint. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "WPView.h"
+#import <FacebookSDK/FacebookSDK.h>
 
-@interface WPLoginView : WPView
+@class WPLoginViewController;
+
+@interface WPLoginView : WPView <UITextFieldDelegate>
+
+@property (nonatomic) WPLoginViewController *parentViewController;
+
+@property (nonatomic) UITextField *emailTextField;
+@property (nonatomic) UITextField *passwordTextField;
+
+-(void)dismissKeyboard;
 
 @end

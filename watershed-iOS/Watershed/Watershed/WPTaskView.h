@@ -7,13 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UIExtensions.h"
 
-@interface WPTaskView : UIView
+@interface WPTaskView : WPView
 
 @property (nonatomic) UILabel *title;
 @property (nonatomic) UILabel *taskDescription;
 @property (nonatomic) UILabel *dueDate;
+@property (nonatomic) UILabel *assigneeLabel;
 @property (nonatomic) UIButton *completed;
-
+@property (nonatomic) UIButton *addFieldReportButton;
+@property (nonatomic) UIButton *siteLinkButton;
 
 @end

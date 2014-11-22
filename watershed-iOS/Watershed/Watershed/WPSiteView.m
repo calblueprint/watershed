@@ -234,18 +234,18 @@ static int COVER_PHOTO_TRANS = 0;
 #pragma mark - Blurred Photo Generation
 
 - (void)generateBlurredPhotos {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        for (int i = 0; i <= 20; i+= 2) {
-            UIImage *image = self.originalCoverPhoto;
-            image = [image applyBlurWithRadius:i
-                                     tintColor:[UIColor clearColor]
-                         saturationDeltaFactor:1
-                                     maskImage:nil];
-            
-            [self.coverPhotoArray addObject:image];
-            [self.coverPhotoArray addObject:image];
-        }
-    });
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+//        for (int i = 0; i <= 20; i+= 2) {
+//            UIImage *image = self.originalCoverPhoto;
+//            image = [image applyBlurWithRadius:i
+//                                     tintColor:[UIColor clearColor]
+//                         saturationDeltaFactor:1
+//                                     maskImage:nil];
+//            
+//            [self.coverPhotoArray addObject:image];
+//            [self.coverPhotoArray addObject:image];
+//        }
+//    });
 }
 
 #pragma mark - Lazy Instantiation
