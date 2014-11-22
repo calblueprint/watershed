@@ -10,7 +10,7 @@
 
 @implementation WPUser
 
--(instancetype)initWithFacebookUser:(id<FBGraphUser>)user {
+- (instancetype)initWithFacebookUser:(id<FBGraphUser>)user {
     self.email = user[@"email"];
     self.name = user[@"name"];
     self.profilePictureId = user[@"id"];

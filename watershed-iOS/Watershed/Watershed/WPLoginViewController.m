@@ -79,7 +79,26 @@ static NSString * const SIGNIN_URL = @"users/sign_in";
                             user:(id<FBGraphUser>)user {
     WPUser *fbUser = [[WPUser alloc] initWithFacebookUser:user];
     NSString *fbAccessToken = [FBSession activeSession].accessTokenData.accessToken;
+  
+    // NOTE(mark): Using the same networking setup as before, change this when you get your network manager in place.
+    AFHTTPRequestOperationManager *manager = _appDelegate.getAFManager;
+    NSDictionary *parameters = @{@"user" : @{
+                                     @"email": fbUser.email,
+                                     @"facebook_auth_token": fbAccessToken,
+                                     @"name": fbUser.name,
+                                     @"facebook_id": fbUser.profilePictureId,
+                                     }};
     
+    NSString *loginString = [manager.baseURL.absoluteString stringByAppendingString:SIGNIN_URL];
+    [manager POST:loginString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"JSON: %@", responseObject);
+        [self parseResponse:responseObject];
+        [self pushTabBarController];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Incorrect email or password." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
 }
 
 - (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
