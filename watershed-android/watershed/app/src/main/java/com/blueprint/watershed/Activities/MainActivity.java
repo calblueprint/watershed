@@ -35,6 +35,7 @@ import android.view.View;
 import android.content.Context;
 import android.content.Intent;
 import android.app.ActionBar.Tab;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -43,6 +44,7 @@ import java.util.ArrayList;
 public class MainActivity extends ActionBarActivity
                           implements ActionBar.TabListener,
                                      View.OnClickListener,
+                                     ListView.OnItemClickListener,
                                      TaskFragment.OnFragmentInteractionListener,
                                      TaskDetailFragment.OnFragmentInteractionListener,
                                      SiteListFragment.OnFragmentInteractionListener,
@@ -213,7 +215,6 @@ public class MainActivity extends ActionBarActivity
         updateTitle(mtaskFragment);
         android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.add(R.id.container, mtaskFragment);
-        //ft.show(mtaskFragment);
         ft.commit();
     }
 
@@ -262,6 +263,7 @@ public class MainActivity extends ActionBarActivity
         for (String title : titles) {
             menuItems.add(title);
         }
+        mDrawerList.setOnItemClickListener(this);
 
         mDrawerList.setAdapter(new ArrayAdapter<String>(this,
                 R.layout.residemenu_item, R.id.tv_title, titles));
@@ -274,14 +276,12 @@ public class MainActivity extends ActionBarActivity
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                getActionBar().setTitle(mTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                getActionBar().setTitle("Menu");
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
@@ -304,17 +304,20 @@ public class MainActivity extends ActionBarActivity
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
+    // Nav Drawer on click listener
+
+    public void onItemClick(AdapterView parent, View view, int position, long id) {
+        onNavClick(position);
+    }
+
     // View on click listener
-    @Override
-    public void onClick(View view) {
-        int position = menuItems.indexOf(view);
+    public void onNavClick(int position) {
         switch (position) {
             case 0:
                 TaskFragment taskFragment = TaskFragment.newInstance(0);
                 replaceFragment(taskFragment);
                 break;
             case 1:
-                //displayTaskView(false);
                 siteListFragment = new SiteListFragment();
                 replaceFragment(siteListFragment);
                 break;
@@ -337,8 +340,10 @@ public class MainActivity extends ActionBarActivity
                 startActivity(intent);
                 break;
         }
-        //resideMenu.closeMenu();
     }
+
+    @Override
+    public void onClick(View view){}
 
     // System level attributes
     private static int getAppVersion(Context context) {
