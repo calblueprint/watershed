@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "UIExtensions.h"
 
-@interface WPAddTaskViewController : WPViewController<UITableViewDataSource, UITableViewDelegate> 
+@interface WPAddTaskViewController : WPViewController<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 
 @end

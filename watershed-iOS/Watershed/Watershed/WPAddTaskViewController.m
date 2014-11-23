@@ -75,11 +75,14 @@ static NSString *CellIdentifier = @"Cell";
             UITextField *textField = [[UITextField alloc] init];
             cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:textField];
             cell.label.text = @"Assigned To";
+            break;
         }
         case 5: {
             UISwitch *urgentSwitch = [[UISwitch alloc] init];
+            urgentSwitch.onTintColor = [UIColor wp_red];
             cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:urgentSwitch];
             cell.label.text = @"Urgent";
+            break;
         }
         default: {
             //do nothing
