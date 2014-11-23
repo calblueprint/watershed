@@ -11,6 +11,7 @@
 #
 
 class Photo < ActiveRecord::Base
+  mount_uploader :image, ImageUploader
   skip_callback :save, :after, :remove_previously_stored_image
 
   belongs_to :parent, polymorphic: true
