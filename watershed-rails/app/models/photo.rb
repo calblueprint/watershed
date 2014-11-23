@@ -11,4 +11,7 @@
 #
 
 class Photo < ActiveRecord::Base
+  skip_callback :save, :after, :remove_previously_stored_image
+
+  belongs_to :parent, polymorphic: true
 end
