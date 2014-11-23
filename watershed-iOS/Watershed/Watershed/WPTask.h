@@ -13,10 +13,10 @@
 @property (nonatomic) NSNumber *taskId;
 @property (nonatomic) NSString *title;
 @property (nonatomic) NSString *taskDescription;
-@property (nonatomic) NSNumber *siteId;
 @property (nonatomic) NSDate *dueDate;
 @property (nonatomic) Boolean *urgent;
 @property (nonatomic) Boolean *completed;
+@property (nonatomic) NSNumber *siteId;
 @property (nonatomic) NSNumber *assigneeId;
 @property (nonatomic) NSNumber *assignerId;
 

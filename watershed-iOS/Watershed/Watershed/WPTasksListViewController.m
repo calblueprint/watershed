@@ -25,12 +25,12 @@
     [super viewDidLoad];
     self.navigationItem.title = @"Tasks";
     self.view.backgroundColor = [UIColor whiteColor];
-    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc]
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc]
                                    initWithTitle:@"+"
                                    style:UIBarButtonItemStyleBordered
                                    target:self
                                    action:@selector(newTaskForm:)];
-    self.navigationItem.rightBarButtonItem = saveButton;
+    self.navigationItem.rightBarButtonItem = addButton;
 }
 
 - (void)loadView {

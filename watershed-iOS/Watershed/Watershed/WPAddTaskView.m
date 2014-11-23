@@ -25,7 +25,7 @@
     }
 
     self.taskFormTableView.scrollEnabled = NO;
-    [self.taskFormTableView reloadData];
+//    [self.taskFormTableView reloadData];
     return self;
 }
 
@@ -45,7 +45,6 @@
 - (void)createSubviews {
     
     _taskFormTableView = [[UITableView alloc] init];
-    _taskFormTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self addSubview:_taskFormTableView];
     
 }

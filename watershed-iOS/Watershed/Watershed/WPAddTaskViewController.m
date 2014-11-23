@@ -17,15 +17,23 @@
 
 @implementation WPAddTaskViewController
 
+static NSString *CellIdentifier = @"Cell";
+
 - (void)loadView {
     self.view = [[WPAddTaskView alloc] init];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.title = @"New Task";
     self.view.taskFormTableView.delegate = self;
     self.view.taskFormTableView.dataSource = self;
-
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc]
+                                   initWithTitle:@"Done"
+                                   style:UIBarButtonItemStyleBordered
+                                   target:self
+                                   action:@selector(saveForm:)];
+    self.navigationItem.rightBarButtonItem = doneButton;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -37,43 +45,46 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WPAddTaskTableViewCell *cell = [[WPAddTaskTableViewCell alloc] init];
-//    switch (indexPath.row) {
-//        case 1: {
-//            FAKIonIcons *mailIcon = [FAKIonIcons ios7EmailOutlineIconWithSize:30];
-//            [cell setIconImageView:[[UIImageView alloc] initWithImage:[mailIcon imageWithSize:CGSizeMake(30, 30)]]];
-//            
-//            UILabel *infoLabel = [[UILabel alloc] init];
-//            infoLabel.text = self.user.email;
-//            [cell setInfoLabel:infoLabel];
-//            
-//            break;
-//        }
-//        case 2: {
-//            FAKIonIcons *locationIcon = [FAKIonIcons ios7LocationOutlineIconWithSize:30];
-//            [cell setIconImageView:[[UIImageView alloc] initWithImage:[locationIcon imageWithSize:CGSizeMake(30, 30)]]];
-//            
-//            UILabel *infoLabel = [[UILabel alloc] init];
-//            infoLabel.text = self.user.location;
-//            [cell setInfoLabel:infoLabel];
-//            break;
-//        }
-//        case 3: {
-//            FAKIonIcons *phoneIcon = [FAKIonIcons ios7TelephoneOutlineIconWithSize:30];
-//            [cell setIconImageView:[[UIImageView alloc] initWithImage:[phoneIcon imageWithSize:CGSizeMake(30, 30)]]];
-//            
-//            UILabel *infoLabel = [[UILabel alloc] init];
-//            infoLabel.text = self.user.phoneNumber;
-//            [cell setInfoLabel:infoLabel];
-//            break;
-//        }
-//        default: {
-//            //do nothing
-//        }
-//    }
-//    cell.infoLabel.textColor = [UIColor darkGrayColor];
-//    cell.infoLabel.font = [UIFont fontWithName:@"Helvetica" size:12];
-//    [cell addSubviews];
+    WPAddTaskTableViewCell *cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    switch (indexPath.row) {
+        case 0: {
+            UITextField *textField = [[UITextField alloc] init];
+            cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:textField];
+            cell.label.text = @"Task";
+            break;
+        }
+        case 1: {
+            UIDatePicker *datePicker = [[UIDatePicker alloc] init];
+            cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:datePicker];
+            cell.label.text = @"Due Date";
+            break;
+        }
+        case 2: {
+            UITextView *textView = [[UITextView alloc] init];
+            cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:textView];
+            cell.label.text = @"Description";
+            break;
+        }
+        case 3: {
+            UITextField *textField = [[UITextField alloc] init];
+            cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:textField];
+            cell.label.text = @"Site";
+            break;
+        }
+        case 4: {
+            UITextField *textField = [[UITextField alloc] init];
+            cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:textField];
+            cell.label.text = @"Assigned To";
+        }
+        case 5: {
+            UISwitch *urgentSwitch = [[UISwitch alloc] init];
+            cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:urgentSwitch];
+            cell.label.text = @"Urgent";
+        }
+        default: {
+            //do nothing
+        }
+    }
     return cell;
 }
 
@@ -86,14 +97,14 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
-        return 1.f;
+    if (indexPath.row == 2) {
+        return 80;
     }
     return 50;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    return 6;
 }
 
 
