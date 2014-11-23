@@ -7,6 +7,7 @@
 //
 
 #import "WPRootViewController.h"
+#import "WPNetworkingManager.h"
 
 @interface WPRootViewController ()
 
@@ -20,7 +21,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIViewController *launchingViewController = [self newLoginViewController];
+    UIViewController *launchingViewController = nil;
+    UICKeyChainStore *store = [[WPNetworkingManager sharedManager] keyChainStore];
+    if (store[@"auth_token"] && store[@"email"]) {
+        launchingViewController = [self newInitialViewController];
+    }
+    else {
+        launchingViewController = [self newLoginViewController];
+    }
     [self showViewController:launchingViewController];
 }
 
