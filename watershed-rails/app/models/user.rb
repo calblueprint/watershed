@@ -37,6 +37,10 @@ class User < ActiveRecord::Base
   has_many :user_mini_sites
   has_many :mini_sites, through: :user_mini_sites
 
+  validates :facebook_auth_token, presence: true
+  validates :email, presence: true
+  validates :name, presence: true
+
   #
   # Search
   #
@@ -84,6 +88,7 @@ class User < ActiveRecord::Base
 
   def create_with_facebook_info(facebook_params)
     self.name = facebook_params[:name]
+    self.facebook_auth_token = facebook_params[:facebook_auth_token]
     self.facebook_id = facebook_params[:facebook_id]
     self.password = Devise.friendly_token
 
