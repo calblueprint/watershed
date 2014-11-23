@@ -10,6 +10,7 @@
 #import "WPTasksListView.h"
 #import "WPTasksTableViewCell.h"
 #import "UIExtensions.h"
+#import "WPAddTaskViewController.h"
 
 @interface WPTasksListViewController ()
 
@@ -24,6 +25,12 @@
     [super viewDidLoad];
     self.navigationItem.title = @"Tasks";
     self.view.backgroundColor = [UIColor whiteColor];
+    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc]
+                                   initWithTitle:@"+"
+                                   style:UIBarButtonItemStyleBordered
+                                   target:self
+                                   action:@selector(newTaskForm:)];
+    self.navigationItem.rightBarButtonItem = saveButton;
 }
 
 - (void)loadView {
@@ -33,5 +40,11 @@
     [self addChildViewController:_allTasksTableController];
     self.view = [[WPTasksListView alloc] initWithFrame:CGRectZero  andTableViewController:self];
 }
+
+- (void)newTaskForm:(UIButton *)sender {
+    WPAddTaskViewController *addTaskViewController = [[WPAddTaskViewController alloc] init];
+    [[self navigationController] pushViewController: addTaskViewController animated:YES];
+}
+
 
 @end

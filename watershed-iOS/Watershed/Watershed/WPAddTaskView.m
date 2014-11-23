@@ -53,7 +53,7 @@
 - (void)updateConstraints {
     
     [self.taskFormTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.nameLabel.mas_bottom).with.offset(50);
+        make.top.equalTo(@(topMargin));
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
         make.bottom.equalTo(@0);
