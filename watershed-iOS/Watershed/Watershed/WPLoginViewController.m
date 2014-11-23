@@ -15,8 +15,6 @@
 #import "WPRootViewController.h"
 #import "WPUser.h"
 
-static NSString * const SIGNIN_URL = @"users/sign_in";
-static NSString * const FACEBOOK_LOGIN_URL = @"users/sign_up/facebook";
 
 @interface WPLoginViewController ()
 @property (nonatomic) WPLoginView *view;
@@ -75,7 +73,6 @@ static NSString * const FACEBOOK_LOGIN_URL = @"users/sign_up/facebook";
     NSString *fbAccessToken = [FBSession activeSession].accessTokenData.accessToken;
   
     // NOTE(mark): Using the same networking setup as before, change this when you get your network manager in place.
-    AFHTTPRequestOperationManager *manager = _appDelegate.getAFManager;
     NSDictionary *parameters = @{@"user" : @{
                                      @"email": fbUser.email,
                                      @"facebook_auth_token": fbAccessToken,
@@ -83,15 +80,9 @@ static NSString * const FACEBOOK_LOGIN_URL = @"users/sign_up/facebook";
                                      @"facebook_id": fbUser.profilePictureId,
                                      }};
     
-    NSString *facebookLoginURL = [manager.baseURL.absoluteString stringByAppendingString:FACEBOOK_LOGIN_URL];
-    [manager POST:facebookLoginURL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-        [self parseResponse:responseObject];
+    [[WPNetworkingManager sharedManager] requestFacebookLoginWithParameters:parameters success:^(id response) {
+        [self parseResponse:response];
         [self pushTabBarController];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Can't log in via Facebook." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [incorrect show];
-        NSLog(@"Error: %@", error);
     }];
 }
 
