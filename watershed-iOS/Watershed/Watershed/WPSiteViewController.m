@@ -95,14 +95,13 @@ static NSString *cellIdentifier = @"MiniSiteCell";
     
     if ([tableView isEqual:self.miniSiteTableView]) rowCount = self.miniSiteList.count;
     [(WPSiteView *)self.view updateTableViewHeight:self.miniSiteList.count];
-    NSLog(@"%d", (int)rowCount);
     return rowCount;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    UITableViewCell *cellView = nil;
+    WPMiniSiteTableViewCell *cellView = nil;
     
     if ([tableView isEqual:self.miniSiteTableView]) {
         
@@ -110,13 +109,14 @@ static NSString *cellIdentifier = @"MiniSiteCell";
         if (!cellView) {
             
             cellView = [[WPMiniSiteTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                      reuseIdentifier:cellIdentifier
-                                                                 name:@"Yes"
-                                                                image:[UIImage imageNamed:@"SampleCoverPhoto2"]
-                                                               rating:3
-                                                            taskCount:5
-                                                     fieldReportCount:5];
+                                                      reuseIdentifier:cellIdentifier];
         }
+        WPMiniSite *miniSite = self.miniSiteList[indexPath.row];
+        cellView.nameLabel.text = miniSite.name;
+        cellView.photoView.image = miniSite.image;
+        cellView.ratingDotView.backgroundColor = [UIColor colorForRating:3];
+        cellView.taskCountLabel.label.text = [NSString stringWithFormat:@" %d tasks", 5];
+        cellView.fieldReportCountLabel.label.text = [NSString stringWithFormat:@" %d field reports", 5];
     }
     return cellView;
 }
