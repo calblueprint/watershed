@@ -38,6 +38,8 @@ class User < ActiveRecord::Base
   has_many :mini_sites, through: :user_mini_sites
 
   validates :facebook_auth_token, presence: true
+  validates :email, presence: true
+  validates :name, presence: true
 
   #
   # Search
