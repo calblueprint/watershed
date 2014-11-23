@@ -53,10 +53,11 @@
 - (void)parseResponse:(id)responseObject {
     NSDictionary *responseDictionary = responseObject;
     NSString *authToken = [responseDictionary objectForKey:@"authentication_token"];
-    //NSString *name = [[responseDictionary objectForKey:@"user"] objectForKey:@"name"];
+    NSString *email = [responseDictionary objectForKey:@"email"];
     
     UICKeyChainStore *store = [[WPNetworkingManager sharedManager] keyChainStore];
     [store setString:authToken forKey:@"auth_token"];
+    [store setString:email forKey:@"email"];
     [store synchronize];
 }
 

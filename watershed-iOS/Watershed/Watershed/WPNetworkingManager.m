@@ -101,7 +101,7 @@ static NSString * const SITES_URL = @"sites";
 
 - (void)addAuthenticationParameters:(NSMutableDictionary *)parameters {
     parameters[@"auth_token"] = self.keyChainStore[@"auth_token"];
-    parameters[@"email"] = @"mark@mark.com";
+    parameters[@"email"] = self.keyChainStore[@"email"];
 }
 
 #pragma mark - Lazy Instantiation
