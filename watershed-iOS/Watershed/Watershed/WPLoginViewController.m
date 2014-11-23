@@ -15,7 +15,7 @@
 #import "WPUser.h"
 
 static NSString * const SIGNIN_URL = @"users/sign_in";
-static NSString * const FACEBOOK_LOGIN_URL = @"users/sign_in/facebook";
+static NSString * const FACEBOOK_LOGIN_URL = @"users/sign_up/facebook";
 
 @interface WPLoginViewController ()
 @property (nonatomic) WPLoginView *view;
