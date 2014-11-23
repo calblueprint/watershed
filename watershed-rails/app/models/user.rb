@@ -81,7 +81,7 @@ class User < ActiveRecord::Base
   # Facebook Authentication
   #
   def valid_facebook_token?(token)
-    !facebook_auth_token.blank? && facebook_auth_token == token
+    !self.facebook_auth_token.blank? && self.facebook_auth_token == token
   end
 
   def create_with_facebook_info(facebook_params)
