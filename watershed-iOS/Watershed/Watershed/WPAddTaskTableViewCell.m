@@ -22,7 +22,7 @@
         [self createSubviews];
         _control = control;
         [self.contentView addSubview:_control];
-        [self setNeedsUpdateConstraints];
+        [self updateConstraints];
     }
     return self;
 }
@@ -40,14 +40,13 @@
 
     [self.label mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentView.mas_top).with.offset(standardMargin);
-        make.leading.equalTo(self.contentView.mas_leading).with.offset(standardMargin);
-        make.trailing.equalTo(self.contentView.mas_trailing).with.offset(-standardMargin);
+        make.left.equalTo(self.contentView.mas_leading).with.offset(standardMargin);
     }];
     
     [self.control mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentView.mas_top).with.offset(standardMargin);
-        make.leading.equalTo(self.label.mas_right).with.offset(standardMargin);
-        make.trailing.equalTo(self.contentView.mas_trailing).with.offset(-standardMargin);
+        make.left.equalTo(self.label.mas_right).with.offset(standardMargin);
+        make.right.equalTo(self.contentView.mas_right).with.offset(-standardMargin);
         make.bottom.equalTo(self.contentView.mas_trailing).with.offset(-standardMargin);
     }];
 
