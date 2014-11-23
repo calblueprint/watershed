@@ -104,6 +104,13 @@ static NSString * const SITES_URL = @"sites";
     parameters[@"email"] = self.keyChainStore[@"email"];
 }
 
+#pragma mark - Remove stored info
+
+- (void)eraseStore {
+    [self.keyChainStore removeItemForKey:@"auth_token"];
+    [self.keyChainStore removeItemForKey:@"email"];
+}
+
 #pragma mark - Lazy Instantiation
 
 - (WPAppDelegate *)appDelegate {
