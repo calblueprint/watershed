@@ -10,17 +10,17 @@ import android.view.ViewGroup;
 
 import com.blueprint.watershed.R;
 
-public class FieldReportFragment extends Fragment {
+public class AddFieldReportFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
 
-    public static FieldReportFragment newInstance() {
-        FieldReportFragment fieldReportFragment = new FieldReportFragment();
-        return fieldReportFragment;
+    public static AddFieldReportFragment newInstance() {
+        AddFieldReportFragment addFieldReportFragment = new AddFieldReportFragment();
+        return addFieldReportFragment;
     }
 
-    public FieldReportFragment() {
+    public AddFieldReportFragment() {
         // Required empty public constructor
     }
 

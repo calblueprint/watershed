@@ -18,13 +18,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 
 import com.blueprint.watershed.FieldReports.FieldReport;
-import com.blueprint.watershed.FieldReports.FieldReportFragment;
+import com.blueprint.watershed.FieldReports.AddFieldReportFragment;
 import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
@@ -67,7 +66,7 @@ public class MainActivity extends ActionBarActivity
                                      SiteListFragment.OnFragmentInteractionListener,
                                      SiteFragment.OnFragmentInteractionListener,
                                      MiniSiteFragment.OnFragmentInteractionListener,
-                                     FieldReportFragment.OnFragmentInteractionListener {
+                                     AddFieldReportFragment.OnFragmentInteractionListener {
 
     // Constants
     public  static final String PREFERENCES = "LOGIN_PREFERENCES";
@@ -386,7 +385,7 @@ public class MainActivity extends ActionBarActivity
     // Button Events
 
     public void FieldReportButtonPressed(View view){
-        FieldReportFragment fieldFragment = FieldReportFragment.newInstance();
+        AddFieldReportFragment fieldFragment = AddFieldReportFragment.newInstance();
         replaceFragment(fieldFragment);
     }
 
