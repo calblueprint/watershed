@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "WPView.h"
-#import <FacebookSDK/FacebookSDK.h>
 
 @class WPLoginViewController;
 
@@ -19,6 +18,7 @@
 @property (nonatomic) UITextField *emailTextField;
 @property (nonatomic) UITextField *passwordTextField;
 
+- (instancetype)initWithParentController:(WPLoginViewController *)parentVC;
 -(void)dismissKeyboard;
 
 @end
