@@ -23,7 +23,7 @@ class ImageUploader < CarrierWave::Uploader::Base
       image_ext.include?(file.extension.downcase)
     else
       # Not all Carrierwave storages respond to :extension
-      ext = file.path.split('.').last.downcase
+      ext = file.path.split(".").last.downcase
       image_ext.include?(ext)
     end
   rescue

@@ -29,6 +29,11 @@ class Api::V1::FieldReportsController < Api::V1::BaseController
 
   def field_report_params
     params.require(:field_report).permit(:user_id, :mini_site_id,
-                                         :description, :health_rating, :urgent)
+                                         :description, :health_rating, :urgent, {
+                                           photos_attributes: [
+                                             :id,
+                                             :image,
+                                           ],
+                                         })
   end
 end
