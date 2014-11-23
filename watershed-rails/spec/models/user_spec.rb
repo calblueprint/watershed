@@ -16,8 +16,10 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #  name                   :string(255)
-#  role                   :integer
+#  role                   :integer          default(0)
 #  authentication_token   :string(255)
+#  facebook_auth_token    :string(255)
+#  facebook_id            :string(255)
 #
 
 require 'spec_helper'

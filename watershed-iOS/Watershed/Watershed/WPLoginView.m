@@ -32,11 +32,10 @@
 @implementation WPLoginView
 
 
-- (instancetype)initWithFrame:(CGRect)frame {
-    
-    frame = [WPView getScreenFrame];
-    self = [super initWithFrame:frame];
+- (instancetype)initWithParentController:(WPLoginViewController *)parentVC {
+    self = [super initWithFrame:[WPView getScreenFrame]];
     if (self) {
+        self.parentViewController = parentVC;
         _isFirstTime = YES;
         _emailClicked = NO;
         [self createSubviews];
@@ -143,7 +142,8 @@
     _appTitleLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:_appTitleLabel];
     
-    _fbLoginView = [[FBLoginView alloc] init];
+    _fbLoginView = [[FBLoginView alloc] initWithReadPermissions:@[@"public_profile", @"email"]];
+    _fbLoginView.delegate = self.parentViewController;
     [self addSubview:_fbLoginView];
     
     _emailButton = [[UIButton alloc] init];

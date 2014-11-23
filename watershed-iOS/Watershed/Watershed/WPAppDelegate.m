@@ -13,6 +13,7 @@
 #import "WPSiteViewController.h"
 #import "WPTaskViewController.h"
 #import "AFNetworkActivityIndicatorManager.h"
+#import <Facebook-iOS-SDK/FacebookSDK/FBAppCall.h>
 
 static NSString * const BASE_URL = @"https://intense-reaches-1457.herokuapp.com/api/v1/";
 
@@ -64,6 +65,16 @@ static NSString * const BASE_URL = @"https://intense-reaches-1457.herokuapp.com/
     [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
 
     return YES;
+}
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    
+    // Call FBAppCall's handleOpenURL:sourceApplication to handle Facebook app responses
+    BOOL wasHandled = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
+    return wasHandled;
 }
 
 - (AFHTTPRequestOperationManager *)getAFManager {

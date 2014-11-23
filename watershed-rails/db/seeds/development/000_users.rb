@@ -4,7 +4,9 @@ managers = [
   ["Mark Miyashita", "mark@mark.com"],
 ]
 
-random_users = (0..20).collect { |number| ["User Number #{number}", "user#{number}@user.com"] }
+employees = (0..20).collect { |number| ["Employee Number #{number}", "employee#{number}@watershed.com"] }
+
+community_members = (0..20).collect { |number| ["CM Number #{number}", "member#{number}@watershed.com"] }
 
 def create_users(users_info, role)
   users_info.each do |user_info|
@@ -22,5 +24,5 @@ def create_users(users_info, role)
 end
 
 create_users(managers, :manager)
-create_users(random_users, :employee)
-
+create_users(employees, :employee)
+create_users(community_members, :community_member)
