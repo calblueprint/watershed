@@ -96,7 +96,7 @@ static NSString * const FACEBOOK_LOGIN_URL = @"users/sign_up/facebook";
         [self parseResponse:responseObject];
         [self pushTabBarController];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Incorrect email or password." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Can't log in via Facebook." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [incorrect show];
         NSLog(@"Error: %@", error);
     }];

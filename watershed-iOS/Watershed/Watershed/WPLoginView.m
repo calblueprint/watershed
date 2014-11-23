@@ -33,9 +33,9 @@
 
 
 - (instancetype)initWithParentController:(WPLoginViewController *)parentVC {
-    self.parentViewController = parentVC;
     self = [super initWithFrame:[WPView getScreenFrame]];
     if (self) {
+        self.parentViewController = parentVC;
         _isFirstTime = YES;
         _emailClicked = NO;
         [self createSubviews];

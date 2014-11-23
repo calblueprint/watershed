@@ -19,6 +19,6 @@
 @property (nonatomic) NSInteger *role;
 @property (nonatomic) NSString *location;
 
--(instancetype)initWithFacebookUser:(id<FBGraphUser>)user;
+- (instancetype)initWithFacebookUser:(id<FBGraphUser>)user;
 
 @end
