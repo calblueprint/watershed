@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 
+import com.blueprint.watershed.Photos.PhotoPagerAdapter;
 import com.blueprint.watershed.R;
 
 import java.util.ArrayList;
@@ -26,5 +27,8 @@ public class CoverPhotoPagerView extends ViewPager {
     }
 
     public void initializeViews() {
+        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
+        PhotoPagerAdapter photoPagerAdapter = new PhotoPagerAdapter();
+        viewPager.setAdapter(photoPagerAdapter);
     }
 }

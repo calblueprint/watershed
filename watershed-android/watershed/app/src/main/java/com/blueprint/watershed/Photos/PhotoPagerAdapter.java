@@ -20,6 +20,10 @@ public class PhotoPagerAdapter extends PagerAdapter {
 
     private ArrayList<Photo> mPhotos;
 
+    public void configureWithPhotos(ArrayList<Photo> photos) {
+        mPhotos = photos;
+    }
+
     @Override
     public int getCount() {
         return mPhotos.size();
