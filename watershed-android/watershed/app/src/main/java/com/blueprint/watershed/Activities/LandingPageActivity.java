@@ -36,8 +36,7 @@ public class LandingPageActivity extends Activity {
     // Constants
     public  static final String PREFERENCES = "LOGIN_PREFERENCES";
     private static final String TAG         = "LandingPageActivity";
-    //private static final String LOGIN_URL = "https://intense-reaches-1457.herokuapp.com/api/v1/users/sign_in";
-    private static final String LOGIN_URL = "http://10.142.38.201:3001/api/v1/users/sign_in";
+    private static final String LOGIN_URL = "https://intense-reaches-1457.herokuapp.com/api/v1/users/sign_in";
 
     // UI Elements
     private ImageView mLandingPageImage;

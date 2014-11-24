@@ -33,8 +33,7 @@ public abstract class BaseRequest extends JsonObjectRequest {
     private SharedPreferences preferences;
     private Response.Listener listener;
 
-    //private static final String baseURL = "https://intense-reaches-1457.herokuapp.com/api/v1/";
-    private static final String baseURL = "http://10.142.38.201:3001/api/v1/";
+    private static final String baseURL = "https://intense-reaches-1457.herokuapp.com/api/v1/";
 
     public BaseRequest(int method, String url, JSONObject jsonRequest,
                        Response.Listener listener, final Activity activity) {
