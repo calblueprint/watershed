@@ -10,4 +10,12 @@
 
 @implementation WPSite
 
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+    return @{
+             @"siteId" : @"id",
+             @"info" : @"description",
+             @"zipCode" : @"zip_code"
+             };
+}
+
 @end
