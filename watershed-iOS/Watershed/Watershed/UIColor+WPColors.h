@@ -24,4 +24,7 @@
 + (UIColor *)colorForRating:(NSInteger)rating;
 + (UIColor *)wp_transparentBlue;
 + (UIColor *)wp_transparentDarkBlue;
++ (UIColor *)wp_paragraph;
++ (UIColor *)wp_header;
+
 @end

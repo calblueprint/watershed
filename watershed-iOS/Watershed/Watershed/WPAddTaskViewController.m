@@ -9,6 +9,7 @@
 #import "WPAddTaskViewController.h"
 #import "WPAddTaskView.h"
 #import "WPAddTaskTableViewCell.h"
+#import "UIExtensions.h"
 
 @interface WPAddTaskViewController()
 
@@ -35,7 +36,7 @@ static NSString *CellIdentifier = @"Cell";
                                    target:self
                                    action:@selector(saveForm:)];
     self.navigationItem.rightBarButtonItem = doneButton;
-    self.view.taskFormTableView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.view.taskFormTableView = [[UITableView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -62,6 +63,8 @@ static NSString *CellIdentifier = @"Cell";
             UITextField *textField = [[UITextField alloc] init];
             textField.delegate = self;
             textField.placeholder = @"Task";
+            textField.textColor = [UIColor wp_paragraph];
+            textField.font = [UIFont boldSystemFontOfSize:16];
             cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:textField];
             cell.label.text = @"Task";
             break;
@@ -77,13 +80,16 @@ static NSString *CellIdentifier = @"Cell";
             _dateField.inputView = datePicker;
             _dateField.placeholder = @"Task";
             cell.label.text = @"Due Date";
+            _dateField.textColor = [UIColor wp_paragraph];
+            _dateField.font = [UIFont boldSystemFontOfSize:16];
             break;
         }
         case 2: {
             UITextView *textView = [[UITextView alloc] init];
             cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:textView];
-            textView.backgroundColor = [UIColor blackColor];
             cell.label.text = @"Description";
+            cell.textColor = [UIColor wp_paragraph];
+            cell.font = [UIFont boldSystemFontOfSize:12];
             break;
         }
         case 3: {
@@ -92,14 +98,18 @@ static NSString *CellIdentifier = @"Cell";
             cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:textField];
             textField.placeholder = @"Site";
             cell.label.text = @"Site";
+            textField.textColor = [UIColor wp_paragraph];
+            textField.font = [UIFont boldSystemFontOfSize:16];
             break;
         }
         case 4: {
             UITextField *textField = [[UITextField alloc] init];
             textField.delegate = self;
             cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:textField];
-            textField.placeholder = @"Assigned To";
-            cell.label.text = @"Assigned To";
+            textField.placeholder = @"Assignee";
+            cell.label.text = @"Assignee";
+            textField.textColor = [UIColor wp_paragraph];
+            textField.font = [UIFont boldSystemFontOfSize:16];
             break;
         }
         case 5: {
