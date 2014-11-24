@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "WPViewController.h"
+#import "WPUser.h"
 
 @interface WPSettingsTableViewController : WPViewController <UITableViewDelegate, UITableViewDataSource>
+
+@property (nonatomic) WPUser *user;
 
 @end

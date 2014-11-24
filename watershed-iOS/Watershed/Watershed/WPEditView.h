@@ -12,3 +12,10 @@
 @interface WPEditView : WPView <UITableViewDelegate, UITableViewDataSource>
 
 @end
+
+@interface WPEditTableViewCell : UITableViewCell
+
+@property (nonatomic) UITextField *editField;
+- (void)addSubviews;
+
+@end

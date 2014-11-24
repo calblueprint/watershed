@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WPUser.h"
 
 @interface WPEditViewController : UIViewController
 
 -(void)dismissSelf;
+@property (nonatomic) WPUser *user;
 
 @end

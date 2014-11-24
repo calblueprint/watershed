@@ -39,6 +39,7 @@
 
 -(void)openSettings {
     WPSettingsTableViewController *settingsTableViewController = [[WPSettingsTableViewController alloc] init];
+    
     [self.navigationController pushViewController:settingsTableViewController animated:YES];
 }
 

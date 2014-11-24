@@ -78,14 +78,21 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *newCell = [[UITableViewCell alloc] init];
+    WPEditTableViewCell *newCell = [[WPEditTableViewCell alloc] init];
     switch (indexPath.row) {
         case 0: {
             newCell.textLabel.text = @"Name";
+            UITextField *editName = [[UITextField alloc] init];
+            editName.text = @"Max Wolffe";
+            newCell.editField = editName;
             break;
         }
         case 1: {
             newCell.textLabel.text = @"Email";
+            newCell.textLabel.text = @"Name";
+            UITextField *editName = [[UITextField alloc] init];
+            editName.text = @"Max Wolffe";
+            newCell.editField = editName;
             break;
         }
         case 2: {
@@ -100,6 +107,7 @@
             //do nothing
         }
     }
+    [newCell addSubviews];
     return newCell;
 
 }
@@ -108,4 +116,31 @@
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 
 }
+@end
+
+@implementation WPEditTableViewCell
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        [self setNeedsUpdateConstraints];
+    }
+    return self;
+}
+
+- (void)addSubviews {
+    [self.contentView addSubview:self.editField];
+    
+}
+
+- (void)updateConstraints {
+    
+    [self.editField mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.trailing.equalTo(@(-standardMargin));
+        make.centerY.equalTo(self.mas_centerY);
+    }];
+
+    [super updateConstraints];
+}
+
 @end
