@@ -45,20 +45,8 @@
     NSDictionary *parameters = @{@"user" : @{@"email": email, @"password": password}};
     
     [[WPNetworkingManager sharedManager] requestLoginWithParameters:parameters success:^(id response) {
-        [self parseResponse:response];
         [self pushTabBarController];
     }];
-}
-
-- (void)parseResponse:(id)responseObject {
-    NSDictionary *responseDictionary = responseObject;
-    NSString *authToken = [responseDictionary objectForKey:@"authentication_token"];
-    NSString *email = [responseDictionary objectForKey:@"email"];
-    
-    UICKeyChainStore *store = [[WPNetworkingManager sharedManager] keyChainStore];
-    [store setString:authToken forKey:@"auth_token"];
-    [store setString:email forKey:@"email"];
-    [store synchronize];
 }
 
 - (void)pushTabBarController {
@@ -82,7 +70,6 @@
                                      }};
     
     [[WPNetworkingManager sharedManager] requestFacebookLoginWithParameters:parameters success:^(id response) {
-        [self parseResponse:response];
         [self pushTabBarController];
     }];
 }

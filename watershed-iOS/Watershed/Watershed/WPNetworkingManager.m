@@ -40,7 +40,11 @@ static NSString * const SITES_URL = @"sites";
     
     [self POST:signInString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"SIGN IN RESPONSE: %@", responseObject);
-        success(responseObject);
+        
+        NSDictionary *responseDictionary = responseObject;
+        NSString *authToken = responseDictionary[@"authentication_token"];
+        NSString *email = responseDictionary[@"email"];
+        [self updateLoginKeyChainInfoWithAuthToken:authToken email:email];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Incorrect email or password." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [incorrect show];
@@ -53,7 +57,11 @@ static NSString * const SITES_URL = @"sites";
     
     [self POST:facebookLoginString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"FACEBOOK LOGIN RESPONSE: %@", responseObject);
-        success(responseObject);
+        
+        NSDictionary *responseDictionary = responseObject;
+        NSString *authToken = responseDictionary[@"authentication_token"];
+        NSString *email = responseDictionary[@"email"];
+        [self updateLoginKeyChainInfoWithAuthToken:authToken email:email];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Cannot log in with Facebook." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [incorrect show];
@@ -126,6 +134,13 @@ static NSString * const SITES_URL = @"sites";
 }
 
 #pragma mark - KeyChainStore Configuration
+
+- (void)updateLoginKeyChainInfoWithAuthToken:(NSString *)authToken
+                                       email:(NSString *)email {
+    [self.keyChainStore setString:authToken forKey:@"auth_token"];
+    [self.keyChainStore setString:email forKey:@"email"];
+    [self.keyChainStore synchronize];
+}
 
 - (void)eraseLoginKeyChainInfo {
     [self.keyChainStore removeItemForKey:@"auth_token"];
