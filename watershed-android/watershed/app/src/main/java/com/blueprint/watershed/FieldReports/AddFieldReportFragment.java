@@ -21,16 +21,22 @@ import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.MiniSites.MiniSite;
+import com.blueprint.watershed.Networking.FieldReports.CreateFieldReportRequest;
+import com.blueprint.watershed.Networking.MiniSites.MiniSiteRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Tasks.TaskFragment;
 import com.blueprint.watershed.Users.User;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 public class AddFieldReportFragment extends Fragment implements View.OnClickListener {
 
@@ -98,6 +104,22 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
     }
 
     /*
+     * Networking
+     */
+    public void createFieldReportRequest(FieldReport fieldReport) {
+        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
+
+        CreateFieldReportRequest createFieldReportRequest = new CreateFieldReportRequest(getActivity(), fieldReport, params, new Response.Listener<FieldReport>() {
+            @Override
+            public void onResponse(FieldReport fieldReport) {
+
+            }
+        });
+
+        mNetworkManager.getRequestQueue().add(createFieldReportRequest);
+    }
+
+    /*
      * View.OnClickListener methods
      */
     public void onClick(View view) {
@@ -150,6 +172,8 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
 
         FieldReport fieldReport = new FieldReport(fieldReportDescription, fieldReportHealthInt, urgency, fieldReportPhoto, new User(), new MiniSite());
 
+
+
         TaskFragment taskFragment = TaskFragment.newInstance(0);
         mActivity.replaceFragment(taskFragment);
     }
@@ -169,9 +193,9 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
         return image;
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         ImageView fieldReportImageView = (ImageView)view.findViewById(R.id.field_report_image);
-        if (requestCode == CAMERA_REQUEST && resultCode == mActivity.RESULT_OK {
+        if (requestCode == CAMERA_REQUEST && resultCode == mActivity.RESULT_OK) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             fieldReportImageView.setImageBitmap(photo);
         }
