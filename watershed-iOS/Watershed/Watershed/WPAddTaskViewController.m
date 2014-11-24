@@ -10,7 +10,8 @@
 #import "WPAddTaskView.h"
 #import "WPAddTaskTableViewCell.h"
 #import "UIExtensions.h"
-#import "WPSelectTaskView.h"
+#import "WPSelectTaskViewController.h"
+
 
 @interface WPAddTaskViewController()
 
@@ -39,7 +40,6 @@ static NSString *CellIdentifier = @"Cell";
     self.navigationItem.rightBarButtonItem = doneButton;
     self.view.taskFormTableView = [[UITableView alloc] initWithFrame:CGRectZero];
     self.view.taskFormTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-
 }
 
 - (void)didReceiveMemoryWarning {
@@ -48,6 +48,22 @@ static NSString *CellIdentifier = @"Cell";
 
 - (void)saveForm:(UIButton *)sender {
     
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextView *)textView{
+    
+    NSLog(@"textViewShouldBeginEditing:");
+    WPSelectTaskViewController *selectTaskViewController = [[WPSelectTaskViewController alloc] init];
+    selectTaskViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [self presentViewController:selectTaskViewController animated:YES completion:nil];
+    return YES;
+}
+
+- (void)selectTask {
+    NSLog(@"HELLO");
+    WPSelectTaskViewController *selectTaskViewController = [[WPSelectTaskViewController alloc] init];
+    selectTaskViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [self presentViewController:selectTaskViewController animated:YES completion:nil];
 }
 
 - (void)datePickerValueChanged:(id)sender{
@@ -59,7 +75,7 @@ static NSString *CellIdentifier = @"Cell";
     [_dateField setText:dateString];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (WPAddTaskTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     WPAddTaskTableViewCell *cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     switch (indexPath.row) {
         case 0: {
@@ -70,6 +86,8 @@ static NSString *CellIdentifier = @"Cell";
             textField.font = [UIFont systemFontOfSize:16];
             cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:textField];
             cell.label.text = @"Task";
+            UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectTask)];
+            [textField addGestureRecognizer:tapRecognizer];
             break;
         }
         case 1: {

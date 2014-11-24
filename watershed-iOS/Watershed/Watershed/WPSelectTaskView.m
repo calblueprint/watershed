@@ -25,7 +25,7 @@
 - (void)createSubviews {
     _selectTaskTableView = [[UITableView alloc] init];
     [self addSubview:_selectTaskTableView];
-    
+
     _searchField = [({
         UITextField *searchField = [[UITextField alloc] init];
         searchField.font = [UIFont systemFontOfSize:14];
@@ -42,7 +42,7 @@
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
     }];
-    
+
     [self.selectTaskTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.searchField.mas_bottom);
         make.leading.equalTo(@0);
