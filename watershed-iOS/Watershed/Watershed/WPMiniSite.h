@@ -10,7 +10,7 @@
 #import "WPSite.h"
 #import "Mantle.h"
 
-@interface WPMiniSite : NSObject
+@interface WPMiniSite : MTLModel <MTLJSONSerializing>
 
 @property (nonatomic) NSNumber *miniSiteId;
 @property (nonatomic) NSString *name;
