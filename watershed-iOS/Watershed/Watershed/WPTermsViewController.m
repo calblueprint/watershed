@@ -28,7 +28,7 @@
     if (self) {
         [self createSubviews];
         [self setNeedsUpdateConstraints];
-        self.backgroundColor = [UIColor wp_blue];
+        self.backgroundColor = [UIColor lightGrayColor];
     }
     return self;
 }
@@ -37,6 +37,7 @@
     
     _termsLabel = [[UILabel alloc] init];
     _termsLabel.text = @"Terms";
+    _termsLabel.textColor = [UIColor whiteColor];
     [self addSubview:_termsLabel];
     
     _termsInfoLabel = [[UILabel alloc] init];
@@ -44,10 +45,12 @@
     _termsInfoLabel.font= [UIFont systemFontOfSize:10];
     _termsInfoLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _termsInfoLabel.numberOfLines = 0;
+    _termsInfoLabel.textColor = [UIColor whiteColor];
     [self addSubview:_termsInfoLabel];
     
     _privacyLabel = [[UILabel alloc] init];
     _privacyLabel.text = @"Privacy";
+    _privacyLabel.textColor = [UIColor whiteColor];
     [self addSubview:_privacyLabel];
     
     _privacyInfoLabel = [[UILabel alloc] init];
@@ -55,6 +58,7 @@
     _privacyInfoLabel.font= [UIFont systemFontOfSize:10];
     _privacyInfoLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _privacyInfoLabel.numberOfLines = 0;
+    _privacyInfoLabel.textColor = [UIColor whiteColor];
     [self addSubview:_privacyInfoLabel];
     
 }

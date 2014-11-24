@@ -19,8 +19,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    UIViewController *launchingViewController = [self newLoginViewController];
+//    UIViewController *launchingViewController = [self newLoginViewController];
+    UIViewController *launchingViewController = [self newInitialViewController];
     [self showViewController:launchingViewController];
 }
 

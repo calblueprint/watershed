@@ -30,7 +30,7 @@
     if (self) {
         [self createSubviews];
         [self setNeedsUpdateConstraints];
-        self.backgroundColor = [UIColor wp_blue];
+        self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"about_watershed.png"]];
     }
     return self;
 }
@@ -39,6 +39,7 @@
     
     _titleLabel = [[UILabel alloc] init];
     _titleLabel.text = @"The Watershed Project";
+    _titleLabel.textColor = [UIColor whiteColor];
     [self addSubview:_titleLabel];
     
     _aboutLabel = [[UILabel alloc] init];
@@ -46,6 +47,7 @@
     _aboutLabel.font = [UIFont systemFontOfSize:10];
     _aboutLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _aboutLabel.numberOfLines = 0;
+    _aboutLabel.textColor = [UIColor whiteColor];
     [self addSubview:_aboutLabel];
 
 }
