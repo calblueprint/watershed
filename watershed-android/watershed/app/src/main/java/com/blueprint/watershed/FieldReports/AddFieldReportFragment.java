@@ -21,6 +21,7 @@ import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Tasks.TaskFragment;
@@ -34,6 +35,7 @@ import java.util.Date;
 public class AddFieldReportFragment extends Fragment implements View.OnClickListener {
 
     private OnFragmentInteractionListener mListener;
+    private MainActivity mActivity;
     private View view;
     private Button mTakePhotoButton;
     private Button mSubmitFieldReportButton;
@@ -81,6 +83,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
+            mActivity = (MainActivity) activity;
             mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
@@ -110,9 +113,9 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
         }
     }
 
-    public void onTakePhotoButtonPressed(View view){
+    public void onTakePhotoButtonPressed(View takePhotoButton){
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+        if (takePictureIntent.resolveActivity(mActivity.getPackageManager()) != null) {
             File photoFile = null;
             try {
                 photoFile = createImageFile();
@@ -128,27 +131,27 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
     }
 
     public void onSubmitFieldReportButtonPressed(View fieldReportButton){
-        String fieldReportDescription = ((EditText)findViewById(R.id.field_report_description)).getText().toString();
+        String fieldReportDescription = ((EditText)view.findViewById(R.id.field_report_description)).getText().toString();
 
-        RadioGroup healthGroup = (RadioGroup) findViewById(R.id.health_group);
+        RadioGroup healthGroup = (RadioGroup)view.findViewById(R.id.health_group);
         Integer selectId = healthGroup.getCheckedRadioButtonId();
-        if (selectId == -1){
-            Toast toast = Toast.makeText(getApplicationContext(), "Please select a health rating", Toast.LENGTH_SHORT);
+        if (selectId == -1) {
+            Toast toast = Toast.makeText(mActivity.getApplicationContext(), "Please select a health rating", Toast.LENGTH_SHORT);
             toast.show();
             return;
         }
-        String fieldReportHealth = ((RadioButton) findViewById(selectId)).getText().toString();
+        String fieldReportHealth = ((RadioButton)view.findViewById(selectId)).getText().toString();
         Integer fieldReportHealthInt = Integer.parseInt(fieldReportHealth);
 
-        ImageView image = (ImageView) findViewById(R.id.field_report_image);
+        ImageView image = (ImageView)view.findViewById(R.id.field_report_image);
         Bitmap fieldReportPhoto = ((BitmapDrawable)image.getDrawable()).getBitmap();
 
-        Boolean urgency = ((Switch)findViewById(R.id.field_report_urgent)).isChecked();
+        Boolean urgency = ((Switch)view.findViewById(R.id.field_report_urgent)).isChecked();
 
         FieldReport fieldReport = new FieldReport(fieldReportDescription, fieldReportHealthInt, urgency, fieldReportPhoto, new User(), new MiniSite());
 
         TaskFragment taskFragment = TaskFragment.newInstance(0);
-        replaceFragment(taskFragment);
+        mActivity.replaceFragment(taskFragment);
     }
 
     // Image Handling
@@ -167,7 +170,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        ImageView fieldReportImageView = (ImageView)findViewById(R.id.field_report_image);
+        ImageView fieldReportImageView = (ImageView)view.findViewById(R.id.field_report_image);
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             fieldReportImageView.setImageBitmap(photo);
