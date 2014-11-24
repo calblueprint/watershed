@@ -37,6 +37,8 @@ static NSString *CellIdentifier = @"Cell";
                                    action:@selector(saveForm:)];
     self.navigationItem.rightBarButtonItem = doneButton;
     self.view.taskFormTableView = [[UITableView alloc] initWithFrame:CGRectZero];
+    self.view.taskFormTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -64,7 +66,7 @@ static NSString *CellIdentifier = @"Cell";
             textField.delegate = self;
             textField.placeholder = @"Task";
             textField.textColor = [UIColor wp_paragraph];
-            textField.font = [UIFont boldSystemFontOfSize:16];
+            textField.font = [UIFont systemFontOfSize:16];
             cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:textField];
             cell.label.text = @"Task";
             break;
@@ -78,18 +80,17 @@ static NSString *CellIdentifier = @"Cell";
             [datePicker addTarget:self action:@selector(datePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
             datePicker.tag = indexPath.row;
             _dateField.inputView = datePicker;
-            _dateField.placeholder = @"Task";
+            _dateField.placeholder = @"Due Date";
             cell.label.text = @"Due Date";
             _dateField.textColor = [UIColor wp_paragraph];
-            _dateField.font = [UIFont boldSystemFontOfSize:16];
+            _dateField.font = [UIFont systemFontOfSize:16];
             break;
         }
         case 2: {
-            UITextView *textView = [[UITextView alloc] init];
-            cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:textView];
-            cell.label.text = @"Description";
-            cell.textColor = [UIColor wp_paragraph];
-            cell.font = [UIFont boldSystemFontOfSize:12];
+            UISwitch *urgentSwitch = [[UISwitch alloc] init];
+            urgentSwitch.onTintColor = [UIColor wp_red];
+            cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:urgentSwitch];
+            cell.label.text = @"Urgent";
             break;
         }
         case 3: {
@@ -99,7 +100,7 @@ static NSString *CellIdentifier = @"Cell";
             textField.placeholder = @"Site";
             cell.label.text = @"Site";
             textField.textColor = [UIColor wp_paragraph];
-            textField.font = [UIFont boldSystemFontOfSize:16];
+            textField.font = [UIFont systemFontOfSize:16];
             break;
         }
         case 4: {
@@ -109,14 +110,15 @@ static NSString *CellIdentifier = @"Cell";
             textField.placeholder = @"Assignee";
             cell.label.text = @"Assignee";
             textField.textColor = [UIColor wp_paragraph];
-            textField.font = [UIFont boldSystemFontOfSize:16];
+            textField.font = [UIFont systemFontOfSize:16];
             break;
         }
         case 5: {
-            UISwitch *urgentSwitch = [[UISwitch alloc] init];
-            urgentSwitch.onTintColor = [UIColor wp_red];
-            cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:urgentSwitch];
-            cell.label.text = @"Urgent";
+            UITextView *textView = [[UITextView alloc] init];
+            cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:textView];
+            cell.label.text = @"Description";
+            textView.textColor = [UIColor wp_paragraph];
+            textView.font = [UIFont systemFontOfSize:12];
             break;
         }
         default: {
@@ -136,7 +138,7 @@ static NSString *CellIdentifier = @"Cell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 2) {
+    if (indexPath.row == 5) {
         return 80;
     }
     return 50;
