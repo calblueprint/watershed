@@ -7,6 +7,7 @@
 //
 
 #import "WPSelectTaskViewController.h"
+#import "WPSelectTaskView.h"
 
 @interface WPSelectTaskViewController ()
 
@@ -18,8 +19,13 @@
 
 static NSString *CellIdentifier = @"Cell";
 
+- (void)loadView {
+    self.view[[WPSelectTaskView] NSString
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     _taskArray = @[@"Water Tree", @"Kill Tree", @"Plant Tree", @"Feed Tree"];
 }
 
