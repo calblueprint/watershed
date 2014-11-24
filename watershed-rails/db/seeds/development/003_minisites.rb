@@ -23,7 +23,7 @@ images = [
 
 images.each do |image_url|
   photo = Photo.create!(
-    image_tmp_url: image_url,
     parent: MiniSite.first,
+    image: open(image_url),
   )
 end
