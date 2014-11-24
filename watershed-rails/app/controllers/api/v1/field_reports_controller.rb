@@ -10,6 +10,7 @@ class Api::V1::FieldReportsController < Api::V1::BaseController
   end
 
   def create
+    puts params
     if @field_report.save
       render json: @field_report, serializer: FieldReportSerializer
     else

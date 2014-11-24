@@ -25,7 +25,7 @@ public class CreateFieldReportRequest extends BaseRequest {
     Activity mActivity;
 
     public CreateFieldReportRequest(final Activity activity, final FieldReport fieldReport, HashMap<String, JSONObject> params, final Response.Listener<FieldReport> listener) {
-        super(Request.Method.POST, makeURL("field_reports"), new JSONObject(params),
+        super(Request.Method.POST, makeURL("field_reports"), fieldReportParams(activity, fieldReport),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {
@@ -40,19 +40,24 @@ public class CreateFieldReportRequest extends BaseRequest {
                         }
                     }
                 }, activity);
+        mActivity = activity;
         mFieldReport = fieldReport;
     }
 
-    @Override
-    protected HashMap<String,String> getParams(){
-        HashMap<String,String> params = new HashMap<String, String>();
+    protected static JSONObject fieldReportParams(final Activity activity, final FieldReport fieldReport) {
+        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
+        ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
 
         try {
-            params.put("field_report", getNetworkManager(mActivity.getApplicationContext()).getObjectMapper().writeValueAsString(mFieldReport));
+            JSONObject fieldReportJson = new JSONObject(mapper.writeValueAsString(fieldReport));
+            params.put("field_report", fieldReportJson);
         } catch (Exception e) {
             // lol
+            Log.e("exception", e.toString());
+            e.printStackTrace();
         }
 
-        return params;
+        Log.e("params", params.toString());
+        return new JSONObject(params);
     }
 }

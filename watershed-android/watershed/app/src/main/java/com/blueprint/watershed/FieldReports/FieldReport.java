@@ -20,7 +20,7 @@ public class FieldReport implements APIObject {
     private String mDescription;
     private Integer mHealth;
     private Boolean mUrgent;
-    private Bitmap mPhoto;
+    //private Bitmap mPhoto;
 
     // Relationships
     private User mUser;
@@ -34,7 +34,7 @@ public class FieldReport implements APIObject {
         mDescription = description;
         mHealth = health;
         mUrgent = urgent;
-        mPhoto = photo;
+        //mPhoto = photo;
         mUser = user;
         mMiniSite = miniSite;
     }
@@ -66,9 +66,9 @@ public class FieldReport implements APIObject {
     public Boolean getUrgent() {
         return mUrgent;
     }
-    public Bitmap getPhoto(){
-        return mPhoto;
-    }
+//    public Bitmap getPhoto(){
+//        return mPhoto;
+//    }
 
     // Setters
     public void setId(Integer id) { mId = id; }
@@ -81,7 +81,7 @@ public class FieldReport implements APIObject {
     public void setUrgent(Boolean urgent) {
         mUrgent = urgent;
     }
-    public void setPhoto(Bitmap photo){
-        mPhoto = photo;
-    }
+//    public void setPhoto(Bitmap photo){
+//        mPhoto = photo;
+//    }
 }
