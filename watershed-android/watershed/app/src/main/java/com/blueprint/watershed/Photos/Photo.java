@@ -1,10 +1,13 @@
 package com.blueprint.watershed.Photos;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Base64;
 
+import com.android.volley.Response;
 import com.blueprint.watershed.APIObject;
 import com.blueprint.watershed.MiniSites.MiniSite;
+import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Users.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -41,7 +44,18 @@ public class Photo implements APIObject {
     }
 
     @JsonIgnore
-    public Bitmap getImage() { return mImage; }
+    public Bitmap getImage(Context context) {
+        if (mImage == null) {
+            NetworkManager manager = NetworkManager.getInstance(context);
+            manager.imageRequest(getURL(), new Response.Listener<Bitmap>() {
+                @Override
+                public void onResponse(Bitmap bitmap) {
+                    mImage = bitmap;
+                }
+            });
+        }
+        return mImage;
+    }
 
     // Setters
     public void setId(Integer id) { mId = id; }
