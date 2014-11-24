@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 
 import com.blueprint.watershed.APIObject;
 import com.blueprint.watershed.MiniSites.MiniSite;
+import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Users.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -27,18 +28,20 @@ public class FieldReport implements APIObject {
     // Relationships
     private User mUser;
     private MiniSite mMiniSite;
+    private Task mTask;
 
     public FieldReport() {
     }
 
     public FieldReport(String description, Integer healthRating, Boolean urgent, Bitmap photo,
-                       User user, MiniSite miniSite) {
+                       User user, MiniSite miniSite, Task task) {
         mDescription = description;
         mHealthRating = healthRating;
         mUrgent = urgent;
         //mPhoto = photo;
         mUser = user;
         mMiniSite = miniSite;
+        mTask = task;
     }
 
     /*
@@ -52,12 +55,18 @@ public class FieldReport implements APIObject {
     @JsonIgnore
     public MiniSite getMiniSite() { return mMiniSite; }
 
+    @JsonIgnore
+    public Task getTask() { return mTask; }
+
     // Setters
     @JsonProperty
     public void setUser(User user) { mUser = user; }
 
     @JsonProperty
     public void setMiniSite(MiniSite miniSite) { mMiniSite = miniSite; }
+
+    @JsonProperty
+    public void setTask(Task task) { mTask = task; }
 
     /*
      * Attributes
@@ -67,6 +76,9 @@ public class FieldReport implements APIObject {
     @JsonIgnore
     public Integer getId() { return mId; }
 
+    public Integer getUserId() { return mUser.getId(); }
+    public Integer getTaskId() { return mTask.getId(); }
+    public Integer getMiniSiteId() { return mMiniSite.getId(); }
     public String getDescription() {
         return mDescription;
     }
