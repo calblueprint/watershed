@@ -68,7 +68,7 @@
     self.viewPhotoModal.view.userInteractionEnabled = YES;
 
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.viewPhotoModal.view.frame];
-    imageView.contentMode=UIViewContentModeScaleAspectFit;
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
     imageView.image = self.view.selectedImageView.image;
 
     [self.viewPhotoModal.view addSubview:imageView];

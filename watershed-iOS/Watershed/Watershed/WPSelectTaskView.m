@@ -44,7 +44,7 @@
     }];
     
     [self.selectTaskTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.searchField.mas_bottom).with.offset(standardMargin);
+        make.top.equalTo(self.searchField.mas_bottom);
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
         make.bottom.equalTo(@0);

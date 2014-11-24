@@ -10,6 +10,7 @@
 #import "WPAddTaskView.h"
 #import "WPAddTaskTableViewCell.h"
 #import "UIExtensions.h"
+#import "WPSelectTaskView.h"
 
 @interface WPAddTaskViewController()
 
