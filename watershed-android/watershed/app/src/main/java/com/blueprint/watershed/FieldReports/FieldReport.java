@@ -62,13 +62,8 @@ public class FieldReport implements APIObject {
     public Photo getPhoto() { return mPhoto; }
 
     // Setters
-    @JsonProperty
     public void setUser(User user) { mUser = user; }
-
-    @JsonProperty
     public void setMiniSite(MiniSite miniSite) { mMiniSite = miniSite; }
-
-    @JsonProperty
     public void setTask(Task task) { mTask = task; }
 
     @JsonProperty("photo_attributes")
@@ -96,9 +91,7 @@ public class FieldReport implements APIObject {
     }
 
     // Setters
-    @JsonProperty
     public void setId(Integer id) { mId = id; }
-
     public void setDescription(String description) {
         mDescription = description;
     }
