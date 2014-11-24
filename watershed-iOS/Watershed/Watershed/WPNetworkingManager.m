@@ -61,13 +61,20 @@ static NSString * const SITES_URL = @"sites";
     }];
 }
 
-- (void)requestSitesListWithParameters:(NSMutableDictionary *)parameters success:(void (^)(id response))success {
+- (void)requestSitesListWithParameters:(NSMutableDictionary *)parameters success:(void (^)(NSMutableArray* sitesList))success {
     NSString *sitesString = [WPNetworkingManager createURLWithEndpoint:SITES_URL];
     [self addAuthenticationParameters:parameters];
     
     [self GET:sitesString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"SITES LIST: %@", responseObject);
-        success(responseObject);
+        NSArray *sitesListJSON = (NSArray *)responseObject[@"sites"];
+        NSMutableArray *sitesList = [[NSMutableArray alloc] init];
+        for (NSDictionary *siteJSON in sitesListJSON) {
+            WPSite *site = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:siteJSON error:nil];
+            site.image = [UIImage imageNamed:@"SampleCoverPhoto"];
+            [sitesList addObject:site];
+        }
+        success(sitesList);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load sites." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [incorrect show];

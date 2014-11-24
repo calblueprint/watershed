@@ -38,30 +38,10 @@ static NSString *cellIdentifier = @"SiteCell";
     self.sitesTableView.delegate = self;
     self.sitesTableView.dataSource = self;
     
-    [[WPNetworkingManager sharedManager] requestSitesListWithParameters:[[NSMutableDictionary alloc] init] success:^(id response) {
-        [self loadSiteData:(NSDictionary *)response];
+    [[WPNetworkingManager sharedManager] requestSitesListWithParameters:[[NSMutableDictionary alloc] init] success:^(NSMutableArray *sitesList) {
+        self.sitesList = sitesList;
+        [self.sitesTableView reloadData];
     }];
-}
-
-- (void)loadSiteData:(NSDictionary *)data {
-    NSArray *sitesJSON = data[@"sites"];
-    for (NSDictionary *siteData in sitesJSON) {
-        WPSite *site = [[WPSite alloc] init];
-        site.siteId = siteData[@"id"];
-        site.name = siteData[@"name"];
-        site.info = siteData[@"description"];
-        site.latitude = [siteData[@"latitude"] floatValue];
-        site.longitude = [siteData[@"longitude"] floatValue];
-        site.street = siteData[@"street"];
-        site.city = siteData[@"city"];
-        site.state = siteData[@"state"];
-        site.zipCode = siteData[@"zip_code"];
-        site.image = [UIImage imageNamed:@"SampleCoverPhoto"];
-        site.miniSitesCount = siteData[@"mini_sites_count"];
-        
-        [self.sitesList addObject:site];
-    }
-    [self.sitesTableView reloadData];
 }
 
 #pragma mark - TableView Delegate/DataSource Methods

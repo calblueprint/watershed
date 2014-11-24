@@ -18,7 +18,7 @@
 + (WPNetworkingManager *)sharedManager;
 - (void)requestLoginWithParameters:(NSDictionary *)parameters success:(void (^)(id response))success;
 - (void)requestFacebookLoginWithParameters:(NSDictionary *)parameters success:(void (^)(id response))success;
-- (void)requestSitesListWithParameters:(NSMutableDictionary *)parameters success:(void (^)(id response))success;
+- (void)requestSitesListWithParameters:(NSMutableDictionary *)parameters success:(void (^)(NSMutableArray *sitesList))success;
 - (void)requestSiteWithSite:(WPSite *)site parameters:(NSMutableDictionary *)parameters success:(void (^)(id response))success;
 
 - (void)eraseStore;
