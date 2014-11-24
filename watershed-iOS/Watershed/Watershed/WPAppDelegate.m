@@ -116,6 +116,8 @@ static NSString * const BASE_URL = @"https://intense-reaches-1457.herokuapp.com/
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     NSLog(@"Did Receive Remote Notifications: (%@)", userInfo);
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
 
 }
 
