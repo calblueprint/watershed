@@ -73,23 +73,23 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     protected void onResume() {
         super.onResume();
 
-        AppEventsLogger.activateApp(this);
+        //AppEventsLogger.activateApp(this);
     }
 
     protected void onPause() {
         super.onPause();
 
-        AppEventsLogger.deactivateApp(this);
+        //AppEventsLogger.deactivateApp(this);
     }
 
     public void initializeViews() {
         //setLandingPageImage((ImageView)findViewById(R.id.landing_page_image));
 
         setLoginButton((Button)findViewById(R.id.login_load_fragment_button));
-        setFacebookButton((Button)findViewById(R.id.facebook_button));
+        //setFacebookButton((Button)findViewById(R.id.facebook_button));
         setSignUpButton((Button)findViewById(R.id.sign_up_load_fragment_button));
 
-        mFacebookButton.setOnClickListener(this);
+        //mFacebookButton.setOnClickListener(this);
         mLoginButton.setOnClickListener(this);
         mSignUpButton.setOnClickListener(this);
     }

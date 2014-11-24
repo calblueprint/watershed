@@ -32,4 +32,7 @@
     <string name="urgent">Urgent</string>
     <string name="not_urgent">Not</string>
 
+    <!--Facebook Auth-->
+    <string name="facebook_app_id">544628745672116</string>
+
 </resources>

@@ -47,26 +47,14 @@
         android:layout_marginEnd="@dimen/standard_margin"
         android:layout_marginRight="@dimen/standard_margin">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="vertical">
+        <com.facebook.widget.LoginButton
+            android:id="@+id/authButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            />
 
-            <Button
-                android:id="@+id/facebook_button"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/button_border_standard_height"
-                android:background="@color/facebook_blue"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:text="@string/landing_page_facebook_button"
-                />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/facebook_dark_blue" />
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
