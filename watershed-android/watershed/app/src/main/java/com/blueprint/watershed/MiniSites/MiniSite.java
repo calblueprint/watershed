@@ -1,6 +1,7 @@
 package com.blueprint.watershed.MiniSites;
 import com.blueprint.watershed.APIObject;
 import com.blueprint.watershed.FieldReports.FieldReport;
+import com.blueprint.watershed.Photos.Photo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class MiniSite implements APIObject {
     private String mLongitude;
 
     private ArrayList<FieldReport> mFieldReports;
+    private ArrayList<Photo> mPhotos;
 
     public MiniSite() {
     }
@@ -39,6 +41,15 @@ public class MiniSite implements APIObject {
     }
 
     public FieldReport getFieldReport(int position) { return mFieldReports.get(position); }
+
+    public ArrayList<Photo> getPhotos() {
+        if (mPhotos == null) {
+            mPhotos = new ArrayList<Photo>();
+        }
+        return mPhotos;
+    }
+
+    public Photo getPhoto(int position) { return mPhotos.get(position); }
 
     // Getters
     public Integer getId() { return mId; }

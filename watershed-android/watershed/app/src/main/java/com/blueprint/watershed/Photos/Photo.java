@@ -20,6 +20,7 @@ import java.io.ByteArrayOutputStream;
 public class Photo implements APIObject {
 
     private Integer mId;
+    private String mURL;
     private Bitmap mImage;
 
     public Photo() {
@@ -31,9 +32,7 @@ public class Photo implements APIObject {
 
     // Getters
     public Integer getId() { return mId; }
-
-    @JsonIgnore
-    public Bitmap getImage() { return mImage; }
+    public String getURL() { return mURL; }
 
     public String getData() {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -41,7 +40,11 @@ public class Photo implements APIObject {
         return Base64.encodeToString(stream.toByteArray(), Base64.DEFAULT);
     }
 
+    @JsonIgnore
+    public Bitmap getImage() { return mImage; }
+
     // Setters
     public void setId(Integer id) { mId = id; }
+    public void setURL(String URL) { mURL = URL; }
     public void setImage(Bitmap image) { mImage = image; }
 }
