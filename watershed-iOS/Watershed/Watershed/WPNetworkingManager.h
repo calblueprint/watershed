@@ -10,6 +10,7 @@
 #import "AFNetworking.h"
 #import "UICKeyChainStore.h"
 #import "WPSite.h"
+#import "WPMiniSite.h"
 
 @interface WPNetworkingManager : AFHTTPRequestOperationManager
 
@@ -19,7 +20,7 @@
 - (void)requestLoginWithParameters:(NSDictionary *)parameters success:(void (^)(id response))success;
 - (void)requestFacebookLoginWithParameters:(NSDictionary *)parameters success:(void (^)(id response))success;
 - (void)requestSitesListWithParameters:(NSMutableDictionary *)parameters success:(void (^)(NSMutableArray *sitesList))success;
-- (void)requestSiteWithSite:(WPSite *)site parameters:(NSMutableDictionary *)parameters success:(void (^)(id response))success;
+- (void)requestSiteWithSite:(WPSite *)site parameters:(NSMutableDictionary *)parameters success:(void (^)(WPSite *site, NSMutableArray *miniSiteList))success;
 
 - (void)eraseStore;
 @end

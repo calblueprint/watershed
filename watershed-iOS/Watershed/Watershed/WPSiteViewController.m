@@ -30,8 +30,10 @@ static NSString *cellIdentifier = @"MiniSiteCell";
     self.miniSiteTableView.delegate = self;
     self.miniSiteTableView.dataSource = self;
 
-    [[WPNetworkingManager sharedManager] requestSiteWithSite:self.site parameters:[[NSMutableDictionary alloc] init] success:^(id response) {
-        [self loadMiniSiteData:(NSMutableDictionary *)response];
+    [[WPNetworkingManager sharedManager] requestSiteWithSite:self.site parameters:[[NSMutableDictionary alloc] init] success:^(WPSite *site, NSMutableArray *miniSiteList) {
+        self.site = site;
+        self.miniSiteList = miniSiteList;
+        [self.miniSiteTableView reloadData];
     }];
 }
 
@@ -46,28 +48,6 @@ static NSString *cellIdentifier = @"MiniSiteCell";
     siteView.siteCountLabel.label.text = [[self.site.miniSitesCount stringValue] stringByAppendingString:@" mini sites"];
     
     self.miniSiteTableView = siteView.miniSiteTableView;
-}
-
-- (void)loadMiniSiteData:(NSMutableDictionary *)data {
-    NSArray *miniSites = data[@"site"][@"mini_sites"];
-    
-    for (NSDictionary *miniSiteData in miniSites) {
-        WPMiniSite *miniSite = [[WPMiniSite alloc] init];
-        miniSite.miniSiteId = miniSiteData[@"id"];
-        miniSite.name = miniSiteData[@"name"];
-        miniSite.info = miniSiteData[@"info"];
-        miniSite.latitude = [miniSiteData[@"latitude"] floatValue];
-        miniSite.longitude = [miniSiteData[@"longitude"] floatValue];
-        miniSite.street = miniSiteData[@"street"];
-        miniSite.city = miniSiteData[@"city"];
-        miniSite.state = miniSiteData[@"state"];
-        miniSite.zipCode = miniSiteData[@"zip_code"];
-        miniSite.image = [UIImage imageNamed:@"SampleCoverPhoto2"];
-        miniSite.site = self.site;
-        
-        [self.miniSiteList addObject:miniSite];
-    }
-    [self.miniSiteTableView reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

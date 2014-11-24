@@ -67,6 +67,7 @@ static NSString * const SITES_URL = @"sites";
     
     [self GET:sitesString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"SITES LIST: %@", responseObject);
+        
         NSArray *sitesListJSON = (NSArray *)responseObject[@"sites"];
         NSMutableArray *sitesList = [[NSMutableArray alloc] init];
         for (NSDictionary *siteJSON in sitesListJSON) {
@@ -82,7 +83,7 @@ static NSString * const SITES_URL = @"sites";
     }];
 }
 
-- (void)requestSiteWithSite:(WPSite *)site parameters:(NSMutableDictionary *)parameters success:(void (^)(id response))success {
+- (void)requestSiteWithSite:(WPSite *)site parameters:(NSMutableDictionary *)parameters success:(void (^)(WPSite *site, NSMutableArray *miniSiteList))success {
     NSString *siteEndpoint = [@"/" stringByAppendingString:[site.siteId stringValue]];
     NSString *SITE_URL = [SITES_URL stringByAppendingString:siteEndpoint];
     NSString *siteString = [WPNetworkingManager createURLWithEndpoint:SITE_URL];
@@ -90,7 +91,20 @@ static NSString * const SITES_URL = @"sites";
     
     [self GET:siteString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"SINGLE SITE: %@", responseObject);
-        success(responseObject);
+        
+        NSDictionary *siteJSON = (NSDictionary *)responseObject[@"site"];
+        WPSite *site = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:siteJSON error:nil];
+        site.image = [UIImage imageNamed:@"SampleCoverPhoto"];
+        
+        NSDictionary *miniSiteListJSON = siteJSON[@"mini_sites"];
+        NSMutableArray *miniSiteList = [[NSMutableArray alloc] init];
+        for (NSDictionary *miniSiteJSON in miniSiteListJSON) {
+            WPMiniSite *miniSite = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:miniSiteJSON error:nil];
+            miniSite.image = [UIImage imageNamed:@"SampleCoverPhoto2"];
+            [miniSiteList addObject:miniSite];
+        }
+
+        success(site, miniSiteList);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load site." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [incorrect show];
