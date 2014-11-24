@@ -35,7 +35,7 @@ public abstract class BaseRequest extends Request {
     private static final String baseURL = "https://intense-reaches-1457.herokuapp.com/api/v1/";
 
     public BaseRequest(int method, String url, JSONObject jsonRequest,
-                       Response.Listener listener, final Activity activity){
+                       Response.Listener listener, final Activity activity) {
         super(method, url, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
