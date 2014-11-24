@@ -15,4 +15,13 @@ class Photo < ActiveRecord::Base
   skip_callback :save, :after, :remove_previously_stored_image
 
   belongs_to :parent, polymorphic: true
+
+  def url
+    image_tmp_url || image.url
+  end
+
+  def image_tmp_url
+    "/tmp/uploads/#{image_tmp}" unless image_tmp.nil?
+  end
+
 end

@@ -27,6 +27,7 @@ import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.Networking.FieldReports.CreateFieldReportRequest;
 import com.blueprint.watershed.Networking.MiniSites.MiniSiteRequest;
 import com.blueprint.watershed.Networking.NetworkManager;
+import com.blueprint.watershed.Photos.Photo;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Tasks.TaskFragment;
@@ -173,7 +174,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
         Boolean urgency = ((Switch)view.findViewById(R.id.field_report_urgent)).isChecked();
 
         // TODO(max): Make sure to replace user, minisite, and task with the corresponding objects.
-        FieldReport fieldReport = new FieldReport(fieldReportDescription, fieldReportHealthInt, urgency, fieldReportPhoto, new User(), new MiniSite(), new Task());
+        FieldReport fieldReport = new FieldReport(fieldReportDescription, fieldReportHealthInt, urgency, new Photo(fieldReportPhoto), new User(), new MiniSite(), new Task());
 
         createFieldReportRequest(fieldReport);
 

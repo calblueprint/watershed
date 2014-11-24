@@ -31,7 +31,7 @@ class Api::V1::FieldReportsController < Api::V1::BaseController
     params.require(:field_report).permit(:user_id, :mini_site_id,
                                          :description, :health_rating, :urgent,
                                          :task_id, {
-                                           photos_attributes: [
+                                           photo_attributes: [
                                              :id,
                                              :image,
                                            ],

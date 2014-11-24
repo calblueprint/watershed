@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 
 import com.blueprint.watershed.APIObject;
 import com.blueprint.watershed.MiniSites.MiniSite;
+import com.blueprint.watershed.Photos.Photo;
 import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Users.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -23,25 +24,25 @@ public class FieldReport implements APIObject {
     private String mDescription;
     private Integer mHealthRating;
     private Boolean mUrgent;
-    //private Bitmap mPhoto;
 
     // Relationships
     private User mUser;
     private MiniSite mMiniSite;
     private Task mTask;
+    private Photo mPhoto;
 
     public FieldReport() {
     }
 
-    public FieldReport(String description, Integer healthRating, Boolean urgent, Bitmap photo,
+    public FieldReport(String description, Integer healthRating, Boolean urgent, Photo photo,
                        User user, MiniSite miniSite, Task task) {
         mDescription = description;
         mHealthRating = healthRating;
         mUrgent = urgent;
-        //mPhoto = photo;
         mUser = user;
         mMiniSite = miniSite;
         mTask = task;
+        mPhoto = photo;
     }
 
     /*
@@ -58,6 +59,8 @@ public class FieldReport implements APIObject {
     @JsonIgnore
     public Task getTask() { return mTask; }
 
+    public Photo getPhoto() { return mPhoto; }
+
     // Setters
     @JsonProperty
     public void setUser(User user) { mUser = user; }
@@ -67,6 +70,9 @@ public class FieldReport implements APIObject {
 
     @JsonProperty
     public void setTask(Task task) { mTask = task; }
+
+    @JsonProperty("photo_attributes")
+    public void setPhoto(Photo photo) { mPhoto = photo; }
 
     /*
      * Attributes
@@ -88,9 +94,6 @@ public class FieldReport implements APIObject {
     public Boolean getUrgent() {
         return mUrgent;
     }
-//    public Bitmap getPhoto(){
-//        return mPhoto;
-//    }
 
     // Setters
     @JsonProperty
@@ -105,7 +108,4 @@ public class FieldReport implements APIObject {
     public void setUrgent(Boolean urgent) {
         mUrgent = urgent;
     }
-//    public void setPhoto(Bitmap photo){
-//        mPhoto = photo;
-//    }
 }
