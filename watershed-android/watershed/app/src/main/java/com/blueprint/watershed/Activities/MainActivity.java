@@ -361,6 +361,7 @@ public class MainActivity extends ActionBarActivity
                 startActivity(intent);
                 break;
         }
+        mDrawerLayout.closeDrawer(mDrawerList);
     }
 
     @Override
