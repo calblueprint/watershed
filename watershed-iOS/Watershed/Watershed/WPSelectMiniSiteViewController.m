@@ -18,7 +18,7 @@
 
 @implementation WPSelectMiniSiteViewController
 
-@synthesize selectTaskDelegate;
+@synthesize selectSiteDelegate;
 
 static NSString *CellIdentifier = @"Cell";
 
@@ -31,7 +31,7 @@ static NSString *CellIdentifier = @"Cell";
     self.view.backgroundColor = [UIColor whiteColor];
     self.view.selectMiniSiteTableView.delegate = self;
     self.view.selectMiniSiteTableView.dataSource = self;
-    _miniSiteArray = @[@"Water Tree", @"Kill Tree", @"Plant Tree", @"Feed Tree"];
+    _miniSiteArray = @[@"Mark's Motel", @"Max's Moat", @"Melissa's Mansion", @"Andrew's Antfarm"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -47,9 +47,9 @@ static NSString *CellIdentifier = @"Cell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if([self.selectTaskDelegate respondsToSelector:@selector(secondViewControllerDismissed:)])
+    if([self.selectSiteDelegate respondsToSelector:@selector(selectSiteViewControllerDismissed:)])
     {
-        [self.selectTaskDelegate secondViewControllerDismissed:[self.view.selectMiniSiteTableView cellForRowAtIndexPath:indexPath].textLabel.text];
+        [self.selectSiteDelegate selectSiteViewControllerDismissed:[self.view.selectMiniSiteTableView cellForRowAtIndexPath:indexPath].textLabel.text];
     }
     [self dismissViewControllerAnimated:YES completion:nil];
 }

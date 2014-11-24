@@ -8,13 +8,13 @@
 
 #import "WPViewController.h"
 
-@protocol SelectTaskDelegate <NSObject>
--(void) secondViewControllerDismissed:(NSString *)stringForFirst;
+@protocol SelectSiteDelegate <NSObject>
+-(void) selectSiteViewControllerDismissed:(NSString *)stringForFirst;
 @end
 
 @interface WPSelectMiniSiteViewController : WPViewController<UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, assign) id<SelectTaskDelegate>    selectTaskDelegate;
+@property (nonatomic, assign) id<SelectSiteDelegate>    selectSiteDelegate;
 @property (nonatomic) NSString *myString;
 
 @end

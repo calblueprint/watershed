@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "UIExtensions.h"
 #import "WPSelectTaskViewController.h"
+#import "WPSelectMiniSiteViewController.h"
 
-@interface WPAddTaskViewController : WPViewController<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, SelectTaskDelegate>
+@interface WPAddTaskViewController : WPViewController<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, SelectTaskDelegate, SelectSiteDelegate>
 
 @end
