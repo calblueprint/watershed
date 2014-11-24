@@ -17,6 +17,8 @@
 
 @property (nonatomic) WPAddTaskView *view;
 @property (nonatomic) UITextField *dateField;
+@property (nonatomic) UITextField *taskField;
+
 @end
 
 @implementation WPAddTaskViewController
@@ -50,12 +52,22 @@ static NSString *CellIdentifier = @"Cell";
     
 }
 
-- (BOOL)textFieldShouldBeginEditing:(UITextView *)textView{
-    
-    NSLog(@"textViewShouldBeginEditing:");
-    WPSelectTaskViewController *selectTaskViewController = [[WPSelectTaskViewController alloc] init];
-    selectTaskViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    [self presentViewController:selectTaskViewController animated:YES completion:nil];
+- (void)secondViewControllerDismissed:(NSString *)stringForFirst
+{
+    NSString *thisIsTheDesiredString = stringForFirst; //And there you have it.....
+    NSLog(thisIsTheDesiredString);
+    _taskField.text = stringForFirst;
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+    if (textField.tag == 1) {
+        NSLog(@"textViewShouldBeginEditing:");
+        WPSelectTaskViewController *selectTaskViewController = [[WPSelectTaskViewController alloc] init];
+        selectTaskViewController.myString = @"This text is passed from firstViewController!";
+        selectTaskViewController.selectTaskDelegate = self;
+        selectTaskViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        [self presentViewController:selectTaskViewController animated:YES completion:nil];
+    }
     return YES;
 }
 
@@ -79,15 +91,16 @@ static NSString *CellIdentifier = @"Cell";
     WPAddTaskTableViewCell *cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     switch (indexPath.row) {
         case 0: {
-            UITextField *textField = [[UITextField alloc] init];
-            textField.delegate = self;
-            textField.placeholder = @"Task";
-            textField.textColor = [UIColor wp_paragraph];
-            textField.font = [UIFont systemFontOfSize:16];
-            cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:textField];
+            _taskField = [[UITextField alloc] init];
+            _taskField.delegate = self;
+            _taskField.placeholder = @"Task";
+            _taskField.tag = 1;
+            _taskField.textColor = [UIColor wp_paragraph];
+            _taskField.font = [UIFont systemFontOfSize:16];
+            cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:_taskField];
             cell.label.text = @"Task";
             UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectTask)];
-            [textField addGestureRecognizer:tapRecognizer];
+            [_taskField addGestureRecognizer:tapRecognizer];
             break;
         }
         case 1: {
