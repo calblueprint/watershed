@@ -2,19 +2,23 @@ package com.blueprint.watershed.Activities;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -28,8 +32,6 @@ import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Users.ProfileFragment;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Users.User;
-import com.blueprint.watershed.Utilities.ResideMenu;
-import com.blueprint.watershed.Utilities.ResideMenuItem;
 import com.blueprint.watershed.Sites.SiteFragment;
 import com.blueprint.watershed.Sites.SiteListFragment;
 import com.blueprint.watershed.Utilities.TabsPagerAdapter;
@@ -41,6 +43,10 @@ import android.view.View;
 import android.content.Context;
 import android.content.Intent;
 import android.app.ActionBar.Tab;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -57,6 +63,7 @@ import java.util.Date;
 public class MainActivity extends ActionBarActivity
                           implements ActionBar.TabListener,
                                      View.OnClickListener,
+                                     ListView.OnItemClickListener,
                                      TaskFragment.OnFragmentInteractionListener,
                                      TaskDetailFragment.OnFragmentInteractionListener,
                                      SiteFragment.OnFragmentInteractionListener,
@@ -86,8 +93,10 @@ public class MainActivity extends ActionBarActivity
     private AboutFragment mAboutFragment;
 
     // Navigation Drawer
-    private ResideMenu resideMenu;
-    private ArrayList<ResideMenuItem> menuItems;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private ArrayList<String> menuItems;
 
     // View Elements
     public CharSequence mTitle;
@@ -181,7 +190,7 @@ public class MainActivity extends ActionBarActivity
         });
     }
 
-    public void updateTitle(Fragment f){
+    public void updateTitle(Fragment f) {
         if (f instanceof TaskFragment){
             setTitle("Tasks");
             displayTaskView(true);
@@ -200,7 +209,7 @@ public class MainActivity extends ActionBarActivity
 
     }
 
-    public void displayTaskView(boolean toggle){
+    public void displayTaskView(boolean toggle) {
         if (toggle){
             actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
             viewPager.setVisibility(View.VISIBLE);
@@ -244,11 +253,11 @@ public class MainActivity extends ActionBarActivity
         ft.commit();
     }
 
-    public void onFragmentInteraction(String id){
+    public void onFragmentInteraction(String id) {
         // Deals with fragment interactions
     }
 
-    public void onFragmentInteraction(Uri uri){
+    public void onFragmentInteraction(Uri uri) {
     }
 
 
@@ -269,42 +278,81 @@ public class MainActivity extends ActionBarActivity
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
+                Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
+                if (!(f instanceof TaskFragment) && !(f instanceof SiteListFragment)) {
+                    getSupportFragmentManager().popBackStack();
+                    return false;
+                }
+        }
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void initializeNavigationDrawer() {
-        resideMenu = new ResideMenu(this);
-        resideMenu.attachToActivity(this);
-        resideMenu.setShadowVisible(false);
-        resideMenu.setDirectionDisable(ResideMenu.DIRECTION_RIGHT);
-        resideMenu.setDirectionDisable(ResideMenu.DIRECTION_LEFT);
-        resideMenu.setBackground(R.drawable.golden_gate_bridge);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
         String titles[] = { "Tasks", "Sites", "Activity Log", "Profile", "About", "Logout" };
-        int icon[] = { R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo, R.drawable.watershed_logo };
-        menuItems = new ArrayList<ResideMenuItem>();
-        for (int i = 0; i < titles.length; i++) {
-            ResideMenuItem item = new ResideMenuItem(this, icon[i], titles[i]);
-            item.setOnClickListener(this);
-            resideMenu.addMenuItem(item, ResideMenu.DIRECTION_LEFT);
-            menuItems.add(item);
+
+        menuItems = new ArrayList<String>();
+        for (String title : titles) {
+            menuItems.add(title);
         }
+        mDrawerList.setOnItemClickListener(this);
+
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
+                R.layout.menu_list_item, R.id.menu_title, titles));
+
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                R.drawable.ic_drawer, R.string.draw_open_close , R.string.draw_open_close) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    // Nav Drawer on click listener
+
+    public void onItemClick(AdapterView parent, View view, int position, long id) {
+        onNavClick(position);
     }
 
     // View on click listener
-    @Override
-    public void onClick(View view) {
-        int position = menuItems.indexOf(view);
+    public void onNavClick(int position) {
         switch (position) {
             case 0:
                 TaskFragment taskFragment = TaskFragment.newInstance(0);
                 replaceFragment(taskFragment);
                 break;
             case 1:
-                //displayTaskView(false);
                 siteListFragment = new SiteListFragment();
                 replaceFragment(siteListFragment);
                 break;
@@ -327,8 +375,10 @@ public class MainActivity extends ActionBarActivity
                 startActivity(intent);
                 break;
         }
-        resideMenu.closeMenu();
     }
+
+    @Override
+    public void onClick(View view){}
 
     // System level attributes
     private static int getAppVersion(Context context) {
@@ -391,8 +441,6 @@ public class MainActivity extends ActionBarActivity
 
         FieldReport fieldReport = new FieldReport(fieldReportDescription, fieldReportHealthInt, urgency, fieldReportPhoto, new User(), new MiniSite());
 
-        // Go back to Task to mark complete instead of returning to Task List.
-        // How to keep state of which task made the call to create field report?
         TaskFragment taskFragment = TaskFragment.newInstance(0);
         replaceFragment(taskFragment);
     }

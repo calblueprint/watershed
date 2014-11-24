@@ -22,5 +22,8 @@ module Watershed
 
     # We have to manually iterate over all the extended classes to include them in the project.
     Dir[Rails.root.join("app", "extended_classes", "*.rb")].each { |extended_class| require extended_class }
+
+    # Autoload folders within serializers
+    config.autoload_paths += Dir[Rails.root.join("app", "serializers", "{**}")]
   end
 end

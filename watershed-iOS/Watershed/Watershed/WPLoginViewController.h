@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <FacebookSDK/FacebookSDK.h>
 
-@interface WPLoginViewController : UIViewController
+@interface WPLoginViewController : UIViewController <FBLoginViewDelegate>
 
 - (void)emailSignup;
 

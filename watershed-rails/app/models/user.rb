@@ -16,8 +16,10 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #  name                   :string(255)
-#  role                   :integer
+#  role                   :integer          default(0)
 #  authentication_token   :string(255)
+#  facebook_auth_token    :string(255)
+#  facebook_id            :string(255)
 #
 
 class User < ActiveRecord::Base
@@ -26,7 +28,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  enum role: [ :manager, :employee, :community_member ]
+  enum role: [ :community_member, :employee, :manager ]
 
   has_many :field_reports
   has_many :assigned_tasks, class_name: "Task", foreign_key: "assigner_id"
@@ -34,6 +36,10 @@ class User < ActiveRecord::Base
 
   has_many :user_mini_sites
   has_many :mini_sites, through: :user_mini_sites
+
+  validates :facebook_auth_token, presence: true
+  validates :email, presence: true
+  validates :name, presence: true
 
   #
   # Search
@@ -71,5 +77,22 @@ class User < ActiveRecord::Base
       token = Devise.friendly_token
       break token unless self.class.unscoped.where(authentication_token: token).first
     end
+  end
+
+  #
+  # Facebook Authentication
+  #
+  def valid_facebook_token?(token)
+    !facebook_auth_token.blank? && facebook_auth_token == token
+  end
+
+  def create_with_facebook_info(facebook_params)
+    self.name = facebook_params[:name]
+    self.facebook_auth_token = facebook_params[:facebook_auth_token]
+    self.facebook_id = facebook_params[:facebook_id]
+    self.password = Devise.friendly_token
+
+    # TODO(mark): More configuration with the facebook params (photo, etc)
+    self.save
   end
 end

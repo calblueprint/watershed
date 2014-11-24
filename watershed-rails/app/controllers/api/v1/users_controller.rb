@@ -1,4 +1,6 @@
 class Api::V1::UsersController < Api::V1::BaseController
+  skip_before_filter :authenticate_user_from_token!, only: [:create, :facebook_login]
+  skip_before_filter :authenticate_api_v1_user!, only: [:create, :facebook_login]
   load_and_authorize_resource param_method: :user_params
 
   def index
@@ -22,6 +24,17 @@ class Api::V1::UsersController < Api::V1::BaseController
     end
   end
 
+  def facebook_login
+    @user = User.where(email: params[:user][:email]).first_or_initialize
+    return successful_login(@user) if @user.valid_facebook_token?(params[:user][:facebook_auth_token])
+
+    if @user.create_with_facebook_info(params[:user])
+      successful_login(@user)
+    else
+      invalid_facebook_login_attempt
+    end
+  end
+
   def update
     if @user.update(user_params)
       render json: @user, serializer: UserSerializer
@@ -33,7 +46,21 @@ class Api::V1::UsersController < Api::V1::BaseController
   private
 
   def user_params
-    params.require(:user).permit(:email, :name, :role)
+    params.require(:user).permit(:email, :name, :role, :facebook_auth_token)
+  end
+
+  def invalid_facebook_login_attempt
+    render json: { message: "There was a problem signing in with Facebook." }, status: 401
+  end
+
+  def successful_login(user)
+    sign_in(:user, user)
+    user.ensure_authentication_token
+
+    render json: {
+      authentication_token: user.authentication_token,
+      email: user.email,
+    }.merge(JSON.parse(user.to_json)), status: :ok
   end
 
 end

@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resources :users, only: [:index, :show, :create, :update] do
         collection do
           match "search", to: "users#search", via: :get
+          match "sign_up/facebook", to: "users#facebook_login", via: :post
         end
       end
 

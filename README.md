@@ -1,7 +1,7 @@
 The Watershed Project - Fall 2014
 ================
 
-This application manages task delegation and field input to streamline maintainenance of the Bay Area watershed.
+This application manages task delegation and field input to streamline maintenance of the Bay Area watershed.
 
 Who We Are
 ----------
