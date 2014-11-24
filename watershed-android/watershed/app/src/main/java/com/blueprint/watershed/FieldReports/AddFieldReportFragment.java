@@ -26,6 +26,7 @@ import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.Networking.FieldReports.CreateFieldReportRequest;
 import com.blueprint.watershed.Networking.MiniSites.MiniSiteRequest;
+import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Tasks.TaskFragment;
 import com.blueprint.watershed.Users.User;
@@ -42,6 +43,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
 
     private OnFragmentInteractionListener mListener;
     private MainActivity mActivity;
+    private NetworkManager mNetworkManager;
     private View view;
     private Button mTakePhotoButton;
     private Button mSubmitFieldReportButton;
@@ -66,8 +68,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
+        mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
     }
 
     @Override
@@ -172,7 +173,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
 
         FieldReport fieldReport = new FieldReport(fieldReportDescription, fieldReportHealthInt, urgency, fieldReportPhoto, new User(), new MiniSite());
 
-
+        createFieldReportRequest(fieldReport);
 
         TaskFragment taskFragment = TaskFragment.newInstance(0);
         mActivity.replaceFragment(taskFragment);
