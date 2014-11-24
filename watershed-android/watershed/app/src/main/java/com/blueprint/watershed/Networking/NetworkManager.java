@@ -15,6 +15,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.blueprint.watershed.MiniSites.MiniSite;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 
@@ -147,13 +148,12 @@ public class NetworkManager {
         return response[0];
     }
 
-    public Bitmap imageRequest(String url, JSONObject params) {
-        final Bitmap[] returnedImage = new Bitmap[1];
+    public void imageRequest(String url, final Response.Listener<Bitmap> listener) {
         ImageRequest request = new ImageRequest(url,
                 new Response.Listener<Bitmap>() {
                     @Override
                     public void onResponse(Bitmap bitmap) {
-                        returnedImage[0] = bitmap;
+                        listener.onResponse(bitmap);
                     }
                 }, 0, 0, null,
                 new Response.ErrorListener() {
@@ -163,7 +163,6 @@ public class NetworkManager {
                     }
                 });
         mRequestQueue.add(request);
-        return returnedImage[0];
     }
 
     public String stringRequest(String url) {

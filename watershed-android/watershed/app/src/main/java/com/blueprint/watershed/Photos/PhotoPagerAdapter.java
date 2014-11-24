@@ -4,9 +4,13 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.R;
@@ -18,10 +22,18 @@ import java.util.ArrayList;
  */
 public class PhotoPagerAdapter extends PagerAdapter {
 
+    private LayoutInflater mLayoutInflater;
+    private Context mContext;
+
     private ArrayList<Photo> mPhotos;
 
+    public PhotoPagerAdapter(Context context) {
+        mContext = context;
+        mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
     public void configureWithPhotos(ArrayList<Photo> photos) {
-        mPhotos = photos;
+        setPhotos(photos);
     }
 
     @Override
@@ -31,24 +43,26 @@ public class PhotoPagerAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return view == ((ImageView) object);
+        return view == ((LinearLayout) object);
     }
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        Context context = container.getContext();
-        ImageView imageView = new ImageView(context);
-        int padding = 10;
-        imageView.setPadding(padding, padding, padding, padding);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        imageView.setImageBitmap(getImage(position));
-        container.addView(imageView, 0);
-        return imageView;
+        Photo photo = getPhoto(position);
+        Bitmap image = photo.getImage(mContext);
+
+        View itemView = mLayoutInflater.inflate(R.layout.cover_photo_item_view, container, false);
+
+        ImageView imageView = (ImageView) itemView.findViewById(R.id.cover_photo);
+        imageView.setImageBitmap(image);
+
+        container.addView(itemView);
+        return itemView;
     }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((ImageView) object);
+        container.removeView((LinearLayout) object);
     }
 
     // Getters
@@ -60,5 +74,12 @@ public class PhotoPagerAdapter extends PagerAdapter {
     }
 
     public Photo getPhoto(int position) { return mPhotos.get(position); }
-    public Bitmap getImage(int position) { return getPhoto(position).getImage(); }
+
+    // Setters
+    public void setPhotos(ArrayList<Photo> photos) {
+        mPhotos.clear();
+        for (Photo photo : photos) {
+            mPhotos.add(photo);
+        }
+    }
 }

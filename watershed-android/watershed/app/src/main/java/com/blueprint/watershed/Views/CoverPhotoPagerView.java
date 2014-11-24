@@ -17,7 +17,6 @@ import java.util.ArrayList;
  */
 public class CoverPhotoPagerView extends ViewPager {
 
-    private ArrayList<ImageView> mImageViews;
     private PhotoPagerAdapter mAdapter;
 
     public CoverPhotoPagerView(Context context, AttributeSet attrs) {
@@ -26,13 +25,12 @@ public class CoverPhotoPagerView extends ViewPager {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.cover_photo_pager_view, this, true);
 
-        initializeViews();
+        initializeViews(context);
     }
 
-    public void initializeViews() {
-        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
-        mAdapter = new PhotoPagerAdapter();
-        viewPager.setAdapter(mAdapter);
+    public void initializeViews(Context context) {
+        mAdapter = new PhotoPagerAdapter(context);
+        this.setAdapter(mAdapter);
     }
 
     public void configureWithPhotos(ArrayList<Photo> photos) {
