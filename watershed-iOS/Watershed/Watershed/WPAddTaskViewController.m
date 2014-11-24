@@ -11,6 +11,7 @@
 #import "WPAddTaskTableViewCell.h"
 #import "UIExtensions.h"
 #import "WPSelectTaskViewController.h"
+#import "WPSelectMiniSiteViewController.h"
 
 
 @interface WPAddTaskViewController()
@@ -18,6 +19,8 @@
 @property (nonatomic) WPAddTaskView *view;
 @property (nonatomic) UITextField *dateField;
 @property (nonatomic) UITextField *taskField;
+@property (nonatomic) UITextField *siteField;
+
 
 @end
 
@@ -52,27 +55,35 @@ static NSString *CellIdentifier = @"Cell";
     
 }
 
+- (void)selectTaskViewControllerDismissed:(NSString *)stringForFirst
+{
+    _taskField.text = stringForFirst;
+}
+
 - (void)secondViewControllerDismissed:(NSString *)stringForFirst
 {
-    NSString *thisIsTheDesiredString = stringForFirst; //And there you have it.....
-    NSLog(thisIsTheDesiredString);
-    _taskField.text = stringForFirst;
+    _siteField.text = stringForFirst;
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
     if (textField.tag == 1) {
-        NSLog(@"textViewShouldBeginEditing:");
         WPSelectTaskViewController *selectTaskViewController = [[WPSelectTaskViewController alloc] init];
         selectTaskViewController.myString = @"This text is passed from firstViewController!";
         selectTaskViewController.selectTaskDelegate = self;
         selectTaskViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
         [self presentViewController:selectTaskViewController animated:YES completion:nil];
     }
+    if (textField.tag == 2) {
+        WPSelectMiniSiteViewController *selectMiniSiteViewController = [[WPSelectMiniSiteViewController alloc] init];
+        selectMiniSiteViewController.myString = @"This text is passed from firstViewController!";
+        selectMiniSiteViewController.selectTaskDelegate = self;
+        selectMiniSiteViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        [self presentViewController:selectMiniSiteViewController animated:YES completion:nil];
+    }
     return YES;
 }
 
 - (void)selectTask {
-    NSLog(@"HELLO");
     WPSelectTaskViewController *selectTaskViewController = [[WPSelectTaskViewController alloc] init];
     selectTaskViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [self presentViewController:selectTaskViewController animated:YES completion:nil];
@@ -126,13 +137,14 @@ static NSString *CellIdentifier = @"Cell";
             break;
         }
         case 3: {
-            UITextField *textField = [[UITextField alloc] init];
-            textField.delegate = self;
-            cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:textField];
-            textField.placeholder = @"Site";
+            _siteField = [[UITextField alloc] init];
+            _siteField.delegate = self;
+            cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:_siteField];
+            _siteField.placeholder = @"Site";
             cell.label.text = @"Site";
-            textField.textColor = [UIColor wp_paragraph];
-            textField.font = [UIFont systemFontOfSize:16];
+            _siteField.tag = 2;
+            _siteField.textColor = [UIColor wp_paragraph];
+            _siteField.font = [UIFont systemFontOfSize:16];
             break;
         }
         case 4: {

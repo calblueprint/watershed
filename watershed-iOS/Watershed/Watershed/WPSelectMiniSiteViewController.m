@@ -1,38 +1,37 @@
 //
-//  WPSelectTaskViewController.m
+//  WPSelectMiniSiteViewController.m
 //  Watershed
 //
-//  Created by Jordeen Chang on 11/23/14.
+//  Created by Jordeen Chang on 11/24/14.
 //  Copyright (c) 2014 Blueprint. All rights reserved.
 //
 
-#import "WPSelectTaskViewController.h"
-#import "WPSelectTaskView.h"
+#import "WPSelectMiniSiteViewController.h"
+#import "WPSelectMiniSiteView.h"
 
-@interface WPSelectTaskViewController ()
+@interface WPSelectMiniSiteViewController ()
 
-@property (nonatomic) WPSelectTaskView *view;
-@property NSArray *taskArray;
-
+@property (nonatomic) WPSelectMiniSiteView *view;
+@property NSArray *miniSiteArray;
 
 @end
 
-@implementation WPSelectTaskViewController
+@implementation WPSelectMiniSiteViewController
 
 @synthesize selectTaskDelegate;
 
 static NSString *CellIdentifier = @"Cell";
 
 - (void)loadView {
-    self.view = [[WPSelectTaskView alloc] init];
+    self.view = [[WPSelectMiniSiteView alloc] init];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.view.selectTaskTableView.delegate = self;
-    self.view.selectTaskTableView.dataSource = self;
-    _taskArray = @[@"Water Tree", @"Kill Tree", @"Plant Tree", @"Feed Tree"];
+    self.view.selectMiniSiteTableView.delegate = self;
+    self.view.selectMiniSiteTableView.dataSource = self;
+    _miniSiteArray = @[@"Water Tree", @"Kill Tree", @"Plant Tree", @"Feed Tree"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -41,16 +40,16 @@ static NSString *CellIdentifier = @"Cell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    cell.textLabel.text = [_taskArray objectAtIndex:indexPath.row];
+    cell.textLabel.text = [_miniSiteArray objectAtIndex:indexPath.row];
     cell.textLabel.textColor = [UIColor wp_paragraph];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if([self.selectTaskDelegate respondsToSelector:@selector(selectTaskViewControllerDismissed:)])
+    if([self.selectTaskDelegate respondsToSelector:@selector(secondViewControllerDismissed:)])
     {
-        [self.selectTaskDelegate selectTaskViewControllerDismissed:[self.view.selectTaskTableView cellForRowAtIndexPath:indexPath].textLabel.text];
+        [self.selectTaskDelegate secondViewControllerDismissed:[self.view.selectMiniSiteTableView cellForRowAtIndexPath:indexPath].textLabel.text];
     }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -67,7 +66,7 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [_taskArray count];
+    return [_miniSiteArray count];
 }
 
 

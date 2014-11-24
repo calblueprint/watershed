@@ -1,21 +1,20 @@
 //
-//  WPSelectTaskViewController.h
+//  WPSelectMiniSiteViewController.h
 //  Watershed
 //
-//  Created by Jordeen Chang on 11/23/14.
+//  Created by Jordeen Chang on 11/24/14.
 //  Copyright (c) 2014 Blueprint. All rights reserved.
 //
 
 #import "WPViewController.h"
 
 @protocol SelectTaskDelegate <NSObject>
--(void) selectTaskViewControllerDismissed:(NSString *)stringForFirst;
+-(void) secondViewControllerDismissed:(NSString *)stringForFirst;
 @end
 
-@interface WPSelectTaskViewController : WPViewController<UITableViewDataSource, UITableViewDelegate>
+@interface WPSelectMiniSiteViewController : WPViewController<UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, assign) id<SelectTaskDelegate>    selectTaskDelegate;
 @property (nonatomic) NSString *myString;
 
 @end
-

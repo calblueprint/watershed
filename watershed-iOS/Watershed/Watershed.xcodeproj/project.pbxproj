@@ -32,6 +32,8 @@
 		06B1B00819F4E77A007FC3D5 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		06ECE8E21A22E63C009870CA /* WPSelectTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06ECE8E11A22E63C009870CA /* WPSelectTaskViewController.m */; };
 		06ECE8E51A22E658009870CA /* WPSelectTaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06ECE8E41A22E658009870CA /* WPSelectTaskView.m */; };
+		06ECE8E81A23436D009870CA /* WPSelectMiniSiteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06ECE8E71A23436D009870CA /* WPSelectMiniSiteViewController.m */; };
+		06ECE8EB1A234381009870CA /* WPSelectMiniSiteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06ECE8EA1A234381009870CA /* WPSelectMiniSiteView.m */; };
 		0BFD8558DD12470AB2409F6A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 38F773F3CE0741AE9B08A802 /* libPods.a */; };
 		273ABECC19EDFA8600FC1C92 /* WPSitesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273ABECB19EDFA8600FC1C92 /* WPSitesTableViewController.m */; };
 		2749D18C1A06203000D0ECA2 /* WPMiniSiteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2749D18B1A06203000D0ECA2 /* WPMiniSiteView.m */; };
@@ -131,6 +133,10 @@
 		06ECE8E11A22E63C009870CA /* WPSelectTaskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPSelectTaskViewController.m; sourceTree = "<group>"; };
 		06ECE8E31A22E658009870CA /* WPSelectTaskView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPSelectTaskView.h; sourceTree = "<group>"; };
 		06ECE8E41A22E658009870CA /* WPSelectTaskView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPSelectTaskView.m; sourceTree = "<group>"; };
+		06ECE8E61A23436D009870CA /* WPSelectMiniSiteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPSelectMiniSiteViewController.h; sourceTree = "<group>"; };
+		06ECE8E71A23436D009870CA /* WPSelectMiniSiteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPSelectMiniSiteViewController.m; sourceTree = "<group>"; };
+		06ECE8E91A234381009870CA /* WPSelectMiniSiteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPSelectMiniSiteView.h; sourceTree = "<group>"; };
+		06ECE8EA1A234381009870CA /* WPSelectMiniSiteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPSelectMiniSiteView.m; sourceTree = "<group>"; };
 		273ABECA19EDFA8600FC1C92 /* WPSitesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPSitesTableViewController.h; sourceTree = "<group>"; };
 		273ABECB19EDFA8600FC1C92 /* WPSitesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPSitesTableViewController.m; sourceTree = "<group>"; };
 		2749D18A1A06203000D0ECA2 /* WPMiniSiteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPMiniSiteView.h; sourceTree = "<group>"; };
@@ -345,6 +351,10 @@
 				06ECE8E11A22E63C009870CA /* WPSelectTaskViewController.m */,
 				06ECE8E31A22E658009870CA /* WPSelectTaskView.h */,
 				06ECE8E41A22E658009870CA /* WPSelectTaskView.m */,
+				06ECE8E61A23436D009870CA /* WPSelectMiniSiteViewController.h */,
+				06ECE8E71A23436D009870CA /* WPSelectMiniSiteViewController.m */,
+				06ECE8E91A234381009870CA /* WPSelectMiniSiteView.h */,
+				06ECE8EA1A234381009870CA /* WPSelectMiniSiteView.m */,
 			);
 			name = Tasks;
 			sourceTree = "<group>";
@@ -686,6 +696,7 @@
 				064462E91A0739A500C6FE8B /* WPMyTasksTableViewController.m in Sources */,
 				06A8139B19D91D8600E3EB05 /* UIColor+WPColors.m in Sources */,
 				27BABFE91A0202F300F9CCCE /* WPViewController.m in Sources */,
+				06ECE8EB1A234381009870CA /* WPSelectMiniSiteView.m in Sources */,
 				068AB39F1A1B4155009BB746 /* WPAddFieldReportViewController.m in Sources */,
 				27BEC6B01A1063B5006CBFF6 /* WPFieldReportView.m in Sources */,
 				27F0B70119E2496400E848C3 /* WPSiteView.m in Sources */,
@@ -709,6 +720,7 @@
 				068AB39E1A1B4155009BB746 /* WPAddFieldReportView.m in Sources */,
 				064462FC1A073A3000C6FE8B /* WPProfileTableViewCell.m in Sources */,
 				0653A8F41A2124950022462B /* WPAddTaskTableViewCell.m in Sources */,
+				06ECE8E81A23436D009870CA /* WPSelectMiniSiteViewController.m in Sources */,
 				BA4F8DDC19C7739300C816E3 /* main.m in Sources */,
 				0653A8F11A206CE50022462B /* WPAddTaskView.m in Sources */,
 				064462EC1A0739A500C6FE8B /* WPAllTasksTableViewController.m in Sources */,

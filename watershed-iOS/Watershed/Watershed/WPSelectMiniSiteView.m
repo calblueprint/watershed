@@ -1,14 +1,14 @@
 //
-//  WPSelectTaskView.m
+//  WPSelectMiniSiteView.m
 //  Watershed
 //
-//  Created by Jordeen Chang on 11/23/14.
+//  Created by Jordeen Chang on 11/24/14.
 //  Copyright (c) 2014 Blueprint. All rights reserved.
 //
 
-#import "WPSelectTaskView.h"
+#import "WPSelectMiniSiteView.h"
 
-@implementation WPSelectTaskView
+@implementation WPSelectMiniSiteView
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame visibleNavbar:NO];
@@ -23,9 +23,9 @@
 #pragma mark - View Hierarchy
 
 - (void)createSubviews {
-    _selectTaskTableView = [[UITableView alloc] init];
-    [self addSubview:_selectTaskTableView];
-
+    _selectMiniSiteTableView = [[UITableView alloc] init];
+    [self addSubview:_selectMiniSiteTableView];
+    
     _searchField = [({
         UITextField *searchField = [[UITextField alloc] init];
         searchField.font = [UIFont systemFontOfSize:14];
@@ -36,21 +36,21 @@
 }
 
 - (void)updateConstraints {
-//    
-//    [self.searchField mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(@(topMargin));
-//        make.leading.equalTo(@0);
-//        make.trailing.equalTo(@0);
-//    }];
-
-    [self.selectTaskTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+    //
+    //    [self.searchField mas_makeConstraints:^(MASConstraintMaker *make) {
+    //        make.top.equalTo(@(topMargin));
+    //        make.leading.equalTo(@0);
+    //        make.trailing.equalTo(@0);
+    //    }];
+    
+    [self.selectMiniSiteTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@0);
-//        make.top.equalTo(self.searchField.mas_bottom);
+        //        make.top.equalTo(self.searchField.mas_bottom);
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
         make.bottom.equalTo(@0);
     }];
-
+    
     [super updateConstraints];
 }
 
