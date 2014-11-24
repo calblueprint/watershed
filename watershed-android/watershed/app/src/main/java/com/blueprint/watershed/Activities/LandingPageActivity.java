@@ -25,13 +25,14 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.blueprint.watershed.Authentication.LoginFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.R;
+import com.facebook.AppEventsLogger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class LandingPageActivity extends Activity {
+public class LandingPageActivity extends Activity implements View.OnClickListener{
 
     // Constants
     public  static final String PREFERENCES = "LOGIN_PREFERENCES";
@@ -68,12 +69,41 @@ public class LandingPageActivity extends Activity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        AppEventsLogger.activateApp(this);
+    }
+
+    protected void onPause() {
+        super.onPause();
+
+        AppEventsLogger.deactivateApp(this);
+    }
+
     public void initializeViews() {
         //setLandingPageImage((ImageView)findViewById(R.id.landing_page_image));
 
         setLoginButton((Button)findViewById(R.id.login_load_fragment_button));
         setFacebookButton((Button)findViewById(R.id.facebook_button));
         setSignUpButton((Button)findViewById(R.id.sign_up_load_fragment_button));
+
+        mFacebookButton.setOnClickListener(this);
+        mLoginButton.setOnClickListener(this);
+        mSignUpButton.setOnClickListener(this);
+    }
+
+    public void onClick(View view){
+        if (view == mFacebookButton){
+            didTapFacebookButton(view);
+        }
+        else if (view == mLoginButton){
+            didTapLoginLoadFragmentButton(view);
+        }
+        else{
+            didTapSignUpLoadFragmentButton(view);
+        }
     }
 
     public boolean hasAuthCredentials(SharedPreferences preferences) {

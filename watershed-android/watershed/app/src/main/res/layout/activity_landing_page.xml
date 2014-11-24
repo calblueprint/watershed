@@ -54,7 +54,6 @@
 
             <Button
                 android:id="@+id/facebook_button"
-                android:onClick="didTapFacebookButton"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/button_border_standard_height"
                 android:background="@color/facebook_blue"
@@ -76,7 +75,6 @@
 
             <Button
                 android:id="@+id/sign_up_load_fragment_button"
-                android:onClick="didTapSignUpLoadFragmentButton"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/button_standard_height"
                 android:layout_weight="0.5"
@@ -90,7 +88,6 @@
 
             <Button
                 android:id="@+id/login_load_fragment_button"
-                android:onClick="didTapLoginLoadFragmentButton"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/button_standard_height"
                 android:layout_weight="0.5"
