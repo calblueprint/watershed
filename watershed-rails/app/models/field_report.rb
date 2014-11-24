@@ -21,7 +21,7 @@ class FieldReport < ActiveRecord::Base
 
   has_many :photos, as: :parent
 
-  validates :user_id, presence: true
-  validates :mini_site_id, presence: true
+  # validates :user_id, presence: true
+  # validates :mini_site_id, presence: true
   validates :health_rating, numericality: { less_than_or_equal_to: 5, greater_than_or_equal_to: 1 }
 end
