@@ -7,7 +7,9 @@ import com.blueprint.watershed.APIObject;
 import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Users.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.ByteArrayOutputStream;
 
@@ -30,12 +32,13 @@ public class Photo implements APIObject {
     // Getters
     public Integer getId() { return mId; }
 
-    public String getImage() {
+    @JsonIgnore
+    public Bitmap getImage() { return mImage; }
+
+    public String getData() {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         mImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
-        String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
-        return encodedImage;
+        return Base64.encodeToString(stream.toByteArray(), Base64.DEFAULT);
     }
 
     // Setters
