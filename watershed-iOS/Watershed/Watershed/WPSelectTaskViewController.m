@@ -11,21 +11,27 @@
 
 @interface WPSelectTaskViewController ()
 
+@property (nonatomic) WPSelectTaskView *view;
 @property NSArray *taskArray;
+
 
 @end
 
 @implementation WPSelectTaskViewController
 
+@synthesize selectTaskDelegate;
+
 static NSString *CellIdentifier = @"Cell";
 
 - (void)loadView {
-    self.view[[WPSelectTaskView] NSString
+    self.view = [[WPSelectTaskView alloc] init];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    self.view.selectTaskTableView.delegate = self;
+    self.view.selectTaskTableView.dataSource = self;
     _taskArray = @[@"Water Tree", @"Kill Tree", @"Plant Tree", @"Feed Tree"];
 }
 
@@ -41,6 +47,15 @@ static NSString *CellIdentifier = @"Cell";
         [cell.contentView addSubview:customTask];
     }
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if([self.selectTaskDelegate respondsToSelector:@selector(secondViewControllerDismissed:)])
+    {
+        [self.selectTaskDelegate secondViewControllerDismissed:[self.view.selectTaskTableView cellForRowAtIndexPath:indexPath].textLabel.text];
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Table View Protocols
