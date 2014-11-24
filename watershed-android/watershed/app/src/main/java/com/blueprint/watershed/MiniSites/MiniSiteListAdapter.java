@@ -44,6 +44,9 @@ public class MiniSiteListAdapter extends ArrayAdapter<MiniSite> {
 
             holder = new MiniSiteHolder();
             holder.photosView = (CoverPhotoPagerView) row.findViewById(R.id.cover_photo_pager_view);
+            holder.coverPhotoLabel = (TextView) row.findViewById(R.id.cover_photo_label);
+            holder.topLabel = (TextView) row.findViewById(R.id.top_label);
+            holder.bottomLabel = (TextView) row.findViewById(R.id.bottom_label);
 
             row.setTag(holder);
         } else {
@@ -52,11 +55,17 @@ public class MiniSiteListAdapter extends ArrayAdapter<MiniSite> {
 
         MiniSite miniSite = miniSites.get(position);
         holder.photosView.configureWithPhotos(miniSite.getPhotos());
+        holder.coverPhotoLabel.setText(String.format("%s Field Reports", miniSite.getFieldReports().size()));
+        holder.topLabel.setText(miniSite.getName());
+        holder.bottomLabel.setText(miniSite.getLocation());
 
         return row;
     }
 
     static class MiniSiteHolder {
         CoverPhotoPagerView photosView;
+        TextView coverPhotoLabel;
+        TextView topLabel;
+        TextView bottomLabel;
     }
 }

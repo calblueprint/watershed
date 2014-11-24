@@ -49,12 +49,17 @@ public class PhotoPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         Photo photo = getPhoto(position);
-        Bitmap image = photo.getImage(mContext);
 
         View itemView = mLayoutInflater.inflate(R.layout.cover_photo_item_view, container, false);
 
         ImageView imageView = (ImageView) itemView.findViewById(R.id.cover_photo);
-        imageView.setImageBitmap(image);
+        photo.getImageAndSetImageView(mContext, imageView);
+
+        TextView primaryLabel = (TextView) itemView.findViewById(R.id.primary_label);
+        primaryLabel.setText("");
+
+        TextView secondaryLabel = (TextView) itemView.findViewById(R.id.secondary_label);
+        secondaryLabel.setText("");
 
         container.addView(itemView);
         return itemView;

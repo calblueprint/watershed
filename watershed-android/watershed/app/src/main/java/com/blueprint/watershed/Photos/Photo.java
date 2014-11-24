@@ -3,6 +3,7 @@ package com.blueprint.watershed.Photos;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Base64;
+import android.widget.ImageView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.APIObject;
@@ -55,6 +56,24 @@ public class Photo implements APIObject {
             });
         }
         return mImage;
+    }
+
+    @JsonIgnore
+    public void getImageAndSetImageView(Context context, final ImageView imageView) {
+        if (mImage == null) {
+            NetworkManager manager = NetworkManager.getInstance(context);
+            manager.imageRequest(getURL(), new Response.Listener<Bitmap>() {
+                @Override
+                public void onResponse(Bitmap bitmap) {
+                    mImage = bitmap;
+                    imageView.setImageBitmap(mImage);
+                    imageView.refreshDrawableState();
+                }
+            });
+        } else {
+            imageView.setImageBitmap(mImage);
+            imageView.refreshDrawableState();
+        }
     }
 
     // Setters
