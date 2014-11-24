@@ -18,7 +18,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignBottom="@+id/cover_photo_pager_view"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="25dp">
 
         <TextView
             android:id="@+id/cover_photo_label"

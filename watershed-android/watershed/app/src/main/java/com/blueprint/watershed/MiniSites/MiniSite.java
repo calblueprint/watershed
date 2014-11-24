@@ -65,7 +65,7 @@ public class MiniSite implements APIObject {
 
     @JsonIgnore
     public String getLocation() {
-        return String.format("%s, %s, %s %s", getStreet(), getCity(), getStreet(), getZipCode());
+        return String.format("%s, %s, %s %s", getStreet(), getCity(), getState(), getZipCode());
     }
 
     // Setters

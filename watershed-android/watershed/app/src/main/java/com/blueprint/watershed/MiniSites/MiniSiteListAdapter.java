@@ -2,6 +2,7 @@ package com.blueprint.watershed.MiniSites;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.blueprint.watershed.Photos.PhotoPagerAdapter;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Sites.Site;
+import com.blueprint.watershed.Sites.SiteFragment;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
 
 import java.util.ArrayList;

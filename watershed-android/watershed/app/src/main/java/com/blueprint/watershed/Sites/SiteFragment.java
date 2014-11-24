@@ -3,6 +3,7 @@ package com.blueprint.watershed.Sites;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,7 +112,7 @@ public class SiteFragment extends Fragment
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (null != mListener) {
+        if (mListener != null) {
             // Load MiniSite
             MiniSite miniSite = getMiniSite(position);
             MiniSiteFragment miniSiteFragment = new MiniSiteFragment();
