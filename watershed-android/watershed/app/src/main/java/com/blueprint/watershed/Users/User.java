@@ -3,6 +3,15 @@ package com.blueprint.watershed.Users;
 /**
  * Created by maxwolffe on 10/29/14.
 **/
+enum Role {
+    COMMUNITY_MEMBER(0), EMPLOYEE(1), MANAGER(2);
+
+    private int value;
+
+    Role(int value) { this.value = value; }
+    public int getValue() { return value; }
+}
+
 public class User {
 
     private Integer mId;
@@ -13,6 +22,12 @@ public class User {
     public User() {
     }
 
+    // Roles
+    public Boolean isManager() { return mRole == Role.MANAGER.getValue(); }
+    public Boolean isEmployee() { return mRole == Role.EMPLOYEE.getValue(); }
+    public Boolean isCommunityMember() { return mRole == Role.COMMUNITY_MEMBER.getValue(); }
+
+    // Getters
     public Integer getId() { return mId; }
     public Integer getRole() { return mRole; }
     public String getName() { return mName; }
