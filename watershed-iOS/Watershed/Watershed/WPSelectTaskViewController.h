@@ -8,6 +8,6 @@
 
 #import "WPViewController.h"
 
-@interface WPSelectTaskViewController : WPViewController
+@interface WPSelectTaskViewController : WPViewController<UITableViewDataSource, UITableViewDelegate>
 
 @end
