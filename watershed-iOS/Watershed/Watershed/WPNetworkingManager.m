@@ -35,7 +35,7 @@ static NSString * const SITES_URL = @"sites";
 
 #pragma mark - HTTP Request Methods
 
-- (void)requestLoginWithParameters:(NSDictionary *)parameters success:(void (^)(id response))success {
+- (void)requestLoginWithParameters:(NSDictionary *)parameters success:(void (^)(WPUser *user))success {
     NSString *signInString = [WPNetworkingManager createURLWithEndpoint:SIGNIN_URL];
     
     [self POST:signInString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -45,6 +45,10 @@ static NSString * const SITES_URL = @"sites";
         NSString *authToken = responseDictionary[@"authentication_token"];
         NSString *email = responseDictionary[@"email"];
         [self updateLoginKeyChainInfoWithAuthToken:authToken email:email];
+        
+        NSDictionary *userJSON = responseDictionary[@"user"];
+        WPUser *user = [MTLJSONAdapter modelOfClass:WPUser.class fromJSONDictionary:userJSON error:nil];
+        success(user);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Incorrect email or password." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [incorrect show];
@@ -52,7 +56,7 @@ static NSString * const SITES_URL = @"sites";
     }];
 }
 
-- (void)requestFacebookLoginWithParameters:(NSDictionary *)parameters success:(void (^)(id response))success {
+- (void)requestFacebookLoginWithParameters:(NSDictionary *)parameters success:(void (^)(WPUser *user))success {
     NSString *facebookLoginString = [WPNetworkingManager createURLWithEndpoint:FACEBOOK_LOGIN_URL];
     
     [self POST:facebookLoginString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -62,6 +66,10 @@ static NSString * const SITES_URL = @"sites";
         NSString *authToken = responseDictionary[@"authentication_token"];
         NSString *email = responseDictionary[@"email"];
         [self updateLoginKeyChainInfoWithAuthToken:authToken email:email];
+        
+        NSDictionary *userJSON = responseDictionary[@"user"];
+        WPUser *user = [MTLJSONAdapter modelOfClass:WPUser.class fromJSONDictionary:userJSON error:nil];
+        success(user);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Cannot log in with Facebook." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [incorrect show];

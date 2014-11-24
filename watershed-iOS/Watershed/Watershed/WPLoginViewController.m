@@ -44,7 +44,7 @@
     
     NSDictionary *parameters = @{@"user" : @{@"email": email, @"password": password}};
     
-    [[WPNetworkingManager sharedManager] requestLoginWithParameters:parameters success:^(id response) {
+    [[WPNetworkingManager sharedManager] requestLoginWithParameters:parameters success:^(WPUser *user) {
         [self pushTabBarController];
     }];
 }
@@ -69,7 +69,7 @@
                                      @"facebook_id": fbUser.profilePictureId,
                                      }};
     
-    [[WPNetworkingManager sharedManager] requestFacebookLoginWithParameters:parameters success:^(id response) {
+    [[WPNetworkingManager sharedManager] requestFacebookLoginWithParameters:parameters success:^(WPUser *user) {
         [self pushTabBarController];
     }];
 }
