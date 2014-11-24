@@ -109,9 +109,6 @@ public class MainActivity extends ActionBarActivity
     // Networking
     private NetworkManager mNetworkManager;
 
-    // Camera Stuff
-    private static final int CAMERA_REQUEST = 1337;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -387,73 +384,5 @@ public class MainActivity extends ActionBarActivity
     public void FieldReportButtonPressed(View view){
         AddFieldReportFragment fieldFragment = AddFieldReportFragment.newInstance();
         replaceFragment(fieldFragment);
-    }
-
-    public void HandleTakePhotoButton(View view){
-         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-             File photoFile = null;
-             try {
-                 photoFile = createImageFile();
-             } catch (IOException ex) {
-                Log.e("Field Report Photo", "Error");
-             }
-             if (photoFile != null) {
-                 //takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
-                         //Uri.fromFile(photoFile));
-                 startActivityForResult(takePictureIntent, CAMERA_REQUEST);
-             }
-        }
-    }
-
-    public void createFieldReport(View fieldReportButton){
-        String fieldReportDescription = ((EditText)findViewById(R.id.field_report_description)).getText().toString();
-
-        RadioGroup healthGroup = (RadioGroup) findViewById(R.id.health_group);
-        Integer selectId = healthGroup.getCheckedRadioButtonId();
-        if (selectId == -1){
-            Toast toast = Toast.makeText(getApplicationContext(), "Please select a health rating", Toast.LENGTH_SHORT);
-            toast.show();
-            return;
-        }
-        String fieldReportHealth = ((RadioButton) findViewById(selectId)).getText().toString();
-        Integer fieldReportHealthInt = Integer.parseInt(fieldReportHealth);
-
-        ImageView image = (ImageView) findViewById(R.id.field_report_image);
-        Bitmap fieldReportPhoto = ((BitmapDrawable)image.getDrawable()).getBitmap();
-
-        Boolean urgency = ((Switch)findViewById(R.id.field_report_urgent)).isChecked();
-
-        FieldReport fieldReport = new FieldReport(fieldReportDescription, fieldReportHealthInt, urgency, fieldReportPhoto, new User(), new MiniSite());
-
-        TaskFragment taskFragment = TaskFragment.newInstance(0);
-        replaceFragment(taskFragment);
-    }
-
-
-    // Image Handling
-
-    String mCurrentPhotoPath;
-
-    private File createImageFile() throws IOException {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,
-                ".jpg",
-                storageDir
-        );
-        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
-        return image;
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        ImageView fieldReportImageView = (ImageView)findViewById(R.id.field_report_image);
-        if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
-            Bitmap photo = (Bitmap) data.getExtras().get("data");
-            fieldReportImageView.setImageBitmap(photo);
-        }
     }
 }
