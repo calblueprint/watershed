@@ -23,4 +23,6 @@ class MiniSite < ActiveRecord::Base
 
   has_many :user_mini_sites
   has_many :users, through: :user_mini_sites
+
+  has_many :photos, as: :parent
 end

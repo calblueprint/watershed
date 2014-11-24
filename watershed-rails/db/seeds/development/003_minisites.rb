@@ -14,3 +14,16 @@
   puts "Created Minisite: #{example_minisite.name}"
 end
 
+images = [
+  "http://www.foodsystemsnyc.org/files/Cross%20River%20Resevoir_courtesy%20of%20@JoshDickPhoto.com.jpg",
+  "http://maxcdn.thedesigninspiration.com/wp-content/uploads/2009/09/cute-animals/02.jpg",
+  "http://animals.loepr.com/wp-content/uploads/2013/06/Cute-animals-pictures-41.jpg",
+  "http://image.cdnllnwnl.xosnetwork.com/pics33/800/AN/ANJLCPIXOGYUBNC.20130607192302.jpg",
+]
+
+images.each do |image_url|
+  photo = Photo.create!(
+    image_tmp_url: image_url,
+    parent: MiniSite.first,
+  )
+end
