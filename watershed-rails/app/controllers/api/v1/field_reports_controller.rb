@@ -1,4 +1,5 @@
 class Api::V1::FieldReportsController < Api::V1::BaseController
+  prepend_before_filter :convert_base64_to_image, only: [:create]
   load_and_authorize_resource param_method: :field_report_params
 
   def index
@@ -37,4 +38,9 @@ class Api::V1::FieldReportsController < Api::V1::BaseController
                                            ],
                                          })
   end
+
+  def convert_base64_to_image
+    params[:field_report][:photo_attributes][:image] = Photo.convert_base64(params[:field_report][:photo_attributes][:data])
+  end
+
 end
