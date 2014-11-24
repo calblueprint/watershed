@@ -52,12 +52,9 @@ public class CreateFieldReportRequest extends BaseRequest {
             JSONObject fieldReportJson = new JSONObject(mapper.writeValueAsString(fieldReport));
             params.put("field_report", fieldReportJson);
         } catch (Exception e) {
-            // lol
-            Log.e("exception", e.toString());
             e.printStackTrace();
         }
 
-        Log.e("params", params.toString());
         return new JSONObject(params);
     }
 }
