@@ -171,7 +171,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         ImageView fieldReportImageView = (ImageView)view.findViewById(R.id.field_report_image);
-        if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+        if (requestCode == CAMERA_REQUEST && resultCode == mActivity.RESULT_OK {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             fieldReportImageView.setImageBitmap(photo);
         }
