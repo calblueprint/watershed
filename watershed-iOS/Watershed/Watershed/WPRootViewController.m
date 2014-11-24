@@ -20,7 +20,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     UIViewController *launchingViewController = nil;
     UICKeyChainStore *store = [[WPNetworkingManager sharedManager] keyChainStore];
     if (store[@"auth_token"] && store[@"email"]) {
@@ -49,10 +49,10 @@
                toViewController:(UIViewController*)newVC {
     [oldVC willMoveToParentViewController:nil];
     [self addChildViewController:newVC];
-    
+
     newVC.view.frame = newVC.view.frame;
     CGRect endFrame = oldVC.view.frame;
-    
+
     [self transitionFromViewController: oldVC
                       toViewController: newVC
                               duration: 0.1
@@ -77,7 +77,7 @@
     UIViewController *launchingViewController = [self newLoginViewController];
     [self cycleFromViewController:oldVC toViewController:launchingViewController];
 
-    
+
 }
 
 - (void)didReceiveMemoryWarning {

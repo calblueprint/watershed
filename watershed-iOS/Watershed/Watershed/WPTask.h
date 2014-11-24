@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WPSite.h"
+#import "WPUser.h"
 
 @interface WPTask : NSObject
 
@@ -15,9 +17,10 @@
 @property (nonatomic) NSString *taskDescription;
 @property (nonatomic) NSDate *dueDate;
 @property (nonatomic) Boolean *urgent;
-@property (nonatomic) Boolean *completed;
 @property (nonatomic) NSNumber *siteId;
-@property (nonatomic) NSNumber *assigneeId;
-@property (nonatomic) NSNumber *assignerId;
+@property (nonatomic) WPUser *assignee;
+@property (nonatomic) WPUser *assigner;
+@property (nonatomic) WPSite *site;
+
 
 @end
