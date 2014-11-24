@@ -18,6 +18,7 @@ class FieldReport < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :mini_site
+  belongs_to :task
 
   has_one :photo, as: :parent
 

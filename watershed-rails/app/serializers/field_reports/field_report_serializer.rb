@@ -1,3 +1,3 @@
 class FieldReportSerializer < BaseFieldReportSerializer
-  # has_many :photos
+  has_one :photo
 end
