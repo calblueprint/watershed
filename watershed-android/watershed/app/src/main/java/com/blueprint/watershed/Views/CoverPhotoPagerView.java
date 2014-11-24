@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 
+import com.blueprint.watershed.Photos.Photo;
 import com.blueprint.watershed.Photos.PhotoPagerAdapter;
 import com.blueprint.watershed.R;
 
@@ -17,18 +18,25 @@ import java.util.ArrayList;
 public class CoverPhotoPagerView extends ViewPager {
 
     private ArrayList<ImageView> mImageViews;
+    private PhotoPagerAdapter mAdapter;
 
     public CoverPhotoPagerView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initializeViews();
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.cover_photo_pager_view, this, true);
+
+        initializeViews();
     }
 
     public void initializeViews() {
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
-        PhotoPagerAdapter photoPagerAdapter = new PhotoPagerAdapter();
-        viewPager.setAdapter(photoPagerAdapter);
+        mAdapter = new PhotoPagerAdapter();
+        viewPager.setAdapter(mAdapter);
+    }
+
+    public void configureWithPhotos(ArrayList<Photo> photos) {
+        mAdapter.configureWithPhotos(photos);
+        mAdapter.notifyDataSetChanged();
     }
 }

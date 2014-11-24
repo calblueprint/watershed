@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.blueprint.watershed.Views.CoverPhotoView
+    <com.blueprint.watershed.Views.CoverPhotoPagerView
+        android:id="@+id/cover_photo_pager_view"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         />

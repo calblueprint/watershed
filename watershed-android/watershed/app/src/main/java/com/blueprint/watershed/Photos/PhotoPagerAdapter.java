@@ -26,7 +26,7 @@ public class PhotoPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return mPhotos.size();
+        return getPhotos().size();
     }
 
     @Override
@@ -52,6 +52,13 @@ public class PhotoPagerAdapter extends PagerAdapter {
     }
 
     // Getters
+    public ArrayList<Photo> getPhotos() {
+        if (mPhotos == null) {
+            mPhotos = new ArrayList<Photo>();
+        }
+        return mPhotos;
+    }
+
     public Photo getPhoto(int position) { return mPhotos.get(position); }
     public Bitmap getImage(int position) { return getPhoto(position).getImage(); }
 }
