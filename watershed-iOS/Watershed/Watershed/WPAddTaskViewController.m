@@ -60,7 +60,7 @@ static NSString *CellIdentifier = @"Cell";
     _taskField.text = stringForFirst;
 }
 
-- (void)secondViewControllerDismissed:(NSString *)stringForFirst
+- (void)selectSiteViewControllerDismissed:(NSString *)stringForFirst
 {
     _siteField.text = stringForFirst;
 }
@@ -68,15 +68,13 @@ static NSString *CellIdentifier = @"Cell";
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
     if (textField.tag == 1) {
         WPSelectTaskViewController *selectTaskViewController = [[WPSelectTaskViewController alloc] init];
-        selectTaskViewController.myString = @"This text is passed from firstViewController!";
         selectTaskViewController.selectTaskDelegate = self;
         selectTaskViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
         [self presentViewController:selectTaskViewController animated:YES completion:nil];
     }
     if (textField.tag == 2) {
         WPSelectMiniSiteViewController *selectMiniSiteViewController = [[WPSelectMiniSiteViewController alloc] init];
-        selectMiniSiteViewController.myString = @"This text is passed from firstViewController!";
-        selectMiniSiteViewController.selectTaskDelegate = self;
+        selectMiniSiteViewController.selectSiteDelegate = self;
         selectMiniSiteViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
         [self presentViewController:selectMiniSiteViewController animated:YES completion:nil];
     }
