@@ -125,9 +125,9 @@ static NSString * const SITES_URL = @"sites";
     parameters[@"email"] = self.keyChainStore[@"email"];
 }
 
-#pragma mark - Remove stored info
+#pragma mark - KeyChainStore Configuration
 
-- (void)eraseStore {
+- (void)eraseLoginKeyChainInfo {
     [self.keyChainStore removeItemForKey:@"auth_token"];
     [self.keyChainStore removeItemForKey:@"email"];
 }

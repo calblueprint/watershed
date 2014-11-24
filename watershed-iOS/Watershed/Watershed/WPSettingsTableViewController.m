@@ -133,7 +133,7 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
         }
     } else if (indexPath.section == 2) {
         if (indexPath.row == 0) {
-            [[WPNetworkingManager sharedManager] eraseStore];
+            [[WPNetworkingManager sharedManager] eraseLoginKeyChainInfo];
             WPRootViewController *parentVC = (WPRootViewController *)self.parentViewController.parentViewController.parentViewController;
             [parentVC pushNewLoginControllerFromTab:(WPTabBarController *)self.parentViewController.parentViewController];
         }
