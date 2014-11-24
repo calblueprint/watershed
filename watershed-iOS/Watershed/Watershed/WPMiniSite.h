@@ -8,14 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import "WPSite.h"
+#import "Mantle.h"
 
 @interface WPMiniSite : NSObject
 
 @property (nonatomic) NSNumber *miniSiteId;
 @property (nonatomic) NSString *name;
 @property (nonatomic) NSString *info;
-@property (nonatomic) CGFloat latitude;
-@property (nonatomic) CGFloat longitude;
+@property (nonatomic) NSNumber *latitude;
+@property (nonatomic) NSNumber *longitude;
 @property (nonatomic) NSString *street;
 @property (nonatomic) NSString *city;
 @property (nonatomic) NSString *state;

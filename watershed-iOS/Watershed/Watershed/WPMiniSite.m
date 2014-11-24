@@ -10,4 +10,12 @@
 
 @implementation WPMiniSite
 
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+    return @{
+             @"miniSiteId" : @"id",
+             @"info" : @"description",
+             @"zipCode" : @"zip_code"
+             };
+}
+
 @end
