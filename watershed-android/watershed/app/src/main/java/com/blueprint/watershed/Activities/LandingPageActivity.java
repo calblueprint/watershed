@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Button;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 import android.widget.Toast;
@@ -26,6 +27,8 @@ import com.blueprint.watershed.Authentication.LoginFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.R;
 import com.facebook.AppEventsLogger;
+import com.facebook.Session;
+import com.facebook.SessionState;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONException;
@@ -42,11 +45,18 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     // UI Elements
     private ImageView mLandingPageImage;
     private Button mLoginButton;
-    private Button mFacebookButton;
+    private com.facebook.widget.LoginButton mFacebookButton;
     private Button mSignUpButton;
     private NetworkManager mloginNetworkManager;
     private SharedPreferences preferences;
     private ObjectMapper mMapper;
+
+    private Session.StatusCallback callback = new Session.StatusCallback() {
+        @Override
+        public void call(Session session, SessionState state, Exception exception) {
+            onSessionStateChange(session, state, exception);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,20 +83,26 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     protected void onResume() {
         super.onResume();
 
-        //AppEventsLogger.activateApp(this);
+        AppEventsLogger.activateApp(this);
+
+        Session session = Session.getActiveSession();
+        if (session != null &&
+                (session.isOpened() || session.isClosed()) ) {
+            onSessionStateChange(session, session.getState(), null);
+        }
     }
 
     protected void onPause() {
         super.onPause();
 
-        //AppEventsLogger.deactivateApp(this);
+        AppEventsLogger.deactivateApp(this);
     }
 
     public void initializeViews() {
         //setLandingPageImage((ImageView)findViewById(R.id.landing_page_image));
 
         setLoginButton((Button)findViewById(R.id.login_load_fragment_button));
-        //setFacebookButton((Button)findViewById(R.id.facebook_button));
+        setFacebookButton((com.facebook.widget.LoginButton)findViewById(R.id.authButton));
         setSignUpButton((Button)findViewById(R.id.sign_up_load_fragment_button));
 
         //mFacebookButton.setOnClickListener(this);
@@ -193,6 +209,29 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         mloginNetworkManager.getRequestQueue().add(request);
     }
 
+    // Facebook Stuff
+
+    private void onSessionStateChange(Session session, SessionState state, Exception exception) {
+        if (state.isOpened()) {
+            Log.i("Facebook", "Logged in...");
+        } else if (state.isClosed()) {
+            Log.i("Facebook", "Logged out...");
+        }
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Object result = data.getExtras().get("com.facebook.LoginActivity:Result");
+        Log.e("THIS RESULT", result.toString());
+
+        for (String key : data.getExtras().keySet()) {
+            Object value = data.getExtras().get(key);
+            Log.e("THIS STUFF", String.format("%s %s (%s)", key,
+                    value.toString(), value.getClass().getName()));
+        }    }
+
     // Getters
     public ImageView getLandingPageImage() { return mLandingPageImage; }
     public Button getLoginButton() { return mLoginButton; }
@@ -203,6 +242,6 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     // Setters
     public void setLandingPageImage(ImageView imageView) { mLandingPageImage = imageView; }
     public void setLoginButton(Button loginButton) { mLoginButton = loginButton; }
-    public void setFacebookButton(Button facebookButton) { mFacebookButton = facebookButton; }
+    public void setFacebookButton(com.facebook.widget.LoginButton facebookButton) { mFacebookButton = facebookButton; }
     public void setSignUpButton(Button signUpButton) { mSignUpButton = signUpButton; }
 }
