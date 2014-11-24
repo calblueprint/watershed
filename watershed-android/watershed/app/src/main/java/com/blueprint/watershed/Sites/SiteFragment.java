@@ -3,7 +3,6 @@ package com.blueprint.watershed.Sites;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +18,7 @@ import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteListAdapter;
 import com.blueprint.watershed.Networking.NetworkManager;
-import com.blueprint.watershed.Networking.SiteListRequest;
-import com.blueprint.watershed.Networking.SiteRequest;
+import com.blueprint.watershed.Networking.Sites.SiteRequest;
 import com.blueprint.watershed.R;
 
 import org.json.JSONObject;

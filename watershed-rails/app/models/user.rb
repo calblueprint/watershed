@@ -37,7 +37,6 @@ class User < ActiveRecord::Base
   has_many :user_mini_sites
   has_many :mini_sites, through: :user_mini_sites
 
-  validates :facebook_auth_token, presence: true
   validates :email, presence: true
   validates :name, presence: true
 
@@ -66,7 +65,7 @@ class User < ActiveRecord::Base
   # Token Authentication
   #
   def ensure_authentication_token
-    if authentication_token.blank?
+    if authentication_token.nil? || authentication_token.blank?
       self.authentication_token = generate_authentication_token
       self.save
     end
@@ -75,7 +74,7 @@ class User < ActiveRecord::Base
   def generate_authentication_token
     loop do
       token = Devise.friendly_token
-      break token unless self.class.unscoped.where(authentication_token: token).first
+      return token unless self.class.unscoped.where(authentication_token: token).first
     end
   end
 
@@ -87,6 +86,10 @@ class User < ActiveRecord::Base
   end
 
   def create_with_facebook_info(facebook_params)
+    if facebook_params[:facebook_auth_token].nil?
+      return false
+    end
+
     self.name = facebook_params[:name]
     self.facebook_auth_token = facebook_params[:facebook_auth_token]
     self.facebook_id = facebook_params[:facebook_id]

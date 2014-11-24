@@ -14,6 +14,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.blueprint.watershed.APIObject;
 
 import org.json.JSONArray;
@@ -28,15 +29,15 @@ import java.util.Map;
 /**
  * Created by maxwolffe on 11/2/14.
  */
-public abstract class BaseRequest extends Request {
+public abstract class BaseRequest extends JsonObjectRequest {
     private SharedPreferences preferences;
     private Response.Listener listener;
 
     private static final String baseURL = "https://intense-reaches-1457.herokuapp.com/api/v1/";
 
     public BaseRequest(int method, String url, JSONObject jsonRequest,
-                       Response.Listener listener, final Activity activity){
-        super(method, url, new Response.ErrorListener() {
+                       Response.Listener listener, final Activity activity) {
+        super(method, url, jsonRequest, listener, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 String message;
@@ -78,15 +79,10 @@ public abstract class BaseRequest extends Request {
 
     @Override
     public HashMap<String, String> getHeaders() {
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("X-AUTH-TOKEN", preferences.getString("authentication_token", "none"));
-        params.put("X-AUTH-EMAIL", preferences.getString("email", "none"));
-        return params;
-    }
-
-    @Override
-    protected void deliverResponse(Object response) {
-        this.listener.onResponse(response);
+        HashMap<String, String> headers = new HashMap<String, String>();
+        headers.put("X-AUTH-TOKEN", preferences.getString("authentication_token", "none"));
+        headers.put("X-AUTH-EMAIL", preferences.getString("email", "none"));
+        return headers;
     }
 
     @Override

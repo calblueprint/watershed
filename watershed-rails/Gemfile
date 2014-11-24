@@ -27,6 +27,11 @@ gem "travis", github: "travis-ci/travis.rb"
 # Search
 gem "pg_search", "~> 0.7.8"
 
+# Uploads
+gem "carrierwave", "~> 0.10.0"
+gem "fog", "~> 1.22.1"
+gem "rmagick", "~> 2.13.2", require: false
+
 group :development, :test do
   gem "annotate", "~> 2.6.1"
   gem "awesome_print", "~> 1.2.0"
