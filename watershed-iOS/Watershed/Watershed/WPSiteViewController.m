@@ -15,6 +15,7 @@
 
 @interface WPSiteViewController ()
 
+@property (nonatomic) WPSiteView *view;
 @property (nonatomic) UITableView *miniSiteTableView;
 @property (nonatomic) NSMutableArray *miniSiteList;
 
@@ -32,22 +33,16 @@ static NSString *cellIdentifier = @"MiniSiteCell";
 
     [[WPNetworkingManager sharedManager] requestSiteWithSite:self.site parameters:[[NSMutableDictionary alloc] init] success:^(WPSite *site, NSMutableArray *miniSiteList) {
         self.site = site;
+        [self updateSiteView];
         self.miniSiteList = miniSiteList;
         [self.miniSiteTableView reloadData];
     }];
 }
 
 - (void)loadView {
-    WPSiteView *siteView = [[WPSiteView alloc] init];
-    self.view = siteView;
-    siteView.originalCoverPhoto = self.site.image;
-    siteView.coverPhotoView.image = siteView.originalCoverPhoto;
-    siteView.titleLabel.text = self.site.name;
-    siteView.descriptionLabel.text = self.site.info;
-    siteView.addressLabel.label.text = [NSString stringWithFormat:@"%@, %@, %@ %@", self.site.street, self.site.city, self.site.state, self.site.zipCode];
-    siteView.siteCountLabel.label.text = [[self.site.miniSitesCount stringValue] stringByAppendingString:@" mini sites"];
-    
-    self.miniSiteTableView = siteView.miniSiteTableView;
+    self.view = [[WPSiteView alloc] init];
+    [self updateSiteView];
+    self.miniSiteTableView = self.view.miniSiteTableView;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -74,7 +69,7 @@ static NSString *cellIdentifier = @"MiniSiteCell";
     NSInteger rowCount = 0;
     
     if ([tableView isEqual:self.miniSiteTableView]) rowCount = self.miniSiteList.count;
-    [(WPSiteView *)self.view updateTableViewHeight:self.miniSiteList.count];
+    [self.view updateTableViewHeight:self.miniSiteList.count];
     return rowCount;
 }
 
@@ -109,6 +104,15 @@ static NSString *cellIdentifier = @"MiniSiteCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     WPMiniSiteViewController *miniSiteViewController = [[WPMiniSiteViewController alloc] init];
     [self.navigationController pushViewController:miniSiteViewController animated:YES];
+}
+
+- (void)updateSiteView {
+    self.view.originalCoverPhoto = self.site.image;
+    self.view.coverPhotoView.image = self.view.originalCoverPhoto;
+    self.view.titleLabel.text = self.site.name;
+    self.view.descriptionLabel.text = self.site.info;
+    self.view.addressLabel.label.text = [NSString stringWithFormat:@"%@, %@, %@ %@", self.site.street, self.site.city, self.site.state, self.site.zipCode];
+    self.view.siteCountLabel.label.text = [[self.site.miniSitesCount stringValue] stringByAppendingString:@" mini sites"];
 }
 
 #pragma mark - Lazy Instantiation
