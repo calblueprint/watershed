@@ -8,14 +8,13 @@
 
 #import "WPLoginViewController.h"
 #import "WPLoginView.h"
+#import "WPNetworkingManager.h"
 #import "AFNetworking.h"
 #import "WPAppDelegate.h"
 #import "UICKeyChainStore.h"
 #import "WPRootViewController.h"
 #import "WPUser.h"
 
-static NSString * const SIGNIN_URL = @"users/sign_in";
-static NSString * const FACEBOOK_LOGIN_URL = @"users/sign_up/facebook";
 
 @interface WPLoginViewController ()
 @property (nonatomic) WPLoginView *view;
@@ -43,30 +42,11 @@ static NSString * const FACEBOOK_LOGIN_URL = @"users/sign_up/facebook";
     NSString *email = self.view.emailTextField.text;
     NSString *password = self.view.passwordTextField.text;
     
-    AFHTTPRequestOperationManager *manager = _appDelegate.getAFManager;
     NSDictionary *parameters = @{@"user" : @{@"email": email, @"password": password}};
     
-    NSString *loginString = [manager.baseURL.absoluteString stringByAppendingString:SIGNIN_URL];
-    [manager POST:loginString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-        [self parseResponse:responseObject];
+    [[WPNetworkingManager sharedManager] requestLoginWithParameters:parameters success:^(WPUser *user) {
         [self pushTabBarController];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Incorrect email or password." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [incorrect show];
-        NSLog(@"Error: %@", error);
     }];
-    
-}
-
-- (void)parseResponse:(id)responseObject {
-    NSDictionary *responseDictionary = responseObject;
-    NSString *authToken = [responseDictionary objectForKey:@"authentication_token"];
-    //NSString *name = [[responseDictionary objectForKey:@"user"] objectForKey:@"name"];
-    
-    UICKeyChainStore *store = [_appDelegate getKeyChainStore];
-    [store setString:authToken forKey:@"auth_token"];
-    [store synchronize];
 }
 
 - (void)pushTabBarController {
@@ -82,7 +62,6 @@ static NSString * const FACEBOOK_LOGIN_URL = @"users/sign_up/facebook";
     NSString *fbAccessToken = [FBSession activeSession].accessTokenData.accessToken;
   
     // NOTE(mark): Using the same networking setup as before, change this when you get your network manager in place.
-    AFHTTPRequestOperationManager *manager = _appDelegate.getAFManager;
     NSDictionary *parameters = @{@"user" : @{
                                      @"email": fbUser.email,
                                      @"facebook_auth_token": fbAccessToken,
@@ -90,15 +69,8 @@ static NSString * const FACEBOOK_LOGIN_URL = @"users/sign_up/facebook";
                                      @"facebook_id": fbUser.profilePictureId,
                                      }};
     
-    NSString *facebookLoginURL = [manager.baseURL.absoluteString stringByAppendingString:FACEBOOK_LOGIN_URL];
-    [manager POST:facebookLoginURL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-        [self parseResponse:responseObject];
+    [[WPNetworkingManager sharedManager] requestFacebookLoginWithParameters:parameters success:^(WPUser *user) {
         [self pushTabBarController];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Can't log in via Facebook." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [incorrect show];
-        NSLog(@"Error: %@", error);
     }];
 }
 

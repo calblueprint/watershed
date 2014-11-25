@@ -10,5 +10,5 @@
 #import "WPViewController.h"
 
 @interface WPSitesTableViewController : WPViewController <UITableViewDelegate, UITableViewDataSource>
-
+@property (nonatomic) NSMutableArray *sitesList;
 @end

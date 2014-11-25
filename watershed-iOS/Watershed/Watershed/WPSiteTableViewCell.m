@@ -9,15 +9,7 @@
 #import "WPSiteTableViewCell.h"
 
 @interface WPSiteTableViewCell ()
-
-@property (nonatomic) UILabel *nameLabel;
-@property (nonatomic) UIImageView *photoView;
-@property (nonatomic) UILabel *miniSiteLabel;
 @property (nonatomic) UIView *darkOverlay;
-@property (nonatomic) NSString *name;
-@property (nonatomic) UIImage *image;
-@property (nonatomic) NSInteger miniSiteCount;
-
 @end
 
 @implementation WPSiteTableViewCell
@@ -27,21 +19,13 @@ const static int ORIGINAL_PHOTO_POSITION = 50;
 const static float PARALLAX_REDUCTION = 3.5;
 
 - (id)initWithStyle:(UITableViewCellStyle)style
-    reuseIdentifier:(NSString *)reuseIdentifier
-               name:(NSString *)name
-              image:(UIImage *)image
-      miniSiteCount:(NSInteger)miniSiteCount {
+    reuseIdentifier:(NSString *)reuseIdentifier {
     
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
     if (self) {
         
         [self setClipsToBounds:YES];
-        
-        _name = name;
-        _image = image;
-        _miniSiteCount = miniSiteCount;
-        
         [self createSubviews];
         [self setNeedsUpdateConstraints];
     }
@@ -56,7 +40,7 @@ const static float PARALLAX_REDUCTION = 3.5;
     content.backgroundColor = [UIColor whiteColor];
     
     _photoView = [({
-        UIImageView *photoView = [[UIImageView alloc] initWithImage:self.image];
+        UIImageView *photoView = [[UIImageView alloc] init];
         [photoView setContentMode:UIViewContentModeScaleAspectFill];
         //[photoView setClipsToBounds:YES];
         photoView;
@@ -70,16 +54,17 @@ const static float PARALLAX_REDUCTION = 3.5;
     
     _nameLabel = [({
         UILabel *label = [[UILabel alloc] init];
-        label.text = self.name;
         label.textColor = [UIColor whiteColor];
         label.font = [UIFont systemFontOfSize:20.0];
+        label.lineBreakMode = NSLineBreakByWordWrapping;
+        label.numberOfLines = 0;
+        label.textAlignment = NSTextAlignmentCenter;
         [self addTextShadow:label];
         label;
     }) wp_addToSuperview:content];
     
     _miniSiteLabel = [({
         UILabel *miniSiteLabel = [[UILabel alloc] init];
-        miniSiteLabel.text = [NSString stringWithFormat:@"%d mini sites", (int) self.miniSiteCount];
         miniSiteLabel.textColor = [UIColor whiteColor];
         miniSiteLabel.font = [UIFont systemFontOfSize:14.0];
         [self addTextShadow:miniSiteLabel];
@@ -113,13 +98,15 @@ const static float PARALLAX_REDUCTION = 3.5;
     }];
     
     [self.nameLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.contentView.mas_centerX);
-        make.centerY.equalTo(self.contentView.mas_centerY);
+        make.top.equalTo(@(standardMargin));
+        make.leading.equalTo(@(standardMargin));
+        make.trailing.equalTo(@(-standardMargin));
+        make.bottom.equalTo(@(-standardMargin));
     }];
     
     [self.miniSiteLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo([UIView wp_styleNegativePadding]);
-        make.trailing.equalTo([UIView wp_styleNegativePadding]);
+        make.bottom.equalTo(@(-standardMargin));
+        make.trailing.equalTo(@(-standardMargin));
     }];
 
     
