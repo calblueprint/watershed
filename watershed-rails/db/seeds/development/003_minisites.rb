@@ -18,7 +18,15 @@ first_site = Site.first
 
 (0..5).each do |number|
   mini_site_for_first_site = MiniSite.where(
-
+    name: Faker::Commerce.department,
+    description: Faker::Lorem.paragraph,
+    street: Faker::Address.street_address,
+    city: Faker::Address.city,
+    state: Faker::Address.state,
+    zip_code: Faker::Address.zip_code,
+    latitude: BigDecimal.new(Faker::Address.latitude),
+    longitude: BigDecimal.new(Faker::Address.longitude),
+    site_id: first_site.id,
   ).first_or_create
 
   puts "Created Mini Site for Site: #{first_site.name}"
