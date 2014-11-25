@@ -34,7 +34,6 @@ static NSString *cellIdentifier = @"MiniSiteCell";
 
     [[WPNetworkingManager sharedManager] requestSiteWithSite:self.site parameters:[[NSMutableDictionary alloc] init] success:^(WPSite *site, NSMutableArray *miniSiteList) {
         self.site = site;
-        [self updateSiteView];
         self.miniSiteList = miniSiteList;
         [self.miniSiteTableView reloadData];
     }];
