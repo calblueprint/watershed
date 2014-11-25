@@ -13,6 +13,7 @@
 
 @interface WPMiniSiteViewController ()
 
+@property (nonatomic) WPMiniSiteView *view;
 @property (nonatomic) UITableView *fieldReportTableView;
 @property (nonatomic) NSMutableArray *fieldReportList;
 
@@ -21,6 +22,7 @@
 static NSString *cellIdentifier = @"FieldReportCell";
 
 @implementation WPMiniSiteViewController
+@synthesize miniSite = _miniSite;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -77,13 +79,8 @@ static NSString *cellIdentifier = @"FieldReportCell";
         
         cellView = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (!cellView) {
-            
             cellView = [[WPFieldReportTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                         reuseIdentifier:cellIdentifier
-                                                                   image:[UIImage imageNamed:@"SampleCoverPhoto"]
-                                                                    date:@"Oct 1, 2015"
-                                                                  rating:[self.fieldReportList[indexPath.row] intValue]
-                                                                  urgent:YES];
+                                                         reuseIdentifier:cellIdentifier];
         }
     }
     return cellView;
@@ -97,6 +94,40 @@ static NSString *cellIdentifier = @"FieldReportCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     WPFieldReportViewController *fieldReportController = [[WPFieldReportViewController alloc] init];
     [self.navigationController pushViewController:fieldReportController animated:YES];
+}
+
+- (void)updateMiniSiteView {
+    self.view.originalCoverPhoto = self.miniSite.image;
+    self.view.coverPhotoView.image = self.view.originalCoverPhoto;
+    self.view.titleLabel.text = self.miniSite.name;
+    self.view.descriptionLabel.text = self.miniSite.info;
+    self.view.addressLabel.label.text = [NSString stringWithFormat:@"%@, %@, %@ %@", self.miniSite.street, self.miniSite.city, self.miniSite.state, self.miniSite.zipCode];
+    self.view.vegetationListLabel.text = self.miniSite.vegetations;
+    self.view.currentTaskLabel.text = self.miniSite.currentTask;
+    self.view.fieldReportCountLabel.label.text = [[self.miniSite.fieldReportCount stringValue] stringByAppendingString:@" field reports"];
+}
+
+#pragma mark - Setter Methods
+
+- (void)setMiniSite:(WPMiniSite *)miniSite {
+    _miniSite = miniSite;
+    [self updateMiniSiteView];
+}
+
+#pragma mark - Lazy Instantiation
+
+- (NSMutableArray *)miniSiteList {
+    if (!_fieldReportList) {
+        _fieldReportList = [[NSMutableArray alloc] init];
+    }
+    return _fieldReportList;
+}
+
+- (WPMiniSite *)miniSite {
+    if (!_miniSite) {
+        _miniSite = [[WPMiniSite alloc] init];
+    }
+    return _miniSite;
 }
 
 @end
