@@ -19,6 +19,7 @@ static NSString * const BASE_URL = @"https://intense-reaches-1457.herokuapp.com/
 static NSString * const SIGNIN_URL = @"users/sign_in";
 static NSString * const FACEBOOK_LOGIN_URL = @"users/sign_up/facebook";
 static NSString * const SITES_URL = @"sites";
+static NSString * const MINI_SITES_URL = @"mini_sites";
 
 #pragma mark - Singleton Methods
 
@@ -123,6 +124,22 @@ static NSString * const SITES_URL = @"sites";
         success(site, miniSiteList);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load site." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+- (void)requestSiteWithMiniSite:(WPMiniSite *)miniSite parameters:(NSMutableDictionary *)parameters success:(void (^)(WPMiniSite *miniSite, NSMutableArray *fieldReportList))success {
+    NSString *miniSiteEndpoint = [@"/" stringByAppendingString:[miniSite.miniSiteId stringValue]];
+    NSString *MINI_SITE_URL = [MINI_SITES_URL stringByAppendingString:miniSiteEndpoint];
+    NSString *miniSiteString = [WPNetworkingManager createURLWithEndpoint:MINI_SITE_URL];
+    [self addAuthenticationParameters:parameters];
+    
+    [self GET:miniSiteString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"SINGLE MINI SITE: %@", responseObject);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load mini site." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [incorrect show];
         NSLog(@"Error: %@", error);
     }];
