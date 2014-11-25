@@ -34,6 +34,7 @@ public abstract class BaseRequest extends JsonObjectRequest {
     private Response.Listener listener;
 
     private static final String baseURL = "https://intense-reaches-1457.herokuapp.com/api/v1/";
+    //private static final String baseURL = "http://10.0.0.18:3001/api/v1/";
 
     public BaseRequest(int method, String url, JSONObject jsonRequest,
                        Response.Listener listener, final Activity activity) {
@@ -43,8 +44,7 @@ public abstract class BaseRequest extends JsonObjectRequest {
                 String message;
                 if (volleyError instanceof NetworkError) {
                     message = "Network Error. Please try again later.";
-                }
-                else {
+                } else {
                     try {
                         JSONObject response = new JSONObject(new String(volleyError.networkResponse.data));
                         message = (String) response.get("message");

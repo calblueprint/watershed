@@ -2,6 +2,8 @@ package com.blueprint.watershed.MiniSites;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +11,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.blueprint.watershed.Photos.PhotoPagerAdapter;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Sites.Site;
+import com.blueprint.watershed.Sites.SiteFragment;
+import com.blueprint.watershed.Views.CoverPhotoPagerView;
 
 import java.util.ArrayList;
 
@@ -40,8 +45,10 @@ public class MiniSiteListAdapter extends ArrayAdapter<MiniSite> {
             row = inflater.inflate(layoutResourceId, parent, false);
 
             holder = new MiniSiteHolder();
-            holder.name = (TextView) row.findViewById(R.id.primary_label);
-            holder.description = (TextView) row.findViewById(R.id.secondary_label);
+            holder.photosView = (CoverPhotoPagerView) row.findViewById(R.id.cover_photo_pager_view);
+            holder.coverPhotoLabel = (TextView) row.findViewById(R.id.cover_photo_label);
+            holder.topLabel = (TextView) row.findViewById(R.id.top_label);
+            holder.bottomLabel = (TextView) row.findViewById(R.id.bottom_label);
 
             row.setTag(holder);
         } else {
@@ -49,15 +56,18 @@ public class MiniSiteListAdapter extends ArrayAdapter<MiniSite> {
         }
 
         MiniSite miniSite = miniSites.get(position);
-
-        holder.name.setText(miniSite.getName());
-        holder.description.setText("");
+        holder.photosView.configureWithPhotos(miniSite.getPhotos());
+        holder.coverPhotoLabel.setText(String.format("%s Field Reports", miniSite.getFieldReports().size()));
+        holder.topLabel.setText(miniSite.getName());
+        holder.bottomLabel.setText(miniSite.getLocation());
 
         return row;
     }
 
     static class MiniSiteHolder {
-        TextView name;
-        TextView description;
+        CoverPhotoPagerView photosView;
+        TextView coverPhotoLabel;
+        TextView topLabel;
+        TextView bottomLabel;
     }
 }

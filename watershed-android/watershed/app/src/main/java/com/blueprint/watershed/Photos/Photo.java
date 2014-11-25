@@ -1,10 +1,14 @@
 package com.blueprint.watershed.Photos;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Base64;
+import android.widget.ImageView;
 
+import com.android.volley.Response;
 import com.blueprint.watershed.APIObject;
 import com.blueprint.watershed.MiniSites.MiniSite;
+import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Users.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -20,6 +24,7 @@ import java.io.ByteArrayOutputStream;
 public class Photo implements APIObject {
 
     private Integer mId;
+    private String mURL;
     private Bitmap mImage;
 
     public Photo() {
@@ -31,9 +36,7 @@ public class Photo implements APIObject {
 
     // Getters
     public Integer getId() { return mId; }
-
-    @JsonIgnore
-    public Bitmap getImage() { return mImage; }
+    public String getURL() { return mURL; }
 
     public String getData() {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -41,7 +44,40 @@ public class Photo implements APIObject {
         return Base64.encodeToString(stream.toByteArray(), Base64.DEFAULT);
     }
 
+    @JsonIgnore
+    public Bitmap getImage(Context context) {
+        if (mImage == null) {
+            NetworkManager manager = NetworkManager.getInstance(context);
+            manager.imageRequest(getURL(), new Response.Listener<Bitmap>() {
+                @Override
+                public void onResponse(Bitmap bitmap) {
+                    mImage = bitmap;
+                }
+            });
+        }
+        return mImage;
+    }
+
+    @JsonIgnore
+    public void getImageAndSetImageView(Context context, final ImageView imageView) {
+        if (mImage == null) {
+            NetworkManager manager = NetworkManager.getInstance(context);
+            manager.imageRequest(getURL(), new Response.Listener<Bitmap>() {
+                @Override
+                public void onResponse(Bitmap bitmap) {
+                    mImage = bitmap;
+                    imageView.setImageBitmap(mImage);
+                    imageView.refreshDrawableState();
+                }
+            });
+        } else {
+            imageView.setImageBitmap(mImage);
+            imageView.refreshDrawableState();
+        }
+    }
+
     // Setters
     public void setId(Integer id) { mId = id; }
+    public void setURL(String URL) { mURL = URL; }
     public void setImage(Bitmap image) { mImage = image; }
 }
