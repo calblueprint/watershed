@@ -44,8 +44,7 @@ public abstract class BaseRequest extends JsonObjectRequest {
                 String message;
                 if (volleyError instanceof NetworkError) {
                     message = "Network Error. Please try again later.";
-                }
-                else {
+                } else {
                     try {
                         JSONObject response = new JSONObject(new String(volleyError.networkResponse.data));
                         message = (String) response.get("message");

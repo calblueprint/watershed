@@ -158,8 +158,7 @@ public class NetworkManager {
                 }, 0, 0, null,
                 new Response.ErrorListener() {
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("Volley Error", error.getMessage());
-                        //mImageView.setImageResource(R.drawable.image_load_error);
+                        Log.d("Volley Error", error.toString());
                     }
                 });
         mRequestQueue.add(request);
