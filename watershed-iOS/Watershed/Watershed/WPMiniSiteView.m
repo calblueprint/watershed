@@ -11,20 +11,11 @@
 
 @interface WPMiniSiteView () <UIScrollViewDelegate>
 
-@property (nonatomic) UIImageView *coverPhotoView;
-@property (nonatomic) UIImage *originalCoverPhoto;
 @property (nonatomic) UIImageView *navbarShadowOverlay;
 @property (nonatomic) UIView *tableHeaderView;
-@property (nonatomic) UILabel *titleLabel;
-@property (nonatomic) UILabel *descriptionLabel;
 @property (nonatomic) UIView *headingLineBreak;
-@property (nonatomic) WPLabeledIcon *addressLabel;
-@property (nonatomic) WPLabeledIcon *vegetationListLabel;
-@property (nonatomic) WPLabeledIcon *currentTaskLabel;
-@property (nonatomic) WPLabeledIcon *fieldReportCountLabel;
 @property (nonatomic) UIImageView *tableViewShadowOverlay;
 @property (nonatomic) UIScrollView *miniSiteScrollView;
-
 @property (nonatomic) NSMutableArray *coverPhotoArray;
 @property (nonatomic) NSInteger blurRadius;
 
