@@ -14,7 +14,7 @@
 
 @interface WPSelectMiniSiteViewController : WPViewController<UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, assign) id<SelectSiteDelegate>    selectSiteDelegate;
+@property (nonatomic, assign) id<SelectSiteDelegate> selectSiteDelegate;
 @property (nonatomic) NSString *myString;
 
 @end
