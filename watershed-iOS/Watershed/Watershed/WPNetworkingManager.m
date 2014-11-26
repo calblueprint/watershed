@@ -146,8 +146,12 @@ static NSString * const MINI_SITES_URL = @"mini_sites";
         for (NSDictionary *fieldReportJSON in fieldReportListJSON) {
             WPFieldReport *fieldReport = [MTLJSONAdapter modelOfClass:WPFieldReport.class fromJSONDictionary:fieldReportJSON error:nil];
             fieldReport.image = [UIImage imageNamed:@"SampleCoverPhoto2"];
+            fieldReport.creationDate = @"October 1, 2014";
             [fieldReportList addObject:fieldReport];
         }
+        miniSite.image = [UIImage imageNamed:@"SampleCoverPhoto2"];
+        miniSite.fieldReportCount = @(fieldReportList.count);
+        
         success(miniSite, fieldReportList);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

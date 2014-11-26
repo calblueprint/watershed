@@ -71,14 +71,14 @@ static NSString *cellIdentifier = @"FieldReportCell";
     NSInteger rowCount = 0;
     
     if ([tableView isEqual:self.fieldReportTableView]) rowCount = self.fieldReportList.count;
-    [(WPMiniSiteView *)self.view updateTableViewHeight:self.fieldReportList.count];
+    [self.view updateTableViewHeight:self.fieldReportList.count];
     return rowCount;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    UITableViewCell *cellView = nil;
+    WPFieldReportTableViewCell *cellView = nil;
     
     if ([tableView isEqual:self.fieldReportTableView]) {
         
@@ -87,6 +87,11 @@ static NSString *cellIdentifier = @"FieldReportCell";
             cellView = [[WPFieldReportTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                          reuseIdentifier:cellIdentifier];
         }
+        WPFieldReport *fieldReport = self.fieldReportList[indexPath.row];
+        cellView.photoView.image = fieldReport.image;
+        cellView.dateLabel.text = fieldReport.creationDate;
+        cellView.ratingNumberLabel.text = [fieldReport.rating stringValue];
+        cellView.ratingNumberLabel.textColor = [UIColor colorForRating:[fieldReport.rating intValue]];
     }
     return cellView;
 }

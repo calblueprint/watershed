@@ -14,7 +14,6 @@
     return @{
              @"fieldReportId" : @"id",
              @"info" : @"description",
-             @"miniSitesCount" : @"mini_sites_count"
              @"rating" : @"health_rating"
              };
 }
