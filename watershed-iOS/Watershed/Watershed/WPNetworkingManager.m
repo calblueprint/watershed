@@ -117,6 +117,7 @@ static NSString * const MINI_SITES_URL = @"mini_sites";
         NSMutableArray *miniSiteList = [[NSMutableArray alloc] init];
         for (NSDictionary *miniSiteJSON in miniSiteListJSON) {
             WPMiniSite *miniSite = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:miniSiteJSON error:nil];
+            miniSite.site = site;
             miniSite.image = [UIImage imageNamed:@"SampleCoverPhoto2"];
             miniSite.fieldReportCount = @(((NSArray *)miniSiteJSON[@"field_reports"]).count);
             [miniSiteList addObject:miniSite];
@@ -146,6 +147,7 @@ static NSString * const MINI_SITES_URL = @"mini_sites";
         NSMutableArray *fieldReportList = [[NSMutableArray alloc] init];
         for (NSDictionary *fieldReportJSON in fieldReportListJSON) {
             WPFieldReport *fieldReport = [MTLJSONAdapter modelOfClass:WPFieldReport.class fromJSONDictionary:fieldReportJSON error:nil];
+            fieldReport.miniSite = miniSite;
             fieldReport.image = [UIImage imageNamed:@"SampleCoverPhoto2"];
             fieldReport.creationDate = @"October 1, 2014";
             [fieldReportList addObject:fieldReport];
@@ -154,7 +156,6 @@ static NSString * const MINI_SITES_URL = @"mini_sites";
         miniSite.fieldReportCount = @(fieldReportList.count);
         
         success(miniSite, fieldReportList);
-        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load mini site." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [incorrect show];
