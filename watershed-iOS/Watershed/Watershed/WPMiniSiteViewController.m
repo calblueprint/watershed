@@ -10,6 +10,7 @@
 #import "WPMiniSiteView.h"
 #import "WPFieldReportTableViewCell.h"
 #import "WPFieldReportViewController.h"
+#import "WPNetworkingManager.h"
 
 @interface WPMiniSiteViewController ()
 
@@ -27,9 +28,11 @@ static NSString *cellIdentifier = @"FieldReportCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = self.miniSite.name;
-    [self loadFieldReportData];
     self.fieldReportTableView.delegate = self;
     self.fieldReportTableView.dataSource = self;
+    
+    [[WPNetworkingManager sharedManager] requestMiniSiteWithMiniSite:self.miniSite parameters:[[NSMutableDictionary alloc] init] success:^(WPMiniSite *miniSite, NSMutableArray *fieldReportList) {
+    }];
 }
 
 - (void)loadView {
