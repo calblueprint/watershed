@@ -101,7 +101,9 @@ static NSString *cellIdentifier = @"MiniSiteCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    WPMiniSite *selectedMiniSite = self.miniSiteList[indexPath.row];
     WPMiniSiteViewController *miniSiteViewController = [[WPMiniSiteViewController alloc] init];
+    miniSiteViewController.miniSite = selectedMiniSite;
     [self.navigationController pushViewController:miniSiteViewController animated:YES];
 }
 
