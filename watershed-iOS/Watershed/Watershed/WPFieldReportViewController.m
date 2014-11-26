@@ -9,7 +9,12 @@
 #import "WPFieldReportViewController.h"
 #import "WPFieldReportView.h"
 
+@interface WPFieldReportViewController ()
+@property (nonatomic) WPFieldReportView *view;
+@end
+
 @implementation WPFieldReportViewController
+@synthesize fieldReport = _fieldReport;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -24,7 +29,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [((WPFieldReportView *)self.view) showBubbles];
+    [self.view showBubbles];
     
     if ([self isMovingToParentViewController]) {
         //view controller is being pushed on
@@ -40,8 +45,32 @@
     }
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
+- (void)updateFieldReportView {
+    UIColor *ratingColor = [UIColor colorForRating:[self.fieldReport.rating intValue]];
+    self.view.backgroundColor = ratingColor;
+    self.view.ratingNumberLabel.text = [self.fieldReport.rating stringValue];
+    self.view.ratingNumberLabel.textColor = ratingColor;
+    self.view.ratingNumberLabel.layer.borderColor = [ratingColor CGColor];
+    self.view.reportImageView.image = self.fieldReport.image;
+    self.view.userImageView.image = [UIImage imageNamed:@"max"];
+    self.view.userImageView.layer.borderColor = [ratingColor CGColor];
+    self.view.descriptionLabel.text = self.fieldReport.info;
+}
+
+#pragma mark - Setter Methods
+
+- (void)setFieldReport:(WPFieldReport *)fieldReport {
+    _fieldReport = fieldReport;
+    [self updateFieldReportView];
+}
+
+#pragma mark - Lazy Instantiation
+
+- (WPFieldReport *)fieldReport {
+    if (!_fieldReport) {
+        _fieldReport = [[WPFieldReport alloc] init];
+    }
+    return _fieldReport;
 }
 
 @end
