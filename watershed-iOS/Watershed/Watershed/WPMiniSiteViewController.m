@@ -26,16 +26,15 @@ static NSString *cellIdentifier = @"FieldReportCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"Mini Site";
+    self.navigationItem.title = self.miniSite.name;
     [self loadFieldReportData];
     self.fieldReportTableView.delegate = self;
     self.fieldReportTableView.dataSource = self;
 }
 
 - (void)loadView {
-    WPMiniSiteView *miniSiteView = [[WPMiniSiteView alloc] init];
-    self.view = miniSiteView;
-    self.fieldReportTableView = miniSiteView.fieldReportTableView;
+    self.view = [[WPMiniSiteView alloc] init];
+    self.fieldReportTableView = self.view.fieldReportTableView;
 }
 
 - (void)loadFieldReportData {
