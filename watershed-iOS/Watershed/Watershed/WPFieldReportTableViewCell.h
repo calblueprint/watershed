@@ -14,7 +14,6 @@
 @property (nonatomic) UIImageView *photoView;
 @property (nonatomic) UILabel *dateLabel;
 @property (nonatomic) UILabel *ratingNumberLabel;
-@property (nonatomic) UILabel *ratingTextLabel;
 
 + (CGFloat)cellHeight;
 

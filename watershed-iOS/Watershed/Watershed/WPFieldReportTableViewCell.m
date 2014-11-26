@@ -8,6 +8,10 @@
 
 #import "WPFieldReportTableViewCell.h"
 
+@interface WPFieldReportTableViewCell ()
+@property (nonatomic) UILabel *ratingTextLabel;
+@end
+
 @implementation WPFieldReportTableViewCell
 
 const static float CELL_HEIGHT = 61.0f;
