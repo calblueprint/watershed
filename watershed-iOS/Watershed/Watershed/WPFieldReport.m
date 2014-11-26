@@ -10,4 +10,13 @@
 
 @implementation WPFieldReport
 
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+    return @{
+             @"fieldReportId" : @"id",
+             @"info" : @"description",
+             @"miniSitesCount" : @"mini_sites_count"
+             @"rating" : @"health_rating"
+             };
+}
+
 @end
