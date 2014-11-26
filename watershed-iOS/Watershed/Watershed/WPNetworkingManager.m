@@ -138,6 +138,14 @@ static NSString * const MINI_SITES_URL = @"mini_sites";
     [self GET:miniSiteString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"SINGLE MINI SITE: %@", responseObject);
         
+        NSDictionary *miniSiteJSON = (NSDictionary *)responseObject[@"mini_site"];
+        WPMiniSite *miniSite = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:miniSiteJSON error:nil];
+        
+        NSDictionary *fieldReportListJSON = miniSiteJSON[@"field_reports"];
+        NSMutableArray *fieldReportList = [[NSMutableArray alloc] init];
+        for (NSDictionary *fieldReportJSON in fieldReportListJSON) {
+        }
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load mini site." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [incorrect show];

@@ -12,6 +12,7 @@
 #import "WPUser.h"
 #import "WPSite.h"
 #import "WPMiniSite.h"
+#import "WPFieldReport.h"
 
 @interface WPNetworkingManager : AFHTTPRequestOperationManager
 
