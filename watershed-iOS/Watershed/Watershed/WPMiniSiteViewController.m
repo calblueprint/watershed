@@ -32,6 +32,9 @@ static NSString *cellIdentifier = @"FieldReportCell";
     self.fieldReportTableView.dataSource = self;
     
     [[WPNetworkingManager sharedManager] requestMiniSiteWithMiniSite:self.miniSite parameters:[[NSMutableDictionary alloc] init] success:^(WPMiniSite *miniSite, NSMutableArray *fieldReportList) {
+        self.miniSite = miniSite;
+        self.fieldReportList = fieldReportList;
+        [self.fieldReportTableView reloadData];
     }];
 }
 
