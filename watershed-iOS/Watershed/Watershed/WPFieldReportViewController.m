@@ -18,7 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"Field Report";
+    self.navigationItem.title = self.fieldReport.creationDate;
     self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
@@ -54,6 +54,8 @@
     self.view.reportImageView.image = self.fieldReport.image;
     self.view.userImageView.image = [UIImage imageNamed:@"max"];
     self.view.userImageView.layer.borderColor = [ratingColor CGColor];
+    self.view.titleLabel.text = self.fieldReport.miniSite.name;
+    self.view.userLabel.text = @"Reported by Max Wolfe";
     self.view.descriptionLabel.text = self.fieldReport.info;
 }
 
