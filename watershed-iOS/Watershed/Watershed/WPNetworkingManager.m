@@ -116,7 +116,7 @@ static NSString * const MINI_SITES_URL = @"mini_sites";
         NSDictionary *miniSiteListJSON = siteJSON[@"mini_sites"];
         NSMutableArray *miniSiteList = [[NSMutableArray alloc] init];
         for (NSDictionary *miniSiteJSON in miniSiteListJSON) {
-            WPMiniSite *miniSite = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:miniSiteJSON error:nil];
+            WPMiniSite *miniSite = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:miniSiteJSON error:nil];
             miniSite.image = [UIImage imageNamed:@"SampleCoverPhoto2"];
             [miniSiteList addObject:miniSite];
         }
