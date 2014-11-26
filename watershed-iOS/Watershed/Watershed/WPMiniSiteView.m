@@ -63,7 +63,6 @@ static int COVER_PHOTO_TRANS = 0;
     
     _titleLabel = [({
         UILabel *titleLabel = [[UILabel alloc] init];
-        titleLabel.text = @"Mini Site";
         titleLabel.font = [UIFont boldSystemFontOfSize:25.0];
         titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
         titleLabel.numberOfLines = 0;
@@ -72,7 +71,6 @@ static int COVER_PHOTO_TRANS = 0;
     
     _descriptionLabel = [({
         UILabel *descriptionLabel = [[UILabel alloc] init];
-        descriptionLabel.text = @"This is tha minisite. Tha minisite has vegetation and other stoof, like tasks and field reports.";
         descriptionLabel.font = [UIFont systemFontOfSize:14.0];
         descriptionLabel.lineBreakMode = NSLineBreakByWordWrapping;
         descriptionLabel.numberOfLines = 0;
@@ -89,29 +87,29 @@ static int COVER_PHOTO_TRANS = 0;
     _addressLabel = [({
         FAKFontAwesome *mapMarkerIcon = [FAKFontAwesome mapMarkerIconWithSize:[WPLabeledIcon viewHeight]];
         UIImage *mapMarkerImage = [mapMarkerIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
-        WPLabeledIcon *addressLabel = [[WPLabeledIcon alloc] initWithText:@"123 Mark Miyashita Drive, Berkeley, CA 94720" icon:mapMarkerImage];
+        WPLabeledIcon *addressLabel = [[WPLabeledIcon alloc] initWithText:@"Street Addresss Label" icon:mapMarkerImage];
         addressLabel;
     }) wp_addToSuperview:self.tableHeaderView];
     
     _vegetationListLabel = [({
         FAKFontAwesome *treeIcon = [FAKFontAwesome treeIconWithSize:[WPLabeledIcon viewHeight]];
         UIImage *treeImage = [treeIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
-        WPLabeledIcon *vegetationListLabel = [[WPLabeledIcon alloc] initWithText:@"Vegetation -- Apples, Oranges, Carrots, What am I saying" icon:treeImage];
+        WPLabeledIcon *vegetationListLabel = [[WPLabeledIcon alloc] initWithText:@"Vegetation List" icon:treeImage];
         vegetationListLabel;
     }) wp_addToSuperview:self.tableHeaderView];
     
     _currentTaskLabel = [({
         FAKFontAwesome *checkIcon = [FAKFontAwesome checkIconWithSize:[WPLabeledIcon viewHeight]];
         UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
-        WPLabeledIcon *currentTaskLabel = [[WPLabeledIcon alloc] initWithText:@"Current Task -- Fix the water" icon:checkImage];
+        WPLabeledIcon *currentTaskLabel = [[WPLabeledIcon alloc] initWithText:@"Current Task" icon:checkImage];
         currentTaskLabel;
     }) wp_addToSuperview:self.tableHeaderView];
     
     _fieldReportCountLabel = [({
         FAKFontAwesome *exclamationIcon = [FAKFontAwesome exclamationTriangleIconWithSize:[WPLabeledIcon viewHeight]];
         UIImage *exclamationImage = [exclamationIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
-        WPLabeledIcon *siteCountLabel = [[WPLabeledIcon alloc] initWithText:@"10 field reports" icon:exclamationImage];
-        siteCountLabel;
+        WPLabeledIcon *fieldReportCountLabel = [[WPLabeledIcon alloc] initWithText:@"Field Report Count" icon:exclamationImage];
+        fieldReportCountLabel;
     }) wp_addToSuperview:self.tableHeaderView];
     
     _tableViewShadowOverlay = [({
