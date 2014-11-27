@@ -8,6 +8,7 @@
 
 #import "WPFieldReportViewController.h"
 #import "WPFieldReportView.h"
+#import "WPNetworkingManager.h"
 
 @interface WPFieldReportViewController ()
 @property (nonatomic) WPFieldReportView *view;
@@ -20,6 +21,10 @@
     [super viewDidLoad];
     self.navigationItem.title = self.fieldReport.creationDate;
     self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    [[WPNetworkingManager sharedManager] requestFieldReportWithFieldReport:self.fieldReport parameters:[[NSMutableDictionary alloc] init] success:^(WPFieldReport *fieldReport) {
+        self.fieldReport = fieldReport;
+    }];
 }
 
 - (void)loadView {
