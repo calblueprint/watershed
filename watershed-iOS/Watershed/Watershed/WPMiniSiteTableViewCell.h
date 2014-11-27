@@ -11,13 +11,11 @@
 
 @interface WPMiniSiteTableViewCell : UITableViewCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style
-    reuseIdentifier:(NSString *)reuseIdentifier
-               name:(NSString *)name
-              image:(UIImage *)image
-             rating:(NSInteger)rating
-          taskCount:(NSInteger)taskCount
-   fieldReportCount:(NSInteger)fieldReportCount;
+@property (nonatomic) UILabel *nameLabel;
+@property (nonatomic) UIImageView *photoView;
+@property (nonatomic) UIView *ratingDotView;
+@property (nonatomic) WPLabeledIcon *taskCountLabel;
+@property (nonatomic) WPLabeledIcon *fieldReportCountLabel;
 
 + (CGFloat)cellHeight;
 

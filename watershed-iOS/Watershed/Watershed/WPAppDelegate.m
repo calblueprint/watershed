@@ -15,14 +15,6 @@
 #import "AFNetworkActivityIndicatorManager.h"
 #import <Facebook-iOS-SDK/FacebookSDK/FBAppCall.h>
 
-static NSString * const BASE_URL = @"https://intense-reaches-1457.herokuapp.com/api/v1/";
-
-@interface WPAppDelegate ()
-
-@property (nonatomic) AFHTTPRequestOperationManager *manager;
-@property (nonatomic) UICKeyChainStore *store;
-
-@end
 
 
 @implementation WPAppDelegate
@@ -39,12 +31,7 @@ static NSString * const BASE_URL = @"https://intense-reaches-1457.herokuapp.com/
     [self.window makeKeyAndVisible];
 
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
-    NSURL *baseURL = [[NSURL alloc] initWithString:BASE_URL];
-    _manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
-    _manager.responseSerializer = [AFJSONResponseSerializer serializer];
-
-    _store = [UICKeyChainStore keyChainStore];
-
+    
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 
     //clear navbar
@@ -62,6 +49,8 @@ static NSString * const BASE_URL = @"https://intense-reaches-1457.herokuapp.com/
     [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"BackButton" ]];
     [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"BackButton" ]];
 
+    [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
+
     return YES;
 }
 
@@ -73,14 +62,6 @@ static NSString * const BASE_URL = @"https://intense-reaches-1457.herokuapp.com/
     // Call FBAppCall's handleOpenURL:sourceApplication to handle Facebook app responses
     BOOL wasHandled = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
     return wasHandled;
-}
-
-- (AFHTTPRequestOperationManager *)getAFManager {
-    return _manager;
-}
-
-- (UICKeyChainStore *)getKeyChainStore {
-    return _store;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -108,6 +89,25 @@ static NSString * const BASE_URL = @"https://intense-reaches-1457.herokuapp.com/
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma mark - Remote Notifications
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    NSLog(@"Did Receive Remote Notifications: (%@)", userInfo);
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    NSLog(@"Did Register for Remote Notifications with Device Token (%@)", deviceToken);
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    NSLog(@"Did Fail to Register for Remote Notifications");
+    NSLog(@"%@, %@", error, error.localizedDescription);
+    
 }
 
 @end

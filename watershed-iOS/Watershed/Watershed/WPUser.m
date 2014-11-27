@@ -17,4 +17,11 @@
     return self;
 }
 
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+    return @{
+             @"userId" : @"id",
+             @"profilePictureId" : @"facebook_id"
+             };
+}
+
 @end

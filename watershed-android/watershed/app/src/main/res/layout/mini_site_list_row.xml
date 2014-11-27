@@ -1,13 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.blueprint.watershed.Views.CoverPhotoView
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
+    <com.blueprint.watershed.Views.CoverPhotoPagerView
+        android:id="@+id/cover_photo_pager_view"
+        android:background="@color/ws_blue"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
         />
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/light_gray"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/cover_photo_pager_view"
+        android:layout_marginBottom="25dp">
+
+        <TextView
+            android:id="@+id/cover_photo_label"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:text="Label"
+            />
+
+    </LinearLayout>
+    
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@+id/cover_photo_pager_view"
+        android:layout_marginLeft="@dimen/standard_margin"
+        android:layout_marginRight="@dimen/standard_margin"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/top_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Top Label"
+            />
+
+        <TextView
+            android:id="@+id/bottom_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Bottom Label"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>
