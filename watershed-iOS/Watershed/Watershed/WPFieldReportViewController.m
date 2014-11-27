@@ -24,6 +24,7 @@
     
     [[WPNetworkingManager sharedManager] requestFieldReportWithFieldReport:self.fieldReport parameters:[[NSMutableDictionary alloc] init] success:^(WPFieldReport *fieldReport) {
         self.fieldReport = fieldReport;
+        [self.view showBubbles];
     }];
 }
 
@@ -33,8 +34,6 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-    [self.view showBubbles];
     
     if ([self isMovingToParentViewController]) {
         //view controller is being pushed on
