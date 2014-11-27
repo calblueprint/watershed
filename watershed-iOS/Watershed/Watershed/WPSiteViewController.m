@@ -24,6 +24,7 @@
 static NSString *cellIdentifier = @"MiniSiteCell";
 
 @implementation WPSiteViewController
+@synthesize site = _site;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -33,7 +34,6 @@ static NSString *cellIdentifier = @"MiniSiteCell";
 
     [[WPNetworkingManager sharedManager] requestSiteWithSite:self.site parameters:[[NSMutableDictionary alloc] init] success:^(WPSite *site, NSMutableArray *miniSiteList) {
         self.site = site;
-        [self updateSiteView];
         self.miniSiteList = miniSiteList;
         [self.miniSiteTableView reloadData];
     }];
@@ -41,7 +41,6 @@ static NSString *cellIdentifier = @"MiniSiteCell";
 
 - (void)loadView {
     self.view = [[WPSiteView alloc] init];
-    [self updateSiteView];
     self.miniSiteTableView = self.view.miniSiteTableView;
 }
 
@@ -113,6 +112,13 @@ static NSString *cellIdentifier = @"MiniSiteCell";
     self.view.descriptionLabel.text = self.site.info;
     self.view.addressLabel.label.text = [NSString stringWithFormat:@"%@, %@, %@ %@", self.site.street, self.site.city, self.site.state, self.site.zipCode];
     self.view.siteCountLabel.label.text = [[self.site.miniSitesCount stringValue] stringByAppendingString:@" mini sites"];
+}
+
+#pragma mark - Setter Methods
+
+- (void)setSite:(WPSite *)site {
+    _site = site;
+    [self updateSiteView];
 }
 
 #pragma mark - Lazy Instantiation
