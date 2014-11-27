@@ -51,8 +51,20 @@
     [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"BackButton" ]];
     [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"BackButton" ]];
 
-    [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
-
+    if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
+    {
+        // iOS 8 Notifications
+        [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+        
+        [application registerForRemoteNotifications];
+    }
+    else
+    {
+        // iOS < 8 Notifications
+        [application registerForRemoteNotificationTypes:
+         (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound)];
+    }
+    
     return YES;
 }
 
@@ -97,8 +109,11 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     NSLog(@"Did Receive Remote Notifications: (%@)", userInfo);
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [alert show];
+    //check if alert should send
+    if (_shouldSendPush) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    }
 
 }
 
