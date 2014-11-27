@@ -14,6 +14,7 @@
 #import "WPTermsViewController.h"
 #import "WPRootViewController.h"
 #import "WPNetworkingManager.h"
+#import "WPAppDelegate.h"
 
 @interface WPSettingsTableViewController ()
 
@@ -101,6 +102,7 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
             if (indexPath.section == 0) {
                 cell.textLabel.text = @"Push Notifications";
                 UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
+                [switchView addTarget:self action:@selector(switchPush:) forControlEvents:UIControlEventValueChanged];
                 cell.accessoryView = switchView;
             } else if (indexPath.section == 1) {
                 cell.textLabel.text = @"Terms and Privacy";
@@ -138,6 +140,12 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
             [parentVC pushNewLoginControllerFromTab:(WPTabBarController *)self.parentViewController.parentViewController];
         }
     }
+}
+
+#pragma mark - UISwitch Delegate
+
+- (void)switchPush:(id)sender {
+    [[WPAppDelegate instance] setShouldSendPush:[sender isOn]];
 }
 
 

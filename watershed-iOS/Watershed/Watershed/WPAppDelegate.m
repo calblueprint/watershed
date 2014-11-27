@@ -15,7 +15,9 @@
 #import "AFNetworkActivityIndicatorManager.h"
 #import <Facebook-iOS-SDK/FacebookSDK/FBAppCall.h>
 
+@interface WPAppDelegate ()
 
+@end
 
 @implementation WPAppDelegate
 
@@ -101,6 +103,7 @@
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    [self setShouldSendPush:YES];
     NSLog(@"Did Register for Remote Notifications with Device Token (%@)", deviceToken);
 }
 
