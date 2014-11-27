@@ -173,8 +173,9 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
     [self GET:fieldReportString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"SINGLE FIELD REPORT: %@", responseObject);
         NSDictionary *fieldReportJSON = (NSDictionary *)responseObject[@"field_report"];
-        WPFieldReport *fieldReport = [MTLJSONAdapter modelOfClass:WPFieldReport.class fromJSONDictionary:fieldReportJSON error:nil];
-        success(fieldReport);
+        WPFieldReport *fieldReportResponse = [MTLJSONAdapter modelOfClass:WPFieldReport.class fromJSONDictionary:fieldReportJSON error:nil];
+        fieldReportResponse.miniSite = fieldReport.miniSite;
+        success(fieldReportResponse);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load field report." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [incorrect show];
