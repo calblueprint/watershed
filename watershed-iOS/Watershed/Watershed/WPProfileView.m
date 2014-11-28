@@ -70,7 +70,11 @@ static int PROFILE_PIC_HEIGHT = 65;
     switch (indexPath.row) {
         case 1: {
             FAKIonIcons *mailIcon = [FAKIonIcons ios7EmailOutlineIconWithSize:30];
-            [cell setIconImageView:[[UIImageView alloc] initWithImage:[mailIcon imageWithSize:CGSizeMake(30, 30)]]];
+            [mailIcon addAttribute:NSForegroundColorAttributeName
+                             value:[UIColor darkGrayColor]];
+            [cell setIconImageView:[[UIImageView alloc]
+                     initWithImage:[mailIcon imageWithSize:CGSizeMake(30, 30)]]];
+            
             
             UILabel *infoLabel = [[UILabel alloc] init];
             infoLabel.text = self.user.email;
@@ -80,7 +84,10 @@ static int PROFILE_PIC_HEIGHT = 65;
         }
         case 2: {
             FAKIonIcons *locationIcon = [FAKIonIcons ios7LocationOutlineIconWithSize:30];
-            [cell setIconImageView:[[UIImageView alloc] initWithImage:[locationIcon imageWithSize:CGSizeMake(30, 30)]]];
+            [locationIcon addAttribute:NSForegroundColorAttributeName
+                             value:[UIColor darkGrayColor]];
+            [cell setIconImageView:[[UIImageView alloc]
+                     initWithImage:[locationIcon imageWithSize:CGSizeMake(30, 30)]]];
             
             UILabel *infoLabel = [[UILabel alloc] init];
             infoLabel.text = self.user.location;
@@ -89,7 +96,10 @@ static int PROFILE_PIC_HEIGHT = 65;
         }
         case 3: {
             FAKIonIcons *phoneIcon = [FAKIonIcons ios7TelephoneOutlineIconWithSize:30];
-            [cell setIconImageView:[[UIImageView alloc] initWithImage:[phoneIcon imageWithSize:CGSizeMake(30, 30)]]];
+            [phoneIcon addAttribute:NSForegroundColorAttributeName
+                             value:[UIColor darkGrayColor]];
+            [cell setIconImageView:[[UIImageView alloc]
+                     initWithImage:[phoneIcon imageWithSize:CGSizeMake(30, 30)]]];
             
             UILabel *infoLabel = [[UILabel alloc] init];
             infoLabel.text = self.user.phoneNumber;
