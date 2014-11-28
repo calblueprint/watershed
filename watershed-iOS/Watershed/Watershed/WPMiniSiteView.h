@@ -7,6 +7,7 @@
 //
 
 #import "WPView.h"
+#import "WPMiniSite.h"
 
 @interface WPMiniSiteView : WPView
 
@@ -21,5 +22,6 @@
 @property (nonatomic) UITableView *fieldReportTableView;
 
 - (void)updateTableViewHeight:(NSInteger)cellCount;
+- (void)configureWithMiniSite:(WPMiniSite *)miniSite;
 
 @end

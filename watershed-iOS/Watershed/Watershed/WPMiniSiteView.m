@@ -250,6 +250,17 @@ static int COVER_PHOTO_TRANS = 0;
     }];
 }
 
+- (void)configureWithMiniSite:(WPMiniSite *)miniSite {
+    self.originalCoverPhoto = miniSite.image;
+    self.coverPhotoView.image = self.originalCoverPhoto;
+    self.titleLabel.text = miniSite.name;
+    self.descriptionLabel.text = miniSite.info;
+    self.addressLabel.label.text = [NSString stringWithFormat:@"%@, %@, %@ %@", miniSite.street, miniSite.city, miniSite.state, miniSite.zipCode];
+    self.vegetationListLabel.text = miniSite.vegetations;
+    self.currentTaskLabel.text = miniSite.currentTask;
+    self.fieldReportCountLabel.label.text = [[miniSite.fieldReportCount stringValue] stringByAppendingString:@" field reports"];
+}
+
 #pragma mark - Blurred Photo Generation
 
 - (void)generateBlurredPhotos {

@@ -108,22 +108,11 @@ static NSString *cellIdentifier = @"FieldReportCell";
     [self.navigationController pushViewController:fieldReportController animated:YES];
 }
 
-- (void)updateMiniSiteView {
-    self.view.originalCoverPhoto = self.miniSite.image;
-    self.view.coverPhotoView.image = self.view.originalCoverPhoto;
-    self.view.titleLabel.text = self.miniSite.name;
-    self.view.descriptionLabel.text = self.miniSite.info;
-    self.view.addressLabel.label.text = [NSString stringWithFormat:@"%@, %@, %@ %@", self.miniSite.street, self.miniSite.city, self.miniSite.state, self.miniSite.zipCode];
-    self.view.vegetationListLabel.text = self.miniSite.vegetations;
-    self.view.currentTaskLabel.text = self.miniSite.currentTask;
-    self.view.fieldReportCountLabel.label.text = [[self.miniSite.fieldReportCount stringValue] stringByAppendingString:@" field reports"];
-}
-
 #pragma mark - Setter Methods
 
 - (void)setMiniSite:(WPMiniSite *)miniSite {
     _miniSite = miniSite;
-    [self updateMiniSiteView];
+    [self.view configureWithMiniSite:miniSite];
 }
 
 #pragma mark - Lazy Instantiation
