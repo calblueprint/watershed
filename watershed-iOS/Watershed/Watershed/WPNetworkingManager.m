@@ -141,6 +141,11 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
         NSMutableArray *miniSiteList = [[NSMutableArray alloc] init];
         for (NSDictionary *miniSiteJSON in miniSiteListJSON) {
             WPMiniSite *miniSite = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:miniSiteJSON error:nil];
+            NSArray *photosListJSON = miniSiteJSON[@"photos"];
+            for (NSDictionary *photoJSON in photosListJSON) {
+                [miniSite.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];
+            }
+            
             miniSite.site = siteResponse;
             miniSite.image = [UIImage imageNamed:@"SampleCoverPhoto2"];
             miniSite.fieldReportCount = @(((NSArray *)miniSiteJSON[@"field_reports"]).count);
