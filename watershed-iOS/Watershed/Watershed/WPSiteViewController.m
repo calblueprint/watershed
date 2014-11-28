@@ -90,7 +90,7 @@ static NSString *cellIdentifier = @"MiniSiteCell";
         cellView.photoView.image = miniSite.image;
         cellView.ratingDotView.backgroundColor = [UIColor colorForRating:3];
         cellView.taskCountLabel.label.text = [NSString stringWithFormat:@" %d tasks", 5];
-        cellView.fieldReportCountLabel.label.text = [NSString stringWithFormat:@" %d field reports", 5];
+        cellView.fieldReportCountLabel.label.text = [[miniSite.fieldReportCount stringValue] stringByAppendingString:@" field reports"];
     }
     return cellView;
 }
@@ -101,24 +101,17 @@ static NSString *cellIdentifier = @"MiniSiteCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    WPMiniSite *selectedMiniSite = self.miniSiteList[indexPath.row];
     WPMiniSiteViewController *miniSiteViewController = [[WPMiniSiteViewController alloc] init];
+    miniSiteViewController.miniSite = selectedMiniSite;
     [self.navigationController pushViewController:miniSiteViewController animated:YES];
-}
-
-- (void)updateSiteView {
-    self.view.originalCoverPhoto = self.site.image;
-    self.view.coverPhotoView.image = self.view.originalCoverPhoto;
-    self.view.titleLabel.text = self.site.name;
-    self.view.descriptionLabel.text = self.site.info;
-    self.view.addressLabel.label.text = [NSString stringWithFormat:@"%@, %@, %@ %@", self.site.street, self.site.city, self.site.state, self.site.zipCode];
-    self.view.siteCountLabel.label.text = [[self.site.miniSitesCount stringValue] stringByAppendingString:@" mini sites"];
 }
 
 #pragma mark - Setter Methods
 
 - (void)setSite:(WPSite *)site {
     _site = site;
-    [self updateSiteView];
+    [self.view configureWithSite:site];
 }
 
 #pragma mark - Lazy Instantiation
