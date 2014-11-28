@@ -22,6 +22,7 @@
 @property (nonatomic) NSString *state;
 @property (nonatomic) NSNumber *zipCode;
 @property (nonatomic) UIImage *image;
+@property (nonatomic) NSMutableArray *imageURLs; //of NSURL's
 @property (nonatomic) NSString *vegetations;
 
 @property (nonatomic) WPSite *site;
