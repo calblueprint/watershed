@@ -137,7 +137,7 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
         WPSite *siteResponse = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:siteJSON error:nil];
         siteResponse.image = [UIImage imageNamed:@"SampleCoverPhoto"];
         
-        NSDictionary *miniSiteListJSON = siteJSON[@"mini_sites"];
+        NSArray *miniSiteListJSON = siteJSON[@"mini_sites"];
         NSMutableArray *miniSiteList = [[NSMutableArray alloc] init];
         for (NSDictionary *miniSiteJSON in miniSiteListJSON) {
             WPMiniSite *miniSite = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:miniSiteJSON error:nil];
@@ -166,7 +166,7 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
         WPMiniSite *miniSiteResponse = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:miniSiteJSON error:nil];
         miniSiteResponse.site = miniSite.site;
         
-        NSDictionary *fieldReportListJSON = miniSiteJSON[@"field_reports"];
+        NSArray *fieldReportListJSON = miniSiteJSON[@"field_reports"];
         NSMutableArray *fieldReportList = [[NSMutableArray alloc] init];
         for (NSDictionary *fieldReportJSON in fieldReportListJSON) {
             WPFieldReport *fieldReport = [MTLJSONAdapter modelOfClass:WPFieldReport.class fromJSONDictionary:fieldReportJSON error:nil];
