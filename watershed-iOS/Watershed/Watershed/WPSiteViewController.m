@@ -107,20 +107,11 @@ static NSString *cellIdentifier = @"MiniSiteCell";
     [self.navigationController pushViewController:miniSiteViewController animated:YES];
 }
 
-- (void)updateSiteView {
-    self.view.originalCoverPhoto = self.site.image;
-    self.view.coverPhotoView.image = self.view.originalCoverPhoto;
-    self.view.titleLabel.text = self.site.name;
-    self.view.descriptionLabel.text = self.site.info;
-    self.view.addressLabel.label.text = [NSString stringWithFormat:@"%@, %@, %@ %@", self.site.street, self.site.city, self.site.state, self.site.zipCode];
-    self.view.siteCountLabel.label.text = [[self.site.miniSitesCount stringValue] stringByAppendingString:@" mini sites"];
-}
-
 #pragma mark - Setter Methods
 
 - (void)setSite:(WPSite *)site {
     _site = site;
-    [self updateSiteView];
+    [self.view configureWithSite:site];
 }
 
 #pragma mark - Lazy Instantiation
