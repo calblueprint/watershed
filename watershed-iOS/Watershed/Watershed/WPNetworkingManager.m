@@ -176,6 +176,7 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
         NSDictionary *fieldReportJSON = (NSDictionary *)responseObject[@"field_report"];
         WPFieldReport *fieldReportResponse = [MTLJSONAdapter modelOfClass:WPFieldReport.class fromJSONDictionary:fieldReportJSON error:nil];
         fieldReportResponse.miniSite = fieldReport.miniSite;
+        fieldReportResponse.image = fieldReport.image;
         success(fieldReportResponse);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load field report." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
