@@ -11,12 +11,9 @@
 
 @interface WPFieldReportTableViewCell : UITableViewCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style
-    reuseIdentifier:(NSString *)reuseIdentifier
-              image:(UIImage *)image
-               date:(NSString *)date
-             rating:(NSInteger)rating
-             urgent:(BOOL)urgent;
+@property (nonatomic) UIImageView *photoView;
+@property (nonatomic) UILabel *dateLabel;
+@property (nonatomic) UILabel *ratingNumberLabel;
 
 + (CGFloat)cellHeight;
 

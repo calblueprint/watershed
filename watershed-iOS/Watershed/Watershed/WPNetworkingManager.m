@@ -19,6 +19,8 @@ static NSString * const BASE_URL = @"https://intense-reaches-1457.herokuapp.com/
 static NSString * const SIGNIN_URL = @"users/sign_in";
 static NSString * const FACEBOOK_LOGIN_URL = @"users/sign_up/facebook";
 static NSString * const SITES_URL = @"sites";
+static NSString * const MINI_SITES_URL = @"mini_sites";
+static NSString * const FIELD_REPORTS_URL = @"field_reports";
 
 #pragma mark - Singleton Methods
 
@@ -109,20 +111,75 @@ static NSString * const SITES_URL = @"sites";
         NSLog(@"SINGLE SITE: %@", responseObject);
         
         NSDictionary *siteJSON = (NSDictionary *)responseObject[@"site"];
-        WPSite *site = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:siteJSON error:nil];
-        site.image = [UIImage imageNamed:@"SampleCoverPhoto"];
+        WPSite *siteResponse = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:siteJSON error:nil];
+        siteResponse.image = [UIImage imageNamed:@"SampleCoverPhoto"];
         
         NSDictionary *miniSiteListJSON = siteJSON[@"mini_sites"];
         NSMutableArray *miniSiteList = [[NSMutableArray alloc] init];
         for (NSDictionary *miniSiteJSON in miniSiteListJSON) {
-            WPMiniSite *miniSite = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:miniSiteJSON error:nil];
+            WPMiniSite *miniSite = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:miniSiteJSON error:nil];
+            miniSite.site = siteResponse;
             miniSite.image = [UIImage imageNamed:@"SampleCoverPhoto2"];
+            miniSite.fieldReportCount = @(((NSArray *)miniSiteJSON[@"field_reports"]).count);
             [miniSiteList addObject:miniSite];
         }
-
-        success(site, miniSiteList);
+        success(siteResponse, miniSiteList);
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load site." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+- (void)requestMiniSiteWithMiniSite:(WPMiniSite *)miniSite parameters:(NSMutableDictionary *)parameters success:(void (^)(WPMiniSite *miniSite, NSMutableArray *fieldReportList))success {
+    NSString *miniSiteEndpoint = [@"/" stringByAppendingString:[miniSite.miniSiteId stringValue]];
+    NSString *MINI_SITE_URL = [MINI_SITES_URL stringByAppendingString:miniSiteEndpoint];
+    NSString *miniSiteString = [WPNetworkingManager createURLWithEndpoint:MINI_SITE_URL];
+    [self addAuthenticationParameters:parameters];
+    
+    [self GET:miniSiteString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"SINGLE MINI SITE: %@", responseObject);
+        
+        NSDictionary *miniSiteJSON = (NSDictionary *)responseObject[@"mini_site"];
+        WPMiniSite *miniSiteResponse = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:miniSiteJSON error:nil];
+        miniSiteResponse.site = miniSite.site;
+        
+        NSDictionary *fieldReportListJSON = miniSiteJSON[@"field_reports"];
+        NSMutableArray *fieldReportList = [[NSMutableArray alloc] init];
+        for (NSDictionary *fieldReportJSON in fieldReportListJSON) {
+            WPFieldReport *fieldReport = [MTLJSONAdapter modelOfClass:WPFieldReport.class fromJSONDictionary:fieldReportJSON error:nil];
+            fieldReport.miniSite = miniSiteResponse;
+            fieldReport.image = [UIImage imageNamed:@"SampleCoverPhoto2"];
+            fieldReport.creationDate = @"October 1, 2014";
+            [fieldReportList addObject:fieldReport];
+        }
+        miniSiteResponse.image = [UIImage imageNamed:@"SampleCoverPhoto2"];
+        miniSiteResponse.fieldReportCount = @(fieldReportList.count);
+        
+        success(miniSiteResponse, fieldReportList);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load mini site." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+- (void)requestFieldReportWithFieldReport:(WPFieldReport *)fieldReport parameters:(NSMutableDictionary *)parameters success:(void (^)(WPFieldReport *fieldReport))success {
+    NSString *fieldReportEndpoint = [@"/" stringByAppendingString:[fieldReport.fieldReportId stringValue]];
+    NSString *FIELD_REPORT_URL = [FIELD_REPORTS_URL stringByAppendingString:fieldReportEndpoint];
+    NSString *fieldReportString = [WPNetworkingManager createURLWithEndpoint:FIELD_REPORT_URL];
+    [self addAuthenticationParameters:parameters];
+    
+    [self GET:fieldReportString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"SINGLE FIELD REPORT: %@", responseObject);
+        NSDictionary *fieldReportJSON = (NSDictionary *)responseObject[@"field_report"];
+        WPFieldReport *fieldReportResponse = [MTLJSONAdapter modelOfClass:WPFieldReport.class fromJSONDictionary:fieldReportJSON error:nil];
+        fieldReportResponse.miniSite = fieldReport.miniSite;
+        fieldReportResponse.image = fieldReport.image;
+        success(fieldReportResponse);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load field report." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [incorrect show];
         NSLog(@"Error: %@", error);
     }];

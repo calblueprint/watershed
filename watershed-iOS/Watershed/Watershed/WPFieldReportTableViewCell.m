@@ -8,17 +8,8 @@
 
 #import "WPFieldReportTableViewCell.h"
 
-@interface WPFieldReportTableViewCell()
-
-@property (nonatomic) UIImageView *photoView;
-@property (nonatomic) UILabel *dateLabel;
-@property (nonatomic) UILabel *ratingNumberLabel;
+@interface WPFieldReportTableViewCell ()
 @property (nonatomic) UILabel *ratingTextLabel;
-@property (nonatomic) UIImage *image;
-@property (nonatomic) NSString *date;
-@property (nonatomic) NSInteger rating;
-@property (nonatomic) BOOL urgent;
-
 @end
 
 @implementation WPFieldReportTableViewCell
@@ -26,21 +17,12 @@
 const static float CELL_HEIGHT = 61.0f;
 
 - (id)initWithStyle:(UITableViewCellStyle)style
-    reuseIdentifier:(NSString *)reuseIdentifier
-              image:(UIImage *)image
-               date:(NSString *)date
-             rating:(NSInteger)rating
-             urgent:(BOOL)urgent {
+    reuseIdentifier:(NSString *)reuseIdentifier {
     
     
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.backgroundColor = [UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:1];
-        
-        _image = image;
-        _date = date;
-        _rating = rating;
-        _urgent = urgent;
         
         [self createSubviews];
         [self setNeedsUpdateConstraints];
@@ -55,7 +37,7 @@ const static float CELL_HEIGHT = 61.0f;
     content.backgroundColor = [UIColor whiteColor];
     
     _photoView = [({
-        UIImageView *photoView = [[UIImageView alloc] initWithImage:self.image];
+        UIImageView *photoView = [[UIImageView alloc] init];
         [photoView setContentMode:UIViewContentModeScaleAspectFill];
         [photoView setClipsToBounds:YES];
         photoView.layer.cornerRadius = 3.0;
@@ -64,16 +46,13 @@ const static float CELL_HEIGHT = 61.0f;
     
     _dateLabel = [({
         UILabel *label = [[UILabel alloc] init];
-        label.text = self.date;
         label;
     }) wp_addToSuperview:content];
     
     _ratingNumberLabel = [({
         UILabel *label = [[UILabel alloc] init];
-        label.text = [NSString stringWithFormat:@"%d", (int)self.rating];
         label.font = [UIFont systemFontOfSize:28.0];
         label.textAlignment = NSTextAlignmentCenter;
-        label.textColor = [UIColor colorForRating:self.rating];
         label;
     }) wp_addToSuperview:content];
     

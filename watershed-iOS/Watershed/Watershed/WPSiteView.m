@@ -221,6 +221,15 @@ static int COVER_PHOTO_TRANS = 0;
     }];
 }
 
+- (void)configureWithSite:(WPSite *)site {
+    self.originalCoverPhoto = site.image;
+    self.coverPhotoView.image = self.originalCoverPhoto;
+    self.titleLabel.text = site.name;
+    self.descriptionLabel.text = site.info;
+    self.addressLabel.label.text = [NSString stringWithFormat:@"%@, %@, %@ %@", site.street, site.city, site.state, site.zipCode];
+    self.siteCountLabel.label.text = [[site.miniSitesCount stringValue] stringByAppendingString:@" mini sites"];
+}
+
 #pragma mark - Blurred Photo Generation
 
 - (void)generateBlurredPhotos {

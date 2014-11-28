@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "WPView.h"
+#import "WPSite.h"
 
 @interface WPSiteView : WPView
 
@@ -20,5 +21,6 @@
 @property (nonatomic) UITableView *miniSiteTableView;
 
 - (void)updateTableViewHeight:(NSInteger)cellCount;
+- (void)configureWithSite:(WPSite *)site;
 
 @end
