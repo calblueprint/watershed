@@ -14,6 +14,7 @@
 @interface WPProfileViewController ()
 
 @property (nonatomic) WPProfileView *view;
+@property (nonatomic) WPUser *user;
 
 @end
 
@@ -26,9 +27,10 @@
     UIBarButtonItem *settingsButtonItem = [[UIBarButtonItem alloc] initWithImage:settingsImage style:UIBarButtonItemStylePlain target:self action:@selector(openSettings)];
     settingsButtonItem.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = settingsButtonItem;
-    WPUser *user = [[WPUser alloc] init];
-    user.userId = @1; //change this
-    [[WPNetworkingManager sharedManager] requestUserWithUser:user parameters:[[NSMutableDictionary alloc] init] success:^(WPUser *user) {
+    _user = [[WPUser alloc] init];
+    _user.userId = @1; //change this
+    [[WPNetworkingManager sharedManager] requestUserWithUser:_user parameters:[[NSMutableDictionary alloc] init] success:^(WPUser *user) {
+        _user = user;
         [self.view configureWithUser:user];
     }];
     
@@ -45,6 +47,7 @@
 
 -(void)openSettings {
     WPSettingsTableViewController *settingsTableViewController = [[WPSettingsTableViewController alloc] init];
+    settingsTableViewController.user = _user;
     [self.navigationController pushViewController:settingsTableViewController animated:YES];
 }
 
