@@ -45,6 +45,7 @@ static int PROFILE_PIC_HEIGHT = 65;
 }
 
 - (void)configureWithUser {
+    int temp_id = 1;
     self.user = [[WPUser alloc] init];
     [self.user setProfilePicture:@"max.png"];
     [self.user setUserId:[NSNumber numberWithInt:5]];

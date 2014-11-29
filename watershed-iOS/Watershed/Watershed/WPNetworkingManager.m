@@ -17,6 +17,7 @@
 
 static NSString * const BASE_URL = @"https://intense-reaches-1457.herokuapp.com/api/v1/";
 static NSString * const SIGNIN_URL = @"users/sign_in";
+static NSString * const USERS_URL = @"users";
 static NSString * const FACEBOOK_LOGIN_URL = @"users/sign_up/facebook";
 static NSString * const SITES_URL = @"sites";
 static NSString * const MINI_SITES_URL = @"mini_sites";
@@ -41,7 +42,7 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
     NSString *signInString = [WPNetworkingManager createURLWithEndpoint:SIGNIN_URL];
     
     [self POST:signInString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"SIGN IN RESPONSE: %@", responseObject);
+//        NSLog(@"SIGN IN RESPONSE: %@", responseObject);
         
         NSDictionary *responseDictionary = responseObject;
         NSString *authToken = responseDictionary[@"authentication_token"];
@@ -62,7 +63,7 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
     NSString *facebookLoginString = [WPNetworkingManager createURLWithEndpoint:FACEBOOK_LOGIN_URL];
     
     [self POST:facebookLoginString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"FACEBOOK LOGIN RESPONSE: %@", responseObject);
+//        NSLog(@"FACEBOOK LOGIN RESPONSE: %@", responseObject);
         
         NSDictionary *responseDictionary = responseObject;
         NSString *authToken = responseDictionary[@"authentication_token"];
@@ -84,7 +85,7 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
     [self addAuthenticationParameters:parameters];
     
     [self GET:sitesString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"SITES LIST: %@", responseObject);
+//        NSLog(@"SITES LIST: %@", responseObject);
         
         NSArray *sitesListJSON = (NSArray *)responseObject[@"sites"];
         NSMutableArray *sitesList = [[NSMutableArray alloc] init];
@@ -108,7 +109,7 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
     [self addAuthenticationParameters:parameters];
     
     [self GET:siteString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"SINGLE SITE: %@", responseObject);
+//        NSLog(@"SINGLE SITE: %@", responseObject);
         
         NSDictionary *siteJSON = (NSDictionary *)responseObject[@"site"];
         WPSite *siteResponse = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:siteJSON error:nil];
@@ -139,7 +140,7 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
     [self addAuthenticationParameters:parameters];
     
     [self GET:miniSiteString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"SINGLE MINI SITE: %@", responseObject);
+//        NSLog(@"SINGLE MINI SITE: %@", responseObject);
         
         NSDictionary *miniSiteJSON = (NSDictionary *)responseObject[@"mini_site"];
         WPMiniSite *miniSiteResponse = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:miniSiteJSON error:nil];
@@ -172,7 +173,7 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
     [self addAuthenticationParameters:parameters];
     
     [self GET:fieldReportString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"SINGLE FIELD REPORT: %@", responseObject);
+//        NSLog(@"SINGLE FIELD REPORT: %@", responseObject);
         NSDictionary *fieldReportJSON = (NSDictionary *)responseObject[@"field_report"];
         WPFieldReport *fieldReportResponse = [MTLJSONAdapter modelOfClass:WPFieldReport.class fromJSONDictionary:fieldReportJSON error:nil];
         fieldReportResponse.miniSite = fieldReport.miniSite;
@@ -180,6 +181,26 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
         success(fieldReportResponse);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load field report." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+- (void)requestUserWithUser:(WPUser *)user parameters:(NSMutableDictionary *)parameters success:(void (^)(WPUser *user))success {
+    NSString *userEndpoint = [@"/" stringByAppendingString:[user.userId stringValue]];
+    NSString *USER_URL = [USERS_URL stringByAppendingString:userEndpoint];
+    NSString *userString = [WPNetworkingManager createURLWithEndpoint:USER_URL];
+    [self addAuthenticationParameters:parameters];
+    
+    [self GET:userString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"SINGLE USER: %@", responseObject);
+        NSDictionary *userJSON = (NSDictionary *)responseObject[@"user"];
+        WPUser *userResponse = [MTLJSONAdapter modelOfClass:WPUser.class fromJSONDictionary:userJSON error:nil];
+//        fieldReportResponse.miniSite = fieldReport.miniSite;
+//        fieldReportResponse.image = fieldReport.image;
+        success(userResponse);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load user." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [incorrect show];
         NSLog(@"Error: %@", error);
     }];
