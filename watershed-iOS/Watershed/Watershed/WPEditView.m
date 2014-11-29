@@ -102,11 +102,16 @@
         }
         case 2: {
             newCell.textLabel.text = @"Address";
-            UITextField *edit = [[UITextField alloc] init];
+            UITextField *editAddress = [[UITextField alloc] init];
+            //
+            newCell.editField = editAddress;
             break;
         }
         case 3: {
             newCell.textLabel.text = @"Phone Number";
+            UITextField *editPhone = [[UITextField alloc] init];
+            //
+            newCell.editField = editPhone;
             break;
         }
         case 4: {
