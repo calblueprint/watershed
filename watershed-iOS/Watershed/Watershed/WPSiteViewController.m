@@ -80,6 +80,7 @@ static NSString *cellIdentifier = @"MiniSiteCell";
     if ([tableView isEqual:self.miniSiteTableView]) {
         
         cellView = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        [cellView.photoView cancelImageRequestOperation];
         if (!cellView) {
             
             cellView = [[WPMiniSiteTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
@@ -87,7 +88,7 @@ static NSString *cellIdentifier = @"MiniSiteCell";
         }
         WPMiniSite *miniSite = self.miniSiteList[indexPath.row];
         cellView.nameLabel.text = miniSite.name;
-        cellView.photoView.image = miniSite.image;
+        [cellView.photoView setImageWithURL:[miniSite.imageURLs firstObject]];
         cellView.ratingDotView.backgroundColor = [UIColor colorForRating:3];
         cellView.taskCountLabel.label.text = [NSString stringWithFormat:@" %d tasks", 5];
         cellView.fieldReportCountLabel.label.text = [[miniSite.fieldReportCount stringValue] stringByAppendingString:@" field reports"];

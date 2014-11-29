@@ -147,7 +147,6 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
             }
             
             miniSite.site = siteResponse;
-            miniSite.image = [UIImage imageNamed:@"SampleCoverPhoto2"];
             miniSite.fieldReportCount = @(((NSArray *)miniSiteJSON[@"field_reports"]).count);
             [miniSiteList addObject:miniSite];
         }
@@ -180,7 +179,6 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
             fieldReport.creationDate = @"October 1, 2014";
             [fieldReportList addObject:fieldReport];
         }
-        miniSiteResponse.image = [UIImage imageNamed:@"SampleCoverPhoto2"];
         miniSiteResponse.fieldReportCount = @(fieldReportList.count);
         
         success(miniSiteResponse, fieldReportList);
