@@ -14,6 +14,7 @@
 @property (nonatomic) UITableView *infoTableView;
 @property (nonatomic) UIView *profilePicView;
 @property (nonatomic) UIView *statusBarView;
+@property (nonatomic) WPUser *user;
 
 @end
 
@@ -22,8 +23,6 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        [self createSubviews];
-        [self setNeedsUpdateConstraints];
         self.backgroundColor = [UIColor whiteColor];
     }
     return self;
@@ -60,6 +59,13 @@
     [super updateConstraints];
 }
 
+- (void)configureWithUser:(WPUser *)user {
+    self.user = user;
+    [self createSubviews];
+    [self setNeedsUpdateConstraints];
+}
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -69,7 +75,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return 4;
+    return 5;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -83,24 +89,28 @@
         case 0: {
             newCell.textLabel.text = @"Name";
             UITextField *editName = [[UITextField alloc] init];
-            editName.text = @"Max Wolffe";
+            editName.text = self.user.name;
             newCell.editField = editName;
             break;
         }
         case 1: {
             newCell.textLabel.text = @"Email";
-            newCell.textLabel.text = @"Name";
-            UITextField *editName = [[UITextField alloc] init];
-            editName.text = @"Max Wolffe";
-            newCell.editField = editName;
+            UITextField *editEmail = [[UITextField alloc] init];
+            editEmail.text = self.user.email;
+            newCell.editField = editEmail;
             break;
         }
         case 2: {
             newCell.textLabel.text = @"Address";
+            UITextField *edit = [[UITextField alloc] init];
             break;
         }
         case 3: {
             newCell.textLabel.text = @"Phone Number";
+            break;
+        }
+        case 4: {
+            newCell.textLabel.text = @"Profile Picture";
             break;
         }
         default: {

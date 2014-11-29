@@ -14,4 +14,7 @@
 
 @property (nonatomic) WPUser *user;
 
+-(void)dismissEdit;
+-(void)saveAndDismissEdit;
+
 @end

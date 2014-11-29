@@ -19,7 +19,7 @@
 @interface WPSettingsTableViewController ()
 
 @property (nonatomic) UITableView *settingsTableView;
-
+@property (nonatomic) WPEditViewController *editViewController;
 
 @end
 
@@ -46,6 +46,18 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Edit Delegate
+
+-(void)dismissEdit {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)saveAndDismissEdit {
+    //save
+    [self dismissEdit];
 }
 
 #pragma mark - Table view data source
@@ -119,8 +131,9 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     if (indexPath.section == 0 && indexPath.row == 0) {
-        WPEditViewController *editViewController = [[WPEditViewController alloc] init];
-        UINavigationController *editNavController = [[UINavigationController alloc] initWithRootViewController:editViewController];
+        _editViewController = [[WPEditViewController alloc] init];
+        _editViewController.delegate = self;
+        UINavigationController *editNavController = [[UINavigationController alloc] initWithRootViewController:_editViewController];
         [editNavController.navigationBar setBackgroundColor:[UIColor whiteColor]];
         [editNavController.navigationBar setBarTintColor:[UIColor whiteColor]];
         [editNavController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];

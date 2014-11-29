@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "WPUser.h"
+#import "WPSettingsTableViewController.h"
 
 @interface WPEditViewController : UIViewController
 
 -(void)dismissSelf;
 @property (nonatomic) WPUser *user;
+@property (nonatomic) WPSettingsTableViewController *delegate;
 
 @end
