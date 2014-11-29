@@ -32,18 +32,15 @@ static int PROFILE_PIC_HEIGHT = 65;
     self = [super initWithFrame:frame visibleNavbar:YES];
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
-        [self createSubviews];
-        [self updateConstraints];
+
     }
-    self.infoTableView.delegate = self;
-    self.infoTableView.dataSource = self;
-    self.infoTableView.scrollEnabled = NO;
-    [self.infoTableView reloadData];
+
     return self;
 }
 
 - (void)configureWithUser:(WPUser *)user {
     self.user = user;
+    _infoArray = [[NSMutableArray alloc] init];
     if (user.email) {
         [_infoArray addObject:user.email];
     }
@@ -53,8 +50,12 @@ static int PROFILE_PIC_HEIGHT = 65;
     if (user.phoneNumber) {
         [_infoArray addObject:user.phoneNumber];
     }
-    [self setNeedsUpdateConstraints];
+    [self createSubviews];
+    self.infoTableView.delegate = self;
+    self.infoTableView.dataSource = self;
+    self.infoTableView.scrollEnabled = NO;
     [self.infoTableView reloadData];
+    [self setNeedsUpdateConstraints];
 }
 
 #pragma mark - View Hierarchy
@@ -137,10 +138,10 @@ static int PROFILE_PIC_HEIGHT = 65;
 - (void)createSubviews {
 
     _profilePictureView = [[UIImageView alloc] init];
-    _profilePictureView.contentMode = UIViewContentModeScaleAspectFit;
+    _profilePictureView.contentMode = UIViewContentModeScaleAspectFill;
     _profilePictureView.clipsToBounds = YES;
     [self setRoundedView:_profilePictureView];
-//    [_profilePictureView setImage:[UIImage imageNamed:self.user.profilePicture]];
+    [_profilePictureView setImage:[UIImage imageNamed:@"hill.png"]];
     [self addSubview:_profilePictureView];
 
 
@@ -186,8 +187,7 @@ static int PROFILE_PIC_HEIGHT = 65;
     return 1;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
         return 1.f;
     }
