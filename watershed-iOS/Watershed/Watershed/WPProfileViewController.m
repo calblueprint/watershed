@@ -26,9 +26,6 @@
     UIBarButtonItem *settingsButtonItem = [[UIBarButtonItem alloc] initWithImage:settingsImage style:UIBarButtonItemStylePlain target:self action:@selector(openSettings)];
     settingsButtonItem.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = settingsButtonItem;
-    WPUser *user = [[WPUser alloc] init];
-    user.userId = @1; //change this
-    [self.view configureWithUser:user];
     [super viewDidLoad];
 }
 
@@ -37,7 +34,9 @@
 }
 
 -(void)loadView {
-    self.view = [[WPProfileView alloc] init];
+    WPUser *user = [[WPUser alloc] init];
+    user.userId = @1; //change this
+    self.view = [[WPProfileView alloc] initWithUser:user];
 }
 
 -(void)openSettings {

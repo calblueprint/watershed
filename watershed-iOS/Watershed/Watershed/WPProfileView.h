@@ -12,6 +12,6 @@
 
 @interface WPProfileView : WPView <UITableViewDataSource, UITableViewDelegate>
 
-- (void)configureWithUser:(WPUser *)user;
+- (id)initWithUser:(WPUser *)user;
 
 @end
