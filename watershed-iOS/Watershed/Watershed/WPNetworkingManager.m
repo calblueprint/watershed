@@ -193,11 +193,9 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
     [self addAuthenticationParameters:parameters];
     
     [self GET:userString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"SINGLE USER: %@", responseObject);
+//        NSLog(@"SINGLE USER: %@", responseObject);
         NSDictionary *userJSON = (NSDictionary *)responseObject[@"user"];
         WPUser *userResponse = [MTLJSONAdapter modelOfClass:WPUser.class fromJSONDictionary:userJSON error:nil];
-//        fieldReportResponse.miniSite = fieldReport.miniSite;
-//        fieldReportResponse.image = fieldReport.image;
         success(userResponse);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load user." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];

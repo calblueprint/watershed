@@ -28,11 +28,10 @@
 NSString *profileReuseIdentifier = @"WPProfileCell";
 static int PROFILE_PIC_HEIGHT = 65;
 
-- (id)initWithUser:(WPUser *)user {
-    self = [super initWithFrame:[WPView getScreenFrame] visibleNavbar:YES];
+- (id)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame visibleNavbar:YES];
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
-        [self configureWithUser:user];
         [self createSubviews];
         [self updateConstraints];
     }
@@ -54,6 +53,8 @@ static int PROFILE_PIC_HEIGHT = 65;
     if (user.phoneNumber) {
         [_infoArray addObject:user.phoneNumber];
     }
+    [self setNeedsUpdateConstraints];
+    [self.infoTableView reloadData];
 }
 
 #pragma mark - View Hierarchy
@@ -139,7 +140,7 @@ static int PROFILE_PIC_HEIGHT = 65;
     _profilePictureView.contentMode = UIViewContentModeScaleAspectFit;
     _profilePictureView.clipsToBounds = YES;
     [self setRoundedView:_profilePictureView];
-    [_profilePictureView setImage:[UIImage imageNamed:self.user.profilePicture]];
+//    [_profilePictureView setImage:[UIImage imageNamed:self.user.profilePicture]];
     [self addSubview:_profilePictureView];
 
 
