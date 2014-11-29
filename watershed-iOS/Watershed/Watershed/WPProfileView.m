@@ -141,7 +141,13 @@ static int PROFILE_PIC_HEIGHT = 65;
     _profilePictureView.contentMode = UIViewContentModeScaleAspectFill;
     _profilePictureView.clipsToBounds = YES;
     [self setRoundedView:_profilePictureView];
-    [_profilePictureView setImage:[UIImage imageNamed:@"hill.png"]];
+    if (_user.profilePicture) {
+        //do prof pic from server
+    } else if (_user.profilePictureId) {
+        //do facebook stuff
+    } else {
+        [_profilePictureView setImage:[UIImage imageNamed:@"hill.png"]];
+    }
     [self addSubview:_profilePictureView];
 
 
