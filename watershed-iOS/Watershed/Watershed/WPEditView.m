@@ -36,6 +36,7 @@
     _infoTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     _infoTableView.delegate = self;
     _infoTableView.dataSource = self;
+    _infoTableView.scrollEnabled = NO;
     [self addSubview:_infoTableView];
     
     _statusBarView = [[UIView alloc] init];
@@ -129,7 +130,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-
 }
 @end
 

@@ -53,6 +53,7 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
 -(void)dismissEdit {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:NO];
 }
 
 -(void)saveAndDismissEdit {
