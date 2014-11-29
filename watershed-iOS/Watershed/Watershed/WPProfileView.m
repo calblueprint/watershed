@@ -18,6 +18,7 @@
 @property (nonatomic) WPUser *user;
 @property (nonatomic) UIImageView *profilePictureView;
 @property (nonatomic) UILabel *nameLabel;
+@property (nonatomic) NSMutableArray *infoArray;
 
 @end
 
@@ -43,14 +44,15 @@ static int PROFILE_PIC_HEIGHT = 65;
 
 - (void)configureWithUser:(WPUser *)user {
     self.user = user;
-//    int temp_id = 1;
-//    self.user = [[WPUser alloc] init];
-//    [self.user setProfilePicture:@"max.png"];
-//    [self.user setUserId:[NSNumber numberWithInt:5]];
-//    [self.user setName:@"Max Wolffe"];
-//    [self.user setPhoneNumber:@"9162128793"];
-//    [self.user setEmail:@"max@millman.com"];
-//    [self.user setLocation:@"123 Millman Way Berkeley, CA 82918"];
+    if (user.email) {
+        [_infoArray addObject:user.email];
+    }
+    if (user.location) {
+        [_infoArray addObject:user.location];
+    }
+    if (user.phoneNumber) {
+        [_infoArray addObject:user.phoneNumber];
+    }
 }
 
 #pragma mark - View Hierarchy
