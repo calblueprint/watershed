@@ -10,7 +10,6 @@
 #import "UIExtensions.h"
 #import "FontAwesomeKit/FontAwesomeKit.h"
 #import "WPProfileTableViewCell.h"
-#import "WPUser.h"
 
 
 @interface WPProfileView ()
@@ -32,11 +31,9 @@ static int PROFILE_PIC_HEIGHT = 65;
     self = [super initWithFrame:frame visibleNavbar:YES];
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
-        [self configureWithUser];
         [self createSubviews];
         [self updateConstraints];
     }
-    
     self.infoTableView.delegate = self;
     self.infoTableView.dataSource = self;
     self.infoTableView.scrollEnabled = NO;
@@ -44,15 +41,16 @@ static int PROFILE_PIC_HEIGHT = 65;
     return self;
 }
 
-- (void)configureWithUser {
-    int temp_id = 1;
-    self.user = [[WPUser alloc] init];
-    [self.user setProfilePicture:@"max.png"];
-    [self.user setUserId:[NSNumber numberWithInt:5]];
-    [self.user setName:@"Max Wolffe"];
-    [self.user setPhoneNumber:@"9162128793"];
-    [self.user setEmail:@"max@millman.com"];
-    [self.user setLocation:@"123 Millman Way Berkeley, CA 82918"];
+- (void)configureWithUser:(WPUser *)user {
+    self.user = user;
+//    int temp_id = 1;
+//    self.user = [[WPUser alloc] init];
+//    [self.user setProfilePicture:@"max.png"];
+//    [self.user setUserId:[NSNumber numberWithInt:5]];
+//    [self.user setName:@"Max Wolffe"];
+//    [self.user setPhoneNumber:@"9162128793"];
+//    [self.user setEmail:@"max@millman.com"];
+//    [self.user setLocation:@"123 Millman Way Berkeley, CA 82918"];
 }
 
 #pragma mark - View Hierarchy
