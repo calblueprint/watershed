@@ -251,7 +251,8 @@ static int COVER_PHOTO_TRANS = 0;
 }
 
 - (void)configureWithMiniSite:(WPMiniSite *)miniSite {
-    [self.coverPhotoView setImageWithURL:[miniSite.imageURLs firstObject]];
+    [self.coverPhotoView setImageWithURL:[miniSite.imageURLs firstObject]
+                        placeholderImage:[UIImage imageNamed:@"SampleCoverPhoto"]];
     self.originalCoverPhoto = self.coverPhotoView.image;
     self.titleLabel.text = miniSite.name;
     self.descriptionLabel.text = miniSite.info;
