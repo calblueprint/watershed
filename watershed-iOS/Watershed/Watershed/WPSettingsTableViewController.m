@@ -149,10 +149,53 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
         }
     } else if (indexPath.section == 2) {
         if (indexPath.row == 0) {
+            //prompt
             [[WPNetworkingManager sharedManager] eraseLoginKeyChainInfo];
+            //DELETE user session
+            
             WPRootViewController *parentVC = (WPRootViewController *)self.parentViewController.parentViewController.parentViewController;
             [parentVC pushNewLoginControllerFromTab:(WPTabBarController *)self.parentViewController.parentViewController];
         }
+    }
+}
+
+#pragma mark - Log out prompt
+
+- (void)logoutButtonAction {
+    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
+        UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"Are you sure you want to log out?"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"Cancel"
+                                             destructiveButtonTitle:nil
+                                                  otherButtonTitles:@"Log Out", nil];
+        popup.tag = 1;
+        [popup showInView:[UIApplication sharedApplication].keyWindow];
+    } else {
+        UIAlertController *addPhotoActionSheet = [UIAlertController alertControllerWithTitle:nil
+                                                                                     message:nil
+                                                                              preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertAction *logout = [UIAlertAction
+                                    actionWithTitle:@"Take Photo"
+                                    style:UIAlertActionStyleDefault
+                                    handler:^(UIAlertAction * action)
+                                    {
+                                        [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
+//                                        [self takePhoto];
+                                        
+                                    }];
+        UIAlertAction *cancel = [UIAlertAction
+                                 actionWithTitle:@"Cancel"
+                                 style:UIAlertActionStyleCancel
+                                 handler:^(UIAlertAction * action)
+                                 {
+                                     [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
+                                     
+                                 }];
+        
+        
+        [addPhotoActionSheet addAction:logout];
+        [addPhotoActionSheet addAction:cancel];
+        [self presentViewController:addPhotoActionSheet animated:YES completion:nil];
     }
 }
 

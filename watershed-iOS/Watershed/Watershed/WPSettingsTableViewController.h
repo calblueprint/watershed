@@ -10,7 +10,7 @@
 #import "WPViewController.h"
 #import "WPUser.h"
 
-@interface WPSettingsTableViewController : WPViewController <UITableViewDelegate, UITableViewDataSource>
+@interface WPSettingsTableViewController : WPViewController <UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate>
 
 @property (nonatomic) WPUser *user;
 
