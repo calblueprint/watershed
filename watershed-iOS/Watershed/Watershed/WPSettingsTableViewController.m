@@ -161,32 +161,28 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
         UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"Are you sure you want to log out?"
                                                            delegate:self
                                                   cancelButtonTitle:@"Cancel"
-                                             destructiveButtonTitle:nil
-                                                  otherButtonTitles:@"Log Out", nil];
+                                             destructiveButtonTitle:@"Log Out"
+                                                  otherButtonTitles:nil];
         popup.tag = 1;
         [popup showInView:[UIApplication sharedApplication].keyWindow];
     } else {
-        UIAlertController *addPhotoActionSheet = [UIAlertController alertControllerWithTitle:nil
-                                                                                     message:nil
-                                                                              preferredStyle:UIAlertControllerStyleActionSheet];
-        UIAlertAction *logout = [UIAlertAction
-                                    actionWithTitle:@"Log Out"
-                                    style:UIAlertActionStyleDefault
-                                    handler:^(UIAlertAction * action)
-                                    {
-                                        [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
-                                        [self logout];
-                                        
+        UIAlertController *addPhotoActionSheet =
+        [UIAlertController alertControllerWithTitle:@"Are you sure you want to log out?"
+                                            message:nil
+                                     preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertAction *logout =
+        [UIAlertAction actionWithTitle:@"Log Out"
+                                 style:UIAlertActionStyleDestructive
+                               handler:^(UIAlertAction * action) {
+                                   [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
+                                   [self logout];
                                     }];
-        UIAlertAction *cancel = [UIAlertAction
-                                 actionWithTitle:@"Cancel"
+        UIAlertAction *cancel =
+        [UIAlertAction actionWithTitle:@"Cancel"
                                  style:UIAlertActionStyleCancel
-                                 handler:^(UIAlertAction * action)
-                                 {
-                                     [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
-                                     
-                                 }];
-        
+                               handler:^(UIAlertAction * action) {
+                                   [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
+                                   }];
         
         [addPhotoActionSheet addAction:logout];
         [addPhotoActionSheet addAction:cancel];
