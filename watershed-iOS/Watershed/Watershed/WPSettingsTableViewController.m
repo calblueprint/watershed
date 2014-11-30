@@ -149,19 +149,14 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
         }
     } else if (indexPath.section == 2) {
         if (indexPath.row == 0) {
-            //prompt
-            [[WPNetworkingManager sharedManager] eraseLoginKeyChainInfo];
-            //DELETE user session
-            
-            WPRootViewController *parentVC = (WPRootViewController *)self.parentViewController.parentViewController.parentViewController;
-            [parentVC pushNewLoginControllerFromTab:(WPTabBarController *)self.parentViewController.parentViewController];
+            [self logoutPrompt];
         }
     }
 }
 
 #pragma mark - Log out prompt
 
-- (void)logoutButtonAction {
+- (void)logoutPrompt {
     if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
         UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"Are you sure you want to log out?"
                                                            delegate:self
@@ -175,12 +170,12 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
                                                                                      message:nil
                                                                               preferredStyle:UIAlertControllerStyleActionSheet];
         UIAlertAction *logout = [UIAlertAction
-                                    actionWithTitle:@"Take Photo"
+                                    actionWithTitle:@"Log Out"
                                     style:UIAlertActionStyleDefault
                                     handler:^(UIAlertAction * action)
                                     {
                                         [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
-//                                        [self takePhoto];
+                                        [self logout];
                                         
                                     }];
         UIAlertAction *cancel = [UIAlertAction
@@ -197,6 +192,14 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
         [addPhotoActionSheet addAction:cancel];
         [self presentViewController:addPhotoActionSheet animated:YES completion:nil];
     }
+}
+
+-(void)logout {
+    [[WPNetworkingManager sharedManager] eraseLoginKeyChainInfo];
+    //DELETE user session
+    
+    WPRootViewController *parentVC = (WPRootViewController *)self.parentViewController.parentViewController.parentViewController;
+    [parentVC pushNewLoginControllerFromTab:(WPTabBarController *)self.parentViewController.parentViewController];
 }
 
 #pragma mark - UISwitch Delegate
