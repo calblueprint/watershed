@@ -25,6 +25,10 @@ const static float CELL_HEIGHT = 86.0f;
     return self;
 }
 
+- (void)dealloc {
+    [self.photoView cancelImageRequestOperation];
+}
+
 #pragma mark - View Hierarchy
 
 - (void)createSubviews {
