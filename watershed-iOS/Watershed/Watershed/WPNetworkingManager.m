@@ -150,6 +150,7 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
             miniSite.fieldReportCount = @(((NSArray *)miniSiteJSON[@"field_reports"]).count);
             [miniSiteList addObject:miniSite];
         }
+        siteResponse.miniSites = miniSiteList;
         success(siteResponse, miniSiteList);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -180,6 +181,7 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
             fieldReport.creationDate = @"October 1, 2014";
             [fieldReportList addObject:fieldReport];
         }
+        miniSiteResponse.fieldReports = fieldReportList;
         miniSiteResponse.fieldReportCount = @(fieldReportList.count);
         success(miniSiteResponse, fieldReportList);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

@@ -26,4 +26,11 @@
     return _imageURLs;
 }
 
+- (NSMutableArray *)fieldReports {
+    if (!_fieldReports) {
+        _fieldReports = [[NSMutableArray alloc] init];
+    }
+    return _fieldReports;
+}
+
 @end
