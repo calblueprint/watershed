@@ -228,7 +228,7 @@ static int COVER_PHOTO_TRANS = 0;
 - (void)configureWithSite:(WPSite *)site {
     [self.coverPhotoView setImageWithURL:[site.imageURLs firstObject]
                         placeholderImage:[UIImage imageNamed:@"SampleCoverPhoto"]];
-    self.coverPhotoView.image = self.originalCoverPhoto;
+    self.originalCoverPhoto = self.coverPhotoView.image;
     self.titleLabel.text = site.name;
     self.descriptionLabel.text = site.info;
     self.addressLabel.label.text = [NSString stringWithFormat:@"%@, %@, %@ %@", site.street, site.city, site.state, site.zipCode];
