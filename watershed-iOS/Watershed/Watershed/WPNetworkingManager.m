@@ -47,12 +47,10 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
         NSDictionary *sessionDictionary = [responseDictionary objectForKey:@"session"];
         NSString *authToken = sessionDictionary[@"authentication_token"];
         NSString *email = sessionDictionary[@"email"];
+        
         NSDictionary *userJSON = sessionDictionary[@"user"];
-        NSString *userId = [userJSON[@"id"] stringValue];
-        
-        [self updateLoginKeyChainInfoWithAuthToken:authToken email:email userId:userId];
-        
         WPUser *user = [MTLJSONAdapter modelOfClass:WPUser.class fromJSONDictionary:userJSON error:nil];
+        [self updateLoginKeyChainInfoWithUser:user AuthToken:authToken email:email];
         success(user);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Incorrect email or password." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -71,11 +69,9 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
         NSString *email = sessionDictionary[@"email"];
         
         NSDictionary *userJSON = sessionDictionary[@"user"];
-        NSString *userId = [userJSON[@"id"] stringValue];
-
-        [self updateLoginKeyChainInfoWithAuthToken:authToken email:email userId:userId];
-        
         WPUser *user = [MTLJSONAdapter modelOfClass:WPUser.class fromJSONDictionary:userJSON error:nil];
+        [self updateLoginKeyChainInfoWithUser:user AuthToken:authToken email:email];
+        
         success(user);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Incorrect email or password." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -93,11 +89,10 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
         NSString *authToken = sessionDictionary[@"authentication_token"];
         NSString *email = sessionDictionary[@"email"];
         NSDictionary *userJSON = sessionDictionary[@"user"];
-        NSString *userId = [userJSON[@"id"] stringValue];
 
-        [self updateLoginKeyChainInfoWithAuthToken:authToken email:email userId:userId];
-        
         WPUser *user = [MTLJSONAdapter modelOfClass:WPUser.class fromJSONDictionary:userJSON error:nil];
+        [self updateLoginKeyChainInfoWithUser:user AuthToken:authToken email:email];
+        
         success(user);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Cannot log in with Facebook." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -248,11 +243,12 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
 
 #pragma mark - KeyChainStore Configuration
 
-- (void)updateLoginKeyChainInfoWithAuthToken:(NSString *)authToken
-                                       email:(NSString *)email
-                                      userId:(NSString *)userId {
+- (void)updateLoginKeyChainInfoWithUser:(WPUser *)user
+                              AuthToken:(NSString *)authToken
+                                  email:(NSString *)email {
+    [self.keyChainStore setString:[user.userId stringValue] forKey:@"user_id"];
+    [self.keyChainStore setString:[user.role stringValue] forKey:@"role"];
     [self.keyChainStore setString:authToken forKey:@"auth_token"];
-    [self.keyChainStore setString:userId forKey:@"userId"];
     [self.keyChainStore setString:email forKey:@"email"];
     [self.keyChainStore synchronize];
 }
