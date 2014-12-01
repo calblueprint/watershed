@@ -115,7 +115,10 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
         NSMutableArray *sitesList = [[NSMutableArray alloc] init];
         for (NSDictionary *siteJSON in sitesListJSON) {
             WPSite *site = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:siteJSON error:nil];
-            site.image = [UIImage imageNamed:@"SampleCoverPhoto"];
+            NSArray *photosListJSON = siteJSON[@"photos"];
+            for (NSDictionary *photoJSON in photosListJSON) {
+                [site.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];
+            }
             [sitesList addObject:site];
         }
         success(sitesList);
@@ -135,7 +138,10 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
     [self GET:siteString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *siteJSON = (NSDictionary *)responseObject[@"site"];
         WPSite *siteResponse = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:siteJSON error:nil];
-        siteResponse.image = [UIImage imageNamed:@"SampleCoverPhoto"];
+        NSArray *photosListJSON = siteJSON[@"photos"];
+        for (NSDictionary *photoJSON in photosListJSON) {
+            [siteResponse.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];
+        }
         
         NSArray *miniSiteListJSON = siteJSON[@"mini_sites"];
         NSMutableArray *miniSiteList = [[NSMutableArray alloc] init];
