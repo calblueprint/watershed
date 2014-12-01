@@ -83,6 +83,8 @@ static NSString *cellIdentifier = @"MiniSiteCell";
         
         cellView = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         [cellView.photoView cancelImageRequestOperation];
+        cellView.photoView.image = nil;
+        
         if (!cellView) {
             
             cellView = [[WPMiniSiteTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault

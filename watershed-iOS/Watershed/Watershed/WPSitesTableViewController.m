@@ -66,6 +66,7 @@ static NSString *cellIdentifier = @"SiteCell";
         
         cellView = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         [cellView.photoView cancelImageRequestOperation];
+        cellView.photoView.image = nil;
         
         if (!cellView) {
             cellView = [[WPSiteTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
