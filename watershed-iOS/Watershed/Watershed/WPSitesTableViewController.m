@@ -65,6 +65,7 @@ static NSString *cellIdentifier = @"SiteCell";
     if ([tableView isEqual:self.sitesTableView]) {
         
         cellView = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        [cellView.photoView cancelImageRequestOperation];
         
         if (!cellView) {
             cellView = [[WPSiteTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
@@ -72,7 +73,8 @@ static NSString *cellIdentifier = @"SiteCell";
         }
         WPSite *site = self.sitesList[indexPath.row];
         cellView.nameLabel.text = site.name;
-        cellView.photoView.image = site.image;
+        [cellView.photoView setImageWithURL:[site.imageURLs firstObject]
+                           placeholderImage:[UIImage imageNamed:@"SampleCoverPhoto"]];
         cellView.miniSiteLabel.text = [[site.miniSitesCount stringValue] stringByAppendingString:@" mini sites"];
         
         [self updatePhotoOffset:self.sitesTableView.contentOffset.y];
