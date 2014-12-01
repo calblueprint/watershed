@@ -32,10 +32,12 @@ static NSString *cellIdentifier = @"MiniSiteCell";
     self.miniSiteTableView.delegate = self;
     self.miniSiteTableView.dataSource = self;
 
+    __weak __typeof(self)weakSelf = self;
     [[WPNetworkingManager sharedManager] requestSiteWithSite:self.site parameters:[[NSMutableDictionary alloc] init] success:^(WPSite *site, NSMutableArray *miniSiteList) {
-        self.site = site;
-        self.miniSiteList = miniSiteList;
-        [self.miniSiteTableView reloadData];
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        strongSelf.site = site;
+        strongSelf.miniSiteList = miniSiteList;
+        [strongSelf.miniSiteTableView reloadData];
     }];
 }
 

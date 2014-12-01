@@ -38,9 +38,11 @@ static NSString *cellIdentifier = @"SiteCell";
     self.sitesTableView.delegate = self;
     self.sitesTableView.dataSource = self;
     
+    __weak __typeof(self)weakSelf = self;
     [[WPNetworkingManager sharedManager] requestSitesListWithParameters:[[NSMutableDictionary alloc] init] success:^(NSMutableArray *sitesList) {
-        self.sitesList = sitesList;
-        [self.sitesTableView reloadData];
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        strongSelf.sitesList = sitesList;
+        [strongSelf.sitesTableView reloadData];
     }];
 }
 
