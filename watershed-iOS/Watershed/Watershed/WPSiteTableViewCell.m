@@ -32,6 +32,10 @@ const static float PARALLAX_REDUCTION = 3.5;
     return self;
 }
 
+- (void)dealloc {
+    [self.photoView cancelImageRequestOperation];
+}
+
 #pragma mark - View Hierarchy
 
 - (void)createSubviews {

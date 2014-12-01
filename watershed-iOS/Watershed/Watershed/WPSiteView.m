@@ -38,6 +38,10 @@ static int COVER_PHOTO_TRANS = 0;
     return self;
 }
 
+- (void)dealloc {
+    [self.coverPhotoView cancelImageRequestOperation];
+}
+
 #pragma mark - View Hierarchy
 
 - (void)createSubviews {
