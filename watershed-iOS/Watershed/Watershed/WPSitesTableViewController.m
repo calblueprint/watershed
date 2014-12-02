@@ -33,7 +33,13 @@ static NSString *cellIdentifier = @"SiteCell";
     
     [super viewDidLoad];
     self.navigationItem.title = @"Sites";
-    [self setUpSearchBar];
+    
+    NSMutableArray *barButtonItems = [[NSMutableArray alloc] initWithObjects:[self newSearchBarButtonItem], nil];
+    NSString *userRole = [WPNetworkingManager sharedManager].keyChainStore[@"role"];
+    if ([userRole isEqual:@"0"]) {
+        [barButtonItems addObject:[self newAddSiteButtonItem]];
+    }
+    [self.navigationItem setRightBarButtonItems:barButtonItems animated:YES];
     
     self.sitesTableView.delegate = self;
     self.sitesTableView.dataSource = self;
@@ -111,14 +117,13 @@ static NSString *cellIdentifier = @"SiteCell";
 
 #pragma mark - Search / Search Delegate Methods
 
-- (void)setUpSearchBar {
+- (UIBarButtonItem *)newSearchBarButtonItem {
 
     UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc]
                                          initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
                                          target:self
                                          action:@selector(openSearch) ];
     searchButtonItem.tintColor = [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = searchButtonItem;
     
     self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, topMargin, [WPView getScreenWidth], topMargin)];
     self.searchBar.delegate = self;
@@ -129,6 +134,8 @@ static NSString *cellIdentifier = @"SiteCell";
     self.searchController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
     self.searchController.delegate = self;
     self.searchController.searchResultsDataSource = self;
+    
+    return searchButtonItem;
 }
 
 - (void)openSearch {
@@ -147,6 +154,18 @@ static NSString *cellIdentifier = @"SiteCell";
     [UIView animateWithDuration:0.2 animations:^{
         [self.searchBar setFrame:CGRectMake(0, topMargin, [WPView getScreenWidth], topMargin)];
     }];
+}
+
+#pragma mark - Add Site Button
+
+- (UIBarButtonItem *)newAddSiteButtonItem {
+    UIBarButtonItem *addSiteButtonItem = [[UIBarButtonItem alloc]
+                                         initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                         target:self
+                                         action:nil ];
+    addSiteButtonItem.tintColor = [UIColor whiteColor];
+    
+    return addSiteButtonItem;
 }
 
 #pragma mark - Lazy instantiation
