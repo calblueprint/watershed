@@ -9,6 +9,7 @@
 #import "WPLoginView.h"
 #import "FontAwesomeKit/FontAwesomeKit.h"
 #import "WPLoginViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface WPLoginView ()
 
@@ -152,17 +153,18 @@
     [_emailButton setTitle:@"Sign in with Email" forState:UIControlStateNormal];
     _emailButton.layer.cornerRadius = 5.0;
     
-    _signupButton = [[UIButton alloc] init];
-    _signupButton.backgroundColor = [UIColor clearColor];
-    [_signupButton setTitle:@"Sign up" forState:UIControlStateNormal];
-    _signupButton.layer.cornerRadius = 5.0;
-    
     FAKIonIcons *mailIcon = [FAKIonIcons ios7EmailOutlineIconWithSize:30];
     [mailIcon addAttribute:NSForegroundColorAttributeName
                      value:[UIColor whiteColor]];
     _emailIconView = [[UIImageView alloc] initWithImage:[mailIcon imageWithSize:CGSizeMake(30, 30)]];
     [_emailButton addSubview:_emailIconView];
     [self addSubview:_emailButton];
+    
+    _signupButton = [[UIButton alloc] init];
+    [_signupButton setTitle:@"Sign up" forState:UIControlStateNormal];
+    _signupButton.titleLabel.font = [UIFont fontWithName:@"Helvetica" size:12];
+    _signupButton.titleLabel.textColor = [UIColor darkGrayColor];
+    [self addSubview:_signupButton];
 
 }
 
@@ -190,6 +192,12 @@
             self.emailButtonTopConstraint = make.top.equalTo(self.appTitleLabel.mas_bottom).with.offset(20);
             make.leading.equalTo(self.fbLoginView.mas_leading);
             make.height.equalTo(self.fbLoginView.mas_height);
+        }];
+        
+        [self.signupButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.fbLoginView.mas_bottom).with.offset(5);
+            make.trailing.equalTo(self.fbLoginView.mas_trailing);
+            make.height.equalTo(@15);
         }];
         
         [self.emailIconView mas_makeConstraints:^(MASConstraintMaker *make) {
