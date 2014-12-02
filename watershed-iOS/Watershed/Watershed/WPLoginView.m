@@ -16,6 +16,7 @@
 @property (nonatomic) FBLoginView *fbLoginView;
 @property (nonatomic) UIButton *emailButton;
 @property (nonatomic) UIButton *signupButton;
+@property (nonatomic) UILabel *noAccountLabel;
 @property (nonatomic) UIImageView *emailIconView;
 @property (nonatomic) UIImageView *signInEmailIconView;
 @property (nonatomic) UIImageView *signInPasswordIconView;
@@ -161,10 +162,16 @@
     [self addSubview:_emailButton];
     
     _signupButton = [[UIButton alloc] init];
-    [_signupButton setTitle:@"Sign up" forState:UIControlStateNormal];
+    [_signupButton setTitle:@"Sign up!" forState:UIControlStateNormal];
     _signupButton.titleLabel.font = [UIFont fontWithName:@"Helvetica" size:12];
-    _signupButton.titleLabel.textColor = [UIColor darkGrayColor];
+    [_signupButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self addSubview:_signupButton];
+    
+    _noAccountLabel = [[UILabel alloc] init];
+    _noAccountLabel.text = @"Don't have an account?";
+    _noAccountLabel.font = [UIFont fontWithName:@"Helvetica" size:12];
+    _noAccountLabel.textColor = [UIColor grayColor];
+    [self addSubview:_noAccountLabel];
 
 }
 
@@ -197,6 +204,12 @@
         [self.signupButton mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.fbLoginView.mas_bottom).with.offset(5);
             make.trailing.equalTo(self.fbLoginView.mas_trailing);
+            make.height.equalTo(@15);
+        }];
+        
+        [self.noAccountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.fbLoginView.mas_bottom).with.offset(5);
+            make.trailing.equalTo(self.signupButton.mas_leading).with.offset(-2);
             make.height.equalTo(@15);
         }];
         
