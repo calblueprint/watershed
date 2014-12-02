@@ -14,6 +14,7 @@
 
 @property (nonatomic) FBLoginView *fbLoginView;
 @property (nonatomic) UIButton *emailButton;
+@property (nonatomic) UIButton *signupButton;
 @property (nonatomic) UIImageView *emailIconView;
 @property (nonatomic) UIImageView *signInEmailIconView;
 @property (nonatomic) UIImageView *signInPasswordIconView;
@@ -151,6 +152,11 @@
     [_emailButton setTitle:@"Sign in with Email" forState:UIControlStateNormal];
     _emailButton.layer.cornerRadius = 5.0;
     
+    _signupButton = [[UIButton alloc] init];
+    _signupButton.backgroundColor = [UIColor clearColor];
+    [_signupButton setTitle:@"Sign up" forState:UIControlStateNormal];
+    _signupButton.layer.cornerRadius = 5.0;
+    
     FAKIonIcons *mailIcon = [FAKIonIcons ios7EmailOutlineIconWithSize:30];
     [mailIcon addAttribute:NSForegroundColorAttributeName
                      value:[UIColor whiteColor]];
@@ -174,7 +180,6 @@
         
         [self.fbLoginView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.emailButton.mas_bottom).with.offset(standardMargin);
-//            make.centerX.equalTo(self.mas_centerX);
             make.leading.equalTo(@(wideMargin));
             make.trailing.equalTo(@(-wideMargin));
             make.height.equalTo(@45);
