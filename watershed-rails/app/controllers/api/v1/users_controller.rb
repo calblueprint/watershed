@@ -18,7 +18,7 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def create
     if @user.save
-      render json: @user, serializer: SessionSerializer
+      successful_login(@user)
     else
       render json: @user.errors, serializer: ErrorSerializer, status: 422
     end
