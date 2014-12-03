@@ -161,6 +161,23 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
     }];
 }
 
+- (void)createSiteWithSite:(WPSite *)site parameters:(NSMutableDictionary *)parameters success:(void (^)())success {
+    NSString *siteString = [WPNetworkingManager createURLWithEndpoint:SITES_URL];
+    [self addAuthenticationParameters:parameters];
+    NSDictionary *siteJSON = [MTLJSONAdapter JSONDictionaryFromModel:site];
+    [parameters setObject:siteJSON forKey:@"site"];
+    
+    [self POST:siteString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"CREATED SITE: %@", responseObject);
+        success();
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not create site." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
+}
+
 - (void)requestMiniSiteWithMiniSite:(WPMiniSite *)miniSite parameters:(NSMutableDictionary *)parameters success:(void (^)(WPMiniSite *miniSite, NSMutableArray *fieldReportList))success {
     NSString *miniSiteEndpoint = [@"/" stringByAppendingString:[miniSite.miniSiteId stringValue]];
     NSString *MINI_SITE_URL = [MINI_SITES_URL stringByAppendingString:miniSiteEndpoint];
