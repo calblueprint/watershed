@@ -52,10 +52,8 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 -(void)dismissKeyboard {
-//    if([self.view.fieldDescription isFirstResponder]) {
     [self.dateField resignFirstResponder];
     [self.descriptionView resignFirstResponder];
-//    }
 }
 
 -(void)didReceiveMemoryWarning {
