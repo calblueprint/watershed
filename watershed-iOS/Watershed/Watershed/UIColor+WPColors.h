@@ -15,6 +15,7 @@
 + (UIColor *)wp_lightBlue;
 + (UIColor *)wp_facebookBlue;
 + (UIColor *)wp_transWhite;
++ (UIColor *)wp_transBlack;
 + (UIColor *)wp_red;
 + (UIColor *)wp_orange;
 + (UIColor *)wp_yellow;

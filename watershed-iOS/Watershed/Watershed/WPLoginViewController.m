@@ -60,10 +60,15 @@
 - (void)presentSignupViewController {
     WPSignupViewController *signupViewController = [[WPSignupViewController alloc] init];
     UINavigationController *signupNavController = [[UINavigationController alloc] initWithRootViewController:signupViewController];
-//    [signupViewController.navigationBar setBackgroundColor:[UIColor whiteColor]];
+//    [signupViewController.navigationController.navigationBar setBackgroundColor:[UIColor wp_transWhite]];
 //    [editNavController.navigationBar setBarTintColor:[UIColor whiteColor]];
 //    [editNavController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
+    signupViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelSignup)];
     [self presentViewController:signupNavController animated:YES completion:nil];
+}
+
+- (void)cancelSignup {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - FBLoginViewDelegate

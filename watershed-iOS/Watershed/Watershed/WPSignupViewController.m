@@ -11,7 +11,7 @@
 @implementation WPSignupViewController
 
 - (void)viewDidLoad {
-    self.navigationItem.title = @"About";
+    self.navigationItem.title = @"Create Account";
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 }
 
@@ -26,7 +26,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.backgroundColor = [UIColor wp_blue];
+        self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"about_watershed.png"]];
         [self createSubviews];
         [self setNeedsUpdateConstraints];
     }
@@ -34,14 +34,23 @@
 }
 
 - (void)createSubviews {
-    
-
+    _nameField = [[UITextField alloc] init];
+    _nameField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Full Name"
+                                                                        attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    _nameField.font = [UIFont fontWithName:@"Helvetica" size:12];
+    _nameField.textColor = [UIColor whiteColor];
+    _nameField.backgroundColor = [UIColor wp_transBlack];
+    [self addSubview:_nameField];
     
 }
 
 - (void)updateConstraints {
-    
-
+    [self.nameField mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(topMargin+standardMargin));
+        make.leading.equalTo(@30);
+        make.trailing.equalTo(@-30);
+        make.height.equalTo(@40);
+    }];
     
     
     [super updateConstraints];

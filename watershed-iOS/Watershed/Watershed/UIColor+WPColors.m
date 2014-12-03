@@ -34,6 +34,10 @@
     return [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.5];
 }
 
++ (UIColor *)wp_transBlack {
+    return [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2];
+}
+
 + (UIColor *)wp_transparentBlue {
     return [UIColor colorWithRed:129.0/255.0 green:180.0/255.0 blue:222.0/255.0 alpha:0.3];
 }

@@ -166,6 +166,7 @@
     _signupButton = [[UIButton alloc] init];
     [_signupButton setAttributedTitle:underline forState:UIControlStateNormal];
     _signupButton.titleLabel.font = [UIFont fontWithName:@"Helvetica" size:12];
+    [_signupButton addTarget:self.parentViewController action:@selector(presentSignupViewController) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_signupButton];
     
     _noAccountLabel = [[UILabel alloc] init];
