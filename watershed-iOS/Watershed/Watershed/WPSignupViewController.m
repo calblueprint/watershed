@@ -81,7 +81,11 @@
     _confirmPasswordField.secureTextEntry = YES;
     [self addSubview:_confirmPasswordField];
     
-    
+    _signupButton = [[UIButton alloc] init];
+    _signupButton.backgroundColor = [UIColor wp_lightGreen];
+    [_signupButton setTitle:@"Sign up" forState:UIControlStateNormal];
+    [_signupButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self addSubview:_signupButton];
 }
 
 - (void)updateConstraints {
@@ -108,6 +112,13 @@
     
     [self.confirmPasswordField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.passwordField.mas_bottom).with.offset(1);
+        make.leading.equalTo(self.nameField.mas_leading);
+        make.trailing.equalTo(self.nameField.mas_trailing);
+        make.height.equalTo(self.nameField.mas_height);
+    }];
+    
+    [self.signupButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.confirmPasswordField.mas_bottom).with.offset(standardMargin);
         make.leading.equalTo(self.nameField.mas_leading);
         make.trailing.equalTo(self.nameField.mas_trailing);
         make.height.equalTo(self.nameField.mas_height);
