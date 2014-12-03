@@ -22,6 +22,7 @@
 @property (nonatomic) UITextField *taskField;
 @property (nonatomic) UITextField *siteField;
 @property (nonatomic) UITextField *assigneeField;
+@property (nonatomic) UITextView *descriptionView;
 
 @end
 
@@ -44,8 +45,17 @@ static NSString *CellIdentifier = @"Cell";
                                    target:self
                                    action:@selector(saveForm:)];
     self.navigationItem.rightBarButtonItem = doneButton;
-    self.view.taskFormTableView = [[UITableView alloc] initWithFrame:CGRectZero];
-    self.view.taskFormTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self
+                action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:tap];
+    
+}
+
+-(void)dismissKeyboard {
+//    if([self.view.fieldDescription isFirstResponder]) {
+    [self.dateField resignFirstResponder];
+    [self.descriptionView resignFirstResponder];
+//    }
 }
 
 -(void)didReceiveMemoryWarning {
@@ -169,11 +179,11 @@ static NSString *CellIdentifier = @"Cell";
             break;
         }
         case 5: {
-            UITextView *textView = [[UITextView alloc] init];
-            cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:textView];
+            _descriptionView = [[UITextView alloc] init];
+            cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:_descriptionView];
             cell.label.text = @"Description";
-            textView.textColor = [UIColor wp_paragraph];
-            textView.font = [UIFont systemFontOfSize:12];
+            _descriptionView.textColor = [UIColor wp_paragraph];
+            _descriptionView.font = [UIFont systemFontOfSize:12];
             break;
         }
         default: {
@@ -194,9 +204,11 @@ static NSString *CellIdentifier = @"Cell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == 5) {
-        return 80;
+        return 70;
+    } else if (indexPath.row == 2) {
+        return 50;
     }
-    return 50;
+    return 40;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

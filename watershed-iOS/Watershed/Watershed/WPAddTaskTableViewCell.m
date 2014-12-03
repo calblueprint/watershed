@@ -49,6 +49,7 @@ NSInteger labelWidth = 90;
         make.top.equalTo(self.contentView.mas_top).with.offset(standardMargin);
         make.left.equalTo(self.label.mas_right).with.offset(standardMargin);
         make.right.equalTo(self.contentView.mas_right).with.offset(-standardMargin);
+//        make.centerY.equalTo(self.contentView.mas_centerY);
         make.bottom.equalTo(self.contentView.mas_bottom).with.offset(-standardMargin);
     }];
 

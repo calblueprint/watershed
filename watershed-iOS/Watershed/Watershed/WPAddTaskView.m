@@ -45,6 +45,8 @@
 - (void)createSubviews {
 
     _taskFormTableView = [[UITableView alloc] init];
+    [_taskFormTableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
+
     [self addSubview:_taskFormTableView];
     
 }
