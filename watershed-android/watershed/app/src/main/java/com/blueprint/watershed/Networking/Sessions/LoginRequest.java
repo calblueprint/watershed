@@ -20,8 +20,8 @@ import java.util.HashMap;
  */
 public class LoginRequest extends BaseRequest {
 
-    public LoginRequest(final Activity activity, HashMap<String, JSONObject> params, final Response.Listener<Session> listener) {
-        super(Request.Method.POST, makeURL("users"), new JSONObject(params),
+    public LoginRequest(final Activity activity, HashMap<String, String> params, final Response.Listener<Session> listener) {
+        super(Request.Method.POST, makeURL("users/sign_in"), loginRequestParams(activity, params),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {
@@ -36,6 +36,13 @@ public class LoginRequest extends BaseRequest {
                         }
                     }
                 }, activity);
+    }
+
+    protected static JSONObject loginRequestParams(final Activity activity, final HashMap<String, String> userParams) {
+        HashMap<String, HashMap<String, String>> params = new HashMap<String, HashMap<String, String>>();
+        params.put("user", userParams);
+        Log.e("user", new JSONObject(params).toString());
+        return new JSONObject(params);
     }
 
 }

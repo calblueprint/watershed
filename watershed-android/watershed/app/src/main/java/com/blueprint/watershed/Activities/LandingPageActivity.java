@@ -274,7 +274,6 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         mloginNetworkManager.getRequestQueue().add(loginRequest);
     }
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -282,6 +281,9 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
 
         Session session = Session.getActiveSession();
+    }
+
+    public void signUpRequest(HashMap<String, String> params) {
     }
 
     // Getters

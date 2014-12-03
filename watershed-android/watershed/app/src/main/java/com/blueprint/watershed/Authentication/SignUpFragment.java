@@ -94,10 +94,8 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         user_params.put("email", emailString);
         user_params.put("password", passwordString);
         user_params.put("password_confirmation", passwordConfirmationString);
-        HashMap<String, HashMap<String, String>> params = new HashMap<String, HashMap<String,String>>();
-        params.put("user",user_params);
 
-        parentActivity.login(params);
+        parentActivity.signUpRequest(user_params);
     }
 
     // Getters

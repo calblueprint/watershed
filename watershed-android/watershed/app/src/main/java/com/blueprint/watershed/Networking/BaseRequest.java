@@ -47,7 +47,7 @@ public abstract class BaseRequest extends JsonObjectRequest {
                 } else {
                     try {
                         JSONObject response = new JSONObject(new String(volleyError.networkResponse.data));
-                        message = (String) response.get("message");
+                        message = (String) response.get("error");
                     } catch (Exception e) {
                         message = "Unknown Error";
                         e.printStackTrace();
