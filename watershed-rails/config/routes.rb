@@ -2,7 +2,9 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: "json" } do
     namespace :v1 do
-      devise_for :users, skip: [ :registrations, :passwords ]
+      match "mobile", to: "base#mobile", via: :get
+
+      devise_for :users, skip: [:registrations, :passwords]
       resources :users, only: [:index, :show, :create, :update] do
         collection do
           match "search", to: "users#search", via: :get

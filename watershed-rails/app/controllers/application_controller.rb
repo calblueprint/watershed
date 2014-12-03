@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
     render json: {
       authentication_token: user.authentication_token,
       email: user.email,
-    }.merge(JSON.parse(user.to_json)), status: :ok
+    }.merge(JSON.parse(user.to_json))
   end
 
   def unauthorized_response

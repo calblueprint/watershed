@@ -2,6 +2,15 @@ class Api::V1::BaseController < Api::BaseController
   before_filter :authenticate_user_from_token!
   before_filter :authenticate_api_v1_user!
 
+  def mobile
+    @user = User.find_by(email: params[:email], authentication_token: params[:auth_token])
+    if @user.nil?
+      unauthorized_response
+    else
+      successful_login(@user)
+    end
+  end
+
   private
 
   def current_ability
