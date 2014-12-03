@@ -36,6 +36,7 @@ import com.blueprint.watershed.Tasks.TaskAdapter;
 import com.blueprint.watershed.Tasks.TaskDetailFragment;
 import com.blueprint.watershed.Tasks.TaskFragment;
 import com.facebook.AppEventsLogger;
+import com.facebook.Session;
 
 import android.view.View;
 import android.content.Context;
@@ -355,6 +356,11 @@ public class MainActivity extends ActionBarActivity
                 editor.clear();
                 editor.commit();
                 Intent intent = new Intent(this, LandingPageActivity.class);
+
+                if (Session.getActiveSession() != null) {
+                    Session.getActiveSession().closeAndClearTokenInformation();
+                }
+
                 this.finish();
                 startActivity(intent);
                 break;

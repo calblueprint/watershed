@@ -11,10 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.blueprint.watershed.R;
+import com.facebook.Session;
+import com.facebook.SessionState;
+import com.facebook.UiLifecycleHelper;
 
 public class FacebookAuthFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
+    private UiLifecycleHelper uiHelper;
 
     public static FacebookAuthFragment newInstance() {
         FacebookAuthFragment fragment = new FacebookAuthFragment();
@@ -28,9 +32,7 @@ public class FacebookAuthFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-        }
+        uiHelper.onCreate(savedInstanceState);
     }
 
     @Override

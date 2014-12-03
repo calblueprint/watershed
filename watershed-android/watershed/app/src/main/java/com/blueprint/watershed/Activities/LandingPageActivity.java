@@ -29,7 +29,9 @@ import com.blueprint.watershed.R;
 import com.facebook.AppEventsLogger;
 import com.facebook.Session;
 import com.facebook.SessionState;
+import com.facebook.model.GraphUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,6 +43,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     public  static final String PREFERENCES = "LOGIN_PREFERENCES";
     private static final String TAG         = "LandingPageActivity";
     private static final String LOGIN_URL = "https://intense-reaches-1457.herokuapp.com/api/v1/users/sign_in";
+    private static final String FACEBOOK_URL = "https://intense-reaches-1457.herokuapp.com/api/v1/users/sign_up/facebook";
     //private static final String LOGIN_URL = "http://10.0.0.18:3001/api/v1/users/sign_in";
 
     // UI Elements
@@ -90,6 +93,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         if (session != null &&
                 (session.isOpened() || session.isClosed()) ) {
             onSessionStateChange(session, session.getState(), null);
+
         }
     }
 
@@ -100,15 +104,14 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     }
 
     public void initializeViews() {
-        //setLandingPageImage((ImageView)findViewById(R.id.landing_page_image));
-
         setLoginButton((Button)findViewById(R.id.login_load_fragment_button));
         setFacebookButton((com.facebook.widget.LoginButton)findViewById(R.id.authButton));
         setSignUpButton((Button)findViewById(R.id.sign_up_load_fragment_button));
 
-        //mFacebookButton.setOnClickListener(this);
         mLoginButton.setOnClickListener(this);
         mSignUpButton.setOnClickListener(this);
+
+        mFacebookButton.setReadPermissions(Arrays.asList("email"));
     }
 
     public void onClick(View view){
@@ -141,9 +144,103 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
 
     public void didTapFacebookButton(View view) {
         // Facebook authentication
+
+    }
+
+    // Facebook Stuff
+
+    private void onSessionStateChange(final Session session, SessionState state, Exception exception) {
+        if (state.isOpened()) {
+            com.facebook.Request.executeMeRequestAsync(session, new com.facebook.Request.GraphUserCallback() {
+
+                @Override
+                public void onCompleted(GraphUser user, com.facebook.Response response) {
+                    if (user != null) {
+                        String accessToken = session.getAccessToken();
+                        String name = user.getName();
+                        String id = user.getId(); //This may not be the profile picture Id that you are expecting, but we can pass this in to the graph api to get the actual profile picture
+                        String email = "";
+                        try {
+                            email = user.getInnerJSONObject().getString("email");
+                        }
+                        catch (JSONException e){
+                            Log.e("JSONException", "Facebook Login");
+                        }
+                        makeFacebookRequest(email, accessToken, id, name);
+                    }
+                }
+            });
+
+            Log.e("Facebook", "Logged in...");
+        } else if (state.isClosed()) {
+            Log.e("Facebook", "Logged out...");
+        }
     }
 
     public void didTapSignUpLoadFragmentButton(View view) {
+    }
+
+    public void makeFacebookRequest(String email, String accessToken, String id, String name){
+        final Intent intent = new Intent(this, MainActivity.class);
+
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("email", email);
+        params.put("facebook_auth_token", accessToken);
+        params.put("facebook_id", id);
+        params.put("name", name);
+
+        JSONObject requestUser = new JSONObject(params);
+        HashMap<String, JSONObject> realParams = new HashMap<String, JSONObject>();
+        realParams.put("user", requestUser);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, FACEBOOK_URL, new JSONObject(realParams), new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                SharedPreferences.Editor editor = preferences.edit();
+
+                try {
+                    //TODO do something with the user object.
+                    String token = jsonObject.getString("authentication_token");
+                    String email = jsonObject.getString("email");
+
+                    editor.putString("authentication_token", token);
+                    editor.putString("email", email);
+                    editor.commit();
+
+                    LandingPageActivity.this.finish();
+                    startActivity(intent);
+                }
+                catch (JSONException e) {
+                    Log.e("Json exception", "in login fragment");
+                }
+            }
+        },
+        new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                String message;
+                if (volleyError instanceof NetworkError) {
+                    message = "Network Error. Please try again later.";
+                }
+                else {
+                    try {
+                        JSONObject response = new JSONObject(new String(volleyError.networkResponse.data));
+                        message = (String) response.get("message");
+                    } catch (Exception e) {
+                        message = "Unknown Error";
+                        e.printStackTrace();
+                    }
+                }
+                Context context = getApplicationContext();
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, message, duration);
+                toast.show();
+            }
+        });
+
+        mloginNetworkManager.getRequestQueue().add(request);
     }
 
     public void login(HashMap<String, HashMap<String, String>> params) {
@@ -161,12 +258,6 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
                         SharedPreferences.Editor editor = preferences.edit();
 
                         try {
-
-                            /* This will be broken into a user object and auth info later.
-                            JSONObject auth_info = jsonObject.getJSONObject("auth_info");
-                            String token = auth_info.getString("token");
-                            String email = auth_info.getString("email");
-                            */
                             String token = jsonObject.getString("authentication_token");
                             String email = jsonObject.getString("email");
 
@@ -210,16 +301,6 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         mloginNetworkManager.getRequestQueue().add(request);
     }
 
-    // Facebook Stuff
-
-    private void onSessionStateChange(Session session, SessionState state, Exception exception) {
-        if (state.isOpened()) {
-            Log.i("Facebook", "Logged in...");
-        } else if (state.isClosed()) {
-            Log.i("Facebook", "Logged out...");
-        }
-    }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -227,11 +308,10 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         Object result = data.getExtras().get("com.facebook.LoginActivity:Result");
         Log.e("THIS RESULT", result.toString());
 
-        for (String key : data.getExtras().keySet()) {
-            Object value = data.getExtras().get(key);
-            Log.e("THIS STUFF", String.format("%s %s (%s)", key,
-                    value.toString(), value.getClass().getName()));
-        }    }
+        Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
+
+        Session session = Session.getActiveSession();
+    }
 
     // Getters
     public ImageView getLandingPageImage() { return mLandingPageImage; }
