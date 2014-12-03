@@ -10,4 +10,7 @@
 
 @interface WPSelectAssigneeView : WPView
 
+@property (nonatomic) UITableView *selectAssigneeTableView;
+@property (nonatomic) UITextField *searchField;
+
 @end
