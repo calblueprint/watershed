@@ -1,8 +1,8 @@
 class BaseErrorSerializer < ActiveModel::Serializer
-  attributes :message
+  attributes :messages
 
-  def message
-    full_message
+  def messages
+    object.full_messages
   end
 
 end
