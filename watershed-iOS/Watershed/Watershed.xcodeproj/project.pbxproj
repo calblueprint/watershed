@@ -22,8 +22,9 @@
 		064463051A073E3700C6FE8B /* WPTasksTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A039BD19EB973800EB83CC /* WPTasksTableViewCell.m */; };
 		0653A8EE1A206CCA0022462B /* WPAddTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0653A8ED1A206CCA0022462B /* WPAddTaskViewController.m */; };
 		0653A8F11A206CE50022462B /* WPAddTaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0653A8F01A206CE50022462B /* WPAddTaskView.m */; };
-		0653A8F41A2124950022462B /* WPAddTaskTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0653A8F31A2124950022462B /* WPAddTaskTableViewCell.m */; };
 		0653A8F71A21267B0022462B /* WPTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 0653A8F61A21267B0022462B /* WPTask.m */; };
+		066088DB1A2EE5F700FFA8BC /* WPAddTaskTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0653A8F31A2124950022462B /* WPAddTaskTableViewCell.m */; };
+		066088DC1A2EE5F700FFA8BC /* WPSelectMiniSiteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06ECE8E71A23436D009870CA /* WPSelectMiniSiteViewController.m */; };
 		068AB39E1A1B4155009BB746 /* WPAddFieldReportView.m in Sources */ = {isa = PBXBuildFile; fileRef = 068AB39B1A1B4155009BB746 /* WPAddFieldReportView.m */; };
 		068AB39F1A1B4155009BB746 /* WPAddFieldReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 068AB39D1A1B4155009BB746 /* WPAddFieldReportViewController.m */; };
 		06A8139519D911C900E3EB05 /* WPTasksListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A8139419D911C900E3EB05 /* WPTasksListViewController.m */; };
@@ -32,7 +33,6 @@
 		06B1B00819F4E77A007FC3D5 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		06ECE8E21A22E63C009870CA /* WPSelectTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06ECE8E11A22E63C009870CA /* WPSelectTaskViewController.m */; };
 		06ECE8E51A22E658009870CA /* WPSelectTaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06ECE8E41A22E658009870CA /* WPSelectTaskView.m */; };
-		06ECE8E81A23436D009870CA /* WPSelectMiniSiteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06ECE8E71A23436D009870CA /* WPSelectMiniSiteViewController.m */; };
 		06ECE8EB1A234381009870CA /* WPSelectMiniSiteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06ECE8EA1A234381009870CA /* WPSelectMiniSiteView.m */; };
 		06ECE8EE1A244A9A009870CA /* WPSelectAssigneeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06ECE8ED1A244A9A009870CA /* WPSelectAssigneeViewController.m */; };
 		06ECE8F11A245768009870CA /* WPSelectAssigneeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06ECE8F01A245768009870CA /* WPSelectAssigneeView.m */; };
@@ -700,6 +700,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				066088DB1A2EE5F700FFA8BC /* WPAddTaskTableViewCell.m in Sources */,
+				066088DC1A2EE5F700FFA8BC /* WPSelectMiniSiteViewController.m in Sources */,
 				064463041A073E3700C6FE8B /* WPTabBarController.m in Sources */,
 				064463051A073E3700C6FE8B /* WPTasksTableViewCell.m in Sources */,
 				273ABECC19EDFA8600FC1C92 /* WPSitesTableViewController.m in Sources */,
