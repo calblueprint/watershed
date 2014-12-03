@@ -20,7 +20,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
     UIViewController *launchingViewController = nil;
     UICKeyChainStore *store = [[WPNetworkingManager sharedManager] keyChainStore];
     if (store[@"auth_token"] && store[@"email"]) {
