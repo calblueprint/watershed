@@ -3,9 +3,8 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery
 
-  rescue_from CanCan::AccessDenied do |exception|
-    flash[:warning] = "We're sorry, we couldn't find that page!"
-    redirect_to root_path
+  rescue_from CanCan::AccessDenied, ActiveRecord::RecordNotFound do |exception|
+    unauthorized_response
   end
 
   def successful_login(user)
