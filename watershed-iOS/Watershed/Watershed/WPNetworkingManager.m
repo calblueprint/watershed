@@ -46,8 +46,9 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
 //        NSLog(@"SIGN IN RESPONSE: %@", responseObject);
         
         NSDictionary *responseDictionary = responseObject;
-        NSString *authToken = responseDictionary[@"authentication_token"];
-        NSString *email = responseDictionary[@"email"];
+        NSDictionary *sessionDictionary = [responseDictionary objectForKey:@"session"];
+        NSString *authToken = sessionDictionary[@"authentication_token"];
+        NSString *email = sessionDictionary[@"email"];
         [self updateLoginKeyChainInfoWithAuthToken:authToken email:email];
         
         NSDictionary *userJSON = responseDictionary[@"user"];
@@ -65,8 +66,9 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
     
     [self POST:signUpString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {        
         NSDictionary *responseDictionary = responseObject;
-        NSString *authToken = responseDictionary[@"authentication_token"];
-        NSString *email = responseDictionary[@"email"];
+        NSDictionary *sessionDictionary = [responseDictionary objectForKey:@"session"];
+        NSString *authToken = sessionDictionary[@"authentication_token"];
+        NSString *email = sessionDictionary[@"email"];
         [self updateLoginKeyChainInfoWithAuthToken:authToken email:email];
         
         NSDictionary *userJSON = responseDictionary[@"user"];
