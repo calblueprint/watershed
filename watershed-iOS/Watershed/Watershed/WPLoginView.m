@@ -161,16 +161,17 @@
     [_emailButton addSubview:_emailIconView];
     [self addSubview:_emailButton];
     
+    NSMutableAttributedString *underline = [[NSMutableAttributedString alloc] initWithString:@"Sign up"];
+    [underline setAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor],NSUnderlineStyleAttributeName:[NSNumber numberWithInteger:NSUnderlineStyleSingle]} range:NSMakeRange(0,[underline length])];
     _signupButton = [[UIButton alloc] init];
-    [_signupButton setTitle:@"Sign up!" forState:UIControlStateNormal];
+    [_signupButton setAttributedTitle:underline forState:UIControlStateNormal];
     _signupButton.titleLabel.font = [UIFont fontWithName:@"Helvetica" size:12];
-    [_signupButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self addSubview:_signupButton];
     
     _noAccountLabel = [[UILabel alloc] init];
     _noAccountLabel.text = @"Don't have an account?";
     _noAccountLabel.font = [UIFont fontWithName:@"Helvetica" size:12];
-    _noAccountLabel.textColor = [UIColor grayColor];
+    _noAccountLabel.textColor = [UIColor wp_transWhite];
     [self addSubview:_noAccountLabel];
 
 }
