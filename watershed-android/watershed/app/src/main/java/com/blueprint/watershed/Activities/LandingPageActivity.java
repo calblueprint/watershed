@@ -30,6 +30,7 @@ import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.Networking.MiniSites.MiniSiteRequest;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Sessions.LoginRequest;
+import com.blueprint.watershed.Networking.Sessions.SignUpRequest;
 import com.blueprint.watershed.R;
 import com.facebook.AppEventsLogger;
 import com.facebook.Session;
@@ -47,9 +48,12 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     // Constants
     public  static final String PREFERENCES = "LOGIN_PREFERENCES";
     private static final String TAG         = "LandingPageActivity";
+<<<<<<< HEAD
     private static final String LOGIN_URL = "https://intense-reaches-1457.herokuapp.com/api/v1/users/sign_in";
     private static final String FACEBOOK_URL = "https://intense-reaches-1457.herokuapp.com/api/v1/users/sign_up/facebook";
     //private static final String LOGIN_URL = "http://10.0.0.18:3001/api/v1/users/sign_in";
+=======
+>>>>>>> Fix user model. Store session and log in the user
 
     // UI Elements
     private ImageView mLandingPageImage;
@@ -261,13 +265,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         LoginRequest loginRequest = new LoginRequest(this, params, new Response.Listener<Session>() {
             @Override
             public void onResponse(Session session) {
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("authentication_token", session.getAuthToken());
-                editor.putString("email", session.getEmail());
-                editor.commit();
-
-                LandingPageActivity.this.finish();
-                startActivity(intent);
+                storeSessionAndStartMainActivity(intent, session);
             }
         });
 
@@ -284,6 +282,26 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     }
 
     public void signUpRequest(HashMap<String, String> params) {
+        final Intent intent = new Intent(this, MainActivity.class);
+
+        SignUpRequest signUpRequest = new SignUpRequest(this, params, new Response.Listener<Session>() {
+            @Override
+            public void onResponse(Session session) {
+                storeSessionAndStartMainActivity(intent, session);
+            }
+        });
+
+        mloginNetworkManager.getRequestQueue().add(signUpRequest);
+    }
+
+    public void storeSessionAndStartMainActivity(Intent intent, Session session) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("authentication_token", session.getAuthenticationToken());
+        editor.putString("email", session.getEmail());
+        editor.commit();
+
+        LandingPageActivity.this.finish();
+        startActivity(intent);
     }
 
     // Getters

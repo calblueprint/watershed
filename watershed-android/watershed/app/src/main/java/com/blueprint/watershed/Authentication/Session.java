@@ -7,7 +7,7 @@ import com.blueprint.watershed.Users.User;
  */
 public class Session {
     private String mEmail;
-    private String mAuthToken;
+    private String mAuthenticationToken;
     private User mUser;
 
     public Session() {
@@ -15,11 +15,11 @@ public class Session {
 
     // Getters
     public String getEmail() { return mEmail; }
-    public String getAuthToken() { return mAuthToken; }
+    public String getAuthenticationToken() { return mAuthenticationToken; }
     public User getUser() { return mUser; }
 
     // Setters
     public void setEmail(String email) { mEmail = email; }
-    public void setAuthToken(String authToken) { mAuthToken = authToken; }
+    public void setAuthenticationToken(String authenticationToken) { mAuthenticationToken = authenticationToken; }
     public void setUser(User user) { mUser = user; }
 }

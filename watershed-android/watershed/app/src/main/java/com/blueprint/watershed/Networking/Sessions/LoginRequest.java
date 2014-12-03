@@ -28,7 +28,7 @@ public class LoginRequest extends BaseRequest {
                         try {
                             String sessionJson = jsonObject.get("session").toString();
                             ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
-                            Session session = mapper.readValue(sessionJson, new TypeReference<FieldReport>() {
+                            Session session = mapper.readValue(sessionJson, new TypeReference<Session>() {
                             });
                             listener.onResponse(session);
                         } catch (Exception e) {
@@ -41,7 +41,6 @@ public class LoginRequest extends BaseRequest {
     protected static JSONObject loginRequestParams(final Activity activity, final HashMap<String, String> userParams) {
         HashMap<String, HashMap<String, String>> params = new HashMap<String, HashMap<String, String>>();
         params.put("user", userParams);
-        Log.e("user", new JSONObject(params).toString());
         return new JSONObject(params);
     }
 

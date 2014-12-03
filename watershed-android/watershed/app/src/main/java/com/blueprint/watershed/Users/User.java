@@ -35,7 +35,7 @@ public class User {
 
     // Setters
     public void setId(Integer id) { mId = id; }
-    public void getRole(Integer role) { mRole = role; }
+    public void setRole(Integer role) { mRole = role; }
     public void setName(String name) { mName = name; }
-    public void geEmail(String email) { mEmail = email; }
+    public void setEmail(String email) { mEmail = email; }
 }
