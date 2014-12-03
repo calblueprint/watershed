@@ -22,12 +22,15 @@ import android.view.MenuItem;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 
+import com.android.volley.Response;
 import com.blueprint.watershed.AboutFragment;
 import com.blueprint.watershed.FieldReports.FieldReport;
 import com.blueprint.watershed.FieldReports.AddFieldReportFragment;
 import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
+import com.blueprint.watershed.Networking.Sites.SiteRequest;
+import com.blueprint.watershed.Networking.Users.HomeRequest;
 import com.blueprint.watershed.Users.ProfileFragment;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Users.User;
@@ -53,11 +56,14 @@ import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 public class MainActivity extends ActionBarActivity
                           implements ActionBar.TabListener,
@@ -115,6 +121,9 @@ public class MainActivity extends ActionBarActivity
     // Networking
     private NetworkManager mNetworkManager;
 
+    // User
+    private User mUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,10 +134,23 @@ public class MainActivity extends ActionBarActivity
         mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
         viewPager = (ViewPager) findViewById(R.id.pager);
         mContainer = findViewById(R.id.container);
+        mNetworkManager = NetworkManager.getInstance(getApplicationContext());
         initializeFragments();
         initializeTabs(0);
 
         initializeNavigationDrawer();
+
+        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
+
+        HomeRequest homeRequest = new HomeRequest(this, params, new Response.Listener<User>() {
+            @Override
+            public void onResponse(User home) {
+                setUser(home);
+            }
+        });
+
+        mNetworkManager.getRequestQueue().add(homeRequest);
+
 
         SharedPreferences prefs = getSharedPreferences(PREFERENCES, 0);
         authToken = prefs.getString("auth_token", "none");
@@ -398,5 +420,11 @@ public class MainActivity extends ActionBarActivity
     public void FieldReportButtonPressed(View view){
         AddFieldReportFragment fieldFragment = AddFieldReportFragment.newInstance();
         replaceFragment(fieldFragment);
+    }
+
+    // Setter
+
+    public void setUser(User user){
+        mUser = user;
     }
 }
