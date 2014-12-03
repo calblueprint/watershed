@@ -22,9 +22,12 @@
     <string name="landing_page_login_button">Log In with Email</string>
 
     <!-- Login View -->
+    <string name="name_hint">Name</string>
     <string name="email_hint">Email</string>
     <string name="password_hint">Password</string>
+    <string name="password_confirmation_hint">Confirmation</string>
     <string name="login_fragment_login_button">Log In</string>
+    <string name="sign_up_fragment_login_button">Sign Up</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!--Field Report -->

@@ -2,10 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.blueprint.watershed.Authentication.LoginFragment">
+    tools:context="com.blueprint.watershed.Authentication.SignUpFragment">
 
     <LinearLayout
-        android:id="@+id/login_with_email_layout"
+        android:id="@+id/sign_up_with_email_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -20,6 +20,29 @@
             android:layout_marginTop="100dp"
             android:background="@color/white"
             android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/name_field"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="@dimen/tight_margin"
+                android:layout_marginEnd="@dimen/tight_margin"
+                android:layout_marginLeft="@dimen/tight_margin"
+                android:layout_marginRight="@dimen/tight_margin"
+                android:inputType="textPersonName"
+                android:hint="@string/name_hint"
+                android:background="@color/transparent"
+                />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:layout_marginEnd="@dimen/standard_margin"
+                android:layout_marginLeft="@dimen/standard_margin"
+                android:layout_marginRight="@dimen/standard_margin"
+                android:background="@color/light_gray"
+                />
 
             <EditText
                 android:id="@+id/email_field"
@@ -56,6 +79,29 @@
                 android:hint="@string/password_hint"
                 android:background="@color/transparent"
                 />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:layout_marginEnd="@dimen/standard_margin"
+                android:layout_marginLeft="@dimen/standard_margin"
+                android:layout_marginRight="@dimen/standard_margin"
+                android:background="@color/light_gray"
+                />
+
+            <EditText
+                android:id="@+id/password_confirmation_field"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="@dimen/tight_margin"
+                android:layout_marginEnd="@dimen/tight_margin"
+                android:layout_marginLeft="@dimen/tight_margin"
+                android:layout_marginRight="@dimen/tight_margin"
+                android:inputType="textPassword"
+                android:hint="@string/password_confirmation_hint"
+                android:background="@color/transparent"
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -64,12 +110,12 @@
             android:layout_marginTop="10dp">
 
             <Button
-                android:id="@+id/login_button"
+                android:id="@+id/sign_up_button"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/button_standard_height"
                 android:background="@drawable/border_button"
                 android:textSize="14sp"
-                android:text="@string/login_fragment_login_button"
+                android:text="@string/sign_up_fragment_login_button"
                 android:textColor="@color/white"
                 />
         </LinearLayout>
