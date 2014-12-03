@@ -25,7 +25,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.blueprint.watershed.Authentication.LoginFragment;
 import com.blueprint.watershed.Authentication.SignUpFragment;
+import com.blueprint.watershed.MiniSites.MiniSite;
+import com.blueprint.watershed.Networking.MiniSites.MiniSiteRequest;
 import com.blueprint.watershed.Networking.NetworkManager;
+import com.blueprint.watershed.Networking.Sessions.LoginRequest;
 import com.blueprint.watershed.R;
 import com.facebook.AppEventsLogger;
 import com.facebook.Session;
@@ -251,70 +254,29 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         mloginNetworkManager.getRequestQueue().add(request);
     }
 
-    public void login(HashMap<String, HashMap<String, String>> params) {
+    public void loginRequest(HashMap<String, String> params) {
         final Intent intent = new Intent(this, MainActivity.class);
 
-        JSONObject requestUser = new JSONObject(params.get("user"));
-        HashMap<String, JSONObject> realParams = new HashMap<String, JSONObject>();
-        realParams.put("user", requestUser);
+        LoginRequest loginRequest = new LoginRequest(this, params, new Response.Listener<Session>() {
+            @Override
+            public void onResponse(Session session) {
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("authentication_token", session.getAuthToken());
+                editor.putString("email", session.getEmail());
+                editor.commit();
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, LOGIN_URL, new JSONObject(realParams),
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    // presumably will receive a hash that has the auth info and user object
-                    public void onResponse(JSONObject jsonObject) {
-                        SharedPreferences.Editor editor = preferences.edit();
+                LandingPageActivity.this.finish();
+                startActivity(intent);
+            }
+        });
 
-                        try {
-                            String token = jsonObject.getString("authentication_token");
-                            String email = jsonObject.getString("email");
-
-                            editor.putString("authentication_token", token);
-                            editor.putString("email", email);
-                            editor.commit();
-
-                            LandingPageActivity.this.finish();
-                            startActivity(intent);
-                        }
-                        catch (JSONException e) {
-                            Log.e("Json exception", "in login fragment");
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        String message;
-                        if (volleyError instanceof NetworkError) {
-                            message = "Network Error. Please try again later.";
-                        }
-                        else {
-                            try {
-                                JSONObject response = new JSONObject(new String(volleyError.networkResponse.data));
-                                message = (String) response.get("message");
-                            } catch (Exception e) {
-                                message = "Unknown Error";
-                                e.printStackTrace();
-                            }
-                        }
-                        Context context = getApplicationContext();
-                        int duration = Toast.LENGTH_SHORT;
-
-                        Toast toast = Toast.makeText(context, message, duration);
-                        toast.show();
-                    }
-                }
-        );
-
-        mloginNetworkManager.getRequestQueue().add(request);
+        mloginNetworkManager.getRequestQueue().add(loginRequest);
     }
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Object result = data.getExtras().get("com.facebook.LoginActivity:Result");
-        Log.e("THIS RESULT", result.toString());
 
         Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
 

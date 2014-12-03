@@ -37,5 +37,5 @@ public class User {
     public void setId(Integer id) { mId = id; }
     public void getRole(Integer role) { mRole = role; }
     public void setName(String name) { mName = name; }
-    public void getEmail(String email) { mEmail = email; }
+    public void geEmail(String email) { mEmail = email; }
 }
