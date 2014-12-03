@@ -10,6 +10,7 @@
 #import "WPSitesTableView.h"
 #import "WPSiteTableViewCell.h"
 #import "WPSiteViewController.h"
+#import "WPCreateSiteViewController.h"
 #import "WPSite.h"
 #import "WPNetworkingManager.h"
 
@@ -156,16 +157,25 @@ static NSString *cellIdentifier = @"SiteCell";
     }];
 }
 
-#pragma mark - Add Site Button
+#pragma mark - Add Site Button / Methods
 
 - (UIBarButtonItem *)newAddSiteButtonItem {
     UIBarButtonItem *addSiteButtonItem = [[UIBarButtonItem alloc]
                                          initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
                                          target:self
-                                         action:nil ];
+                                         action:@selector(showCreateSiteView) ];
     addSiteButtonItem.tintColor = [UIColor whiteColor];
     
     return addSiteButtonItem;
+}
+
+- (void)showCreateSiteView {
+    WPCreateSiteViewController *createSiteViewController = [[WPCreateSiteViewController alloc] init];
+    UINavigationController *createSiteNavController = [[UINavigationController alloc] initWithRootViewController:createSiteViewController];
+    [createSiteNavController.navigationBar setBackgroundColor:[UIColor whiteColor]];
+    [createSiteNavController.navigationBar setBarTintColor:[UIColor whiteColor]];
+    [createSiteNavController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
+    [self.navigationController presentViewController:createSiteNavController animated:YES completion:nil];
 }
 
 #pragma mark - Lazy instantiation
