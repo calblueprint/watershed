@@ -10,11 +10,12 @@
 #import "WPSitesTableView.h"
 #import "WPSiteTableViewCell.h"
 #import "WPSiteViewController.h"
+#import "WPSite.h"
+#import "WPNetworkingManager.h"
 
 @interface WPSitesTableViewController () <UISearchDisplayDelegate, UISearchBarDelegate>
 
 @property (nonatomic) WPSitesTableView *sitesTableView;
-@property (nonatomic) NSMutableArray *siteList;
 @property (nonatomic) UISearchDisplayController *searchController;
 @property (nonatomic) UISearchBar *searchBar;
 
@@ -32,21 +33,15 @@ static NSString *cellIdentifier = @"SiteCell";
     
     [super viewDidLoad];
     self.navigationItem.title = @"Sites";
-    
     [self setUpSearchBar];
     
-    [self loadSiteData];
     self.sitesTableView.delegate = self;
     self.sitesTableView.dataSource = self;
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    [self updatePhotoOffset:self.sitesTableView.contentOffset.y];
-}
-
-- (void)loadSiteData {
-    self.siteList = @[@1, @3, @4, @2, @5, @1, @5, @2, @2, @3, @4, @0].mutableCopy;
+    
+    [[WPNetworkingManager sharedManager] requestSitesListWithParameters:[[NSMutableDictionary alloc] init] success:^(NSMutableArray *sitesList) {
+        self.sitesList = sitesList;
+        [self.sitesTableView reloadData];
+    }];
 }
 
 #pragma mark - TableView Delegate/DataSource Methods
@@ -56,27 +51,29 @@ static NSString *cellIdentifier = @"SiteCell";
 
     NSInteger rowCount = 0;
     
-    if ([tableView isEqual:self.sitesTableView]) rowCount = self.siteList.count;
+    if ([tableView isEqual:self.sitesTableView]) rowCount = self.sitesList.count;
     return rowCount;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    UITableViewCell *cellView = nil;
+    WPSiteTableViewCell *cellView = nil;
     
     if ([tableView isEqual:self.sitesTableView]) {
         
         cellView = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        
         if (!cellView) {
-            
             cellView = [[WPSiteTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                      reuseIdentifier:cellIdentifier
-                                                                 name:@"Sample Site"
-                                                                image:[UIImage imageNamed:@"SampleCoverPhoto"]
-                                                        miniSiteCount:[self.siteList[indexPath.row] intValue]
-                        ];
+                                                  reuseIdentifier:cellIdentifier];
         }
+        WPSite *site = self.sitesList[indexPath.row];
+        cellView.nameLabel.text = site.name;
+        cellView.photoView.image = site.image;
+        cellView.miniSiteLabel.text = [[site.miniSitesCount stringValue] stringByAppendingString:@" mini sites"];
+        
+        [self updatePhotoOffset:self.sitesTableView.contentOffset.y];
     }
     return cellView;
 }
@@ -87,7 +84,9 @@ static NSString *cellIdentifier = @"SiteCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    WPSite *selectedSite = self.sitesList[indexPath.row];
     WPSiteViewController *siteViewController = [[WPSiteViewController alloc] init];
+    siteViewController.site = selectedSite;
     [self.navigationController pushViewController:siteViewController animated:YES];
 }
 
@@ -146,6 +145,13 @@ static NSString *cellIdentifier = @"SiteCell";
 }
 
 #pragma mark - Lazy instantiation
+
+- (NSMutableArray *)sitesList {
+    if (!_sitesList) {
+        _sitesList = [[NSMutableArray alloc] init];
+    }
+    return _sitesList;
+}
 
 - (WPSitesTableView *)sitesTableView {
     if (!_sitesTableView) {

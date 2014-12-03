@@ -8,14 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "AFNetworking.h"
-#import "UICKeyChainStore.h"
 
 @interface WPAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 + (WPAppDelegate *)instance;
-- (AFHTTPRequestOperationManager *)getAFManager;
-- (UICKeyChainStore *)getKeyChainStore;
 
 @end
     

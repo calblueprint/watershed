@@ -7,7 +7,8 @@
 //
 
 #import "WPViewController.h"
+#import "WPFieldReport.h"
 
 @interface WPFieldReportViewController : WPViewController
-
+@property (nonatomic) WPFieldReport *fieldReport;
 @end

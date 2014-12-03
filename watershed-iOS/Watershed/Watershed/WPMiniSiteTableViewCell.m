@@ -8,42 +8,16 @@
 
 #import "WPMiniSiteTableViewCell.h"
 
-@interface WPMiniSiteTableViewCell()
-
-@property (nonatomic) UILabel *nameLabel;
-@property (nonatomic) UIImageView *photoView;
-@property (nonatomic) UIView *ratingDotView;
-@property (nonatomic) WPLabeledIcon *taskCountLabel;
-@property (nonatomic) WPLabeledIcon *fieldReportCountLabel;
-@property (nonatomic) NSString *name;
-@property (nonatomic) UIImage *image;
-@property (nonatomic) NSInteger rating;
-@property (nonatomic) NSInteger taskCount;
-@property (nonatomic) NSInteger fieldReportCount;
-
-@end
-
 @implementation WPMiniSiteTableViewCell
 
 const static float CELL_HEIGHT = 86.0f;
 
 - (id)initWithStyle:(UITableViewCellStyle)style
-    reuseIdentifier:(NSString *)reuseIdentifier
-               name:(NSString *)name
-              image:(UIImage *)image
-             rating:(NSInteger)rating
-          taskCount:(NSInteger)taskCount
-   fieldReportCount:(NSInteger)fieldReportCount {
+    reuseIdentifier:(NSString *)reuseIdentifier {
 
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.backgroundColor = [UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:1];
-
-        _name = name;
-        _image = image;
-        _rating = rating;
-        _taskCount = taskCount;
-        _fieldReportCount = fieldReportCount;
 
         [self createSubviews];
         [self setNeedsUpdateConstraints];
@@ -59,12 +33,12 @@ const static float CELL_HEIGHT = 86.0f;
 
     _nameLabel = [({
         UILabel *label = [[UILabel alloc] init];
-        label.text = self.name;
+        //label.text = self.name;
         label;
     }) wp_addToSuperview:content];
 
     _photoView = [({
-        UIImageView *photoView = [[UIImageView alloc] initWithImage:self.image];
+        UIImageView *photoView = [[UIImageView alloc] init];
         [photoView setContentMode:UIViewContentModeScaleAspectFill];
         [photoView setClipsToBounds:YES];
         photoView.layer.cornerRadius = 3.0;
@@ -74,17 +48,14 @@ const static float CELL_HEIGHT = 86.0f;
     _ratingDotView = [({
         UIView *ratingDotView = [[UIView alloc] init];
         ratingDotView.layer.cornerRadius = 5.0;
-        ratingDotView.backgroundColor = [UIColor colorForRating:self.rating];
+        //ratingDotView.backgroundColor = [UIColor colorForRating:self.rating];
         ratingDotView;
     }) wp_addToSuperview:content];
 
     _taskCountLabel = [({
         FAKFontAwesome *checkIcon = [FAKFontAwesome checkIconWithSize:[WPLabeledIcon viewHeight]];
         UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
-
-        NSString *taskText = [NSString stringWithFormat:@"%d tasks", (int) self.taskCount];
-        WPLabeledIcon *taskCountLabel = [[WPLabeledIcon alloc] initWithText:taskText
-                                                                       icon:checkImage];
+        WPLabeledIcon *taskCountLabel = [[WPLabeledIcon alloc] initWithText:@"Task Count" icon:checkImage];
         taskCountLabel.alpha = 0.3;
         taskCountLabel;
     }) wp_addToSuperview:content];
@@ -92,10 +63,7 @@ const static float CELL_HEIGHT = 86.0f;
     _fieldReportCountLabel = [({
         FAKFontAwesome *exclamationIcon = [FAKFontAwesome exclamationTriangleIconWithSize:[WPLabeledIcon viewHeight]];
         UIImage *exclamationImage = [exclamationIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
-
-        NSString *fieldReportText = [NSString stringWithFormat:@"%d reports", (int) self.fieldReportCount];
-        WPLabeledIcon *fieldReportCountLabel = [[WPLabeledIcon alloc] initWithText:fieldReportText
-                                                                              icon:exclamationImage];
+        WPLabeledIcon *fieldReportCountLabel = [[WPLabeledIcon alloc] initWithText:@"Field Report Count" icon:exclamationImage];
         fieldReportCountLabel.alpha = 0.3;
         fieldReportCountLabel;
     }) wp_addToSuperview:content];

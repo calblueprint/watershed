@@ -1,4 +1,4 @@
-package com.blueprint.watershed.Networking;
+package com.blueprint.watershed.Networking.MiniSites;
 
 import android.app.Activity;
 import android.util.Log;
@@ -6,6 +6,7 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.blueprint.watershed.MiniSites.MiniSite;
+import com.blueprint.watershed.Networking.BaseRequest;
 import com.blueprint.watershed.Sites.Site;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

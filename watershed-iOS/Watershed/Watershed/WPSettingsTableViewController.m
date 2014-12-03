@@ -13,6 +13,7 @@
 #import "WPAboutViewController.h"
 #import "WPTermsViewController.h"
 #import "WPRootViewController.h"
+#import "WPNetworkingManager.h"
 
 @interface WPSettingsTableViewController ()
 
@@ -132,7 +133,7 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
         }
     } else if (indexPath.section == 2) {
         if (indexPath.row == 0) {
-            // implement log out logic (erase keychain)
+            [[WPNetworkingManager sharedManager] eraseLoginKeyChainInfo];
             WPRootViewController *parentVC = (WPRootViewController *)self.parentViewController.parentViewController.parentViewController;
             [parentVC pushNewLoginControllerFromTab:(WPTabBarController *)self.parentViewController.parentViewController];
         }

@@ -10,9 +10,11 @@
 #import "WPMiniSiteView.h"
 #import "WPFieldReportTableViewCell.h"
 #import "WPFieldReportViewController.h"
+#import "WPNetworkingManager.h"
 
 @interface WPMiniSiteViewController ()
 
+@property (nonatomic) WPMiniSiteView *view;
 @property (nonatomic) UITableView *fieldReportTableView;
 @property (nonatomic) NSMutableArray *fieldReportList;
 
@@ -21,19 +23,24 @@
 static NSString *cellIdentifier = @"FieldReportCell";
 
 @implementation WPMiniSiteViewController
+@synthesize miniSite = _miniSite;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"Mini Site";
-    [self loadFieldReportData];
+    self.navigationItem.title = self.miniSite.name;
     self.fieldReportTableView.delegate = self;
     self.fieldReportTableView.dataSource = self;
+    
+    [[WPNetworkingManager sharedManager] requestMiniSiteWithMiniSite:self.miniSite parameters:[[NSMutableDictionary alloc] init] success:^(WPMiniSite *miniSite, NSMutableArray *fieldReportList) {
+        self.miniSite = miniSite;
+        self.fieldReportList = fieldReportList;
+        [self.fieldReportTableView reloadData];
+    }];
 }
 
 - (void)loadView {
-    WPMiniSiteView *miniSiteView = [[WPMiniSiteView alloc] init];
-    self.view = miniSiteView;
-    self.fieldReportTableView = miniSiteView.fieldReportTableView;
+    self.view = [[WPMiniSiteView alloc] init];
+    self.fieldReportTableView = self.view.fieldReportTableView;
 }
 
 - (void)loadFieldReportData {
@@ -64,27 +71,27 @@ static NSString *cellIdentifier = @"FieldReportCell";
     NSInteger rowCount = 0;
     
     if ([tableView isEqual:self.fieldReportTableView]) rowCount = self.fieldReportList.count;
-    [(WPMiniSiteView *)self.view updateTableViewHeight:self.fieldReportList.count];
+    [self.view updateTableViewHeight:self.fieldReportList.count];
     return rowCount;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    UITableViewCell *cellView = nil;
+    WPFieldReportTableViewCell *cellView = nil;
     
     if ([tableView isEqual:self.fieldReportTableView]) {
         
         cellView = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (!cellView) {
-            
             cellView = [[WPFieldReportTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                         reuseIdentifier:cellIdentifier
-                                                                   image:[UIImage imageNamed:@"SampleCoverPhoto"]
-                                                                    date:@"Oct 1, 2015"
-                                                                  rating:[self.fieldReportList[indexPath.row] intValue]
-                                                                  urgent:YES];
+                                                         reuseIdentifier:cellIdentifier];
         }
+        WPFieldReport *fieldReport = self.fieldReportList[indexPath.row];
+        cellView.photoView.image = fieldReport.image;
+        cellView.dateLabel.text = fieldReport.creationDate;
+        cellView.ratingNumberLabel.text = [fieldReport.rating stringValue];
+        cellView.ratingNumberLabel.textColor = [UIColor colorForRating:[fieldReport.rating intValue]];
     }
     return cellView;
 }
@@ -95,8 +102,33 @@ static NSString *cellIdentifier = @"FieldReportCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    WPFieldReport *selectedFieldReport = self.fieldReportList[indexPath.row];
     WPFieldReportViewController *fieldReportController = [[WPFieldReportViewController alloc] init];
+    fieldReportController.fieldReport = selectedFieldReport;
     [self.navigationController pushViewController:fieldReportController animated:YES];
+}
+
+#pragma mark - Setter Methods
+
+- (void)setMiniSite:(WPMiniSite *)miniSite {
+    _miniSite = miniSite;
+    [self.view configureWithMiniSite:miniSite];
+}
+
+#pragma mark - Lazy Instantiation
+
+- (NSMutableArray *)miniSiteList {
+    if (!_fieldReportList) {
+        _fieldReportList = [[NSMutableArray alloc] init];
+    }
+    return _fieldReportList;
+}
+
+- (WPMiniSite *)miniSite {
+    if (!_miniSite) {
+        _miniSite = [[WPMiniSite alloc] init];
+    }
+    return _miniSite;
 }
 
 @end

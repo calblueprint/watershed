@@ -7,6 +7,7 @@
 //
 
 #import "WPRootViewController.h"
+#import "WPNetworkingManager.h"
 
 @interface WPRootViewController ()
 
@@ -20,7 +21,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIViewController *launchingViewController = [self newLoginViewController];
+    UIViewController *launchingViewController = nil;
+    UICKeyChainStore *store = [[WPNetworkingManager sharedManager] keyChainStore];
+    if (store[@"auth_token"] && store[@"email"]) {
+        launchingViewController = [self newInitialViewController];
+    } else {
+        launchingViewController = [self newLoginViewController];
+    }
     [self showViewController:launchingViewController];
 }
 
@@ -38,8 +45,8 @@
     self.currentViewController = initialViewController;
 }
 
-- (void)cycleFromViewController: (UIViewController*) oldVC
-               toViewController: (UIViewController*) newVC {
+- (void)cycleFromViewController:(UIViewController*)oldVC
+               toViewController:(UIViewController*)newVC {
     [oldVC willMoveToParentViewController:nil];
     [self addChildViewController:newVC];
     
@@ -60,13 +67,13 @@
                             }];
 }
 
-- (void)pushNewTabBarControllerFromLogin: (WPLoginViewController *)oldVC {
+- (void)pushNewTabBarControllerFromLogin:(WPLoginViewController *)oldVC {
     UIViewController *launchingViewController = [self newInitialViewController];
     [self cycleFromViewController:oldVC toViewController:launchingViewController];
 
 }
 
-- (void)pushNewLoginControllerFromTab: (WPTabBarController *)oldVC {
+- (void)pushNewLoginControllerFromTab:(WPTabBarController *)oldVC {
     UIViewController *launchingViewController = [self newLoginViewController];
     [self cycleFromViewController:oldVC toViewController:launchingViewController];
 
