@@ -38,10 +38,10 @@
     UIView *nameSpacerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
     _nameField = [[UITextField alloc] init];
     _nameField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Full Name"
-                                                                        attributes:@{NSForegroundColorAttributeName:[UIColor lightGrayColor]}];
+                                                                        attributes:@{NSForegroundColorAttributeName:[UIColor grayColor]}];
     _nameField.font = [UIFont fontWithName:@"Helvetica" size:12];
-    _nameField.textColor = [UIColor whiteColor];
-    _nameField.backgroundColor = [UIColor wp_transBlack];
+    _nameField.textColor = [UIColor blackColor];
+    _nameField.backgroundColor = [UIColor whiteColor];
     [_nameField setLeftViewMode:UITextFieldViewModeAlways];
     [_nameField setLeftView:nameSpacerView];
     [self addSubview:_nameField];
@@ -49,10 +49,10 @@
     UIView *emailSpacerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
     _emailField = [[UITextField alloc] init];
     _emailField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Email Address"
-                                                                       attributes:@{NSForegroundColorAttributeName:[UIColor lightGrayColor]}];
+                                                                       attributes:@{NSForegroundColorAttributeName:[UIColor grayColor]}];
     _emailField.font = [UIFont fontWithName:@"Helvetica" size:12];
-    _emailField.textColor = [UIColor whiteColor];
-    _emailField.backgroundColor = [UIColor wp_transBlack];
+    _emailField.textColor = [UIColor blackColor];
+    _emailField.backgroundColor = [UIColor whiteColor];
     [_emailField setLeftViewMode:UITextFieldViewModeAlways];
     [_emailField setLeftView:emailSpacerView];
     [self addSubview:_emailField];
@@ -60,10 +60,10 @@
     UIView *passwordSpacerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
     _passwordField = [[UITextField alloc] init];
     _passwordField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Password"
-                                                                        attributes:@{NSForegroundColorAttributeName:[UIColor lightGrayColor]}];
+                                                                        attributes:@{NSForegroundColorAttributeName:[UIColor grayColor]}];
     _passwordField.font = [UIFont fontWithName:@"Helvetica" size:12];
-    _passwordField.textColor = [UIColor whiteColor];
-    _passwordField.backgroundColor = [UIColor wp_transBlack];
+    _passwordField.textColor = [UIColor blackColor];
+    _passwordField.backgroundColor = [UIColor whiteColor];
     [_passwordField setLeftViewMode:UITextFieldViewModeAlways];
     [_passwordField setLeftView:passwordSpacerView];
     _passwordField.secureTextEntry = YES;
@@ -72,14 +72,15 @@
     UIView *confirmSpacerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
     _confirmPasswordField = [[UITextField alloc] init];
     _confirmPasswordField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Confirm Password"
-                                                                           attributes:@{NSForegroundColorAttributeName:[UIColor lightGrayColor]}];
+                                                                           attributes:@{NSForegroundColorAttributeName:[UIColor grayColor]}];
     _confirmPasswordField.font = [UIFont fontWithName:@"Helvetica" size:12];
-    _confirmPasswordField.textColor = [UIColor whiteColor];
-    _confirmPasswordField.backgroundColor = [UIColor wp_transBlack];
+    _confirmPasswordField.textColor = [UIColor blackColor];
+    _confirmPasswordField.backgroundColor = [UIColor whiteColor];
     [_confirmPasswordField setLeftViewMode:UITextFieldViewModeAlways];
     [_confirmPasswordField setLeftView:confirmSpacerView];
     _confirmPasswordField.secureTextEntry = YES;
     [self addSubview:_confirmPasswordField];
+    
     
 }
 
@@ -92,21 +93,21 @@
     }];
     
     [self.emailField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.nameField.mas_bottom).with.offset(standardMargin);
+        make.top.equalTo(self.nameField.mas_bottom).with.offset(1);
         make.leading.equalTo(self.nameField.mas_leading);
         make.trailing.equalTo(self.nameField.mas_trailing);
         make.height.equalTo(self.nameField.mas_height);
     }];
     
     [self.passwordField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.emailField.mas_bottom).with.offset(standardMargin);
+        make.top.equalTo(self.emailField.mas_bottom).with.offset(1);
         make.leading.equalTo(self.nameField.mas_leading);
         make.trailing.equalTo(self.nameField.mas_trailing);
         make.height.equalTo(self.nameField.mas_height);
     }];
     
     [self.confirmPasswordField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.passwordField.mas_bottom).with.offset(standardMargin);
+        make.top.equalTo(self.passwordField.mas_bottom).with.offset(1);
         make.leading.equalTo(self.nameField.mas_leading);
         make.trailing.equalTo(self.nameField.mas_trailing);
         make.height.equalTo(self.nameField.mas_height);

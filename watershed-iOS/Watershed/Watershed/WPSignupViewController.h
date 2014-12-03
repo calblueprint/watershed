@@ -20,5 +20,6 @@
 @property (nonatomic) UITextField *emailField;
 @property (nonatomic) UITextField *passwordField;
 @property (nonatomic) UITextField *confirmPasswordField;
+@property (nonatomic) UIButton *signupButton;
 
 @end
