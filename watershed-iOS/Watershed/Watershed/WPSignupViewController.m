@@ -66,7 +66,19 @@
     _passwordField.backgroundColor = [UIColor wp_transBlack];
     [_passwordField setLeftViewMode:UITextFieldViewModeAlways];
     [_passwordField setLeftView:spacerView];
+    _passwordField.secureTextEntry = YES;
     [self addSubview:_passwordField];
+    
+    _confirmPasswordField = [[UITextField alloc] init];
+    _confirmPasswordField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Confirm Password"
+                                                                           attributes:@{NSForegroundColorAttributeName:[UIColor lightGrayColor]}];
+    _confirmPasswordField.font = [UIFont fontWithName:@"Helvetica" size:12];
+    _confirmPasswordField.textColor = [UIColor whiteColor];
+    _confirmPasswordField.backgroundColor = [UIColor wp_transBlack];
+    [_confirmPasswordField setLeftViewMode:UITextFieldViewModeAlways];
+    [_confirmPasswordField setLeftView:spacerView];
+    _confirmPasswordField.secureTextEntry = YES;
+    [self addSubview:_confirmPasswordField];
     
 }
 

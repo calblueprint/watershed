@@ -19,6 +19,6 @@
 @property (nonatomic) UITextField *nameField;
 @property (nonatomic) UITextField *emailField;
 @property (nonatomic) UITextField *passwordField;
-@property (nonatomic) UITextField *passwordConfirmationField;
+@property (nonatomic) UITextField *confirmPasswordField;
 
 @end
