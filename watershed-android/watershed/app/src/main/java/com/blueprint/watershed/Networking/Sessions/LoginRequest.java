@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.blueprint.watershed.Authentication.Session;
 import com.blueprint.watershed.FieldReports.FieldReport;
 import com.blueprint.watershed.Networking.BaseRequest;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -19,40 +20,22 @@ import java.util.HashMap;
  */
 public class LoginRequest extends BaseRequest {
 
-    FieldReport mFieldReport;
-    Activity mActivity;
-
-    public LoginRequest(final Activity activity, HashMap<String, JSONObject> params, final Response.Listener<FieldReport> listener) {
-        super(Request.Method.POST, makeURL("field_reports"), fieldReportParams(activity, fieldReport),
+    public LoginRequest(final Activity activity, HashMap<String, JSONObject> params, final Response.Listener<Session> listener) {
+        super(Request.Method.POST, makeURL("users"), new JSONObject(params),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {
                         try {
-                            String fieldReportJson = jsonObject.get("field_report").toString();
+                            String sessionJson = jsonObject.get("session").toString();
                             ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
-                            FieldReport fieldReport = mapper.readValue(fieldReportJson, new TypeReference<FieldReport>() {
+                            Session session = mapper.readValue(sessionJson, new TypeReference<FieldReport>() {
                             });
-                            listener.onResponse(fieldReport);
+                            listener.onResponse(session);
                         } catch (Exception e) {
                             Log.e("Json exception", e.toString());
                         }
                     }
                 }, activity);
-        mActivity = activity;
-        mFieldReport = fieldReport;
     }
 
-    protected static JSONObject fieldReportParams(final Activity activity, final FieldReport fieldReport) {
-        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
-        ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
-
-        try {
-            JSONObject fieldReportJson = new JSONObject(mapper.writeValueAsString(fieldReport));
-            params.put("field_report", fieldReportJson);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return new JSONObject(params);
-    }
 }

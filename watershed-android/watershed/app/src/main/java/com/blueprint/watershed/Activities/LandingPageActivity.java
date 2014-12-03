@@ -24,6 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.blueprint.watershed.Authentication.LoginFragment;
+import com.blueprint.watershed.Authentication.Session;
 import com.blueprint.watershed.Authentication.SignUpFragment;
 import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.Networking.MiniSites.MiniSiteRequest;

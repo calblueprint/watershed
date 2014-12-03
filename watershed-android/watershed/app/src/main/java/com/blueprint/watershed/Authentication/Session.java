@@ -16,7 +16,7 @@ public class Session {
     // Getters
     public String getEmail() { return mEmail; }
     public String getAuthToken() { return mAuthToken; }
-    public User getUser() { return mUSer; }
+    public User getUser() { return mUser; }
 
     // Setters
     public void setEmail(String email) { mEmail = email; }
