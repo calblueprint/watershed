@@ -49,7 +49,7 @@
     [self addSubview:_nameField];
     
     _emailField = [[UITextField alloc] init];
-    _emailField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Email address"
+    _emailField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Email Address"
                                                                        attributes:@{NSForegroundColorAttributeName:[UIColor lightGrayColor]}];
     _emailField.font = [UIFont fontWithName:@"Helvetica" size:12];
     _emailField.textColor = [UIColor whiteColor];
