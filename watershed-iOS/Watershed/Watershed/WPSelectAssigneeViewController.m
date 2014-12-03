@@ -33,7 +33,7 @@ static NSString *CellIdentifier = @"Cell";
     self.view.selectAssigneeTableView.delegate = self;
     self.view.selectAssigneeTableView.dataSource = self;
     _employeeArray = @[@"Mark", @"Max", @"Melissa", @"Andrew"];
-    _communityArray = @[@"Community 1", @"Community 2", @"Community 2"];
+    _communityArray = @[@"Community 1", @"Community 2", @"Community 3",  @"Community 4",  @"Community 5",  @"Community 6",  @"Community 7"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -77,6 +77,13 @@ static NSString *CellIdentifier = @"Cell";
     } else {
         return [_communityArray count];
     }
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    if(section == 0)
+        return @"Employees";
+    else
+        return @"Community Members";
 }
 
 @end

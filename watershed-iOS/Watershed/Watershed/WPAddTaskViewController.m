@@ -12,6 +12,7 @@
 #import "UIExtensions.h"
 #import "WPSelectTaskViewController.h"
 #import "WPSelectMiniSiteViewController.h"
+#import "WPSelectAssigneeViewController.h"
 
 
 @interface WPAddTaskViewController()
@@ -83,6 +84,12 @@ static NSString *CellIdentifier = @"Cell";
         selectMiniSiteViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
         [self presentViewController:selectMiniSiteViewController animated:YES completion:nil];
     }
+    if (textField.tag == 3) {
+        WPSelectAssigneeViewController *selectAssigneeViewController = [[WPSelectAssigneeViewController alloc] init];
+        selectAssigneeViewController.selectAssigneeDelegate = self;
+        selectAssigneeViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        [self presentViewController:selectAssigneeViewController animated:YES completion:nil];
+    }
     return YES;
 }
 
@@ -107,7 +114,7 @@ static NSString *CellIdentifier = @"Cell";
         case 0: {
             _taskField = [[UITextField alloc] init];
             _taskField.delegate = self;
-            _taskField.placeholder = @"Task";
+            _taskField.placeholder = @"Required";
             _taskField.tag = 1;
             _taskField.textColor = [UIColor wp_paragraph];
             _taskField.font = [UIFont systemFontOfSize:16];
@@ -126,7 +133,7 @@ static NSString *CellIdentifier = @"Cell";
             [datePicker addTarget:self action:@selector(datePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
             datePicker.tag = indexPath.row;
             _dateField.inputView = datePicker;
-            _dateField.placeholder = @"Due Date";
+            _dateField.placeholder = @"Required";
             cell.label.text = @"Due Date";
             _dateField.textColor = [UIColor wp_paragraph];
             _dateField.font = [UIFont systemFontOfSize:16];
@@ -143,7 +150,7 @@ static NSString *CellIdentifier = @"Cell";
             _siteField = [[UITextField alloc] init];
             _siteField.delegate = self;
             cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:_siteField];
-            _siteField.placeholder = @"Site";
+            _siteField.placeholder = @"Required";
             cell.label.text = @"Site";
             _siteField.tag = 2;
             _siteField.textColor = [UIColor wp_paragraph];
@@ -151,13 +158,14 @@ static NSString *CellIdentifier = @"Cell";
             break;
         }
         case 4: {
-            UITextField *textField = [[UITextField alloc] init];
-            textField.delegate = self;
-            cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:textField];
-            textField.placeholder = @"Assignee";
+            _assigneeField = [[UITextField alloc] init];
+            _assigneeField.delegate = self;
+            cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:_assigneeField];
+            _assigneeField.placeholder = @"Required";
             cell.label.text = @"Assignee";
-            textField.textColor = [UIColor wp_paragraph];
-            textField.font = [UIFont systemFontOfSize:16];
+            _assigneeField.tag = 3;
+            _assigneeField.textColor = [UIColor wp_paragraph];
+            _assigneeField.font = [UIFont systemFontOfSize:16];
             break;
         }
         case 5: {
