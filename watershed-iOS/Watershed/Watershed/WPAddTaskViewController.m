@@ -20,7 +20,7 @@
 @property (nonatomic) UITextField *dateField;
 @property (nonatomic) UITextField *taskField;
 @property (nonatomic) UITextField *siteField;
-
+@property (nonatomic) UITextField *assigneeField;
 
 @end
 
@@ -28,11 +28,11 @@
 
 static NSString *CellIdentifier = @"Cell";
 
-- (void)loadView {
+-(void)loadView {
     self.view = [[WPAddTaskView alloc] init];
 }
 
-- (void)viewDidLoad {
+-(void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"New Task";
     self.view.taskFormTableView.delegate = self;
@@ -47,25 +47,30 @@ static NSString *CellIdentifier = @"Cell";
     self.view.taskFormTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
-- (void)didReceiveMemoryWarning {
+-(void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
-- (void)saveForm:(UIButton *)sender {
+-(void)saveForm:(UIButton *)sender {
     
 }
 
-- (void)selectTaskViewControllerDismissed:(NSString *)stringForFirst
+
+-(void)selectTaskViewControllerDismissed:(NSString *)stringForFirst
 {
     _taskField.text = stringForFirst;
 }
 
-- (void)selectSiteViewControllerDismissed:(NSString *)stringForFirst
+-(void)selectSiteViewControllerDismissed:(NSString *)stringForFirst
 {
     _siteField.text = stringForFirst;
 }
 
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+-(void)selectAssigneeViewControllerDismissed:(NSString *)stringForFirst {
+    _assigneeField.text = stringForFirst;
+}
+
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
     if (textField.tag == 1) {
         WPSelectTaskViewController *selectTaskViewController = [[WPSelectTaskViewController alloc] init];
         selectTaskViewController.selectTaskDelegate = self;

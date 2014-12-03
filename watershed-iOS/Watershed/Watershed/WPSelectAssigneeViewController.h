@@ -8,6 +8,14 @@
 
 #import "WPViewController.h"
 
-@interface WPSelectAssigneeViewController : WPViewController
+@protocol SelectAssigneeDelegate <NSObject>
+-(void) selectAssigneeViewControllerDismissed:(NSString *)assigneeString;
+@end
+
+@interface WPSelectAssigneeViewController : WPViewController<UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic, assign) id<SelectAssigneeDelegate> selectAssigneeDelegate;
+
+@property (nonatomic) NSString *assigneeName;
 
 @end
