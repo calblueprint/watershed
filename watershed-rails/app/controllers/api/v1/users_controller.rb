@@ -54,14 +54,4 @@ class Api::V1::UsersController < Api::V1::BaseController
     render json: { message: "There was a problem signing in with Facebook." }, status: 401
   end
 
-  def successful_login(user)
-    sign_in(:user, user)
-    user.ensure_authentication_token
-
-    render json: {
-      authentication_token: user.authentication_token,
-      email: user.email,
-    }.merge(JSON.parse(user.to_json)), status: :ok
-  end
-
 end

@@ -7,4 +7,19 @@ class ApplicationController < ActionController::Base
     flash[:warning] = "We're sorry, we couldn't find that page!"
     redirect_to root_path
   end
+
+  def successful_login(user)
+    sign_in(:user, user)
+    user.ensure_authentication_token
+
+    render json: {
+      authentication_token: user.authentication_token,
+      email: user.email,
+    }.merge(JSON.parse(user.to_json)), status: :ok
+  end
+
+  def unauthorized_response
+    render json: { message: "Unauthorized" }, status: 403
+  end
+
 end

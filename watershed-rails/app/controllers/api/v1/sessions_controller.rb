@@ -20,6 +20,15 @@ class Api::V1::SessionsController < Devise::SessionsController
     end
   end
 
+  def mobile
+    @user = User.find_by(email: params[:email], authentication_token: params[:authentication_token])
+    if user.nil?
+      unauthorized_response
+    else
+      successful_login(@user)
+    end
+  end
+
   private
 
   def ensure_params_exist
