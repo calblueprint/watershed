@@ -2,6 +2,15 @@ class Api::V1::BaseController < Api::BaseController
   before_filter :authenticate_user_from_token!
   before_filter :authenticate_api_v1_user!
 
+  def mobile
+    @user = User.find_by(email: params[:email], authentication_token: params[:auth_token])
+    if @user.nil?
+      unauthorized_response
+    else
+      render json: @user, serializer: SessionSerializer
+    end
+  end
+
   private
 
   def current_ability
@@ -21,6 +30,8 @@ class Api::V1::BaseController < Api::BaseController
       # for every request. If you want the token to work as a
       # sign in token, you can simply remove store: false.
       sign_in user, store: false
+    else
+      unauthorized_response
     end
   end
 end
