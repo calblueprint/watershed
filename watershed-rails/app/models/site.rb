@@ -36,7 +36,7 @@ class Site < ActiveRecord::Base
   def photos
     # For now, show the first photo of the first mini site
     # Has to return an array, thus the try(:first, 1)
-    mini_sites.try(:first).try(:photos).try(:first, 1)
+    mini_sites.try(:first).try(:photos).try(:first, 1) || []
   end
 
 end
