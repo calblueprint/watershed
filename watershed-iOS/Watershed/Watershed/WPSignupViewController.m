@@ -26,6 +26,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
+        self.backgroundColor = [UIColor wp_blue];
         [self createSubviews];
         [self setNeedsUpdateConstraints];
     }

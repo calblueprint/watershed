@@ -14,6 +14,7 @@
 #import "UICKeyChainStore.h"
 #import "WPRootViewController.h"
 #import "WPUser.h"
+#import "WPSignupViewController.h"
 
 
 @interface WPLoginViewController ()
@@ -52,6 +53,17 @@
 - (void)pushTabBarController {
     WPRootViewController *parentVC = (WPRootViewController *)self.parentViewController;
     [parentVC pushNewTabBarControllerFromLogin:self];
+}
+
+#pragma mark - Signup
+
+- (void)presentSignupViewController {
+    WPSignupViewController *signupViewController = [[WPSignupViewController alloc] init];
+    UINavigationController *signupNavController = [[UINavigationController alloc] initWithRootViewController:signupViewController];
+//    [signupViewController.navigationBar setBackgroundColor:[UIColor whiteColor]];
+//    [editNavController.navigationBar setBarTintColor:[UIColor whiteColor]];
+//    [editNavController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
+    [self presentViewController:signupNavController animated:YES completion:nil];
 }
 
 #pragma mark - FBLoginViewDelegate

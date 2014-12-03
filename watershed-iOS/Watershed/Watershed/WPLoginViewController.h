@@ -12,5 +12,6 @@
 @interface WPLoginViewController : UIViewController <FBLoginViewDelegate>
 
 - (void)emailSignup;
+- (void)presentSignupViewController;
 
 @end
