@@ -23,8 +23,11 @@
 #pragma mark - View Hierarchy
 
 - (void)createSubviews {
-    _selectMiniSiteTableView = [[UITableView alloc] init];
-    [self addSubview:_selectMiniSiteTableView];
+    _selectMiniSiteTableView = [({
+        UITableView *miniSiteTableView = [[UITableView alloc] init];
+        [miniSiteTableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
+        miniSiteTableView;
+    }) wp_addToSuperview:self];
     
     _searchField = [({
         UITextField *searchField = [[UITextField alloc] init];

@@ -23,8 +23,11 @@
 #pragma mark - View Hierarchy
 
 - (void)createSubviews {
-    _selectTaskTableView = [[UITableView alloc] init];
-    [self addSubview:_selectTaskTableView];
+    _selectTaskTableView = [({
+        UITableView *taskTableView = [[UITableView alloc] init];
+        [taskTableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
+        taskTableView;
+    }) wp_addToSuperview:self];
 
     _searchField = [({
         UITextField *searchField = [[UITextField alloc] init];
