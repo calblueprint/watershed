@@ -20,7 +20,8 @@ class Api::V1::UsersController < Api::V1::BaseController
     if @user.save
       render json: @user, serializer: UserSerializer
     else
-      render json: { errors: @user.errors }, status: 422
+      puts @user.errors.full_messages
+      render json: { errors: @user.errors.full_messages }, status: 422
     end
   end
 
