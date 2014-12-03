@@ -2,7 +2,7 @@ package com.blueprint.watershed.Users;
 
 /**
  * Created by maxwolffe on 10/29/14.
-**/
+ **/
 enum Role {
     COMMUNITY_MEMBER(0), EMPLOYEE(1), MANAGER(2);
 
