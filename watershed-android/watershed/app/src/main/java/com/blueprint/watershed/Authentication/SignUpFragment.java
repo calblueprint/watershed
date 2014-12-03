@@ -22,9 +22,11 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     private View rootView;
 
     // UI Elements
+    private EditText mNameField;
     private EditText mEmailField;
     private EditText mPasswordField;
-    private Button mLoginButton;
+    private EditText mPasswordConfirmationField;
+    private Button mSignUpButton;
     private SharedPreferences preferences;
 
     public static SignUpFragment newInstance() {
@@ -45,12 +47,14 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         rootView = inflater.inflate(R.layout.fragment_sign_up, container, false);
 
         // Configure view
+        setNameField((EditText) rootView.findViewById(R.id.name_field));
         setEmailField((EditText) rootView.findViewById(R.id.email_field));
         setPasswordField((EditText) rootView.findViewById(R.id.password_field));
-        setLoginButton((Button) rootView.findViewById(R.id.login_button));
+        setPasswordConfirmationField((EditText) rootView.findViewById(R.id.password_confirmation_field));
+        setSignUpButton((Button) rootView.findViewById(R.id.sign_up_button));
 
         // Set OnClickListeners
-        getLoginButton().setOnClickListener(this);
+        getSignUpButton().setOnClickListener(this);
 
         return rootView;
     }
@@ -68,37 +72,42 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     // View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.login_button:
-                didTapLoginButton(view);
+            case R.id.sign_up_button:
+                didTapSignUpButton(view);
                 break;
         }
     }
 
     // UI Actions
-    public void didTapLoginButton(View view) {
-
+    public void didTapSignUpButton(View view) {
+        final String nameString = getNameField().getText().toString();
         final String emailString = getEmailField().getText().toString();
         final String passwordString = getPasswordField().getText().toString();
+        final String passwordConfirmationString = getPasswordConfirmationField().getText().toString();
 
         HashMap<String, String> user_params = new HashMap<String, String>();
+        user_params.put("name", nameString);
         user_params.put("email", emailString);
         user_params.put("password", passwordString);
+        user_params.put("password_confirmation", passwordConfirmationString);
         HashMap<String, HashMap<String, String>> params = new HashMap<String, HashMap<String,String>>();
         params.put("user",user_params);
 
         parentActivity.login(params);
     }
 
-
-
     // Getters
+    public EditText getNameField() { return mNameField; }
     public EditText getEmailField() { return mEmailField; }
     public EditText getPasswordField() { return mPasswordField; }
-    public Button getLoginButton() { return mLoginButton; }
+    public EditText getPasswordConfirmationField() { return mPasswordConfirmationField; }
+    public Button getSignUpButton() { return mSignUpButton; }
 
 
     // Setters
+    public void setNameField(EditText nameField) { mNameField = nameField; }
     public void setEmailField(EditText emailField) { mEmailField = emailField; }
     public void setPasswordField(EditText passwordField) { mPasswordField = passwordField; }
-    public void setLoginButton(Button loginButton) { mLoginButton = loginButton; }
+    public void setPasswordConfirmationField(EditText passwordConfirmationField) { mPasswordConfirmationField = passwordConfirmationField; }
+    public void setSignUpButton(Button signUpButton) { mSignUpButton = signUpButton; }
 }
