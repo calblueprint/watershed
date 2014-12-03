@@ -7,6 +7,7 @@
 //
 
 #import "WPSignupViewController.h"
+#import "WPNetworkingManager.h"
 
 @interface WPSignupViewController()
 
@@ -27,7 +28,15 @@
 
 - (void)emailSignup {
     if ([self.view.passwordField.text isEqualToString:self.view.confirmPasswordField.text]) {
+        NSString *name = self.view.nameField.text;
+        NSString *email = self.view.emailField.text;
+        NSString *password = self.view.passwordField.text;
         
+        NSDictionary *parameters = @{@"user" : @{@"email": email, @"password": password, @"name": name, @"role": @"0"}};
+        
+//        [[WPNetworkingManager sharedManager] requestLoginWithParameters:parameters success:^(WPUser *user) {
+//            [self pushTabBarController];
+//        }];
     } else {
         UIAlertView *passwordNotMatchAlert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                                         message:@"Passwords must match"
