@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         setEmailField((EditText) rootView.findViewById(R.id.email_field));
         setPasswordField((EditText) rootView.findViewById(R.id.password_field));
         setLoginButton((Button) rootView.findViewById(R.id.login_button));
+
+        getPasswordField().setTransformationMethod(new PasswordTransformationMethod());
 
         // Set OnClickListeners
         getLoginButton().setOnClickListener(this);

@@ -24,6 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.blueprint.watershed.Authentication.LoginFragment;
+import com.blueprint.watershed.Authentication.SignUpFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.R;
 import com.facebook.AppEventsLogger;
@@ -178,6 +179,13 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     }
 
     public void didTapSignUpLoadFragmentButton(View view) {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        SignUpFragment fragment = new SignUpFragment();
+        fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     public void makeFacebookRequest(String email, String accessToken, String id, String name){
