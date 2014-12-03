@@ -7,6 +7,7 @@
 //
 
 #import "WPCreateSiteViewController.h"
+#import "WPCreateSiteView.h"
 
 @interface WPCreateSiteViewController ()
 
@@ -17,6 +18,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+}
+
+- (void)loadView {
+    self.view = [[WPCreateSiteView alloc] init];
 }
 
 - (void)didReceiveMemoryWarning {
