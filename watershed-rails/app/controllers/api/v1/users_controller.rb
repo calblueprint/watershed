@@ -46,7 +46,8 @@ class Api::V1::UsersController < Api::V1::BaseController
   private
 
   def user_params
-    params.require(:user).permit(:email, :name, :role, :facebook_auth_token)
+    params.require(:user).permit(:email, :name, :role, :password,
+                                 :password_confirmation, :facebook_auth_token)
   end
 
   def invalid_facebook_login_attempt
