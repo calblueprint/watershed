@@ -11,10 +11,7 @@ class ApplicationController < ActionController::Base
     sign_in(:user, user)
     user.ensure_authentication_token
 
-    render json: {
-      authentication_token: user.authentication_token,
-      email: user.email,
-    }.merge(JSON.parse(user.to_json))
+    render json: user, serializer: SessionSerializer
   end
 
   def unauthorized_response
