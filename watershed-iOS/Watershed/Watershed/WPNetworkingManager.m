@@ -17,6 +17,7 @@
 
 static NSString * const BASE_URL = @"https://intense-reaches-1457.herokuapp.com/api/v1/";
 static NSString * const SIGNIN_URL = @"users/sign_in";
+static NSString * const SIGNUP_URL = @"users";
 static NSString * const USERS_URL = @"users";
 static NSString * const FACEBOOK_LOGIN_URL = @"users/sign_up/facebook";
 static NSString * const SITES_URL = @"sites";
@@ -44,6 +45,25 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
     [self POST:signInString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
 //        NSLog(@"SIGN IN RESPONSE: %@", responseObject);
         
+        NSDictionary *responseDictionary = responseObject;
+        NSString *authToken = responseDictionary[@"authentication_token"];
+        NSString *email = responseDictionary[@"email"];
+        [self updateLoginKeyChainInfoWithAuthToken:authToken email:email];
+        
+        NSDictionary *userJSON = responseDictionary[@"user"];
+        WPUser *user = [MTLJSONAdapter modelOfClass:WPUser.class fromJSONDictionary:userJSON error:nil];
+        success(user);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Incorrect email or password." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+- (void)postUserWithParameters:(NSDictionary *)parameters success:(void (^)(WPUser *user))success {
+    NSString *signUpString = [WPNetworkingManager createURLWithEndpoint:SIGNUP_URL];
+    
+    [self POST:signUpString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {        
         NSDictionary *responseDictionary = responseObject;
         NSString *authToken = responseDictionary[@"authentication_token"];
         NSString *email = responseDictionary[@"email"];

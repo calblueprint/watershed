@@ -127,7 +127,7 @@
 
 - (void)passwordToDone {
     [self.passwordTextField becomeFirstResponder];
-    [_parentViewController emailSignup];
+    [_parentViewController emailSignin];
 }
 
 
