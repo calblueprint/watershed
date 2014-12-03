@@ -113,8 +113,8 @@
         }
         _emailClicked = YES;
         
-        SEL emailSignupSelector = sel_registerName("emailSignup");
-        [_emailButton addTarget:_parentViewController action:emailSignupSelector forControlEvents:UIControlEventTouchUpInside];
+        SEL emailSigninSelector = sel_registerName("emailSignin");
+        [_emailButton addTarget:_parentViewController action:emailSigninSelector forControlEvents:UIControlEventTouchUpInside];
         [self setNeedsUpdateConstraints];
     }];
 

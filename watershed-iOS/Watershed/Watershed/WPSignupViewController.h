@@ -12,6 +12,8 @@
 
 @interface WPSignupViewController : WPViewController
 
+- (void)emailSignup;
+
 @end
 
 @interface WPSignupView : WPView
@@ -21,5 +23,9 @@
 @property (nonatomic) UITextField *passwordField;
 @property (nonatomic) UITextField *confirmPasswordField;
 @property (nonatomic) UIButton *signupButton;
+@property (nonatomic) WPSignupViewController *parentViewController;
+
+- (instancetype)initWithParent:(WPSignupViewController *)parent;
+
 
 @end

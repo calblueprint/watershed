@@ -8,6 +8,12 @@
 
 #import "WPSignupViewController.h"
 
+@interface WPSignupViewController()
+
+@property (nonatomic) WPSignupView *view;
+
+@end
+
 @implementation WPSignupViewController
 
 - (void)viewDidLoad {
@@ -15,17 +21,31 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 }
 
--(void)loadView {
+- (void)loadView {
     self.view = [[WPSignupView alloc] init];
+}
+
+- (void)emailSignup {
+    if ([self.view.passwordField.text isEqualToString:self.view.confirmPasswordField.text]) {
+        
+    } else {
+        UIAlertView *passwordNotMatchAlert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                        message:@"Passwords must match"
+                                                                       delegate:self
+                                                              cancelButtonTitle:@"Ok"
+                                                              otherButtonTitles:nil];
+        [passwordNotMatchAlert show];
+    }
 }
 
 @end
 
 @implementation WPSignupView
 
-- (instancetype)init {
+- (instancetype)initWithParent:(WPSignupViewController *)parent {
     self = [super init];
     if (self) {
+        self.parentViewController = parent;
         self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"about_watershed.png"]];
         [self createSubviews];
         [self setNeedsUpdateConstraints];
@@ -85,6 +105,7 @@
     _signupButton.backgroundColor = [UIColor wp_lightGreen];
     [_signupButton setTitle:@"Sign up" forState:UIControlStateNormal];
     [_signupButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_signupButton addTarget:self.parentViewController action:@selector(emailSignup) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_signupButton];
 }
 
