@@ -11,10 +11,7 @@ class Api::V1::SessionsController < Devise::SessionsController
     if user.valid_password?(params[:user][:password])
       sign_in(:user, user)
       user.ensure_authentication_token
-      render json: {
-        authentication_token: user.authentication_token,
-        email: user.email,
-      }.merge(JSON.parse(user.to_json)), status: :ok
+      successful_login(user)
     else
       invalid_login_attempt
     end

@@ -10,7 +10,6 @@ class ApplicationController < ActionController::Base
   def successful_login(user)
     sign_in(:user, user)
     user.ensure_authentication_token
-
     render json: user, serializer: SessionSerializer
   end
 
