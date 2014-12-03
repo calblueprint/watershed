@@ -62,7 +62,7 @@
     signupViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
                                                                                                           target:self
                                                                                                           action:@selector(cancelSignup)];
-    signupViewController.parentViewController = self;
+    signupViewController.parentVC = self;
     [self presentViewController:signupNavController animated:YES completion:nil];
 }
 

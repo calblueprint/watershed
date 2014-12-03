@@ -14,5 +14,6 @@
 - (void)cancelSignup;
 - (void)emailSignin;
 - (void)presentSignupViewController;
+- (void)pushTabBarController;
 
 @end

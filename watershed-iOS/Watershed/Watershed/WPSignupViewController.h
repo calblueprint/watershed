@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "WPViewController.h"
 #import "WPView.h"
+#import "WPLoginViewController.h"
 
 @interface WPSignupViewController : WPViewController
 
+@property (nonatomic) WPLoginViewController *parentVC;
 - (void)emailSignup;
 
 @end

@@ -9,11 +9,9 @@
 #import "WPSignupViewController.h"
 #import "WPNetworkingManager.h"
 #import "WPUser.h"
-#import "WPLoginViewController.h"
 
 @interface WPSignupViewController()
 
-@property (nonatomic) WPLoginViewController *parentViewController;
 @property (nonatomic) WPSignupView *view;
 
 @end
@@ -39,8 +37,9 @@
         NSDictionary *parameters = @{@"user" : @{@"email": email, @"password": password, @"password_confirmation": confirm, @"name": name, @"role": @"community_member"}};
         
         [[WPNetworkingManager sharedManager] postUserWithParameters:parameters success:^(WPUser *user) {
-            [self.parentViewController cancelSignup];
-            [self.parentViewController pushTabBarController];
+            [self.parentVC cancelSignup];
+            //sign in
+            [self.parentVC pushTabBarController];
         }];
     } else {
         UIAlertView *passwordNotMatchAlert = [[UIAlertView alloc] initWithTitle:@"Error"
