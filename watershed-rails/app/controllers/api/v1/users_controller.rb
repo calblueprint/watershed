@@ -18,9 +18,8 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def create
     if @user.save
-      render json: @user, serializer: UserSerializer
+      render json: @user, serializer: SessionSerializer
     else
-      puts @user.errors.full_messages
       render json: { errors: @user.errors.full_messages }, status: 422
     end
   end
