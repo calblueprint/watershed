@@ -9,19 +9,8 @@
 #import "WPFieldReportView.h"
 
 @interface WPFieldReportView () <UIScrollViewDelegate>
-
 @property (nonatomic) UIScrollView *contentScrollView;
-@property (nonatomic) UIImageView *reportImageView;
-@property (nonatomic) UILabel *ratingNumberLabel;
-@property (nonatomic) UIImageView *userImageView;
-@property (nonatomic) UILabel *titleLabel;
-@property (nonatomic) UILabel *userLabel;
-@property (nonatomic) UILabel *descriptionLabel;
-
-@property (nonatomic) NSInteger rating;
-@property (nonatomic) UIColor *ratingColor;
 @property (nonatomic) UIView *navbarOverlay;
-
 @end
 
 const static float REPORT_IMAGE_SIZE = 220.0f;
@@ -34,9 +23,6 @@ const static float BORDER_WIDTH = 6.0f;
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        _rating = arc4random() % 5 + 1;
-        _ratingColor = [UIColor colorForRating:self.rating];
-        self.backgroundColor = self.ratingColor;
         [self createSubviews];
         [self setNeedsUpdateConstraints];
     }
@@ -62,7 +48,6 @@ const static float BORDER_WIDTH = 6.0f;
     
     _reportImageView = [({
         UIImageView *reportImageView = [[UIImageView alloc] init];
-        reportImageView.image = [UIImage imageNamed:@"SampleCoverPhoto"];
         [reportImageView setContentMode:UIViewContentModeScaleAspectFill];
         reportImageView.layer.cornerRadius = REPORT_IMAGE_SIZE / 2;
         reportImageView.clipsToBounds = YES;
@@ -72,14 +57,11 @@ const static float BORDER_WIDTH = 6.0f;
     
     _ratingNumberLabel = [({
         UILabel *label = [[UILabel alloc] init];
-        label.text = [NSString stringWithFormat:@"%d", (int)self.rating];
         label.font = [UIFont systemFontOfSize:45.0];
         label.textAlignment = NSTextAlignmentCenter;
-        label.textColor = self.ratingColor;
         label.backgroundColor = [UIColor whiteColor];
         label.layer.cornerRadius = RATING_SIZE / 2;
         label.layer.borderWidth = BORDER_WIDTH;
-        label.layer.borderColor = [self.ratingColor CGColor];
         label.clipsToBounds = YES;
         
         CALayer *mask = [CALayer layer];
@@ -95,11 +77,9 @@ const static float BORDER_WIDTH = 6.0f;
     
     _userImageView = [({
         UIImageView *userImageView = [[UIImageView alloc] init];
-        userImageView.image = [UIImage imageNamed:@"max"];
         [userImageView setContentMode:UIViewContentModeScaleAspectFill];
         userImageView.layer.cornerRadius = USER_IMAGE_SIZE / 2;
         userImageView.layer.borderWidth = BORDER_WIDTH - 1;
-        userImageView.layer.borderColor = [self.ratingColor CGColor];
         userImageView.clipsToBounds = YES;
         
         CALayer *mask = [CALayer layer];
@@ -115,7 +95,6 @@ const static float BORDER_WIDTH = 6.0f;
     
     _titleLabel = [({
         UILabel *titleLabel = [[UILabel alloc] init];
-        titleLabel.text = @"Mini Site Name";
         titleLabel.font = [UIFont systemFontOfSize:28.0];
         titleLabel.textAlignment = NSTextAlignmentCenter;
         titleLabel.textColor = [UIColor blackColor];
@@ -127,7 +106,6 @@ const static float BORDER_WIDTH = 6.0f;
     
     _userLabel = [({
         UILabel *userLabel = [[UILabel alloc] init];
-        userLabel.text = @"Reported by Max Woffle";
         userLabel.font = [UIFont systemFontOfSize:16.0];
         userLabel.textAlignment = NSTextAlignmentCenter;
         userLabel.textColor = [UIColor blackColor];
@@ -139,7 +117,6 @@ const static float BORDER_WIDTH = 6.0f;
     
     _descriptionLabel = [({
         UILabel *descriptionLabel = [[UILabel alloc] init];
-        descriptionLabel.text = @"Cal Blueprint is a student-run UC Berkeley organization devoted to matching the skills of its members to our desire to see social good enacted in our community. Each semester, teams of 4-5 students work closely with a non-profit to bring technological solutions to the problems they face every day.";
         descriptionLabel.font = [UIFont systemFontOfSize:16.0];
         descriptionLabel.textColor = [UIColor whiteColor];
         descriptionLabel.lineBreakMode = NSLineBreakByWordWrapping;

@@ -19,8 +19,7 @@ import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteListAdapter;
 import com.blueprint.watershed.Networking.NetworkManager;
-import com.blueprint.watershed.Networking.SiteListRequest;
-import com.blueprint.watershed.Networking.SiteRequest;
+import com.blueprint.watershed.Networking.Sites.SiteRequest;
 import com.blueprint.watershed.R;
 
 import org.json.JSONObject;
@@ -113,7 +112,7 @@ public class SiteFragment extends Fragment
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (null != mListener) {
+        if (mListener != null) {
             // Load MiniSite
             MiniSite miniSite = getMiniSite(position);
             MiniSiteFragment miniSiteFragment = new MiniSiteFragment();

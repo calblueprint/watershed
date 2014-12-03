@@ -9,14 +9,16 @@
 #import <Foundation/Foundation.h>
 #import "WPUser.h"
 #import "WPMiniSite.h"
+#import "Mantle.h"
 
-@interface WPFieldReport : NSObject
+@interface WPFieldReport : MTLModel <MTLJSONSerializing>
 
 @property (nonatomic) NSNumber *fieldReportId;
 @property (nonatomic) NSString *creationDate;
 @property (nonatomic) NSString *info;
-@property (nonatomic) NSInteger rating;
-@property (nonatomic) BOOL urgent;
+@property (nonatomic) NSNumber *rating;
+@property (nonatomic) NSNumber *urgent;
+@property (nonatomic) UIImage *image;
 @property (nonatomic) WPUser *user;
 @property (nonatomic) WPMiniSite *miniSite;
 

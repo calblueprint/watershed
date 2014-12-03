@@ -1,11 +1,12 @@
-package com.blueprint.watershed.Networking;
+package com.blueprint.watershed.Networking.Tasks;
 
 import android.app.Activity;
 import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.blueprint.watershed.Sites.Site;
+import com.blueprint.watershed.Networking.BaseRequest;
+import com.blueprint.watershed.Tasks.Task;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -17,25 +18,23 @@ import java.util.HashMap;
 /**
  * Created by Mark Miyashita on 11/16/14.
  */
-public class SiteListRequest extends BaseRequest {
+public class TaskListRequest extends BaseRequest {
 
-    public SiteListRequest(final Activity activity, HashMap<String, JSONObject> params, final Response.Listener<ArrayList<Site>> listener) {
-        super(Request.Method.GET, makeURL("sites"), new JSONObject(params),
+    public TaskListRequest(final Activity activity, HashMap<String, JSONObject> params, final Response.Listener<ArrayList<Task>> listener) {
+        super(Request.Method.GET, makeURL("tasks"), new JSONObject(params),
             new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject jsonObject) {
                     try {
-                        String sitesJson = jsonObject.get("sites").toString();
+                        String sitesJson = jsonObject.get("tasks").toString();
                         ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
-                        ArrayList<Site> sites = mapper.readValue(sitesJson, new TypeReference<ArrayList<Site>>() {
+                        ArrayList<Task> tasks = mapper.readValue(sitesJson, new TypeReference<ArrayList<Task>>() {
                         });
-                        listener.onResponse(sites);
+                        listener.onResponse(tasks);
                     } catch (Exception e) {
                         Log.e("Json exception", e.toString());
                     }
                 }
-
-        }, activity);
+            }, activity);
     }
-
 }

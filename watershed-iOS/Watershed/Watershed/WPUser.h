@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <Facebook-iOS-SDK/FacebookSDK/FBGraphUser.h>
-@interface WPUser : NSObject
+#import "Mantle.h"
+
+@interface WPUser : MTLModel <MTLJSONSerializing>
 
 @property (nonatomic) NSNumber *userId;
 @property (nonatomic) NSString *profilePicture;
@@ -16,7 +18,7 @@
 @property (nonatomic) NSString *email;
 @property (nonatomic) NSString *name;
 @property (nonatomic) NSString *phoneNumber;
-@property (nonatomic) NSInteger *role;
+@property (nonatomic) NSNumber *role;
 @property (nonatomic) NSString *location;
 
 - (instancetype)initWithFacebookUser:(id<FBGraphUser>)user;

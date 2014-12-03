@@ -9,36 +9,55 @@ import java.util.ArrayList;
 /**
  * Created by maxwolffe on 10/29/14.
 **/
+enum Role {
+    COMMUNITY_MEMBER(0), EMPLOYEE(1), MANAGER(2);
+
+    private int value;
+
+    Role(int value) { this.value = value; }
+    public int getValue() { return value; }
+}
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
 
+    private Integer mId;
     private String mEmail;
     private String mName;
-    private String mRole;
+    //private String mRole;
+    private Integer mRole;
+
 
     private ArrayList<FieldReport> mfieldReports;
 
     public User(String email, String name, String role){
         mEmail = email;
         mName = name;
-        mRole = role;
+        //mRole = role;
     }
 
     public User() {
         mName = "Mark Millman";
         mEmail = "mark@mark.com";
-        mRole = "Manager";
+        //mRole = "Manager";
     }
 
+    // Roles
+    public Boolean isManager() { return mRole == Role.MANAGER.getValue(); }
+    public Boolean isEmployee() { return mRole == Role.EMPLOYEE.getValue(); }
+    public Boolean isCommunityMember() { return mRole == Role.COMMUNITY_MEMBER.getValue(); }
+
+    // Getters
+    public Integer getId() { return mId; }
+    public Integer getRole() { return mRole; }
     public String getName() { return mName; }
-    public String getRole() { return mRole; }
+
     public String getEmail() { return mEmail; }
     public ArrayList<FieldReport> getFieldReports() { return mfieldReports; }
 
     // Setters
+    public void setId(Integer id) { mId = id; }
+    public void getRole(Integer role) { mRole = role; }
     public void setName(String name) { mName = name; }
-    public void setRole(String role) { mRole = role;}
-    public void setEmail(String email) { mEmail = email;}
-    public void setFieldReports(ArrayList<FieldReport> fieldReports) { mfieldReports = fieldReports;}
-
+    public void getEmail(String email) { mEmail = email; }
 }

@@ -7,8 +7,9 @@
 //
 
 #import "WPViewController.h"
+#import "WPMiniSite.h"
 
 @interface WPMiniSiteViewController : WPViewController <UITableViewDelegate, UITableViewDataSource>
-
+@property (nonatomic) WPMiniSite *miniSite;
 @end
 

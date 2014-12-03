@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.blueprint.watershed.FieldReports.FieldReportFragment">
+    tools:context="com.blueprint.watershed.FieldReports.AddFieldReportFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -101,23 +101,23 @@
                     android:padding="4dp"
                     android:layout_gravity="start|top"
                     android:textSize="15sp"
-                    android:lines="10"/>
+                    android:lines="10"
+                    />
 
                 <Button
+                    android:id="@+id/take_photo_button"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
+                    android:layout_height="@dimen/button_large_height"
                     android:layout_marginTop="8dp"
-                    android:onClick="HandleTakePhotoButton"
-                    android:text = "Take Photo"
+                    android:text="Take Photo"
                     />
                 <Button
-                    android:id="@+id/submit_field_report"
+                    android:id="@+id/submit_field_report_button"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
+                    android:layout_height="@dimen/button_large_height"
                     android:layout_marginTop="8dp"
                     android:background="@color/ws_blue"
-                    android:onClick="createFieldReport"
-                    android:text = "Submit"
+                    android:text="Submit"
                     />
             </LinearLayout>
         </LinearLayout>

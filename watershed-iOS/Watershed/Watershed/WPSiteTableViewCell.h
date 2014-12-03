@@ -11,11 +11,9 @@
 
 @interface WPSiteTableViewCell : UITableViewCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style
-    reuseIdentifier:(NSString *)reuseIdentifier
-               name:(NSString *)name
-              image:(UIImage *)image
-      miniSiteCount:(NSInteger)miniSiteCount;
+@property (nonatomic) UILabel *nameLabel;
+@property (nonatomic) UIImageView *photoView;
+@property (nonatomic) UILabel *miniSiteLabel;
 
 - (void)updatePhotoPosition:(NSNumber *)contentOffset;
 
