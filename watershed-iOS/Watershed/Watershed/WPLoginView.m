@@ -125,7 +125,7 @@
     [self.passwordTextField becomeFirstResponder];
 }
 
-- (void)passwordToDone {
+- (void)didTapDoneFromPassword {
     [self.passwordTextField becomeFirstResponder];
     [_parentViewController emailSignin];
 }
