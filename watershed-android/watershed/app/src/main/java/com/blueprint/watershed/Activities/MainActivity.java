@@ -49,6 +49,7 @@ import android.widget.ListView;
 
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
@@ -108,7 +109,7 @@ public class MainActivity extends ActionBarActivity
     private ViewPager viewPager;
     private TabsPagerAdapter mAdapter;
     private View mContainer;
-    private ProgressDialog mProgress;
+    private ProgressBar mProgress;
 
 
     // Networking
@@ -124,7 +125,7 @@ public class MainActivity extends ActionBarActivity
         mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
         viewPager = (ViewPager) findViewById(R.id.pager);
         mContainer = findViewById(R.id.container);
-        mProgress = new ProgressDialog(this);
+        mProgress = (ProgressBar) this.findViewById(R.id.progressBar);
         initializeFragments();
         initializeTabs(0);
 
@@ -339,10 +340,12 @@ public class MainActivity extends ActionBarActivity
         switch (position) {
             case 0:
                 TaskFragment taskFragment = TaskFragment.newInstance(0);
+                mProgress.setVisibility(View.VISIBLE);
                 replaceFragment(taskFragment);
                 break;
             case 1:
                 siteListFragment = new SiteListFragment();
+                mProgress.setVisibility(View.VISIBLE);
                 replaceFragment(siteListFragment);
                 break;
             case 2:
@@ -399,9 +402,5 @@ public class MainActivity extends ActionBarActivity
         replaceFragment(fieldFragment);
     }
 
-    public void openSpinner(View view){
-        mProgress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mProgress.setIndeterminate(true);
-        mProgress.show();
-    }
+    public ProgressBar getSpinner() { return mProgress; }
 }

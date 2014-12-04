@@ -134,6 +134,7 @@ public class SiteFragment extends Fragment
             @Override
             public void onResponse(Site site) {
                 setSite(site);
+                mMainActivity.getSpinner().setVisibility(View.GONE);
                 mMiniSiteAdapter.notifyDataSetChanged();
             }
         });
