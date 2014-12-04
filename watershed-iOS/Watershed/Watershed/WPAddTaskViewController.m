@@ -74,8 +74,6 @@ static NSString *CellIdentifier = @"Cell";
 
 -(void)selectSiteViewControllerDismissed:(NSString *)stringForFirst {
     _siteField.text = stringForFirst;
-    [_siteField resignFirstResponder];
-    [_siteField endEditing:YES];
 }
 
 -(void)selectAssigneeViewControllerDismissed:(NSString *)stringForFirst {
@@ -88,25 +86,22 @@ static NSString *CellIdentifier = @"Cell";
             WPSelectTaskViewController *selectTaskViewController = [[WPSelectTaskViewController alloc] init];
             selectTaskViewController.selectTaskDelegate = self;
             selectTaskViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-            [self presentViewController:selectTaskViewController animated:YES completion:nil];
-            break;
+            [[self navigationController] pushViewController: selectTaskViewController animated:YES];
+            return NO;
         }
         case 2: {
             WPSelectMiniSiteViewController *selectMiniSiteViewController = [[WPSelectMiniSiteViewController alloc] init];
             selectMiniSiteViewController.selectSiteDelegate = self;
             [self.siteField resignFirstResponder];
             [[self navigationController] pushViewController: selectMiniSiteViewController animated:YES];
-//            selectMiniSiteViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-//            [self presentViewController:selectMiniSiteViewController animated:YES completion:nil];
-            break;
+            return NO;
         }
         case 3: {
             WPSelectAssigneeViewController *selectAssigneeViewController = [[WPSelectAssigneeViewController alloc] init];
             selectAssigneeViewController.selectAssigneeDelegate = self;
             [self.assigneeField resignFirstResponder];
             [[self navigationController] pushViewController: selectAssigneeViewController animated:YES];
-//            [self presentViewController:selectAssigneeViewController animated:YES completion:nil];
-            break;
+            return NO;
         }
         default:
             break;
@@ -141,8 +136,6 @@ static NSString *CellIdentifier = @"Cell";
             _taskField.font = [UIFont systemFontOfSize:16];
             cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:_taskField];
             cell.label.text = @"Task";
-            UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectTask)];
-            [cell addGestureRecognizer:tapRecognizer];
             break;
         }
         case 1: {

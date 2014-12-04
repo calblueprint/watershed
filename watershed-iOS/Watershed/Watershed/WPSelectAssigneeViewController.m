@@ -55,7 +55,7 @@ static NSString *CellIdentifier = @"Cell";
     if([self.selectAssigneeDelegate respondsToSelector:@selector(selectAssigneeViewControllerDismissed:)]) {
         [self.selectAssigneeDelegate selectAssigneeViewControllerDismissed:[self.view.selectAssigneeTableView cellForRowAtIndexPath:indexPath].textLabel.text];
     }
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Table View Protocols

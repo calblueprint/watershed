@@ -50,7 +50,6 @@ static NSString *CellIdentifier = @"Cell";
     if([self.selectTaskDelegate respondsToSelector:@selector(selectTaskViewControllerDismissed:)]) {
         [self.selectTaskDelegate selectTaskViewControllerDismissed:[self.view.selectTaskTableView cellForRowAtIndexPath:indexPath].textLabel.text];
     }
-//    [self dismissViewControllerAnimated:YES completion:nil];
     [self.navigationController popViewControllerAnimated:YES];
 
 }
