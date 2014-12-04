@@ -1,6 +1,6 @@
 class Api::V1::UsersController < Api::V1::BaseController
   skip_before_filter :authenticate_user_from_token!, only: [:create, :facebook_login]
-  skip_before_filter :authenticate_api_v1_user!, only: [:create, :facebook_login]
+  skip_before_filter :authenticate_api_v1_user!,     only: [:create, :facebook_login]
   load_and_authorize_resource param_method: :user_params
 
   def index
