@@ -31,14 +31,13 @@ import com.blueprint.watershed.Networking.Sessions.FacebookLoginRequest;
 import com.blueprint.watershed.Networking.Sessions.LoginRequest;
 import com.blueprint.watershed.Networking.Sessions.SignUpRequest;
 import com.blueprint.watershed.R;
-<<<<<<< HEAD
 import com.blueprint.watershed.Users.User;
+
 import com.fasterxml.jackson.core.type.TypeReference;
-=======
+
 import com.facebook.AppEventsLogger;
 import com.facebook.SessionState;
 import com.facebook.model.GraphUser;
->>>>>>> 4e76df684e35ce26eb16bc6c3ed0f77f3e438147
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
@@ -216,20 +215,6 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         mloginNetworkManager.getRequestQueue().add(facebookLoginRequest);
     }
 
-<<<<<<< HEAD
-                        try {
-                            String token = jsonObject.getString("authentication_token");
-                            String email = jsonObject.getString("email");
-                            String userJson = jsonObject.getString("user");
-                            try {
-                                //Does it make sense to get the user here? Or should we make an extra request
-                                ObjectMapper mapper = mloginNetworkManager.getObjectMapper();
-                                User user = mapper.readValue(userJson, new TypeReference<User>() {});
-                            }
-                            catch (Exception e){
-                                Log.e("User creation", e.toString());
-                            }
-=======
     public void loginRequest(HashMap<String, String> params) {
         final Intent intent = new Intent(this, MainActivity.class);
 
@@ -239,42 +224,13 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
                 storeSessionAndStartMainActivity(intent, session);
             }
         });
->>>>>>> 4e76df684e35ce26eb16bc6c3ed0f77f3e438147
 
         mloginNetworkManager.getRequestQueue().add(loginRequest);
     }
 
-<<<<<<< HEAD
-                            LandingPageActivity.this.finish();
-                            startActivity(intent);
-                        }
-                        catch (JSONException e) {
-                            Log.e("Json exception", e.toString());
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        String message;
-                        if (volleyError instanceof NetworkError) {
-                            message = "Network Error. Please try again later.";
-                        }
-                        else {
-                            try {
-                                JSONObject response = new JSONObject(new String(volleyError.networkResponse.data));
-                                message = (String) response.get("message");
-                            } catch (Exception e) {
-                                message = "Unknown Error";
-                                e.printStackTrace();
-                            }
-                        }
-                        Context context = getApplicationContext();
-                        int duration = Toast.LENGTH_SHORT;
-=======
+
     public void signUpRequest(HashMap<String, String> params) {
         final Intent intent = new Intent(this, MainActivity.class);
->>>>>>> 4e76df684e35ce26eb16bc6c3ed0f77f3e438147
 
         SignUpRequest signUpRequest = new SignUpRequest(this, params, new Response.Listener<Session>() {
             @Override
