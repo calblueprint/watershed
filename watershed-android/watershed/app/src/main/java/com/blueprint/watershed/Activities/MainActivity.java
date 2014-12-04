@@ -40,6 +40,8 @@ import com.blueprint.watershed.Utilities.TabsPagerAdapter;
 import com.blueprint.watershed.Tasks.TaskAdapter;
 import com.blueprint.watershed.Tasks.TaskDetailFragment;
 import com.blueprint.watershed.Tasks.TaskFragment;
+import com.facebook.AppEventsLogger;
+import com.facebook.Session;
 
 import android.view.View;
 import android.content.Context;
@@ -159,6 +161,7 @@ public class MainActivity extends ActionBarActivity
 
         setNetworkManager(NetworkManager.getInstance(this.getApplicationContext()));
     }
+
 
     public void initializeTabs(int option){
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -389,10 +392,16 @@ public class MainActivity extends ActionBarActivity
                 editor.clear();
                 editor.commit();
                 Intent intent = new Intent(this, LandingPageActivity.class);
+
+                if (Session.getActiveSession() != null) {
+                    Session.getActiveSession().closeAndClearTokenInformation();
+                }
+
                 this.finish();
                 startActivity(intent);
                 break;
         }
+        mDrawerLayout.closeDrawer(mDrawerList);
     }
 
     @Override

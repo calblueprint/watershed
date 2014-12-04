@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 /**
  * Created by maxwolffe on 10/29/14.
-**/
+ **/
 enum Role {
     COMMUNITY_MEMBER(0), EMPLOYEE(1), MANAGER(2);
 
@@ -57,7 +57,7 @@ public class User {
 
     // Setters
     public void setId(Integer id) { mId = id; }
-    public void getRole(Integer role) { mRole = role; }
+    public void setRole(Integer role) { mRole = role; }
     public void setName(String name) { mName = name; }
-    public void getEmail(String email) { mEmail = email; }
+    public void setEmail(String email) { mEmail = email; }
 }
