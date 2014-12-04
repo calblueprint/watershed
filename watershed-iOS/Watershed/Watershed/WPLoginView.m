@@ -107,14 +107,13 @@
             _passwordTextField.delegate = self;
             [_passwordTextField setReturnKeyType:UIReturnKeyGo];
             [_passwordTextField addTarget:self
-                                action:@selector(passwordToDone)
+                                action:@selector(didTapDoneFromPassword)
                       forControlEvents:UIControlEventEditingDidEndOnExit];
             [self addSubview:_passwordTextField];
         }
         _emailClicked = YES;
         
-        SEL emailSigninSelector = sel_registerName("emailSignin");
-        [_emailButton addTarget:_parentViewController action:emailSigninSelector forControlEvents:UIControlEventTouchUpInside];
+        [_emailButton addTarget:_parentViewController action:@selector(didTapEmailSignInButton) forControlEvents:UIControlEventTouchUpInside];
         [self setNeedsUpdateConstraints];
     }];
 
