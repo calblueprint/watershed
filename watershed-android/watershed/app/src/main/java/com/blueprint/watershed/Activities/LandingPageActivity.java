@@ -16,6 +16,7 @@ import android.widget.Button;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.NetworkError;
@@ -61,6 +62,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     private NetworkManager mloginNetworkManager;
     private SharedPreferences preferences;
     private ObjectMapper mMapper;
+    private View viewBlocker;
 
     private com.facebook.Session.StatusCallback callback = new com.facebook.Session.StatusCallback() {
         @Override
@@ -74,7 +76,8 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing_page);
         mloginNetworkManager = NetworkManager.getInstance(this.getApplicationContext());
-
+        viewBlocker = findViewById(R.id.viewBlocker);
+        viewBlocker.setVisibility(View.GONE);
         initializeViews();
 
         preferences = getSharedPreferences(PREFERENCES, 0);

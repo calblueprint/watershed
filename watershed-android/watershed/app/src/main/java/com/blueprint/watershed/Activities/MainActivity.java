@@ -2,6 +2,7 @@ package com.blueprint.watershed.Activities;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -53,6 +54,7 @@ import android.widget.ListView;
 
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
@@ -119,6 +121,8 @@ public class MainActivity extends ActionBarActivity
     private ViewPager viewPager;
     private TabsPagerAdapter mAdapter;
     private View mContainer;
+    private ProgressBar mProgress;
+
 
     // Networking
     private NetworkManager mNetworkManager;
@@ -137,6 +141,7 @@ public class MainActivity extends ActionBarActivity
         viewPager = (ViewPager) findViewById(R.id.pager);
         mContainer = findViewById(R.id.container);
         mNetworkManager = NetworkManager.getInstance(getApplicationContext());
+        mProgress = (ProgressBar) this.findViewById(R.id.progressBar);
         initializeFragments();
         initializeTabs(0);
 
@@ -371,10 +376,12 @@ public class MainActivity extends ActionBarActivity
         switch (position) {
             case 0:
                 TaskFragment taskFragment = TaskFragment.newInstance(0);
+                mProgress.setVisibility(View.VISIBLE);
                 replaceFragment(taskFragment);
                 break;
             case 1:
                 siteListFragment = new SiteListFragment();
+                mProgress.setVisibility(View.VISIBLE);
                 replaceFragment(siteListFragment);
                 break;
             case 2:
@@ -432,8 +439,9 @@ public class MainActivity extends ActionBarActivity
     }
 
     // Setter
-
     public void setUser(User user){
         mUser = user;
     }
+    
+    public ProgressBar getSpinner() { return mProgress; }
 }

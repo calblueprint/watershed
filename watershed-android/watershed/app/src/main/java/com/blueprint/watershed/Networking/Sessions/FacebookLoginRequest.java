@@ -38,8 +38,9 @@ public class FacebookLoginRequest extends BaseRequest {
     }
 
     protected static JSONObject facebookLoginRequestParams(final Activity activity, final HashMap<String, String> userParams) {
-        HashMap<String, HashMap<String, String>> params = new HashMap<String, HashMap<String, String>>();
-        params.put("user", userParams);
+        JSONObject userJson = new JSONObject(userParams);
+        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
+        params.put("user", userJson);
         return new JSONObject(params);
     }
 

@@ -7,7 +7,7 @@ class Api::V1::BaseController < Api::BaseController
     if @user.nil?
       unauthorized_response
     else
-      render json: @user, serializer: SessionSerializer
+      render json: @user, serializer: MobileSerializer
     end
   end
 
