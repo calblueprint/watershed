@@ -15,7 +15,9 @@
 #import "AFNetworkActivityIndicatorManager.h"
 #import <Facebook-iOS-SDK/FacebookSDK/FBAppCall.h>
 
+@interface WPAppDelegate ()
 
+@end
 
 @implementation WPAppDelegate
 
@@ -23,8 +25,7 @@
     return (WPAppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
 
     self.window.rootViewController = [[WPRootViewController alloc] init];
@@ -49,8 +50,17 @@
     [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"BackButton" ]];
     [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"BackButton" ]];
 
-    [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
-
+    if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)]) {
+        // iOS 8 Notifications
+        [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+        
+        [application registerForRemoteNotifications];
+    } else {
+        // iOS < 8 Notifications
+        [application registerForRemoteNotificationTypes:
+         (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound)];
+    }
+    
     return YES;
 }
 
@@ -95,12 +105,16 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     NSLog(@"Did Receive Remote Notifications: (%@)", userInfo);
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [alert show];
+    //check if alert should send
+    if (_shouldSendPush) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    }
 
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    [self setShouldSendPush:YES];
     NSLog(@"Did Register for Remote Notifications with Device Token (%@)", deviceToken);
 }
 

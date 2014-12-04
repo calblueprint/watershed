@@ -8,7 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "WPView.h"
+#import "WPUser.h"
 
 @interface WPEditView : WPView <UITableViewDelegate, UITableViewDataSource>
+
+- (void)configureWithUser:(WPUser *)user;
+
+@end
+
+@interface WPEditTableViewCell : UITableViewCell
+
+@property (nonatomic) UITextField *editField;
+
+- (void)addEditField;
 
 @end

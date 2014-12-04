@@ -17,6 +17,8 @@
 
 static NSString * const BASE_URL = @"https://intense-reaches-1457.herokuapp.com/api/v1/";
 static NSString * const SIGNIN_URL = @"users/sign_in";
+static NSString * const SIGNUP_URL = @"users";
+static NSString * const USERS_URL = @"users";
 static NSString * const FACEBOOK_LOGIN_URL = @"users/sign_up/facebook";
 static NSString * const SITES_URL = @"sites";
 static NSString * const MINI_SITES_URL = @"mini_sites";
@@ -41,14 +43,38 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
     NSString *signInString = [WPNetworkingManager createURLWithEndpoint:SIGNIN_URL];
     
     [self POST:signInString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"SIGN IN RESPONSE: %@", responseObject);
-        
         NSDictionary *responseDictionary = responseObject;
-        NSString *authToken = responseDictionary[@"authentication_token"];
-        NSString *email = responseDictionary[@"email"];
-        [self updateLoginKeyChainInfoWithAuthToken:authToken email:email];
+        NSDictionary *sessionDictionary = [responseDictionary objectForKey:@"session"];
+        NSString *authToken = sessionDictionary[@"authentication_token"];
+        NSString *email = sessionDictionary[@"email"];
+        NSDictionary *userJSON = sessionDictionary[@"user"];
+        NSString *userId = [userJSON[@"id"] stringValue];
         
-        NSDictionary *userJSON = responseDictionary[@"user"];
+        [self updateLoginKeyChainInfoWithAuthToken:authToken email:email userId:userId];
+        
+        WPUser *user = [MTLJSONAdapter modelOfClass:WPUser.class fromJSONDictionary:userJSON error:nil];
+        success(user);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Incorrect email or password." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+- (void)postUserWithParameters:(NSDictionary *)parameters success:(void (^)(WPUser *user))success {
+    NSString *signUpString = [WPNetworkingManager createURLWithEndpoint:SIGNUP_URL];
+    
+    [self POST:signUpString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {        
+        NSDictionary *responseDictionary = responseObject;
+        NSDictionary *sessionDictionary = [responseDictionary objectForKey:@"session"];
+        NSString *authToken = sessionDictionary[@"authentication_token"];
+        NSString *email = sessionDictionary[@"email"];
+        
+        NSDictionary *userJSON = sessionDictionary[@"user"];
+        NSString *userId = [userJSON[@"id"] stringValue];
+
+        [self updateLoginKeyChainInfoWithAuthToken:authToken email:email userId:userId];
+        
         WPUser *user = [MTLJSONAdapter modelOfClass:WPUser.class fromJSONDictionary:userJSON error:nil];
         success(user);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -62,14 +88,15 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
     NSString *facebookLoginString = [WPNetworkingManager createURLWithEndpoint:FACEBOOK_LOGIN_URL];
     
     [self POST:facebookLoginString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"FACEBOOK LOGIN RESPONSE: %@", responseObject);
-        
         NSDictionary *responseDictionary = responseObject;
-        NSString *authToken = responseDictionary[@"authentication_token"];
-        NSString *email = responseDictionary[@"email"];
-        [self updateLoginKeyChainInfoWithAuthToken:authToken email:email];
+        NSDictionary *sessionDictionary = [responseDictionary objectForKey:@"session"];
+        NSString *authToken = sessionDictionary[@"authentication_token"];
+        NSString *email = sessionDictionary[@"email"];
+        NSDictionary *userJSON = sessionDictionary[@"user"];
+        NSString *userId = [userJSON[@"id"] stringValue];
+
+        [self updateLoginKeyChainInfoWithAuthToken:authToken email:email userId:userId];
         
-        NSDictionary *userJSON = responseDictionary[@"user"];
         WPUser *user = [MTLJSONAdapter modelOfClass:WPUser.class fromJSONDictionary:userJSON error:nil];
         success(user);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -84,8 +111,6 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
     [self addAuthenticationParameters:parameters];
     
     [self GET:sitesString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"SITES LIST: %@", responseObject);
-        
         NSArray *sitesListJSON = (NSArray *)responseObject[@"sites"];
         NSMutableArray *sitesList = [[NSMutableArray alloc] init];
         for (NSDictionary *siteJSON in sitesListJSON) {
@@ -108,8 +133,6 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
     [self addAuthenticationParameters:parameters];
     
     [self GET:siteString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"SINGLE SITE: %@", responseObject);
-        
         NSDictionary *siteJSON = (NSDictionary *)responseObject[@"site"];
         WPSite *siteResponse = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:siteJSON error:nil];
         siteResponse.image = [UIImage imageNamed:@"SampleCoverPhoto"];
@@ -139,8 +162,6 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
     [self addAuthenticationParameters:parameters];
     
     [self GET:miniSiteString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"SINGLE MINI SITE: %@", responseObject);
-        
         NSDictionary *miniSiteJSON = (NSDictionary *)responseObject[@"mini_site"];
         WPMiniSite *miniSiteResponse = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:miniSiteJSON error:nil];
         miniSiteResponse.site = miniSite.site;
@@ -172,7 +193,6 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
     [self addAuthenticationParameters:parameters];
     
     [self GET:fieldReportString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"SINGLE FIELD REPORT: %@", responseObject);
         NSDictionary *fieldReportJSON = (NSDictionary *)responseObject[@"field_report"];
         WPFieldReport *fieldReportResponse = [MTLJSONAdapter modelOfClass:WPFieldReport.class fromJSONDictionary:fieldReportJSON error:nil];
         fieldReportResponse.miniSite = fieldReport.miniSite;
@@ -180,6 +200,23 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
         success(fieldReportResponse);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load field report." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+- (void)requestUserWithUser:(WPUser *)user parameters:(NSMutableDictionary *)parameters success:(void (^)(WPUser *user))success {
+    NSString *userEndpoint = [@"/" stringByAppendingString:user.userId];
+    NSString *USER_URL = [USERS_URL stringByAppendingString:userEndpoint];
+    NSString *userString = [WPNetworkingManager createURLWithEndpoint:USER_URL];
+    [self addAuthenticationParameters:parameters];
+    
+    [self GET:userString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *userJSON = (NSDictionary *)responseObject[@"user"];
+        WPUser *userResponse = [MTLJSONAdapter modelOfClass:WPUser.class fromJSONDictionary:userJSON error:nil];
+        success(userResponse);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load user." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [incorrect show];
         NSLog(@"Error: %@", error);
     }];
@@ -201,8 +238,10 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
 #pragma mark - KeyChainStore Configuration
 
 - (void)updateLoginKeyChainInfoWithAuthToken:(NSString *)authToken
-                                       email:(NSString *)email {
+                                       email:(NSString *)email
+                                      userId:(NSString *)userId {
     [self.keyChainStore setString:authToken forKey:@"auth_token"];
+    [self.keyChainStore setString:userId forKey:@"userId"];
     [self.keyChainStore setString:email forKey:@"email"];
     [self.keyChainStore synchronize];
 }
@@ -210,6 +249,8 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
 - (void)eraseLoginKeyChainInfo {
     [self.keyChainStore removeItemForKey:@"auth_token"];
     [self.keyChainStore removeItemForKey:@"email"];
+    [self.keyChainStore removeItemForKey:@"userId"];
+    [self.keyChainStore synchronize];
 }
 
 #pragma mark - Lazy Instantiation

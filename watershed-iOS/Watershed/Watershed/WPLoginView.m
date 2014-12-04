@@ -9,11 +9,14 @@
 #import "WPLoginView.h"
 #import "FontAwesomeKit/FontAwesomeKit.h"
 #import "WPLoginViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface WPLoginView ()
 
 @property (nonatomic) FBLoginView *fbLoginView;
 @property (nonatomic) UIButton *emailButton;
+@property (nonatomic) UIButton *signupButton;
+@property (nonatomic) UILabel *noAccountLabel;
 @property (nonatomic) UIImageView *emailIconView;
 @property (nonatomic) UIImageView *signInEmailIconView;
 @property (nonatomic) UIImageView *signInPasswordIconView;
@@ -104,14 +107,13 @@
             _passwordTextField.delegate = self;
             [_passwordTextField setReturnKeyType:UIReturnKeyGo];
             [_passwordTextField addTarget:self
-                                action:@selector(passwordToDone)
+                                action:@selector(didTapDoneFromPassword)
                       forControlEvents:UIControlEventEditingDidEndOnExit];
             [self addSubview:_passwordTextField];
         }
         _emailClicked = YES;
         
-        SEL emailSignupSelector = sel_registerName("emailSignup");
-        [_emailButton addTarget:_parentViewController action:emailSignupSelector forControlEvents:UIControlEventTouchUpInside];
+        [_emailButton addTarget:_parentViewController action:@selector(didTapEmailSignInButton) forControlEvents:UIControlEventTouchUpInside];
         [self setNeedsUpdateConstraints];
     }];
 
@@ -122,9 +124,9 @@
     [self.passwordTextField becomeFirstResponder];
 }
 
-- (void)passwordToDone {
+- (void)didTapDoneFromPassword {
     [self.passwordTextField becomeFirstResponder];
-    [_parentViewController emailSignup];
+    [_parentViewController didTapEmailSignInButton];
 }
 
 
@@ -157,6 +159,20 @@
     _emailIconView = [[UIImageView alloc] initWithImage:[mailIcon imageWithSize:CGSizeMake(30, 30)]];
     [_emailButton addSubview:_emailIconView];
     [self addSubview:_emailButton];
+    
+    NSMutableAttributedString *underline = [[NSMutableAttributedString alloc] initWithString:@"Sign up"];
+    [underline setAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor],NSUnderlineStyleAttributeName:[NSNumber numberWithInteger:NSUnderlineStyleSingle]} range:NSMakeRange(0,[underline length])];
+    _signupButton = [[UIButton alloc] init];
+    [_signupButton setAttributedTitle:underline forState:UIControlStateNormal];
+    _signupButton.titleLabel.font = [UIFont fontWithName:@"Helvetica" size:12];
+    [_signupButton addTarget:self.parentViewController action:@selector(presentSignupViewController) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:_signupButton];
+    
+    _noAccountLabel = [[UILabel alloc] init];
+    _noAccountLabel.text = @"Don't have an account?";
+    _noAccountLabel.font = [UIFont fontWithName:@"Helvetica" size:12];
+    _noAccountLabel.textColor = [UIColor wp_transWhite];
+    [self addSubview:_noAccountLabel];
 
 }
 
@@ -174,7 +190,6 @@
         
         [self.fbLoginView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.emailButton.mas_bottom).with.offset(standardMargin);
-//            make.centerX.equalTo(self.mas_centerX);
             make.leading.equalTo(@(wideMargin));
             make.trailing.equalTo(@(-wideMargin));
             make.height.equalTo(@45);
@@ -185,6 +200,18 @@
             self.emailButtonTopConstraint = make.top.equalTo(self.appTitleLabel.mas_bottom).with.offset(20);
             make.leading.equalTo(self.fbLoginView.mas_leading);
             make.height.equalTo(self.fbLoginView.mas_height);
+        }];
+        
+        [self.signupButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.fbLoginView.mas_bottom).with.offset(5);
+            make.trailing.equalTo(self.fbLoginView.mas_trailing);
+            make.height.equalTo(@15);
+        }];
+        
+        [self.noAccountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.fbLoginView.mas_bottom).with.offset(5);
+            make.trailing.equalTo(self.signupButton.mas_leading).with.offset(-2);
+            make.height.equalTo(@15);
         }];
         
         [self.emailIconView mas_makeConstraints:^(MASConstraintMaker *make) {
