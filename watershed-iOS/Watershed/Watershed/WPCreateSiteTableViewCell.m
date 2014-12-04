@@ -11,20 +11,20 @@
 @implementation WPCreateSiteTableViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style
-    reuseIdentifier:(NSString *)reuseIdentifier
-          textInput:(UIView *)textInput {
+    reuseIdentifier:(NSString *)reuseIdentifier {
     
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         [self createSubviews];
-        self.textInput = textInput;
-        [self.contentView addSubview:textInput];
         [self updateConstraints];
     }
     return self;
 }
 
 - (void)createSubviews {
+    _textInput = [({
+        [[UIView alloc] init];
+    }) wp_addToSuperview:self.contentView];
 }
 
 - (void)updateConstraints {

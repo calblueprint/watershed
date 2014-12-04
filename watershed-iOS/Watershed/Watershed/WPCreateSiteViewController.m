@@ -8,6 +8,7 @@
 
 #import "WPCreateSiteViewController.h"
 #import "WPCreateSiteView.h"
+#import "WPCreateSiteTableViewCell.h"
 
 @interface WPCreateSiteViewController ()
 @property (nonatomic) WPCreateSiteView *view;
@@ -59,7 +60,7 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *newCell = [[UITableViewCell alloc] init];
+    WPCreateSiteTableViewCell *newCell = [[WPCreateSiteTableViewCell alloc] init];
     switch (indexPath.row) {
         case 0: {
             newCell.textLabel.text = @"Name";
