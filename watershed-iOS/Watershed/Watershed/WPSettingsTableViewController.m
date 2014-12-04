@@ -131,7 +131,7 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    if (indexPath.section == 0 && indexPath.row == 0) {
+    if (indexPath.section == 0 && indexPath.row == 0) { // Edit Profile
         _editViewController = [[WPEditViewController alloc] initWithUser:_user];
         _editViewController.delegate = self;
         UINavigationController *editNavController = [[UINavigationController alloc] initWithRootViewController:_editViewController];
@@ -139,7 +139,7 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
         [editNavController.navigationBar setBarTintColor:[UIColor whiteColor]];
         [editNavController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
         [self.navigationController presentViewController:editNavController animated:YES completion:nil];
-    } else if (indexPath.section == 1) {
+    } else if (indexPath.section == 1) { // About
         if (indexPath.row == 0) {
             WPAboutViewController *aboutViewController = [[WPAboutViewController alloc] init];
             [self.navigationController pushViewController:aboutViewController animated:YES];
@@ -147,7 +147,7 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
             WPTermsViewController *termsViewController = [[WPTermsViewController alloc] init];
             [self.navigationController pushViewController:termsViewController animated:YES];
         }
-    } else if (indexPath.section == 2) {
+    } else if (indexPath.section == 2) { // Log out
         if (indexPath.row == 0) {
             [self logoutPrompt];
         }
@@ -193,7 +193,7 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
 -(void)logout {
     [[WPNetworkingManager sharedManager] eraseLoginKeyChainInfo];
     //DELETE user session
-    
+    [FBSession.activeSession closeAndClearTokenInformation];
     WPRootViewController *parentVC = (WPRootViewController *)self.parentViewController.parentViewController.parentViewController;
     [parentVC pushNewLoginControllerFromTab:(WPTabBarController *)self.parentViewController.parentViewController];
 }

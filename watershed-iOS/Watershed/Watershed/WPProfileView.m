@@ -150,7 +150,7 @@ static int PROFILE_PIC_HEIGHT = 65;
         dispatch_async(dispatch_get_global_queue(0,0), ^{
             NSData * data = [[NSData alloc] initWithContentsOfURL:
                              [NSURL URLWithString:
-                              [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=square", _user.profilePictureId]]];
+                              [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=normal", _user.profilePictureId]]];
             if ( data == nil )
                 return;
             dispatch_async(dispatch_get_main_queue(), ^{
