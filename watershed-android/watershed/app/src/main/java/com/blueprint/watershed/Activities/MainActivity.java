@@ -2,6 +2,7 @@ package com.blueprint.watershed.Activities;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -105,6 +106,8 @@ public class MainActivity extends ActionBarActivity
     private ViewPager viewPager;
     private TabsPagerAdapter mAdapter;
     private View mContainer;
+    private ProgressDialog mProgress;
+
 
     // Networking
     private NetworkManager mNetworkManager;
@@ -119,6 +122,7 @@ public class MainActivity extends ActionBarActivity
         mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
         viewPager = (ViewPager) findViewById(R.id.pager);
         mContainer = findViewById(R.id.container);
+        mProgress = new ProgressDialog(this);
         initializeFragments();
         initializeTabs(0);
 
@@ -384,5 +388,11 @@ public class MainActivity extends ActionBarActivity
     public void FieldReportButtonPressed(View view){
         AddFieldReportFragment fieldFragment = AddFieldReportFragment.newInstance();
         replaceFragment(fieldFragment);
+    }
+
+    public void openSpinner(View view){
+        mProgress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgress.setIndeterminate(true);
+        mProgress.show();
     }
 }
