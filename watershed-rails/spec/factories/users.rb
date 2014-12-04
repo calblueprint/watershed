@@ -18,7 +18,7 @@
 #  name                   :string(255)
 #  role                   :integer          default(0)
 #  authentication_token   :string(255)
-#  facebook_auth_token    :string(255)
+#  facebook_auth_token    :text
 #  facebook_id            :string(255)
 #
 
