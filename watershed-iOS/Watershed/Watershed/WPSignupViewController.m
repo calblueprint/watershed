@@ -38,7 +38,6 @@
         
         [[WPNetworkingManager sharedManager] postUserWithParameters:parameters success:^(WPUser *user) {
             [self.parentVC cancelSignup];
-            //sign in
             [self.parentVC pushTabBarController];
         }];
     } else {

@@ -49,9 +49,11 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
         NSDictionary *sessionDictionary = [responseDictionary objectForKey:@"session"];
         NSString *authToken = sessionDictionary[@"authentication_token"];
         NSString *email = sessionDictionary[@"email"];
-        [self updateLoginKeyChainInfoWithAuthToken:authToken email:email];
-        
         NSDictionary *userJSON = responseDictionary[@"user"];
+        NSString *userId = userJSON[@"id"];
+        
+        [self updateLoginKeyChainInfoWithAuthToken:authToken email:email userId:userId];
+        
         WPUser *user = [MTLJSONAdapter modelOfClass:WPUser.class fromJSONDictionary:userJSON error:nil];
         success(user);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -69,9 +71,12 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
         NSDictionary *sessionDictionary = [responseDictionary objectForKey:@"session"];
         NSString *authToken = sessionDictionary[@"authentication_token"];
         NSString *email = sessionDictionary[@"email"];
-        [self updateLoginKeyChainInfoWithAuthToken:authToken email:email];
         
         NSDictionary *userJSON = responseDictionary[@"user"];
+        NSString *userId = userJSON[@"id"];
+
+        [self updateLoginKeyChainInfoWithAuthToken:authToken email:email userId:userId];
+        
         WPUser *user = [MTLJSONAdapter modelOfClass:WPUser.class fromJSONDictionary:userJSON error:nil];
         success(user);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -90,9 +95,11 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
         NSDictionary *responseDictionary = responseObject;
         NSString *authToken = responseDictionary[@"authentication_token"];
         NSString *email = responseDictionary[@"email"];
-        [self updateLoginKeyChainInfoWithAuthToken:authToken email:email];
-        
         NSDictionary *userJSON = responseDictionary[@"user"];
+        NSString *userId = userJSON[@"id"];
+
+        [self updateLoginKeyChainInfoWithAuthToken:authToken email:email userId:userId];
+        
         WPUser *user = [MTLJSONAdapter modelOfClass:WPUser.class fromJSONDictionary:userJSON error:nil];
         success(user);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -209,7 +216,7 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
 }
 
 - (void)requestUserWithUser:(WPUser *)user parameters:(NSMutableDictionary *)parameters success:(void (^)(WPUser *user))success {
-    NSString *userEndpoint = [@"/" stringByAppendingString:[user.userId stringValue]];
+    NSString *userEndpoint = [@"/" stringByAppendingString:user.userId];
     NSString *USER_URL = [USERS_URL stringByAppendingString:userEndpoint];
     NSString *userString = [WPNetworkingManager createURLWithEndpoint:USER_URL];
     [self addAuthenticationParameters:parameters];
@@ -242,9 +249,11 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
 #pragma mark - KeyChainStore Configuration
 
 - (void)updateLoginKeyChainInfoWithAuthToken:(NSString *)authToken
-                                       email:(NSString *)email {
+                                       email:(NSString *)email
+                                      userId:(NSString *)userId {
     [self.keyChainStore setString:authToken forKey:@"auth_token"];
     [self.keyChainStore setString:email forKey:@"email"];
+    [self.keyChainStore setString:userId forKey:@"userId"];
     [self.keyChainStore synchronize];
 }
 

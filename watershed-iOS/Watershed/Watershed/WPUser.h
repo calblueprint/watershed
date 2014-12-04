@@ -12,7 +12,7 @@
 
 @interface WPUser : MTLModel <MTLJSONSerializing>
 
-@property (nonatomic) NSNumber *userId;
+@property (nonatomic) NSString *userId;
 @property (nonatomic) NSString *profilePicture;
 @property (nonatomic) NSString *profilePictureId;
 @property (nonatomic) NSString *email;
