@@ -47,8 +47,6 @@ static NSString *CellIdentifier = @"Cell";
     self.navigationItem.rightBarButtonItem = doneButton;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                           action:@selector(dismissKeyboard)];
-    UIBarButtonItem *emptyBackButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
-    //[self.navigationItem setBackBarButtonItem:emptyBackButtonItem];
     [self.view addGestureRecognizer:tap];
         [super viewDidLoad];
     
@@ -64,7 +62,24 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 -(void)saveForm:(UIButton *)sender {
-    
+    if (_taskField.text.length == 0 || _siteField.text.length == 0 || _assigneeField.text.length == 0) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                       message:@"Cannot leave required fields blank."
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* ok = [UIAlertAction
+                             actionWithTitle:@"OK"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action)
+                             {
+                                 [alert dismissViewControllerAnimated:YES completion:nil];
+                             }];
+
+        [alert addAction:ok];
+        [self presentViewController:alert animated:YES completion:nil];
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+
 }
 
 

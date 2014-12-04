@@ -16,7 +16,7 @@ static const int labelWidth = 90;
 
 - (id)initWithStyle:(UITableViewCellStyle)style
     reuseIdentifier:(NSString *) reuseIdentifier
-         andControl:(UIControl *) control {
+         andControl:(UIView *) control {
     
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
