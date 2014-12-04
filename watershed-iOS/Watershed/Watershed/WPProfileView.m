@@ -18,7 +18,7 @@
 @property (nonatomic) WPUser *user;
 @property (nonatomic) UIImageView *profilePictureView;
 @property (nonatomic) UILabel *nameLabel;
-@property (nonatomic) NSMutableArray *infoArray;
+@property (nonatomic) NSMutableArray *userInformationArray;
 
 @end
 
@@ -44,15 +44,15 @@ static int PROFILE_PIC_HEIGHT = 65;
         self.user.profilePictureId = [[WPNetworkingManager sharedManager] keyChainStore][@"profilePictureId"];
     }
 
-    _infoArray = [[NSMutableArray alloc] init];
+    _userInformationArray = [[NSMutableArray alloc] init];
     if (user.email) {
-        [_infoArray addObject:user.email];
+        [_userInformationArray addObject:user.email];
     }
     if (user.location) {
-        [_infoArray addObject:user.location];
+        [_userInformationArray addObject:user.location];
     }
     if (user.phoneNumber) {
-        [_infoArray addObject:user.phoneNumber];
+        [_userInformationArray addObject:user.phoneNumber];
     }
     [self createSubviews];
     self.infoTableView.delegate = self;
@@ -213,7 +213,7 @@ static int PROFILE_PIC_HEIGHT = 65;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [_infoArray count] + 1;
+    return [_userInformationArray count] + 1;
 }
 
 

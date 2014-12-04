@@ -38,7 +38,7 @@
     [self.view addGestureRecognizer:tap];
 }
 
-- (void)emailSignin {
+- (void)didTapEmailSignInButton {
     NSString *email = self.view.emailTextField.text;
     NSString *password = self.view.passwordTextField.text;
     

@@ -18,16 +18,16 @@
 
 @implementation WPSignupViewController
 
+- (void)loadView {
+    self.view = [[WPSignupView alloc] initWithParent:self];
+}
+
 - (void)viewDidLoad {
     self.navigationItem.title = @"Create Account";
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 }
 
-- (void)loadView {
-    self.view = [[WPSignupView alloc] initWithParent:self];
-}
-
-- (void)emailSignup {
+- (void)didTapEmailSignupButton {
     if ([self.view.passwordField.text isEqualToString:self.view.confirmPasswordField.text]) {
         NSString *name = self.view.nameField.text;
         NSString *email = self.view.emailField.text;
@@ -117,7 +117,7 @@
     _signupButton.backgroundColor = [UIColor wp_lightGreen];
     [_signupButton setTitle:@"Sign up" forState:UIControlStateNormal];
     [_signupButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_signupButton addTarget:self.parentViewController action:@selector(emailSignup) forControlEvents:UIControlEventTouchUpInside];
+    [_signupButton addTarget:self.parentViewController action:@selector(didTapEmailSignupButton) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_signupButton];
 }
 

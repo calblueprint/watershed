@@ -12,7 +12,7 @@
 @interface WPLoginViewController : UIViewController <FBLoginViewDelegate>
 
 - (void)cancelSignup;
-- (void)emailSignin;
+- (void)didTapEmailSignInButton;
 - (void)presentSignupViewController;
 - (void)pushTabBarController;
 

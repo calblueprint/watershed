@@ -14,7 +14,7 @@
 @interface WPSignupViewController : WPViewController
 
 @property (nonatomic) WPLoginViewController *parentVC;
-- (void)emailSignup;
+- (void)didTapEmailSignupButton;
 
 @end
 

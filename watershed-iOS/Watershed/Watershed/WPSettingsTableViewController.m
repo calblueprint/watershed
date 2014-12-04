@@ -115,7 +115,7 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
             if (indexPath.section == 0) {
                 cell.textLabel.text = @"Push Notifications";
                 UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
-                [switchView addTarget:self action:@selector(switchPush:) forControlEvents:UIControlEventValueChanged];
+                [switchView addTarget:self action:@selector(togglePush:) forControlEvents:UIControlEventValueChanged];
                 cell.accessoryView = switchView;
             } else if (indexPath.section == 1) {
                 cell.textLabel.text = @"Terms and Privacy";
@@ -200,7 +200,7 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
 
 #pragma mark - UISwitch Delegate
 
-- (void)switchPush:(id)sender {
+- (void)togglePush:(id)sender {
     [[WPAppDelegate instance] setShouldSendPush:[sender isOn]];
 }
 
