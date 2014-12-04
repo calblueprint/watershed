@@ -206,7 +206,7 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
 }
 
 - (void)requestUserWithUser:(WPUser *)user parameters:(NSMutableDictionary *)parameters success:(void (^)(WPUser *user))success {
-    NSString *userEndpoint = [@"/" stringByAppendingString:user.userId];
+    NSString *userEndpoint = [@"/" stringByAppendingString:[user.userId stringValue]];
     NSString *USER_URL = [USERS_URL stringByAppendingString:userEndpoint];
     NSString *userString = [WPNetworkingManager createURLWithEndpoint:USER_URL];
     [self addAuthenticationParameters:parameters];

@@ -28,7 +28,9 @@
     settingsButtonItem.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = settingsButtonItem;
     _user = [[WPUser alloc] init];
-    _user.userId = [[WPNetworkingManager sharedManager] keyChainStore][@"userId"];
+    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+    [f setNumberStyle:NSNumberFormatterDecimalStyle];
+    _user.userId = [f numberFromString:[[WPNetworkingManager sharedManager] keyChainStore][@"userId"]];
     [[WPNetworkingManager sharedManager] requestUserWithUser:_user parameters:[[NSMutableDictionary alloc] init] success:^(WPUser *user) {
         _user = user;
         [self.view configureWithUser:user];
