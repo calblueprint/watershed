@@ -86,6 +86,7 @@
                                      }};
     
     [[WPNetworkingManager sharedManager] requestFacebookLoginWithParameters:parameters success:^(WPUser *user) {
+        [[[WPNetworkingManager sharedManager] keyChainStore] setString:fbUser.profilePictureId forKey:@"profilePictureId"];
         [self pushTabBarController];
     }];
 }

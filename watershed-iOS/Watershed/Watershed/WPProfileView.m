@@ -10,7 +10,7 @@
 #import "UIExtensions.h"
 #import "FontAwesomeKit/FontAwesomeKit.h"
 #import "WPProfileTableViewCell.h"
-
+#import "WPNetworkingManager.h"
 
 @interface WPProfileView ()
 
@@ -40,6 +40,10 @@ static int PROFILE_PIC_HEIGHT = 65;
 
 - (void)configureWithUser:(WPUser *)user {
     self.user = user;
+    if ([[WPNetworkingManager sharedManager] keyChainStore][@"profilePictureId"]) {
+        self.user.profilePictureId = [[WPNetworkingManager sharedManager] keyChainStore][@"profilePictureId"];
+    }
+
     _infoArray = [[NSMutableArray alloc] init];
     if (user.email) {
         [_infoArray addObject:user.email];
@@ -136,7 +140,6 @@ static int PROFILE_PIC_HEIGHT = 65;
 
 
 - (void)createSubviews {
-
     _profilePictureView = [[UIImageView alloc] init];
     _profilePictureView.contentMode = UIViewContentModeScaleAspectFill;
     _profilePictureView.clipsToBounds = YES;
@@ -144,7 +147,16 @@ static int PROFILE_PIC_HEIGHT = 65;
     if (_user.profilePicture) {
         //do prof pic from server
     } else if (_user.profilePictureId) {
-        //do facebook stuff
+        dispatch_async(dispatch_get_global_queue(0,0), ^{
+            NSData * data = [[NSData alloc] initWithContentsOfURL:
+                             [NSURL URLWithString:
+                              [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=square", _user.profilePictureId]]];
+            if ( data == nil )
+                return;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [_profilePictureView setImage:[UIImage imageWithData:data]];
+            });
+        });
     } else {
         [_profilePictureView setImage:[UIImage imageNamed:@"hill.png"]];
     }
