@@ -1,10 +1,13 @@
 package com.blueprint.watershed.Authentication;
 
 import com.blueprint.watershed.Users.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Created by Mark Miyashita on 12/2/14.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Session {
     private String mEmail;
     private String mAuthenticationToken;
@@ -15,6 +18,8 @@ public class Session {
 
     // Getters
     public String getEmail() { return mEmail; }
+
+    @JsonProperty("auth_token")
     public String getAuthenticationToken() { return mAuthenticationToken; }
     public User getUser() { return mUser; }
 
