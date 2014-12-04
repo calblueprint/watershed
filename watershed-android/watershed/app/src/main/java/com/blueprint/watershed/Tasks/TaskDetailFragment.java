@@ -81,6 +81,12 @@ public class TaskDetailFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        //TODO make Task request. Do we need to get anything else from the server for this?
+    }
+
     public interface OnFragmentInteractionListener {
         public void onFragmentInteraction(Uri uri);
     }

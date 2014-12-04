@@ -86,7 +86,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         HashMap<String, String> user_params = new HashMap<String, String>();
         user_params.put("email", emailString);
         user_params.put("password", passwordString);
-
+        parentActivity.findViewById(R.id.viewBlocker).setVisibility(View.VISIBLE);
         parentActivity.loginRequest(user_params);
     }
 

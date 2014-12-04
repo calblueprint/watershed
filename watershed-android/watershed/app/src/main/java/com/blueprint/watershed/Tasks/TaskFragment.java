@@ -1,6 +1,7 @@
 package com.blueprint.watershed.Tasks;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -28,7 +29,6 @@ public class TaskFragment extends ListFragment {
     private MainActivity parentActivity;
     private TaskAdapter mTaskAdapter;
     private NetworkManager mNetworkManager;
-
 
     public static TaskFragment newInstance(int option) {
         TaskFragment fragment = new TaskFragment();
@@ -64,7 +64,6 @@ public class TaskFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View finalView = inflater.inflate(R.layout.fragment_task_list, container, false);
-
         listView1 = (ListView)finalView.findViewById(android.R.id.list);
         mTaskAdapter = new TaskAdapter(getActivity(),R.layout.taskview_each_item, mTaskList);
         listView1.setAdapter(mTaskAdapter);
@@ -110,6 +109,7 @@ public class TaskFragment extends ListFragment {
             @Override
             public void onResponse(ArrayList<Task> tasks) {
                 setTasks(tasks);
+                parentActivity.getSpinner().setVisibility(View.GONE);
                 mTaskAdapter.notifyDataSetChanged();
             }
         });
