@@ -18,8 +18,6 @@ public class Session {
 
     // Getters
     public String getEmail() { return mEmail; }
-
-    @JsonProperty("auth_token")
     public String getAuthenticationToken() { return mAuthenticationToken; }
     public User getUser() { return mUser; }
 
