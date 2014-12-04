@@ -123,7 +123,7 @@
             //do nothing
         }
     }
-    [newCell addSubviews];
+    [newCell addEditField];
     return newCell;
 
 }
@@ -143,7 +143,7 @@
     return self;
 }
 
-- (void)addSubviews {
+- (void)addEditField {
     [self.contentView addSubview:self.editField];
     
 }

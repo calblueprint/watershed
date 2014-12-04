@@ -67,7 +67,6 @@
         make.top.equalTo(self.titleLabel.mas_bottom).with.offset(standardMargin);
         make.leading.equalTo(@(standardMargin));
         make.trailing.equalTo(@(-standardMargin));
-//        make.bottom.equalTo(@-49);
     }];
 
     

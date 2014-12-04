@@ -20,6 +20,6 @@
 
 @property (nonatomic) UITextField *editField;
 
-- (void)addSubviews;
+- (void)addEditField;
 
 @end
