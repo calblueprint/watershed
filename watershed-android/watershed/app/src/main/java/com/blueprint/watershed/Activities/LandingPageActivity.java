@@ -27,6 +27,7 @@ import com.blueprint.watershed.Authentication.LoginFragment;
 import com.blueprint.watershed.Authentication.Session;
 import com.blueprint.watershed.Authentication.SignUpFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
+import com.blueprint.watershed.Networking.Sessions.FacebookLoginRequest;
 import com.blueprint.watershed.Networking.Sessions.LoginRequest;
 import com.blueprint.watershed.Networking.Sessions.SignUpRequest;
 import com.blueprint.watershed.R;
@@ -168,7 +169,14 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
                         catch (JSONException e){
                             Log.e("JSONException", "Facebook Login");
                         }
-                        makeFacebookRequest(email, accessToken, id, name);
+
+                        HashMap<String, String> params = new HashMap<String, String>();
+                        params.put("email", email);
+                        params.put("facebook_auth_token", accessToken);
+                        params.put("facebook_id", id);
+                        params.put("name", name);
+
+                        facebookRequest(params);
                     }
                 }
             });
@@ -189,67 +197,17 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         fragmentTransaction.commit();
     }
 
-    public void makeFacebookRequest(String email, String accessToken, String id, String name){
+    public void facebookRequest(HashMap<String, String> params) {
         final Intent intent = new Intent(this, MainActivity.class);
 
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("email", email);
-        params.put("facebook_auth_token", accessToken);
-        params.put("facebook_id", id);
-        params.put("name", name);
-
-        JSONObject requestUser = new JSONObject(params);
-        HashMap<String, JSONObject> realParams = new HashMap<String, JSONObject>();
-        realParams.put("user", requestUser);
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, FACEBOOK_URL, new JSONObject(realParams), new Response.Listener<JSONObject>() {
-
+        FacebookLoginRequest facebookLoginRequest = new FacebookLoginRequest(this, params, new Response.Listener<Session>() {
             @Override
-            public void onResponse(JSONObject jsonObject) {
-                SharedPreferences.Editor editor = preferences.edit();
-
-                try {
-                    //TODO do something with the user object.
-                    String token = jsonObject.getString("authentication_token");
-                    String email = jsonObject.getString("email");
-
-                    editor.putString("authentication_token", token);
-                    editor.putString("email", email);
-                    editor.commit();
-
-                    LandingPageActivity.this.finish();
-                    startActivity(intent);
-                }
-                catch (JSONException e) {
-                    Log.e("Json exception", "in login fragment");
-                }
-            }
-        },
-        new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                String message;
-                if (volleyError instanceof NetworkError) {
-                    message = "Network Error. Please try again later.";
-                }
-                else {
-                    try {
-                        JSONObject response = new JSONObject(new String(volleyError.networkResponse.data));
-                        message = (String) response.get("message");
-                    } catch (Exception e) {
-                        message = "Unknown Error";
-                        e.printStackTrace();
-                    }
-                }
-                Context context = getApplicationContext();
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, message, duration);
-                toast.show();
+            public void onResponse(Session session) {
+                storeSessionAndStartMainActivity(intent, session);
             }
         });
 
-        mloginNetworkManager.getRequestQueue().add(request);
+        mloginNetworkManager.getRequestQueue().add(facebookLoginRequest);
     }
 
     public void loginRequest(HashMap<String, String> params) {
@@ -265,15 +223,6 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         mloginNetworkManager.getRequestQueue().add(loginRequest);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        com.facebook.Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
-
-        com.facebook.Session session = com.facebook.Session.getActiveSession();
-    }
-
     public void signUpRequest(HashMap<String, String> params) {
         final Intent intent = new Intent(this, MainActivity.class);
 
@@ -285,6 +234,15 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         });
 
         mloginNetworkManager.getRequestQueue().add(signUpRequest);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        com.facebook.Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
+
+        com.facebook.Session session = com.facebook.Session.getActiveSession();
     }
 
     public void storeSessionAndStartMainActivity(Intent intent, Session session) {
