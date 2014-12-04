@@ -29,6 +29,7 @@ static NSString *CellIdentifier = @"Cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.title = @"Select Task";
     self.view.backgroundColor = [UIColor whiteColor];
     self.view.selectTaskTableView.delegate = self;
     self.view.selectTaskTableView.dataSource = self;

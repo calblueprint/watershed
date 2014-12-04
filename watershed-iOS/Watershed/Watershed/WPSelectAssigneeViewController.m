@@ -28,12 +28,14 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+    self.navigationItem.title = @"Select Assignee";
     self.view.backgroundColor = [UIColor whiteColor];
     self.view.selectAssigneeTableView.delegate = self;
     self.view.selectAssigneeTableView.dataSource = self;
     _employeeArray = @[@"Mark", @"Max", @"Melissa", @"Andrew"];
     _communityArray = @[@"Community 1", @"Community 2", @"Community 3",  @"Community 4",  @"Community 5",  @"Community 6",  @"Community 7"];
+    [super viewDidLoad];
+
 }
 
 - (void)didReceiveMemoryWarning {

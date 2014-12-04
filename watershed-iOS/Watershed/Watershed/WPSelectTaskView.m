@@ -11,7 +11,7 @@
 @implementation WPSelectTaskView
 
 - (id)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame visibleNavbar:NO];
+    self = [super initWithFrame:frame visibleNavbar:YES];
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
         [self createSubviews];
@@ -47,7 +47,7 @@
 //    }];
 
     [self.selectTaskTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@0);
+        make.top.equalTo(@(topMargin));
 //        make.top.equalTo(self.searchField.mas_bottom);
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);

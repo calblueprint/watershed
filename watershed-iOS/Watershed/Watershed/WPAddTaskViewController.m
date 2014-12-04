@@ -35,7 +35,7 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 -(void)viewDidLoad {
-    [super viewDidLoad];
+
     self.navigationItem.title = @"New Task";
     self.view.taskFormTableView.delegate = self;
     self.view.taskFormTableView.dataSource = self;
@@ -48,8 +48,9 @@ static NSString *CellIdentifier = @"Cell";
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                           action:@selector(dismissKeyboard)];
     UIBarButtonItem *emptyBackButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
-    [self.navigationItem setBackBarButtonItem:emptyBackButtonItem];
+    //[self.navigationItem setBackBarButtonItem:emptyBackButtonItem];
     [self.view addGestureRecognizer:tap];
+        [super viewDidLoad];
     
 }
 
@@ -85,7 +86,6 @@ static NSString *CellIdentifier = @"Cell";
         case 1: {
             WPSelectTaskViewController *selectTaskViewController = [[WPSelectTaskViewController alloc] init];
             selectTaskViewController.selectTaskDelegate = self;
-            selectTaskViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
             [[self navigationController] pushViewController: selectTaskViewController animated:YES];
             return NO;
         }
@@ -99,7 +99,6 @@ static NSString *CellIdentifier = @"Cell";
         case 3: {
             WPSelectAssigneeViewController *selectAssigneeViewController = [[WPSelectAssigneeViewController alloc] init];
             selectAssigneeViewController.selectAssigneeDelegate = self;
-            [self.assigneeField resignFirstResponder];
             [[self navigationController] pushViewController: selectAssigneeViewController animated:YES];
             return NO;
         }

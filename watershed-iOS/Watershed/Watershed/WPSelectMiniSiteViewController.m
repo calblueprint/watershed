@@ -28,6 +28,7 @@ static NSString *CellIdentifier = @"Cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.title = @"Select Site";
     self.view.backgroundColor = [UIColor whiteColor];
     self.view.selectMiniSiteTableView.delegate = self;
     self.view.selectMiniSiteTableView.dataSource = self;
