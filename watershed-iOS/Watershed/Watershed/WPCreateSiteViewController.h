@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WPCreateSiteViewController : UIViewController
+@interface WPCreateSiteViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @end

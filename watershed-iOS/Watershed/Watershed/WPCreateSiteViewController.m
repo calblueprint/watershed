@@ -10,7 +10,8 @@
 #import "WPCreateSiteView.h"
 
 @interface WPCreateSiteViewController ()
-
+@property (nonatomic) WPCreateSiteView *view;
+@property (nonatomic) UITableView *infoTableView;
 @end
 
 @implementation WPCreateSiteViewController
@@ -35,21 +36,59 @@
 
 - (void)loadView {
     self.view = [[WPCreateSiteView alloc] init];
+    self.infoTableView = self.view.infoTableView;
+    self.infoTableView.delegate = self;
+    self.infoTableView.dataSource = self;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark - Table View Delegate / Data Source Methods
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    // Return the number of sections.
+    return 1;
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    // Return the number of rows in the section.
+    return 4;
 }
-*/
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 44;
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *newCell = [[UITableViewCell alloc] init];
+    switch (indexPath.row) {
+        case 0: {
+            newCell.textLabel.text = @"Name";
+            break;
+        }
+        case 1: {
+            newCell.textLabel.text = @"Email";
+            break;
+        }
+        case 2: {
+            newCell.textLabel.text = @"Address";
+            break;
+        }
+        case 3: {
+            newCell.textLabel.text = @"Phone Number";
+            break;
+        }
+        default: {
+            //do nothing
+        }
+    }
+    return newCell;
+    
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    
+}
+
 
 @end
