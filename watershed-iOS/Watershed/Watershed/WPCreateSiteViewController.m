@@ -17,7 +17,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
+    self.title = @"New Site";
+    
+    FAKFontAwesome *closeIcon = [FAKFontAwesome closeIconWithSize:22];
+    UIImage *closeImage = [closeIcon imageWithSize:CGSizeMake(22, 22)];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithImage:closeImage style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.leftBarButtonItem = cancelButton;
+    self.navigationItem.leftBarButtonItem.tintColor = [UIColor wp_red];
+    
+    FAKFontAwesome *checkIcon = [FAKFontAwesome checkIconWithSize:22];
+    UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake(22, 22)];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithImage:checkImage style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.rightBarButtonItem = doneButton;
+    self.navigationItem.rightBarButtonItem.tintColor = [UIColor wp_lightGreen];
 }
 
 - (void)loadView {
