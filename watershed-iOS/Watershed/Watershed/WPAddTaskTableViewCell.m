@@ -12,7 +12,7 @@
 
 @implementation WPAddTaskTableViewCell
 
-NSInteger labelWidth = 90;
+static const int labelWidth = 90;
 
 - (id)initWithStyle:(UITableViewCellStyle)style
     reuseIdentifier:(NSString *) reuseIdentifier

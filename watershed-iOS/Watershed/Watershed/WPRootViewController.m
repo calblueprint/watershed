@@ -27,6 +27,7 @@
     } else {
         launchingViewController = [self newLoginViewController];
     }
+    launchingViewController = [self newInitialViewController];
     [self showViewController:launchingViewController];
 }
 

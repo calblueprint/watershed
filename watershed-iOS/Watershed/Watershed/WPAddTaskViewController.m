@@ -47,6 +47,8 @@ static NSString *CellIdentifier = @"Cell";
     self.navigationItem.rightBarButtonItem = doneButton;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                           action:@selector(dismissKeyboard)];
+    UIBarButtonItem *emptyBackButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    [self.navigationItem setBackBarButtonItem:emptyBackButtonItem];
     [self.view addGestureRecognizer:tap];
     
 }
@@ -67,10 +69,13 @@ static NSString *CellIdentifier = @"Cell";
 
 -(void)selectTaskViewControllerDismissed:(NSString *)stringForFirst {
     _taskField.text = stringForFirst;
+    
 }
 
 -(void)selectSiteViewControllerDismissed:(NSString *)stringForFirst {
     _siteField.text = stringForFirst;
+    [_siteField resignFirstResponder];
+    [_siteField endEditing:YES];
 }
 
 -(void)selectAssigneeViewControllerDismissed:(NSString *)stringForFirst {
@@ -89,15 +94,18 @@ static NSString *CellIdentifier = @"Cell";
         case 2: {
             WPSelectMiniSiteViewController *selectMiniSiteViewController = [[WPSelectMiniSiteViewController alloc] init];
             selectMiniSiteViewController.selectSiteDelegate = self;
-            selectMiniSiteViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-            [self presentViewController:selectMiniSiteViewController animated:YES completion:nil];
+            [self.siteField resignFirstResponder];
+            [[self navigationController] pushViewController: selectMiniSiteViewController animated:YES];
+//            selectMiniSiteViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+//            [self presentViewController:selectMiniSiteViewController animated:YES completion:nil];
             break;
         }
         case 3: {
             WPSelectAssigneeViewController *selectAssigneeViewController = [[WPSelectAssigneeViewController alloc] init];
             selectAssigneeViewController.selectAssigneeDelegate = self;
-            selectAssigneeViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-            [self presentViewController:selectAssigneeViewController animated:YES completion:nil];
+            [self.assigneeField resignFirstResponder];
+            [[self navigationController] pushViewController: selectAssigneeViewController animated:YES];
+//            [self presentViewController:selectAssigneeViewController animated:YES completion:nil];
             break;
         }
         default:
@@ -108,11 +116,11 @@ static NSString *CellIdentifier = @"Cell";
 
 - (void)selectTask {
     WPSelectTaskViewController *selectTaskViewController = [[WPSelectTaskViewController alloc] init];
-    selectTaskViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    [self presentViewController:selectTaskViewController animated:YES completion:nil];
+    [[self navigationController] pushViewController: selectTaskViewController animated:YES];
+
 }
 
-- (void)datePickerValueChanged:(id)sender{
+- (void)datePickerValueChanged:(id)sender {
     UIDatePicker *picker = (UIDatePicker *)sender;
     NSString *dateString;
     dateString = [NSDateFormatter localizedStringFromDate:[picker date]
@@ -134,7 +142,7 @@ static NSString *CellIdentifier = @"Cell";
             cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:_taskField];
             cell.label.text = @"Task";
             UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectTask)];
-            [_taskField addGestureRecognizer:tapRecognizer];
+            [cell addGestureRecognizer:tapRecognizer];
             break;
         }
         case 1: {
@@ -204,8 +212,7 @@ static NSString *CellIdentifier = @"Cell";
     return 1;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 5) {
         return 70;
     } else if (indexPath.row == 2) {
