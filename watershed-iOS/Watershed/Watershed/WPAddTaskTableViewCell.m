@@ -14,12 +14,12 @@
 
 NSInteger labelWidth = 90;
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *) reuseIdentifier
-    andControl: (UIControl *) control {
+- (id)initWithStyle:(UITableViewCellStyle)style
+    reuseIdentifier:(NSString *) reuseIdentifier
+         andControl:(UIControl *) control {
     
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self)
-    {
+    if (self) {
         [self createSubviews];
         _control = control;
         [self.contentView addSubview:_control];

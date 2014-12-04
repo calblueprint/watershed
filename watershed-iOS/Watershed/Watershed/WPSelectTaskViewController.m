@@ -46,10 +46,8 @@ static NSString *CellIdentifier = @"Cell";
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if([self.selectTaskDelegate respondsToSelector:@selector(selectTaskViewControllerDismissed:)])
-    {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if([self.selectTaskDelegate respondsToSelector:@selector(selectTaskViewControllerDismissed:)]) {
         [self.selectTaskDelegate selectTaskViewControllerDismissed:[self.view.selectTaskTableView cellForRowAtIndexPath:indexPath].textLabel.text];
     }
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -61,8 +59,7 @@ static NSString *CellIdentifier = @"Cell";
     return 1;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 50;
 }
 

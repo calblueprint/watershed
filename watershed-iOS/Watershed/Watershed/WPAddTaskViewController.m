@@ -45,8 +45,8 @@ static NSString *CellIdentifier = @"Cell";
                                    target:self
                                    action:@selector(saveForm:)];
     self.navigationItem.rightBarButtonItem = doneButton;
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self
-                action:@selector(dismissKeyboard)];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                          action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
     
 }
@@ -65,13 +65,11 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 
--(void)selectTaskViewControllerDismissed:(NSString *)stringForFirst
-{
+-(void)selectTaskViewControllerDismissed:(NSString *)stringForFirst {
     _taskField.text = stringForFirst;
 }
 
--(void)selectSiteViewControllerDismissed:(NSString *)stringForFirst
-{
+-(void)selectSiteViewControllerDismissed:(NSString *)stringForFirst {
     _siteField.text = stringForFirst;
 }
 
@@ -79,24 +77,31 @@ static NSString *CellIdentifier = @"Cell";
     _assigneeField.text = stringForFirst;
 }
 
--(BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
-    if (textField.tag == 1) {
-        WPSelectTaskViewController *selectTaskViewController = [[WPSelectTaskViewController alloc] init];
-        selectTaskViewController.selectTaskDelegate = self;
-        selectTaskViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-        [self presentViewController:selectTaskViewController animated:YES completion:nil];
-    }
-    if (textField.tag == 2) {
-        WPSelectMiniSiteViewController *selectMiniSiteViewController = [[WPSelectMiniSiteViewController alloc] init];
-        selectMiniSiteViewController.selectSiteDelegate = self;
-        selectMiniSiteViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-        [self presentViewController:selectMiniSiteViewController animated:YES completion:nil];
-    }
-    if (textField.tag == 3) {
-        WPSelectAssigneeViewController *selectAssigneeViewController = [[WPSelectAssigneeViewController alloc] init];
-        selectAssigneeViewController.selectAssigneeDelegate = self;
-        selectAssigneeViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-        [self presentViewController:selectAssigneeViewController animated:YES completion:nil];
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    switch (textField.tag) {
+        case 1: {
+            WPSelectTaskViewController *selectTaskViewController = [[WPSelectTaskViewController alloc] init];
+            selectTaskViewController.selectTaskDelegate = self;
+            selectTaskViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+            [self presentViewController:selectTaskViewController animated:YES completion:nil];
+            break;
+        }
+        case 2: {
+            WPSelectMiniSiteViewController *selectMiniSiteViewController = [[WPSelectMiniSiteViewController alloc] init];
+            selectMiniSiteViewController.selectSiteDelegate = self;
+            selectMiniSiteViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+            [self presentViewController:selectMiniSiteViewController animated:YES completion:nil];
+            break;
+        }
+        case 3: {
+            WPSelectAssigneeViewController *selectAssigneeViewController = [[WPSelectAssigneeViewController alloc] init];
+            selectAssigneeViewController.selectAssigneeDelegate = self;
+            selectAssigneeViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+            [self presentViewController:selectAssigneeViewController animated:YES completion:nil];
+            break;
+        }
+        default:
+            break;
     }
     return YES;
 }

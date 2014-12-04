@@ -12,6 +12,13 @@
 #import "WPSelectMiniSiteViewController.h"
 #import "WPSelectAssigneeViewController.h"
 
-@interface WPAddTaskViewController : WPViewController<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, SelectTaskDelegate, SelectSiteDelegate, SelectAssigneeDelegate>
+@interface WPAddTaskViewController : WPViewController<
+    UITableViewDataSource,
+    UITableViewDelegate,
+    UITextFieldDelegate,
+    SelectTaskDelegate,
+    SelectSiteDelegate,
+    SelectAssigneeDelegate
+>
 
 @end

@@ -13,5 +13,4 @@
 @property (nonatomic) UITableView *selectTaskTableView;
 @property (nonatomic) UITextField *searchField;
 
-
 @end

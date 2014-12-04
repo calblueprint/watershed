@@ -14,7 +14,7 @@
 
 @interface WPSelectTaskViewController : WPViewController<UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, assign) id<SelectTaskDelegate>    selectTaskDelegate;
+@property (nonatomic, assign) id<SelectTaskDelegate> selectTaskDelegate;
 @property (nonatomic) NSString *myString;
 
 @end

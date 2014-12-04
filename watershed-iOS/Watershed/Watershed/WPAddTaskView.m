@@ -29,16 +29,6 @@
     return self;
 }
 
-//- (void)configureWithUser {
-//    self.user = [[WPUser alloc] init];
-//    [self.user setProfilePicture:@"max.png"];
-//    [self.user setUserId:[NSNumber numberWithInt:5]];
-//    [self.user setName:@"Max Wolffe"];
-//    [self.user setPhoneNumber:@"9162128793"];
-//    [self.user setEmail:@"max@millman.com"];
-//    [self.user setLocation:@"123 Millman Way Berkeley, CA 82918"];
-//}
-
 #pragma mark - View Hierarchy
 
 
