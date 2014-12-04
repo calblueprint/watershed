@@ -26,14 +26,11 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.blueprint.watershed.Authentication.LoginFragment;
 import com.blueprint.watershed.Authentication.Session;
 import com.blueprint.watershed.Authentication.SignUpFragment;
-import com.blueprint.watershed.MiniSites.MiniSite;
-import com.blueprint.watershed.Networking.MiniSites.MiniSiteRequest;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Sessions.LoginRequest;
 import com.blueprint.watershed.Networking.Sessions.SignUpRequest;
 import com.blueprint.watershed.R;
 import com.facebook.AppEventsLogger;
-import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.model.GraphUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -48,12 +45,8 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     // Constants
     public  static final String PREFERENCES = "LOGIN_PREFERENCES";
     private static final String TAG         = "LandingPageActivity";
-<<<<<<< HEAD
     private static final String LOGIN_URL = "https://intense-reaches-1457.herokuapp.com/api/v1/users/sign_in";
     private static final String FACEBOOK_URL = "https://intense-reaches-1457.herokuapp.com/api/v1/users/sign_up/facebook";
-    //private static final String LOGIN_URL = "http://10.0.0.18:3001/api/v1/users/sign_in";
-=======
->>>>>>> Fix user model. Store session and log in the user
 
     // UI Elements
     private ImageView mLandingPageImage;
@@ -64,9 +57,9 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     private SharedPreferences preferences;
     private ObjectMapper mMapper;
 
-    private Session.StatusCallback callback = new Session.StatusCallback() {
+    private com.facebook.Session.StatusCallback callback = new com.facebook.Session.StatusCallback() {
         @Override
-        public void call(Session session, SessionState state, Exception exception) {
+        public void call(com.facebook.Session session, SessionState state, Exception exception) {
             onSessionStateChange(session, state, exception);
         }
     };
@@ -98,7 +91,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
 
         AppEventsLogger.activateApp(this);
 
-        Session session = Session.getActiveSession();
+        com.facebook.Session session = com.facebook.Session.getActiveSession();
         if (session != null &&
                 (session.isOpened() || session.isClosed()) ) {
             onSessionStateChange(session, session.getState(), null);
@@ -158,7 +151,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
 
     // Facebook Stuff
 
-    private void onSessionStateChange(final Session session, SessionState state, Exception exception) {
+    private void onSessionStateChange(final com.facebook.Session session, SessionState state, Exception exception) {
         if (state.isOpened()) {
             com.facebook.Request.executeMeRequestAsync(session, new com.facebook.Request.GraphUserCallback() {
 
@@ -276,9 +269,9 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
+        com.facebook.Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
 
-        Session session = Session.getActiveSession();
+        com.facebook.Session session = com.facebook.Session.getActiveSession();
     }
 
     public void signUpRequest(HashMap<String, String> params) {
