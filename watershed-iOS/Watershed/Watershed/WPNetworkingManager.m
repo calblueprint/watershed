@@ -49,8 +49,8 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
         NSDictionary *sessionDictionary = [responseDictionary objectForKey:@"session"];
         NSString *authToken = sessionDictionary[@"authentication_token"];
         NSString *email = sessionDictionary[@"email"];
-        NSDictionary *userJSON = responseDictionary[@"user"];
-        NSString *userId = userJSON[@"id"];
+        NSDictionary *userJSON = sessionDictionary[@"user"];
+        NSString *userId = [userJSON[@"id"] stringValue];
         
         [self updateLoginKeyChainInfoWithAuthToken:authToken email:email userId:userId];
         
@@ -72,8 +72,8 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
         NSString *authToken = sessionDictionary[@"authentication_token"];
         NSString *email = sessionDictionary[@"email"];
         
-        NSDictionary *userJSON = responseDictionary[@"user"];
-        NSString *userId = userJSON[@"id"];
+        NSDictionary *userJSON = sessionDictionary[@"user"];
+        NSString *userId = [userJSON[@"id"] stringValue];
 
         [self updateLoginKeyChainInfoWithAuthToken:authToken email:email userId:userId];
         
@@ -96,7 +96,7 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
         NSString *authToken = responseDictionary[@"authentication_token"];
         NSString *email = responseDictionary[@"email"];
         NSDictionary *userJSON = responseDictionary[@"user"];
-        NSString *userId = userJSON[@"id"];
+        NSString *userId = [userJSON[@"id"] stringValue];
 
         [self updateLoginKeyChainInfoWithAuthToken:authToken email:email userId:userId];
         
@@ -252,14 +252,16 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
                                        email:(NSString *)email
                                       userId:(NSString *)userId {
     [self.keyChainStore setString:authToken forKey:@"auth_token"];
-    [self.keyChainStore setString:email forKey:@"email"];
     [self.keyChainStore setString:userId forKey:@"userId"];
+    [self.keyChainStore setString:email forKey:@"email"];
     [self.keyChainStore synchronize];
 }
 
 - (void)eraseLoginKeyChainInfo {
     [self.keyChainStore removeItemForKey:@"auth_token"];
     [self.keyChainStore removeItemForKey:@"email"];
+    [self.keyChainStore removeItemForKey:@"userId"];
+    [self.keyChainStore synchronize];
 }
 
 #pragma mark - Lazy Instantiation
