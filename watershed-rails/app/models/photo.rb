@@ -10,9 +10,12 @@
 #  updated_at        :datetime
 #  original_filename :string(255)
 #  image_tmp         :string(255)
+#  hidden            :boolean          default(FALSE)
 #
 
 class Photo < ActiveRecord::Base
+  default_scope -> { where(hidden: false) }
+
   mount_uploader :image, ImageUploader
   skip_callback :save, :after, :remove_previously_stored_image
 
