@@ -10,7 +10,9 @@
 
 @implementation WPCreateSiteTableViewCell
 
-const static int labelWidth = 75;
+const static float CELL_HEIGHT = 44.0f;
+const static float CELL_DESCRIPTION_HEIGHT = 130.0f;
+const static float LABEL_WIDTH = 75.0f;
 
 - (id)initWithStyle:(UITableViewCellStyle)style
     reuseIdentifier:(NSString *)reuseIdentifier {
@@ -25,7 +27,9 @@ const static int labelWidth = 75;
 
 - (void)createSubviews {
     _inputLabel = [({
-        [[UILabel alloc] init];
+        UILabel *label = [[UILabel alloc] init];
+        label.font = [UIFont systemFontOfSize:13.0];
+        label;
     }) wp_addToSuperview:self.contentView];
     
     _textInput = [({
@@ -45,10 +49,10 @@ const static int labelWidth = 75;
     }];
     
     [self.inputLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.width.equalTo(@(labelWidth));
+        make.width.equalTo(@(LABEL_WIDTH));
+        make.height.equalTo(@(CELL_HEIGHT));
         make.top.equalTo(@0);
         make.leading.equalTo(@15);
-        make.bottom.equalTo(@0);
     }];
     
     [self.textInput mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -65,6 +69,18 @@ const static int labelWidth = 75;
     [super setSelected:selected animated:animated];
     
 }
+
+#pragma mark - Public Methods
+
++ (CGFloat)cellHeight {
+    return CELL_HEIGHT;
+}
+
++ (CGFloat)cellDescriptionHeight {
+    return CELL_DESCRIPTION_HEIGHT;
+}
+
+#pragma mark - Override Getter / Setter Methods
 
 - (void)setTextInput:(UIView *)textInput {
     [_textInput removeFromSuperview];

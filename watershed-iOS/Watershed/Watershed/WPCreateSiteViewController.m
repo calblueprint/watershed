@@ -122,7 +122,9 @@
         }
         // Description
         case 2: {
-            cell.textInput = [[UITextView alloc] init];
+            UITextView *descriptionView = [[UITextView alloc] init];
+            descriptionView.font = [UIFont systemFontOfSize:17.0];
+            cell.textInput = descriptionView;
             cell.inputLabel.text = @"Description";
             break;
         }
