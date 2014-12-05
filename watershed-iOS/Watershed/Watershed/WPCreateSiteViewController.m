@@ -26,13 +26,13 @@
     UIImage *closeImage = [closeIcon imageWithSize:CGSizeMake(22, 22)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithImage:closeImage style:UIBarButtonItemStylePlain target:nil action:nil];
     self.navigationItem.leftBarButtonItem = cancelButton;
-    self.navigationItem.leftBarButtonItem.tintColor = [UIColor wp_red];
+    self.navigationItem.leftBarButtonItem.tintColor = [UIColor wp_blue];
     
     FAKFontAwesome *checkIcon = [FAKFontAwesome checkIconWithSize:22];
     UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake(22, 22)];
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithImage:checkImage style:UIBarButtonItemStylePlain target:nil action:nil];
     self.navigationItem.rightBarButtonItem = doneButton;
-    self.navigationItem.rightBarButtonItem.tintColor = [UIColor wp_lightGreen];
+    self.navigationItem.rightBarButtonItem.tintColor = [UIColor wp_blue];
 }
 
 - (void)loadView {
