@@ -190,7 +190,16 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
     }
 }
 
--(void)logout {
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (actionSheet.tag == 1) {
+        if (buttonIndex == 0) {
+            [self logout];
+        }
+    }
+}
+
+
+- (void)logout {
     [[WPNetworkingManager sharedManager] eraseLoginKeyChainInfo];
     //DELETE user session
     [FBSession.activeSession closeAndClearTokenInformation];
