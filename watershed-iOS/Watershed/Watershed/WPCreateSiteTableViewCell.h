@@ -10,5 +10,6 @@
 #import "UIExtensions.h"
 
 @interface WPCreateSiteTableViewCell : UITableViewCell
+@property (nonatomic) UILabel *inputLabel;
 @property (nonatomic) UIView *textInput;
 @end

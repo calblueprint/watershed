@@ -65,6 +65,7 @@
     switch (indexPath.row) {
         case 0: {
             cell.textInput = [[UITextField alloc] init];
+            cell.inputLabel.text = @"Name";
             break;
         }
         case 1: {

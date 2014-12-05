@@ -10,6 +10,8 @@
 
 @implementation WPCreateSiteTableViewCell
 
+const static int labelWidth = 75;
+
 - (id)initWithStyle:(UITableViewCellStyle)style
     reuseIdentifier:(NSString *)reuseIdentifier {
     
@@ -22,6 +24,10 @@
 }
 
 - (void)createSubviews {
+    _inputLabel = [({
+        [[UILabel alloc] init];
+    }) wp_addToSuperview:self.contentView];
+    
     _textInput = [({
         [[UIView alloc] init];
     }) wp_addToSuperview:self.contentView];
@@ -38,9 +44,16 @@
         make.centerY.equalTo(self.mas_centerY);
     }];
     
-    [self.textInput mas_updateConstraints:^(MASConstraintMaker *make) {
+    [self.inputLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(@(labelWidth));
         make.top.equalTo(@0);
         make.leading.equalTo(@15);
+        make.bottom.equalTo(@0);
+    }];
+    
+    [self.textInput mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@0);
+        make.leading.equalTo(self.inputLabel.mas_trailing).with.offset(standardMargin);
         make.trailing.equalTo(@0);
         make.bottom.equalTo(@0);
     }];
