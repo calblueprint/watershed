@@ -38,9 +38,9 @@
         make.centerY.equalTo(self.mas_centerY);
     }];
     
-    [self.textInput mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.textInput mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@0);
-        make.leading.equalTo(@0);
+        make.leading.equalTo(@15);
         make.trailing.equalTo(@0);
         make.bottom.equalTo(@0);
     }];
@@ -51,6 +51,12 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
     
+}
+
+- (void)setTextInput:(UIView *)textInput {
+    [_textInput removeFromSuperview];
+    _textInput = textInput;
+    [self.contentView addSubview:_textInput];
 }
 
 @end

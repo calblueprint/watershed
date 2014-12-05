@@ -60,29 +60,30 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WPCreateSiteTableViewCell *newCell = [[WPCreateSiteTableViewCell alloc] init];
+    WPCreateSiteTableViewCell *cell = [[WPCreateSiteTableViewCell alloc] init];
+    
     switch (indexPath.row) {
         case 0: {
-            newCell.textLabel.text = @"Name";
+            cell.textInput = [[UITextField alloc] init];
             break;
         }
         case 1: {
-            newCell.textLabel.text = @"Email";
+            cell.textInput = [[UITextField alloc] init];
             break;
         }
         case 2: {
-            newCell.textLabel.text = @"Address";
+            cell.textInput = [[UITextField alloc] init];
             break;
         }
         case 3: {
-            newCell.textLabel.text = @"Phone Number";
+            cell.textInput = [[UITextField alloc] init];
             break;
         }
         default: {
             //do nothing
         }
     }
-    return newCell;
+    return cell;
     
 }
 
