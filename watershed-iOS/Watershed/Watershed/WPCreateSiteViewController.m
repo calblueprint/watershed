@@ -46,46 +46,88 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-    return 1;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return 4;
+    switch (section) {
+        case 0: {
+            return 1;
+            break;
+        }
+        case 1: {
+            return 4;
+            break;
+        }
+        case 2: {
+            return 1;
+            break;
+        }
+        default: {
+            return 1;
+            break;
+        }
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 44;
+    if (indexPath.section == 2) {
+        return 120;
+    }
+    else {
+        return 44;
+    }
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     WPCreateSiteTableViewCell *cell = [[WPCreateSiteTableViewCell alloc] init];
     
-    switch (indexPath.row) {
+    switch (indexPath.section) {
+        // Name
         case 0: {
             cell.textInput = [[UITextField alloc] init];
             cell.inputLabel.text = @"Name";
             break;
         }
+        // Address
         case 1: {
-            cell.textInput = [[UITextField alloc] init];
+            switch (indexPath.row) {
+                case 0: {
+                    cell.textInput = [[UITextField alloc] init];
+                    cell.inputLabel.text = @"Street";
+                    break;
+                }
+                case 1: {
+                    cell.textInput = [[UITextField alloc] init];
+                    cell.inputLabel.text = @"City";
+                    break;
+                }
+                case 2: {
+                    cell.textInput = [[UITextField alloc] init];
+                    cell.inputLabel.text = @"State";
+                    break;
+                }
+                case 3: {
+                    cell.textInput = [[UITextField alloc] init];
+                    cell.inputLabel.text = @"Zip Code";
+                    break;
+                }
+                default: {
+                    //do nothing
+                }
+            }
             break;
         }
+        // Description
         case 2: {
-            cell.textInput = [[UITextField alloc] init];
+            cell.textInput = [[UITextView alloc] init];
+            cell.inputLabel.text = @"Description";
             break;
-        }
-        case 3: {
-            cell.textInput = [[UITextField alloc] init];
-            break;
-        }
-        default: {
-            //do nothing
         }
     }
     return cell;
-    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
