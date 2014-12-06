@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WPViewController.h"
+#import "BSKeyboardControls.h"
 
-@interface WPCreateSiteViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface WPCreateSiteViewController : WPViewController <UITableViewDelegate, UITableViewDataSource, BSKeyboardControlsDelegate, UITextFieldDelegate, UITextViewDelegate>
 
 @end

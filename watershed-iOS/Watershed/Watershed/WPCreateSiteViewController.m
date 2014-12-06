@@ -9,9 +9,8 @@
 #import "WPCreateSiteViewController.h"
 #import "WPCreateSiteView.h"
 #import "WPCreateSiteTableViewCell.h"
-#import "BSKeyboardControls.h"
 
-@interface WPCreateSiteViewController () <BSKeyboardControlsDelegate, UITextFieldDelegate, UITextViewDelegate>
+@interface WPCreateSiteViewController ()
 
 @property (nonatomic) WPCreateSiteView *view;
 @property (nonatomic) UITableView *infoTableView;
