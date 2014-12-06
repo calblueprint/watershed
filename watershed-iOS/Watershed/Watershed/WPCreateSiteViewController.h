@@ -12,4 +12,11 @@
 
 @interface WPCreateSiteViewController : WPViewController <UITableViewDelegate, UITableViewDataSource, BSKeyboardControlsDelegate, UITextFieldDelegate, UITextViewDelegate>
 
+@property (nonatomic) UITextField *nameTextField;
+@property (nonatomic) UITextField *streetTextField;
+@property (nonatomic) UITextField *cityTextField;
+@property (nonatomic) UITextField *stateTextField;
+@property (nonatomic) UITextField *zipCodeTextField;
+@property (nonatomic) UITextView *descriptionTextView;
+
 @end

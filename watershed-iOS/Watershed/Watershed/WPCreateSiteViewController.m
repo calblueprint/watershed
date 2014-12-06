@@ -14,7 +14,7 @@
 
 @property (nonatomic) WPCreateSiteView *view;
 @property (nonatomic) UITableView *infoTableView;
-@property (nonatomic) NSMutableArray *textInputViews;
+@property (nonatomic) NSArray *textInputViews;
 @property (nonatomic) BSKeyboardControls *keyboardControls;
 
 @end
@@ -37,6 +37,8 @@
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithImage:checkImage style:UIBarButtonItemStylePlain target:nil action:nil];
     self.navigationItem.rightBarButtonItem = doneButton;
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor wp_blue];
+    
+    self.keyboardControls.delegate = self;
 }
 
 - (void)loadView {
@@ -91,7 +93,7 @@
     switch (indexPath.section) {
         // Name
         case 0: {
-            cell.textInput = [self createTextField];
+            cell.textInput = self.nameTextField;
             cell.inputLabel.text = @"Name";
             break;
         }
@@ -99,22 +101,22 @@
         case 1: {
             switch (indexPath.row) {
                 case 0: {
-                    cell.textInput = [self createTextField];
+                    cell.textInput = self.streetTextField;
                     cell.inputLabel.text = @"Street";
                     break;
                 }
                 case 1: {
-                    cell.textInput = [self createTextField];
+                    cell.textInput = self.cityTextField;
                     cell.inputLabel.text = @"City";
                     break;
                 }
                 case 2: {
-                    cell.textInput = [self createTextField];
+                    cell.textInput = self.stateTextField;
                     cell.inputLabel.text = @"State";
                     break;
                 }
                 case 3: {
-                    cell.textInput = [self createTextField];
+                    cell.textInput = self.zipCodeTextField;
                     cell.inputLabel.text = @"Zip Code";
                     break;
                 }
@@ -126,9 +128,7 @@
         }
         // Description
         case 2: {
-            UITextView *descriptionView = [self createTextView];
-            descriptionView.font = [UIFont systemFontOfSize:17.0];
-            cell.textInput = descriptionView;
+            cell.textInput = self.descriptionTextView;
             cell.inputLabel.text = @"Description";
             break;
         }
@@ -138,13 +138,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(indexPath.section == 2 && indexPath.row == ((NSIndexPath*)[[tableView indexPathsForVisibleRows] lastObject]).row){
-        self.keyboardControls.delegate = self;
-    }
 }
 
 #pragma mark - BSKeyboardControls Delegate Methods
@@ -175,22 +168,6 @@
     return YES;
 }
 
-#pragma mark - TextField / TextView Allocation
-
-- (UITextField *)createTextField {
-    UITextField *textField = [[UITextField alloc] init];
-    [self.textInputViews addObject:textField];
-    textField.delegate = self;
-    return textField;
-}
-
-- (UITextView *)createTextView {
-    UITextView *textView = [[UITextView alloc] init];
-    [self.textInputViews addObject:textView];
-    textView.delegate = self;
-    return textView;
-}
-
 #pragma mark - Lazy Instantiation
 
 - (BSKeyboardControls *)keyboardControls {
@@ -200,11 +177,67 @@
     return _keyboardControls;
 }
 
-- (NSMutableArray *)textInputViews {
+- (NSArray *)textInputViews {
     if (!_textInputViews) {
-        _textInputViews = [[NSMutableArray alloc] init];
+        _textInputViews = @[
+                            self.nameTextField,
+                            self.streetTextField,
+                            self.cityTextField,
+                            self.stateTextField,
+                            self.zipCodeTextField,
+                            self.descriptionTextView
+                            ];
     }
     return _textInputViews;
+}
+
+- (UITextField *)nameTextField {
+    if (!_nameTextField) {
+        _nameTextField = [[UITextField alloc] init];
+        _nameTextField.delegate = self;
+    }
+    return _nameTextField;
+}
+
+- (UITextField *)streetTextField {
+    if (!_streetTextField) {
+        _streetTextField = [[UITextField alloc] init];
+        _streetTextField.delegate = self;
+    }
+    return _nameTextField;
+}
+
+- (UITextField *)cityTextField {
+    if (!_cityTextField) {
+        _cityTextField = [[UITextField alloc] init];
+        _cityTextField.delegate = self;
+    }
+    return _cityTextField;
+}
+
+- (UITextField *)stateTextField {
+    if (!_stateTextField) {
+        _stateTextField = [[UITextField alloc] init];
+        _stateTextField.delegate = self;
+    }
+    return _stateTextField;
+}
+
+- (UITextField *)zipCodeTextField {
+    if (!_zipCodeTextField) {
+        _zipCodeTextField = [[UITextField alloc] init];
+        _zipCodeTextField.delegate = self;
+    }
+    return _zipCodeTextField;
+}
+
+- (UITextView *)descriptionTextView {
+    if (!_descriptionTextView) {
+        _descriptionTextView = [[UITextView alloc] init];
+        _descriptionTextView.font = [UIFont systemFontOfSize:17.0];
+        _descriptionTextView.delegate = self;
+    }
+    return _descriptionTextView;
 }
 
 @end
