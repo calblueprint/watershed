@@ -9,10 +9,15 @@
 #import "WPCreateSiteViewController.h"
 #import "WPCreateSiteView.h"
 #import "WPCreateSiteTableViewCell.h"
+#import "BSKeyboardControls.h"
 
-@interface WPCreateSiteViewController ()
+@interface WPCreateSiteViewController () <BSKeyboardControlsDelegate, UITextFieldDelegate, UITextViewDelegate>
+
 @property (nonatomic) WPCreateSiteView *view;
 @property (nonatomic) UITableView *infoTableView;
+@property (nonatomic) NSMutableArray *textInputViews;
+@property (nonatomic) BSKeyboardControls *keyboardControls;
+
 @end
 
 @implementation WPCreateSiteViewController
@@ -87,7 +92,7 @@
     switch (indexPath.section) {
         // Name
         case 0: {
-            cell.textInput = [[UITextField alloc] init];
+            cell.textInput = [self createTextField];
             cell.inputLabel.text = @"Name";
             break;
         }
@@ -95,22 +100,22 @@
         case 1: {
             switch (indexPath.row) {
                 case 0: {
-                    cell.textInput = [[UITextField alloc] init];
+                    cell.textInput = [self createTextField];
                     cell.inputLabel.text = @"Street";
                     break;
                 }
                 case 1: {
-                    cell.textInput = [[UITextField alloc] init];
+                    cell.textInput = [self createTextField];
                     cell.inputLabel.text = @"City";
                     break;
                 }
                 case 2: {
-                    cell.textInput = [[UITextField alloc] init];
+                    cell.textInput = [self createTextField];
                     cell.inputLabel.text = @"State";
                     break;
                 }
                 case 3: {
-                    cell.textInput = [[UITextField alloc] init];
+                    cell.textInput = [self createTextField];
                     cell.inputLabel.text = @"Zip Code";
                     break;
                 }
@@ -122,7 +127,7 @@
         }
         // Description
         case 2: {
-            UITextView *descriptionView = [[UITextView alloc] init];
+            UITextView *descriptionView = [self createTextView];
             descriptionView.font = [UIFont systemFontOfSize:17.0];
             cell.textInput = descriptionView;
             cell.inputLabel.text = @"Description";
@@ -137,5 +142,70 @@
     
 }
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(indexPath.section == 2 && indexPath.row == ((NSIndexPath*)[[tableView indexPathsForVisibleRows] lastObject]).row){
+        self.keyboardControls.delegate = self;
+    }
+}
+
+#pragma mark - BSKeyboardControls Delegate Methods
+
+- (void)keyboardControlsDonePressed:(BSKeyboardControls *)keyboardControls {
+    [keyboardControls.activeField resignFirstResponder];
+}
+
+- (void)keyboardControls:(BSKeyboardControls *)keyboardControls
+           selectedField:(UIView *)field
+             inDirection:(BSKeyboardControlsDirection)direction {
+    CGFloat offsetY = [field convertRect:field.frame toView:self.infoTableView].origin.y - topMargin - [WPCreateSiteTableViewCell cellHeight];
+    CGPoint offset = CGPointMake(0, offsetY);
+    [self.infoTableView setContentOffset:offset animated:YES];
+}
+
+#pragma mark - TextField Delegate Methods
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    self.keyboardControls.activeField = textField;
+    return YES;
+}
+
+#pragma mark - TextView Delegate Methods
+
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
+    self.keyboardControls.activeField = textView;
+    return YES;
+}
+
+#pragma mark - TextField / TextView Allocation
+
+- (UITextField *)createTextField {
+    UITextField *textField = [[UITextField alloc] init];
+    [self.textInputViews addObject:textField];
+    textField.delegate = self;
+    return textField;
+}
+
+- (UITextView *)createTextView {
+    UITextView *textView = [[UITextView alloc] init];
+    [self.textInputViews addObject:textView];
+    textView.delegate = self;
+    return textView;
+}
+
+#pragma mark - Lazy Instantiation
+
+- (BSKeyboardControls *)keyboardControls {
+    if (!_keyboardControls) {
+        _keyboardControls = [[BSKeyboardControls alloc] initWithFields:self.textInputViews];
+    }
+    return _keyboardControls;
+}
+
+- (NSMutableArray *)textInputViews {
+    if (!_textInputViews) {
+        _textInputViews = [[NSMutableArray alloc] init];
+    }
+    return _textInputViews;
+}
 
 @end
