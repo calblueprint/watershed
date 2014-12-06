@@ -10,6 +10,7 @@
 
 @interface WPCreateSiteView ()
 @property (nonatomic) UIView *statusBarView;
+@property (nonatomic) UIView *navbarShadowOverlay;
 @end
 
 @implementation WPCreateSiteView
@@ -40,6 +41,14 @@
         view.backgroundColor = [UIColor whiteColor];
         view;
     }) wp_addToSuperview:self];
+    
+    _navbarShadowOverlay = [({
+        UIImageView *navbarShadowOverlay = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ShadowOverlay"]];
+        [navbarShadowOverlay setContentMode:UIViewContentModeScaleToFill];
+        [navbarShadowOverlay setClipsToBounds:YES];
+        navbarShadowOverlay.alpha = 0.10;
+        navbarShadowOverlay;
+    }) wp_addToSuperview:self];
 }
 
 - (void)updateConstraints {
@@ -53,6 +62,13 @@
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
         make.height.equalTo(@20);
+    }];
+    
+    [self.navbarShadowOverlay mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(topMargin));
+        make.leading.equalTo(@0);
+        make.trailing.equalTo(@0);
+        make.height.equalTo(@10);
     }];
     
     [super updateConstraints];
