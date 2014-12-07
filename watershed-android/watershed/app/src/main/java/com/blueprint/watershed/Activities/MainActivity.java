@@ -301,7 +301,7 @@ public class MainActivity extends ActionBarActivity
         switch (item.getItemId()) {
             case android.R.id.home:
                 Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
-                if (!(f instanceof TaskFragment) && !(f instanceof SiteListFragment)) {
+                if (!(f instanceof TaskFragment) && !(f instanceof SiteListFragment) &&!(f instanceof ProfileFragment) &&!(f instanceof AboutFragment)) {
                     getSupportFragmentManager().popBackStack();
                     return false;
                 }
