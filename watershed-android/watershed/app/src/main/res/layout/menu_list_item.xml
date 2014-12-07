@@ -17,6 +17,7 @@
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
         android:textSize="18sp"
+        android:gravity="center|left"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
         android:id="@+id/menu_title"/>

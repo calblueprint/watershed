@@ -4,10 +4,14 @@
     android:layout_height="match_parent"
     android:background="@color/ws_blue"
     tools:context="com.blueprint.watershed.Users.ProfileFragment">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/standard_margin"
         android:layout_marginTop="@dimen/standard_margin"
         android:layout_marginRight="@dimen/standard_margin"
@@ -47,13 +51,16 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
     <ListView
         android:id="@+id/profile_options"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_marginTop="@dimen/tight_margin">
 
-        </ListView>
+    </ListView>
 
     </LinearLayout>
 

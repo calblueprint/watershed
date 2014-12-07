@@ -72,7 +72,6 @@ public class ProfileFragment extends Fragment {
         options = new ArrayList <String>();
         options.add("Field-Reports " + mUser.getFieldReportsCount());
         if (mUser.isEmployee() || mUser.isManager()){
-            options = new ArrayList <String>();
             options.add("Tasks " + mUser.getFieldReportsCount());
             options.add("Sites " + mUser.getSitesCount());
         }
