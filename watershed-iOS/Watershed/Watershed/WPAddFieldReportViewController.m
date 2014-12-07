@@ -65,7 +65,6 @@
     [self dismissKeyboard];
     WPFieldReport *fieldReport = [[WPFieldReport alloc] init];
     NSString *userId = [[WPNetworkingManager sharedManager] keyChainStore][@"userId"];
-//    NSString *miniSiteId = self.parentViewController; //get minisite id
     NSString *description = self.view.fieldDescription.text;
     NSNumber *healthRating;
     if (self.view.rating1.isSelected) {
@@ -79,16 +78,24 @@
     } else if (self.view.rating5.isSelected) {
         healthRating = @5;
     }
-    BOOL urgent = self.view.urgentSwitch.isOn;
+    NSNumber *urgent = @(self.view.urgentSwitch.isOn);
 //  if parent is task VC, do task id, otherwise to nil
     NSNumber *taskId;
+    NSString *miniSiteId;
     if ([self.parentViewController isKindOfClass:[WPMiniSiteViewController class]]) {
+        WPMiniSiteViewController *parent = (WPMiniSiteViewController *)self.parentViewController;
+        miniSiteId = [parent.miniSite.miniSiteId stringValue];
         taskId = nil;
+        
     } else if ([self.parentViewController isKindOfClass:[WPTaskViewController class]]) {
         WPTaskViewController *parent = (WPTaskViewController *)self.parentViewController;
 //        taskId = parent.taskId;
+//        miniSiteId = parent.miniSiteId;
     }
-    NSDictionary *parameters = @{@"user_id": userId};
+    NSData *photo;
+    NSDictionary *parameters = @{@"user_id": userId, @"mini_side_id": miniSiteId,
+                                 @"description": description, @"health_rating": healthRating,
+                                 @"urgent": urgent, @"photo_attributes": @{@"image": photo}};
     
     [[WPNetworkingManager sharedManager] postFieldReportWithParameters:parameters success:^(WPFieldReport *fieldReport) {
         //do stuffs
