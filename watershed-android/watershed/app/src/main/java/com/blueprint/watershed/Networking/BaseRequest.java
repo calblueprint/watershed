@@ -32,27 +32,21 @@ import java.util.Map;
 public abstract class BaseRequest extends JsonObjectRequest {
     private SharedPreferences preferences;
     private Response.Listener listener;
+    private Response.ErrorListener errorListener;
 
     private static final String baseURL = "https://intense-reaches-1457.herokuapp.com/api/v1/";
-    //private static final String baseURL = "http://10.0.0.18:3001/api/v1/";
 
     public BaseRequest(int method, String url, JSONObject jsonRequest,
-                       Response.Listener listener, final Activity activity) {
+                       final Response.Listener listener, final Response.ErrorListener errorListener,
+                       final Activity activity) {
         super(method, url, jsonRequest, listener, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                String message;
-                if (volleyError instanceof NetworkError) {
-                    message = "Network Error. Please try again later.";
-                } else {
-                    try {
-                        JSONObject response = new JSONObject(new String(volleyError.networkResponse.data));
-                        message = (String) response.get("error");
-                    } catch (Exception e) {
-                        message = "Unknown Error";
-                        e.printStackTrace();
-                    }
-                }
+                Log.e("Request Error", volleyError.getMessage());
+                Log.e("Request error data", new String(volleyError.networkResponse.data));
+                errorListener.onErrorResponse(volleyError);
+
+                String message = "An error has occurred.";
                 Context context = activity.getApplicationContext();
                 int duration = Toast.LENGTH_SHORT;
 
@@ -61,6 +55,7 @@ public abstract class BaseRequest extends JsonObjectRequest {
             }});
 
         this.listener = listener;
+        this.errorListener = errorListener;
         this.preferences = activity.getSharedPreferences("LOGIN_PREFERENCES", 0);
     }
 
@@ -69,7 +64,6 @@ public abstract class BaseRequest extends JsonObjectRequest {
     }
 
     public static String makeObjectURL(String endpoint, APIObject object) {
-        Log.i("object id:", object.getId().toString());
         return String.format("%s/%s", makeURL(endpoint), object.getId().toString());
     }
 
@@ -83,17 +77,5 @@ public abstract class BaseRequest extends JsonObjectRequest {
         headers.put("X-AUTH-TOKEN", preferences.getString("authentication_token", "none"));
         headers.put("X-AUTH-EMAIL", preferences.getString("email", "none"));
         return headers;
-    }
-
-    @Override
-    protected Response parseNetworkResponse(NetworkResponse response) {
-        try {
-            JSONObject json = new JSONObject(new String(response.data));
-            return Response.success(
-                    json,
-                    HttpHeaderParser.parseCacheHeaders(response));
-        } catch (JSONException je){
-            return Response.error(new ParseError(je));
-        }
     }
 }
