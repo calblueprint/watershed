@@ -42,7 +42,7 @@ public abstract class BaseRequest extends JsonObjectRequest {
         super(method, url, jsonRequest, listener, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.e("Request Error", volleyError.getMessage());
+                Log.e("Request Error", "Custom ErrorListener detected");
                 Log.e("Request error data", new String(volleyError.networkResponse.data));
                 errorListener.onErrorResponse(volleyError);
 
@@ -57,6 +57,16 @@ public abstract class BaseRequest extends JsonObjectRequest {
         this.listener = listener;
         this.errorListener = errorListener;
         this.preferences = activity.getSharedPreferences("LOGIN_PREFERENCES", 0);
+    }
+
+    public BaseRequest(int method, String url, JSONObject jsonRequest,
+                       final Response.Listener listener, final Activity activity) {
+        this(method, url, jsonRequest, listener, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.e("Error Response", "onErrorResponse not overridden");
+            }
+        }, activity);
     }
 
     public static String makeURL(String endpoint) {
