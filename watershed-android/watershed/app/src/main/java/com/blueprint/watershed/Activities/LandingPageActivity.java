@@ -221,6 +221,11 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
             public void onResponse(Session session) {
                 storeSessionAndStartMainActivity(intent, session);
             }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.e("Error response", "In the landing page activity for the login request");
+            }
         });
 
         mloginNetworkManager.getRequestQueue().add(loginRequest);

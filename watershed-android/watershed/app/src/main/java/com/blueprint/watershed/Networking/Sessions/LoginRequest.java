@@ -24,7 +24,7 @@ import java.util.HashMap;
  */
 public class LoginRequest extends BaseRequest {
 
-    public LoginRequest(final Activity activity, HashMap<String, String> params, final Response.Listener<Session> listener) {
+    public LoginRequest(final Activity activity, HashMap<String, String> params, final Response.Listener<Session> listener, final Response.ErrorListener errorListener) {
         super(Request.Method.POST, makeURL("users/sign_in"), loginRequestParams(activity, params),
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -39,7 +39,7 @@ public class LoginRequest extends BaseRequest {
                             Log.e("Json exception", e.toString());
                         }
                     }
-                }, activity);
+                }, errorListener, activity);
     }
 
 
