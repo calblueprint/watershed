@@ -11,6 +11,7 @@
 #import "WPFieldReportTableViewCell.h"
 #import "WPFieldReportViewController.h"
 #import "WPNetworkingManager.h"
+#import "WPAddFieldReportViewController.h"
 
 @interface WPMiniSiteViewController ()
 
@@ -28,6 +29,14 @@ static NSString *cellIdentifier = @"FieldReportCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = self.miniSite.name;
+    FAKIonIcons *addIcon = [FAKIonIcons ios7PlusEmptyIconWithSize:22];
+    UIImage *addIconImage = [addIcon imageWithSize:CGSizeMake(22, 22)];
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc]
+                                  initWithImage:addIconImage
+                                  style:UIBarButtonItemStylePlain
+                                  target:self
+                                  action:@selector(addNewFieldReport)];
+    self.navigationItem.rightBarButtonItem = addButton;
     self.fieldReportTableView.delegate = self;
     self.fieldReportTableView.dataSource = self;
     
@@ -61,6 +70,11 @@ static NSString *cellIdentifier = @"FieldReportCell";
         //view controller is being popped off
         [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     }
+}
+
+- (void)addNewFieldReport {
+    WPAddFieldReportViewController *addFieldReportViewController = [[WPAddFieldReportViewController alloc] init];
+    [self.navigationController pushViewController:addFieldReportViewController animated:YES];
 }
 
 #pragma mark - TableView Delegate/DataSource Methods
