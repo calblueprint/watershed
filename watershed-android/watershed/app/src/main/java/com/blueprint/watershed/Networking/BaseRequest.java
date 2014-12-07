@@ -36,12 +36,12 @@ import java.util.Map;
 public abstract class BaseRequest extends JsonObjectRequest {
     private SharedPreferences preferences;
     private Response.Listener listener;
-    private Response.ErrorListener errorListener;
+    private Response.Listener errorListener;
 
     private static final String baseURL = "https://intense-reaches-1457.herokuapp.com/api/v1/";
 
     public BaseRequest(int method, String url, JSONObject jsonRequest,
-                       final Response.Listener listener, final Response.ErrorListener<APIError> errorListener,
+                       final Response.Listener listener, final Response.Listener<APIError> errorListener,
                        final Activity activity) {
         super(method, url, jsonRequest, listener, new Response.ErrorListener() {
             @Override
@@ -55,7 +55,7 @@ public abstract class BaseRequest extends JsonObjectRequest {
                     ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
                     apiError = mapper.readValue(errorJson, new TypeReference<Error>() {
                     });
-                    errorListener.onErrorResponse(apiError);
+                    errorListener.onResponse(apiError);
                 } catch (Exception e) {
                     Log.e("Json exception", e.toString());
                 }
@@ -71,10 +71,10 @@ public abstract class BaseRequest extends JsonObjectRequest {
 
     public BaseRequest(int method, String url, JSONObject jsonRequest,
                        final Response.Listener listener, final Activity activity) {
-        this(method, url, jsonRequest, listener, new Response.ErrorListener() {
+        this(method, url, jsonRequest, listener, new Response.Listener<APIError>() {
             @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Log.e("Error Response", "onErrorResponse not overridden");
+            public void onResponse(APIError apiError) {
+                Log.e("Error Response", "onResponse not overridden");
             }
         }, activity);
     }

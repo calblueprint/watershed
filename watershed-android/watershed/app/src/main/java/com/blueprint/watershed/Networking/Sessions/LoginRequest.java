@@ -12,6 +12,7 @@ import com.android.volley.VolleyError;
 import com.blueprint.watershed.Authentication.Session;
 import com.blueprint.watershed.FieldReports.FieldReport;
 import com.blueprint.watershed.Networking.BaseRequest;
+import com.blueprint.watershed.Utilities.APIError;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -24,7 +25,7 @@ import java.util.HashMap;
  */
 public class LoginRequest extends BaseRequest {
 
-    public LoginRequest(final Activity activity, HashMap<String, String> params, final Response.Listener<Session> listener, final Response.ErrorListener<APIError> errorListener) {
+    public LoginRequest(final Activity activity, HashMap<String, String> params, final Response.Listener<Session> listener, final Response.Listener<APIError> errorListener) {
         super(Request.Method.POST, makeURL("users/sign_in"), loginRequestParams(activity, params),
                 new Response.Listener<JSONObject>() {
                     @Override

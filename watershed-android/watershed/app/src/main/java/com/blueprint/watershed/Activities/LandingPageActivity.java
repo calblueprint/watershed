@@ -32,6 +32,7 @@ import com.blueprint.watershed.Networking.Sessions.FacebookLoginRequest;
 import com.blueprint.watershed.Networking.Sessions.LoginRequest;
 import com.blueprint.watershed.Networking.Sessions.SignUpRequest;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Utilities.APIError;
 import com.facebook.AppEventsLogger;
 import com.facebook.SessionState;
 import com.facebook.model.GraphUser;
@@ -221,9 +222,9 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
             public void onResponse(Session session) {
                 storeSessionAndStartMainActivity(intent, session);
             }
-        }, new Response.ErrorListener<Error>() {
+        }, new Response.Listener<APIError>() {
             @Override
-            public void onErrorResponse(Error error) {
+            public void onResponse(APIError apiError) {
                 Log.e("Error response", "In the landing page activity for the login request");
             }
         });
