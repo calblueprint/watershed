@@ -64,6 +64,9 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     private ObjectMapper mMapper;
     private View viewBlocker;
 
+    //User
+    private Integer mUserId;
+
     private com.facebook.Session.StatusCallback callback = new com.facebook.Session.StatusCallback() {
         @Override
         public void call(com.facebook.Session session, SessionState state, Exception exception) {
@@ -258,7 +261,12 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("authentication_token", session.getAuthenticationToken());
         editor.putString("email", session.getEmail());
+        editor.putInt("userId", session.getUser().getId());
         editor.commit();
+
+        Bundle bundle = new Bundle();
+        bundle.putInt("userId", session.getUser().getId());
+        intent.putExtras(bundle);
 
         LandingPageActivity.this.finish();
         startActivity(intent);

@@ -92,7 +92,6 @@ public class MainActivity extends ActionBarActivity
 
     // For storing our credentials once we have successfully authenticated
     SharedPreferences preferences;
-    User currentUser;
 
     // Fragments
     private TaskFragment mtaskFragment;
@@ -129,11 +128,14 @@ public class MainActivity extends ActionBarActivity
 
     // User
     private User mUser;
+    private Integer mUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Bundle b = getIntent().getExtras();
+        mUserId = b.getInt("userId");
 
         actionBar = getActionBar();
         setTitle("Tasks");
@@ -149,7 +151,7 @@ public class MainActivity extends ActionBarActivity
 
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
 
-        HomeRequest homeRequest = new HomeRequest(this, params, new Response.Listener<User>() {
+        HomeRequest homeRequest = new HomeRequest(this, mUserId, params, new Response.Listener<User>() {
             @Override
             public void onResponse(User home) {
                 setUser(home);
@@ -260,7 +262,7 @@ public class MainActivity extends ActionBarActivity
 
     private void initializeFragments() {
         mtaskFragment = TaskFragment.newInstance(0);
-        mProfileFragment = new ProfileFragment();
+        mProfileFragment = ProfileFragment.newInstance(mUser);
         mAboutFragment = new AboutFragment();
         fragmentManager = getSupportFragmentManager();
         fragmentManager.addOnBackStackChangedListener(
@@ -430,6 +432,11 @@ public class MainActivity extends ActionBarActivity
     public NetworkManager getNetworkManager() { return mNetworkManager; }
     public void setNetworkManager(NetworkManager networkManager) { mNetworkManager = networkManager; }
 
+    public void makeHomeRequest(){
+        // TODO: Change to an actual home request, and not just a user request.
+
+    }
+
 
     // Button Events
 
@@ -442,6 +449,6 @@ public class MainActivity extends ActionBarActivity
     public void setUser(User user){
         mUser = user;
     }
-    
+
     public ProgressBar getSpinner() { return mProgress; }
 }
