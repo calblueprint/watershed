@@ -1,5 +1,6 @@
 class Error
   include ActiveModel::Model
+  include ActiveModel::Serializers::JSON
 
   def initialize(object, message = nil)
     @object = object
