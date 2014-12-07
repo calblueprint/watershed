@@ -28,13 +28,13 @@
     
     FAKFontAwesome *closeIcon = [FAKFontAwesome closeIconWithSize:22];
     UIImage *closeImage = [closeIcon imageWithSize:CGSizeMake(22, 22)];
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithImage:closeImage style:UIBarButtonItemStylePlain target:nil action:nil];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithImage:closeImage style:UIBarButtonItemStylePlain target:self.parent action:@selector(dismissCreateSiteViewController)];
     self.navigationItem.leftBarButtonItem = cancelButton;
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor wp_blue];
     
     FAKFontAwesome *checkIcon = [FAKFontAwesome checkIconWithSize:22];
     UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake(22, 22)];
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithImage:checkImage style:UIBarButtonItemStylePlain target:nil action:nil];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithImage:checkImage style:UIBarButtonItemStylePlain target:self.parent action:@selector(saveAndDismissCreateSiteViewController)];
     self.navigationItem.rightBarButtonItem = doneButton;
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor wp_blue];
     

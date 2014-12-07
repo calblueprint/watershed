@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "WPViewController.h"
+#import "WPSitesTableViewController.h"
 #import "BSKeyboardControls.h"
 
 @interface WPCreateSiteViewController : WPViewController <UITableViewDelegate, UITableViewDataSource, BSKeyboardControlsDelegate, UITextFieldDelegate, UITextViewDelegate>
 
+@property (nonatomic) WPSitesTableViewController *parent;
 @property (nonatomic) UITextField *nameTextField;
 @property (nonatomic) UITextField *streetTextField;
 @property (nonatomic) UITextField *cityTextField;

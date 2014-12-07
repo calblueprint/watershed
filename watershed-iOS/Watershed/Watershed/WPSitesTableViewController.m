@@ -171,11 +171,24 @@ static NSString *cellIdentifier = @"SiteCell";
 
 - (void)showCreateSiteView {
     WPCreateSiteViewController *createSiteViewController = [[WPCreateSiteViewController alloc] init];
+    createSiteViewController.parent = self;
     UINavigationController *createSiteNavController = [[UINavigationController alloc] initWithRootViewController:createSiteViewController];
     [createSiteNavController.navigationBar setBackgroundColor:[UIColor whiteColor]];
     [createSiteNavController.navigationBar setBarTintColor:[UIColor whiteColor]];
     [createSiteNavController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
     [self.navigationController presentViewController:createSiteNavController animated:YES completion:nil];
+}
+
+#pragma mark - CreateSiteViewController Delegate
+
+-(void)dismissCreateSiteViewController {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)saveAndDismissCreateSiteViewController {
+    //save
+    [self dismissCreateSiteViewController];
 }
 
 #pragma mark - Lazy instantiation
