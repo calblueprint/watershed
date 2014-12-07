@@ -9,6 +9,7 @@
 #import "WPCreateSiteViewController.h"
 #import "WPCreateSiteView.h"
 #import "WPCreateSiteTableViewCell.h"
+#import "WPNetworkingManager.h"
 
 @interface WPCreateSiteViewController ()
 
@@ -28,13 +29,13 @@
     
     FAKFontAwesome *closeIcon = [FAKFontAwesome closeIconWithSize:22];
     UIImage *closeImage = [closeIcon imageWithSize:CGSizeMake(22, 22)];
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithImage:closeImage style:UIBarButtonItemStylePlain target:self.parent action:@selector(dismissCreateSiteViewController)];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithImage:closeImage style:UIBarButtonItemStylePlain target:self action:@selector(dismissSelf)];
     self.navigationItem.leftBarButtonItem = cancelButton;
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor wp_blue];
     
     FAKFontAwesome *checkIcon = [FAKFontAwesome checkIconWithSize:22];
     UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake(22, 22)];
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithImage:checkImage style:UIBarButtonItemStylePlain target:self.parent action:@selector(saveAndDismissCreateSiteViewController)];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithImage:checkImage style:UIBarButtonItemStylePlain target:self action:@selector(saveAndDismissSelf)];
     self.navigationItem.rightBarButtonItem = doneButton;
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor wp_blue];
     
@@ -46,6 +47,26 @@
     self.infoTableView = self.view.infoTableView;
     self.infoTableView.delegate = self;
     self.infoTableView.dataSource = self;
+}
+
+- (void)dismissSelf {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)saveAndDismissSelf {
+    NSDictionary *siteJSON = @{
+                               @"name" : self.nameTextField.text,
+                               @"street" : self.streetTextField.text,
+                               @"city" : self.cityTextField.text,
+                               @"state" : self.stateTextField.text,
+                               @"zip_code" : self.zipCodeTextField.text,
+                               @"description" : self.descriptionTextView.text
+                               };
+    WPSite *site = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:siteJSON error:nil];
+    [[WPNetworkingManager sharedManager] createSiteWithSite:site parameters:[[NSMutableDictionary alloc] init] success:^{
+        [self dismissSelf];
+    }];
 }
 
 #pragma mark - Table View Delegate / Data Source Methods
