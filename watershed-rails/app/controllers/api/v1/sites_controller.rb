@@ -18,7 +18,7 @@ class Api::V1::SitesController < Api::V1::BaseController
     if @site.save
       render json: @site, serializer: SiteSerializer
     else
-      render json: { errors: @site.errors }, status: 422
+      error_response(@site)
     end
   end
 
@@ -26,7 +26,7 @@ class Api::V1::SitesController < Api::V1::BaseController
     if @site.update(site_params)
       render json: @site, serializer: SiteSerializer
     else
-      render json: { errors: @site.errors }, status: 422
+      error_response(@site)
     end
   end
 
