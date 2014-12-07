@@ -14,7 +14,7 @@ enum Role {
     public int getValue() { return value; }
 }
 
-public class User extends APIObject {
+public class User implements APIObject {
 
     private Integer mId;
     private String mEmail;
