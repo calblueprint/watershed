@@ -144,6 +144,7 @@
 
 - (void)keyboardControlsDonePressed:(BSKeyboardControls *)keyboardControls {
     [keyboardControls.activeField resignFirstResponder];
+    [self.infoTableView setContentOffset:CGPointMake(0, -topMargin) animated:YES];
 }
 
 - (void)keyboardControls:(BSKeyboardControls *)keyboardControls
