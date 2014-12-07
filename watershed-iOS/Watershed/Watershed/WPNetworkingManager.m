@@ -47,10 +47,11 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
         NSDictionary *sessionDictionary = [responseDictionary objectForKey:@"session"];
         NSString *authToken = sessionDictionary[@"authentication_token"];
         NSString *email = sessionDictionary[@"email"];
-        
+
         NSDictionary *userJSON = sessionDictionary[@"user"];
         WPUser *user = [MTLJSONAdapter modelOfClass:WPUser.class fromJSONDictionary:userJSON error:nil];
         [self updateLoginKeyChainInfoWithUser:user AuthToken:authToken email:email];
+
         success(user);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Incorrect email or password." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -88,8 +89,8 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
         NSDictionary *sessionDictionary = [responseDictionary objectForKey:@"session"];
         NSString *authToken = sessionDictionary[@"authentication_token"];
         NSString *email = sessionDictionary[@"email"];
+        
         NSDictionary *userJSON = sessionDictionary[@"user"];
-
         WPUser *user = [MTLJSONAdapter modelOfClass:WPUser.class fromJSONDictionary:userJSON error:nil];
         [self updateLoginKeyChainInfoWithUser:user AuthToken:authToken email:email];
         
