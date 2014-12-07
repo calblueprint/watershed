@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ public class ProfileFragment extends Fragment {
 
     public static ProfileFragment newInstance(User user) {
         ProfileFragment fragment = new ProfileFragment();
+        Log.e("Print User", user.toString());
         fragment.setUser(user);
         return fragment;
     }
@@ -38,13 +40,12 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mUser = new User();
         mMainActivity = (MainActivity) getActivity();
         mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
     }
 
     // Networking
-    public void getUserRequest(User user) {
+    public void makeUserRequest(User user) {
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
 
         UserRequest userRequest= new UserRequest(getActivity(), user, params, new Response.Listener<User>() {
@@ -62,6 +63,7 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        configureViewWithUser(view);
         return view;
     }
 
@@ -82,6 +84,12 @@ public class ProfileFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        makeUserRequest(mUser);
+    }
+
     public interface OnFragmentInteractionListener {
         public void onFragmentInteraction(Uri uri);
     }
@@ -91,7 +99,9 @@ public class ProfileFragment extends Fragment {
         //Make a Request for Field Reports maybe. Depends on how we are going to show things
     }
 
-    public void configureViewWithUser(View view, User user){
+    public void configureViewWithUser(View view){
+        //Log.e("Passed In User:", user.toString());
+        Log.e("mUser: ", mUser.toString());
         ((TextView)view.findViewById(R.id.profile_name)).setText(mUser.getName());
         ((TextView)view.findViewById(R.id.profile_email)).setText(mUser.getEmail());
         //((TextView)view.findViewById(R.id.profile_role)).setText(mUser.getRole());

@@ -31,7 +31,7 @@ public class FacebookLoginRequest extends BaseRequest {
                             });
                             listener.onResponse(session);
                         } catch (Exception e) {
-                            Log.e("Json exception", e.toString());
+                            Log.e("Json exception in Facebook request", e.toString());
                         }
                     }
                 }, activity);

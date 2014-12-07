@@ -137,36 +137,29 @@ public class MainActivity extends ActionBarActivity
         Bundle b = getIntent().getExtras();
         mUserId = b.getInt("userId");
 
+        //FIXME
+        Log.e("Look! I have a user id", mUserId.toString());
+
         actionBar = getActionBar();
         setTitle("Tasks");
         mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
         viewPager = (ViewPager) findViewById(R.id.pager);
         mContainer = findViewById(R.id.container);
-        mNetworkManager = NetworkManager.getInstance(getApplicationContext());
+
+        setNetworkManager(NetworkManager.getInstance(this.getApplicationContext()));
+
         mProgress = (ProgressBar) this.findViewById(R.id.progressBar);
-        initializeFragments();
         initializeTabs(0);
 
+        makeHomeRequest();
         initializeNavigationDrawer();
-
-        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
-
-        HomeRequest homeRequest = new HomeRequest(this, mUserId, params, new Response.Listener<User>() {
-            @Override
-            public void onResponse(User home) {
-                setUser(home);
-            }
-        });
-
-        mNetworkManager.getRequestQueue().add(homeRequest);
-
+        initializeFragments();
 
         SharedPreferences prefs = getSharedPreferences(PREFERENCES, 0);
         authToken = prefs.getString("auth_token", "none");
         authEmail = prefs.getString("auth_email", "none");
         mTitle = "Tasks";
 
-        setNetworkManager(NetworkManager.getInstance(this.getApplicationContext()));
     }
 
 
@@ -262,7 +255,7 @@ public class MainActivity extends ActionBarActivity
 
     private void initializeFragments() {
         mtaskFragment = TaskFragment.newInstance(0);
-        mProfileFragment = ProfileFragment.newInstance(mUser);
+        mProfileFragment = new ProfileFragment();
         mAboutFragment = new AboutFragment();
         fragmentManager = getSupportFragmentManager();
         fragmentManager.addOnBackStackChangedListener(
@@ -434,7 +427,16 @@ public class MainActivity extends ActionBarActivity
 
     public void makeHomeRequest(){
         // TODO: Change to an actual home request, and not just a user request.
+        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
+        HomeRequest homeRequest = new HomeRequest(this, mUserId, params, new Response.Listener<User>() {
+            @Override
+            public void onResponse(User home) {
+                setUser(home);
+                mProfileFragment = ProfileFragment.newInstance(mUser);
+            }
+        });
 
+        mNetworkManager.getRequestQueue().add(homeRequest);
     }
 
 
