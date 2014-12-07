@@ -204,7 +204,7 @@
         _streetTextField = [[UITextField alloc] init];
         _streetTextField.delegate = self;
     }
-    return _nameTextField;
+    return _streetTextField;
 }
 
 - (UITextField *)cityTextField {
