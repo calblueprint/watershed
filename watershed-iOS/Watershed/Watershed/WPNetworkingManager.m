@@ -247,12 +247,7 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
 }
 
 - (void)eraseLoginKeyChainInfo {
-    [self.keyChainStore removeItemForKey:@"auth_token"];
-    [self.keyChainStore removeItemForKey:@"email"];
-    [self.keyChainStore removeItemForKey:@"userId"];
-    if (self.keyChainStore[@"profilePictureId"]) {
-        [self.keyChainStore removeItemForKey:@"profilePictureId"];
-    }
+    [self.keyChainStore removeAllItems];
     [self.keyChainStore synchronize];
 }
 

@@ -57,7 +57,7 @@ static int PROFILE_PIC_HEIGHT = 65;
     [self createSubviews];
     self.infoTableView.delegate = self;
     self.infoTableView.dataSource = self;
-    self.infoTableView.scrollEnabled = NO;
+    self.infoTableView.scrollEnabled = YES;
     [self.infoTableView reloadData];
     [self setNeedsUpdateConstraints];
 }
