@@ -62,12 +62,23 @@
 }
 
 - (void)saveForm:(UIButton *)sender {
-    
+    [self dismissKeyboard];
     WPFieldReport *fieldReport = [[WPFieldReport alloc] init];
     NSString *userId = [[WPNetworkingManager sharedManager] keyChainStore][@"userId"];
 //    NSString *miniSiteId = self.parentViewController; //get minisite id
     NSString *description = self.view.fieldDescription.text;
-//    NSNumber *healthRating = self.view.; //whichever one is selected
+    NSNumber *healthRating;
+    if (self.view.rating1.isSelected) {
+        healthRating = @1;
+    } else if (self.view.rating2.isSelected) {
+        healthRating = @2;
+    } else if (self.view.rating3.isSelected) {
+        healthRating = @3;
+    } else if (self.view.rating4.isSelected) {
+        healthRating = @4;
+    } else if (self.view.rating5.isSelected) {
+        healthRating = @5;
+    }
     BOOL urgent = self.view.urgentSwitch.isOn;
 //  if parent is task VC, do task id, otherwise to nil
     NSNumber *taskId;
