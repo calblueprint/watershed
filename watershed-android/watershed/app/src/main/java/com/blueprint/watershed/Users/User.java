@@ -1,5 +1,7 @@
 package com.blueprint.watershed.Users;
 
+import com.blueprint.watershed.APIObject;
+
 /**
  * Created by maxwolffe on 10/29/14.
  **/
@@ -12,7 +14,7 @@ enum Role {
     public int getValue() { return value; }
 }
 
-public class User {
+public class User extends APIObject {
 
     private Integer mId;
     private String mEmail;
