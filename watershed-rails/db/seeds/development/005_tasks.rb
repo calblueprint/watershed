@@ -1,9 +1,10 @@
-#Tasks
+# Tasks
 
 user_count = User.count
 site_count = Site.count
 
-tasks = ["Water",
+tasks = [
+	"Water",
 	"Prune",
 	"Weed",
 	"Clear inlet/outlet",
@@ -11,7 +12,7 @@ tasks = ["Water",
 	"Hardware Fix",
 	"Outreach",
 	"Other",
-	]
+]
 
 (0..20).each do |task_number|
 	example_task = Task.where(

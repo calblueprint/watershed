@@ -10,6 +10,7 @@
 #  updated_at        :datetime
 #  original_filename :string(255)
 #  image_tmp         :string(255)
+#  hidden            :boolean          default(FALSE)
 #
 
 # Read about factories at https://github.com/thoughtbot/factory_girl

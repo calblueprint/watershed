@@ -20,10 +20,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     UIViewController *launchingViewController = nil;
     UICKeyChainStore *store = [[WPNetworkingManager sharedManager] keyChainStore];
-    if (store[@"auth_token"] && store[@"email"]) {
+    if (store[@"auth_token"] && store[@"email"] && store[@"userId"]) {
         launchingViewController = [self newInitialViewController];
     } else {
         launchingViewController = [self newLoginViewController];

@@ -14,6 +14,7 @@
 @property (nonatomic) UITableView *infoTableView;
 @property (nonatomic) UIView *profilePicView;
 @property (nonatomic) UIView *statusBarView;
+@property (nonatomic) WPUser *user;
 
 @end
 
@@ -22,8 +23,6 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        [self createSubviews];
-        [self setNeedsUpdateConstraints];
         self.backgroundColor = [UIColor whiteColor];
     }
     return self;
@@ -37,6 +36,7 @@
     _infoTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     _infoTableView.delegate = self;
     _infoTableView.dataSource = self;
+    _infoTableView.scrollEnabled = NO;
     [self addSubview:_infoTableView];
     
     _statusBarView = [[UIView alloc] init];
@@ -60,6 +60,13 @@
     [super updateConstraints];
 }
 
+- (void)configureWithUser:(WPUser *)user {
+    self.user = user;
+    [self createSubviews];
+    [self setNeedsUpdateConstraints];
+}
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -69,7 +76,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return 4;
+    return 5;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -78,34 +85,77 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *newCell = [[UITableViewCell alloc] init];
+    WPEditTableViewCell *newCell = [[WPEditTableViewCell alloc] init];
     switch (indexPath.row) {
         case 0: {
             newCell.textLabel.text = @"Name";
+            UITextField *editName = [[UITextField alloc] init];
+            editName.text = self.user.name;
+            newCell.editField = editName;
             break;
         }
         case 1: {
             newCell.textLabel.text = @"Email";
+            UITextField *editEmail = [[UITextField alloc] init];
+            editEmail.text = self.user.email;
+            newCell.editField = editEmail;
             break;
         }
         case 2: {
             newCell.textLabel.text = @"Address";
+            UITextField *editAddress = [[UITextField alloc] init];
+            //
+            newCell.editField = editAddress;
             break;
         }
         case 3: {
             newCell.textLabel.text = @"Phone Number";
+            UITextField *editPhone = [[UITextField alloc] init];
+            //
+            newCell.editField = editPhone;
+            break;
+        }
+        case 4: {
+            newCell.textLabel.text = @"Profile Picture";
             break;
         }
         default: {
             //do nothing
         }
     }
+    [newCell addEditField];
     return newCell;
 
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-
 }
+@end
+
+@implementation WPEditTableViewCell
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        [self setNeedsUpdateConstraints];
+    }
+    return self;
+}
+
+- (void)addEditField {
+    [self.contentView addSubview:self.editField];
+    
+}
+
+- (void)updateConstraints {
+    
+    [self.editField mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.trailing.equalTo(@(-standardMargin));
+        make.centerY.equalTo(self.mas_centerY);
+    }];
+
+    [super updateConstraints];
+}
+
 @end

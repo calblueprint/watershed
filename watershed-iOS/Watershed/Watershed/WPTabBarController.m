@@ -32,7 +32,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.delegate = self;
+//    self.delegate = self;
     // TODO: change color
     self.tabBar.tintColor = [UIColor wp_blue];
     self.tabBar.translucent = NO;
