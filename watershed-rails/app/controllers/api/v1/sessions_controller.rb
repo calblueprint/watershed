@@ -21,11 +21,11 @@ class Api::V1::SessionsController < Devise::SessionsController
 
   def ensure_params_exist
     return unless params[:user].blank?
-    render json: { message: "Missing user parameter" }, status: 422
+    error_response(nil, "Missing user parameter.")
   end
 
   def invalid_login_attempt
-    render json: { message: "Incorrect login or password" }, status: 401
+    error_response(nil, "Incorrect login or password.", 401)
   end
 
 end
