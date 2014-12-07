@@ -60,7 +60,19 @@
 }
 
 - (void)saveForm:(UIButton *)sender {
-
+    WPFieldReport *fieldReport = [[WPFieldReport alloc] init];
+    NSString *userId = [[WPNetworkingManager sharedManager] keyChainStore][@"userId"];
+//    NSString *miniSiteId = self.parentViewController; //get minisite id
+    NSString *description = self.view.fieldDescription.text;
+//    NSNumber *healthRating = self.view.; //whichever one is selected
+    BOOL urgent = self.view.urgentSwitch.isOn;
+//  if from task VC, do task id, otherwise to nil
+    
+    NSDictionary *parameters = @{@"user_id": userId};
+    
+    [[WPNetworkingManager sharedManager] postFieldReportWithParameters:parameters success:^(WPFieldReport *fieldReport) {
+        //do stuffs
+    }];
 }
 
 - (void)viewImageButtonAction:(UIButton *)sender {
