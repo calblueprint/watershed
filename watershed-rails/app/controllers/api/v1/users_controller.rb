@@ -20,7 +20,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     if @user.save
       successful_login(@user)
     else
-      render json: @user.errors, serializer: ErrorSerializer, status: 422
+      render json: Error.new(@user), serializer: ErrorSerializer, status: 422
     end
   end
 
