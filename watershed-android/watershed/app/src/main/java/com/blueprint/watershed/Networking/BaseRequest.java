@@ -16,6 +16,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.blueprint.watershed.APIObject;
+import com.blueprint.watershed.Authentication.Session;
+import com.blueprint.watershed.Utilities.APIError;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,20 +41,26 @@ public abstract class BaseRequest extends JsonObjectRequest {
     private static final String baseURL = "https://intense-reaches-1457.herokuapp.com/api/v1/";
 
     public BaseRequest(int method, String url, JSONObject jsonRequest,
-                       final Response.Listener listener, final Response.ErrorListener errorListener,
+                       final Response.Listener listener, final Response.ErrorListener<APIError> errorListener,
                        final Activity activity) {
         super(method, url, jsonRequest, listener, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Log.e("Request Error", "Custom ErrorListener detected");
-                Log.e("Request error data", new String(volleyError.networkResponse.data));
-                errorListener.onErrorResponse(volleyError);
 
-                String message = "An error has occurred.";
-                Context context = activity.getApplicationContext();
-                int duration = Toast.LENGTH_SHORT;
+                APIError apiError = new APIError();
+                try {
+                    String errorJson = new String(volleyError.networkResponse.data);
+                    Log.e("Data", errorJson);
+                    ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
+                    apiError = mapper.readValue(errorJson, new TypeReference<Error>() {
+                    });
+                    errorListener.onErrorResponse(apiError);
+                } catch (Exception e) {
+                    Log.e("Json exception", e.toString());
+                }
 
-                Toast toast = Toast.makeText(context, message, duration);
+                Toast toast = Toast.makeText(activity.getApplicationContext(), apiError.getMessage(), Toast.LENGTH_SHORT);
                 toast.show();
             }});
 

@@ -221,9 +221,9 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
             public void onResponse(Session session) {
                 storeSessionAndStartMainActivity(intent, session);
             }
-        }, new Response.ErrorListener() {
+        }, new Response.ErrorListener<Error>() {
             @Override
-            public void onErrorResponse(VolleyError volleyError) {
+            public void onErrorResponse(Error error) {
                 Log.e("Error response", "In the landing page activity for the login request");
             }
         });
