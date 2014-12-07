@@ -205,6 +205,27 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
     }];
 }
 
+- (void)postFieldReportWithParameters:(NSDictionary *)parameters success:(void (^)(WPFieldReport *fieldReport))success {
+    NSString *fieldReportString = [WPNetworkingManager createURLWithEndpoint:FIELD_REPORTS_URL];
+    
+    [self POST:fieldReportString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *responseDictionary = responseObject;
+//        NSDictionary *sessionDictionary = [responseDictionary objectForKey:@"session"];
+//        NSString *authToken = sessionDictionary[@"authentication_token"];
+//        NSString *email = sessionDictionary[@"email"];
+//        
+//        NSDictionary *userJSON = sessionDictionary[@"user"];
+//        NSString *userId = [userJSON[@"id"] stringValue];
+        
+        WPFieldReport *fieldReport = [MTLJSONAdapter modelOfClass:WPFieldReport.class fromJSONDictionary:responseDictionary error:nil];
+        success(fieldReport);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Incorrect email or password." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
+}
+
 - (void)requestUserWithUser:(WPUser *)user parameters:(NSMutableDictionary *)parameters success:(void (^)(WPUser *user))success {
     NSString *userEndpoint = [@"/" stringByAppendingString:[user.userId stringValue]];
     NSString *USER_URL = [USERS_URL stringByAppendingString:userEndpoint];

@@ -8,6 +8,7 @@
 
 #import "WPAddFieldReportViewController.h"
 #import "WPAddFieldReportView.h"
+#import "WPNetworkingManager.h"
 
 @interface WPAddFieldReportViewController ()
 
