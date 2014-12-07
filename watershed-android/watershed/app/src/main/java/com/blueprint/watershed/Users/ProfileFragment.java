@@ -96,7 +96,7 @@ public class ProfileFragment extends Fragment {
 
     public void configureProfilewithUser(User user) {
         mUser = user;
-        //Make a Request for Field Reports maybe. Depends on how we are going to show things
+        //Make a Request for Field Reports maybe. Depends on how we are going to show things? If just using buttons then I don't need this request.
     }
 
     public void configureViewWithUser(View view){

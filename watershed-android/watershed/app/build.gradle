@@ -29,4 +29,5 @@ dependencies {
     compile project(':app:libs:facebook')
     compile 'com.google.android.gms:play-services:4.2.42'
     compile 'com.android.support:appcompat-v7:20.0.0'
+    compile 'com.pkmmte.view:circularimageview:1.1'
 }

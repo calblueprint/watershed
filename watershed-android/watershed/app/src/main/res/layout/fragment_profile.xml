@@ -9,6 +9,7 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/standard_margin"
         android:layout_marginTop="@dimen/standard_margin"
+        android:layout_marginRight="@dimen/standard_margin"
         android:orientation="vertical"
         android:gravity="center">
 
@@ -16,6 +17,8 @@
         android:id = "@+id/profile_name"
         android:text="Name"
         android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
