@@ -13,7 +13,7 @@ class Api::V1::MiniSitesController < Api::V1::BaseController
     if @mini_site.save
       render json: @mini_site, serializer: MiniSiteSerializer
     else
-      render json: { errors: @mini_site.errors }, status: 422
+      error_response(@mini_site)
     end
   end
 
@@ -21,7 +21,7 @@ class Api::V1::MiniSitesController < Api::V1::BaseController
     if @mini_site.update(mini_site_params)
       render json: @mini_site, serializer: MiniSiteSerializer
     else
-      render json: { errors: @mini_site.errors }, status: 422
+      error_response(@mini_site)
     end
   end
 
