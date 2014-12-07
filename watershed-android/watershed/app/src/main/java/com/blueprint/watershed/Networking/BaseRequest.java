@@ -51,9 +51,10 @@ public abstract class BaseRequest extends JsonObjectRequest {
                 APIError apiError = new APIError();
                 try {
                     String errorJson = new String(volleyError.networkResponse.data);
-                    Log.e("Data", errorJson);
+                    JSONObject errorJsonObject = new JSONObject(errorJson);
+                    errorJson = errorJsonObject.getString("error");
                     ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
-                    apiError = mapper.readValue(errorJson, new TypeReference<Error>() {
+                    apiError = mapper.readValue(errorJson, new TypeReference<APIError>() {
                     });
                     errorListener.onResponse(apiError);
                 } catch (Exception e) {

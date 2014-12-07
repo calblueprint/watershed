@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 /**
  * Created by Mark Miyashita on 12/7/14.
  */
-@JsonRootName(value = "error")
 public class APIError {
 
     private String mMessage;
