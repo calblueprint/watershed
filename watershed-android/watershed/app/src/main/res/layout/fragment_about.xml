@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/ws_blue"
     tools:context="com.blueprint.watershed.AboutFragment">
 
     <LinearLayout
@@ -17,6 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textStyle="bold"
+        android:textColor="@color/white"
         android:textSize="20sp"
         android:gravity="center"
         android:text = "@string/watershed_title"/>
@@ -24,7 +26,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:textSize="17sp"
         android:layout_marginTop="@dimen/tight_margin"
         android:text="@string/about_us" />
 

@@ -100,12 +100,19 @@ public class ProfileFragment extends Fragment {
     }
 
     public void configureViewWithUser(View view){
-        //Log.e("Passed In User:", user.toString());
         Log.e("mUser: ", mUser.toString());
         ((TextView)view.findViewById(R.id.profile_name)).setText(mUser.getName());
         ((TextView)view.findViewById(R.id.profile_email)).setText(mUser.getEmail());
-        //((TextView)view.findViewById(R.id.profile_role)).setText(mUser.getRole());
-
+        TextView roleView = ((TextView)view.findViewById(R.id.profile_role));
+        if (mUser.isCommunityMember()) {
+            roleView.setText("Community Member");
+        }
+        else if (mUser.isEmployee()) {
+            roleView.setText("Employee");
+        }
+        else {
+            roleView.setText("Manager");
+        }
     }
 
     public void setUser(User user) { mUser = user; }

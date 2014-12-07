@@ -24,22 +24,21 @@ public class User {
     private Integer mId;
     private String mEmail;
     private String mName;
-    //private String mRole;
     private Integer mRole;
 
 
     private ArrayList<FieldReport> mfieldReports;
 
-    public User(String email, String name, String role){
+    public User(String email, String name, Integer role){
         mEmail = email;
         mName = name;
-        //mRole = role;
+        mRole = role;
     }
 
     public User() {
         mName = "Mark Millman";
         mEmail = "mark@mark.com";
-        //mRole = "Manager";
+        mRole = 2;
     }
 
     // Roles
