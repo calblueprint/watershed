@@ -264,10 +264,10 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
 - (void)updateLoginKeyChainInfoWithUser:(WPUser *)user
                               AuthToken:(NSString *)authToken
                                   email:(NSString *)email {
-    [self.keyChainStore setString:[user.userId stringValue] forKey:@"user_id"];
-    [self.keyChainStore setString:[user.role stringValue] forKey:@"role"];
     [self.keyChainStore setString:authToken forKey:@"auth_token"];
     [self.keyChainStore setString:email forKey:@"email"];
+    [self.keyChainStore setString:[user.userId stringValue] forKey:@"user_id"];
+    [self.keyChainStore setString:[user.role stringValue] forKey:@"role"];
     [self.keyChainStore synchronize];
 }
 
