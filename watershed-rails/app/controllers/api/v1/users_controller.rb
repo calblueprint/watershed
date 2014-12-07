@@ -20,7 +20,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     if @user.save
       successful_login(@user)
     else
-      render json: @user.errors, serializer: ErrorSerializer, status: 422
+      error_response(@user)
     end
   end
 
@@ -39,7 +39,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     if @user.update(user_params)
       render json: @user, serializer: UserSerializer
     else
-      render json: @user.errors, serializer: ErrorSerializer, status: 422
+      error_response(@user)
     end
   end
 
@@ -51,7 +51,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def invalid_facebook_login_attempt
-    render json: { message: "There was a problem signing in with Facebook." }, status: 401
+    error_response(nil, "There was a problem signing in with Facebook.", 401)
   end
 
 end

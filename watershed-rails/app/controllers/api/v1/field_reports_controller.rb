@@ -14,7 +14,7 @@ class Api::V1::FieldReportsController < Api::V1::BaseController
     if @field_report.save
       render json: @field_report, serializer: FieldReportSerializer
     else
-      render json: { errors: @field_report.errors }, status: 422
+      error_response(@field_report)
     end
   end
 
@@ -22,7 +22,7 @@ class Api::V1::FieldReportsController < Api::V1::BaseController
     if @field_report.update(field_report_params)
       render json: @field_report, serializer: FieldReportSerializer
     else
-      render json: { errors: @field_report.errors }, status: 422
+      error_response(@field_report)
     end
   end
 

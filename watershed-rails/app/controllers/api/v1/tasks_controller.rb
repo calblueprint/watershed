@@ -13,7 +13,7 @@ class Api::V1::TasksController < Api::V1::BaseController
     if @task.save
       render json: @task, serializer: TaskSerializer
     else
-      render json: { errors: @task.errors }, status: 422
+      error_response(@task)
     end
   end
 
@@ -21,7 +21,7 @@ class Api::V1::TasksController < Api::V1::BaseController
     if @task.update(task_params)
       render json: @task, serializer: TaskSerializer
     else
-      render json: { errors: @task.errors }, status: 422
+      error_response(@task)
     end
   end
 

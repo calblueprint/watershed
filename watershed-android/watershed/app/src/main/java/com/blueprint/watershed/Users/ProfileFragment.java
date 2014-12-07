@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Response;
@@ -18,6 +19,7 @@ import com.blueprint.watershed.R;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ProfileFragment extends Fragment {
@@ -25,6 +27,7 @@ public class ProfileFragment extends Fragment {
     private User mUser;
     private Activity mMainActivity;
     private NetworkManager mNetworkManager;
+    private ProfileOptionsAdapter mAdapter;
 
     public static ProfileFragment newInstance(User user) {
         ProfileFragment fragment = new ProfileFragment();
@@ -64,6 +67,20 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         configureViewWithUser(view);
+        ListView list = (ListView) view.findViewById(R.id.profile_options);
+        ArrayList<String> options;
+        options = new ArrayList <String>();
+        options.add("Field-Reports " + mUser.getFieldReportsCount());
+        if (mUser.isEmployee() || mUser.isManager()){
+            options = new ArrayList <String>();
+            options.add("Tasks " + mUser.getFieldReportsCount());
+            options.add("Sites " + mUser.getSitesCount());
+        }
+
+        mAdapter = new ProfileOptionsAdapter(getActivity(), R.layout.site_list_row, options);
+        list.setAdapter(mAdapter);
+
+
         return view;
     }
 
@@ -96,7 +113,14 @@ public class ProfileFragment extends Fragment {
 
     public void configureProfilewithUser(User user) {
         mUser = user;
-        //Make a Request for Field Reports maybe. Depends on how we are going to show things? If just using buttons then I don't need this request.
+    }
+
+    public void makeAllUserView(){
+
+    }
+
+    public void makeAdminUserView(){
+
     }
 
     public void configureViewWithUser(View view){

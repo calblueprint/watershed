@@ -54,6 +54,7 @@
         android:layout_marginTop="@dimen/tight_margin">
 
         </ListView>
+
     </LinearLayout>
 
 </FrameLayout>
