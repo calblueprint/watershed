@@ -229,10 +229,11 @@ static NSString * const TASKS_URL = @"tasks";
         NSDictionary *miniSiteJSON = (NSDictionary *)responseObject[@"mini_site"];
         WPMiniSite *miniSiteResponse = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:miniSiteJSON error:nil];
         miniSiteResponse.site = miniSite.site;
-        NSArray *photosListJSON = miniSiteJSON[@"photos"];
-        for (NSDictionary *photoJSON in photosListJSON) {
-            [miniSiteResponse.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];
-        }
+        miniSiteResponse.imageURLs = miniSite.imageURLs;
+        // NSArray *photosListJSON = miniSiteJSON[@"photos"];
+        // for (NSDictionary *photoJSON in photosListJSON) {
+        //     [miniSiteResponse.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];
+        // }
         
         NSArray *fieldReportListJSON = miniSiteJSON[@"field_reports"];
         NSMutableArray *fieldReportList = [[NSMutableArray alloc] init];
@@ -266,10 +267,11 @@ static NSString * const TASKS_URL = @"tasks";
         NSDictionary *fieldReportJSON = (NSDictionary *)responseObject[@"field_report"];
         WPFieldReport *fieldReportResponse = [MTLJSONAdapter modelOfClass:WPFieldReport.class fromJSONDictionary:fieldReportJSON error:nil];
         fieldReportResponse.miniSite = fieldReport.miniSite;
-        NSDictionary *photoJSON = fieldReportJSON[@"photo"];
-        if (!([photoJSON isEqual:[NSNull null]])) {
-            [fieldReport.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];
-        }
+        fieldReportResponse.imageURLs = fieldReport.imageURLs;
+        // NSDictionary *photoJSON = fieldReportJSON[@"photo"];
+        // if (!([photoJSON isEqual:[NSNull null]])) {
+        //     [fieldReport.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];
+        // }
         success(fieldReportResponse);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load field report." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
