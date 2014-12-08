@@ -205,18 +205,12 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
     }];
 }
 
-- (void)postFieldReportWithParameters:(NSDictionary *)parameters success:(void (^)(WPFieldReport *fieldReport))success {
+- (void)postFieldReportWithParameters:(NSMutableDictionary *)parameters success:(void (^)(WPFieldReport *fieldReport))success {
     NSString *fieldReportString = [WPNetworkingManager createURLWithEndpoint:FIELD_REPORTS_URL];
     [self addAuthenticationParameters:parameters];
 
     [self POST:fieldReportString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *responseDictionary = responseObject;
-//        NSDictionary *sessionDictionary = [responseDictionary objectForKey:@"session"];
-//        NSString *authToken = sessionDictionary[@"authentication_token"];
-//        NSString *email = sessionDictionary[@"email"];
-//        
-//        NSDictionary *userJSON = sessionDictionary[@"user"];
-//        NSString *userId = [userJSON[@"id"] stringValue];
         
         WPFieldReport *fieldReport = [MTLJSONAdapter modelOfClass:WPFieldReport.class fromJSONDictionary:responseDictionary error:nil];
         success(fieldReport);
