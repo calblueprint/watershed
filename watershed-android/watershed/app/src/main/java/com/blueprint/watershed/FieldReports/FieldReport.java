@@ -70,7 +70,10 @@ public class FieldReport implements APIObject {
     @JsonIgnore
     public ArrayList<Photo> getPhotos() {
         ArrayList<Photo> photos = new ArrayList<Photo>();
-        photos.add(getPhoto());
+        Photo photo = getPhoto();
+        if (photo != null) {
+            photos.add(photo);
+        }
         return photos;
     }
 
