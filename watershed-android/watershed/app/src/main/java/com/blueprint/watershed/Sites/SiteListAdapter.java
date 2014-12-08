@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Views.CoverPhotoPagerView;
 
 import java.util.ArrayList;
 
@@ -38,8 +39,10 @@ public class SiteListAdapter extends ArrayAdapter<Site> {
             row = inflater.inflate(layoutResourceId, parent, false);
 
             holder = new SiteHolder();
-            holder.name = (TextView) row.findViewById(R.id.primary_label);
-            holder.description = (TextView) row.findViewById(R.id.secondary_label);
+            holder.photosView = (CoverPhotoPagerView) row.findViewById(R.id.cover_photo_pager_view);
+            holder.coverPhotoLabel = (TextView) row.findViewById(R.id.cover_photo_label);
+            holder.topLabel = (TextView) row.findViewById(R.id.top_label);
+            holder.bottomLabel = (TextView) row.findViewById(R.id.bottom_label);
 
             row.setTag(holder);
         } else {
@@ -48,14 +51,18 @@ public class SiteListAdapter extends ArrayAdapter<Site> {
 
         Site site = sites.get(position);
 
-        holder.name.setText(site.getName());
-        holder.description.setText("");
+        holder.photosView.configureWithPhotos(site.getPhotos());
+        holder.coverPhotoLabel.setText(String.format("%s Tasks", site.getTasksCount()));
+        holder.topLabel.setText(site.getName());
+        holder.bottomLabel.setText(site.getLocation());
 
         return row;
     }
 
     static class SiteHolder {
-        TextView name;
-        TextView description;
+        CoverPhotoPagerView photosView;
+        TextView coverPhotoLabel;
+        TextView topLabel;
+        TextView bottomLabel;
     }
 }

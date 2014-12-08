@@ -2,6 +2,8 @@ package com.blueprint.watershed.Sites;
 
 import com.blueprint.watershed.APIObject;
 import com.blueprint.watershed.MiniSites.MiniSite;
+import com.blueprint.watershed.Photos.Photo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ public class Site implements APIObject {
 
     // Relationships
     private ArrayList<MiniSite> mMiniSites;
+    private ArrayList<Photo> mPhotos;
 
     public Site() {
     }
@@ -43,6 +46,15 @@ public class Site implements APIObject {
 
     public MiniSite getMiniSite(int position) { return mMiniSites.get(position); }
 
+    public ArrayList<Photo> getPhotos() {
+        if (mPhotos == null) {
+            mPhotos = new ArrayList<Photo>();
+        }
+        return mPhotos;
+    }
+
+    public Photo getPhoto(int position) { return mPhotos.get(position); }
+
     // Getters
     public Integer getId() { return mId; }
     public String getName() { return mName; }
@@ -53,6 +65,12 @@ public class Site implements APIObject {
     public Integer getZipCode() { return mZipCode; }
     public String getLatitude() { return mLatitude; }
     public String getLongitude() { return mLongitude; }
+    public Integer getTasksCount() { return 1; }
+
+    @JsonIgnore
+    public String getLocation() {
+        return String.format("%s, %s, %s %s", getStreet(), getCity(), getState(), getZipCode());
+    }
 
     // Setters
     public void setId(Integer id) { mId = id; }
