@@ -29,7 +29,7 @@ class Api::V1::TasksController < Api::V1::BaseController
   private
 
   def site_params
-    params.require(:task).permit(:title, :description, :site_id,
+    params.require(:task).permit(:title, :description, :mini_site_id,
                                  :assigner_id, :assignee_id, :complete,
                                  :due_date)
   end
