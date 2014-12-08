@@ -110,6 +110,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
      * Networking
      */
     public void createFieldReportRequest(FieldReport fieldReport) {
+        Log.e("HIT DAT ENDPOINT", "Hit It");
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
 
         CreateFieldReportRequest createFieldReportRequest = new CreateFieldReportRequest(getActivity(), fieldReport, params, new Response.Listener<FieldReport>() {

@@ -433,6 +433,7 @@ public class MainActivity extends ActionBarActivity
     public void setUser(User user){
         mUser = user;
     }
+    public User getUser() { return mUser; }
 
     public ProgressBar getSpinner() { return mProgress; }
 }

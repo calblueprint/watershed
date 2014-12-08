@@ -5,8 +5,10 @@ import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Networking.BaseRequest;
 import com.blueprint.watershed.Tasks.Task;
+import com.blueprint.watershed.Tasks.TaskFragment;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -20,7 +22,7 @@ import java.util.HashMap;
 public class CreateTaskRequest extends BaseRequest {
 
     Task mTask;
-    Activity mActivity;
+    MainActivity mActivity;
 
     public CreateTaskRequest(final Activity activity, final Task task, HashMap<String, JSONObject> params, final Response.Listener<Task> listener) {
         super(Request.Method.POST, makeURL("tasks"), taskParams(activity, task),
@@ -38,8 +40,6 @@ public class CreateTaskRequest extends BaseRequest {
                         }
                     }
                 }, activity);
-        mActivity = activity;
-        mTask = task;
     }
 
     protected static JSONObject taskParams(final Activity activity, final Task task) {

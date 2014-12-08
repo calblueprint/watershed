@@ -13,6 +13,10 @@ import android.widget.EditText;
 
 
 import com.android.volley.Response;
+import com.blueprint.watershed.Activities.MainActivity;
+import com.blueprint.watershed.Networking.FieldReports.CreateFieldReportRequest;
+import com.blueprint.watershed.Networking.NetworkManager;
+import com.blueprint.watershed.Networking.Tasks.CreateTaskRequest;
 import com.blueprint.watershed.R;
 
 import org.json.JSONObject;
@@ -27,6 +31,8 @@ public class CreateTaskFragment extends Fragment implements View.OnClickListener
     private EditText mAssigneeField;
     private EditText mDueDateField;
     private EditText mMiniSiteId;
+    private MainActivity mMainActivity;
+    private NetworkManager mNetworkManager;
     private OnFragmentInteractionListener mListener;
 
     public static CreateTaskFragment newInstance() {
@@ -40,7 +46,8 @@ public class CreateTaskFragment extends Fragment implements View.OnClickListener
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
+        mMainActivity = (MainActivity) getActivity();
     }
 
     @Override
@@ -87,10 +94,12 @@ public class CreateTaskFragment extends Fragment implements View.OnClickListener
     }
 
     public void createTaskRequest(Task task){
-        CreateTaskRequest createFieldReportRequest = new CreateFieldReportRequest(getActivity(), fieldReport, params, new Response.Listener<FieldReport>() {
+        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
+
+        CreateTaskRequest createFieldReportRequest = new CreateTaskRequest(getActivity(), task, params, new Response.Listener<Task>() {
             @Override
-            public void onResponse(FieldReport fieldReport) {
-                Log.e("successful field report", "creation");
+            public void onResponse(Task task) {
+                Log.e("successful task", "creation");
             }
         });
 
@@ -100,11 +109,16 @@ public class CreateTaskFragment extends Fragment implements View.OnClickListener
 
     private void createTask() {
         Task submitTask = new Task();
+        submitTask.setTitle(mTitleField.getText().toString());
+        submitTask.setDescription(mDescriptionField.getText().toString());
+        submitTask.setAssignerId(mMainActivity.getUser().getId());
+        submitTask.setMiniSiteId(Integer.parseInt(mMiniSiteId.getText().toString()));
+        submitTask.setComplete(false);
 
-        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
+        createTaskRequest(submitTask);
 
-
-
+        TaskFragment taskFragment = TaskFragment.newInstance(0);
+        mMainActivity.replaceFragment(taskFragment);
     }
 
     public interface OnFragmentInteractionListener {
