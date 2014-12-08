@@ -315,7 +315,7 @@ public class MainActivity extends ActionBarActivity
     private void initializeNavigationDrawer() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        String titles[] = { "Tasks", "Sites", "Activity Log", "Profile", "About", "Logout" };
+        String titles[] = { "Tasks", "Sites", "Profile", "About", "Logout" };
 
         menuItems = new ArrayList<String>();
         for (String title : titles) {
@@ -380,15 +380,12 @@ public class MainActivity extends ActionBarActivity
                 replaceFragment(siteListFragment);
                 break;
             case 2:
-                //replaceFragment();
-                break;
-            case 3:
                 replaceFragment(mProfileFragment);
                 break;
-            case 4:
+            case 3:
                 replaceFragment(mAboutFragment);
                 break;
-            case 5:
+            case 4:
                 SharedPreferences prefs = getSharedPreferences(LandingPageActivity.PREFERENCES, 0);
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.clear();

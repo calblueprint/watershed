@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -22,7 +24,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements ListView.OnItemClickListener{
     private OnFragmentInteractionListener mListener;
     private User mUser;
     private Activity mMainActivity;
@@ -78,7 +80,7 @@ public class ProfileFragment extends Fragment {
 
         mAdapter = new ProfileOptionsAdapter(getActivity(), R.layout.option_item, options);
         list.setAdapter(mAdapter);
-
+        list.setOnItemClickListener(this);
 
         return view;
     }
@@ -93,6 +95,7 @@ public class ProfileFragment extends Fragment {
                     + " must implement OnFragmentInteractionListener");
         }
     }
+
 
     @Override
     public void onDetach() {
@@ -114,13 +117,21 @@ public class ProfileFragment extends Fragment {
         mUser = user;
     }
 
-    public void makeAllUserView(){
-
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (null != mListener) {
+            // Direct to list of User Tasks, Field Reports, or Sites
+            switch (position) {
+                case 0:
+                    //Field Reports
+                case 1:
+                    // Tasks
+                case 2:
+                    // Sites
+            }
+        }
     }
 
-    public void makeAdminUserView(){
-
-    }
 
     public void configureViewWithUser(View view){
         ((TextView)view.findViewById(R.id.profile_name)).setText(mUser.getName());
