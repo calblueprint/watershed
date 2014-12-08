@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.support.v4.app.Fragment;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,6 +22,7 @@ import com.blueprint.watershed.MiniSites.MiniSiteListAdapter;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Sites.SiteRequest;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Views.CoverPhotoPagerView;
 
 import org.json.JSONObject;
 
@@ -34,7 +36,7 @@ public class SiteFragment extends Fragment
     private OnFragmentInteractionListener mListener;
     private NetworkManager mNetworkManager;
     private MainActivity mMainActivity;
-    private ListView mMiniSiteListView;
+    private GridView mMiniSiteGridView;
     private MiniSiteListAdapter mMiniSiteAdapter;
     private Site mSite;
     private ArrayList<MiniSite> mMiniSites;
@@ -54,8 +56,7 @@ public class SiteFragment extends Fragment
     }
 
     public void configureViewWithSite(View view, Site site) {
-        ((TextView)view.findViewById(R.id.primary_label)).setText("");
-        ((TextView)view.findViewById(R.id.secondary_label)).setText("");
+        ((CoverPhotoPagerView)view.findViewById(R.id.cover_photo_pager_view)).configureWithPhotos(site.getPhotos());
         ((TextView)view.findViewById(R.id.site_name)).setText(site.getName());
         ((TextView)view.findViewById(R.id.site_description)).setText(site.getDescription());
     }
@@ -72,11 +73,11 @@ public class SiteFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_site, container, false);
         configureViewWithSite(view, mSite);
 
-        mMiniSiteListView = (ListView) view.findViewById(R.id.mini_sites_table);
+        mMiniSiteGridView = (GridView) view.findViewById(R.id.mini_sites_grid);
         mMiniSiteAdapter = new MiniSiteListAdapter(getActivity(), R.layout.mini_site_list_row, getMiniSites());
-        mMiniSiteListView.setAdapter(mMiniSiteAdapter);
+        mMiniSiteGridView.setAdapter(mMiniSiteAdapter);
 
-        mMiniSiteListView.setOnItemClickListener(this);
+        mMiniSiteGridView.setOnItemClickListener(this);
         return view;
     }
 
