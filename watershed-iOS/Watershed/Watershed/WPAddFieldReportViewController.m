@@ -63,7 +63,7 @@
 
 - (void)saveForm {
     [self dismissKeyboard];
-    NSString *userId = [[WPNetworkingManager sharedManager] keyChainStore][@"userId"];
+    NSString *userId = [[WPNetworkingManager sharedManager] keyChainStore][@"user_id"];
     NSString *fieldReportDescription = self.view.fieldDescription.text;
     NSNumber *healthRating;
     if (self.view.rating1.isSelected) {
