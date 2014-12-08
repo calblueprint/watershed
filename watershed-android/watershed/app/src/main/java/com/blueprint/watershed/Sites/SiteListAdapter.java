@@ -2,6 +2,7 @@ package com.blueprint.watershed.Sites;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,13 +10,15 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Views.CircularTextView;
+import com.blueprint.watershed.Views.CoverPhotoPagerView;
 
 import java.util.ArrayList;
 
 /**
  * Created by Mark Miyashita on 10/14/14.
  */
-public class SiteListAdapter extends ArrayAdapter<Site> {
+public class SiteListAdapter extends ArrayAdapter<Site> implements View.OnClickListener {
 
     Context context;
     int layoutResourceId;
@@ -38,8 +41,10 @@ public class SiteListAdapter extends ArrayAdapter<Site> {
             row = inflater.inflate(layoutResourceId, parent, false);
 
             holder = new SiteHolder();
-            holder.name = (TextView) row.findViewById(R.id.primary_label);
-            holder.description = (TextView) row.findViewById(R.id.secondary_label);
+            holder.photosView = (CoverPhotoPagerView) row.findViewById(R.id.cover_photo_pager_view);
+            holder.numberOfTasksView = (CircularTextView) row.findViewById(R.id.number_of_tasks_view);
+            holder.topLabel = (TextView) row.findViewById(R.id.top_label);
+            holder.bottomLabel = (TextView) row.findViewById(R.id.bottom_label);
 
             row.setTag(holder);
         } else {
@@ -48,14 +53,24 @@ public class SiteListAdapter extends ArrayAdapter<Site> {
 
         Site site = sites.get(position);
 
-        holder.name.setText(site.getName());
-        holder.description.setText("");
+        holder.photosView.configureWithPhotos(site.getPhotos());
+        holder.numberOfTasksView.configureLabels(Integer.toString(site.getTasksCount()), "TASKS");
+        holder.topLabel.setText(site.getName());
+        holder.bottomLabel.setText(String.format("%s Sites", site.getMiniSitesCount()));
 
+        row.setOnClickListener(this);
         return row;
     }
 
     static class SiteHolder {
-        TextView name;
-        TextView description;
+        CoverPhotoPagerView photosView;
+        CircularTextView numberOfTasksView;
+        TextView topLabel;
+        TextView bottomLabel;
+    }
+
+    @Override
+    public void onClick(View view) {
+        Log.d("Sample", "Clicked on tag: " + view.getTag());
     }
 }

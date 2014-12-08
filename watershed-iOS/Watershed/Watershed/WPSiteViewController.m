@@ -32,10 +32,12 @@ static NSString *cellIdentifier = @"MiniSiteCell";
     self.miniSiteTableView.delegate = self;
     self.miniSiteTableView.dataSource = self;
 
+    __weak __typeof(self)weakSelf = self;
     [[WPNetworkingManager sharedManager] requestSiteWithSite:self.site parameters:[[NSMutableDictionary alloc] init] success:^(WPSite *site, NSMutableArray *miniSiteList) {
-        self.site = site;
-        self.miniSiteList = miniSiteList;
-        [self.miniSiteTableView reloadData];
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        strongSelf.site = site;
+        strongSelf.miniSiteList = miniSiteList;
+        [strongSelf.miniSiteTableView reloadData];
     }];
 }
 
@@ -80,6 +82,9 @@ static NSString *cellIdentifier = @"MiniSiteCell";
     if ([tableView isEqual:self.miniSiteTableView]) {
         
         cellView = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        [cellView.photoView cancelImageRequestOperation];
+        cellView.photoView.image = nil;
+        
         if (!cellView) {
             
             cellView = [[WPMiniSiteTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
@@ -87,7 +92,8 @@ static NSString *cellIdentifier = @"MiniSiteCell";
         }
         WPMiniSite *miniSite = self.miniSiteList[indexPath.row];
         cellView.nameLabel.text = miniSite.name;
-        cellView.photoView.image = miniSite.image;
+        [cellView.photoView setImageWithURL:[miniSite.imageURLs firstObject]
+                           placeholderImage:[UIImage imageNamed:@"SampleCoverPhoto2"]];
         cellView.ratingDotView.backgroundColor = [UIColor colorForRating:3];
         cellView.taskCountLabel.label.text = [NSString stringWithFormat:@" %d tasks", 5];
         cellView.fieldReportCountLabel.label.text = [[miniSite.fieldReportCount stringValue] stringByAppendingString:@" field reports"];

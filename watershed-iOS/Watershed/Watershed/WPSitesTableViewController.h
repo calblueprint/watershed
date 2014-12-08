@@ -11,4 +11,5 @@
 
 @interface WPSitesTableViewController : WPViewController <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic) NSMutableArray *sitesList;
+- (void)requestAndLoadSites;
 @end

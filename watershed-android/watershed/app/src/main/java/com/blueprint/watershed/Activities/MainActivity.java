@@ -3,32 +3,28 @@ package com.blueprint.watershed.Activities;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentTransaction;
-import android.app.ProgressDialog;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.MenuItem;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 
-import com.blueprint.watershed.FieldReports.FieldReport;
+import com.android.volley.Response;
+import com.blueprint.watershed.AboutFragment;
 import com.blueprint.watershed.FieldReports.AddFieldReportFragment;
-import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
+import com.blueprint.watershed.Networking.Users.HomeRequest;
+import com.blueprint.watershed.Users.UserFragment;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Sites.SiteFragment;
@@ -37,7 +33,6 @@ import com.blueprint.watershed.Utilities.TabsPagerAdapter;
 import com.blueprint.watershed.Tasks.TaskAdapter;
 import com.blueprint.watershed.Tasks.TaskDetailFragment;
 import com.blueprint.watershed.Tasks.TaskFragment;
-import com.facebook.AppEventsLogger;
 import com.facebook.Session;
 
 import android.view.View;
@@ -48,19 +43,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Switch;
-import android.widget.Toast;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 
 public class MainActivity extends ActionBarActivity
                           implements ActionBar.TabListener,
@@ -68,8 +56,10 @@ public class MainActivity extends ActionBarActivity
                                      ListView.OnItemClickListener,
                                      TaskFragment.OnFragmentInteractionListener,
                                      TaskDetailFragment.OnFragmentInteractionListener,
-                                     SiteListFragment.OnFragmentInteractionListener,
                                      SiteFragment.OnFragmentInteractionListener,
+                                     UserFragment.OnFragmentInteractionListener,
+                                     AboutFragment.OnFragmentInteractionListener,
+                                     SiteListFragment.OnFragmentInteractionListener,
                                      MiniSiteFragment.OnFragmentInteractionListener,
                                      AddFieldReportFragment.OnFragmentInteractionListener {
 
@@ -85,10 +75,11 @@ public class MainActivity extends ActionBarActivity
     SharedPreferences preferences;
 
     // Fragments
-    public Fragment currentFragment;
     private TaskFragment mtaskFragment;
     private SiteListFragment siteListFragment;
     private FragmentManager fragmentManager;
+    private UserFragment mUserFragment;
+    private AboutFragment mAboutFragment;
 
     // Navigation Drawer
     private DrawerLayout mDrawerLayout;
@@ -116,28 +107,37 @@ public class MainActivity extends ActionBarActivity
     // Networking
     private NetworkManager mNetworkManager;
 
+    // User
+    private User mUser;
+    private Integer mUserId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Bundle b = getIntent().getExtras();
+        mUserId = b.getInt("userId");
 
         actionBar = getActionBar();
         setTitle("Tasks");
         mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
         viewPager = (ViewPager) findViewById(R.id.pager);
         mContainer = findViewById(R.id.container);
+
+        setNetworkManager(NetworkManager.getInstance(this.getApplicationContext()));
+
         mProgress = (ProgressBar) this.findViewById(R.id.progressBar);
-        initializeFragments();
         initializeTabs(0);
 
+        makeHomeRequest();
         initializeNavigationDrawer();
+        initializeFragments();
 
         SharedPreferences prefs = getSharedPreferences(PREFERENCES, 0);
         authToken = prefs.getString("auth_token", "none");
         authEmail = prefs.getString("auth_email", "none");
         mTitle = "Tasks";
 
-        setNetworkManager(NetworkManager.getInstance(this.getApplicationContext()));
     }
 
 
@@ -195,8 +195,14 @@ public class MainActivity extends ActionBarActivity
             displayTaskView(true);
             return;
         }
-        else if (f instanceof SiteListFragment) {
+        else if (f instanceof SiteListFragment || f instanceof SiteFragment) {
             setTitle("Sites");
+        }
+        else if (f instanceof AboutFragment) {
+            setTitle("About");
+        }
+        else if (f instanceof UserFragment) {
+            setTitle("Profile");
         }
         displayTaskView(false);
 
@@ -227,6 +233,8 @@ public class MainActivity extends ActionBarActivity
 
     private void initializeFragments() {
         mtaskFragment = TaskFragment.newInstance(0);
+        mUserFragment = new UserFragment();
+        mAboutFragment = new AboutFragment();
         fragmentManager = getSupportFragmentManager();
         fragmentManager.addOnBackStackChangedListener(
                 new FragmentManager.OnBackStackChangedListener() {
@@ -271,7 +279,7 @@ public class MainActivity extends ActionBarActivity
         switch (item.getItemId()) {
             case android.R.id.home:
                 Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
-                if (!(f instanceof TaskFragment) && !(f instanceof SiteListFragment)) {
+                if (!(f instanceof TaskFragment) && !(f instanceof SiteListFragment) &&!(f instanceof UserFragment) &&!(f instanceof AboutFragment)) {
                     getSupportFragmentManager().popBackStack();
                     return false;
                 }
@@ -285,7 +293,7 @@ public class MainActivity extends ActionBarActivity
     private void initializeNavigationDrawer() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        String titles[] = { "Tasks", "Sites", "Activity Log", "Profile", "About", "Logout" };
+        String titles[] = { "Tasks", "Sites", "Profile", "About", "Logout" };
 
         menuItems = new ArrayList<String>();
         for (String title : titles) {
@@ -350,15 +358,12 @@ public class MainActivity extends ActionBarActivity
                 replaceFragment(siteListFragment);
                 break;
             case 2:
-                //replaceFragment();
+                replaceFragment(mUserFragment);
                 break;
             case 3:
-                //replaceFragment();
+                replaceFragment(mAboutFragment);
                 break;
             case 4:
-                //replaceFragment();
-                break;
-            case 5:
                 logoutCurrentUser(this);
                 break;
         }
@@ -399,12 +404,31 @@ public class MainActivity extends ActionBarActivity
     public NetworkManager getNetworkManager() { return mNetworkManager; }
     public void setNetworkManager(NetworkManager networkManager) { mNetworkManager = networkManager; }
 
+    public void makeHomeRequest(){
+        // TODO: Change to an actual home request, and not just a user request.
+        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
+        HomeRequest homeRequest = new HomeRequest(this, mUserId, params, new Response.Listener<User>() {
+            @Override
+            public void onResponse(User home) {
+                setUser(home);
+                mUserFragment = UserFragment.newInstance(mUser);
+            }
+        });
+
+        mNetworkManager.getRequestQueue().add(homeRequest);
+    }
+
 
     // Button Events
 
     public void FieldReportButtonPressed(View view){
         AddFieldReportFragment fieldFragment = AddFieldReportFragment.newInstance();
         replaceFragment(fieldFragment);
+    }
+
+    // Setter
+    public void setUser(User user){
+        mUser = user;
     }
 
     public ProgressBar getSpinner() { return mProgress; }

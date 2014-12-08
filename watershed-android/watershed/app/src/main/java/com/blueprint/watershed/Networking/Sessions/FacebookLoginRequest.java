@@ -7,6 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.blueprint.watershed.Authentication.Session;
 import com.blueprint.watershed.Networking.BaseRequest;
+import com.blueprint.watershed.Utilities.APIError;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -19,7 +20,7 @@ import java.util.HashMap;
  */
 public class FacebookLoginRequest extends BaseRequest {
 
-    public FacebookLoginRequest(final Activity activity, HashMap<String, String> params, final Response.Listener<Session> listener) {
+    public FacebookLoginRequest(final Activity activity, HashMap<String, String> params, final Response.Listener<Session> listener, final Response.Listener<APIError> errorListener) {
         super(Request.Method.POST, makeURL("users/sign_up/facebook"), facebookLoginRequestParams(activity, params),
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -31,10 +32,10 @@ public class FacebookLoginRequest extends BaseRequest {
                             });
                             listener.onResponse(session);
                         } catch (Exception e) {
-                            Log.e("Json exception", e.toString());
+                            Log.e("Json exception in Facebook request", e.toString());
                         }
                     }
-                }, activity);
+                }, errorListener,  activity);
     }
 
     protected static JSONObject facebookLoginRequestParams(final Activity activity, final HashMap<String, String> userParams) {

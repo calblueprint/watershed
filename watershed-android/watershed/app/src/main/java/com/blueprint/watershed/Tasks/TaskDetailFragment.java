@@ -13,8 +13,6 @@ import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.R;
 
-import java.util.Date;
-
 
 public class TaskDetailFragment extends Fragment {
 
@@ -52,7 +50,7 @@ public class TaskDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-         View view = inflater.inflate(R.layout.fragment_task_detail, container, false);
+         View view = inflater.inflate(R.layout.fragment_task, container, false);
         configureViewWithTask(view, mTask);
         return view;
     }

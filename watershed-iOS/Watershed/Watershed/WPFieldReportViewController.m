@@ -22,9 +22,11 @@
     self.navigationItem.title = self.fieldReport.creationDate;
     self.automaticallyAdjustsScrollViewInsets = NO;
     
+    __weak __typeof(self)weakSelf = self;
     [[WPNetworkingManager sharedManager] requestFieldReportWithFieldReport:self.fieldReport parameters:[[NSMutableDictionary alloc] init] success:^(WPFieldReport *fieldReport) {
-        self.fieldReport = fieldReport;
-        [self.view showBubbles];
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        strongSelf.fieldReport = fieldReport;
+        [strongSelf.view showBubbles];
     }];
 }
 

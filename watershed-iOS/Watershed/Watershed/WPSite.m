@@ -19,4 +19,18 @@
              };
 }
 
+- (NSMutableArray *)imageURLs {
+    if (!_imageURLs) {
+        _imageURLs = [[NSMutableArray alloc] init];
+    }
+    return _imageURLs;
+}
+
+- (NSMutableArray *)miniSites {
+    if (!_miniSites) {
+        _miniSites = [[NSMutableArray alloc] init];
+    }
+    return _miniSites;
+}
+
 @end

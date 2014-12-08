@@ -7,6 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.blueprint.watershed.Authentication.Session;
 import com.blueprint.watershed.Networking.BaseRequest;
+import com.blueprint.watershed.Utilities.APIError;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -19,7 +20,7 @@ import java.util.HashMap;
  */
 public class SignUpRequest extends BaseRequest {
 
-    public SignUpRequest(final Activity activity, HashMap<String, String> params, final Response.Listener<Session> listener) {
+    public SignUpRequest(final Activity activity, HashMap<String, String> params, final Response.Listener<Session> listener, final Response.Listener<APIError> errorListener) {
         super(Request.Method.POST, makeURL("users"), signUpRequestParams(activity, params),
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -34,7 +35,7 @@ public class SignUpRequest extends BaseRequest {
                             Log.e("Json exception", e.toString());
                         }
                     }
-                }, activity);
+                }, errorListener, activity);
     }
 
     protected static JSONObject signUpRequestParams(final Activity activity, final HashMap<String, String> userParams) {
