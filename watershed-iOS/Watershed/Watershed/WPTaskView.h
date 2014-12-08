@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "UIExtensions.h"
+#import "WPTask.h"
 
 @interface WPTaskView : WPView
 
@@ -18,5 +19,7 @@
 @property (nonatomic) UIButton *completed;
 @property (nonatomic) UIButton *addFieldReportButton;
 @property (nonatomic) UIButton *siteLinkButton;
+
+- (void)configureWithTask:(WPTask *)task;
 
 @end

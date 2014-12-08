@@ -13,7 +13,7 @@
 
 @property (copy, nonatomic) NSString *title;
 @property (copy, nonatomic) NSString *taskDescription;
-@property (copy, nonatomic) NSString *dueDate;
+@property (copy, nonatomic) NSDate *dueDate;
 @property (nonatomic) Boolean *completed;
 
 @end

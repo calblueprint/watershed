@@ -11,6 +11,8 @@
 #import "WPTasksTableViewCell.h"
 #import "UIExtensions.h"
 #import "WPAddTaskViewController.h"
+#import "WPNetworkingManager.h"
+#import "WPTask.h"
 
 @interface WPTasksListViewController ()
 
@@ -33,6 +35,7 @@
                                   target:self
                                   action:@selector(newTaskForm:)];
     self.navigationItem.rightBarButtonItem = addButton;
+         
 }
 
 - (void)loadView {

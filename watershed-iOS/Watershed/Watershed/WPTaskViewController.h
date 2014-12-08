@@ -9,6 +9,7 @@
 
 #import <UIKit/UIKit.h>
 #import "UIExtensions.h"
+#import "WPTask.h"
 
 @interface WPTaskViewController : WPViewController
 
@@ -18,6 +19,7 @@
 @property (nonatomic) NSString *completed;
 @property (nonatomic) NSString *assignee;
 @property (nonatomic) NSString *assigner;
-@property (nonatomic) WPTaskView *view;
+
+@property (nonatomic) WPTask *task;
 
 @end

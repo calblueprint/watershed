@@ -8,6 +8,7 @@
 
 #import "WPTaskView.h"
 #import "UIExtensions.h"
+#import "WPTask.h"
 
 int WPButtonHeight = 75;
 
@@ -106,6 +107,16 @@ int WPButtonHeight = 75;
         [_completed setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _completed.layer.borderWidth = 0;
     }
+}
+
+- (void)configureWithTask:(WPTask *)task {
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"MM-dd-yyyy"];
+    NSString *dueDateString = [dateFormat stringFromDate:task.dueDate];
+    self.dueDate.text = [NSString stringWithFormat:@"%@", dueDateString];
+    self.taskDescription.text = task.taskDescription;
+    self.assigneeLabel.text = task.assignee.name;
+    self.title.text = task.title;
 }
 
 - (void)updateConstraints {

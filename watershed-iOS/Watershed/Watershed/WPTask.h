@@ -21,6 +21,6 @@
 @property (nonatomic) WPUser *assignee;
 @property (nonatomic) WPUser *assigner;
 @property (nonatomic) WPSite *site;
-
+@property (nonatomic) Boolean *completed;
 
 @end
