@@ -29,8 +29,16 @@ class Site < ActiveRecord::Base
   #
   # Properties
   #
+  def tasks
+    mini_sites.joins(:tasks).collect { |mini_site| mini_site.tasks }.flatten
+  end
+
   def mini_sites_count
     mini_sites.count
+  end
+
+  def tasks_count
+    tasks.count
   end
 
   def photos
