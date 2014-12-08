@@ -1,5 +1,5 @@
 class BaseTaskSerializer < ActiveModel::Serializer
-  attributes :id, :title, :description, :site_id,
+  attributes :id, :title, :description, :mini_site_id,
              :complete, :due_date, :urgent, :created_at
 
   has_one :assignee, serializer: UserListSerializer

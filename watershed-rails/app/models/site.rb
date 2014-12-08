@@ -29,14 +29,21 @@ class Site < ActiveRecord::Base
   #
   # Properties
   #
+  def tasks
+    Task.joins(:mini_site).where(mini_site: mini_sites)
+  end
+
   def mini_sites_count
     mini_sites.count
   end
 
+  def tasks_count
+    tasks.count
+  end
+
   def photos
-    # For now, show the first photo of the first mini site
-    # Has to return an array, thus the try(:first, 1)
-    mini_sites.try(:first).try(:photos).try(:first, 1) || []
+    # For now, show the first mini_site's photos
+    mini_sites.try(:first).try(:photos) || []
   end
 
 end

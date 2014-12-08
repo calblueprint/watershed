@@ -7,14 +7,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.app.Fragment;
+import android.widget.Button;
+import android.widget.EditText;
 
 
 import com.blueprint.watershed.R;
 
 
-public class CreateTaskFragment extends Fragment {
+public class CreateTaskFragment extends Fragment implements View.OnClickListener {
 
-
+    private EditText mTitleField;
+    private EditText mDescriptionField;
+    private EditText mAssigneeField;
+    private EditText mDueDateField;
+    private EditText mMiniSiteId;
     private OnFragmentInteractionListener mListener;
 
     public static CreateTaskFragment newInstance() {
@@ -58,7 +64,24 @@ public class CreateTaskFragment extends Fragment {
     }
 
     private void setButtonListeners(View view){
-        //TODO
+        Button submitButton = (Button)view.findViewById(R.id.create_task_submit);
+        mTitleField = (EditText)view.findViewById(R.id.create_task_title);
+        mDescriptionField = (EditText)view.findViewById(R.id.create_task_description);
+        mAssigneeField = (EditText)view.findViewById(R.id.create_task_assignee);
+        mDueDateField = (EditText)view.findViewById(R.id.create_task_due_date);
+        mMiniSiteId = (EditText)view.findViewById(R.id.create_task_site);
+        submitButton.setOnClickListener(this);
+    }
+
+    public void onClick(View view) {
+        switch (view.getId()){
+            case (R.id.create_task_submit):
+                createTask();
+        }
+    }
+
+    private void createTask() {
+        Task submitTask = new Task();
     }
 
     public interface OnFragmentInteractionListener {

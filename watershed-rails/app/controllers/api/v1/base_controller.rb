@@ -21,6 +21,10 @@ class Api::V1::BaseController < Api::BaseController
     @current_ability ||= ::Ability.new(current_api_v1_user)
   end
 
+  def current_user
+    current_api_v1_user
+  end
+
   def authenticate_user_from_token!
     user_email = params[:email].presence
     user       = user_email && User.find_by_email(user_email)

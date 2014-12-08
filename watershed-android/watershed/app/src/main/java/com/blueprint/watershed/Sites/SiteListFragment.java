@@ -27,7 +27,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class SiteListFragment extends Fragment implements AbsListView.OnItemClickListener {
+public class SiteListFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
@@ -62,10 +62,8 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
 
         mSiteListView = (ListView) view.findViewById(android.R.id.list);
 
-        mAdapter = new SiteListAdapter(getActivity(), R.layout.site_list_row, getSites());
+        mAdapter = new SiteListAdapter(mMainActivity, getActivity(), R.layout.site_list_row, getSites());
         mSiteListView.setAdapter(mAdapter);
-
-        mSiteListView.setOnItemClickListener(this);
         return view;
     }
 
@@ -91,18 +89,6 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (null != mListener) {
-            // Load site
-            Site site = getSite(position);
-            SiteFragment siteFragment = new SiteFragment();
-            siteFragment.configureWithSite(site);
-
-            mMainActivity.replaceFragment(siteFragment);
-        }
     }
 
     @Override

@@ -108,7 +108,7 @@
                 style="@style/WsLabel"
                 android:gravity="bottom"
                 android:layout_height="@dimen/button_standard_height"
-                android:text="@string/task_due_date"
+                android:text="@string/description"
                 />
             <EditText
                 android:id="@+id/create_task_description"
@@ -127,6 +127,7 @@
             android:gravity="bottom">
 
             <Button
+                android:id="@+id/create_task_submit"
                 android:layout_width="fill_parent"
                 android:background="@color/ws_blue"
                 android:textColor="@color/white"

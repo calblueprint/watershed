@@ -56,7 +56,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         holder.title.setText(task.getTitle());
         holder.description.setText(task.getDescription());
         holder.due_date.setText(parseDate(task.getDueDate()));
-        //holder.site.setText("Site " + task.getSiteId().toString());
+        holder.site.setText("Site " + Integer.toString(task.getMiniSiteId()));
 
         return row;
     }
