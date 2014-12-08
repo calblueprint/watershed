@@ -38,4 +38,8 @@ class MiniSite < ActiveRecord::Base
     field_reports.count
   end
 
+  def health_rating
+    field_reports.try(:first).try(:health_rating) || 0
+  end
+
 end
