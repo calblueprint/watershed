@@ -38,6 +38,10 @@ static int COVER_PHOTO_TRANS = 0;
     return self;
 }
 
+- (void)dealloc {
+    [self.coverPhotoView cancelImageRequestOperation];
+}
+
 #pragma mark - View Hierarchy
 
 - (void)createSubviews {
@@ -222,8 +226,9 @@ static int COVER_PHOTO_TRANS = 0;
 }
 
 - (void)configureWithSite:(WPSite *)site {
-    self.originalCoverPhoto = site.image;
-    self.coverPhotoView.image = self.originalCoverPhoto;
+    [self.coverPhotoView setImageWithURL:[site.imageURLs firstObject]
+                        placeholderImage:[UIImage imageNamed:@"SampleCoverPhoto"]];
+    self.originalCoverPhoto = self.coverPhotoView.image;
     self.titleLabel.text = site.name;
     self.descriptionLabel.text = site.info;
     self.addressLabel.label.text = [NSString stringWithFormat:@"%@, %@, %@ %@", site.street, site.city, site.state, site.zipCode];

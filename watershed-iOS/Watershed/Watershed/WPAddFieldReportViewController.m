@@ -8,6 +8,9 @@
 
 #import "WPAddFieldReportViewController.h"
 #import "WPAddFieldReportView.h"
+#import "WPNetworkingManager.h"
+#import "WPMiniSiteViewController.h"
+#import "WPTaskViewController.h"
 
 @interface WPAddFieldReportViewController ()
 
@@ -34,7 +37,7 @@
                                    initWithTitle:@"Save"
                                    style:UIBarButtonItemStyleBordered
                                    target:self
-                                   action:@selector(saveForm:)];
+                                   action:@selector(saveForm)];
     self.navigationItem.rightBarButtonItem = saveButton;
     self.view.fieldDescription.delegate = self;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self
@@ -58,8 +61,68 @@
     }
 }
 
-- (void)saveForm:(UIButton *)sender {
+- (void)saveForm {
+    [self dismissKeyboard];
+    NSString *userId = [[WPNetworkingManager sharedManager] keyChainStore][@"user_id"];
+    NSString *fieldReportDescription = self.view.fieldDescription.text;
+    NSNumber *healthRating;
+    if (self.view.rating1.isSelected) {
+        healthRating = @1;
+    } else if (self.view.rating2.isSelected) {
+        healthRating = @2;
+    } else if (self.view.rating3.isSelected) {
+        healthRating = @3;
+    } else if (self.view.rating4.isSelected) {
+        healthRating = @4;
+    } else if (self.view.rating5.isSelected) {
+        healthRating = @5;
+    }
+    NSNumber *urgent = @(self.view.urgentSwitch.isOn);
+//  if parent is task VC, do task id, otherwise to nil
+    NSNumber *taskId;
+    NSString *miniSiteId;
+    UIViewController *previousViewController = [((UINavigationController *)self.parentViewController).viewControllers objectAtIndex:((UINavigationController *)self.parentViewController).viewControllers.count-2];
+    if ([previousViewController isKindOfClass:[WPMiniSiteViewController class]]) {
+        WPMiniSiteViewController *parent = (WPMiniSiteViewController *)previousViewController;
+        miniSiteId = [parent.miniSite.miniSiteId stringValue];
+        taskId = nil;
+    } else if ([previousViewController isKindOfClass:[WPTaskViewController class]]) {
+        WPTaskViewController *parent = (WPTaskViewController *)previousViewController;
+//        taskId = parent.taskId;
+//        miniSiteId = parent.miniSiteId;
+    }
+    NSString *photo = [UIImagePNGRepresentation([self compressForUpload:self.view.selectedImageView.image withScale:0.2]) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];;
     
+    NSDictionary *staticParameters = @{@"field_report": @{
+                                         @"user_id": userId,
+                                         @"mini_site_id": miniSiteId,
+                                         @"description": fieldReportDescription,
+                                         @"health_rating": healthRating,
+                                         @"urgent": urgent,
+                                         @"photo_attributes": @{
+                                                 @"data": photo
+                                         }
+                                 }};
+    NSMutableDictionary *parameters = [staticParameters mutableCopy];
+    
+    [[WPNetworkingManager sharedManager] postFieldReportWithParameters:parameters success:^(WPFieldReport *fieldReport) {
+        [self.navigationController popViewControllerAnimated:YES];
+        //do stuffs
+    }];
+}
+
+- (UIImage *)compressForUpload:(UIImage *)original withScale:(CGFloat)scale {
+    // Calculate new size given scale factor.
+    CGSize originalSize = original.size;
+    CGSize newSize = CGSizeMake(originalSize.width * scale, originalSize.height * scale);
+    
+    // Scale the original image to match the new size.
+    UIGraphicsBeginImageContext(newSize);
+    [original drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage* compressedImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return compressedImage;
 }
 
 - (void)viewImageButtonAction:(UIButton *)sender {

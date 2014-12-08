@@ -10,13 +10,14 @@
 
 @interface WPSiteTableViewCell ()
 @property (nonatomic) UIView *darkOverlay;
+@property (nonatomic) UIView *bottomShadowOverlay;
 @end
 
 @implementation WPSiteTableViewCell
 
 const static float CELL_HEIGHT = 150.0f;
-const static int ORIGINAL_PHOTO_POSITION = 50;
-const static float PARALLAX_REDUCTION = 3.5;
+const static int ORIGINAL_PHOTO_POSITION = 40;
+const static float PARALLAX_REDUCTION = 5.0;
 
 - (id)initWithStyle:(UITableViewCellStyle)style
     reuseIdentifier:(NSString *)reuseIdentifier {
@@ -30,6 +31,10 @@ const static float PARALLAX_REDUCTION = 3.5;
         [self setNeedsUpdateConstraints];
     }
     return self;
+}
+
+- (void)dealloc {
+    [self.photoView cancelImageRequestOperation];
 }
 
 #pragma mark - View Hierarchy
@@ -50,6 +55,13 @@ const static float PARALLAX_REDUCTION = 3.5;
         UIView *darkOverlay = [[UIView alloc] init];
         darkOverlay.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.15];
         darkOverlay;
+    }) wp_addToSuperview:content];
+    
+    _bottomShadowOverlay = [({
+        UIImageView *shadowOverlay = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"BottomShadowOverlay"]];
+        [shadowOverlay setContentMode:UIViewContentModeScaleToFill];
+        [shadowOverlay setClipsToBounds:YES];
+        shadowOverlay;
     }) wp_addToSuperview:content];
     
     _nameLabel = [({
@@ -92,6 +104,13 @@ const static float PARALLAX_REDUCTION = 3.5;
     
     [self.darkOverlay mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@0);
+        make.leading.equalTo(@0);
+        make.trailing.equalTo(@0);
+        make.bottom.equalTo(@0);
+    }];
+    
+    [self.bottomShadowOverlay mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@(CELL_HEIGHT / 3));
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
         make.bottom.equalTo(@0);

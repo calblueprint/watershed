@@ -32,6 +32,10 @@ import com.blueprint.watershed.Networking.Sessions.FacebookLoginRequest;
 import com.blueprint.watershed.Networking.Sessions.LoginRequest;
 import com.blueprint.watershed.Networking.Sessions.SignUpRequest;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Users.User;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+
 import com.blueprint.watershed.Utilities.APIError;
 import com.facebook.AppEventsLogger;
 import com.facebook.SessionState;
@@ -61,6 +65,9 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     private ObjectMapper mMapper;
     private View viewBlocker;
 
+    //User
+    private Integer mUserId;
+
     private com.facebook.Session.StatusCallback callback = new com.facebook.Session.StatusCallback() {
         @Override
         public void call(com.facebook.Session session, SessionState state, Exception exception) {
@@ -81,8 +88,12 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
 
         // NOTE(mark): Change to !hasAuthCredentials if you want the main activity to show.
         if (hasAuthCredentials(preferences)) {
+            // Ideally we could request the user object from the server again here and then pass them to the main activity.
             final Intent intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            Bundle b = new Bundle();
+            b.putInt("userId", 1); //Replace with an actual user Id soon
+            intent.putExtras(b);
             // intent.putExtra("auth_token", preferences.getString("auth_token", null));
             this.finish();
             startActivity(intent);
@@ -184,8 +195,6 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
                     }
                 }
             });
-
-            Log.e("Facebook", "Logged in...");
         } else if (state.isClosed()) {
             Log.e("Facebook", "Logged out...");
         }
@@ -209,6 +218,11 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
             public void onResponse(Session session) {
                 storeSessionAndStartMainActivity(intent, session);
             }
+        }, new Response.Listener<APIError>() {
+            @Override
+            public void onResponse(APIError apiError) {
+                viewBlocker.setVisibility(View.GONE);
+            }
         });
 
         mloginNetworkManager.getRequestQueue().add(facebookLoginRequest);
@@ -225,12 +239,13 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         }, new Response.Listener<APIError>() {
             @Override
             public void onResponse(APIError apiError) {
-                Log.e("Error response", "In the landing page activity for the login request");
+                viewBlocker.setVisibility(View.GONE);
             }
         });
 
         mloginNetworkManager.getRequestQueue().add(loginRequest);
     }
+
 
     public void signUpRequest(HashMap<String, String> params) {
         final Intent intent = new Intent(this, MainActivity.class);
@@ -239,6 +254,11 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
             @Override
             public void onResponse(Session session) {
                 storeSessionAndStartMainActivity(intent, session);
+            }
+        }, new Response.Listener<APIError>() {
+            @Override
+            public void onResponse(APIError apiError) {
+                viewBlocker.setVisibility(View.GONE);
             }
         });
 
@@ -258,7 +278,12 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("authentication_token", session.getAuthenticationToken());
         editor.putString("email", session.getEmail());
+        editor.putInt("userId", session.getUser().getId());
         editor.commit();
+
+        Bundle bundle = new Bundle();
+        bundle.putInt("userId", session.getUser().getId());
+        intent.putExtras(bundle);
 
         LandingPageActivity.this.finish();
         startActivity(intent);
