@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/light_gray">
+        android:background="@drawable/circular_background">
 
         <TextView
             android:id="@+id/primary_label"
@@ -17,6 +17,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
             android:textColor="@color/white"
+            android:textSize="12sp"
             android:textAppearance="@android:style/TextAppearance.Holo.Medium"
             />
 
@@ -28,6 +29,7 @@
             android:layout_below="@+id/primary_label"
             android:layout_centerInParent="true"
             android:textColor="@color/white"
+            android:textSize="10sp"
             android:textAppearance="@android:style/TextAppearance.Holo.Small"
             />
 

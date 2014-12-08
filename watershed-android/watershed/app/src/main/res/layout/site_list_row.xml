@@ -40,26 +40,16 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <com.blueprint.watershed.Views.CircularTextView
+        android:id="@+id/number_of_tasks_view"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:background="@color/transparent"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignBottom="@+id/cover_photo_pager_view"
-        android:layout_marginRight="30dp"
-        android:layout_marginBottom="-15dp">
-
-        <TextView
-            android:id="@+id/cover_photo_label"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Label"
-            android:layout_margin="10dp"
-            android:gravity="center_vertical|center_horizontal"
-            android:background="@drawable/circular_text_view"
-            />
-
-    </LinearLayout>
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="-40dp"
+        />
 
 </RelativeLayout>

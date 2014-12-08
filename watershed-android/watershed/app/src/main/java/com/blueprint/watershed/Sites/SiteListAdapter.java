@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Views.CircularTextView;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
 
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class SiteListAdapter extends ArrayAdapter<Site> implements View.OnClickL
 
             holder = new SiteHolder();
             holder.photosView = (CoverPhotoPagerView) row.findViewById(R.id.cover_photo_pager_view);
-            holder.coverPhotoLabel = (TextView) row.findViewById(R.id.cover_photo_label);
+            holder.numberOfTasksView = (CircularTextView) row.findViewById(R.id.number_of_tasks_view);
             holder.topLabel = (TextView) row.findViewById(R.id.top_label);
             holder.bottomLabel = (TextView) row.findViewById(R.id.bottom_label);
 
@@ -53,7 +54,7 @@ public class SiteListAdapter extends ArrayAdapter<Site> implements View.OnClickL
         Site site = sites.get(position);
 
         holder.photosView.configureWithPhotos(site.getPhotos());
-        holder.coverPhotoLabel.setText(String.format("%s Tasks", site.getTasksCount()));
+        holder.numberOfTasksView.configureLabels(Integer.toString(site.getTasksCount()), "Tasks");
         holder.topLabel.setText(site.getName());
         holder.bottomLabel.setText(String.format("%s Sites", site.getMiniSitesCount()));
 
@@ -63,7 +64,7 @@ public class SiteListAdapter extends ArrayAdapter<Site> implements View.OnClickL
 
     static class SiteHolder {
         CoverPhotoPagerView photosView;
-        TextView coverPhotoLabel;
+        CircularTextView numberOfTasksView;
         TextView topLabel;
         TextView bottomLabel;
     }

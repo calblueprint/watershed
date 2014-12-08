@@ -29,6 +29,11 @@ public class CircularTextView extends RelativeLayout {
         setSecondaryLabel((TextView) findViewById(R.id.secondary_label));
     }
 
+    public void configureLabels(String primaryText, String secondaryText) {
+        //getPrimaryLabel().setText(primaryText);
+        //getSecondaryLabel().setText(secondaryText);
+    }
+
     // Getters
     public TextView getPrimaryLabel() { return mPrimaryLabel; }
     public TextView getSecondaryLabel() { return mSecondaryLabel; }
