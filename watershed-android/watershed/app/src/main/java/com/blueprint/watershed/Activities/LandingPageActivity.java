@@ -222,7 +222,6 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
             @Override
             public void onResponse(APIError apiError) {
                 viewBlocker.setVisibility(View.GONE);
-                Log.e("Error response", "In the landing page activity for the login request");
             }
         });
 
@@ -241,7 +240,6 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
             @Override
             public void onResponse(APIError apiError) {
                 viewBlocker.setVisibility(View.GONE);
-                Log.e("Error response", "In the landing page activity for the login request");
             }
         });
 
@@ -261,7 +259,6 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
             @Override
             public void onResponse(APIError apiError) {
                 viewBlocker.setVisibility(View.GONE);
-                Log.e("Error response", "In the landing page activity for the login request");
             }
         });
 

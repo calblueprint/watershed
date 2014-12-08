@@ -22,7 +22,7 @@ import java.util.HashMap;
 public class UserRequest extends BaseRequest {
 
     public UserRequest(final Activity activity, User user, HashMap<String, JSONObject> params, final Response.Listener<User> listener) {
-        super(Request.Method.GET, makeURL("users"), new JSONObject(params),
+        super(Request.Method.GET, makeObjectURL("users", user), new JSONObject(params),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {

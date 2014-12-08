@@ -33,7 +33,7 @@ public class User implements APIObject {
     private Integer mSitesCount;
 
 
-    private ArrayList<FieldReport> mfieldReports;
+    private ArrayList<FieldReport> mFieldReports;
 
     public User(String email, String name, Integer role){
         mEmail = email;
@@ -61,7 +61,12 @@ public class User implements APIObject {
     public Integer getFieldReportsCount() { return mFieldReportsCount; }
 
     public String getEmail() { return mEmail; }
-    public ArrayList<FieldReport> getFieldReports() { return mfieldReports; }
+    public ArrayList<FieldReport> getFieldReports() {
+        if (mFieldReports == null){
+            return new ArrayList<FieldReport>();
+        }
+        return mFieldReports;
+    }
 
     // Setters
     public void setId(Integer id) { mId = id; }

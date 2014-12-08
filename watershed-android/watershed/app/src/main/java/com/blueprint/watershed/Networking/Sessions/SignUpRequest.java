@@ -35,7 +35,7 @@ public class SignUpRequest extends BaseRequest {
                             Log.e("Json exception", e.toString());
                         }
                     }
-                }, activity);
+                }, errorListener, activity);
     }
 
     protected static JSONObject signUpRequestParams(final Activity activity, final HashMap<String, String> userParams) {

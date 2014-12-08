@@ -3,37 +3,28 @@ package com.blueprint.watershed.Activities;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentTransaction;
-import android.app.ProgressDialog;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.MenuItem;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.AboutFragment;
-import com.blueprint.watershed.FieldReports.FieldReport;
 import com.blueprint.watershed.FieldReports.AddFieldReportFragment;
-import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
-import com.blueprint.watershed.Networking.Sites.SiteRequest;
 import com.blueprint.watershed.Networking.Users.HomeRequest;
-import com.blueprint.watershed.Users.ProfileFragment;
+import com.blueprint.watershed.Users.UserFragment;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Sites.SiteFragment;
@@ -42,7 +33,6 @@ import com.blueprint.watershed.Utilities.TabsPagerAdapter;
 import com.blueprint.watershed.Tasks.TaskAdapter;
 import com.blueprint.watershed.Tasks.TaskDetailFragment;
 import com.blueprint.watershed.Tasks.TaskFragment;
-import com.facebook.AppEventsLogger;
 import com.facebook.Session;
 
 import android.view.View;
@@ -53,21 +43,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Switch;
-import android.widget.Toast;
 
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 public class MainActivity extends ActionBarActivity
@@ -77,7 +57,7 @@ public class MainActivity extends ActionBarActivity
                                      TaskFragment.OnFragmentInteractionListener,
                                      TaskDetailFragment.OnFragmentInteractionListener,
                                      SiteFragment.OnFragmentInteractionListener,
-                                     ProfileFragment.OnFragmentInteractionListener,
+                                     UserFragment.OnFragmentInteractionListener,
                                      AboutFragment.OnFragmentInteractionListener,
                                      SiteListFragment.OnFragmentInteractionListener,
                                      MiniSiteFragment.OnFragmentInteractionListener,
@@ -98,7 +78,7 @@ public class MainActivity extends ActionBarActivity
     private TaskFragment mtaskFragment;
     private SiteListFragment siteListFragment;
     private FragmentManager fragmentManager;
-    private ProfileFragment mProfileFragment;
+    private UserFragment mUserFragment;
     private AboutFragment mAboutFragment;
 
     // Navigation Drawer
@@ -137,9 +117,6 @@ public class MainActivity extends ActionBarActivity
         setContentView(R.layout.activity_main);
         Bundle b = getIntent().getExtras();
         mUserId = b.getInt("userId");
-
-        //FIXME
-        Log.e("Look! I have a user id", mUserId.toString());
 
         actionBar = getActionBar();
         setTitle("Tasks");
@@ -224,7 +201,7 @@ public class MainActivity extends ActionBarActivity
         else if (f instanceof AboutFragment) {
             setTitle("About");
         }
-        else if (f instanceof ProfileFragment) {
+        else if (f instanceof UserFragment) {
             setTitle("Profile");
         }
         displayTaskView(false);
@@ -256,7 +233,7 @@ public class MainActivity extends ActionBarActivity
 
     private void initializeFragments() {
         mtaskFragment = TaskFragment.newInstance(0);
-        mProfileFragment = new ProfileFragment();
+        mUserFragment = new UserFragment();
         mAboutFragment = new AboutFragment();
         fragmentManager = getSupportFragmentManager();
         fragmentManager.addOnBackStackChangedListener(
@@ -302,7 +279,7 @@ public class MainActivity extends ActionBarActivity
         switch (item.getItemId()) {
             case android.R.id.home:
                 Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
-                if (!(f instanceof TaskFragment) && !(f instanceof SiteListFragment) &&!(f instanceof ProfileFragment) &&!(f instanceof AboutFragment)) {
+                if (!(f instanceof TaskFragment) && !(f instanceof SiteListFragment) &&!(f instanceof UserFragment) &&!(f instanceof AboutFragment)) {
                     getSupportFragmentManager().popBackStack();
                     return false;
                 }
@@ -381,7 +358,7 @@ public class MainActivity extends ActionBarActivity
                 replaceFragment(siteListFragment);
                 break;
             case 2:
-                replaceFragment(mProfileFragment);
+                replaceFragment(mUserFragment);
                 break;
             case 3:
                 replaceFragment(mAboutFragment);
@@ -434,7 +411,7 @@ public class MainActivity extends ActionBarActivity
             @Override
             public void onResponse(User home) {
                 setUser(home);
-                mProfileFragment = ProfileFragment.newInstance(mUser);
+                mUserFragment = UserFragment.newInstance(mUser);
             }
         });
 
