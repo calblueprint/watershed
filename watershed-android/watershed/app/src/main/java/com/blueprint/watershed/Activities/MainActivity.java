@@ -27,6 +27,7 @@ import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Users.HomeRequest;
 import com.blueprint.watershed.Tasks.CreateTaskFragment;
+import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Users.UserFragment;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Users.User;
@@ -114,6 +115,9 @@ public class MainActivity extends ActionBarActivity
     // User
     private User mUser;
     private Integer mUserId;
+
+    //Task for FieldReport
+    private Task mFieldReportTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -422,18 +426,14 @@ public class MainActivity extends ActionBarActivity
     }
 
 
-    // Button Events
-
-    public void FieldReportButtonPressed(View view){
-        AddFieldReportFragment fieldFragment = AddFieldReportFragment.newInstance();
-        replaceFragment(fieldFragment);
-    }
-
     // Setter
     public void setUser(User user){
         mUser = user;
     }
     public User getUser() { return mUser; }
+
+    public void setFieldReportTask(Task task) { mFieldReportTask = task; }
+    public Task getFieldReportTask() { return mFieldReportTask; }
 
     public ProgressBar getSpinner() { return mProgress; }
 }

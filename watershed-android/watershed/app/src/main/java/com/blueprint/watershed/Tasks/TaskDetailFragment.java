@@ -13,11 +13,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.blueprint.watershed.Activities.MainActivity;
+import com.blueprint.watershed.FieldReports.AddFieldReportFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.R;
 
 
-public class TaskDetailFragment extends Fragment {
+public class TaskDetailFragment extends Fragment implements View.OnClickListener {
 
     private Task mTask;
     private OnFragmentInteractionListener mListener;
@@ -60,6 +61,7 @@ public class TaskDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
          View view = inflater.inflate(R.layout.fragment_task, container, false);
+        view.findViewById(R.id.field_report_button).setOnClickListener(this);
         configureViewWithTask(view, mTask);
         return view;
     }
@@ -106,6 +108,22 @@ public class TaskDetailFragment extends Fragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    // Button Events
+
+    public void onClick(View view){
+        switch(view.getId()){
+            case (R.id.field_report_button):
+                FieldReportButtonPressed(view);
+        }
+    }
+
+    public void FieldReportButtonPressed(View view){
+        AddFieldReportFragment fieldFragment = AddFieldReportFragment.newInstance();
+        mMainActivity.setFieldReportTask(mTask);
+        mMainActivity.replaceFragment(fieldFragment);
+
     }
 
     public interface OnFragmentInteractionListener {
