@@ -16,6 +16,8 @@
 #
 
 class Task < ActiveRecord::Base
+  scope :unassigned, -> { where("assignee_id IS NULL") }
+  scope :completed, -> { where(complete: true) }
 
   DEFAULT_TASK_NAMES = [
     "Water",
