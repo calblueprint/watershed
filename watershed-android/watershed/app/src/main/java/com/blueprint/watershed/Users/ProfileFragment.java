@@ -123,7 +123,6 @@ public class ProfileFragment extends Fragment {
     }
 
     public void configureViewWithUser(View view){
-        Log.e("mUser: ", mUser.toString());
         ((TextView)view.findViewById(R.id.profile_name)).setText(mUser.getName());
         ((TextView)view.findViewById(R.id.profile_email)).setText(mUser.getEmail());
         TextView roleView = ((TextView)view.findViewById(R.id.profile_role));

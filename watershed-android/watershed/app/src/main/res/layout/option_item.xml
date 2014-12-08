@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginRight="@dimen/tight_margin"
+        android:layout_marginTop="@dimen/tight_margin"
+        android:layout_marginLeft="@dimen/tight_margin"
+        android:orientation="vertical">
+
+        <com.blueprint.watershed.Views.CoverPhotoView
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            />
+        <TextView
+            android:layout_width="fill_parent"
+            android:text="See More"
+            android:background="@color/white"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:layout_height="24dp" />
+
+    </LinearLayout>
+</LinearLayout>

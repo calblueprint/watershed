@@ -195,8 +195,6 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
                     }
                 }
             });
-
-            Log.e("Facebook", "Logged in...");
         } else if (state.isClosed()) {
             Log.e("Facebook", "Logged out...");
         }
