@@ -14,6 +14,7 @@
 #import "UICKeyChainStore.h"
 #import "WPRootViewController.h"
 #import "WPUser.h"
+#import "WPSignupViewController.h"
 
 
 @interface WPLoginViewController ()
@@ -37,8 +38,7 @@
     [self.view addGestureRecognizer:tap];
 }
 
-- (void)emailSignup {
-    
+- (void)didTapEmailSignInButton {
     NSString *email = self.view.emailTextField.text;
     NSString *password = self.view.passwordTextField.text;
     
@@ -52,6 +52,22 @@
 - (void)pushTabBarController {
     WPRootViewController *parentVC = (WPRootViewController *)self.parentViewController;
     [parentVC pushNewTabBarControllerFromLogin:self];
+}
+
+#pragma mark - Signup
+
+- (void)presentSignupViewController {
+    WPSignupViewController *signupViewController = [[WPSignupViewController alloc] init];
+    UINavigationController *signupNavController = [[UINavigationController alloc] initWithRootViewController:signupViewController];
+    signupViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+                                                                                                          target:self
+                                                                                                          action:@selector(cancelSignup)];
+    signupViewController.parentVC = self;
+    [self presentViewController:signupNavController animated:YES completion:nil];
+}
+
+- (void)cancelSignup {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - FBLoginViewDelegate
@@ -70,6 +86,7 @@
                                      }};
     
     [[WPNetworkingManager sharedManager] requestFacebookLoginWithParameters:parameters success:^(WPUser *user) {
+        [[[WPNetworkingManager sharedManager] keyChainStore] setString:fbUser.profilePictureId forKey:@"profilePictureId"];
         [self pushTabBarController];
     }];
 }

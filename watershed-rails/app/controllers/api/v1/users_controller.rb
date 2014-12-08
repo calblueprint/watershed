@@ -1,6 +1,6 @@
 class Api::V1::UsersController < Api::V1::BaseController
   skip_before_filter :authenticate_user_from_token!, only: [:create, :facebook_login]
-  skip_before_filter :authenticate_api_v1_user!, only: [:create, :facebook_login]
+  skip_before_filter :authenticate_api_v1_user!,     only: [:create, :facebook_login]
   load_and_authorize_resource param_method: :user_params
 
   def index
@@ -18,9 +18,9 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def create
     if @user.save
-      render json: @user, serializer: UserSerializer
+      successful_login(@user)
     else
-      render json: { errors: @user.errors }, status: 422
+      error_response(@user)
     end
   end
 
@@ -39,7 +39,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     if @user.update(user_params)
       render json: @user, serializer: UserSerializer
     else
-      render json: { errors: @user.errors }, status: 422
+      error_response(@user)
     end
   end
 
@@ -51,7 +51,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def invalid_facebook_login_attempt
-    render json: { message: "There was a problem signing in with Facebook." }, status: 401
+    error_response(nil, "There was a problem signing in with Facebook.", 401)
   end
 
 end

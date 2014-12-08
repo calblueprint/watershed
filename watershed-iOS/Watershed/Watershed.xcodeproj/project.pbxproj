@@ -75,6 +75,7 @@
 		BA4F8DFE19C7739300C816E3 /* WatershedTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4F8DFD19C7739300C816E3 /* WatershedTests.m */; };
 		BABC5E1C1A0B2805002825E4 /* WPEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BABC5E1B1A0B2805002825E4 /* WPEditViewController.m */; };
 		BABC5E1F1A0B281F002825E4 /* WPEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = BABC5E1E1A0B281F002825E4 /* WPEditView.m */; };
+		BAF96EA41A2EBDCB009CB4BC /* WPSignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF96EA31A2EBDCB009CB4BC /* WPSignupViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -218,6 +219,8 @@
 		BABC5E1B1A0B2805002825E4 /* WPEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPEditViewController.m; sourceTree = "<group>"; };
 		BABC5E1D1A0B281F002825E4 /* WPEditView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPEditView.h; sourceTree = "<group>"; };
 		BABC5E1E1A0B281F002825E4 /* WPEditView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPEditView.m; sourceTree = "<group>"; };
+		BAF96EA21A2EBDCB009CB4BC /* WPSignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPSignupViewController.h; sourceTree = "<group>"; };
+		BAF96EA31A2EBDCB009CB4BC /* WPSignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPSignupViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -399,6 +402,7 @@
 				27714CA819D9076F005344B0 /* WPLoginViewController.m */,
 				BA4588B01A146DE200F91275 /* WPLoginView.h */,
 				BA4588B11A146DE200F91275 /* WPLoginView.m */,
+				BAF96EA11A2EBD90009CB4BC /* Signup */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -565,6 +569,15 @@
 			name = Edit;
 			sourceTree = "<group>";
 		};
+		BAF96EA11A2EBD90009CB4BC /* Signup */ = {
+			isa = PBXGroup;
+			children = (
+				BAF96EA21A2EBDCB009CB4BC /* WPSignupViewController.h */,
+				BAF96EA31A2EBDCB009CB4BC /* WPSignupViewController.m */,
+			);
+			name = Signup;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -718,6 +731,7 @@
 				BA4588B21A146DE200F91275 /* WPLoginView.m in Sources */,
 				27B9CF7C1A185B6700CEB5A8 /* WPMiniSite.m in Sources */,
 				BA24044519DCF06C00E9DB2F /* WPRootViewController.m in Sources */,
+				BAF96EA41A2EBDCB009CB4BC /* WPSignupViewController.m in Sources */,
 				27B9CF791A18597100CEB5A8 /* WPSite.m in Sources */,
 				064462E91A0739A500C6FE8B /* WPMyTasksTableViewController.m in Sources */,
 				06A8139B19D91D8600E3EB05 /* UIColor+WPColors.m in Sources */,

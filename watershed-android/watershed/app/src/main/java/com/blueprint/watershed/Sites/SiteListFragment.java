@@ -108,6 +108,7 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
             @Override
             public void onResponse(ArrayList<Site> sites) {
                 setSites(sites);
+                mMainActivity.getSpinner().setVisibility(View.GONE);
                 mAdapter.notifyDataSetChanged();
             }
         });

@@ -1,14 +1,18 @@
 class Api::V1::BaseController < Api::BaseController
-  before_filter :authenticate_user_from_token!
-  before_filter :authenticate_api_v1_user!
+  before_filter :authenticate_user_from_token!, except: [:ping]
+  before_filter :authenticate_api_v1_user!, except: [:ping]
 
   def mobile
     @user = User.find_by(email: params[:email], authentication_token: params[:auth_token])
     if @user.nil?
       unauthorized_response
     else
-      render json: @user, serializer: SessionSerializer
+      render json: @user, serializer: MobileSerializer
     end
+  end
+
+  def ping
+    render json: { message: "Successful ping" }
   end
 
   private

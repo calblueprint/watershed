@@ -8,12 +8,13 @@
 
 #import "WPProfileViewController.h"
 #import "WPSettingsTableViewController.h"
-
-
+#import "WPUser.h"
+#import "WPNetworkingManager.h"
 
 @interface WPProfileViewController ()
 
 @property (nonatomic) WPProfileView *view;
+@property (nonatomic) WPUser *user;
 
 @end
 
@@ -26,6 +27,15 @@
     UIBarButtonItem *settingsButtonItem = [[UIBarButtonItem alloc] initWithImage:settingsImage style:UIBarButtonItemStylePlain target:self action:@selector(openSettings)];
     settingsButtonItem.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = settingsButtonItem;
+    _user = [[WPUser alloc] init];
+    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+    [f setNumberStyle:NSNumberFormatterDecimalStyle];
+    _user.userId = [f numberFromString:[[WPNetworkingManager sharedManager] keyChainStore][@"userId"]];
+    [[WPNetworkingManager sharedManager] requestUserWithUser:_user parameters:[[NSMutableDictionary alloc] init] success:^(WPUser *user) {
+        _user = user;
+        [self.view configureWithUser:user];
+    }];
+    
     [super viewDidLoad];
 }
 
@@ -39,6 +49,7 @@
 
 -(void)openSettings {
     WPSettingsTableViewController *settingsTableViewController = [[WPSettingsTableViewController alloc] init];
+    settingsTableViewController.user = self.user;
     [self.navigationController pushViewController:settingsTableViewController animated:YES];
 }
 

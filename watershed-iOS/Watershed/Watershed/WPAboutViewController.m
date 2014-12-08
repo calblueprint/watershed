@@ -30,7 +30,7 @@
     if (self) {
         [self createSubviews];
         [self setNeedsUpdateConstraints];
-        self.backgroundColor = [UIColor wp_blue];
+        self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"about_watershed.png"]];
     }
     return self;
 }
@@ -38,14 +38,19 @@
 - (void)createSubviews {
     
     _titleLabel = [[UILabel alloc] init];
-    _titleLabel.text = @"The Watershed Project";
+    _titleLabel.text = @"THE WATERSHED PROJECT";
+    _titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:24];
+    _titleLabel.textColor = [UIColor whiteColor];
+    _titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    _titleLabel.numberOfLines = 3;
     [self addSubview:_titleLabel];
     
     _aboutLabel = [[UILabel alloc] init];
-    _aboutLabel.text = @"The Watershed Project’s vision is “people committed to a healthy San Francisco Bay watershed.” Since 1997, we’ve pursued that vision through initiatives that: Restore and preserve our unique, local ecosystems. We are located in Richmond, California, on the University of California's Richmond Field Station.";
-    _aboutLabel.font = [UIFont systemFontOfSize:10];
+    _aboutLabel.text = @"The Watershed Project's mission is to inspire Bay Area communities to understand, appreciate and protect our local watersheds. Located at the University of California's Richmond Field Station, since 1997 we have pursued this vision through various initiatives. The Healthy Watersheds Initiative focuses on litter and other source of pollutants. The Living Shoreline Initiative aims to help people appreciate the rich potential for healthy underwater habitats in the Bay and along it's shoreline, with an emphasis on native Oyster restoration. The Greening Urban Watersheds Initiative seeks to redefine the way we inhabit our urban centers, envisioning a green cityscape that maintains or mimics the natural flows and rhythms of local ecosystems. ";
+    _aboutLabel.font = [UIFont systemFontOfSize:15];
     _aboutLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _aboutLabel.numberOfLines = 0;
+    _aboutLabel.textColor = [UIColor whiteColor];
     [self addSubview:_aboutLabel];
 
 }
@@ -55,7 +60,7 @@
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(topMargin + standardMargin));
         make.leading.equalTo(@(standardMargin));
-        make.trailing.equalTo(@(-standardMargin));
+        make.width.equalTo(@175);
     }];
     
     [self.aboutLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -63,6 +68,7 @@
         make.leading.equalTo(@(standardMargin));
         make.trailing.equalTo(@(-standardMargin));
     }];
+
     
     [super updateConstraints];
 }

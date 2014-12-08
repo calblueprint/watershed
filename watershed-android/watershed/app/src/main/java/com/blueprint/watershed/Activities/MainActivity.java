@@ -1,7 +1,9 @@
 package com.blueprint.watershed.Activities;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -35,6 +37,8 @@ import com.blueprint.watershed.Utilities.TabsPagerAdapter;
 import com.blueprint.watershed.Tasks.TaskAdapter;
 import com.blueprint.watershed.Tasks.TaskDetailFragment;
 import com.blueprint.watershed.Tasks.TaskFragment;
+import com.facebook.AppEventsLogger;
+import com.facebook.Session;
 
 import android.view.View;
 import android.content.Context;
@@ -46,6 +50,7 @@ import android.widget.ListView;
 
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
@@ -105,6 +110,8 @@ public class MainActivity extends ActionBarActivity
     private ViewPager viewPager;
     private TabsPagerAdapter mAdapter;
     private View mContainer;
+    private ProgressBar mProgress;
+
 
     // Networking
     private NetworkManager mNetworkManager;
@@ -119,6 +126,7 @@ public class MainActivity extends ActionBarActivity
         mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
         viewPager = (ViewPager) findViewById(R.id.pager);
         mContainer = findViewById(R.id.container);
+        mProgress = (ProgressBar) this.findViewById(R.id.progressBar);
         initializeFragments();
         initializeTabs(0);
 
@@ -131,6 +139,7 @@ public class MainActivity extends ActionBarActivity
 
         setNetworkManager(NetworkManager.getInstance(this.getApplicationContext()));
     }
+
 
     public void initializeTabs(int option){
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -332,10 +341,12 @@ public class MainActivity extends ActionBarActivity
         switch (position) {
             case 0:
                 TaskFragment taskFragment = TaskFragment.newInstance(0);
+                mProgress.setVisibility(View.VISIBLE);
                 replaceFragment(taskFragment);
                 break;
             case 1:
                 siteListFragment = new SiteListFragment();
+                mProgress.setVisibility(View.VISIBLE);
                 replaceFragment(siteListFragment);
                 break;
             case 2:
@@ -348,15 +359,25 @@ public class MainActivity extends ActionBarActivity
                 //replaceFragment();
                 break;
             case 5:
-                SharedPreferences prefs = getSharedPreferences(LandingPageActivity.PREFERENCES, 0);
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.clear();
-                editor.commit();
-                Intent intent = new Intent(this, LandingPageActivity.class);
-                this.finish();
-                startActivity(intent);
+                logoutCurrentUser(this);
                 break;
         }
+        mDrawerLayout.closeDrawer(mDrawerList);
+    }
+
+    public static void logoutCurrentUser(Activity activity) {
+        SharedPreferences prefs = activity.getSharedPreferences(LandingPageActivity.PREFERENCES, 0);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.clear();
+        editor.commit();
+        Intent intent = new Intent(activity, LandingPageActivity.class);
+
+        if (Session.getActiveSession() != null) {
+            Session.getActiveSession().closeAndClearTokenInformation();
+        }
+
+        activity.finish();
+        activity.startActivity(intent);
     }
 
     @Override
@@ -385,4 +406,6 @@ public class MainActivity extends ActionBarActivity
         AddFieldReportFragment fieldFragment = AddFieldReportFragment.newInstance();
         replaceFragment(fieldFragment);
     }
+
+    public ProgressBar getSpinner() { return mProgress; }
 }

@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "WPView.h"
+#import "WPUser.h"
 
 @interface WPProfileView : WPView <UITableViewDataSource, UITableViewDelegate>
+
+- (void)configureWithUser:(WPUser *)user;
 
 @end
