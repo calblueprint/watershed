@@ -84,7 +84,7 @@ public class SiteFragment extends Fragment
         configureViewWithSite(header, mSite);
 
         // Set the adapter to fill the list of mini sites
-        mMiniSiteAdapter = new MiniSiteListAdapter(getActivity(), R.layout.mini_site_list_row, getMiniSites());
+        mMiniSiteAdapter = new MiniSiteListAdapter(mMainActivity, getActivity(), R.layout.mini_site_list_row, getMiniSites());
         mMiniSiteGridView.setAdapter(mMiniSiteAdapter);
 
         mMiniSiteGridView.setOnItemClickListener(this);

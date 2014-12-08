@@ -21,6 +21,7 @@ import android.graphics.Typeface;
 import com.android.volley.Response;
 import com.blueprint.watershed.AboutFragment;
 import com.blueprint.watershed.FieldReports.AddFieldReportFragment;
+import com.blueprint.watershed.FieldReports.FieldReportFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Users.HomeRequest;
@@ -61,6 +62,7 @@ public class MainActivity extends ActionBarActivity
                                      AboutFragment.OnFragmentInteractionListener,
                                      SiteListFragment.OnFragmentInteractionListener,
                                      MiniSiteFragment.OnFragmentInteractionListener,
+                                     FieldReportFragment.OnFragmentInteractionListener,
                                      AddFieldReportFragment.OnFragmentInteractionListener {
 
     // Constants
