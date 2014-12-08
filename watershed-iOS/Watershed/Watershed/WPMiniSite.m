@@ -15,6 +15,7 @@
              @"miniSiteId" : @"id",
              @"info" : @"description",
              @"zipCode" : @"zip_code",
+             @"taskCount" : @"tasks_count",
              @"fieldReportCount" : @"field_reports_count"
              };
 }

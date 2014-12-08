@@ -95,7 +95,7 @@ static NSString *cellIdentifier = @"MiniSiteCell";
         [cellView.photoView setImageWithURL:[miniSite.imageURLs firstObject]
                            placeholderImage:[UIImage imageNamed:@"SampleCoverPhoto2"]];
         cellView.ratingDotView.backgroundColor = [UIColor colorForRating:3];
-        cellView.taskCountLabel.label.text = [NSString stringWithFormat:@" %d tasks", 5];
+        cellView.taskCountLabel.label.text = [NSString stringWithFormat:@"%@ tasks", miniSite.taskCount];
         cellView.fieldReportCountLabel.label.text = [[miniSite.fieldReportCount stringValue] stringByAppendingString:@" field reports"];
     }
     return cellView;

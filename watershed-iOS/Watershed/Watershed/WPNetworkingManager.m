@@ -240,7 +240,7 @@ static NSString * const TASKS_URL = @"tasks";
             WPFieldReport *fieldReport = [MTLJSONAdapter modelOfClass:WPFieldReport.class fromJSONDictionary:fieldReportJSON error:nil];
             fieldReport.miniSite = miniSiteResponse;
             NSDictionary *photoJSON = fieldReportJSON[@"photo"];
-            if (photoJSON) {
+            if (!([photoJSON isEqual:[NSNull null]]) && photoJSON) {
                 [fieldReport.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];
             }
             [fieldReportList addObject:fieldReport];
@@ -266,7 +266,7 @@ static NSString * const TASKS_URL = @"tasks";
         fieldReportResponse.miniSite = fieldReport.miniSite;
         fieldReportResponse.imageURLs = fieldReport.imageURLs;
         // NSDictionary *photoJSON = fieldReportJSON[@"photo"];
-        // if (!([photoJSON isEqual:[NSNull null]])) {
+        // if (!([photoJSON isEqual:[NSNull null]]) && photoJSON) {
         //     [fieldReport.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];
         // }
         success(fieldReportResponse);
