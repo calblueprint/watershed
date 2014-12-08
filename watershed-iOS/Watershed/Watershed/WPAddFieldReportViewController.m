@@ -63,7 +63,6 @@
 
 - (void)saveForm:(UIButton *)sender {
     [self dismissKeyboard];
-//    WPFieldReport *fieldReport = [[WPFieldReport alloc] init];
     NSString *userId = [[WPNetworkingManager sharedManager] keyChainStore][@"userId"];
     NSString *fieldReportDescription = self.view.fieldDescription.text;
     NSNumber *healthRating;
@@ -94,7 +93,7 @@
     }
     NSString *photo = [UIImagePNGRepresentation([self compressForUpload:self.view.selectedImageView.image withScale:0.2]) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];;
     
-    NSDictionary *parameters = @{@"field_report": @{
+    NSDictionary *staticParameters = @{@"field_report": @{
                                          @"user_id": userId,
                                          @"mini_site_id": miniSiteId,
                                          @"description": fieldReportDescription,
@@ -104,6 +103,7 @@
                                                  @"data": photo
                                          }
                                  }};
+    NSMutableDictionary *parameters = [staticParameters mutableCopy];
     
     [[WPNetworkingManager sharedManager] postFieldReportWithParameters:parameters success:^(WPFieldReport *fieldReport) {
         //do stuffs

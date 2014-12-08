@@ -207,7 +207,8 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
 
 - (void)postFieldReportWithParameters:(NSDictionary *)parameters success:(void (^)(WPFieldReport *fieldReport))success {
     NSString *fieldReportString = [WPNetworkingManager createURLWithEndpoint:FIELD_REPORTS_URL];
-    
+    [self addAuthenticationParameters:parameters];
+
     [self POST:fieldReportString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *responseDictionary = responseObject;
 //        NSDictionary *sessionDictionary = [responseDictionary objectForKey:@"session"];
