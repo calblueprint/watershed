@@ -71,11 +71,15 @@ static NSString *cellIdentifier = @"SiteCell";
         }
         WPSite *site = self.sitesList[indexPath.row];
         cellView.nameLabel.text = site.name;
-        [cellView.photoView setImageWithURL:[site.imageURLs firstObject]
-                           placeholderImage:[UIImage imageNamed:@"SampleCoverPhoto"]];
-        cellView.miniSiteLabel.text = [[site.miniSitesCount stringValue] stringByAppendingString:@" mini sites"];
+
+        __weak __typeof(cellView.photoView)weakPhotoView = cellView.photoView;
+        [cellView.photoView setImageWithURLRequest:[NSURLRequest requestWithURL:[site.imageURLs firstObject]] placeholderImage:[UIImage imageNamed:@"SampleCoverPhoto" ] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+            __weak __typeof(weakPhotoView)strongPhotoView = weakPhotoView;
+            strongPhotoView.image = image;
+            [self updatePhotoOffset:self.sitesTableView.contentOffset.y];
+        } failure:nil];
         
-        [self updatePhotoOffset:self.sitesTableView.contentOffset.y];
+        cellView.miniSiteLabel.text = [[site.miniSitesCount stringValue] stringByAppendingString:@" mini sites"];
     }
     return cellView;
 }
