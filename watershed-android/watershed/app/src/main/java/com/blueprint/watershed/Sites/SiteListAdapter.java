@@ -70,6 +70,7 @@ public class SiteListAdapter extends ArrayAdapter<Site> {
                 mMainActivity.replaceFragment(siteFragment);
             }
         });
+
         return row;
     }
 
