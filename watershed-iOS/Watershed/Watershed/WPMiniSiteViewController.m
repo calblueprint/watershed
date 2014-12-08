@@ -106,7 +106,8 @@ static NSString *cellIdentifier = @"FieldReportCell";
                                                          reuseIdentifier:cellIdentifier];
         }
         WPFieldReport *fieldReport = self.fieldReportList[indexPath.row];
-        cellView.photoView.image = fieldReport.image;
+        [cellView.photoView setImageWithURL:[fieldReport.imageURLs firstObject]
+                           placeholderImage:[UIImage imageNamed:@"SampleCoverPhoto2"]];
         cellView.dateLabel.text = fieldReport.creationDate;
         cellView.ratingNumberLabel.text = [fieldReport.rating stringValue];
         cellView.ratingNumberLabel.textColor = [UIColor colorForRating:[fieldReport.rating intValue]];
