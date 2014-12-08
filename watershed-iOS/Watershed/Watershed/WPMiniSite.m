@@ -16,6 +16,7 @@
              @"info" : @"description",
              @"zipCode" : @"zip_code",
              @"taskCount" : @"tasks_count",
+             @"healthRating" : @"health_rating",
              @"fieldReportCount" : @"field_reports_count"
              };
 }
