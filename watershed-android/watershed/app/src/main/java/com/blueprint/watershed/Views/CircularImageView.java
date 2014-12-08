@@ -1,4 +1,4 @@
-package com.blueprint.watershed.Utilities;
+package com.blueprint.watershed.Views;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
