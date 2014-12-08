@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Views.CircularTextView;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
@@ -18,14 +19,16 @@ import java.util.ArrayList;
 /**
  * Created by Mark Miyashita on 10/14/14.
  */
-public class SiteListAdapter extends ArrayAdapter<Site> implements View.OnClickListener {
+public class SiteListAdapter extends ArrayAdapter<Site> {
 
+    MainActivity mMainActivity;
     Context context;
     int layoutResourceId;
     ArrayList<Site> sites;
 
-    public SiteListAdapter(Context context, int layoutResourceId, ArrayList<Site> sites) {
+    public SiteListAdapter(MainActivity mainActivity, Context context, int layoutResourceId, ArrayList<Site> sites) {
         super(context, layoutResourceId, sites);
+        this.mMainActivity = mainActivity;
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.sites = sites;
@@ -51,14 +54,23 @@ public class SiteListAdapter extends ArrayAdapter<Site> implements View.OnClickL
             holder = (SiteHolder)row.getTag();
         }
 
-        Site site = sites.get(position);
+        final Site site = sites.get(position);
 
         holder.photosView.configureWithPhotos(site.getPhotos());
         holder.numberOfTasksView.configureLabels(Integer.toString(site.getTasksCount()), "TASKS");
         holder.topLabel.setText(site.getName());
         holder.bottomLabel.setText(String.format("%s Sites", site.getMiniSitesCount()));
 
-        row.setOnClickListener(this);
+        row.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SiteFragment siteFragment = new SiteFragment();
+                siteFragment.configureWithSite(site);
+
+                mMainActivity.replaceFragment(siteFragment);
+            }
+        });
+
         return row;
     }
 
@@ -67,10 +79,5 @@ public class SiteListAdapter extends ArrayAdapter<Site> implements View.OnClickL
         CircularTextView numberOfTasksView;
         TextView topLabel;
         TextView bottomLabel;
-    }
-
-    @Override
-    public void onClick(View view) {
-        Log.d("Sample", "Clicked on tag: " + view.getTag());
     }
 }
