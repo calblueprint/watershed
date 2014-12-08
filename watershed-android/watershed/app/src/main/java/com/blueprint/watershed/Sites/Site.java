@@ -24,6 +24,8 @@ public class Site implements APIObject {
     private Integer mZipCode;
     private String mLatitude;
     private String mLongitude;
+    private Integer mTasksCount;
+    private Integer mMiniSitesCount;
 
     // Relationships
     private ArrayList<MiniSite> mMiniSites;
@@ -66,6 +68,7 @@ public class Site implements APIObject {
     public String getLatitude() { return mLatitude; }
     public String getLongitude() { return mLongitude; }
     public Integer getTasksCount() { return 1; }
+    public Integer getMiniSitesCount() { return 5; }
 
     @JsonIgnore
     public String getLocation() {
@@ -82,4 +85,6 @@ public class Site implements APIObject {
     public void setZipCode(Integer zipCode) { mZipCode = zipCode; }
     public void setLatitude(String latitude) { mLatitude = latitude; }
     public void setLongitude(String longitude) { mLongitude = longitude; }
+    public void setTasksCount(Integer tasksCount) { mTasksCount = tasksCount; }
+    public void setMiniSitesCount(Integer miniSitesCount) { mMiniSitesCount = miniSitesCount; }
 }

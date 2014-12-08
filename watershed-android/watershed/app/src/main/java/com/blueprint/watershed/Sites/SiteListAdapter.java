@@ -55,9 +55,8 @@ public class SiteListAdapter extends ArrayAdapter<Site> implements View.OnClickL
         holder.photosView.configureWithPhotos(site.getPhotos());
         holder.coverPhotoLabel.setText(String.format("%s Tasks", site.getTasksCount()));
         holder.topLabel.setText(site.getName());
-        holder.bottomLabel.setText(site.getLocation());
+        holder.bottomLabel.setText(String.format("%s Sites", site.getMiniSitesCount()));
 
-        holder.photosView.requestDisallowInterceptTouchEvent(true);
         row.setOnClickListener(this);
         return row;
     }

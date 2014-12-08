@@ -61,6 +61,7 @@ public class Photo implements APIObject {
     @JsonIgnore
     public void getImageAndSetImageView(Context context, final ImageView imageView) {
         if (mImage == null) {
+            imageView.setImageBitmap(null);
             NetworkManager manager = NetworkManager.getInstance(context);
             manager.imageRequest(getURL(), new Response.Listener<Bitmap>() {
                 @Override
