@@ -19,8 +19,8 @@
         android:gravity="center|top">
 
     <ImageView
-        android:layout_width="110dp"
-        android:layout_height="110dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:src="@drawable/watershed_logo"/>
 
     <TextView
@@ -37,7 +37,7 @@
     <TextView
         android:id = "@+id/profile_email"
         android:text="Email"
-        android:layout_marginTop="@dimen/tight_margin"
+        android:layout_marginTop="8dp"
         android:textColor="@color/white"
         android:gravity="center"
         android:layout_width="match_parent"
@@ -47,7 +47,7 @@
         android:id = "@+id/profile_role"
         android:text="Role"
         android:textColor="@color/white"
-        android:layout_marginTop="@dimen/tight_margin"
+        android:layout_marginTop="8dp"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -58,7 +58,7 @@
         android:id="@+id/profile_options"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginTop="@dimen/tight_margin">
+        >
 
     </ListView>
 

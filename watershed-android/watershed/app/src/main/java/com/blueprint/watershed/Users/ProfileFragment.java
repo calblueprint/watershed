@@ -76,7 +76,7 @@ public class ProfileFragment extends Fragment {
             options.add("Sites " + mUser.getSitesCount());
         }
 
-        mAdapter = new ProfileOptionsAdapter(getActivity(), R.layout.site_list_row, options);
+        mAdapter = new ProfileOptionsAdapter(getActivity(), R.layout.option_item, options);
         list.setAdapter(mAdapter);
 
 

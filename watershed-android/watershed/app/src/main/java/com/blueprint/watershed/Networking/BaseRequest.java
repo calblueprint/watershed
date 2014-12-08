@@ -58,7 +58,7 @@ public abstract class BaseRequest extends JsonObjectRequest {
                     });
                     errorListener.onResponse(apiError);
                 } catch (Exception e) {
-                    Log.e("Json exception", e.toString());
+                    Log.e("Json exception in Base Request", e.toString());
                 }
 
                 Toast toast = Toast.makeText(activity.getApplicationContext(), apiError.getMessage(), Toast.LENGTH_SHORT);
