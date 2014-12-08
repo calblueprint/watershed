@@ -10,4 +10,11 @@
 
 @implementation WPTask
 
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+    return @{
+             @"taskId" : @"id",
+             @"taskDescription" : @"description",
+             };
+}
+
 @end

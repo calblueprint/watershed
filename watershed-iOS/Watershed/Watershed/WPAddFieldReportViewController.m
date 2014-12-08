@@ -63,7 +63,7 @@
 
 - (void)saveForm:(UIButton *)sender {
     [self dismissKeyboard];
-    WPFieldReport *fieldReport = [[WPFieldReport alloc] init];
+//    WPFieldReport *fieldReport = [[WPFieldReport alloc] init];
     NSString *userId = [[WPNetworkingManager sharedManager] keyChainStore][@"userId"];
     NSString *description = self.view.fieldDescription.text;
     NSNumber *healthRating;

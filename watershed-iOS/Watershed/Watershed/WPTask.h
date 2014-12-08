@@ -6,8 +6,18 @@
 //  Copyright (c) 2014 Blueprint. All rights reserved.
 //
 
-#import "MTLModel.h"
+#import "Mantle.h"
 
-@interface WPTask : MTLModel
+@interface WPTask : MTLModel <MTLJSONSerializing>
+
+@property (nonatomic) NSNumber *taskId;
+@property (nonatomic) NSString *title;
+@property (nonatomic) NSString *taskDescription;
+@property (nonatomic) NSNumber *miniSiteId;
+@property (nonatomic) NSNumber *assignerId;
+@property (nonatomic) NSNumber *assigneeId;
+@property (assign) BOOL complete;
+@property (assign) BOOL urgent;
+@property (nonatomic) NSDate *dueDate;
 
 @end
