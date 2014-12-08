@@ -35,6 +35,13 @@
         <item name="android:src">@drawable/landing_page_photo</item>
     </style>
 
+    <style name="WsLabel">
+        <item name="android:gravity">bottom|left</item>
+        <item name="android:layout_width">0px</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
 
 
 </resources>

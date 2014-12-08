@@ -1,0 +1,63 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.blueprint.watershed.Tasks.CreateTaskFragment">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="@dimen/standard_margin"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/button_standard_height">
+            <TextView
+                style="@style/WsLabel"
+                android:text="@string/title"/>
+            <EditText
+                android:id="@+id/create_task_title"
+                android:layout_width="0px"
+                android:layout_height="@dimen/button_standard_height"
+                android:layout_weight="3"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:clickable="true"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/button_standard_height"
+            android:gravity="bottom" >
+
+            <TextView
+                style="@style/WsLabel"
+                android:text="@string/task_due_date"
+                />
+            <EditText
+                android:id="@+id/create_task_due_date"
+                android:layout_width="0px"
+                android:layout_height="@dimen/button_standard_height"
+                android:layout_weight="3"
+                android:text=""/>
+        </LinearLayout>
+
+        <ToggleButton
+            android:id="@+id/create_task_urgent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOn="Vibrate on"
+            android:textOff="Vibrate off"
+            android:onClick="onToggleClicked"/>
+
+        <EditText
+            android:id="@+id/create_task_site"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/button_standard_height" />
+
+
+        </LinearLayout>
+
+
+</FrameLayout>
