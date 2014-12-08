@@ -23,7 +23,7 @@ public class Task implements APIObject {
     private Integer mId;
     private String mTitle;
     private String mDescription;
-    private Integer mSiteId;
+    private Integer mMiniSiteId;
     private Integer mAssigneeId;
     private Integer mAssignerId;
     private Boolean mComplete;
@@ -37,7 +37,7 @@ public class Task implements APIObject {
     public Integer getId() {return mId;}
     public String getTitle() { return mTitle; }
     public String getDescription() { return mDescription; }
-    public Integer getSiteId() { return mSiteId; }
+    public Integer getMiniSiteId() { return mMiniSiteId; }
     public Integer getAssigneeId() { return mAssigneeId; }
     public Integer getAssignerId() { return mAssignerId; }
     public Boolean getComplete() { return mComplete; }
@@ -52,7 +52,7 @@ public class Task implements APIObject {
     public void setDescription(String description){
         mDescription = description;
     }
-    public void setSiteId(Integer siteId){ mSiteId = siteId; }
+    public void setMiniSiteId(Integer miniSiteId){ mMiniSiteId = miniSiteId; }
     public void setAssigneeId(Integer assigneeId) {
         mAssigneeId = assigneeId;
     }
