@@ -90,7 +90,6 @@ public class FieldReport implements APIObject {
      */
 
     // Getters
-    @JsonIgnore
     public Integer getId() { return mId; }
 
     public Integer getUserId() { return mUser.getId(); }
