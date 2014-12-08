@@ -14,7 +14,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/dark_gray"
+        android:background="@color/dark_transparent_gray"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignBottom="@+id/cover_photo_pager_view"
