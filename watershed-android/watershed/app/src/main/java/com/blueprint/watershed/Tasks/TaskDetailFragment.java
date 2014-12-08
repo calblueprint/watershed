@@ -5,6 +5,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -28,6 +31,11 @@ public class TaskDetailFragment extends Fragment {
         return taskFragment;
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.create_task_menu, menu);
+    }
+
     public TaskDetailFragment() {
         // Required empty public constructor
     }
@@ -44,6 +52,7 @@ public class TaskDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
     }
 
@@ -83,6 +92,20 @@ public class TaskDetailFragment extends Fragment {
     public void onResume() {
         super.onResume();
         //TODO make Task request. Do we need to get anything else from the server for this?
+    }
+
+    //TODO Move this method to TaskFragment once the duplicate menu items bug is fixed.
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.add_task:
+                CreateTaskFragment newTask = CreateTaskFragment.newInstance();
+                ((MainActivity)getActivity()).replaceFragment(newTask);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public interface OnFragmentInteractionListener {

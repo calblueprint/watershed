@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -48,6 +50,7 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         preferences = getActivity().getSharedPreferences(LandingPageActivity.PREFERENCES, 0);
         mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
     }
@@ -92,7 +95,6 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.e("item clicked", "yeS");
         if (null != mListener) {
             // Load site
             Site site = getSite(position);
@@ -101,6 +103,11 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
 
             mMainActivity.replaceFragment(siteFragment);
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.create_task_menu, menu);
     }
 
     public void getSitesRequest() {
