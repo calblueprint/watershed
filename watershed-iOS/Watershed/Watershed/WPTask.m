@@ -16,7 +16,8 @@
              @"title" : @"title",
              @"taskDescription" : @"description",
              @"completed" : @"complete",
-             @"dueDate" : @"due_date"
+             @"dueDate" : @"due_date",
+             @"urgent": @"urgent"
              };
 }
 

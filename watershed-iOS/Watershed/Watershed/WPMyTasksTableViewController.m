@@ -25,14 +25,14 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    _tasks = @[
-               @{@"Task": @"Water MY Tree", @"Description": @"Please. That would be very very very very very very very very very nice. You're a doll.", @"DueDate": @"05/11"},
-               @{@"Task": @"Prune MY Tree", @"Description": @"Pretty please", @"DueDate": @"05/10"},
-               @{@"Task": @"Keep MY Tree Alive", @"Description": @"Cherry on top"},
-               @{@"Task": @"Start MY Tree", @"Description": @"Dig hole", @"DueDate": @"05/12"},
-               @{@"Task": @"Put MY Tree in Hole", @"Description": @"Place it in", @"DueDate": @"05/12"}
-               ];
+//    
+//    _tasks = @[
+//               @{@"Task": @"Water MY Tree", @"Description": @"Please. That would be very very very very very very very very very nice. You're a doll.", @"DueDate": @"05/11"},
+//               @{@"Task": @"Prune MY Tree", @"Description": @"Pretty please", @"DueDate": @"05/10"},
+//               @{@"Task": @"Keep MY Tree Alive", @"Description": @"Cherry on top"},
+//               @{@"Task": @"Start MY Tree", @"Description": @"Dig hole", @"DueDate": @"05/12"},
+//               @{@"Task": @"Put MY Tree in Hole", @"Description": @"Place it in", @"DueDate": @"05/12"}
+//               ];
     self.tableView = [[UITableView alloc] init];
     [self.tableView registerClass:[WPTasksTableViewCell class] forCellReuseIdentifier:CellIdentifier];
     self.tableView.delegate = self;
@@ -65,7 +65,7 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _tasks.count;
+//    return _tasks.count;
     NSInteger rowCount = 0;
     
     if ([tableView isEqual:self.tableView]) rowCount = self.tasks.count;

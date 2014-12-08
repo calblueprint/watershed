@@ -131,11 +131,6 @@ static NSString * const TASKS_URL = @"tasks";
 }
 
 - (void)requestMyTasksListWithUser:(NSNumber *)userId parameters:(NSMutableDictionary *)parameters success:(void (^)(NSMutableArray *tasksList))success {
-    NSString *userIdString = [userId stringValue];
-//    NSString *userEndpoint = [@"/" stringByAppendingString:userIdString];
-//    NSString *userTasksEndpoint = [userEndpoint stringByAppendingString:TASKS_URL];
-//    *userEndpoint = [@"/" stringByAppendingString:userTasksEndpoint];
-//    NSString *USER_URL = [USERS_URL stringByAppendingString:userTasksEndpoint];
     NSString *myUserString = [NSString stringWithFormat:@"%@/%@/%@",USERS_URL, userId, TASKS_URL];
     NSString *userString = [WPNetworkingManager createURLWithEndpoint:myUserString];
 
