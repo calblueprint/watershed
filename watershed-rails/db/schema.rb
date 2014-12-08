@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141205054253) do
+ActiveRecord::Schema.define(version: 20141208092335) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,14 +68,14 @@ ActiveRecord::Schema.define(version: 20141205054253) do
   create_table "tasks", force: true do |t|
     t.string   "title"
     t.text     "description"
-    t.integer  "site_id"
+    t.integer  "mini_site_id"
     t.integer  "assigner_id"
     t.integer  "assignee_id"
     t.boolean  "complete"
     t.datetime "due_date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "urgent",      default: false
+    t.boolean  "urgent",       default: false
   end
 
   create_table "user_mini_sites", force: true do |t|
