@@ -28,4 +28,14 @@ class MiniSite < ActiveRecord::Base
   has_many :tasks
 
   has_many :photos, as: :parent
+
+  # TODO(mark): Make these counts into counter caches
+  def tasks_count
+    tasks.count
+  end
+
+  def field_reports_count
+    field_reports.count
+  end
+
 end
