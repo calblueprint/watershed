@@ -3,6 +3,7 @@ package com.blueprint.watershed.Tasks;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 
+import com.android.volley.Response;
 import com.blueprint.watershed.R;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 
 public class CreateTaskFragment extends Fragment implements View.OnClickListener {
@@ -80,8 +86,25 @@ public class CreateTaskFragment extends Fragment implements View.OnClickListener
         }
     }
 
+    public void createTaskRequest(Task task){
+        CreateTaskRequest createFieldReportRequest = new CreateFieldReportRequest(getActivity(), fieldReport, params, new Response.Listener<FieldReport>() {
+            @Override
+            public void onResponse(FieldReport fieldReport) {
+                Log.e("successful field report", "creation");
+            }
+        });
+
+        mNetworkManager.getRequestQueue().add(createFieldReportRequest);
+    }
+
+
     private void createTask() {
         Task submitTask = new Task();
+
+        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
+
+
+
     }
 
     public interface OnFragmentInteractionListener {
