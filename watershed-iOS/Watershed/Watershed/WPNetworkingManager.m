@@ -191,7 +191,6 @@ static NSString * const TASKS_URL = @"tasks";
             }
             
             miniSite.site = siteResponse;
-            miniSite.fieldReportCount = @(((NSArray *)miniSiteJSON[@"field_reports"]).count);
             [miniSiteList addObject:miniSite];
         }
         siteResponse.miniSites = miniSiteList;
@@ -241,10 +240,9 @@ static NSString * const TASKS_URL = @"tasks";
             WPFieldReport *fieldReport = [MTLJSONAdapter modelOfClass:WPFieldReport.class fromJSONDictionary:fieldReportJSON error:nil];
             fieldReport.miniSite = miniSiteResponse;
             NSDictionary *photoJSON = fieldReportJSON[@"photo"];
-            if (!([photoJSON isEqual:[NSNull null]])) {
+            if (photoJSON) {
                 [fieldReport.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];
             }
-            fieldReport.creationDate = @"October 1, 2014";
             [fieldReportList addObject:fieldReport];
         }
         miniSiteResponse.fieldReports = fieldReportList;

@@ -19,7 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = self.fieldReport.creationDate;
+    self.navigationItem.title = [self.fieldReport dateString];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     __weak __typeof(self)weakSelf = self;
