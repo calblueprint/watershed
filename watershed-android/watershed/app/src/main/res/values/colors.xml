@@ -7,7 +7,7 @@
     <color name="medium_gray">#EEEEEE</color>
     <color name="dark_gray">#656d78</color>
 
-    <color name="dark_transparent_gray">#33656d78</color>
+    <color name="dark_transparent_gray">#CC656D78</color>
 
     <!-- Watershed Colors -->
     <color name="ws_blue">#81B4DE</color>
