@@ -158,10 +158,8 @@ int WPButtonHeight = 75;
     
     [self.assigneeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.addFieldReportButton.mas_top).with.offset(-standardMargin);
-        make.leading.equalTo(@0);
+        make.leading.equalTo(@(standardMargin));
         make.trailing.equalTo(@(-standardMargin));
-//        make.height.equalTo(@);
-        
     }];
 
     [self.addFieldReportButton mas_makeConstraints:^(MASConstraintMaker *make) {
