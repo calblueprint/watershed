@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: "json" } do
     namespace :v1 do
+      match "/", to: "base#ping", via: :get
       match "mobile", to: "base#mobile", via: :get
 
       devise_for :users, skip: [:registrations, :passwords]
