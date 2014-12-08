@@ -16,8 +16,8 @@
 @implementation WPSiteTableViewCell
 
 const static float CELL_HEIGHT = 150.0f;
-const static int ORIGINAL_PHOTO_POSITION = 50;
-const static float PARALLAX_REDUCTION = 3.5;
+const static int ORIGINAL_PHOTO_POSITION = 40;
+const static float PARALLAX_REDUCTION = 5.0;
 
 - (id)initWithStyle:(UITableViewCellStyle)style
     reuseIdentifier:(NSString *)reuseIdentifier {
