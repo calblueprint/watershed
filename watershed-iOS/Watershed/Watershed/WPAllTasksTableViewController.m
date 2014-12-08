@@ -52,9 +52,7 @@ static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
     return 60;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    return _allTasks.count;
-    
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {    
     NSInteger rowCount = 0;
     
     if ([tableView isEqual:self.tableView]) rowCount = self.allTasks.count;

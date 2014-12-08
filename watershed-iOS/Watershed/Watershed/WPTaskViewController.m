@@ -47,7 +47,7 @@
 
 #pragma mark - Setter Methods
 
--(void)setSite:(WPTask *)task {
+-(void)setTask:(WPTask *)task {
     _task = task;
     [self.view configureWithTask:task];
 }

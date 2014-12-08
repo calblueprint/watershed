@@ -110,12 +110,18 @@ int WPButtonHeight = 75;
 }
 
 - (void)configureWithTask:(WPTask *)task {
+    NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
+    [outputFormatter setDateFormat:@"MM/dd/yyyy"];
+    
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"MM-dd-yyyy"];
-    NSString *dueDateString = [dateFormat stringFromDate:task.dueDate];
-    self.dueDate.text = [NSString stringWithFormat:@"%@", dueDateString];
+    [dateFormat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
+    
+    NSDate *date  = [dateFormat dateFromString: task.dueDate];
+    NSString *dueDateString = [outputFormatter stringFromDate:date];
+
+    self.dueDate.text = dueDateString;
     self.taskDescription.text = task.taskDescription;
-    self.assigneeLabel.text = task.assignee.name;
+//    self.assigneeLabel.text = task.assignee.name;
     self.title.text = task.title;
 }
 

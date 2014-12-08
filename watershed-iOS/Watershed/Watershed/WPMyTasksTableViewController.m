@@ -25,14 +25,7 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    
-//    _tasks = @[
-//               @{@"Task": @"Water MY Tree", @"Description": @"Please. That would be very very very very very very very very very nice. You're a doll.", @"DueDate": @"05/11"},
-//               @{@"Task": @"Prune MY Tree", @"Description": @"Pretty please", @"DueDate": @"05/10"},
-//               @{@"Task": @"Keep MY Tree Alive", @"Description": @"Cherry on top"},
-//               @{@"Task": @"Start MY Tree", @"Description": @"Dig hole", @"DueDate": @"05/12"},
-//               @{@"Task": @"Put MY Tree in Hole", @"Description": @"Place it in", @"DueDate": @"05/12"}
-//               ];
+
     self.tableView = [[UITableView alloc] init];
     [self.tableView registerClass:[WPTasksTableViewCell class] forCellReuseIdentifier:CellIdentifier];
     self.tableView.delegate = self;
@@ -91,20 +84,13 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
         }
         WPTask *task = self.tasks[indexPath.row];
         cellView.title = task.title;
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        NSString *formatString = @"yyyy-MM-dd'T'HH:mm:ss.???";
-        [formatter setDateFormat:formatString];
-//        NSDate *date = [formatter dateFromString:dateValue];
-        
-        
+
         NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
-        
         [outputFormatter setDateFormat:@"MM/dd/yyyy"];
-        
-        NSString *dateStr = [outputFormatter stringFromDate:task.dueDate];
 
         NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
         [dateFormat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
+
         NSDate *date  = [dateFormat dateFromString: task.dueDate];
         NSString *dueDateString = [outputFormatter stringFromDate:date];
         cellView.dueDate = dueDateString;
@@ -117,10 +103,6 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     WPTaskViewController *taskViewController = [[WPTaskViewController alloc] init];
-//    taskViewController.taskTitle = self.tasks[indexPath.row][@"Task"];
-//    taskViewController.taskDescription = self.tasks[indexPath.row][@"Description"];
-//    taskViewController.dueDate = self.tasks[indexPath.row][@"DueDate"];
-//    [[self.parentViewController navigationController] pushViewController:taskViewController animated:YES];
     
     WPTask *selectedTask = self.tasks[indexPath.row];
     taskViewController.task = selectedTask;
