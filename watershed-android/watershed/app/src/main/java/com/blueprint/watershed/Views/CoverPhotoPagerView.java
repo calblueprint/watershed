@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewParent;
 import android.widget.ImageView;
 
 import com.blueprint.watershed.Photos.Photo;
@@ -27,7 +28,6 @@ public class CoverPhotoPagerView extends ViewPager {
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.cover_photo_pager_view, this, true);
-
         initializeViews(context);
     }
 
