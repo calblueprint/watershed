@@ -29,8 +29,16 @@ class Site < ActiveRecord::Base
   #
   # Properties
   #
+  def tasks
+    Task.joins(:mini_site).where(mini_site: mini_sites)
+  end
+
   def mini_sites_count
     mini_sites.count
+  end
+
+  def tasks_count
+    tasks.count
   end
 
   def photos
