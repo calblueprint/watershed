@@ -73,16 +73,21 @@ public class SiteFragment extends Fragment
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_site, container, false);
 
-        configureViewWithSite(view, mSite);
-
+        // Create MiniSite grid
         mMiniSiteGridView = (HeaderGridView) view.findViewById(R.id.mini_sites_grid);
+
+        // Add site header information to the top
+        ViewGroup header = (ViewGroup)inflater.inflate(R.layout.site_header_view, mMiniSiteGridView, false);
+        mMiniSiteGridView.addHeaderView(header, null, false);
+
+        // Configure the header
+        configureViewWithSite(header, mSite);
+
+        // Set the adapter to fill the list of mini sites
         mMiniSiteAdapter = new MiniSiteListAdapter(getActivity(), R.layout.mini_site_list_row, getMiniSites());
         mMiniSiteGridView.setAdapter(mMiniSiteAdapter);
 
         mMiniSiteGridView.setOnItemClickListener(this);
-
-        ViewGroup header = (ViewGroup)inflater.inflate(R.layout.site_header_view, mMiniSiteGridView, false);
-        mMiniSiteGridView.addHeaderView(header, null, false);
         return view;
     }
 
