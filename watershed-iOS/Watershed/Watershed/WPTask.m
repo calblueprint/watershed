@@ -8,6 +8,7 @@
 
 #import "WPTask.h"
 #import "WPUser.h"
+#import "WPSite.h"
 
 @implementation WPTask
 
@@ -30,6 +31,10 @@
 
 + (NSValueTransformer *)assignerJSONTransformer {
     return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[WPUser class]];
+}
+
++ (NSValueTransformer *)siteJSONTransformer {
+    return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[WPSite class]];
 }
 //           what to do with these objects?
 //             @"assignee_id",
