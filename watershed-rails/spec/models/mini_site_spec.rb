@@ -14,6 +14,7 @@
 #  created_at  :datetime
 #  updated_at  :datetime
 #  site_id     :integer
+#  planted_at  :date
 #
 
 require 'spec_helper'
