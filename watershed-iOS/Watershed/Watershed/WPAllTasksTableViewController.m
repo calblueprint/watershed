@@ -26,13 +26,6 @@ static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _allTasks = @[
-               @{@"Task": @"Water Tree", @"Description": @"Please", @"DueDate": @"05/11", @"Assigner": @"Derek", @"Assignee": @"Lala"},
-               @{@"Task": @"Prune Tree", @"Description": @"Pretty please", @"DueDate": @"05/10", @"Assigner": @"Derek", @"Assignee": @"Lala"},
-               @{@"Task": @"Keep Tree Alive Lot of text. Lot of Text. Lot of Text. Lot of Text.", @"Description": @"Cherry on top. Hello lots of text. Wow that's a lot of text. A lot of text. A lot of Text. A Lot of Text. A Lot Of Text. Lot of text. Lot of text. Lot of text. ", @"Assigner": @"Derek", @"Assignee": @"Lala"},
-               @{@"Task": @"Start Tree", @"Description": @"Dig hole", @"DueDate": @"05/12", @"Assigner": @"Derek", @"Assignee": @"Lala"},
-               @{@"Task": @"Put Tree in Hole", @"Description": @"Place it in", @"DueDate": @"05/12", @"Assigner": @"Derek", @"Assignee": @"Lala"}
-               ];
     self.tableView = [[UITableView alloc] init];
     [self.tableView registerClass:[WPTasksTableViewCell class] forCellReuseIdentifier:allTasksIdentifier];
     self.tableView.delegate = self;

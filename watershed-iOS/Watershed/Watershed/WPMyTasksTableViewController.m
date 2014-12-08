@@ -41,7 +41,6 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
     [f setNumberStyle:NSNumberFormatterDecimalStyle];
     NSNumber *userId = [f numberFromString:[[WPNetworkingManager sharedManager] keyChainStore][@"userId"]];
 
-    
     [[WPNetworkingManager sharedManager] requestMyTasksListWithUser:userId parameters: [[NSMutableDictionary alloc] init] success:^(NSMutableArray *tasksList) {
         self.tasks = tasksList;
         [self.tableView reloadData];

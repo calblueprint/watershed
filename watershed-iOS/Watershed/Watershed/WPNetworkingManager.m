@@ -135,7 +135,7 @@ static NSString * const TASKS_URL = @"tasks";
     NSString *userString = [WPNetworkingManager createURLWithEndpoint:myUserString];
 
     [self addAuthenticationParameters:parameters];
-    
+
     [self GET:userString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSArray *tasksListJSON = (NSArray *)responseObject[@"tasks"];
         NSMutableArray *tasksList = [[NSMutableArray alloc] init];

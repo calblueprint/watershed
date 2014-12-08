@@ -17,11 +17,11 @@
 @property (nonatomic) NSString *title;
 @property (nonatomic) NSString *taskDescription;
 @property (nonatomic) NSDate *dueDate;
-@property (nonatomic) Boolean *urgent;
+@property (nonatomic) BOOL urgent;
 @property (nonatomic) NSNumber *siteId;
 @property (nonatomic) WPUser *assignee;
 @property (nonatomic) WPUser *assigner;
 @property (nonatomic) WPSite *site;
-@property (nonatomic) Boolean *completed;
+@property (nonatomic) BOOL completed;
 
 @end

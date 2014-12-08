@@ -13,11 +13,9 @@
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
              @"taskId" : @"id",
-             @"title" : @"title",
              @"taskDescription" : @"description",
              @"completed" : @"complete",
              @"dueDate" : @"due_date",
-             @"urgent": @"urgent"
              };
 }
 
