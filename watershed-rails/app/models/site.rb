@@ -30,7 +30,7 @@ class Site < ActiveRecord::Base
   # Properties
   #
   def tasks
-    mini_sites.joins(:tasks).collect { |mini_site| mini_site.tasks }.flatten
+    Task.joins(:mini_site).where(mini_site: mini_sites)
   end
 
   def mini_sites_count
