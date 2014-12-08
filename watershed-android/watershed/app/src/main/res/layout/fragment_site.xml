@@ -12,6 +12,7 @@
         android:layout_marginTop="@dimen/no_margin"
         android:layout_marginLeft="@dimen/no_margin"
         android:layout_marginRight="@dimen/no_margin"
+        android:background="@color/medium_gray"
         android:numColumns="2"
         android:verticalSpacing="@dimen/tight_margin"
         android:horizontalSpacing="@dimen/tight_margin">
