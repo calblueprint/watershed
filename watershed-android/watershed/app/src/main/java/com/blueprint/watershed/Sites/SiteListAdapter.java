@@ -2,6 +2,7 @@ package com.blueprint.watershed.Sites;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 /**
  * Created by Mark Miyashita on 10/14/14.
  */
-public class SiteListAdapter extends ArrayAdapter<Site> {
+public class SiteListAdapter extends ArrayAdapter<Site> implements View.OnClickListener {
 
     Context context;
     int layoutResourceId;
@@ -56,6 +57,8 @@ public class SiteListAdapter extends ArrayAdapter<Site> {
         holder.topLabel.setText(site.getName());
         holder.bottomLabel.setText(site.getLocation());
 
+        holder.photosView.requestDisallowInterceptTouchEvent(true);
+        row.setOnClickListener(this);
         return row;
     }
 
@@ -64,5 +67,10 @@ public class SiteListAdapter extends ArrayAdapter<Site> {
         TextView coverPhotoLabel;
         TextView topLabel;
         TextView bottomLabel;
+    }
+
+    @Override
+    public void onClick(View view) {
+        Log.d("Sample", "Clicked on tag: " + view.getTag());
     }
 }
