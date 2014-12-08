@@ -91,7 +91,23 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
         }
         WPTask *task = self.tasks[indexPath.row];
         cellView.title = task.title;
-        cellView.dueDate = task.dueDate;
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        NSString *formatString = @"yyyy-MM-dd'T'HH:mm:ss.???";
+        [formatter setDateFormat:formatString];
+//        NSDate *date = [formatter dateFromString:dateValue];
+        
+        
+        NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
+        
+        [outputFormatter setDateFormat:@"MM/dd/yyyy"];
+        
+        NSString *dateStr = [outputFormatter stringFromDate:task.dueDate];
+
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+        [dateFormat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
+        NSDate *date  = [dateFormat dateFromString: task.dueDate];
+        NSString *dueDateString = [outputFormatter stringFromDate:date];
+        cellView.dueDate = dueDateString;
         cellView.taskDescription = task.taskDescription;
         cellView.completed = task.completed;
     }

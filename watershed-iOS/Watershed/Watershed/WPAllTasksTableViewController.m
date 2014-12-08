@@ -62,15 +62,7 @@ static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    WPTasksTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:allTasksIdentifier forIndexPath:indexPath];
-//    
-//    NSDictionary *rowData = self.allTasks[indexPath.row];
-//    cell.title = rowData[@"Task"];
-//    cell.taskDescription = rowData[@"Description"];
-//    cell.dueDate = rowData[@"DueDate"];
-//    return cell;
-//    
-//    
+
     WPTasksTableViewCell *cellView = nil;
     
     if ([tableView isEqual:self.tableView]) {
@@ -94,12 +86,6 @@ static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     WPTaskViewController *taskViewController = [[WPTaskViewController alloc] init];
-//    taskViewController.taskTitle = self.allTasks[indexPath.row][@"Task"];
-//    taskViewController.taskDescription = self.allTasks[indexPath.row][@"Description"];
-//    taskViewController.dueDate = self.allTasks[indexPath.row][@"DueDate"];
-//    taskViewController.assignee = self.allTasks[indexPath.row][@"Assignee"];
-//    taskViewController.assigner = self.allTasks[indexPath.row][@"Assigner"];
-    
     WPTask *selectedTask = self.allTasks[indexPath.row];
     taskViewController.task = selectedTask;
     [[self.parentViewController navigationController] pushViewController:taskViewController animated:YES];
