@@ -52,8 +52,8 @@ public class FieldReportFragment extends Fragment
 
     public void configureViewWithFieldReport(View view, FieldReport fieldReport) {
         ((CoverPhotoPagerView)view.findViewById(R.id.cover_photo_pager_view)).configureWithPhotos(fieldReport.getPhotos());
-        ((TextView)view.findViewById(R.id.site_name)).setText(String.format("Rating: %s", fieldReport.getHealthRating()));
-        ((TextView)view.findViewById(R.id.site_description)).setText(fieldReport.getDescription());
+        ((TextView)view.findViewById(R.id.field_report_health_rating)).setText(String.format("Rating: %s", fieldReport.getHealthRating()));
+        ((TextView)view.findViewById(R.id.field_report_description)).setText(fieldReport.getDescription());
     }
 
     @Override

@@ -55,9 +55,9 @@ public class FieldReportListAdapter extends ArrayAdapter<FieldReport> {
 
         final FieldReport fieldReport = fieldReports.get(position);
         holder.photosView.configureWithPhotos(fieldReport.getPhotos());
-        holder.coverPhotoLabel.setText(fieldReport.getHealthRating());
+        holder.coverPhotoLabel.setText(String.format("Rating: %s", fieldReport.getHealthRating()));
         holder.topLabel.setText("12/8/2014");
-        holder.bottomLabel.setText(String.format("By: %s", fieldReport.getUser().getName()));
+        holder.bottomLabel.setText(String.format("By: %s", fieldReport.getUserName()));
 
         row.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -55,6 +55,11 @@ public class FieldReport implements APIObject {
     public User getUser() { return mUser; }
 
     @JsonIgnore
+    public String getUserName() {
+        return mUser == null ? "Derek Hitchcock" : mUser.getName();
+    }
+
+    @JsonIgnore
     public MiniSite getMiniSite() { return mMiniSite; }
 
     @JsonIgnore
