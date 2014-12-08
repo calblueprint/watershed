@@ -45,12 +45,7 @@ static NSString *cellIdentifier = @"SiteCell";
     self.sitesTableView.delegate = self;
     self.sitesTableView.dataSource = self;
     
-    __weak __typeof(self)weakSelf = self;
-    [[WPNetworkingManager sharedManager] requestSitesListWithParameters:[[NSMutableDictionary alloc] init] success:^(NSMutableArray *sitesList) {
-        __strong __typeof(weakSelf)strongSelf = weakSelf;
-        strongSelf.sitesList = sitesList;
-        [strongSelf.sitesTableView reloadData];
-    }];
+    [self requestAndLoadSites];
 }
 
 #pragma mark - TableView Delegate/DataSource Methods
@@ -100,6 +95,17 @@ static NSString *cellIdentifier = @"SiteCell";
     WPSiteViewController *siteViewController = [[WPSiteViewController alloc] init];
     siteViewController.site = selectedSite;
     [self.navigationController pushViewController:siteViewController animated:YES];
+}
+
+#pragma mark - Networking Methods
+
+- (void)requestAndLoadSites {
+    __weak __typeof(self)weakSelf = self;
+    [[WPNetworkingManager sharedManager] requestSitesListWithParameters:[[NSMutableDictionary alloc] init] success:^(NSMutableArray *sitesList) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        strongSelf.sitesList = sitesList;
+        [strongSelf.sitesTableView reloadData];
+    }];
 }
 
 #pragma mark - ScrollView Delegate Methods
@@ -171,6 +177,7 @@ static NSString *cellIdentifier = @"SiteCell";
 
 - (void)showCreateSiteView {
     WPCreateSiteViewController *createSiteViewController = [[WPCreateSiteViewController alloc] init];
+    createSiteViewController.parent = self;
     UINavigationController *createSiteNavController = [[UINavigationController alloc] initWithRootViewController:createSiteViewController];
     [createSiteNavController.navigationBar setBackgroundColor:[UIColor whiteColor]];
     [createSiteNavController.navigationBar setBarTintColor:[UIColor whiteColor]];

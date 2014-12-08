@@ -65,6 +65,7 @@
                                };
     WPSite *site = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:siteJSON error:nil];
     [[WPNetworkingManager sharedManager] createSiteWithSite:site parameters:[[NSMutableDictionary alloc] init] success:^{
+        [self.parent requestAndLoadSites];
         [self dismissSelf];
     }];
 }
