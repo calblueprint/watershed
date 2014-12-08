@@ -2,6 +2,7 @@ package com.blueprint.watershed.Views;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,10 +19,9 @@ public class CircularTextView extends RelativeLayout {
 
     public CircularTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initializeViews();
-
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.circular_text_view, this, true);
+        initializeViews();
     }
 
     public void initializeViews() {
@@ -30,8 +30,8 @@ public class CircularTextView extends RelativeLayout {
     }
 
     public void configureLabels(String primaryText, String secondaryText) {
-        //getPrimaryLabel().setText(primaryText);
-        //getSecondaryLabel().setText(secondaryText);
+        getPrimaryLabel().setText(primaryText);
+        getSecondaryLabel().setText(secondaryText);
     }
 
     // Getters

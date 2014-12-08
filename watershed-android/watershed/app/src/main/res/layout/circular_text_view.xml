@@ -2,7 +2,7 @@
 
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:text="Primary Label"
             android:layout_centerHorizontal="true"
-            android:layout_centerInParent="true"
+            android:layout_marginTop="15dp"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:textAppearance="@android:style/TextAppearance.Holo.Medium"
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:text="Secondary Label"
             android:layout_below="@+id/primary_label"
-            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
             android:textColor="@color/white"
             android:textSize="10sp"
             android:textAppearance="@android:style/TextAppearance.Holo.Small"
