@@ -65,7 +65,7 @@
     [self dismissKeyboard];
 //    WPFieldReport *fieldReport = [[WPFieldReport alloc] init];
     NSString *userId = [[WPNetworkingManager sharedManager] keyChainStore][@"userId"];
-    NSString *description = self.view.fieldDescription.text;
+    NSString *fieldReportDescription = self.view.fieldDescription.text;
     NSNumber *healthRating;
     if (self.view.rating1.isSelected) {
         healthRating = @1;
@@ -82,21 +82,22 @@
 //  if parent is task VC, do task id, otherwise to nil
     NSNumber *taskId;
     NSString *miniSiteId;
-    if ([self.parentViewController isKindOfClass:[WPMiniSiteViewController class]]) {
-        WPMiniSiteViewController *parent = (WPMiniSiteViewController *)self.parentViewController;
+    UIViewController *previousViewController = [((UINavigationController *)self.parentViewController).viewControllers objectAtIndex:((UINavigationController *)self.parentViewController).viewControllers.count-2];
+    if ([previousViewController isKindOfClass:[WPMiniSiteViewController class]]) {
+        WPMiniSiteViewController *parent = (WPMiniSiteViewController *)previousViewController;
         miniSiteId = [parent.miniSite.miniSiteId stringValue];
         taskId = nil;
-        
-    } else if ([self.parentViewController isKindOfClass:[WPTaskViewController class]]) {
-        WPTaskViewController *parent = (WPTaskViewController *)self.parentViewController;
+    } else if ([previousViewController isKindOfClass:[WPTaskViewController class]]) {
+        WPTaskViewController *parent = (WPTaskViewController *)previousViewController;
 //        taskId = parent.taskId;
 //        miniSiteId = parent.miniSiteId;
     }
     NSString *photo = [UIImagePNGRepresentation(self.view.selectedImageView.image) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];;
     
     NSDictionary *parameters = @{@"user_id": userId, @"mini_site_id": miniSiteId,
-                                 @"description": description, @"health_rating": healthRating,
-                                 @"urgent": urgent, @"photo_attributes": @{@"image": photo}};
+                                 @"description": fieldReportDescription,
+                                 @"health_rating": healthRating, @"urgent": urgent,
+                                 @"photo_attributes": @{@"image": photo}};
     
     [[WPNetworkingManager sharedManager] postFieldReportWithParameters:parameters success:^(WPFieldReport *fieldReport) {
         //do stuffs
