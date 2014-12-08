@@ -1,3 +1,3 @@
 class BasePhotoSerializer < ActiveModel::Serializer
-  attributes :id, :url
+  attributes :id, :url, :created_at
 end

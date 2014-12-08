@@ -86,9 +86,10 @@
     <orderEntry type="library" exported="" name="jackson-core-2.4.3" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-20.0.0" level="project" />
     <orderEntry type="library" exported="" name="support-v4-20.0.0" level="project" />
+    <orderEntry type="library" exported="" name="facebook-android-sdk-3.20.0" level="project" />
     <orderEntry type="library" exported="" name="volley" level="project" />
+    <orderEntry type="library" exported="" name="bolts-android-1.1.2" level="project" />
     <orderEntry type="library" exported="" name="jackson-annotations-2.4.3" level="project" />
-    <orderEntry type="module" module-name="facebook" exported="" />
   </component>
 </module>
 

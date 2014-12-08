@@ -16,11 +16,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.blueprint.watershed.APIObject;
+import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Authentication.Session;
 import com.blueprint.watershed.Utilities.APIError;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.apache.http.HttpStatus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,10 +49,15 @@ public abstract class BaseRequest extends JsonObjectRequest {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Log.e("Request Error", "Custom ErrorListener detected");
+                NetworkResponse networkResponse = volleyError.networkResponse;
+                if (networkResponse != null && networkResponse.statusCode == HttpStatus.SC_FORBIDDEN) {
+                    MainActivity.logoutCurrentUser(activity);
+                    return;
+                }
 
                 APIError apiError = new APIError();
                 try {
-                    String errorJson = new String(volleyError.networkResponse.data);
+                    String errorJson = new String(networkResponse.data);
                     JSONObject errorJsonObject = new JSONObject(errorJson);
                     errorJson = errorJsonObject.getString("error");
                     ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();

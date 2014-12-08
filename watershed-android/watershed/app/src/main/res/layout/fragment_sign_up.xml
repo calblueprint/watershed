@@ -75,6 +75,7 @@
                 android:layout_marginEnd="@dimen/tight_margin"
                 android:layout_marginLeft="@dimen/tight_margin"
                 android:layout_marginRight="@dimen/tight_margin"
+                android:inputType="textNoSuggestions"
                 android:hint="@string/password_hint"
                 android:background="@color/transparent"
                 />
@@ -97,6 +98,7 @@
                 android:layout_marginEnd="@dimen/tight_margin"
                 android:layout_marginLeft="@dimen/tight_margin"
                 android:layout_marginRight="@dimen/tight_margin"
+                android:inputType="textNoSuggestions"
                 android:hint="@string/password_confirmation_hint"
                 android:background="@color/transparent"
                 />

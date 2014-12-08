@@ -1,6 +1,7 @@
 package com.blueprint.watershed.Activities;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.res.Configuration;
@@ -386,21 +387,25 @@ public class MainActivity extends ActionBarActivity
                 replaceFragment(mAboutFragment);
                 break;
             case 4:
-                SharedPreferences prefs = getSharedPreferences(LandingPageActivity.PREFERENCES, 0);
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.clear();
-                editor.commit();
-                Intent intent = new Intent(this, LandingPageActivity.class);
-
-                if (Session.getActiveSession() != null) {
-                    Session.getActiveSession().closeAndClearTokenInformation();
-                }
-
-                this.finish();
-                startActivity(intent);
+                logoutCurrentUser(this);
                 break;
         }
         mDrawerLayout.closeDrawer(mDrawerList);
+    }
+
+    public static void logoutCurrentUser(Activity activity) {
+        SharedPreferences prefs = activity.getSharedPreferences(LandingPageActivity.PREFERENCES, 0);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.clear();
+        editor.commit();
+        Intent intent = new Intent(activity, LandingPageActivity.class);
+
+        if (Session.getActiveSession() != null) {
+            Session.getActiveSession().closeAndClearTokenInformation();
+        }
+
+        activity.finish();
+        activity.startActivity(intent);
     }
 
     @Override
