@@ -65,12 +65,6 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    WPTasksTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-//    NSDictionary *rowData = self.tasks[indexPath.row];
-//    cell.title = rowData[@"Task"];
-//    cell.taskDescription = rowData[@"Description"];
-//    cell.dueDate = rowData[@"DueDate"];
-//    return cell;
     
     WPTasksTableViewCell *cellView = nil;
     

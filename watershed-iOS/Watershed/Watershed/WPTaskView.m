@@ -121,7 +121,7 @@ int WPButtonHeight = 75;
 
     self.dueDate.text = dueDateString;
     self.taskDescription.text = task.taskDescription;
-//    self.assigneeLabel.text = task.assignee.name;
+    self.assigneeLabel.text = [NSString stringWithFormat:@"Assigned to %@ by %@", task.assignee.name, task.assigner.name];
     self.title.text = task.title;
 }
 

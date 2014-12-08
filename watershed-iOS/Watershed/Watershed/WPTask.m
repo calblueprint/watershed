@@ -7,6 +7,7 @@
 //
 
 #import "WPTask.h"
+#import "WPUser.h"
 
 @implementation WPTask
 
@@ -19,6 +20,17 @@
              };
 }
 
++ (NSValueTransformer *)booleanJSONTransformer {
+    return [NSValueTransformer valueTransformerForName:MTLBooleanValueTransformerName];
+}
+
++ (NSValueTransformer *)assigneeJSONTransformer {
+    return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[WPUser class]];
+}
+
++ (NSValueTransformer *)assignerJSONTransformer {
+    return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[WPUser class]];
+}
 //           what to do with these objects?
 //             @"assignee_id",
 //             site_id
