@@ -20,6 +20,7 @@ import com.blueprint.watershed.FieldReports.FieldReportListAdapter;
 import com.blueprint.watershed.Networking.MiniSites.MiniSiteRequest;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Views.HeaderGridView;
 
 import org.json.JSONObject;
 
@@ -33,7 +34,7 @@ public class MiniSiteFragment extends Fragment
     private OnFragmentInteractionListener mListener;
     private NetworkManager mNetworkManager;
     private MainActivity mMainActivity;
-    private ListView mFieldReportListView;
+    private HeaderGridView mFieldReportGirdView;
     private FieldReportListAdapter mFieldReportAdapter;
     private MiniSite mMiniSite;
     private ArrayList<FieldReport> mFieldReports;
@@ -69,13 +70,22 @@ public class MiniSiteFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mini_site, container, false);
-        configureViewWithMiniSite(view, mMiniSite);
 
-        mFieldReportListView = (ListView) view.findViewById(R.id.field_reports_table);
-        mFieldReportAdapter = new FieldReportListAdapter(getActivity(), R.layout.field_report_list_row, getFieldReports());
-        mFieldReportListView.setAdapter(mFieldReportAdapter);
+        // Create FieldReportGridView
+        mFieldReportGirdView = (HeaderGridView) view.findViewById(R.id.field_reports_grid);
 
-        mFieldReportListView.setOnItemClickListener(this);
+        // Add mini site header information to the top
+        ViewGroup header = (ViewGroup)inflater.inflate(R.layout.mini_site_header_view, mFieldReportGirdView, false);
+        mFieldReportGirdView.addHeaderView(header, null, false);
+
+        // Configure the header
+        configureViewWithMiniSite(header, mMiniSite);
+
+        // Set the adapter to fill the list of field reports
+        mFieldReportAdapter = new FieldReportListAdapter(mMainActivity, getActivity(), R.layout.field_report_list_row, getFieldReports());
+        mFieldReportGirdView.setAdapter(mFieldReportAdapter);
+
+        mFieldReportGirdView.setOnItemClickListener(this);
         return view;
     }
 

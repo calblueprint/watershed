@@ -1,4 +1,4 @@
-package com.blueprint.watershed.FieldReports.;
+package com.blueprint.watershed.FieldReports;
 
 import android.app.Activity;
 import android.net.Uri;
@@ -17,7 +17,7 @@ import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.FieldReports.FieldReport;
 import com.blueprint.watershed.FieldReports.AddFieldReportFragment;
 import com.blueprint.watershed.FieldReports.FieldReportListAdapter;
-import com.blueprint.watershed.Networking.FieldReports.fieldReportRequest;
+import com.blueprint.watershed.Networking.FieldReports.FieldReportRequest;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.R;
 

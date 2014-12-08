@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.blueprint.watershed.Activities.MainActivity;
+import com.blueprint.watershed.MiniSites.MiniSiteFragment;
+
 import java.util.ArrayList;
 
 /**
@@ -15,12 +18,14 @@ import java.util.ArrayList;
  */
 public class FieldReportListAdapter extends ArrayAdapter<FieldReport> {
 
+    MainActivity mMainActivity;
     Context context;
     int layoutResourceId;
     ArrayList<FieldReport> fieldReports;
 
-    public FieldReportListAdapter(Context context, int layoutResourceId, ArrayList<FieldReport> fieldReports) {
+    public FieldReportListAdapter(MainActivity mainActivity, Context context, int layoutResourceId, ArrayList<FieldReport> fieldReports) {
         super(context, layoutResourceId, fieldReports);
+        this.mMainActivity = mainActivity;
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.fieldReports = fieldReports;
@@ -44,10 +49,19 @@ public class FieldReportListAdapter extends ArrayAdapter<FieldReport> {
             holder = (FieldReportHolder)row.getTag();
         }
 
-        FieldReport fieldReport = fieldReports.get(position);
+        final FieldReport fieldReport = fieldReports.get(position);
 
         //holder.name.setText(miniSite.getName());
         //holder.description.setText("");
+
+        row.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FieldReportFragment fieldReportFragment = new FieldReportFragment();
+                fieldReportFragment.configureWithFieldReport(fieldReport);
+                mMainActivity.replaceFragment(fieldReportFragment);
+            }
+        });
 
         return row;
     }
