@@ -50,14 +50,13 @@
              style="@style/WsLabel"
              android:text = "@string/urgent"/>
 
-        <ToggleButton
-            android:id="@+id/create_task_urgent"
-            android:layout_width="0px"
-            android:layout_height="fill_parent"
-            android:layout_weight="3"
-            android:textOn="Vibrate on"
-            android:textOff="Vibrate off"
-            android:onClick="onToggleClicked"/>
+            <Switch
+                android:id="@+id/field_report_urgent"
+                android:textOn="@string/urgent"
+                android:textOff="@string/not_urgent"
+                android:layout_weight="3"
+                android:layout_width="0px"
+                android:layout_height="16dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -97,11 +96,10 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="top" >
+            android:gravity="bottom">
 
             <TextView
                 style="@style/WsLabel"
-                android:gravity="bottom"
                 android:layout_height="@dimen/button_standard_height"
                 android:text="@string/task_due_date"
                 />

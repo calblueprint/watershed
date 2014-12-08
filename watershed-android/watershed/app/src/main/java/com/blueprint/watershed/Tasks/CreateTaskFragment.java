@@ -34,7 +34,10 @@ public class CreateTaskFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_create_task, container, false);
+        View view =  inflater.inflate(R.layout.fragment_create_task, container, false);
+
+        setButtonListeners(view);
+        return view;
     }
 
     @Override
@@ -52,6 +55,10 @@ public class CreateTaskFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    private void setButtonListeners(View view){
+        //TODO
     }
 
     public interface OnFragmentInteractionListener {
