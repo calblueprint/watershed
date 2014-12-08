@@ -10,6 +10,7 @@
 #import "AFNetworking.h"
 #import "UICKeyChainStore.h"
 #import "WPUser.h"
+#import "WPTask.h"
 #import "WPSite.h"
 #import "WPMiniSite.h"
 #import "WPFieldReport.h"
@@ -21,6 +22,8 @@
 + (WPNetworkingManager *)sharedManager;
 - (void)requestLoginWithParameters:(NSDictionary *)parameters success:(void (^)(WPUser *user))success;
 - (void)requestFacebookLoginWithParameters:(NSDictionary *)parameters success:(void (^)(WPUser *user))success;
+- (void)requestTasksListWithParameters:(NSMutableDictionary *)parameters success:(void (^)(NSMutableArray *sitesList))success;
+- (void)requestMyTasksListWithUser:(NSNumber *)userId parameters:(NSMutableDictionary *)parameters success:(void (^)(NSMutableArray *tasksList))success;
 - (void)requestSitesListWithParameters:(NSMutableDictionary *)parameters success:(void (^)(NSMutableArray *sitesList))success;
 - (void)requestSiteWithSite:(WPSite *)site parameters:(NSMutableDictionary *)parameters success:(void (^)(WPSite *site, NSMutableArray *miniSiteList))success;
 - (void)requestMiniSiteWithMiniSite:(WPMiniSite *)miniSite parameters:(NSMutableDictionary *)parameters success:(void (^)(WPMiniSite *miniSite, NSMutableArray *fieldReportList))success;

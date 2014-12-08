@@ -9,8 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "WPSite.h"
 #import "WPUser.h"
+#import "Mantle.h"
 
-@interface WPTask : NSObject
+@interface WPTask : MTLModel <MTLJSONSerializing>
 
 @property (nonatomic) NSNumber *taskId;
 @property (nonatomic) NSString *title;

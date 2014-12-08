@@ -38,8 +38,8 @@ static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-    [[WPNetworkingManager sharedManager] requestSitesListWithParameters:[[NSMutableDictionary alloc] init] success:^(NSMutableArray *sitesList) {
-        self.allTasks = sitesList;
+    [[WPNetworkingManager sharedManager] requestTasksListWithParameters:[[NSMutableDictionary alloc] init] success:^(NSMutableArray *tasksList) {
+        self.allTasks = tasksList;
         [self.tableView reloadData];
     }];
 }
