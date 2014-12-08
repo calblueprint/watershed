@@ -14,7 +14,8 @@
     return @{
              @"miniSiteId" : @"id",
              @"info" : @"description",
-             @"zipCode" : @"zip_code"
+             @"zipCode" : @"zip_code",
+             @"fieldReportCount" : @"field_reports_count"
              };
 }
 

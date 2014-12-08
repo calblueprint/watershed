@@ -248,7 +248,6 @@ static NSString * const TASKS_URL = @"tasks";
             [fieldReportList addObject:fieldReport];
         }
         miniSiteResponse.fieldReports = fieldReportList;
-        miniSiteResponse.fieldReportCount = @(fieldReportList.count);
         success(miniSiteResponse, fieldReportList);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load mini site." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
