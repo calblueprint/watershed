@@ -10,6 +10,7 @@
 
 @interface WPSiteTableViewCell ()
 @property (nonatomic) UIView *darkOverlay;
+@property (nonatomic) UIView *bottomShadowOverlay;
 @end
 
 @implementation WPSiteTableViewCell
@@ -56,6 +57,13 @@ const static float PARALLAX_REDUCTION = 3.5;
         darkOverlay;
     }) wp_addToSuperview:content];
     
+    _bottomShadowOverlay = [({
+        UIImageView *shadowOverlay = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"BottomShadowOverlay"]];
+        [shadowOverlay setContentMode:UIViewContentModeScaleToFill];
+        [shadowOverlay setClipsToBounds:YES];
+        shadowOverlay;
+    }) wp_addToSuperview:content];
+    
     _nameLabel = [({
         UILabel *label = [[UILabel alloc] init];
         label.textColor = [UIColor whiteColor];
@@ -96,6 +104,13 @@ const static float PARALLAX_REDUCTION = 3.5;
     
     [self.darkOverlay mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@0);
+        make.leading.equalTo(@0);
+        make.trailing.equalTo(@0);
+        make.bottom.equalTo(@0);
+    }];
+    
+    [self.bottomShadowOverlay mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@(CELL_HEIGHT / 3));
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
         make.bottom.equalTo(@0);
