@@ -28,8 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class FieldReportFragment extends Fragment
-        implements AbsListView.OnItemClickListener {
+public class FieldReportFragment extends Fragment implements AbsListView.OnItemClickListener {
 
     private OnFragmentInteractionListener mListener;
     private NetworkManager mNetworkManager;
@@ -65,7 +64,7 @@ public class FieldReportFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_mini_site, container, false);
+        View view = inflater.inflate(R.layout.fragment_field_report, container, false);
         configureViewWithFieldReport(view, mFieldReport);
 
         return view;

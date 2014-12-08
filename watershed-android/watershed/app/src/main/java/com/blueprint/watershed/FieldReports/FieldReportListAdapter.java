@@ -2,6 +2,7 @@ package com.blueprint.watershed.FieldReports;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,8 +63,7 @@ public class FieldReportListAdapter extends ArrayAdapter<FieldReport> {
         row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FieldReportFragment fieldReportFragment = new FieldReportFragment();
-                fieldReportFragment.configureWithFieldReport(fieldReport);
+                FieldReportFragment fieldReportFragment = FieldReportFragment.newInstance(fieldReport);
                 mMainActivity.replaceFragment(fieldReportFragment);
             }
         });
