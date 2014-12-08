@@ -37,7 +37,7 @@
                                    initWithTitle:@"Save"
                                    style:UIBarButtonItemStyleBordered
                                    target:self
-                                   action:@selector(saveForm:)];
+                                   action:@selector(saveForm)];
     self.navigationItem.rightBarButtonItem = saveButton;
     self.view.fieldDescription.delegate = self;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self
@@ -61,7 +61,7 @@
     }
 }
 
-- (void)saveForm:(UIButton *)sender {
+- (void)saveForm {
     [self dismissKeyboard];
     NSString *userId = [[WPNetworkingManager sharedManager] keyChainStore][@"userId"];
     NSString *fieldReportDescription = self.view.fieldDescription.text;
@@ -106,6 +106,7 @@
     NSMutableDictionary *parameters = [staticParameters mutableCopy];
     
     [[WPNetworkingManager sharedManager] postFieldReportWithParameters:parameters success:^(WPFieldReport *fieldReport) {
+        [self.navigationController popViewControllerAnimated:YES];
         //do stuffs
     }];
 }
