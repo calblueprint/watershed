@@ -18,6 +18,7 @@
 class Task < ActiveRecord::Base
   scope :unassigned, -> { where("assignee_id IS NULL") }
   scope :completed, -> { where(complete: true) }
+  scope :for_mini_sites, -> (mini_sites) { where(mini_site: mini_sites) }
 
   DEFAULT_TASK_NAMES = [
     "Water",
