@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Response;
+import com.blueprint.watershed.Activities.LandingPageActivity;
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Sites.SiteListRequest;
@@ -35,7 +37,7 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
     private ArrayList<Site> mSites;
 
 
-    public static SiteListFragment newInstance(String param1, String param2) {
+    public static SiteListFragment newInstance() {
         return new SiteListFragment();
     }
 
@@ -46,7 +48,7 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        preferences = getActivity().getSharedPreferences("LOGIN_PREFERENCES", 0);
+        preferences = getActivity().getSharedPreferences(LandingPageActivity.PREFERENCES, 0);
         mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
     }
 
@@ -88,9 +90,9 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
         mListener = null;
     }
 
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Log.e("item clicked", "yeS");
         if (null != mListener) {
             // Load site
             Site site = getSite(position);
@@ -114,14 +116,6 @@ public class SiteListFragment extends Fragment implements AbsListView.OnItemClic
         });
 
         mNetworkManager.getRequestQueue().add(siteListRequest);
-    }
-
-    public void setEmptyText(CharSequence emptyText) {
-        View emptyView = mSiteListView.getEmptyView();
-
-        if (emptyText instanceof TextView) {
-            ((TextView) emptyView).setText(emptyText);
-        }
     }
 
     public interface OnFragmentInteractionListener {

@@ -1,7 +1,6 @@
 package com.blueprint.watershed.Tasks;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -65,7 +64,7 @@ public class TaskFragment extends ListFragment {
                              Bundle savedInstanceState) {
         View finalView = inflater.inflate(R.layout.fragment_task_list, container, false);
         listView1 = (ListView)finalView.findViewById(android.R.id.list);
-        mTaskAdapter = new TaskAdapter(getActivity(),R.layout.taskview_each_item, mTaskList);
+        mTaskAdapter = new TaskAdapter(getActivity(),R.layout.task_list_row, mTaskList);
         listView1.setAdapter(mTaskAdapter);
         return finalView;
     }
