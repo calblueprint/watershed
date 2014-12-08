@@ -21,6 +21,8 @@
                 />
             <EditText
                 android:id="@+id/create_task_title"
+                android:hint="Required"
+
                 android:layout_width="0px"
                 android:layout_height="@dimen/button_standard_height"
                 android:layout_weight="3"
@@ -37,6 +39,7 @@
                 />
             <EditText
                 android:id="@+id/create_task_due_date"
+                android:hint="Required"
                 android:layout_width="0px"
                 android:layout_height="@dimen/button_standard_height"
                 android:layout_weight="3"
@@ -70,6 +73,7 @@
                 />
             <EditText
                 android:id="@+id/create_task_site"
+                android:hint="Required"
                 android:layout_width="0px"
                 android:layout_height="@dimen/button_standard_height"
                 android:layout_weight="3"
@@ -88,6 +92,8 @@
             <EditText
                 android:id="@+id/create_task_assignee"
                 android:layout_width="0px"
+                android:hint="Required"
+
                 android:layout_height="@dimen/button_standard_height"
                 android:layout_weight="3"
                 android:text=""/>
@@ -96,22 +102,37 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="bottom">
+            >
 
             <TextView
                 style="@style/WsLabel"
+                android:gravity="bottom"
                 android:layout_height="@dimen/button_standard_height"
                 android:text="@string/task_due_date"
                 />
             <EditText
                 android:id="@+id/create_task_description"
+                android:hint="Required"
+                android:gravity="bottom"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:lines="4"
-                android:text=""/>
+                android:text=""
+                />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="bottom">
 
+            <Button
+                android:layout_width="fill_parent"
+                android:background="@color/ws_blue"
+                android:textColor="@color/white"
+                android:text="Create Task"
+                android:layout_height="96dp" />
+        </LinearLayout>
 
         </LinearLayout>
 
