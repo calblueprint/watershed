@@ -5,74 +5,16 @@
     android:orientation="vertical"
     tools:context="com.blueprint.watershed.Sites.SiteFragment">
 
-
-    <ScrollView
+    <GridView
+        android:id="@+id/mini_sites_grid"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <com.blueprint.watershed.Views.CoverPhotoPagerView
-                android:id="@+id/cover_photo_pager_view"
-                android:background="@color/ws_blue"
-                android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/standard_margin"
-                android:layout_marginRight="@dimen/standard_margin"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/site_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/tight_margin"
-                    android:textSize="30sp"
-                    android:text="Site Name"
-                    />
-
-                <TextView
-                    android:id="@+id/site_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/tight_margin"
-                    android:textSize="14sp"
-                    android:text="Site Description"
-                    />
-
-                <TextView
-                    android:id="@+id/site_location"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/tight_margin"
-                    android:textSize="14sp"
-                    android:text="Location"
-                    />
-
-            </LinearLayout>
-
-            <GridView
-                android:id="@+id/mini_sites_grid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/tight_margin"
-                android:layout_marginLeft="@dimen/tight_margin"
-                android:layout_marginRight="@dimen/tight_margin"
-                android:numColumns="2"
-                android:verticalSpacing="@dimen/tight_margin"
-                android:horizontalSpacing="@dimen/tight_margin">
-            </GridView>
-
-        </LinearLayout>
-    </ScrollView>
-
-
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/no_margin"
+        android:layout_marginLeft="@dimen/no_margin"
+        android:layout_marginRight="@dimen/no_margin"
+        android:numColumns="2"
+        android:verticalSpacing="@dimen/tight_margin"
+        android:horizontalSpacing="@dimen/tight_margin">
+    </GridView>
 
 </FrameLayout>
