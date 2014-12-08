@@ -229,6 +229,22 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
     }];
 }
 
+- (void)postFieldReportWithParameters:(NSMutableDictionary *)parameters success:(void (^)(WPFieldReport *fieldReport))success {
+    NSString *fieldReportString = [WPNetworkingManager createURLWithEndpoint:FIELD_REPORTS_URL];
+    [self addAuthenticationParameters:parameters];
+
+    [self POST:fieldReportString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *responseDictionary = responseObject;
+        
+        WPFieldReport *fieldReport = [MTLJSONAdapter modelOfClass:WPFieldReport.class fromJSONDictionary:responseDictionary error:nil];
+        success(fieldReport);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load field report" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
+}
+
 - (void)requestUserWithUser:(WPUser *)user parameters:(NSMutableDictionary *)parameters success:(void (^)(WPUser *user))success {
     NSString *userEndpoint = [@"/" stringByAppendingString:[user.userId stringValue]];
     NSString *USER_URL = [USERS_URL stringByAppendingString:userEndpoint];
