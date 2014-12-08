@@ -23,6 +23,7 @@ import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Sites.SiteRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
+import com.blueprint.watershed.Views.HeaderGridView;
 
 import org.json.JSONObject;
 
@@ -36,7 +37,7 @@ public class SiteFragment extends Fragment
     private OnFragmentInteractionListener mListener;
     private NetworkManager mNetworkManager;
     private MainActivity mMainActivity;
-    private GridView mMiniSiteGridView;
+    private HeaderGridView mMiniSiteGridView;
     private MiniSiteListAdapter mMiniSiteAdapter;
     private Site mSite;
     private ArrayList<MiniSite> mMiniSites;
@@ -71,13 +72,17 @@ public class SiteFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_site, container, false);
+
         configureViewWithSite(view, mSite);
 
-        mMiniSiteGridView = (GridView) view.findViewById(R.id.mini_sites_grid);
+        mMiniSiteGridView = (HeaderGridView) view.findViewById(R.id.mini_sites_grid);
         mMiniSiteAdapter = new MiniSiteListAdapter(getActivity(), R.layout.mini_site_list_row, getMiniSites());
         mMiniSiteGridView.setAdapter(mMiniSiteAdapter);
 
         mMiniSiteGridView.setOnItemClickListener(this);
+
+        ViewGroup header = (ViewGroup)inflater.inflate(R.layout.site_header_view, mMiniSiteGridView, false);
+        mMiniSiteGridView.addHeaderView(header, null, false);
         return view;
     }
 
