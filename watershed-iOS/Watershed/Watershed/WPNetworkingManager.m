@@ -238,7 +238,10 @@ static NSString * const TASKS_URL = @"tasks";
         for (NSDictionary *fieldReportJSON in fieldReportListJSON) {
             WPFieldReport *fieldReport = [MTLJSONAdapter modelOfClass:WPFieldReport.class fromJSONDictionary:fieldReportJSON error:nil];
             fieldReport.miniSite = miniSiteResponse;
-            fieldReport.image = [UIImage imageNamed:@"SampleCoverPhoto2"];
+            NSArray *photosListJSON = fieldReportJSON[@"photos"];
+            for (NSDictionary *photoJSON in photosListJSON) {
+                [fieldReport.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];
+            }
             fieldReport.creationDate = @"October 1, 2014";
             [fieldReportList addObject:fieldReport];
         }
@@ -262,7 +265,7 @@ static NSString * const TASKS_URL = @"tasks";
         NSDictionary *fieldReportJSON = (NSDictionary *)responseObject[@"field_report"];
         WPFieldReport *fieldReportResponse = [MTLJSONAdapter modelOfClass:WPFieldReport.class fromJSONDictionary:fieldReportJSON error:nil];
         fieldReportResponse.miniSite = fieldReport.miniSite;
-        fieldReportResponse.image = fieldReport.image;
+        fieldReportResponse.imageURLs = fieldReport.imageURLs;
         success(fieldReportResponse);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load field report." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];

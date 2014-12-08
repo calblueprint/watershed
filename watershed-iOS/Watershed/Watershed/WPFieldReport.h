@@ -19,6 +19,7 @@
 @property (nonatomic) NSNumber *rating;
 @property (nonatomic) NSNumber *urgent;
 @property (nonatomic) UIImage *image;
+@property (nonatomic) NSMutableArray *imageURLs; //of NSURL's
 @property (nonatomic) WPUser *user;
 @property (nonatomic) WPMiniSite *miniSite;
 

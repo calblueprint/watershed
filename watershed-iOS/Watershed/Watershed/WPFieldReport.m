@@ -18,4 +18,11 @@
              };
 }
 
+- (NSMutableArray *)imageURLs {
+    if (!_imageURLs) {
+        _imageURLs = [[NSMutableArray alloc] init];
+    }
+    return _imageURLs;
+}
+
 @end
