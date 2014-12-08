@@ -35,12 +35,7 @@ static NSString *cellIdentifier = @"SiteCell";
     [super viewDidLoad];
     self.navigationItem.title = @"Sites";
     
-    NSMutableArray *barButtonItems = [[NSMutableArray alloc] initWithObjects:[self newSearchBarButtonItem], nil];
-    NSString *userRole = [WPNetworkingManager sharedManager].keyChainStore[@"role"];
-    if ([userRole isEqual:@"2"]) {
-        [barButtonItems insertObject:[self newAddSiteButtonItem] atIndex:0];
-    }
-    [self.navigationItem setRightBarButtonItems:barButtonItems animated:YES];
+    [self setUpRightBarButtonItems];
     
     self.sitesTableView.delegate = self;
     self.sitesTableView.dataSource = self;
@@ -122,14 +117,24 @@ static NSString *cellIdentifier = @"SiteCell";
                                                       withObject:@(contentOffset)];
 }
 
+#pragma mark - Navigation Bar Setup
+
+- (void)setUpRightBarButtonItems {
+    NSMutableArray *barButtonItems = [[NSMutableArray alloc] initWithObjects:[self newSearchBarButtonItem], nil];
+    NSString *userRole = [WPNetworkingManager sharedManager].keyChainStore[@"role"];
+    if ([userRole isEqual:@"2"]) {
+        [barButtonItems insertObject:[self newAddSiteButtonItem] atIndex:0];
+    }
+    [self.navigationItem setRightBarButtonItems:barButtonItems animated:YES];
+}
+
 #pragma mark - Search / Search Delegate Methods
 
 - (UIBarButtonItem *)newSearchBarButtonItem {
 
-    UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc]
-                                         initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
-                                         target:self
-                                         action:@selector(openSearch) ];
+    FAKFontAwesome *searchIcon = [FAKFontAwesome searchIconWithSize:20];
+    UIImage *searchImage = [searchIcon imageWithSize:CGSizeMake(20, 22)];
+    UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithImage:searchImage style:UIBarButtonItemStylePlain target:self action:@selector(openSearch)];
     searchButtonItem.tintColor = [UIColor whiteColor];
     
     self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, topMargin, [WPView getScreenWidth], topMargin)];
@@ -166,12 +171,10 @@ static NSString *cellIdentifier = @"SiteCell";
 #pragma mark - Add Site Button / Methods
 
 - (UIBarButtonItem *)newAddSiteButtonItem {
-    UIBarButtonItem *addSiteButtonItem = [[UIBarButtonItem alloc]
-                                         initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
-                                         target:self
-                                         action:@selector(showCreateSiteView) ];
+    FAKFontAwesome *plusIcon = [FAKFontAwesome plusIconWithSize:22];
+    UIImage *plusImage = [plusIcon imageWithSize:CGSizeMake(18, 22)];
+    UIBarButtonItem *addSiteButtonItem = [[UIBarButtonItem alloc] initWithImage:plusImage style:UIBarButtonItemStylePlain target:self action:@selector(showCreateSiteView)];
     addSiteButtonItem.tintColor = [UIColor whiteColor];
-    
     return addSiteButtonItem;
 }
 
