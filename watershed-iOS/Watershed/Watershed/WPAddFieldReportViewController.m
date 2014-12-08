@@ -94,7 +94,7 @@
     }
     NSString *photo = [UIImagePNGRepresentation(self.view.selectedImageView.image) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];;
     
-    NSDictionary *parameters = @{@"user_id": userId, @"mini_side_id": miniSiteId,
+    NSDictionary *parameters = @{@"user_id": userId, @"mini_site_id": miniSiteId,
                                  @"description": description, @"health_rating": healthRating,
                                  @"urgent": urgent, @"photo_attributes": @{@"image": photo}};
     
