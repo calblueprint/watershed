@@ -12,24 +12,6 @@
         />
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/light_gray"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignBottom="@+id/cover_photo_pager_view">
-
-        <TextView
-            android:id="@+id/cover_photo_label"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:text="Label"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -54,6 +36,28 @@
             android:layout_marginTop="5dp"
             android:text="Bottom Label"
             android:maxLines="1"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@+id/cover_photo_pager_view"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="-15dp">
+
+        <TextView
+            android:id="@+id/cover_photo_label"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Label"
+            android:layout_margin="10dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:background="@drawable/circular_text_view"
             />
 
     </LinearLayout>
