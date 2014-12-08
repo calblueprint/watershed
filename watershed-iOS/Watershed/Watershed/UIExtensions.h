@@ -17,3 +17,4 @@
 #import "WPProperties.h"
 #import "WPView.h"
 #import "WPViewController.h"
+#import "UIImageView+AFNetworking.h"

@@ -21,6 +21,7 @@
 @property (nonatomic) NSString *state;
 @property (nonatomic) NSNumber *zipCode;
 @property (nonatomic) UIImage *image;
+@property (nonatomic) NSMutableArray *imageURLs; //of NSURL's
 @property (nonatomic) NSMutableArray *miniSites; //of WPMiniSite's
 @property (nonatomic) NSNumber *miniSitesCount;
 

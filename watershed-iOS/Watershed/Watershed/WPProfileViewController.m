@@ -30,7 +30,7 @@
     _user = [[WPUser alloc] init];
     NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
     [f setNumberStyle:NSNumberFormatterDecimalStyle];
-    _user.userId = [f numberFromString:[[WPNetworkingManager sharedManager] keyChainStore][@"userId"]];
+    _user.userId = [f numberFromString:[[WPNetworkingManager sharedManager] keyChainStore][@"user_id"]];
     [[WPNetworkingManager sharedManager] requestUserWithUser:_user parameters:[[NSMutableDictionary alloc] init] success:^(WPUser *user) {
         _user = user;
         [self.view configureWithUser:user];

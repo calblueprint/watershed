@@ -10,6 +10,7 @@
 #import "WPSitesTableView.h"
 #import "WPSiteTableViewCell.h"
 #import "WPSiteViewController.h"
+#import "WPCreateSiteViewController.h"
 #import "WPSite.h"
 #import "WPNetworkingManager.h"
 
@@ -33,15 +34,13 @@ static NSString *cellIdentifier = @"SiteCell";
     
     [super viewDidLoad];
     self.navigationItem.title = @"Sites";
-    [self setUpSearchBar];
+    
+    [self setUpRightBarButtonItems];
     
     self.sitesTableView.delegate = self;
     self.sitesTableView.dataSource = self;
     
-    [[WPNetworkingManager sharedManager] requestSitesListWithParameters:[[NSMutableDictionary alloc] init] success:^(NSMutableArray *sitesList) {
-        self.sitesList = sitesList;
-        [self.sitesTableView reloadData];
-    }];
+    [self requestAndLoadSites];
 }
 
 #pragma mark - TableView Delegate/DataSource Methods
@@ -63,6 +62,8 @@ static NSString *cellIdentifier = @"SiteCell";
     if ([tableView isEqual:self.sitesTableView]) {
         
         cellView = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        [cellView.photoView cancelImageRequestOperation];
+        cellView.photoView.image = nil;
         
         if (!cellView) {
             cellView = [[WPSiteTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
@@ -70,10 +71,15 @@ static NSString *cellIdentifier = @"SiteCell";
         }
         WPSite *site = self.sitesList[indexPath.row];
         cellView.nameLabel.text = site.name;
-        cellView.photoView.image = site.image;
-        cellView.miniSiteLabel.text = [[site.miniSitesCount stringValue] stringByAppendingString:@" mini sites"];
+
+        __weak __typeof(cellView.photoView)weakPhotoView = cellView.photoView;
+        [cellView.photoView setImageWithURLRequest:[NSURLRequest requestWithURL:[site.imageURLs firstObject]] placeholderImage:[UIImage imageNamed:@"SampleCoverPhoto" ] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+            __weak __typeof(weakPhotoView)strongPhotoView = weakPhotoView;
+            strongPhotoView.image = image;
+            [self updatePhotoOffset:self.sitesTableView.contentOffset.y];
+        } failure:nil];
         
-        [self updatePhotoOffset:self.sitesTableView.contentOffset.y];
+        cellView.miniSiteLabel.text = [[site.miniSitesCount stringValue] stringByAppendingString:@" mini sites"];
     }
     return cellView;
 }
@@ -90,6 +96,17 @@ static NSString *cellIdentifier = @"SiteCell";
     [self.navigationController pushViewController:siteViewController animated:YES];
 }
 
+#pragma mark - Networking Methods
+
+- (void)requestAndLoadSites {
+    __weak __typeof(self)weakSelf = self;
+    [[WPNetworkingManager sharedManager] requestSitesListWithParameters:[[NSMutableDictionary alloc] init] success:^(NSMutableArray *sitesList) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        strongSelf.sitesList = sitesList;
+        [strongSelf.sitesTableView reloadData];
+    }];
+}
+
 #pragma mark - ScrollView Delegate Methods
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -104,16 +121,25 @@ static NSString *cellIdentifier = @"SiteCell";
                                                       withObject:@(contentOffset)];
 }
 
+#pragma mark - Navigation Bar Setup
+
+- (void)setUpRightBarButtonItems {
+    NSMutableArray *barButtonItems = [[NSMutableArray alloc] initWithObjects:[self newSearchBarButtonItem], nil];
+    NSString *userRole = [WPNetworkingManager sharedManager].keyChainStore[@"role"];
+    if ([userRole isEqual:@"2"]) {
+        [barButtonItems insertObject:[self newAddSiteButtonItem] atIndex:0];
+    }
+    [self.navigationItem setRightBarButtonItems:barButtonItems animated:YES];
+}
+
 #pragma mark - Search / Search Delegate Methods
 
-- (void)setUpSearchBar {
+- (UIBarButtonItem *)newSearchBarButtonItem {
 
-    UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc]
-                                         initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
-                                         target:self
-                                         action:@selector(openSearch) ];
+    FAKFontAwesome *searchIcon = [FAKFontAwesome searchIconWithSize:20];
+    UIImage *searchImage = [searchIcon imageWithSize:CGSizeMake(20, 22)];
+    UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithImage:searchImage style:UIBarButtonItemStylePlain target:self action:@selector(openSearch)];
     searchButtonItem.tintColor = [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = searchButtonItem;
     
     self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, topMargin, [WPView getScreenWidth], topMargin)];
     self.searchBar.delegate = self;
@@ -124,6 +150,8 @@ static NSString *cellIdentifier = @"SiteCell";
     self.searchController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
     self.searchController.delegate = self;
     self.searchController.searchResultsDataSource = self;
+    
+    return searchButtonItem;
 }
 
 - (void)openSearch {
@@ -142,6 +170,26 @@ static NSString *cellIdentifier = @"SiteCell";
     [UIView animateWithDuration:0.2 animations:^{
         [self.searchBar setFrame:CGRectMake(0, topMargin, [WPView getScreenWidth], topMargin)];
     }];
+}
+
+#pragma mark - Add Site Button / Methods
+
+- (UIBarButtonItem *)newAddSiteButtonItem {
+    FAKFontAwesome *plusIcon = [FAKFontAwesome plusIconWithSize:22];
+    UIImage *plusImage = [plusIcon imageWithSize:CGSizeMake(18, 22)];
+    UIBarButtonItem *addSiteButtonItem = [[UIBarButtonItem alloc] initWithImage:plusImage style:UIBarButtonItemStylePlain target:self action:@selector(showCreateSiteView)];
+    addSiteButtonItem.tintColor = [UIColor whiteColor];
+    return addSiteButtonItem;
+}
+
+- (void)showCreateSiteView {
+    WPCreateSiteViewController *createSiteViewController = [[WPCreateSiteViewController alloc] init];
+    createSiteViewController.parent = self;
+    UINavigationController *createSiteNavController = [[UINavigationController alloc] initWithRootViewController:createSiteViewController];
+    [createSiteNavController.navigationBar setBackgroundColor:[UIColor whiteColor]];
+    [createSiteNavController.navigationBar setBarTintColor:[UIColor whiteColor]];
+    [createSiteNavController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
+    [self.navigationController presentViewController:createSiteNavController animated:YES completion:nil];
 }
 
 #pragma mark - Lazy instantiation

@@ -31,10 +31,12 @@ static NSString *cellIdentifier = @"FieldReportCell";
     self.fieldReportTableView.delegate = self;
     self.fieldReportTableView.dataSource = self;
     
+    __weak __typeof(self)weakSelf = self;
     [[WPNetworkingManager sharedManager] requestMiniSiteWithMiniSite:self.miniSite parameters:[[NSMutableDictionary alloc] init] success:^(WPMiniSite *miniSite, NSMutableArray *fieldReportList) {
-        self.miniSite = miniSite;
-        self.fieldReportList = fieldReportList;
-        [self.fieldReportTableView reloadData];
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        strongSelf.miniSite = miniSite;
+        strongSelf.fieldReportList = fieldReportList;
+        [strongSelf.fieldReportTableView reloadData];
     }];
 }
 

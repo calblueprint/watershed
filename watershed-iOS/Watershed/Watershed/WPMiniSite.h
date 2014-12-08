@@ -21,13 +21,13 @@
 @property (nonatomic) NSString *city;
 @property (nonatomic) NSString *state;
 @property (nonatomic) NSNumber *zipCode;
-@property (nonatomic) UIImage *image;
+@property (nonatomic) NSMutableArray *imageURLs; //of NSURL's
 @property (nonatomic) NSString *vegetations;
 
 @property (nonatomic) WPSite *site;
 @property (nonatomic) NSMutableArray *users; //of WPUser's
 @property (nonatomic) NSString *currentTask;
-@property (nonatomic) NSMutableArray *fieldReports;
+@property (nonatomic) NSMutableArray *fieldReports; // of WPFieldReport's
 @property (nonatomic) NSNumber *fieldReportCount;
 
 @end

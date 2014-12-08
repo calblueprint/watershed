@@ -47,12 +47,11 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
         NSDictionary *sessionDictionary = [responseDictionary objectForKey:@"session"];
         NSString *authToken = sessionDictionary[@"authentication_token"];
         NSString *email = sessionDictionary[@"email"];
+
         NSDictionary *userJSON = sessionDictionary[@"user"];
-        NSString *userId = [userJSON[@"id"] stringValue];
-        
-        [self updateLoginKeyChainInfoWithAuthToken:authToken email:email userId:userId];
-        
         WPUser *user = [MTLJSONAdapter modelOfClass:WPUser.class fromJSONDictionary:userJSON error:nil];
+        [self updateLoginKeyChainInfoWithUser:user AuthToken:authToken email:email];
+
         success(user);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Incorrect email or password." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -71,11 +70,9 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
         NSString *email = sessionDictionary[@"email"];
         
         NSDictionary *userJSON = sessionDictionary[@"user"];
-        NSString *userId = [userJSON[@"id"] stringValue];
-
-        [self updateLoginKeyChainInfoWithAuthToken:authToken email:email userId:userId];
-        
         WPUser *user = [MTLJSONAdapter modelOfClass:WPUser.class fromJSONDictionary:userJSON error:nil];
+        [self updateLoginKeyChainInfoWithUser:user AuthToken:authToken email:email];
+        
         success(user);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Incorrect email or password." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -92,12 +89,11 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
         NSDictionary *sessionDictionary = [responseDictionary objectForKey:@"session"];
         NSString *authToken = sessionDictionary[@"authentication_token"];
         NSString *email = sessionDictionary[@"email"];
-        NSDictionary *userJSON = sessionDictionary[@"user"];
-        NSString *userId = [userJSON[@"id"] stringValue];
-
-        [self updateLoginKeyChainInfoWithAuthToken:authToken email:email userId:userId];
         
+        NSDictionary *userJSON = sessionDictionary[@"user"];
         WPUser *user = [MTLJSONAdapter modelOfClass:WPUser.class fromJSONDictionary:userJSON error:nil];
+        [self updateLoginKeyChainInfoWithUser:user AuthToken:authToken email:email];
+        
         success(user);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Cannot log in with Facebook." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -115,7 +111,10 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
         NSMutableArray *sitesList = [[NSMutableArray alloc] init];
         for (NSDictionary *siteJSON in sitesListJSON) {
             WPSite *site = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:siteJSON error:nil];
-            site.image = [UIImage imageNamed:@"SampleCoverPhoto"];
+            NSArray *photosListJSON = siteJSON[@"photos"];
+            for (NSDictionary *photoJSON in photosListJSON) {
+                [site.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];
+            }
             [sitesList addObject:site];
         }
         success(sitesList);
@@ -135,21 +134,46 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
     [self GET:siteString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *siteJSON = (NSDictionary *)responseObject[@"site"];
         WPSite *siteResponse = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:siteJSON error:nil];
-        siteResponse.image = [UIImage imageNamed:@"SampleCoverPhoto"];
+        NSArray *photosListJSON = siteJSON[@"photos"];
+        for (NSDictionary *photoJSON in photosListJSON) {
+            [siteResponse.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];
+        }
         
-        NSDictionary *miniSiteListJSON = siteJSON[@"mini_sites"];
+        NSArray *miniSiteListJSON = siteJSON[@"mini_sites"];
         NSMutableArray *miniSiteList = [[NSMutableArray alloc] init];
         for (NSDictionary *miniSiteJSON in miniSiteListJSON) {
             WPMiniSite *miniSite = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:miniSiteJSON error:nil];
+            NSArray *photosListJSON = miniSiteJSON[@"photos"];
+            for (NSDictionary *photoJSON in photosListJSON) {
+                [miniSite.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];
+            }
+            
             miniSite.site = siteResponse;
-            miniSite.image = [UIImage imageNamed:@"SampleCoverPhoto2"];
             miniSite.fieldReportCount = @(((NSArray *)miniSiteJSON[@"field_reports"]).count);
             [miniSiteList addObject:miniSite];
         }
+        siteResponse.miniSites = miniSiteList;
         success(siteResponse, miniSiteList);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load site." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+- (void)createSiteWithSite:(WPSite *)site parameters:(NSMutableDictionary *)parameters success:(void (^)())success {
+    NSString *siteString = [WPNetworkingManager createURLWithEndpoint:SITES_URL];
+    [self addAuthenticationParameters:parameters];
+    NSDictionary *siteJSON = [MTLJSONAdapter JSONDictionaryFromModel:site];
+    [parameters setObject:siteJSON forKey:@"site"];
+    
+    [self POST:siteString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"CREATED SITE: %@", responseObject);
+        success();
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not create site." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [incorrect show];
         NSLog(@"Error: %@", error);
     }];
@@ -165,8 +189,9 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
         NSDictionary *miniSiteJSON = (NSDictionary *)responseObject[@"mini_site"];
         WPMiniSite *miniSiteResponse = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:miniSiteJSON error:nil];
         miniSiteResponse.site = miniSite.site;
+        miniSiteResponse.imageURLs = miniSite.imageURLs;
         
-        NSDictionary *fieldReportListJSON = miniSiteJSON[@"field_reports"];
+        NSArray *fieldReportListJSON = miniSiteJSON[@"field_reports"];
         NSMutableArray *fieldReportList = [[NSMutableArray alloc] init];
         for (NSDictionary *fieldReportJSON in fieldReportListJSON) {
             WPFieldReport *fieldReport = [MTLJSONAdapter modelOfClass:WPFieldReport.class fromJSONDictionary:fieldReportJSON error:nil];
@@ -175,9 +200,8 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
             fieldReport.creationDate = @"October 1, 2014";
             [fieldReportList addObject:fieldReport];
         }
-        miniSiteResponse.image = [UIImage imageNamed:@"SampleCoverPhoto2"];
+        miniSiteResponse.fieldReports = fieldReportList;
         miniSiteResponse.fieldReportCount = @(fieldReportList.count);
-        
         success(miniSiteResponse, fieldReportList);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load mini site." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -237,12 +261,13 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
 
 #pragma mark - KeyChainStore Configuration
 
-- (void)updateLoginKeyChainInfoWithAuthToken:(NSString *)authToken
-                                       email:(NSString *)email
-                                      userId:(NSString *)userId {
+- (void)updateLoginKeyChainInfoWithUser:(WPUser *)user
+                              AuthToken:(NSString *)authToken
+                                  email:(NSString *)email {
     [self.keyChainStore setString:authToken forKey:@"auth_token"];
-    [self.keyChainStore setString:userId forKey:@"userId"];
     [self.keyChainStore setString:email forKey:@"email"];
+    [self.keyChainStore setString:[user.userId stringValue] forKey:@"user_id"];
+    [self.keyChainStore setString:[user.role stringValue] forKey:@"role"];
     [self.keyChainStore synchronize];
 }
 
