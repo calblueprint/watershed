@@ -12,19 +12,19 @@
         >
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="@dimen/button_standard_height">
+            android:layout_height="@dimen/button_standard_height"
+            android:gravity="bottom" >
+
             <TextView
                 style="@style/WsLabel"
-                android:text="@string/title"/>
+                android:text="@string/title"
+                />
             <EditText
                 android:id="@+id/create_task_title"
                 android:layout_width="0px"
                 android:layout_height="@dimen/button_standard_height"
                 android:layout_weight="3"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:clickable="true"
-                />
+                android:text=""/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="fill_parent"
@@ -43,18 +43,76 @@
                 android:text=""/>
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/button_standard_height">
+         <TextView
+             style="@style/WsLabel"
+             android:text = "@string/urgent"/>
+
         <ToggleButton
             android:id="@+id/create_task_urgent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0px"
+            android:layout_height="fill_parent"
+            android:layout_weight="3"
             android:textOn="Vibrate on"
             android:textOff="Vibrate off"
             android:onClick="onToggleClicked"/>
+        </LinearLayout>
 
-        <EditText
-            android:id="@+id/create_task_site"
+        <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="@dimen/button_standard_height" />
+            android:layout_height="@dimen/button_standard_height"
+            android:gravity="bottom" >
+
+            <TextView
+                style="@style/WsLabel"
+                android:text="@string/site"
+                />
+            <EditText
+                android:id="@+id/create_task_site"
+                android:layout_width="0px"
+                android:layout_height="@dimen/button_standard_height"
+                android:layout_weight="3"
+                android:text=""/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/button_standard_height"
+            android:gravity="bottom" >
+
+            <TextView
+                style="@style/WsLabel"
+                android:text="@string/assignee"
+                />
+            <EditText
+                android:id="@+id/create_task_assignee"
+                android:layout_width="0px"
+                android:layout_height="@dimen/button_standard_height"
+                android:layout_weight="3"
+                android:text=""/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top" >
+
+            <TextView
+                style="@style/WsLabel"
+                android:gravity="bottom"
+                android:layout_height="@dimen/button_standard_height"
+                android:text="@string/task_due_date"
+                />
+            <EditText
+                android:id="@+id/create_task_description"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:lines="4"
+                android:text=""/>
+        </LinearLayout>
 
 
         </LinearLayout>
