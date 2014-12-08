@@ -20,6 +20,7 @@ import com.blueprint.watershed.FieldReports.FieldReportListAdapter;
 import com.blueprint.watershed.Networking.MiniSites.MiniSiteRequest;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Views.CoverPhotoPagerView;
 import com.blueprint.watershed.Views.HeaderGridView;
 
 import org.json.JSONObject;
@@ -54,10 +55,9 @@ public class MiniSiteFragment extends Fragment
     }
 
     public void configureViewWithMiniSite(View view, MiniSite miniSite) {
-        ((TextView)view.findViewById(R.id.primary_label)).setText("");
-        ((TextView)view.findViewById(R.id.secondary_label)).setText("");
-        ((TextView)view.findViewById(R.id.mini_site_name)).setText(miniSite.getName());
-        ((TextView)view.findViewById(R.id.mini_site_description)).setText(miniSite.getDescription());
+        ((CoverPhotoPagerView)view.findViewById(R.id.cover_photo_pager_view)).configureWithPhotos(miniSite.getPhotos());
+        ((TextView)view.findViewById(R.id.site_name)).setText(miniSite.getName());
+        ((TextView)view.findViewById(R.id.site_description)).setText(miniSite.getDescription());
     }
 
     @Override

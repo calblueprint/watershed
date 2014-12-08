@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
+import com.blueprint.watershed.R;
+import com.blueprint.watershed.Views.CoverPhotoPagerView;
 
 import java.util.ArrayList;
 
@@ -41,8 +43,10 @@ public class FieldReportListAdapter extends ArrayAdapter<FieldReport> {
             row = inflater.inflate(layoutResourceId, parent, false);
 
             holder = new FieldReportHolder();
-            //holder.name = (TextView) row.findViewById(R.id.primary_label);
-            //holder.description = (TextView) row.findViewById(R.id.secondary_label);
+            holder.photosView = (CoverPhotoPagerView) row.findViewById(R.id.cover_photo_pager_view);
+            holder.coverPhotoLabel = (TextView) row.findViewById(R.id.cover_photo_label);
+            holder.topLabel = (TextView) row.findViewById(R.id.top_label);
+            holder.bottomLabel = (TextView) row.findViewById(R.id.bottom_label);
 
             row.setTag(holder);
         } else {
@@ -50,9 +54,10 @@ public class FieldReportListAdapter extends ArrayAdapter<FieldReport> {
         }
 
         final FieldReport fieldReport = fieldReports.get(position);
-
-        //holder.name.setText(miniSite.getName());
-        //holder.description.setText("");
+        holder.photosView.configureWithPhotos(fieldReport.getPhotos());
+        holder.coverPhotoLabel.setText(fieldReport.getHealthRating());
+        holder.topLabel.setText("12/8/2014");
+        holder.bottomLabel.setText(String.format("By: %s", fieldReport.getUser().getName()));
 
         row.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,8 +72,9 @@ public class FieldReportListAdapter extends ArrayAdapter<FieldReport> {
     }
 
     static class FieldReportHolder {
-        TextView description;
-        TextView health;
-        TextView urgent;
+        CoverPhotoPagerView photosView;
+        TextView coverPhotoLabel;
+        TextView topLabel;
+        TextView bottomLabel;
     }
 }

@@ -20,6 +20,7 @@ import com.blueprint.watershed.FieldReports.FieldReportListAdapter;
 import com.blueprint.watershed.Networking.FieldReports.FieldReportRequest;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Views.CoverPhotoPagerView;
 
 import org.json.JSONObject;
 
@@ -49,11 +50,10 @@ public class FieldReportFragment extends Fragment
         mFieldReport = fieldReport;
     }
 
-    public void configureViewWithfieldReport(View view, FieldReport fieldReport) {
-        ((TextView)view.findViewById(R.id.primary_label)).setText("");
-        ((TextView)view.findViewById(R.id.secondary_label)).setText("");
-        ((TextView)view.findViewById(R.id.mini_site_name)).setText(fieldReport.getName());
-        ((TextView)view.findViewById(R.id.mini_site_description)).setText(fieldReport.getDescription());
+    public void configureViewWithFieldReport(View view, FieldReport fieldReport) {
+        ((CoverPhotoPagerView)view.findViewById(R.id.cover_photo_pager_view)).configureWithPhotos(fieldReport.getPhotos());
+        ((TextView)view.findViewById(R.id.site_name)).setText(String.format("Rating: %s", fieldReport.getHealthRating()));
+        ((TextView)view.findViewById(R.id.site_description)).setText(fieldReport.getDescription());
     }
 
     @Override
@@ -66,7 +66,7 @@ public class FieldReportFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mini_site, container, false);
-        configureViewWithfieldReport(view, mFieldReport);
+        configureViewWithFieldReport(view, mFieldReport);
 
         return view;
     }

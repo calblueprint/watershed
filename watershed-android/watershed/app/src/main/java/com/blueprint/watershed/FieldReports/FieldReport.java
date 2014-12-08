@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 /**
  * Created by maxwolffe on 11/18/14.
@@ -60,6 +61,13 @@ public class FieldReport implements APIObject {
     public Task getTask() { return mTask; }
 
     public Photo getPhoto() { return mPhoto; }
+
+    @JsonIgnore
+    public ArrayList<Photo> getPhotos() {
+        ArrayList<Photo> photos = new ArrayList<Photo>();
+        photos.add(getPhoto());
+        return photos;
+    }
 
     // Setters
     public void setUser(User user) { mUser = user; }
