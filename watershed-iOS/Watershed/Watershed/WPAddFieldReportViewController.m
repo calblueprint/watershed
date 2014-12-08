@@ -92,16 +92,36 @@
 //        taskId = parent.taskId;
 //        miniSiteId = parent.miniSiteId;
     }
-    NSString *photo = [UIImagePNGRepresentation(self.view.selectedImageView.image) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];;
+    NSString *photo = [UIImagePNGRepresentation([self compressForUpload:self.view.selectedImageView.image withScale:0.2]) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];;
     
-    NSDictionary *parameters = @{@"user_id": userId, @"mini_site_id": miniSiteId,
-                                 @"description": fieldReportDescription,
-                                 @"health_rating": healthRating, @"urgent": urgent,
-                                 @"photo_attributes": @{@"image": photo}};
+    NSDictionary *parameters = @{@"field_report": @{
+                                         @"user_id": userId,
+                                         @"mini_site_id": miniSiteId,
+                                         @"description": fieldReportDescription,
+                                         @"health_rating": healthRating,
+                                         @"urgent": urgent,
+                                         @"photo_attributes": @{
+                                                 @"data": photo
+                                         }
+                                 }};
     
     [[WPNetworkingManager sharedManager] postFieldReportWithParameters:parameters success:^(WPFieldReport *fieldReport) {
         //do stuffs
     }];
+}
+
+- (UIImage *)compressForUpload:(UIImage *)original withScale:(CGFloat)scale {
+    // Calculate new size given scale factor.
+    CGSize originalSize = original.size;
+    CGSize newSize = CGSizeMake(originalSize.width * scale, originalSize.height * scale);
+    
+    // Scale the original image to match the new size.
+    UIGraphicsBeginImageContext(newSize);
+    [original drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage* compressedImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return compressedImage;
 }
 
 - (void)viewImageButtonAction:(UIButton *)sender {
