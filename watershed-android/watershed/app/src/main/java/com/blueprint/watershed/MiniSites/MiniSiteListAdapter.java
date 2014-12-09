@@ -60,7 +60,7 @@ public class MiniSiteListAdapter extends ArrayAdapter<MiniSite> {
 
         final MiniSite miniSite = miniSites.get(position);
         holder.photosView.configureWithPhotos(miniSite.getPhotos());
-        holder.coverPhotoLabel.setText(String.format("%s Field Reports", miniSite.getFieldReports().size()));
+        holder.coverPhotoLabel.setText(String.format("%s Field Reports", miniSite.getFieldReportsCount()));
         holder.topLabel.setText(miniSite.getName());
         holder.bottomLabel.setText(miniSite.getLocation());
 
