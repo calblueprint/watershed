@@ -67,8 +67,8 @@ public class Site implements APIObject {
     public Integer getZipCode() { return mZipCode; }
     public String getLatitude() { return mLatitude; }
     public String getLongitude() { return mLongitude; }
-    public Integer getTasksCount() { return 1; }
-    public Integer getMiniSitesCount() { return 5; }
+    public Integer getTasksCount() { return mTasksCount; }
+    public Integer getMiniSitesCount() { return mMiniSitesCount; }
 
     @JsonIgnore
     public String getLocation() {

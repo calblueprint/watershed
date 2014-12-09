@@ -1,6 +1,7 @@
 package com.blueprint.watershed.FieldReports;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.blueprint.watershed.APIObject;
 import com.blueprint.watershed.MiniSites.MiniSite;
@@ -82,7 +83,8 @@ public class FieldReport implements APIObject {
     public void setMiniSite(MiniSite miniSite) { mMiniSite = miniSite; }
     public void setTask(Task task) { mTask = task; }
 
-    @JsonProperty("photo_attributes")
+    public void setPhotoAttributes(Photo photo) { mPhoto = photo; }
+
     public void setPhoto(Photo photo) { mPhoto = photo; }
 
     /*
