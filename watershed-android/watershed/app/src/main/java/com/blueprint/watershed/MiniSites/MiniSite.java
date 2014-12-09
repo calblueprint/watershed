@@ -80,5 +80,5 @@ public class MiniSite implements APIObject {
     public void setZipCode(Integer zipCode) { mZipCode = zipCode; }
     public void setLatitude(String latitude) { mLatitude = latitude; }
     public void setLongitude(String longitude) { mLongitude = longitude; }
-    public void setmFieldReportsCount(Integer fieldReportsCount) { mFieldReportsCount = fieldReportsCount; }
+    public void setFieldReportsCount(Integer fieldReportsCount) { mFieldReportsCount = fieldReportsCount; }
 }
