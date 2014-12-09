@@ -5,16 +5,20 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.blueprint.watershed.Activities.MainActivity;
+import com.blueprint.watershed.FieldReports.AddFieldReportFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.R;
 
 
-public class TaskDetailFragment extends Fragment {
+public class TaskDetailFragment extends Fragment implements View.OnClickListener {
 
     private Task mTask;
     private OnFragmentInteractionListener mListener;
@@ -26,6 +30,11 @@ public class TaskDetailFragment extends Fragment {
         TaskDetailFragment taskFragment = new TaskDetailFragment();
         taskFragment.configureWithTask(task);
         return taskFragment;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.create_task_menu, menu);
     }
 
     public TaskDetailFragment() {
@@ -44,6 +53,7 @@ public class TaskDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
     }
 
@@ -51,6 +61,7 @@ public class TaskDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
          View view = inflater.inflate(R.layout.fragment_task, container, false);
+        view.findViewById(R.id.field_report_button).setOnClickListener(this);
         configureViewWithTask(view, mTask);
         return view;
     }
@@ -83,6 +94,36 @@ public class TaskDetailFragment extends Fragment {
     public void onResume() {
         super.onResume();
         //TODO make Task request. Do we need to get anything else from the server for this?
+    }
+
+    //TODO Move this method to TaskFragment once the duplicate menu items bug is fixed.
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.add_task:
+                CreateTaskFragment newTask = CreateTaskFragment.newInstance();
+                ((MainActivity)getActivity()).replaceFragment(newTask);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    // Button Events
+
+    public void onClick(View view){
+        switch(view.getId()){
+            case (R.id.field_report_button):
+                FieldReportButtonPressed(view);
+        }
+    }
+
+    public void FieldReportButtonPressed(View view){
+        AddFieldReportFragment fieldFragment = AddFieldReportFragment.newInstance();
+        mMainActivity.setFieldReportTask(mTask);
+        mMainActivity.replaceFragment(fieldFragment);
+
     }
 
     public interface OnFragmentInteractionListener {

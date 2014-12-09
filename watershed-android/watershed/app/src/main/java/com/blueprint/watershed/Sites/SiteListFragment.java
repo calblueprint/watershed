@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -48,6 +50,7 @@ public class SiteListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         preferences = getActivity().getSharedPreferences(LandingPageActivity.PREFERENCES, 0);
         mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
     }
@@ -86,6 +89,11 @@ public class SiteListFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.create_task_menu, menu);
     }
 
     public void getSitesRequest() {

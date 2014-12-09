@@ -14,6 +14,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -25,6 +27,8 @@ import com.blueprint.watershed.FieldReports.FieldReportFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Users.HomeRequest;
+import com.blueprint.watershed.Tasks.CreateTaskFragment;
+import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Users.UserFragment;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Users.User;
@@ -62,8 +66,9 @@ public class MainActivity extends ActionBarActivity
                                      AboutFragment.OnFragmentInteractionListener,
                                      SiteListFragment.OnFragmentInteractionListener,
                                      MiniSiteFragment.OnFragmentInteractionListener,
-                                     FieldReportFragment.OnFragmentInteractionListener,
-                                     AddFieldReportFragment.OnFragmentInteractionListener {
+                                     AddFieldReportFragment.OnFragmentInteractionListener,
+                                     CreateTaskFragment.OnFragmentInteractionListener,
+                                     FieldReportFragment.OnFragmentInteractionListener {
 
     // Constants
     public  static final String PREFERENCES = "LOGIN_PREFERENCES";
@@ -113,6 +118,9 @@ public class MainActivity extends ActionBarActivity
     private User mUser;
     private Integer mUserId;
 
+    //Task for FieldReport
+    private Task mFieldReportTask;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,7 +149,6 @@ public class MainActivity extends ActionBarActivity
         mTitle = "Tasks";
 
     }
-
 
     public void initializeTabs(int option){
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -235,8 +242,6 @@ public class MainActivity extends ActionBarActivity
 
     private void initializeFragments() {
         mtaskFragment = TaskFragment.newInstance(0);
-        mUserFragment = new UserFragment();
-        mAboutFragment = new AboutFragment();
         fragmentManager = getSupportFragmentManager();
         fragmentManager.addOnBackStackChangedListener(
                 new FragmentManager.OnBackStackChangedListener() {
@@ -360,9 +365,11 @@ public class MainActivity extends ActionBarActivity
                 replaceFragment(siteListFragment);
                 break;
             case 2:
+                mUserFragment = UserFragment.newInstance(mUser);
                 replaceFragment(mUserFragment);
                 break;
             case 3:
+                mAboutFragment = new AboutFragment();
                 replaceFragment(mAboutFragment);
                 break;
             case 4:
@@ -421,17 +428,14 @@ public class MainActivity extends ActionBarActivity
     }
 
 
-    // Button Events
-
-    public void FieldReportButtonPressed(View view){
-        AddFieldReportFragment fieldFragment = AddFieldReportFragment.newInstance();
-        replaceFragment(fieldFragment);
-    }
-
     // Setter
     public void setUser(User user){
         mUser = user;
     }
+    public User getUser() { return mUser; }
+
+    public void setFieldReportTask(Task task) { mFieldReportTask = task; }
+    public Task getFieldReportTask() { return mFieldReportTask; }
 
     public ProgressBar getSpinner() { return mProgress; }
 }

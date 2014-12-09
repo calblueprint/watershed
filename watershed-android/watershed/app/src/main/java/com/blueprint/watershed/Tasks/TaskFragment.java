@@ -4,7 +4,11 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -28,6 +32,7 @@ public class TaskFragment extends ListFragment {
     private MainActivity parentActivity;
     private TaskAdapter mTaskAdapter;
     private NetworkManager mNetworkManager;
+    private Menu mMenu;
 
     public static TaskFragment newInstance(int option) {
         TaskFragment fragment = new TaskFragment();
@@ -43,6 +48,7 @@ public class TaskFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //setHasOptionsMenu(true);
         mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
         parentActivity = (MainActivity)getActivity();
         mTaskList = new ArrayList<Task>();
@@ -65,6 +71,7 @@ public class TaskFragment extends ListFragment {
         View finalView = inflater.inflate(R.layout.fragment_task_list, container, false);
         listView1 = (ListView)finalView.findViewById(android.R.id.list);
         mTaskAdapter = new TaskAdapter(getActivity(),R.layout.task_list_row, mTaskList);
+
         listView1.setAdapter(mTaskAdapter);
         return finalView;
     }
@@ -94,6 +101,12 @@ public class TaskFragment extends ListFragment {
                     + " must implement OnFragmentInteractionListener");
         }
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.create_task_menu, menu);
+    }
+
 
     @Override
     public void onDetach() {

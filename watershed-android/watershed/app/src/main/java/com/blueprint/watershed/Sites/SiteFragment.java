@@ -65,6 +65,7 @@ public class SiteFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(false);
         mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
     }
 

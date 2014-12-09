@@ -41,4 +41,11 @@
     <!--Facebook Auth-->
     <string name="facebook_app_id">544628745672116</string>
 
+    <!-- Task Creation -->
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="task_due_date">Due Date</string>
+    <string name="site">Site</string>
+    <string name="assignee">Assignee</string>
+
 </resources>

@@ -71,6 +71,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
+        mActivity = (MainActivity) getActivity();
     }
 
     @Override
@@ -110,6 +111,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
      * Networking
      */
     public void createFieldReportRequest(FieldReport fieldReport) {
+        Log.e("HIT DAT ENDPOINT", "Hit It");
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
 
         CreateFieldReportRequest createFieldReportRequest = new CreateFieldReportRequest(getActivity(), fieldReport, params, new Response.Listener<FieldReport>() {
@@ -174,7 +176,10 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
         Boolean urgency = ((Switch)view.findViewById(R.id.field_report_urgent)).isChecked();
 
         // TODO(max): Make sure to replace user, minisite, and task with the corresponding objects.
-        FieldReport fieldReport = new FieldReport(fieldReportDescription, fieldReportHealthInt, urgency, new Photo(fieldReportPhoto), new User(), new MiniSite(), new Task());
+        Task fieldReportTask = mActivity.getFieldReportTask();
+        MiniSite fieldReportMiniSite = new MiniSite();
+        fieldReportMiniSite.setId(fieldReportTask.getMiniSiteId());
+        FieldReport fieldReport = new FieldReport(fieldReportDescription, fieldReportHealthInt, urgency, new Photo(fieldReportPhoto), new User(), fieldReportMiniSite, fieldReportTask);
 
         createFieldReportRequest(fieldReport);
 
