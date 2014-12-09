@@ -1,6 +1,7 @@
 package com.blueprint.watershed.FieldReports;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.blueprint.watershed.APIObject;
 import com.blueprint.watershed.MiniSites.MiniSite;
@@ -12,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 /**
  * Created by maxwolffe on 11/18/14.
@@ -54,6 +56,11 @@ public class FieldReport implements APIObject {
     public User getUser() { return mUser; }
 
     @JsonIgnore
+    public String getUserName() {
+        return mUser == null ? "Derek Hitchcock" : mUser.getName();
+    }
+
+    @JsonIgnore
     public MiniSite getMiniSite() { return mMiniSite; }
 
     @JsonIgnore
@@ -61,12 +68,23 @@ public class FieldReport implements APIObject {
 
     public Photo getPhoto() { return mPhoto; }
 
+    @JsonIgnore
+    public ArrayList<Photo> getPhotos() {
+        ArrayList<Photo> photos = new ArrayList<Photo>();
+        Photo photo = getPhoto();
+        if (photo != null) {
+            photos.add(photo);
+        }
+        return photos;
+    }
+
     // Setters
     public void setUser(User user) { mUser = user; }
     public void setMiniSite(MiniSite miniSite) { mMiniSite = miniSite; }
     public void setTask(Task task) { mTask = task; }
 
-    @JsonProperty("photo_attributes")
+    public void setPhotoAttributes(Photo photo) { mPhoto = photo; }
+
     public void setPhoto(Photo photo) { mPhoto = photo; }
 
     /*
@@ -74,7 +92,6 @@ public class FieldReport implements APIObject {
      */
 
     // Getters
-    @JsonIgnore
     public Integer getId() { return mId; }
 
     public Integer getUserId() { return mUser.getId(); }

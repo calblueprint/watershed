@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Photos.PhotoPagerAdapter;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Sites.Site;
@@ -24,12 +25,14 @@ import java.util.ArrayList;
  */
 public class MiniSiteListAdapter extends ArrayAdapter<MiniSite> {
 
+    MainActivity mMainActivity;
     Context context;
     int layoutResourceId;
     ArrayList<MiniSite> miniSites;
 
-    public MiniSiteListAdapter(Context context, int layoutResourceId, ArrayList<MiniSite> miniSites) {
+    public MiniSiteListAdapter(MainActivity mainActivity, Context context, int layoutResourceId, ArrayList<MiniSite> miniSites) {
         super(context, layoutResourceId, miniSites);
+        this.mMainActivity = mainActivity;
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.miniSites = miniSites;
@@ -55,11 +58,21 @@ public class MiniSiteListAdapter extends ArrayAdapter<MiniSite> {
             holder = (MiniSiteHolder)row.getTag();
         }
 
-        MiniSite miniSite = miniSites.get(position);
+        final MiniSite miniSite = miniSites.get(position);
         holder.photosView.configureWithPhotos(miniSite.getPhotos());
-        holder.coverPhotoLabel.setText(String.format("%s Field Reports", miniSite.getFieldReports().size()));
+        holder.coverPhotoLabel.setText(String.format("%s Field Reports", miniSite.getFieldReportsCount()));
         holder.topLabel.setText(miniSite.getName());
         holder.bottomLabel.setText(miniSite.getLocation());
+
+        row.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MiniSiteFragment miniSiteFragment = new MiniSiteFragment();
+                miniSiteFragment.configureWithMiniSite(miniSite);
+
+                mMainActivity.replaceFragment(miniSiteFragment);
+            }
+        });
 
         return row;
     }
