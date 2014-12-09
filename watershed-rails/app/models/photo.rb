@@ -14,7 +14,9 @@
 #
 
 class Photo < ActiveRecord::Base
-  default_scope -> { where(hidden: false) }
+  default_scope -> { where(hidden: false).order_most_recent }
+
+  scope :order_most_recent, -> { order("created_at DESC") }
 
   mount_uploader :image, ImageUploader
   skip_callback :save, :after, :remove_previously_stored_image

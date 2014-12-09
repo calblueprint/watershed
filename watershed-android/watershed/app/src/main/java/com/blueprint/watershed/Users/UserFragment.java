@@ -32,7 +32,6 @@ public class UserFragment extends Fragment implements ListView.OnItemClickListen
 
     public static UserFragment newInstance(User user) {
         UserFragment fragment = new UserFragment();
-        Log.e("Print User", user.toString());
         fragment.setUser(user);
         return fragment;
     }

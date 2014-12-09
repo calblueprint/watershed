@@ -4,6 +4,10 @@
     <color name="white">#FFFFFF</color>
     <color name="transparent">#00000000</color>
     <color name="light_gray">#F9F9F9</color>
+    <color name="medium_gray">#EEEEEE</color>
+    <color name="dark_gray">#656d78</color>
+
+    <color name="dark_transparent_gray">#CC656D78</color>
 
     <!-- Watershed Colors -->
     <color name="ws_blue">#81B4DE</color>

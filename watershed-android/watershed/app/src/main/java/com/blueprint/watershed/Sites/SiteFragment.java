@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.support.v4.app.Fragment;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,6 +22,8 @@ import com.blueprint.watershed.MiniSites.MiniSiteListAdapter;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Sites.SiteRequest;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Views.CoverPhotoPagerView;
+import com.blueprint.watershed.Views.HeaderGridView;
 
 import org.json.JSONObject;
 
@@ -34,7 +37,7 @@ public class SiteFragment extends Fragment
     private OnFragmentInteractionListener mListener;
     private NetworkManager mNetworkManager;
     private MainActivity mMainActivity;
-    private ListView mMiniSiteListView;
+    private HeaderGridView mMiniSiteGridView;
     private MiniSiteListAdapter mMiniSiteAdapter;
     private Site mSite;
     private ArrayList<MiniSite> mMiniSites;
@@ -54,8 +57,7 @@ public class SiteFragment extends Fragment
     }
 
     public void configureViewWithSite(View view, Site site) {
-        ((TextView)view.findViewById(R.id.primary_label)).setText("");
-        ((TextView)view.findViewById(R.id.secondary_label)).setText("");
+        ((CoverPhotoPagerView)view.findViewById(R.id.cover_photo_pager_view)).configureWithPhotos(site.getPhotos());
         ((TextView)view.findViewById(R.id.site_name)).setText(site.getName());
         ((TextView)view.findViewById(R.id.site_description)).setText(site.getDescription());
     }
@@ -63,6 +65,7 @@ public class SiteFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(false);
         mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
     }
 
@@ -70,13 +73,22 @@ public class SiteFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_site, container, false);
-        configureViewWithSite(view, mSite);
 
-        mMiniSiteListView = (ListView) view.findViewById(R.id.mini_sites_table);
-        mMiniSiteAdapter = new MiniSiteListAdapter(getActivity(), R.layout.mini_site_list_row, getMiniSites());
-        mMiniSiteListView.setAdapter(mMiniSiteAdapter);
+        // Create MiniSite grid
+        mMiniSiteGridView = (HeaderGridView) view.findViewById(R.id.mini_sites_grid);
 
-        mMiniSiteListView.setOnItemClickListener(this);
+        // Add site header information to the top
+        ViewGroup header = (ViewGroup)inflater.inflate(R.layout.site_header_view, mMiniSiteGridView, false);
+        mMiniSiteGridView.addHeaderView(header, null, false);
+
+        // Configure the header
+        configureViewWithSite(header, mSite);
+
+        // Set the adapter to fill the list of mini sites
+        mMiniSiteAdapter = new MiniSiteListAdapter(mMainActivity, getActivity(), R.layout.mini_site_list_row, getMiniSites());
+        mMiniSiteGridView.setAdapter(mMiniSiteAdapter);
+
+        mMiniSiteGridView.setOnItemClickListener(this);
         return view;
     }
 

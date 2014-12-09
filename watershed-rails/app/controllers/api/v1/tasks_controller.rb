@@ -2,6 +2,7 @@ class Api::V1::TasksController < Api::V1::BaseController
   load_and_authorize_resource param_method: :task_params
 
   def index
+    @tasks = @tasks.unassigned.for_mini_sites(current_user.mini_sites)
     render json: @tasks, each_serializer: TaskListSerializer
   end
 
@@ -27,8 +28,8 @@ class Api::V1::TasksController < Api::V1::BaseController
 
   private
 
-  def site_params
-    params.require(:task).permit(:title, :description, :site_id,
+  def task_params
+    params.require(:task).permit(:title, :description, :mini_site_id,
                                  :assigner_id, :assignee_id, :complete,
                                  :due_date)
   end

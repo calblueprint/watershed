@@ -22,6 +22,7 @@ public class MiniSite implements APIObject {
     private Integer mZipCode;
     private String mLatitude;
     private String mLongitude;
+    private Integer mFieldReportsCount;
 
     private ArrayList<FieldReport> mFieldReports;
     private ArrayList<Photo> mPhotos;
@@ -62,6 +63,7 @@ public class MiniSite implements APIObject {
     public Integer getZipCode() { return mZipCode; }
     public String getLatitude() { return mLatitude; }
     public String getLongitude() { return mLongitude; }
+    public Integer getFieldReportsCount() { return mFieldReportsCount; }
 
     @JsonIgnore
     public String getLocation() {
@@ -78,4 +80,5 @@ public class MiniSite implements APIObject {
     public void setZipCode(Integer zipCode) { mZipCode = zipCode; }
     public void setLatitude(String latitude) { mLatitude = latitude; }
     public void setLongitude(String longitude) { mLongitude = longitude; }
+    public void setFieldReportsCount(Integer fieldReportsCount) { mFieldReportsCount = fieldReportsCount; }
 }
