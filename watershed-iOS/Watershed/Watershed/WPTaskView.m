@@ -8,6 +8,7 @@
 
 #import "WPTaskView.h"
 #import "UIExtensions.h"
+#import "WPTask.h"
 
 int WPButtonHeight = 75;
 
@@ -27,7 +28,7 @@ int WPButtonHeight = 75;
     _title = [({
         UILabel *title = [[UILabel alloc] init];
         title.numberOfLines = 0;
-        title.font = [UIFont boldSystemFontOfSize:20.0];
+        title.font = [UIFont boldSystemFontOfSize:30];
         title.textColor = [UIColor wp_darkBlue];
         title;
     }) wp_addToSuperview:self];
@@ -35,7 +36,7 @@ int WPButtonHeight = 75;
     _siteLinkButton = [({
         UIButton *siteLinkButton = [[UIButton alloc] init];
         siteLinkButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-        siteLinkButton.titleLabel.font = [UIFont systemFontOfSize:14.0];
+        siteLinkButton.titleLabel.font = [UIFont systemFontOfSize:18];
         siteLinkButton.titleLabel.textColor = [UIColor grayColor];
         siteLinkButton;
     }) wp_addToSuperview:self];
@@ -50,7 +51,7 @@ int WPButtonHeight = 75;
     _assigneeLabel = [({
         UILabel *assignee = [[UILabel alloc] init];
         assignee.numberOfLines = 0;
-        assignee.font = [UIFont systemFontOfSize:12];
+        assignee.font = [UIFont systemFontOfSize:18];
         assignee.textColor = [UIColor grayColor];
         assignee.textAlignment = NSTextAlignmentRight;
         assignee;
@@ -59,7 +60,7 @@ int WPButtonHeight = 75;
     _dueDate = [({
         UILabel *dueDate = [[UILabel alloc] init];
         dueDate.numberOfLines = 0;
-        dueDate.font = [UIFont systemFontOfSize:16.6];
+        dueDate.font = [UIFont systemFontOfSize:20];
         dueDate.textColor = [UIColor darkGrayColor];
         dueDate.textAlignment = NSTextAlignmentRight;
         dueDate;
@@ -91,8 +92,7 @@ int WPButtonHeight = 75;
     [_completed addTarget:self action:@selector(onClick) forControlEvents:UIControlEventTouchUpInside];
     [_addFieldReportButton setTitle:@"Add Field\nReport" forState:UIControlStateNormal];
     [_addFieldReportButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_siteLinkButton setTitle:@"Site whatever" forState:UIControlStateNormal];
-    [_siteLinkButton setTitleColor:[UIColor wp_darkBlue] forState:UIControlStateNormal];
+    [_siteLinkButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
 }
 
 -(void)onClick {
@@ -108,11 +108,33 @@ int WPButtonHeight = 75;
     }
 }
 
+- (void)configureWithTask:(WPTask *)task {
+    NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
+    [outputFormatter setDateFormat:@"MM/dd/yyyy"];
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
+    
+    NSDate *date  = [dateFormat dateFromString: task.dueDate];
+    NSString *dueDateString = [outputFormatter stringFromDate:date];
+
+    self.dueDate.text = dueDateString;
+    self.taskDescription.text = task.taskDescription;
+    self.assigneeLabel.text = [NSString stringWithFormat:@"Assigned to %@ by %@", task.assignee.name, task.assigner.name];
+    self.title.text = task.title;
+    if (!task.site.name) {
+        [self.siteLinkButton setTitle:@"Not assigned to a site" forState:UIControlStateNormal];
+    } else {
+        [self.siteLinkButton setTitle:task.site.name forState:UIControlStateNormal];
+    }
+}
+
 - (void)updateConstraints {
     [self.dueDate mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(topMargin + standardMargin));
         make.width.equalTo(@125);
         make.trailing.equalTo(@(-standardMargin));
+        make.centerY.equalTo(self.title.mas_centerY);
     }];
 
     [self.title mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -136,9 +158,8 @@ int WPButtonHeight = 75;
     
     [self.assigneeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.addFieldReportButton.mas_top).with.offset(-standardMargin);
-        make.leading.equalTo(@0);
+        make.leading.equalTo(@(standardMargin));
         make.trailing.equalTo(@(-standardMargin));
-        make.height.equalTo(@20);
     }];
 
     [self.addFieldReportButton mas_makeConstraints:^(MASConstraintMaker *make) {

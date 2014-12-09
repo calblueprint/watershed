@@ -62,6 +62,14 @@
     return [UIColor colorWithRed:46/255.0 green:204/255.0 blue:113/255.0 alpha:1];
 }
 
++ (UIColor *)wp_paragraph {
+    return [UIColor grayColor];
+}
+
++ (UIColor *)wp_header {
+    return [UIColor wp_darkBlue];
+}
+
 
 + (UIColor *)colorForRating:(NSInteger)rating {
     switch (rating) {

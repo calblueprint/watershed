@@ -41,7 +41,7 @@
     self.navigationItem.rightBarButtonItem = saveButton;
     self.view.fieldDescription.delegate = self;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self
-                action:@selector(dismissKeyboard)];
+                                                                         action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
 }
 
@@ -129,17 +129,17 @@
     self.viewPhotoModal = [[UIViewController alloc] init];
     self.viewPhotoModal.view.backgroundColor = [UIColor blackColor];
     self.viewPhotoModal.view.userInteractionEnabled = YES;
-
+    
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.viewPhotoModal.view.frame];
-    imageView.contentMode=UIViewContentModeScaleAspectFit;
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
     imageView.image = self.view.selectedImageView.image;
-
+    
     [self.viewPhotoModal.view addSubview:imageView];
     
     UITapGestureRecognizer *modalTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissModalView)];
     [self.viewPhotoModal.view addGestureRecognizer:modalTap];
     self.viewPhotoModal.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-
+    
     [self presentViewController:self.viewPhotoModal animated:YES completion:nil];
 }
 
@@ -238,7 +238,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     picker.delegate = self;
     picker.allowsEditing = NO;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-
+    
     [self presentViewController:picker animated:YES completion:NULL];
 }
 
@@ -247,9 +247,9 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     self.view.selectedImageView.image = info[UIImagePickerControllerOriginalImage];
-//    UIImage *chosenImage = info[UIImagePickerControllerOriginalImage];
-//    self.view.originalImage = chosenImage;
-//    [self setBlurredImage];
+    //    UIImage *chosenImage = info[UIImagePickerControllerOriginalImage];
+    //    self.view.originalImage = chosenImage;
+    //    [self setBlurredImage];
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 

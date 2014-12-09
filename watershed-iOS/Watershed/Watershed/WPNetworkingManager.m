@@ -1,4 +1,4 @@
-//
+ //
 //  WPNetworkingManager.m
 //  Watershed
 //
@@ -23,6 +23,7 @@ static NSString * const FACEBOOK_LOGIN_URL = @"users/sign_up/facebook";
 static NSString * const SITES_URL = @"sites";
 static NSString * const MINI_SITES_URL = @"mini_sites";
 static NSString * const FIELD_REPORTS_URL = @"field_reports";
+static NSString * const TASKS_URL = @"tasks";
 
 #pragma mark - Singleton Methods
 
@@ -97,6 +98,47 @@ static NSString * const FIELD_REPORTS_URL = @"field_reports";
         success(user);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Cannot log in with Facebook." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+- (void)requestTasksListWithParameters:(NSMutableDictionary *)parameters success:(void (^)(NSMutableArray *tasksList))success {
+
+    NSString *tasksString = [WPNetworkingManager createURLWithEndpoint:TASKS_URL];
+    [self addAuthenticationParameters:parameters];
+
+    [self GET:tasksString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSArray *tasksListJSON = (NSArray *)responseObject[@"tasks"];
+        NSMutableArray *tasksList = [[NSMutableArray alloc] init];
+        for (NSDictionary *taskJSON in tasksListJSON) {
+            WPTask *task = [MTLJSONAdapter modelOfClass:WPTask.class fromJSONDictionary:taskJSON error:nil];
+            [tasksList addObject:task];
+        }
+        success(tasksList);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load tasks." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+- (void)requestMyTasksListWithUser:(NSNumber *)userId parameters:(NSMutableDictionary *)parameters success:(void (^)(NSMutableArray *tasksList))success {
+    NSString *myUserString = [NSString stringWithFormat:@"%@/%@/%@",USERS_URL, userId, TASKS_URL];
+    NSString *userString = [WPNetworkingManager createURLWithEndpoint:myUserString];
+
+    [self addAuthenticationParameters:parameters];
+
+    [self GET:userString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSArray *tasksListJSON = (NSArray *)responseObject[@"tasks"];
+        NSMutableArray *tasksList = [[NSMutableArray alloc] init];
+        for (NSDictionary *taskJSON in tasksListJSON) {
+            WPTask *task = [MTLJSONAdapter modelOfClass:WPTask.class fromJSONDictionary:taskJSON error:nil];
+            [tasksList addObject:task];
+        }
+        success(tasksList);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load user." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [incorrect show];
         NSLog(@"Error: %@", error);
     }];
