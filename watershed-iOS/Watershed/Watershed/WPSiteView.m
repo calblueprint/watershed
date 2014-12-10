@@ -119,7 +119,7 @@ static int COVER_PHOTO_TRANS = 0;
         coverPhotoView;
     }) wp_addToSuperview:self];
     
-    _coverPhotoOverlay =[({
+    _coverPhotoOverlay = [({
         UIView *overlay = [[UIView alloc] init];
         overlay.backgroundColor = [UIColor blackColor];
         overlay.alpha = 0.1;
@@ -279,7 +279,7 @@ static int COVER_PHOTO_TRANS = 0;
 #pragma mark - ScrollView Delegate Method from ViewController
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    NSLog(@"%f", scrollView.contentOffset.y);
+
     CGFloat trans = scrollView.contentOffset.y;
     COVER_PHOTO_TRANS = trans;
     if (COVER_PHOTO_TRANS > 60) COVER_PHOTO_TRANS = 60;
