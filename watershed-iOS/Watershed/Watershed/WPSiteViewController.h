@@ -12,4 +12,5 @@
 
 @interface WPSiteViewController : WPViewController <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic) WPSite *site;
+- (void)requestAndLoadSite;
 @end

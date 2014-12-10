@@ -22,7 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.navigationBar.tintColor = [UIColor blackColor];
-    self.title = @"New Site";
+    self.title = @"New Mini Site";
     
     FAKFontAwesome *closeIcon = [FAKFontAwesome closeIconWithSize:22];
     UIImage *closeImage = [closeIcon imageWithSize:CGSizeMake(22, 22)];

@@ -11,6 +11,7 @@
 #import "WPMiniSite.h"
 #import "WPMiniSiteTableViewCell.h"
 #import "WPMiniSiteViewController.h"
+#import "WPCreateMiniSiteViewController.h"
 #import "WPNetworkingManager.h"
 
 @interface WPSiteViewController ()
@@ -29,16 +30,13 @@ static NSString *cellIdentifier = @"MiniSiteCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = self.site.name;
+    
+    [self setUpRightBarButtonItems];
+    
     self.miniSiteTableView.delegate = self;
     self.miniSiteTableView.dataSource = self;
 
-    __weak __typeof(self)weakSelf = self;
-    [[WPNetworkingManager sharedManager] requestSiteWithSite:self.site parameters:[[NSMutableDictionary alloc] init] success:^(WPSite *site, NSMutableArray *miniSiteList) {
-        __strong __typeof(weakSelf)strongSelf = weakSelf;
-        strongSelf.site = site;
-        strongSelf.miniSiteList = miniSiteList;
-        [strongSelf.miniSiteTableView reloadData];
-    }];
+    [self requestAndLoadSite];
 }
 
 - (void)loadView {
@@ -111,6 +109,49 @@ static NSString *cellIdentifier = @"MiniSiteCell";
     WPMiniSiteViewController *miniSiteViewController = [[WPMiniSiteViewController alloc] init];
     miniSiteViewController.miniSite = selectedMiniSite;
     [self.navigationController pushViewController:miniSiteViewController animated:YES];
+}
+
+#pragma mark - Networking Methods
+
+- (void)requestAndLoadSite {
+    __weak __typeof(self)weakSelf = self;
+    [[WPNetworkingManager sharedManager] requestSiteWithSite:self.site parameters:[[NSMutableDictionary alloc] init] success:^(WPSite *site, NSMutableArray *miniSiteList) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        strongSelf.site = site;
+        strongSelf.miniSiteList = miniSiteList;
+        [strongSelf.miniSiteTableView reloadData];
+    }];
+}
+
+#pragma mark - Navigation Bar Setup
+
+- (void)setUpRightBarButtonItems {
+    NSMutableArray *barButtonItems = [[NSMutableArray alloc] init];
+    NSString *userRole = [WPNetworkingManager sharedManager].keyChainStore[@"role"];
+    if ([userRole isEqual:@"2"]) {
+        [barButtonItems insertObject:[self newAddSiteButtonItem] atIndex:0];
+    }
+    [self.navigationItem setRightBarButtonItems:barButtonItems animated:YES];
+}
+
+#pragma mark - Add Site Button / Methods
+
+- (UIBarButtonItem *)newAddSiteButtonItem {
+    FAKFontAwesome *plusIcon = [FAKFontAwesome plusIconWithSize:22];
+    UIImage *plusImage = [plusIcon imageWithSize:CGSizeMake(18, 22)];
+    UIBarButtonItem *addMiniSiteButtonItem = [[UIBarButtonItem alloc] initWithImage:plusImage style:UIBarButtonItemStylePlain target:self action:@selector(showCreateMiniSiteView)];
+    addMiniSiteButtonItem.tintColor = [UIColor whiteColor];
+    return addMiniSiteButtonItem;
+}
+
+- (void)showCreateMiniSiteView {
+    WPCreateMiniSiteViewController *createMiniSiteViewController = [[WPCreateMiniSiteViewController alloc] init];
+    createMiniSiteViewController.parent = self;
+    UINavigationController *createMiniSiteNavController = [[UINavigationController alloc] initWithRootViewController:createMiniSiteViewController];
+    [createMiniSiteNavController.navigationBar setBackgroundColor:[UIColor whiteColor]];
+    [createMiniSiteNavController.navigationBar setBarTintColor:[UIColor whiteColor]];
+    [createMiniSiteNavController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
+    [self.navigationController presentViewController:createMiniSiteNavController animated:YES completion:nil];
 }
 
 #pragma mark - Setter Methods

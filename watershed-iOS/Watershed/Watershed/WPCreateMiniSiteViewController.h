@@ -7,12 +7,12 @@
 //
 
 #import "WPViewController.h"
-#import "WPMiniSiteViewController.h"
+#import "WPSiteViewController.h"
 #import "BSKeyboardControls.h"
 
 @interface WPCreateMiniSiteViewController : WPViewController <UITableViewDelegate, UITableViewDataSource, BSKeyboardControlsDelegate, UITextFieldDelegate, UITextViewDelegate>
 
-@property (nonatomic) WPMiniSiteViewController *parent;
+@property (nonatomic) WPSiteViewController *parent;
 @property (nonatomic) UITextField *nameTextField;
 @property (nonatomic) UITextField *streetTextField;
 @property (nonatomic) UITextField *cityTextField;
