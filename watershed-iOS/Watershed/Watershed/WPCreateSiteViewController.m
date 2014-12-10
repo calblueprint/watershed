@@ -181,6 +181,8 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     self.keyboardControls.activeField = textField;
+    //ignore direction in here
+    [self keyboardControls:self.keyboardControls selectedField:textField inDirection:BSKeyboardControlsDirectionNext];
     return YES;
 }
 
@@ -188,6 +190,8 @@
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
     self.keyboardControls.activeField = textView;
+    //ignore direction in here
+    [self keyboardControls:self.keyboardControls selectedField:textView inDirection:BSKeyboardControlsDirectionNext];
     return YES;
 }
 
