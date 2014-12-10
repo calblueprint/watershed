@@ -37,7 +37,7 @@
 		06ECE8EE1A244A9A009870CA /* WPSelectAssigneeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06ECE8ED1A244A9A009870CA /* WPSelectAssigneeViewController.m */; };
 		06ECE8F11A245768009870CA /* WPSelectAssigneeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06ECE8F01A245768009870CA /* WPSelectAssigneeView.m */; };
 		0BFD8558DD12470AB2409F6A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 38F773F3CE0741AE9B08A802 /* libPods.a */; };
-		2739AB961A30222200F3D30F /* WPCreateSiteTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2739AB951A30222200F3D30F /* WPCreateSiteTableViewCell.m */; };
+		2739AB961A30222200F3D30F /* (null) in Sources */ = {isa = PBXBuildFile; };
 		273ABECC19EDFA8600FC1C92 /* WPSitesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273ABECB19EDFA8600FC1C92 /* WPSitesTableViewController.m */; };
 		2749D18C1A06203000D0ECA2 /* WPMiniSiteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2749D18B1A06203000D0ECA2 /* WPMiniSiteView.m */; };
 		2749D18F1A0622A800D0ECA2 /* WPMiniSiteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2749D18E1A0622A800D0ECA2 /* WPMiniSiteViewController.m */; };
@@ -56,6 +56,7 @@
 		27BEC6B01A1063B5006CBFF6 /* WPFieldReportView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27BEC6AF1A1063B5006CBFF6 /* WPFieldReportView.m */; };
 		27BEC6B31A10640B006CBFF6 /* WPFieldReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27BEC6B21A10640B006CBFF6 /* WPFieldReportViewController.m */; };
 		27E36EE119FCBBE5008A63FB /* WPView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E36EE019FCBBE5008A63FB /* WPView.m */; };
+		27EA5B561A37EF1C00E1597A /* WPCreateSiteTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EA5B551A37EF1C00E1597A /* WPCreateSiteTableViewCell.m */; };
 		27EE2DBF1A2EE8F200106803 /* WPCreateSiteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EE2DBE1A2EE8F200106803 /* WPCreateSiteViewController.m */; };
 		27EE2DC21A2EEA0F00106803 /* WPCreateSiteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EE2DC11A2EEA0F00106803 /* WPCreateSiteView.m */; };
 		27F0B70119E2496400E848C3 /* WPSiteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F0B70019E2496400E848C3 /* WPSiteView.m */; };
@@ -78,7 +79,6 @@
 		BA4F8DFE19C7739300C816E3 /* WatershedTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4F8DFD19C7739300C816E3 /* WatershedTests.m */; };
 		BABC5E1C1A0B2805002825E4 /* WPEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BABC5E1B1A0B2805002825E4 /* WPEditViewController.m */; };
 		BABC5E1F1A0B281F002825E4 /* WPEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = BABC5E1E1A0B281F002825E4 /* WPEditView.m */; };
-		BADAAFDB1A350EF200147429 /* WPTask.m in Sources */ = {isa = PBXBuildFile; fileRef = BADAAFDA1A350EF200147429 /* WPTask.m */; };
 		BAF96EA41A2EBDCB009CB4BC /* WPSignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF96EA31A2EBDCB009CB4BC /* WPSignupViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -185,6 +185,8 @@
 		27BEC6B21A10640B006CBFF6 /* WPFieldReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPFieldReportViewController.m; sourceTree = "<group>"; };
 		27E36EDF19FCBBE5008A63FB /* WPView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPView.h; sourceTree = "<group>"; };
 		27E36EE019FCBBE5008A63FB /* WPView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPView.m; sourceTree = "<group>"; };
+		27EA5B541A37EF1C00E1597A /* WPCreateSiteTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPCreateSiteTableViewCell.h; sourceTree = "<group>"; };
+		27EA5B551A37EF1C00E1597A /* WPCreateSiteTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPCreateSiteTableViewCell.m; sourceTree = "<group>"; };
 		27EE2DBD1A2EE8F200106803 /* WPCreateSiteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPCreateSiteViewController.h; sourceTree = "<group>"; };
 		27EE2DBE1A2EE8F200106803 /* WPCreateSiteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPCreateSiteViewController.m; sourceTree = "<group>"; };
 		27EE2DC01A2EEA0F00106803 /* WPCreateSiteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPCreateSiteView.h; sourceTree = "<group>"; };
@@ -227,8 +229,6 @@
 		BABC5E1B1A0B2805002825E4 /* WPEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPEditViewController.m; sourceTree = "<group>"; };
 		BABC5E1D1A0B281F002825E4 /* WPEditView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPEditView.h; sourceTree = "<group>"; };
 		BABC5E1E1A0B281F002825E4 /* WPEditView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPEditView.m; sourceTree = "<group>"; };
-		BADAAFD91A350EF200147429 /* WPTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPTask.h; sourceTree = "<group>"; };
-		BADAAFDA1A350EF200147429 /* WPTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPTask.m; sourceTree = "<group>"; };
 		BAF96EA21A2EBDCB009CB4BC /* WPSignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPSignupViewController.h; sourceTree = "<group>"; };
 		BAF96EA31A2EBDCB009CB4BC /* WPSignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPSignupViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -347,12 +347,12 @@
 		27EE2DBC1A2EE7C700106803 /* Create Site */ = {
 			isa = PBXGroup;
 			children = (
+				27EA5B541A37EF1C00E1597A /* WPCreateSiteTableViewCell.h */,
+				27EA5B551A37EF1C00E1597A /* WPCreateSiteTableViewCell.m */,
 				27EE2DBD1A2EE8F200106803 /* WPCreateSiteViewController.h */,
 				27EE2DBE1A2EE8F200106803 /* WPCreateSiteViewController.m */,
 				27EE2DC01A2EEA0F00106803 /* WPCreateSiteView.h */,
 				27EE2DC11A2EEA0F00106803 /* WPCreateSiteView.m */,
-				2739AB941A30222100F3D30F /* WPCreateSiteTableViewCell.h */,
-				2739AB951A30222200F3D30F /* WPCreateSiteTableViewCell.m */,
 			);
 			name = "Create Site";
 			sourceTree = "<group>";
@@ -745,7 +745,6 @@
 				BABC5E1F1A0B281F002825E4 /* WPEditView.m in Sources */,
 				275C799019EC4F6500E722C7 /* WPMiniSiteTableViewCell.m in Sources */,
 				06A8139819D91A7500E3EB05 /* WPTasksListView.m in Sources */,
-				BADAAFDB1A350EF200147429 /* WPTask.m in Sources */,
 				06A8139519D911C900E3EB05 /* WPTasksListViewController.m in Sources */,
 				06ECE8EE1A244A9A009870CA /* WPSelectAssigneeViewController.m in Sources */,
 				BA38117E1A106B9A00019447 /* WPAboutViewController.m in Sources */,
@@ -777,7 +776,7 @@
 				064462F51A073A0F00C6FE8B /* WPSettingsTableView.m in Sources */,
 				2749D18C1A06203000D0ECA2 /* WPMiniSiteView.m in Sources */,
 				27714CA919D9076F005344B0 /* WPLoginViewController.m in Sources */,
-				2739AB961A30222200F3D30F /* WPCreateSiteTableViewCell.m in Sources */,
+				2739AB961A30222200F3D30F /* (null) in Sources */,
 				27E36EE119FCBBE5008A63FB /* WPView.m in Sources */,
 				275C798D19EB911900E722C7 /* WPLabeledIcon.m in Sources */,
 				06ECE8E21A22E63C009870CA /* WPSelectTaskViewController.m in Sources */,
@@ -785,6 +784,7 @@
 				276959961A081DAF00A5368A /* WPFieldReportTableViewCell.m in Sources */,
 				064463031A073A6100C6FE8B /* WPUser.m in Sources */,
 				064462EA1A0739A500C6FE8B /* WPTaskView.m in Sources */,
+				27EA5B561A37EF1C00E1597A /* WPCreateSiteTableViewCell.m in Sources */,
 				068AB39E1A1B4155009BB746 /* WPAddFieldReportView.m in Sources */,
 				06ECE8F11A245768009870CA /* WPSelectAssigneeView.m in Sources */,
 				064462FC1A073A3000C6FE8B /* WPProfileTableViewCell.m in Sources */,
