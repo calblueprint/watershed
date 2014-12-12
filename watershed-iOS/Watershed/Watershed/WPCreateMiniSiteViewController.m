@@ -274,7 +274,20 @@
 }
 
 - (void)chooseExisting {
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.allowsEditing = NO;
+    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     
+    [picker.navigationBar setBackgroundColor:[UIColor whiteColor]];
+    [picker.navigationBar setShadowImage:[UIImage imageNamed:@"WPBlue"]];
+    [picker.navigationBar setTintColor:[UIColor wp_blue]];
+    [picker.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
+    UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [WPView getScreenWidth], 20)];
+    statusBarView.backgroundColor = [UIColor whiteColor];
+    [picker.view addSubview:statusBarView];
+    
+    [self presentViewController:picker animated:YES completion:nil];
 }
 
 #pragma mark - ActionSheet Delegate Methods
