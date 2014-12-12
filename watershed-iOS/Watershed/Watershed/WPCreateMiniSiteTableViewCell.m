@@ -16,7 +16,11 @@ const static float LABEL_WIDTH = 75.0f;
 
 - (id)initWithStyle:(UITableViewCellStyle)style
     reuseIdentifier:(NSString *)reuseIdentifier {
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> Add custom cells for the createMiniSiteTableView
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         [self createSubviews];
@@ -31,14 +35,22 @@ const static float LABEL_WIDTH = 75.0f;
         label.font = [UIFont systemFontOfSize:13.0];
         label;
     }) wp_addToSuperview:self.contentView];
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> Add custom cells for the createMiniSiteTableView
     _textInput = [({
         [[UIView alloc] init];
     }) wp_addToSuperview:self.contentView];
 }
 
 - (void)updateConstraints {
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> Add custom cells for the createMiniSiteTableView
     [self.contentView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@0);
         make.leading.equalTo(@0);
@@ -47,24 +59,44 @@ const static float LABEL_WIDTH = 75.0f;
         make.centerX.equalTo(self.mas_centerX);
         make.centerY.equalTo(self.mas_centerY);
     }];
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> Add custom cells for the createMiniSiteTableView
     [self.inputLabel mas_updateConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@(LABEL_WIDTH));
         make.height.equalTo(@(CELL_HEIGHT));
         make.top.equalTo(@0);
         make.leading.equalTo(@15);
     }];
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> Add custom cells for the createMiniSiteTableView
     [self.textInput mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@0);
         make.leading.equalTo(self.inputLabel.mas_trailing).with.offset(standardMargin);
         make.trailing.equalTo(@0);
         make.bottom.equalTo(@0);
     }];
+<<<<<<< HEAD
     
     [super updateConstraints];
 }
 
+=======
+
+    [super updateConstraints];
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+
+}
+
+>>>>>>> Add custom cells for the createMiniSiteTableView
 #pragma mark - Public Methods
 
 + (CGFloat)cellHeight {
