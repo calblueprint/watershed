@@ -37,6 +37,7 @@
 		06ECE8F11A245768009870CA /* WPSelectAssigneeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06ECE8F01A245768009870CA /* WPSelectAssigneeView.m */; };
 		0BFD8558DD12470AB2409F6A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 38F773F3CE0741AE9B08A802 /* libPods.a */; };
 		272639481A3AA99800F7EE52 /* WPCreateMiniSiteTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 272639471A3AA99800F7EE52 /* WPCreateMiniSiteTableViewCell.m */; };
+		2726394B1A3ABB9B00F7EE52 /* WPCreateMiniSiteImageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2726394A1A3ABB9B00F7EE52 /* WPCreateMiniSiteImageTableViewCell.m */; };
 		273ABECC19EDFA8600FC1C92 /* WPSitesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273ABECB19EDFA8600FC1C92 /* WPSitesTableViewController.m */; };
 		2749D18C1A06203000D0ECA2 /* WPMiniSiteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2749D18B1A06203000D0ECA2 /* WPMiniSiteView.m */; };
 		2749D18F1A0622A800D0ECA2 /* WPMiniSiteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2749D18E1A0622A800D0ECA2 /* WPMiniSiteViewController.m */; };
@@ -152,6 +153,8 @@
 		06ECE8F01A245768009870CA /* WPSelectAssigneeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPSelectAssigneeView.m; sourceTree = "<group>"; };
 		272639461A3AA99800F7EE52 /* WPCreateMiniSiteTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPCreateMiniSiteTableViewCell.h; sourceTree = "<group>"; };
 		272639471A3AA99800F7EE52 /* WPCreateMiniSiteTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPCreateMiniSiteTableViewCell.m; sourceTree = "<group>"; };
+		272639491A3ABB9B00F7EE52 /* WPCreateMiniSiteImageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPCreateMiniSiteImageTableViewCell.h; sourceTree = "<group>"; };
+		2726394A1A3ABB9B00F7EE52 /* WPCreateMiniSiteImageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPCreateMiniSiteImageTableViewCell.m; sourceTree = "<group>"; };
 		273ABECA19EDFA8600FC1C92 /* WPSitesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPSitesTableViewController.h; sourceTree = "<group>"; };
 		273ABECB19EDFA8600FC1C92 /* WPSitesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPSitesTableViewController.m; sourceTree = "<group>"; };
 		2749D18A1A06203000D0ECA2 /* WPMiniSiteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPMiniSiteView.h; sourceTree = "<group>"; };
@@ -361,6 +364,8 @@
 				27EA5B5C1A380FE200E1597A /* WPCreateMiniSiteView.m */,
 				272639461A3AA99800F7EE52 /* WPCreateMiniSiteTableViewCell.h */,
 				272639471A3AA99800F7EE52 /* WPCreateMiniSiteTableViewCell.m */,
+				272639491A3ABB9B00F7EE52 /* WPCreateMiniSiteImageTableViewCell.h */,
+				2726394A1A3ABB9B00F7EE52 /* WPCreateMiniSiteImageTableViewCell.m */,
 			);
 			name = "Create Mini Site";
 			sourceTree = "<group>";
@@ -792,6 +797,7 @@
 				27714CB219D93405005344B0 /* WPAppDelegate.m in Sources */,
 				064462EB1A0739A500C6FE8B /* WPTaskViewController.m in Sources */,
 				0653A8F71A21267B0022462B /* WPTask.m in Sources */,
+				2726394B1A3ABB9B00F7EE52 /* WPCreateMiniSiteImageTableViewCell.m in Sources */,
 				27F0B70419E249CE00E848C3 /* WPSiteViewController.m in Sources */,
 				27EA5B5A1A38094E00E1597A /* WPCreateMiniSiteViewController.m in Sources */,
 				064462F51A073A0F00C6FE8B /* WPSettingsTableView.m in Sources */,

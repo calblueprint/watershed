@@ -9,6 +9,7 @@
 #import "WPCreateMiniSiteViewController.h"
 #import "WPCreateMiniSiteView.h"
 #import "WPCreateMiniSiteTableViewCell.h"
+#import "WPCreateMiniSiteImageTableViewCell.h"
 #import "WPView.h"
 
 @interface WPCreateMiniSiteViewController ()
@@ -59,7 +60,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-    return 3;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -77,6 +78,10 @@
             return 1;
             break;
         }
+        case 3: {
+            return 1;
+            break;
+        }
         default: {
             return 1;
             break;
@@ -86,10 +91,13 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 2) {
-        return 120;
+        return [WPCreateMiniSiteTableViewCell cellDescriptionHeight];
+    }
+    else if (indexPath.section == 3) {
+        return [WPCreateMiniSiteImageTableViewCell cellHeight];
     }
     else {
-        return 44;
+        return [WPCreateMiniSiteTableViewCell cellHeight];
     }
 }
 
@@ -138,6 +146,12 @@
             cell.textInput = self.descriptionTextView;
             cell.inputLabel.text = @"Description";
             break;
+        }
+            // MiniSite Photo
+        case 3: {
+            WPCreateMiniSiteImageTableViewCell *cell = [[WPCreateMiniSiteImageTableViewCell alloc] init];
+            cell.inputLabel.text = @"Photo";
+            return cell;
         }
     }
     return cell;
