@@ -9,5 +9,5 @@
 #import "WPView.h"
 
 @interface WPCreateMiniSiteView : WPView
-
+@property (nonatomic) UITableView *infoTableView;
 @end

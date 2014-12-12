@@ -7,10 +7,12 @@
 //
 
 #import "WPCreateMiniSiteViewController.h"
+#import "WPCreateMiniSiteView.h"
 #import "WPView.h"
 
 @interface WPCreateMiniSiteViewController ()
 
+@property (nonatomic) WPCreateMiniSiteView *view;
 @property (nonatomic) UITableView *infoTableView;
 @property (nonatomic) NSArray *textInputViews;
 @property (nonatomic) BSKeyboardControls *keyboardControls;
@@ -40,6 +42,10 @@
 }
 
 - (void)loadView {
+    self.view = [[WPCreateMiniSiteView alloc] init];
+    self.infoTableView = self.view.infoTableView;
+    self.infoTableView.delegate = self;
+    self.infoTableView.dataSource = self;
 }
 
 - (void)dismissSelf {
