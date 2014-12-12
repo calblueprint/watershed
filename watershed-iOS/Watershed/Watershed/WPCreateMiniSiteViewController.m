@@ -200,13 +200,14 @@
 
 - (void)presentPhotoButtonAction {
     if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
-        UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
-                                @"Take Photo",
-                                @"Choose Existing",
-                                nil];
+        UIActionSheet *popup = [[UIActionSheet alloc] init];
         if (self.imageInputCell.imageInput.image) {
             popup.destructiveButtonIndex = [popup addButtonWithTitle:@"Remove Photo"];
         }
+        [popup addButtonWithTitle:@"Take Photo"];
+        [popup addButtonWithTitle:@"Choose Existing"];
+        popup.cancelButtonIndex = [popup addButtonWithTitle:@"Cancel"];
+        popup.delegate = self;
         popup.tag = 1;
         [popup showInView:[UIApplication sharedApplication].keyWindow];
     } else {
@@ -260,34 +261,53 @@
 }
 
 - (void)takePhoto {
-    
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Device has no camera" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [myAlertView show];
+    } else {
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+        picker.delegate = self;
+        picker.allowsEditing = NO;
+        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self presentViewController:picker animated:YES completion:nil];
+    }
 }
 
 - (void)chooseExisting {
     
 }
 
-#pragma mark - UIActionSheet Delegate Methods
+#pragma mark - ActionSheet Delegate Methods
 
 - (void)actionSheet:(UIActionSheet *)popup
 clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSInteger buttonShift = popup.numberOfButtons - 3;
     switch (popup.tag) {
         case 1: {
-            switch (buttonIndex) {
-                case 0:
-                    [self takePhoto];
-                    break;
-                case 1:
-                    [self chooseExisting];
-                    break;
-                default:
-                    break;
+            if (buttonIndex == popup.destructiveButtonIndex && buttonShift == 1) {
+                self.imageInputCell.imageInput.image = nil;
+            }
+            else if (buttonIndex == 0 + buttonShift) {
+                [self takePhoto];
+            } else if (buttonIndex == 1 + buttonShift) {
+                [self chooseExisting];
             }
             break;
         }
         default:
             break;
     }
+}
+
+#pragma mark - ImagePickerController delegate methods
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    self.imageInputCell.imageInput.image = info[UIImagePickerControllerOriginalImage];
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Lazy Instantiation

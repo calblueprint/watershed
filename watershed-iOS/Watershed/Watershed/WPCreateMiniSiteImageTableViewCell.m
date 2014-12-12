@@ -34,7 +34,11 @@ const static float LABEL_WIDTH = 75.0f;
     }) wp_addToSuperview:self.contentView];
     
     _imageInput = [({
-        [[UIImageView alloc] init];
+        UIImageView *imageView = [[UIImageView alloc] init];
+        imageView.layer.cornerRadius = 5.0f;
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
+        imageView.clipsToBounds = YES;
+        imageView;
     }) wp_addToSuperview:self.contentView];
 }
 
