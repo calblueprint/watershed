@@ -266,8 +266,7 @@ static NSString * const TASKS_URL = @"tasks";
     
     [self POST:miniSiteString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *miniSiteJSON = (NSDictionary *)responseObject[@"mini_site"];
-        //WPMiniSite *miniSiteResponse = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:miniSiteJSON error:nil];
-        WPMiniSite *miniSiteResponse = [[WPMiniSite alloc] init];;
+        WPMiniSite *miniSiteResponse = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:miniSiteJSON error:nil];
         miniSiteResponse.site = miniSite.site;
         NSArray *photosListJSON = miniSiteJSON[@"photos"];
         for (NSDictionary *photoJSON in photosListJSON) {
