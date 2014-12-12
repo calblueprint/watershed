@@ -258,6 +258,7 @@ static NSString * const TASKS_URL = @"tasks";
     NSString *miniSiteString = [WPNetworkingManager createURLWithEndpoint:MINI_SITES_URL];
     [self addAuthenticationParameters:parameters];
     NSMutableDictionary *miniSiteJSON = [MTLJSONAdapter JSONDictionaryFromModel:miniSite].mutableCopy;
+    [miniSiteJSON setObject:miniSite.site.siteId forKey:@"site_id"];
     NSDictionary *photoAttributes = parameters[@"photo_attributes"];
     [parameters removeObjectForKey:@"photo_attributes"];
     [miniSiteJSON setObject:photoAttributes forKey:@"photo_attributes"];
@@ -265,11 +266,12 @@ static NSString * const TASKS_URL = @"tasks";
     
     [self POST:miniSiteString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *miniSiteJSON = (NSDictionary *)responseObject[@"mini_site"];
-        WPMiniSite *miniSiteResponse = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:miniSiteJSON error:nil];
+        //WPMiniSite *miniSiteResponse = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:miniSiteJSON error:nil];
+        WPMiniSite *miniSiteResponse = [[WPMiniSite alloc] init];;
         miniSiteResponse.site = miniSite.site;
         NSArray *photosListJSON = miniSiteJSON[@"photos"];
         for (NSDictionary *photoJSON in photosListJSON) {
-            [miniSite.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];
+            [miniSiteResponse.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];
         }
         
         success(miniSiteResponse);

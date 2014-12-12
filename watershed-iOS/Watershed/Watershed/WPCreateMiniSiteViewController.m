@@ -10,6 +10,7 @@
 #import "WPCreateMiniSiteView.h"
 #import "WPCreateMiniSiteTableViewCell.h"
 #import "WPView.h"
+#import "WPNetworkingManager.h"
 
 @interface WPCreateMiniSiteViewController ()
 
@@ -55,6 +56,40 @@
 }
 
 - (void)saveAndDismissSelf {
+    NSDictionary *miniSiteJSON = @{
+                                   @"name" : self.nameTextField.text,
+                                   @"street" : self.streetTextField.text,
+                                   @"city" : self.cityTextField.text,
+                                   @"state" : self.stateTextField.text,
+                                   @"zip_code" : self.zipCodeTextField.text,
+                                   @"description" : self.descriptionTextView.text
+                                   };
+    WPMiniSite *miniSite = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:miniSiteJSON error:nil];
+    miniSite.site = self.parent.site;
+    
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    NSString *photo = [UIImagePNGRepresentation([self compressForUpload:self.imageInputCell.imageInput.image withScale:0.2]) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    parameters[@"photo_attributes"] = @{ @"data" : photo };
+    
+    [[WPNetworkingManager sharedManager] createMiniSiteWithMiniSite:miniSite parameters:parameters success:^(WPMiniSite *miniSite) {
+        [self.parent requestAndLoadSite];
+        self.parent = nil;
+        [self dismissSelf];
+    }];
+}
+
+- (UIImage *)compressForUpload:(UIImage *)original withScale:(CGFloat)scale {
+    // Calculate new size given scale factor.
+    CGSize originalSize = original.size;
+    CGSize newSize = CGSizeMake(originalSize.width * scale, originalSize.height * scale);
+    
+    // Scale the original image to match the new size.
+    UIGraphicsBeginImageContext(newSize);
+    [original drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage* compressedImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return compressedImage;
 }
 
 #pragma mark - Table View Delegate / Data Source Methods
