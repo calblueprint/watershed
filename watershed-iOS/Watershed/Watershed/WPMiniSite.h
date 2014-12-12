@@ -25,6 +25,7 @@
 @property (nonatomic) NSString *vegetations;
 
 @property (nonatomic) WPSite *site;
+@property (nonatomic, readonly) NSNumber *siteId;
 @property (nonatomic) NSMutableArray *users; //of WPUser's
 @property (nonatomic) NSString *currentTask;
 @property (nonatomic) NSNumber *taskCount;

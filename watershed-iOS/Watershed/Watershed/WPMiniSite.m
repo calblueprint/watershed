@@ -15,12 +15,16 @@
              @"miniSiteId" : @"id",
              @"info" : @"description",
              @"zipCode" : @"zip_code",
+             @"siteId" : @"site_id",
              @"taskCount" : @"tasks_count",
              @"healthRating" : @"health_rating",
              @"fieldReportCount" : @"field_reports_count"
              };
 }
 
+- (NSNumber *)siteId {
+    return self.site.siteId;
+}
 
 - (NSMutableArray *)imageURLs {
     if (!_imageURLs) {
