@@ -9,7 +9,6 @@
 #import "WPCreateMiniSiteViewController.h"
 #import "WPCreateMiniSiteView.h"
 #import "WPCreateMiniSiteTableViewCell.h"
-#import "WPCreateMiniSiteImageTableViewCell.h"
 #import "WPView.h"
 
 @interface WPCreateMiniSiteViewController ()
@@ -57,6 +56,8 @@
 
 - (void)saveAndDismissSelf {
 }
+
+#pragma mark - Table View Delegate / Data Source Methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
@@ -149,15 +150,16 @@
         }
             // MiniSite Photo
         case 3: {
-            WPCreateMiniSiteImageTableViewCell *cell = [[WPCreateMiniSiteImageTableViewCell alloc] init];
-            cell.inputLabel.text = @"Photo";
-            return cell;
+            return self.imageInputCell;
         }
     }
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 3) {
+        [self presentPhotoButtonAction];
+    }
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
@@ -192,6 +194,100 @@
     //ignore direction in here
     [self keyboardControls:self.keyboardControls selectedField:textView inDirection:BSKeyboardControlsDirectionNext];
     return YES;
+}
+
+#pragma mark - Photo Selection Methods
+
+- (void)presentPhotoButtonAction {
+    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
+        UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
+                                @"Take Photo",
+                                @"Choose Existing",
+                                nil];
+        if (self.imageInputCell.imageInput.image) {
+            popup.destructiveButtonIndex = [popup addButtonWithTitle:@"Remove Photo"];
+        }
+        popup.tag = 1;
+        [popup showInView:[UIApplication sharedApplication].keyWindow];
+    } else {
+        UIAlertController *addPhotoActionSheet = [UIAlertController alertControllerWithTitle:nil
+                                                                                     message:nil
+                                                                              preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertAction *takePhoto = [UIAlertAction
+                                    actionWithTitle:@"Take Photo"
+                                    style:UIAlertActionStyleDefault
+                                    handler:^(UIAlertAction * action)
+                                    {
+                                        [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
+                                        [self takePhoto];
+                                        
+                                    }];
+        UIAlertAction *selectPhoto = [UIAlertAction
+                                      actionWithTitle:@"Choose Existing"
+                                      style:UIAlertActionStyleDefault
+                                      handler:^(UIAlertAction * action)
+                                      {
+                                          [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
+                                          [self chooseExisting];
+                                          
+                                      }];
+        UIAlertAction *cancel = [UIAlertAction
+                                 actionWithTitle:@"Cancel"
+                                 style:UIAlertActionStyleCancel
+                                 handler:^(UIAlertAction * action)
+                                 {
+                                     [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
+                                     
+                                 }];
+        
+        if (self.imageInputCell.imageInput.image) {
+            UIAlertAction *remove = [UIAlertAction
+                                     actionWithTitle:@"Remove Photo"
+                                     style:UIAlertActionStyleDestructive
+                                     handler:^(UIAlertAction * action)
+                                     {
+                                         self.imageInputCell.imageInput.image = nil;
+                                         [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
+                                     }];
+            [addPhotoActionSheet addAction:remove];
+        }
+        
+        [addPhotoActionSheet addAction:takePhoto];
+        [addPhotoActionSheet addAction:selectPhoto];
+        [addPhotoActionSheet addAction:cancel];
+        [self presentViewController:addPhotoActionSheet animated:YES completion:nil];
+    }
+}
+
+- (void)takePhoto {
+    
+}
+
+- (void)chooseExisting {
+    
+}
+
+#pragma mark - UIActionSheet Delegate Methods
+
+- (void)actionSheet:(UIActionSheet *)popup
+clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (popup.tag) {
+        case 1: {
+            switch (buttonIndex) {
+                case 0:
+                    [self takePhoto];
+                    break;
+                case 1:
+                    [self chooseExisting];
+                    break;
+                default:
+                    break;
+            }
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 #pragma mark - Lazy Instantiation
@@ -264,6 +360,14 @@
         _descriptionTextView.delegate = self;
     }
     return _descriptionTextView;
+}
+
+- (WPCreateMiniSiteImageTableViewCell *) imageInputCell {
+    if (!_imageInputCell) {
+        _imageInputCell = [[WPCreateMiniSiteImageTableViewCell alloc] init];
+        _imageInputCell.inputLabel.text = @"Photo";
+    }
+    return _imageInputCell;
 }
 
 @end
