@@ -242,7 +242,7 @@ static int COVER_PHOTO_TRANS = 0;
 
 - (void)configureWithSite:(WPSite *)site {
     [self.coverPhotoView setImageWithURL:[site.imageURLs firstObject]
-                        placeholderImage:[UIImage imageNamed:@"SampleCoverPhoto"]];
+                        placeholderImage:[UIImage imageNamed:@"WPBlue"]];
     self.originalCoverPhoto = self.coverPhotoView.image;
     self.titleLabel.text = site.name;
     self.descriptionLabel.text = site.info;

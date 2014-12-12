@@ -58,7 +58,7 @@
     self.view.ratingNumberLabel.textColor = ratingColor;
     self.view.ratingNumberLabel.layer.borderColor = [ratingColor CGColor];
     [self.view.reportImageView setImageWithURL:[self.fieldReport.imageURLs firstObject]
-                              placeholderImage:[UIImage imageNamed:@"SampleCoverPhoto2"]];
+                              placeholderImage:[UIImage imageNamed:@"WPBlue"]];
     self.view.userImageView.image = [UIImage imageNamed:@"max"];
     self.view.userImageView.layer.borderColor = [ratingColor CGColor];
     self.view.titleLabel.text = self.fieldReport.miniSite.name;

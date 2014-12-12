@@ -91,7 +91,7 @@ static NSString *cellIdentifier = @"MiniSiteCell";
         WPMiniSite *miniSite = self.miniSiteList[indexPath.row];
         cellView.nameLabel.text = miniSite.name;
         [cellView.photoView setImageWithURL:[miniSite.imageURLs firstObject]
-                           placeholderImage:[UIImage imageNamed:@"SampleCoverPhoto2"]];
+                           placeholderImage:[UIImage imageNamed:@"WPBlue"]];
         cellView.ratingDotView.backgroundColor = [UIColor colorForRating:[miniSite.healthRating intValue]];
         cellView.taskCountLabel.label.text = [NSString stringWithFormat:@"%@ tasks", miniSite.taskCount];
         cellView.fieldReportCountLabel.label.text = [[miniSite.fieldReportCount stringValue] stringByAppendingString:@" field reports"];
