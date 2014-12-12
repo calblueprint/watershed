@@ -71,10 +71,12 @@
     NSString *photo = [UIImagePNGRepresentation([self compressForUpload:self.imageInputCell.imageInput.image withScale:0.2]) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
     parameters[@"photo_attributes"] = @{ @"data" : photo };
     
+    __weak __typeof(self)weakSelf = self;
     [[WPNetworkingManager sharedManager] createMiniSiteWithMiniSite:miniSite parameters:parameters success:^(WPMiniSite *miniSite) {
-        [self.parent requestAndLoadSite];
-        self.parent = nil;
-        [self dismissSelf];
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf.parent requestAndLoadSite];
+        strongSelf.parent = nil;
+        [strongSelf dismissSelf];
     }];
 }
 

@@ -64,10 +64,13 @@
                                @"description" : self.descriptionTextView.text
                                };
     WPSite *site = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:siteJSON error:nil];
+    
+    __weak __typeof(self)weakSelf = self;
     [[WPNetworkingManager sharedManager] createSiteWithSite:site parameters:[[NSMutableDictionary alloc] init] success:^{
-        [self.parent requestAndLoadSites];
-        self.parent = nil;
-        [self dismissSelf];
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf.parent requestAndLoadSites];
+        strongSelf.parent = nil;
+        [strongSelf dismissSelf];
     }];
 }
 
