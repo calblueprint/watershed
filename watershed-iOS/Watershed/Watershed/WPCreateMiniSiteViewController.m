@@ -332,7 +332,6 @@
     picker.delegate = self;
     picker.allowsEditing = NO;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    
     [picker.navigationBar setBackgroundColor:[UIColor whiteColor]];
     [picker.navigationBar setShadowImage:[UIImage imageNamed:@"WPBlue"]];
     [picker.navigationBar setTintColor:[UIColor wp_blue]];

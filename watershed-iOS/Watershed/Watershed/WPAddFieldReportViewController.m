@@ -265,7 +265,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     [picker dismissViewControllerAnimated:YES completion:^{
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     }];
-    
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
