@@ -1,15 +1,15 @@
 //
-//  WPCreateSiteTableViewCell.h
+//  WPCreateMiniSiteTableViewCell.h
 //  Watershed
 //
-//  Created by Andrew Millman on 12/3/14.
+//  Created by Andrew Millman on 12/11/14.
 //  Copyright (c) 2014 Blueprint. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "UIExtensions.h"
 
-@interface WPCreateSiteTableViewCell : UITableViewCell
+@interface WPCreateMiniSiteTableViewCell : UITableViewCell
 
 @property (nonatomic) UILabel *inputLabel;
 @property (nonatomic) UIView *textInput;

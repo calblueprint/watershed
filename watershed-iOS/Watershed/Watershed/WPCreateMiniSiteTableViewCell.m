@@ -1,14 +1,14 @@
 //
-//  WPCreateSiteTableViewCell.m
+//  WPCreateMiniSiteTableViewCell.m
 //  Watershed
 //
-//  Created by Andrew Millman on 12/3/14.
+//  Created by Andrew Millman on 12/11/14.
 //  Copyright (c) 2014 Blueprint. All rights reserved.
 //
 
-#import "WPCreateSiteTableViewCell.h"
+#import "WPCreateMiniSiteTableViewCell.h"
 
-@implementation WPCreateSiteTableViewCell
+@implementation WPCreateMiniSiteTableViewCell
 
 const static float CELL_HEIGHT = 44.0f;
 const static float CELL_DESCRIPTION_HEIGHT = 130.0f;
