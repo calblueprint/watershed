@@ -30,14 +30,12 @@
 		06A8139519D911C900E3EB05 /* WPTasksListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A8139419D911C900E3EB05 /* WPTasksListViewController.m */; };
 		06A8139819D91A7500E3EB05 /* WPTasksListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A8139719D91A7500E3EB05 /* WPTasksListView.m */; };
 		06A8139B19D91D8600E3EB05 /* UIColor+WPColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A8139A19D91D8600E3EB05 /* UIColor+WPColors.m */; };
-		06B1B00819F4E77A007FC3D5 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		06ECE8E21A22E63C009870CA /* WPSelectTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06ECE8E11A22E63C009870CA /* WPSelectTaskViewController.m */; };
 		06ECE8E51A22E658009870CA /* WPSelectTaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06ECE8E41A22E658009870CA /* WPSelectTaskView.m */; };
 		06ECE8EB1A234381009870CA /* WPSelectMiniSiteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06ECE8EA1A234381009870CA /* WPSelectMiniSiteView.m */; };
 		06ECE8EE1A244A9A009870CA /* WPSelectAssigneeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06ECE8ED1A244A9A009870CA /* WPSelectAssigneeViewController.m */; };
 		06ECE8F11A245768009870CA /* WPSelectAssigneeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06ECE8F01A245768009870CA /* WPSelectAssigneeView.m */; };
 		0BFD8558DD12470AB2409F6A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 38F773F3CE0741AE9B08A802 /* libPods.a */; };
-		2739AB961A30222200F3D30F /* (null) in Sources */ = {isa = PBXBuildFile; };
 		273ABECC19EDFA8600FC1C92 /* WPSitesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273ABECB19EDFA8600FC1C92 /* WPSitesTableViewController.m */; };
 		2749D18C1A06203000D0ECA2 /* WPMiniSiteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2749D18B1A06203000D0ECA2 /* WPMiniSiteView.m */; };
 		2749D18F1A0622A800D0ECA2 /* WPMiniSiteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2749D18E1A0622A800D0ECA2 /* WPMiniSiteViewController.m */; };
@@ -768,7 +766,6 @@
 				27EE2DBF1A2EE8F200106803 /* WPCreateSiteViewController.m in Sources */,
 				064462FD1A073A3000C6FE8B /* WPProfileView.m in Sources */,
 				06305F4719D9274400BD2CE4 /* UIView+WPExtensions.m in Sources */,
-				06B1B00819F4E77A007FC3D5 /* (null) in Sources */,
 				27714CB219D93405005344B0 /* WPAppDelegate.m in Sources */,
 				064462EB1A0739A500C6FE8B /* WPTaskViewController.m in Sources */,
 				0653A8F71A21267B0022462B /* WPTask.m in Sources */,
@@ -776,7 +773,6 @@
 				064462F51A073A0F00C6FE8B /* WPSettingsTableView.m in Sources */,
 				2749D18C1A06203000D0ECA2 /* WPMiniSiteView.m in Sources */,
 				27714CA919D9076F005344B0 /* WPLoginViewController.m in Sources */,
-				2739AB961A30222200F3D30F /* (null) in Sources */,
 				27E36EE119FCBBE5008A63FB /* WPView.m in Sources */,
 				275C798D19EB911900E722C7 /* WPLabeledIcon.m in Sources */,
 				06ECE8E21A22E63C009870CA /* WPSelectTaskViewController.m in Sources */,
