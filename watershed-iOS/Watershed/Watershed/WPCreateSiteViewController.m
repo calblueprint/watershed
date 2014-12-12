@@ -65,11 +65,10 @@
                                };
     WPSite *site = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:siteJSON error:nil];
     
+    // Don't request the list of sites, because it is already called in the ViewController's viewWillAppear
     __weak __typeof(self)weakSelf = self;
     [[WPNetworkingManager sharedManager] createSiteWithSite:site parameters:[[NSMutableDictionary alloc] init] success:^{
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf.parent requestAndLoadSites];
-        strongSelf.parent = nil;
         [strongSelf dismissSelf];
     }];
 }

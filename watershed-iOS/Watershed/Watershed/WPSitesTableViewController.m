@@ -39,7 +39,9 @@ static NSString *cellIdentifier = @"SiteCell";
     
     self.sitesTableView.delegate = self;
     self.sitesTableView.dataSource = self;
-    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
     [self requestAndLoadSites];
 }
 
@@ -184,7 +186,6 @@ static NSString *cellIdentifier = @"SiteCell";
 
 - (void)showCreateSiteView {
     WPCreateSiteViewController *createSiteViewController = [[WPCreateSiteViewController alloc] init];
-    createSiteViewController.parent = self;
     UINavigationController *createSiteNavController = [[UINavigationController alloc] initWithRootViewController:createSiteViewController];
     [createSiteNavController.navigationBar setBackgroundColor:[UIColor whiteColor]];
     [createSiteNavController.navigationBar setBarTintColor:[UIColor whiteColor]];
