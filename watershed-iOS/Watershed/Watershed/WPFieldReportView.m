@@ -29,6 +29,11 @@ const static float BORDER_WIDTH = 6.0f;
     return self;
 }
 
+- (void)dealloc {
+    [self.reportImageView cancelImageRequestOperation];
+    [self.userImageView cancelImageRequestOperation];
+}
+
 #pragma mark - View Hierarchy
 
 - (void)createSubviews {
