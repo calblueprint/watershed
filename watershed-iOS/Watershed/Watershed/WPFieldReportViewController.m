@@ -27,6 +27,7 @@
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         strongSelf.fieldReport = fieldReport;
         [strongSelf.view showBubbles];
+        [strongSelf setUpActions];
     }];
 }
 
@@ -50,6 +51,36 @@
         [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     }
 }
+
+- (void)setUpActions {
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(presentImageView)];
+    [self.view.reportImageView addGestureRecognizer:tap];
+}
+
+#pragma mark - Photo Viewing Methods
+
+- (void)presentImageView {
+    UIViewController *viewPhotoModal = [[UIViewController alloc] init];
+    viewPhotoModal.view.backgroundColor = [UIColor blackColor];
+    viewPhotoModal.view.userInteractionEnabled = YES;
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:viewPhotoModal.view.frame];
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    imageView.image = self.view.reportImageView.image;
+    [viewPhotoModal.view addSubview:imageView];
+    
+    UITapGestureRecognizer *modalTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissModalView:)];
+    [viewPhotoModal.view addGestureRecognizer:modalTap];
+    viewPhotoModal.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    
+    [self presentViewController:viewPhotoModal animated:YES completion:nil];
+}
+
+- (void)dismissModalView:(UIGestureRecognizer *)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Update field report view
 
 - (void)updateFieldReportView {
     UIColor *ratingColor = [UIColor colorForRating:[self.fieldReport.rating intValue]];

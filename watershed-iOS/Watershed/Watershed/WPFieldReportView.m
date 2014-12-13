@@ -52,6 +52,7 @@ const static float BORDER_WIDTH = 6.0f;
         reportImageView.layer.cornerRadius = REPORT_IMAGE_SIZE / 2;
         reportImageView.clipsToBounds = YES;
         reportImageView.alpha = 0;
+        reportImageView.userInteractionEnabled = YES;
         reportImageView;
     }) wp_addToSuperview:self.contentScrollView];
     
