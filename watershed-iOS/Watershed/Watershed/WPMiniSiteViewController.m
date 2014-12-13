@@ -101,6 +101,9 @@ static NSString *cellIdentifier = @"FieldReportCell";
     if ([tableView isEqual:self.fieldReportTableView]) {
         
         cellView = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        [cellView.photoView cancelImageRequestOperation];
+        cellView.photoView.image = nil;
+        
         if (!cellView) {
             cellView = [[WPFieldReportTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                          reuseIdentifier:cellIdentifier];
