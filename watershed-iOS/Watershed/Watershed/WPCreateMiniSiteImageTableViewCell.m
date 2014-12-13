@@ -40,6 +40,16 @@ const static float LABEL_WIDTH = 75.0f;
         imageView.clipsToBounds = YES;
         imageView;
     }) wp_addToSuperview:self.contentView];
+    
+    _viewImageButton = [({
+        UIButton *button = [[UIButton alloc] init];
+        button.backgroundColor = [UIColor wp_darkBlue];
+        button.titleLabel.font = [UIFont boldSystemFontOfSize:13.0];
+        [button setTitle:@"View Photo" forState:UIControlStateNormal];
+        button.layer.cornerRadius = 3.0;
+        button.alpha = 0;
+        button;
+    }) wp_addToSuperview:self.contentView];
 }
 
 - (void)updateConstraints {
@@ -65,6 +75,13 @@ const static float LABEL_WIDTH = 75.0f;
         make.leading.equalTo(self.inputLabel.mas_trailing).with.offset(standardMargin);
         make.height.equalTo(@(IMAGE_SIZE));
         make.width.equalTo(@(IMAGE_SIZE));
+    }];
+    
+    [self.viewImageButton mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.trailing.equalTo(@(-standardMargin));
+        make.height.equalTo(@(36));
+        make.width.equalTo(@(90));
+        make.centerY.equalTo(self.contentView.mas_centerY);
     }];
     
     [super updateConstraints];

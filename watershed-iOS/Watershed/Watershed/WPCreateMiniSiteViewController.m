@@ -40,6 +40,8 @@
     self.navigationItem.rightBarButtonItem = doneButton;
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor wp_blue];
     
+    [self.imageInputCell.viewImageButton addTarget:self action:@selector(presentImageView) forControlEvents:UIControlEventTouchUpInside];
+    
     self.keyboardControls.delegate = self;
 }
 
@@ -285,6 +287,7 @@
                                      handler:^(UIAlertAction * action)
                                      {
                                          self.imageInputCell.imageInput.image = nil;
+                                         self.imageInputCell.viewImageButton.alpha = 0;
                                          [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
                                      }];
             [addPhotoActionSheet addAction:remove];
@@ -336,6 +339,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
         case 1: {
             if (buttonIndex == popup.destructiveButtonIndex && buttonShift == 1) {
                 self.imageInputCell.imageInput.image = nil;
+                self.imageInputCell.viewImageButton.alpha = 0;
             }
             else if (buttonIndex == 0 + buttonShift) {
                 [self takePhoto];
@@ -353,11 +357,37 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     self.imageInputCell.imageInput.image = info[UIImagePickerControllerOriginalImage];
+    self.imageInputCell.viewImageButton.alpha = 1;
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Photo Viewing Methods
+
+- (void)presentImageView {
+    UIViewController *viewPhotoModal = [[UIViewController alloc] init];
+    viewPhotoModal.view.backgroundColor = [UIColor blackColor];
+    viewPhotoModal.view.userInteractionEnabled = YES;
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:viewPhotoModal.view.frame];
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    imageView.image = self.imageInputCell.imageInput.image;
+    [viewPhotoModal.view addSubview:imageView];
+    
+    UITapGestureRecognizer *modalTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissModalView:)];
+    [viewPhotoModal.view addGestureRecognizer:modalTap];
+    viewPhotoModal.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+    [self presentViewController:viewPhotoModal animated:YES completion:nil];
+}
+
+- (void)dismissModalView:(UIGestureRecognizer *)sender {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Lazy Instantiation

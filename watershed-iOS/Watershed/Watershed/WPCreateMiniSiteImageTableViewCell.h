@@ -13,6 +13,7 @@
 
 @property (nonatomic) UILabel *inputLabel;
 @property (nonatomic) UIImageView *imageInput;
+@property (nonatomic) UIButton *viewImageButton;
 
 + (CGFloat)cellHeight;
 
