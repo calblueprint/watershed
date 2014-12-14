@@ -259,9 +259,9 @@ static NSString * const TASKS_URL = @"tasks";
     [self addAuthenticationParameters:parameters];
     NSMutableDictionary *miniSiteJSON = [MTLJSONAdapter JSONDictionaryFromModel:miniSite].mutableCopy;
     [miniSiteJSON setObject:miniSite.site.siteId forKey:@"site_id"];
-    NSDictionary *photoAttributes = parameters[@"photo_attributes"];
-    [parameters removeObjectForKey:@"photo_attributes"];
-    [miniSiteJSON setObject:photoAttributes forKey:@"photo_attributes"];
+    NSDictionary *photoAttributes = parameters[@"photos_attributes"];
+    [parameters removeObjectForKey:@"photos_attributes"];
+    [miniSiteJSON setObject:photoAttributes forKey:@"photos_attributes"];
     [parameters setObject:miniSiteJSON forKey:@"mini_site"];
     
     [self POST:miniSiteString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {

@@ -74,7 +74,7 @@
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     NSString *photo = [UIImagePNGRepresentation([self compressForUpload:self.imageInputCell.imageInput.image withScale:0.2]) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-    parameters[@"photo_attributes"] = @{ @"data" : photo };
+    parameters[@"photos_attributes"] = @[ @{ @"data" : photo } ];
     
     __weak __typeof(self)weakSelf = self;
     [[WPNetworkingManager sharedManager] createMiniSiteWithMiniSite:miniSite parameters:parameters success:^(WPMiniSite *miniSite) {
