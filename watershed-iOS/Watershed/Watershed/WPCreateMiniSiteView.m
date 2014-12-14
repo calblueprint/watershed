@@ -9,7 +9,6 @@
 #import "WPCreateMiniSiteView.h"
 
 @interface WPCreateMiniSiteView ()
-@property (nonatomic) UIView *statusBarView;
 @property (nonatomic) UIView *navbarShadowOverlay;
 @end
 
@@ -36,12 +35,6 @@
         tableView;
     }) wp_addToSuperview:self];
     
-    _statusBarView = [({
-        UIView *view = [[UIView alloc] init];
-        view.backgroundColor = [UIColor whiteColor];
-        view;
-    }) wp_addToSuperview:self];
-    
     _navbarShadowOverlay = [({
         UIImageView *navbarShadowOverlay = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ShadowOverlay"]];
         [navbarShadowOverlay setContentMode:UIViewContentModeScaleToFill];
@@ -55,13 +48,6 @@
     
     [self.infoTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(@0);
-    }];
-    
-    [self.statusBarView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@0);
-        make.leading.equalTo(@0);
-        make.trailing.equalTo(@0);
-        make.height.equalTo(@20);
     }];
     
     [self.navbarShadowOverlay mas_makeConstraints:^(MASConstraintMaker *make) {
