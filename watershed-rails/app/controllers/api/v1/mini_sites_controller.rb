@@ -1,4 +1,5 @@
 class Api::V1::MiniSitesController < Api::V1::BaseController
+  prepend_before_filter :convert_base64_to_image, only: [:create]
   load_and_authorize_resource param_method: :mini_site_params
 
   def index
