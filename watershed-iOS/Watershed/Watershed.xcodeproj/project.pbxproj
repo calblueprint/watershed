@@ -372,10 +372,10 @@
 				272639471A3AA99800F7EE52 /* WPCreateMiniSiteTableViewCell.m */,
 				272639491A3ABB9B00F7EE52 /* WPCreateMiniSiteImageTableViewCell.h */,
 				2726394A1A3ABB9B00F7EE52 /* WPCreateMiniSiteImageTableViewCell.m */,
-				276940781A3D570C000B4B95 /* WPSelectVegetationView.h */,
-				276940791A3D570C000B4B95 /* WPSelectVegetationView.m */,
 				2769407B1A3D5784000B4B95 /* WPSelectVegetationViewController.h */,
 				2769407C1A3D5784000B4B95 /* WPSelectVegetationViewController.m */,
+				276940781A3D570C000B4B95 /* WPSelectVegetationView.h */,
+				276940791A3D570C000B4B95 /* WPSelectVegetationView.m */,
 			);
 			name = "Create Mini Site";
 			sourceTree = "<group>";

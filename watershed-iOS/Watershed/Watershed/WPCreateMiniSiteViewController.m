@@ -100,7 +100,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-    return 4;
+    return 5;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -122,6 +122,10 @@
             return 1;
             break;
         }
+        case 4: {
+            return 1;
+            break;
+        }
         default: {
             return 1;
             break;
@@ -133,7 +137,7 @@
     if (indexPath.section == 2) {
         return [WPCreateMiniSiteTableViewCell cellDescriptionHeight];
     }
-    else if (indexPath.section == 3) {
+    else if (indexPath.section == 4) {
         return [WPCreateMiniSiteImageTableViewCell cellHeight];
     }
     else {
@@ -187,8 +191,15 @@
             cell.inputLabel.text = @"Description";
             break;
         }
-            // MiniSite Photo
+            // Vegetation
         case 3: {
+            cell.textInput = self.vegetationTextField;
+            cell.inputLabel.text = @"Vegetation";
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            break;
+        }
+            // MiniSite Photo
+        case 4: {
             return self.imageInputCell;
         }
     }
@@ -196,7 +207,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 3) {
+    if (indexPath.section == 4) {
         [self presentPhotoButtonAction];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
@@ -407,7 +418,8 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
                             self.cityTextField,
                             self.stateTextField,
                             self.zipCodeTextField,
-                            self.descriptionTextView
+                            self.descriptionTextView,
+                            self.vegetationTextField
                             ];
     }
     return _textInputViews;
@@ -460,6 +472,16 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
         _descriptionTextView.delegate = self;
     }
     return _descriptionTextView;
+}
+
+- (UITextField *)vegetationTextField {
+    if (!_vegetationTextField) {
+        _vegetationTextField = [[UITextField alloc] init];
+        _vegetationTextField.placeholder = @"Select Vegetation";
+        _vegetationTextField.tag = 1;
+        _vegetationTextField.delegate = self;
+    }
+    return _vegetationTextField;
 }
 
 - (WPCreateMiniSiteImageTableViewCell *) imageInputCell {

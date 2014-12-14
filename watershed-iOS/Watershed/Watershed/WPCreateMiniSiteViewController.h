@@ -20,6 +20,7 @@
 @property (nonatomic) UITextField *stateTextField;
 @property (nonatomic) UITextField *zipCodeTextField;
 @property (nonatomic) UITextView *descriptionTextView;
+@property (nonatomic) UITextField *vegetationTextField;
 
 @property (nonatomic) WPCreateMiniSiteImageTableViewCell *imageInputCell;
 
