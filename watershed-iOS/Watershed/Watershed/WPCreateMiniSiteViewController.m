@@ -234,7 +234,6 @@
 #pragma mark - TextField Delegate Methods
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    self.keyboardControls.activeField = textField;
     
     // select vegetation
     if (textField.tag == 1) {
@@ -243,7 +242,8 @@
         [self.navigationController pushViewController:selectVegetationViewController animated:YES];
         return NO;
     }
-        
+    
+    self.keyboardControls.activeField = textField;
     // ignore direction in here
     [self keyboardControls:self.keyboardControls selectedField:textField inDirection:BSKeyboardControlsDirectionNext];
     return YES;
@@ -430,8 +430,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
                             self.cityTextField,
                             self.stateTextField,
                             self.zipCodeTextField,
-                            self.descriptionTextView,
-                            self.vegetationTextField
+                            self.descriptionTextView
                             ];
     }
     return _textInputViews;
