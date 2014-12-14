@@ -236,6 +236,7 @@
     
     self.keyboardControls.activeField = textField;
 
+    self.keyboardControls.activeField = textField;
     // ignore direction in here
     [self keyboardControls:self.keyboardControls selectedField:textField inDirection:BSKeyboardControlsDirectionNext];
     return YES;
