@@ -29,6 +29,8 @@ class MiniSite < ActiveRecord::Base
 
   has_many :photos, as: :parent
 
+  accepts_nested_attributes_for :photos
+
   # TODO(mark): Make these counts into counter caches
   def tasks_count
     tasks.count

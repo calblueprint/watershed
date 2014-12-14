@@ -1,5 +1,5 @@
 class Api::V1::MiniSitesController < Api::V1::BaseController
-  prepend_before_filter :convert_base64_to_image, only: [:create]
+  prepend_before_filter :convert_base64_to_images, only: [:create]
   load_and_authorize_resource param_method: :mini_site_params
 
   def index
@@ -33,16 +33,18 @@ class Api::V1::MiniSitesController < Api::V1::BaseController
                                       :street, :city, :state,
                                       :zip_code, :latitude, :longitude,
                                       :site_id, {
-                                        photo_attributes: [
+                                        photos_attributes: [
                                           :id,
                                           :image,
                                         ],
                                       })
   end
 
-  def convert_base64_to_image
+  def convert_base64_to_images
     # TODO(mark): Consider making this a helper function for all models
-    params[:mini_site][:photo_attributes][:image] = Photo.convert_base64(params[:mini_site][:photo_attributes][:data])
+    params[:mini_site][:photos_attributes].each do |attributes|
+      attributes[:image] = Photo.convert_base64(attributes[:data])
+    end
   end
 
 end
