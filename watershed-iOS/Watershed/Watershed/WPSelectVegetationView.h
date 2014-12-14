@@ -9,5 +9,5 @@
 #import "WPView.h"
 
 @interface WPSelectVegetationView : WPView
-
+@property (nonatomic) UITableView *selectVegetationTableView;
 @end

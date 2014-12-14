@@ -8,6 +8,10 @@
 
 #import "WPViewController.h"
 
-@interface WPSelectVegetationViewController : WPViewController
+@protocol SelectVegetationDelegate <NSObject>
+- (void) vegetationFinishedSelecting:(NSArray *)vegetation;
+@end
 
+@interface WPSelectVegetationViewController : WPViewController <UITableViewDelegate, UITableViewDataSource>
+@property (nonatomic, assign) id<SelectVegetationDelegate> delegate;
 @end

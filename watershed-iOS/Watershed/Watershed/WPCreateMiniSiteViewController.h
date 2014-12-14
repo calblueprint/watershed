@@ -10,8 +10,9 @@
 #import "WPSiteViewController.h"
 #import "BSKeyboardControls.h"
 #import "WPCreateMiniSiteImageTableViewCell.h"
+#import "WPSelectVegetationViewController.h"
 
-@interface WPCreateMiniSiteViewController : WPViewController <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate, BSKeyboardControlsDelegate, UITextFieldDelegate, UITextViewDelegate>
+@interface WPCreateMiniSiteViewController : WPViewController <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate, BSKeyboardControlsDelegate, UITextFieldDelegate, UITextViewDelegate, SelectVegetationDelegate>
 
 @property (nonatomic) WPSiteViewController *parent;
 @property (nonatomic) UITextField *nameTextField;
