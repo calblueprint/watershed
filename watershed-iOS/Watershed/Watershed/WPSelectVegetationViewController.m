@@ -63,6 +63,14 @@ static NSString *cellIdentifier = @"VegetationCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    [self finishSelecting];
+}
+
+#pragma mark - Private Methods
+
+- (void)finishSelecting {
+    [self.delegate vegetationFinishedSelecting:self.vegetationList];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

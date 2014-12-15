@@ -376,6 +376,19 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     }
 }
 
+#pragma mark - SelectVegetation Delegate
+
+- (void)vegetationFinishedSelecting:(NSArray *)vegetation {
+    for (NSString *vegetationItem in vegetation) {
+        if ([vegetation indexOfObject:vegetationItem] > 0) {
+            NSString *addOn = [@", " stringByAppendingString:vegetationItem];
+            self.vegetationTextField.text = [self.vegetationTextField.text stringByAppendingString:addOn];
+        } else {
+            self.vegetationTextField.text = vegetationItem;
+        }
+    }
+}
+
 #pragma mark - ImagePickerController delegate methods
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
