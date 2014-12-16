@@ -8,6 +8,7 @@
 
 #import "WPSelectVegetationViewController.h"
 #import "WPSelectVegetationView.h"
+#import "WPSelectVegetationTableViewCell.h"
 #import "UIExtensions.h"
 
 @interface WPSelectVegetationViewController ()
@@ -50,16 +51,15 @@ static NSString *cellIdentifier = @"VegetationCell";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 44;
+    return [WPSelectVegetationTableViewCell cellHeight];
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
-    cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    WPSelectVegetationTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[WPSelectVegetationTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     cell.textLabel.text = self.vegetationList[indexPath.row];
     
