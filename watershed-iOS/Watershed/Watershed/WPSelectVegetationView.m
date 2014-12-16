@@ -28,9 +28,10 @@
 - (void)createSubviews {
     
     _selectVegetationTableView = [({
-        UITableView *taskTableView = [[UITableView alloc] init];
-        [taskTableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
-        taskTableView;
+        UITableView *selectVegetationTableView = [[UITableView alloc] init];
+        [selectVegetationTableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
+        selectVegetationTableView.allowsMultipleSelection = YES;
+        selectVegetationTableView;
     }) wp_addToSuperview:self];
     
     _navbarShadowOverlay = [({

@@ -29,6 +29,11 @@ static NSString *cellIdentifier = @"VegetationCell";
     self.view.selectVegetationTableView.delegate = self;
     self.view.selectVegetationTableView.dataSource = self;
     
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                                                target:self
+                                                                                action:@selector(finishSelecting)];
+    self.navigationItem.rightBarButtonItem = doneButton;
+    
     self.vegetationList = @[@"Tree", @"Plant", @"Bioswale", @"Mark Miyashita"];
 }
 
@@ -62,8 +67,6 @@ static NSString *cellIdentifier = @"VegetationCell";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    [self finishSelecting];
 }
 
 #pragma mark - Private Methods
