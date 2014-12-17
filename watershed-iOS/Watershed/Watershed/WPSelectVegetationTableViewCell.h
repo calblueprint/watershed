@@ -10,5 +10,6 @@
 #import "UIExtensions.h"
 
 @interface WPSelectVegetationTableViewCell : UITableViewCell
-+ (CGFloat) cellHeight;
+@property (nonatomic, getter=isActive) BOOL active;
++ (CGFloat)cellHeight;
 @end

@@ -30,6 +30,7 @@
     _selectVegetationTableView = [({
         UITableView *selectVegetationTableView = [[UITableView alloc] init];
         [selectVegetationTableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
+        [selectVegetationTableView setSeparatorInset:UIEdgeInsetsZero];
         selectVegetationTableView.allowsMultipleSelection = YES;
         selectVegetationTableView;
     }) wp_addToSuperview:self];

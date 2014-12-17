@@ -67,14 +67,16 @@ const static float RADIO_BUTTON_SIZE = 25.0f;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    if (selected) {
+    if (!self.isActive && selected) {
         self.backgroundColor = [UIColor wp_lightBlue];
         self.textLabel.textColor = [UIColor whiteColor];
+        self.active = YES;
     } else {
-        [UIView animateWithDuration:0.5 animations:^{
+        [UIView animateWithDuration:0.2 animations:^{
             self.backgroundColor = [UIColor clearColor];
             self.textLabel.textColor = [UIColor blackColor];
         }];
+        self.active = NO;
     }
 }
 
