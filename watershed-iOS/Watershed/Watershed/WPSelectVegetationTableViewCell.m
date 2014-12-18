@@ -11,6 +11,7 @@
 @interface WPSelectVegetationTableViewCell ()
 @property (nonatomic) UIView *radioButton;
 @property (nonatomic) UIImageView *checkImageView;
+@property (nonatomic) UIView *separatorView;
 @end
 
 @implementation WPSelectVegetationTableViewCell
@@ -50,6 +51,13 @@ const static float CHECK_SIZE = RADIO_BUTTON_SIZE * 3 / 5;
         imageView.alpha = 0;
         imageView;
     }) wp_addToSuperview:self.radioButton];
+    
+    _separatorView = [({
+        UIView *separator = [[UIView alloc] init];
+        separator.backgroundColor = [UIColor grayColor];
+        separator.alpha = 0.3;
+        separator;
+    }) wp_addToSuperview:self];
 }
 
 - (void)updateConstraints {
@@ -70,6 +78,13 @@ const static float CHECK_SIZE = RADIO_BUTTON_SIZE * 3 / 5;
         make.centerY.equalTo(self.mas_centerY);
     }];
     
+    [self.separatorView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@(0.5));
+        make.leading.equalTo(@0);
+        make.trailing.equalTo(@0);
+        make.bottom.equalTo(@0);
+    }];
+    
     [super updateConstraints];
 }
 
@@ -86,6 +101,8 @@ const static float CHECK_SIZE = RADIO_BUTTON_SIZE * 3 / 5;
         self.radioButton.layer.borderColor = [UIColor clearColor].CGColor;
         self.radioButton.alpha = 1;
         self.checkImageView.alpha = 1;
+        self.separatorView.backgroundColor = [UIColor whiteColor];
+        self.separatorView.alpha = 0.7;
         self.active = YES;
     } else {
         [UIView animateWithDuration:0.2 animations:^{
@@ -94,6 +111,8 @@ const static float CHECK_SIZE = RADIO_BUTTON_SIZE * 3 / 5;
             self.radioButton.layer.borderColor = [UIColor grayColor].CGColor;
             self.radioButton.alpha = 0.3;
             self.checkImageView.alpha = 0;
+            self.separatorView.backgroundColor = [UIColor grayColor];
+            self.separatorView.alpha = 0.3;
         }];
         self.active = NO;
     }

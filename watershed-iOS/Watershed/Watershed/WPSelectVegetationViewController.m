@@ -35,7 +35,7 @@ static NSString *cellIdentifier = @"VegetationCell";
                                                                                 action:@selector(finishSelecting)];
     self.navigationItem.rightBarButtonItem = doneButton;
     
-    self.vegetationList = @[@"Tree", @"Plant", @"Bioswale", @"Mark Miyashita"];
+    self.vegetationList = @[@"Tree", @"Plant", @"Bioswale", @"Mark Miyashita", @"Dog", @"Cup", @"Tree", @"Flower", @"Tree", @"Plant", @"Bioswale", @"Mark Miyashita", @"Dog", @"Cup", @"Tree", @"Flower"];
 }
 
 #pragma mark - Table View Delegate / Data Source Methods
