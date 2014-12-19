@@ -259,6 +259,8 @@ static NSString * const TASKS_URL = @"tasks";
     [self addAuthenticationParameters:parameters];
     NSMutableDictionary *miniSiteJSON = [MTLJSONAdapter JSONDictionaryFromModel:miniSite].mutableCopy;
     [miniSiteJSON setObject:miniSite.site.siteId forKey:@"site_id"];
+    
+    //Pass photo attributes through parameters and then insert them into the miniSiteJSON
     NSDictionary *photoAttributes = parameters[@"photos_attributes"];
     [parameters removeObjectForKey:@"photos_attributes"];
     [miniSiteJSON setObject:photoAttributes forKey:@"photos_attributes"];

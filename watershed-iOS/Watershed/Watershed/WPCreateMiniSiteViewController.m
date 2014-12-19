@@ -69,7 +69,8 @@
                                    @"city" : self.cityTextField.text,
                                    @"state" : self.stateTextField.text,
                                    @"zip_code" : self.zipCodeTextField.text,
-                                   @"description" : self.descriptionTextView.text
+                                   @"description" : self.descriptionTextView.text,
+                                   @"vegetations" : self.selectedVegetations
                                    };
     WPMiniSite *miniSite = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:miniSiteJSON error:nil];
     miniSite.site = self.parent.site;

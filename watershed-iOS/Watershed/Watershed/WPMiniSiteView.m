@@ -276,7 +276,7 @@ static int COVER_PHOTO_TRANS = 0;
     self.titleLabel.text = miniSite.name;
     self.descriptionLabel.text = miniSite.info;
     self.addressLabel.label.text = [NSString stringWithFormat:@"%@, %@, %@ %@", miniSite.street, miniSite.city, miniSite.state, miniSite.zipCode];
-    self.vegetationListLabel.text = miniSite.vegetations;
+    //self.vegetationListLabel.text = miniSite.vegetations;
     self.currentTaskLabel.label.text = [NSString stringWithFormat:@"%@ tasks", miniSite.taskCount];
     self.fieldReportCountLabel.label.text = [[miniSite.fieldReportCount stringValue] stringByAppendingString:@" field reports"];
 }
