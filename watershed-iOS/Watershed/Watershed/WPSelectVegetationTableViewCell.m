@@ -98,7 +98,7 @@ const static float CHECK_SIZE = RADIO_BUTTON_SIZE * 3 / 5;
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
     
-    if (!self.isActive && selected) {
+    if ( selected) {
         self.backgroundColor = [UIColor wp_lightBlue];
         self.textLabel.textColor = [UIColor whiteColor];
         self.radioButton.layer.borderColor = [UIColor clearColor].CGColor;
@@ -106,7 +106,6 @@ const static float CHECK_SIZE = RADIO_BUTTON_SIZE * 3 / 5;
         self.checkImageView.alpha = 1;
         self.separatorView.backgroundColor = [UIColor whiteColor];
         self.separatorView.alpha = 0.7;
-        self.active = YES;
     } else {
         [UIView animateWithDuration:0.2 animations:^{
             self.backgroundColor = [UIColor clearColor];
@@ -117,7 +116,6 @@ const static float CHECK_SIZE = RADIO_BUTTON_SIZE * 3 / 5;
             self.separatorView.backgroundColor = [UIColor grayColor];
             self.separatorView.alpha = 0.3;
         }];
-        self.active = NO;
     }
 }
 
