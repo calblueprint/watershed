@@ -82,7 +82,7 @@ static NSString *cellIdentifier = @"VegetationCell";
     NSArray *selectedRows = [self.view.selectVegetationTableView indexPathsForSelectedRows];
     NSMutableArray *selectedIndices = [[NSMutableArray alloc] init];
     NSMutableArray *selectedVegetations = [[NSMutableArray alloc] init];
-    
+
     for (NSIndexPath *index in selectedRows) {
         [selectedIndices addObject:@(index.row)];
         NSString *selectedItem = self.vegetationList[index.row];

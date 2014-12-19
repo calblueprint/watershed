@@ -10,36 +10,21 @@
 
 @interface WPSelectVegetationTableViewCell ()
 @property (nonatomic) UIView *radioButton;
-<<<<<<< HEAD
 @property (nonatomic) UIImageView *checkImageView;
 @property (nonatomic) UIView *separatorView;
-=======
->>>>>>> Add custom radio buttons for vegetation cells
 @end
 
 @implementation WPSelectVegetationTableViewCell
 
-<<<<<<< HEAD
 const static float CELL_HEIGHT = 60.0f;
 const static float RADIO_BUTTON_SIZE = 30.0f;
 const static float CHECK_SIZE = RADIO_BUTTON_SIZE * 3 / 5;
 
 - (id)initWithStyle:(UITableViewCellStyle)style
     reuseIdentifier:(NSString *)reuseIdentifier {
-    
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        self.selectionStyle = UITableViewCellSelectionStyleNone;
-=======
-const static float CELL_HEIGHT = 50.0f;
-const static float RADIO_BUTTON_SIZE = 25.0f;
-
-- (id)initWithStyle:(UITableViewCellStyle)style
-    reuseIdentifier:(NSString *)reuseIdentifier {
 
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
->>>>>>> Add custom radio buttons for vegetation cells
         [self createSubviews];
         [self updateConstraints];
     }
@@ -51,7 +36,6 @@ const static float RADIO_BUTTON_SIZE = 25.0f;
         UIView *button = [[UIView alloc] init];
         button.layer.cornerRadius = RADIO_BUTTON_SIZE / 2;
         button.clipsToBounds = YES;
-<<<<<<< HEAD
         button.backgroundColor = [UIColor whiteColor];
         button.layer.borderColor = [UIColor grayColor].CGColor;
         button.layer.borderWidth = 2.0;
@@ -78,16 +62,6 @@ const static float RADIO_BUTTON_SIZE = 25.0f;
 
 - (void)updateConstraints {
     
-=======
-        button.layer.borderColor = [UIColor grayColor].CGColor;
-        button.backgroundColor = [UIColor grayColor];
-        button;
-    }) wp_addToSuperview:self];
-}
-
-- (void)updateConstraints {
-
->>>>>>> Add custom radio buttons for vegetation cells
     [self.contentView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@0);
         make.leading.equalTo(@0);
@@ -96,18 +70,13 @@ const static float RADIO_BUTTON_SIZE = 25.0f;
         make.centerX.equalTo(self.mas_centerX);
         make.centerY.equalTo(self.mas_centerY);
     }];
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> Add custom radio buttons for vegetation cells
     [self.radioButton mas_updateConstraints:^(MASConstraintMaker *make) {
         make.trailing.equalTo(@(-standardMargin));
         make.width.equalTo(@(RADIO_BUTTON_SIZE));
         make.height.equalTo(@(RADIO_BUTTON_SIZE));
         make.centerY.equalTo(self.mas_centerY);
     }];
-<<<<<<< HEAD
     
     [self.separatorView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(0.5));
@@ -116,9 +85,6 @@ const static float RADIO_BUTTON_SIZE = 25.0f;
         make.bottom.equalTo(@0);
     }];
     
-=======
-
->>>>>>> Add custom radio buttons for vegetation cells
     [super updateConstraints];
 }
 
@@ -128,7 +94,6 @@ const static float RADIO_BUTTON_SIZE = 25.0f;
     return CELL_HEIGHT;
 }
 
-<<<<<<< HEAD
 #pragma mark - UI Modifications
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -151,16 +116,6 @@ const static float RADIO_BUTTON_SIZE = 25.0f;
             self.checkImageView.alpha = 0;
             self.separatorView.backgroundColor = [UIColor grayColor];
             self.separatorView.alpha = 0.3;
-=======
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    if (selected) {
-        self.backgroundColor = [UIColor wp_lightBlue];
-        self.textLabel.textColor = [UIColor whiteColor];
-    } else {
-        [UIView animateWithDuration:0.5 animations:^{
-            self.backgroundColor = [UIColor clearColor];
-            self.textLabel.textColor = [UIColor blackColor];
->>>>>>> Add custom radio buttons for vegetation cells
         }];
     }
 }
