@@ -17,8 +17,8 @@
 @property (nonatomic) WPCreateMiniSiteView *view;
 @property (nonatomic) UITableView *infoTableView;
 @property (nonatomic) NSArray *textInputViews;
-@property (nonatomic) NSArray *selectedVegetationIndices;
 @property (nonatomic) NSArray *selectedVegetations;
+@property (nonatomic) NSArray *selectedVegetationIndices;
 @property (nonatomic) BSKeyboardControls *keyboardControls;
 
 @end
@@ -381,17 +381,17 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 
 #pragma mark - SelectVegetation Delegate
 
-- (void)vegetationFinishedSelecting:(NSArray *)vegetation withIndices:(NSArray *)indices {
+- (void)vegetationFinishedSelecting:(NSArray *)vegetations withIndices:(NSArray *)indices {
     self.vegetationTextField.text = nil;
-    for (NSString *vegetationItem in vegetation) {
-        if ([vegetation indexOfObject:vegetationItem] > 0) {
+    for (NSString *vegetationItem in vegetations) {
+        if ([vegetations indexOfObject:vegetationItem] > 0) {
             NSString *addOn = [@", " stringByAppendingString:vegetationItem];
             self.vegetationTextField.text = [self.vegetationTextField.text stringByAppendingString:addOn];
         } else {
             self.vegetationTextField.text = vegetationItem;
         }
     }
-    self.selectedVegetations = vegetation;
+    self.selectedVegetations = vegetations;
     self.selectedVegetationIndices = indices;
 }
 
