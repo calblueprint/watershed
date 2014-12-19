@@ -63,17 +63,40 @@ static NSString *cellIdentifier = @"VegetationCell";
     }
     cell.textLabel.text = self.vegetationList[indexPath.row];
     
+    if ([self.selectedIndices containsObject:@(indexPath.row)]) {
+        [self.view.selectVegetationTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+    }
+    
     return cell;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 #pragma mark - Private Methods
 
 - (void)finishSelecting {
-    [self.delegate vegetationFinishedSelecting:self.vegetationList];
+    [self getSelectedVegetation];
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)getSelectedVegetation {
+    NSArray *selectedRows = [self.view.selectVegetationTableView indexPathsForSelectedRows];
+    NSMutableArray *selectedIndices = [[NSMutableArray alloc] init];
+    NSMutableArray *selectedVegetations = [[NSMutableArray alloc] init];
+    
+    for (NSIndexPath *index in selectedRows) {
+        [selectedIndices addObject:@(index.row)];
+        NSString *selectedItem = self.vegetationList[index.row];
+        [selectedVegetations addObject:selectedItem];
+    }
+    [self.delegate vegetationFinishedSelecting:selectedVegetations withIndices:selectedIndices];
+}
+
+#pragma mark - Lazy Instantiation
+
+- (NSArray *)selectedIndices {
+    if (!_selectedIndices) {
+        _selectedIndices = [[NSArray alloc] init];
+    }
+    return _selectedIndices;
 }
 
 @end

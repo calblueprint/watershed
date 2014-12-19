@@ -17,6 +17,8 @@
 @property (nonatomic) WPCreateMiniSiteView *view;
 @property (nonatomic) UITableView *infoTableView;
 @property (nonatomic) NSArray *textInputViews;
+@property (nonatomic) NSArray *vegetationIndices;
+@property (nonatomic) NSArray *selectedVegetations;
 @property (nonatomic) BSKeyboardControls *keyboardControls;
 
 @end
@@ -239,6 +241,7 @@
     if (textField.tag == 1) {
         WPSelectVegetationViewController *selectVegetationViewController = [[WPSelectVegetationViewController alloc] init];
         selectVegetationViewController.delegate = self;
+        selectVegetationViewController.selectedIndices = self.vegetationIndices;
         [self.navigationController pushViewController:selectVegetationViewController animated:YES];
         return NO;
     }
@@ -378,7 +381,8 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 
 #pragma mark - SelectVegetation Delegate
 
-- (void)vegetationFinishedSelecting:(NSArray *)vegetation {
+- (void)vegetationFinishedSelecting:(NSArray *)vegetation withIndices:(NSArray *)indices {
+    self.vegetationTextField.text = nil;
     for (NSString *vegetationItem in vegetation) {
         if ([vegetation indexOfObject:vegetationItem] > 0) {
             NSString *addOn = [@", " stringByAppendingString:vegetationItem];
@@ -387,6 +391,8 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
             self.vegetationTextField.text = vegetationItem;
         }
     }
+    self.selectedVegetations = vegetation;
+    self.vegetationIndices = indices;
 }
 
 #pragma mark - ImagePickerController delegate methods
@@ -514,6 +520,20 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
         _imageInputCell.inputLabel.text = @"Photo";
     }
     return _imageInputCell;
+}
+
+- (NSArray *)selectedVegetations {
+    if (!_selectedVegetations) {
+        _selectedVegetations = [[NSArray alloc] init];
+    }
+    return _selectedVegetations;
+}
+
+- (NSArray *)vegetationIndices {
+    if (!_vegetationIndices) {
+        _vegetationIndices = [[NSArray alloc] init];
+    }
+    return _vegetationIndices;
 }
 
 @end

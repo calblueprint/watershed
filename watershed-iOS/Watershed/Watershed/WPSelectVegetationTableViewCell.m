@@ -25,6 +25,7 @@ const static float CHECK_SIZE = RADIO_BUTTON_SIZE * 3 / 5;
     
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self createSubviews];
         [self updateConstraints];
     }
@@ -95,6 +96,8 @@ const static float CHECK_SIZE = RADIO_BUTTON_SIZE * 3 / 5;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+    
     if (!self.isActive && selected) {
         self.backgroundColor = [UIColor wp_lightBlue];
         self.textLabel.textColor = [UIColor whiteColor];

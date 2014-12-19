@@ -9,9 +9,10 @@
 #import "WPViewController.h"
 
 @protocol SelectVegetationDelegate <NSObject>
-- (void)vegetationFinishedSelecting:(NSArray *)vegetation;
+- (void)vegetationFinishedSelecting:(NSArray *)vegetation withIndices:(NSArray *)indices;
 @end
 
 @interface WPSelectVegetationViewController : WPViewController <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, assign) id<SelectVegetationDelegate> delegate;
+@property (nonatomic) NSArray *selectedIndices;
 @end
