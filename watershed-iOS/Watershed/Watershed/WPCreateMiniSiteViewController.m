@@ -17,7 +17,7 @@
 @property (nonatomic) WPCreateMiniSiteView *view;
 @property (nonatomic) UITableView *infoTableView;
 @property (nonatomic) NSArray *textInputViews;
-@property (nonatomic) NSArray *vegetationIndices;
+@property (nonatomic) NSArray *selectedVegetationIndices;
 @property (nonatomic) NSArray *selectedVegetations;
 @property (nonatomic) BSKeyboardControls *keyboardControls;
 
@@ -241,7 +241,7 @@
     if (textField.tag == 1) {
         WPSelectVegetationViewController *selectVegetationViewController = [[WPSelectVegetationViewController alloc] init];
         selectVegetationViewController.delegate = self;
-        selectVegetationViewController.selectedIndices = self.vegetationIndices;
+        selectVegetationViewController.selectedIndices = self.selectedVegetationIndices;
         [self.navigationController pushViewController:selectVegetationViewController animated:YES];
         return NO;
     }
@@ -392,7 +392,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
         }
     }
     self.selectedVegetations = vegetation;
-    self.vegetationIndices = indices;
+    self.selectedVegetationIndices = indices;
 }
 
 #pragma mark - ImagePickerController delegate methods
@@ -529,11 +529,11 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     return _selectedVegetations;
 }
 
-- (NSArray *)vegetationIndices {
-    if (!_vegetationIndices) {
-        _vegetationIndices = [[NSArray alloc] init];
+- (NSArray *)selectedVegetationIndices {
+    if (!_selectedVegetationIndices) {
+        _selectedVegetationIndices = [[NSArray alloc] init];
     }
-    return _vegetationIndices;
+    return _selectedVegetationIndices;
 }
 
 @end
