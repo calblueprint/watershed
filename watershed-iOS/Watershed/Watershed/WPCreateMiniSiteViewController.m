@@ -112,24 +112,9 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
     switch (section) {
-        case 0: {
-            return 1;
-            break;
-        }
+        // Address grouping
         case 1: {
             return 4;
-            break;
-        }
-        case 2: {
-            return 1;
-            break;
-        }
-        case 3: {
-            return 1;
-            break;
-        }
-        case 4: {
-            return 1;
             break;
         }
         default: {
@@ -140,9 +125,11 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    //Description cell
     if (indexPath.section == 2) {
         return [WPCreateMiniSiteTableViewCell cellDescriptionHeight];
     }
+    //Uploading Photo
     else if (indexPath.section == 4) {
         return [WPCreateMiniSiteImageTableViewCell cellHeight];
     }
@@ -156,13 +143,13 @@
     WPCreateMiniSiteTableViewCell *cell = [[WPCreateMiniSiteTableViewCell alloc] init];
     
     switch (indexPath.section) {
-            // Name
+        // Name
         case 0: {
             cell.textInput = self.nameTextField;
             cell.inputLabel.text = @"Name";
             break;
         }
-            // Address
+        // Address
         case 1: {
             switch (indexPath.row) {
                 case 0: {
@@ -186,25 +173,25 @@
                     break;
                 }
                 default: {
-                    //do nothing
+                //do nothing
                 }
             }
             break;
         }
-            // Description
+        // Description
         case 2: {
             cell.textInput = self.descriptionTextView;
             cell.inputLabel.text = @"Description";
             break;
         }
-            // Vegetation
+        // Vegetation
         case 3: {
             cell.textInput = self.vegetationTextField;
             cell.inputLabel.text = @"Vegetation";
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
         }
-            // MiniSite Photo
+        // MiniSite Photo
         case 4: {
             return self.imageInputCell;
         }
