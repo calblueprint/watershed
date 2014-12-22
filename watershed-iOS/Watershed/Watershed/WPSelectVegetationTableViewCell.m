@@ -95,10 +95,12 @@ const static float CHECK_SIZE = RADIO_BUTTON_SIZE * 3 / 5;
     return CELL_HEIGHT;
 }
 
+#pragma mark - UI Modifications
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
     
-    if ( selected) {
+    if (selected) {
         self.backgroundColor = [UIColor wp_lightBlue];
         self.textLabel.textColor = [UIColor whiteColor];
         self.radioButton.layer.borderColor = [UIColor clearColor].CGColor;

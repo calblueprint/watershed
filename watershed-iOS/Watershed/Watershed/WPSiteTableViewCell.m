@@ -132,13 +132,7 @@ const static float PARALLAX_REDUCTION = 5.0;
     [super updateConstraints];
 }
 
-#pragma mark - UIView Modifications
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    
-    // Configure the view for the selected state
-}
+#pragma mark - UI Modifications
 
 - (void)updatePhotoPosition:(NSNumber *)contentOffset {
     CGFloat photoOffset = [contentOffset floatValue] - self.frame.origin.y;
@@ -147,8 +141,6 @@ const static float PARALLAX_REDUCTION = 5.0;
         make.top.equalTo(@(ORIGINAL_PHOTO_POSITION + photoOffset / PARALLAX_REDUCTION));
     }];
 }
-
-
 
 - (void)addTextShadow:(UILabel *)label {
     label.layer.shadowColor = [[UIColor blackColor] CGColor];

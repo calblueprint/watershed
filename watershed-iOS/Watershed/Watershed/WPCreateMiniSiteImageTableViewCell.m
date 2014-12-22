@@ -87,11 +87,6 @@ const static float LABEL_WIDTH = 75.0f;
     [super updateConstraints];
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    
-}
-
 #pragma mark - Public Methods
 
 + (CGFloat)cellHeight {

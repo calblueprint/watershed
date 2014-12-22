@@ -123,13 +123,7 @@ const static float CELL_HEIGHT = 86.0f;
     [super updateConstraints];
 }
 
-#pragma mark - UIView Modifications
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-}
+#pragma mark - Public Methods
 
 + (CGFloat)cellHeight { return CELL_HEIGHT; }
 
