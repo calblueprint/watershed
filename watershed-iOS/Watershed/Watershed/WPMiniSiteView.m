@@ -22,7 +22,6 @@
 
 @implementation WPMiniSiteView
 
-static const int COVER_PHOTO_HEIGHT = 124;
 static int COVER_PHOTO_TRANS = 0;
 
 - (id)initWithFrame:(CGRect)frame {

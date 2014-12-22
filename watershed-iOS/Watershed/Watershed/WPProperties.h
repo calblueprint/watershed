@@ -22,3 +22,5 @@ static const CGFloat wpBorderWidth = 1.0f;
 static const CGFloat wpButtonWidth = 250;
 
 static const CGFloat wpButtonHeight = 45;
+
+static const CGFloat COVER_PHOTO_HEIGHT = 124;
