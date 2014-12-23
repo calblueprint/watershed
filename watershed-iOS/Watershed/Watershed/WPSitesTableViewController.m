@@ -19,6 +19,7 @@
 @property (nonatomic) WPSitesTableView *sitesTableView;
 @property (nonatomic) UISearchDisplayController *searchController;
 @property (nonatomic) UISearchBar *searchBar;
+@property (nonatomic) UIRefreshControl *refreshControl;
 
 @end
 
@@ -39,6 +40,9 @@ static NSString *cellIdentifier = @"SiteCell";
     
     self.sitesTableView.delegate = self;
     self.sitesTableView.dataSource = self;
+
+    [self.refreshControl addTarget:self action:@selector(requestAndLoadSites) forControlEvents:UIControlEventValueChanged];
+    [self.sitesTableView addSubview:self.refreshControl];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -106,6 +110,7 @@ static NSString *cellIdentifier = @"SiteCell";
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         strongSelf.sitesList = sitesList;
         [strongSelf.sitesTableView reloadData];
+        [strongSelf.refreshControl endRefreshing];
     }];
 }
 
@@ -208,6 +213,13 @@ static NSString *cellIdentifier = @"SiteCell";
         [self.view addSubview:_sitesTableView];
     }
     return _sitesTableView;
+}
+
+- (UIRefreshControl *)refreshControl {
+    if (!_refreshControl) {
+        _refreshControl = [[UIRefreshControl alloc] init];
+    }
+    return _refreshControl;
 }
 
 
