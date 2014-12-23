@@ -17,7 +17,7 @@
 @property (nonatomic) UIView *tableHeaderView;
 @property (nonatomic) UIView *headingLineBreak;
 @property (nonatomic) UIImageView *tableViewShadowOverlay;
-@property (nonatomic) UIScrollView *miniSiteScrollView;
+@property (nonatomic) UIScrollView *siteScrollView;
 
 @end
 
@@ -44,10 +44,11 @@ static int COVER_PHOTO_TRANS = 0;
 
 - (void)createSubviews {
     
-    _miniSiteScrollView = [({
-        UIScrollView *miniSiteScrollView = [[UIScrollView alloc] init];
-        miniSiteScrollView.delegate = self;
-        miniSiteScrollView;
+    _siteScrollView = [({
+        UIScrollView *siteScrollView = [[UIScrollView alloc] init];
+        siteScrollView.delegate = self;
+        siteScrollView.alwaysBounceVertical = YES;
+        siteScrollView;
     }) wp_addToSuperview:self];
     
     _miniSiteTableView = [({
@@ -57,12 +58,12 @@ static int COVER_PHOTO_TRANS = 0;
         miniSiteTableView.separatorColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1];
         miniSiteTableView.scrollEnabled = NO;
         miniSiteTableView;
-    }) wp_addToSuperview:self.miniSiteScrollView];
+    }) wp_addToSuperview:self.siteScrollView];
     
     _tableHeaderView = [({
         UIView *tableHeaderView = [[UIView alloc] init];
         tableHeaderView;
-    }) wp_addToSuperview:self.miniSiteScrollView];
+    }) wp_addToSuperview:self.siteScrollView];
     
     _titleLabel = [({
         UILabel *titleLabel = [[UILabel alloc] init];
@@ -134,7 +135,7 @@ static int COVER_PHOTO_TRANS = 0;
 }
 
 - (void)setUpActions {
-    [self addGestureRecognizer:self.miniSiteScrollView.panGestureRecognizer];
+    [self addGestureRecognizer:self.siteScrollView.panGestureRecognizer];
 }
 
 - (void)updateConstraints {
@@ -160,7 +161,7 @@ static int COVER_PHOTO_TRANS = 0;
         make.trailing.equalTo(@0);
     }];
     
-    [self.miniSiteScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.siteScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(self.mas_height);
         make.top.equalTo(@0);
         make.bottom.equalTo(@0);

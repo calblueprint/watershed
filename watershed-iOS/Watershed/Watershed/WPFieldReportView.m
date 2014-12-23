@@ -40,7 +40,7 @@ const static float BORDER_WIDTH = 6.0f;
     
     _navbarOverlay = [({
         UIView *overlay = [[UIView alloc] init];
-        overlay.backgroundColor = [UIColor blackColor];
+        overlay.backgroundColor = [UIColor whiteColor];
         overlay.alpha = 0;
         overlay;
     }) wp_addToSuperview:self];
@@ -48,6 +48,7 @@ const static float BORDER_WIDTH = 6.0f;
     _contentScrollView = [({
         UIScrollView *contentScrollView = [[UIScrollView alloc] init];
         contentScrollView.delegate = self;
+        contentScrollView.alwaysBounceVertical = YES;
         contentScrollView;
     }) wp_addToSuperview:self];
     
@@ -203,8 +204,7 @@ const static float BORDER_WIDTH = 6.0f;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGFloat trans = scrollView.contentOffset.y;
-    CGFloat navbarAlpha = trans / 400;
-    if (navbarAlpha > 0.1) navbarAlpha = 0.1;
+    CGFloat navbarAlpha = MIN(0.20, trans / 400);
     self.navbarOverlay.alpha = navbarAlpha;
 }
 

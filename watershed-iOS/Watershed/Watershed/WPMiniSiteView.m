@@ -46,6 +46,7 @@ static int COVER_PHOTO_TRANS = 0;
     _miniSiteScrollView = [({
         UIScrollView *miniSiteScrollView = [[UIScrollView alloc] init];
         miniSiteScrollView.delegate = self;
+        miniSiteScrollView.alwaysBounceVertical = YES;
         miniSiteScrollView;
     }) wp_addToSuperview:self];
     
