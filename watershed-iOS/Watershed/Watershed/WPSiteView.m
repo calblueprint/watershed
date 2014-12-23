@@ -252,6 +252,7 @@ static int COVER_PHOTO_TRANS = 0;
     CGFloat trans = scrollView.contentOffset.y;
     COVER_PHOTO_TRANS = MIN(60, trans);
     self.coverPhotoOverlay.alpha = 0.3 + (COVER_PHOTO_TRANS + topMargin) / 600;
+    self.coverPhotoView.alpha = 1 + (trans + topMargin) / 70;
     
     [self.coverPhotoView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(COVER_PHOTO_HEIGHT - COVER_PHOTO_TRANS));
