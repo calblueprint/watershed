@@ -107,9 +107,6 @@
     NSMutableDictionary *parameters = [staticParameters mutableCopy];
     
     [[WPNetworkingManager sharedManager] postFieldReportWithParameters:parameters success:^(WPFieldReport *fieldReport) {
-        if ([parent isKindOfClass:[WPMiniSiteViewController class]]) {
-            [(WPMiniSiteViewController *)parent requestAndLoadMiniSite];
-        }
         [self.navigationController popViewControllerAnimated:YES];
     }];
 }
