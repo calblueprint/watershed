@@ -82,7 +82,6 @@
     __weak __typeof(self)weakSelf = self;
     [[WPNetworkingManager sharedManager] createMiniSiteWithMiniSite:miniSite parameters:parameters success:^(WPMiniSite *miniSite) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf.parent requestAndLoadSite];
         strongSelf.parent = nil;
         [strongSelf dismissSelf];
     }];

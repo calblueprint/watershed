@@ -18,6 +18,7 @@
 @property (nonatomic) WPMiniSiteView *view;
 @property (nonatomic) UITableView *fieldReportTableView;
 @property (nonatomic) NSMutableArray *fieldReportList;
+@property (nonatomic) UIRefreshControl *refreshControl;
 
 @end
 
@@ -36,6 +37,9 @@ static NSString *cellIdentifier = @"FieldReportCell";
     self.fieldReportTableView.delegate = self;
     self.fieldReportTableView.dataSource = self;
     
+    [self.refreshControl addTarget:self action:@selector(requestAndLoadMiniSite) forControlEvents:UIControlEventValueChanged];
+    [self.view.miniSiteScrollView addSubview:self.refreshControl];
+
     [self requestAndLoadMiniSite];
 }
 
@@ -44,8 +48,9 @@ static NSString *cellIdentifier = @"FieldReportCell";
     self.fieldReportTableView = self.view.fieldReportTableView;
 }
 
-- (void)loadFieldReportData {
-    self.fieldReportList = @[@1, @3, @4, @2, @5, @1, @5, @2, @2, @3, @4, @0].mutableCopy;
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self requestAndLoadMiniSite];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -78,6 +83,7 @@ static NSString *cellIdentifier = @"FieldReportCell";
         strongSelf.miniSite = miniSite;
         strongSelf.fieldReportList = fieldReportList;
         [strongSelf.fieldReportTableView reloadData];
+        [strongSelf.refreshControl endRefreshing];
     }];
 }
 
@@ -151,6 +157,13 @@ static NSString *cellIdentifier = @"FieldReportCell";
         _miniSite = [[WPMiniSite alloc] init];
     }
     return _miniSite;
+}
+
+- (UIRefreshControl *)refreshControl {
+    if (!_refreshControl) {
+        _refreshControl = [[UIRefreshControl alloc] init];
+    }
+    return _refreshControl;
 }
 
 @end
