@@ -18,6 +18,7 @@
 @property (nonatomic) UILabel *descriptionLabel;
 @property (nonatomic) WPLabeledIcon *addressLabel;
 @property (nonatomic) WPLabeledIcon *siteCountLabel;
+@property (nonatomic) UIScrollView *siteScrollView;
 @property (nonatomic) UITableView *miniSiteTableView;
 
 - (void)updateTableViewHeight:(NSInteger)cellCount;

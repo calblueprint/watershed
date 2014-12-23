@@ -17,7 +17,6 @@
 @property (nonatomic) UIView *tableHeaderView;
 @property (nonatomic) UIView *headingLineBreak;
 @property (nonatomic) UIImageView *tableViewShadowOverlay;
-@property (nonatomic) UIScrollView *siteScrollView;
 
 @end
 

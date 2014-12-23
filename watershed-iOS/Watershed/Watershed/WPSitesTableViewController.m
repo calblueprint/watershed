@@ -46,6 +46,7 @@ static NSString *cellIdentifier = @"SiteCell";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     [self requestAndLoadSites];
 }
 
