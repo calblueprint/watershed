@@ -10,6 +10,7 @@
 
 @interface WPFieldReportView : WPView
 
+@property (nonatomic) UIScrollView *contentScrollView;
 @property (nonatomic) UIImageView *reportImageView;
 @property (nonatomic) UILabel *ratingNumberLabel;
 @property (nonatomic) UIImageView *userImageView;

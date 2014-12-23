@@ -9,7 +9,6 @@
 #import "WPFieldReportView.h"
 
 @interface WPFieldReportView () <UIScrollViewDelegate>
-@property (nonatomic) UIScrollView *contentScrollView;
 @property (nonatomic) UIView *navbarOverlay;
 @end
 
