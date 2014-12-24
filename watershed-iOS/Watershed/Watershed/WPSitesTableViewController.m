@@ -111,6 +111,7 @@ static NSString *cellIdentifier = @"SiteCell";
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         strongSelf.sitesList = sitesList;
         [strongSelf.sitesTableView reloadData];
+        [strongSelf.sitesTableView stopIndicator];
         [strongSelf.refreshControl endRefreshing];
     }];
 }
