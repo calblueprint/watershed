@@ -29,24 +29,14 @@ static NSString *cellIdentifier = @"FieldReportCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = self.miniSite.name;
-    FAKIonIcons *addIcon = [FAKIonIcons ios7PlusEmptyIconWithSize:22];
-    UIImage *addIconImage = [addIcon imageWithSize:CGSizeMake(22, 22)];
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc]
-                                  initWithImage:addIconImage
-                                  style:UIBarButtonItemStylePlain
-                                  target:self
-                                  action:@selector(addNewFieldReport)];
-    self.navigationItem.rightBarButtonItem = addButton;
+    FAKFontAwesome *plusIcon = [FAKFontAwesome plusIconWithSize:22];
+    UIImage *plusImage = [plusIcon imageWithSize:CGSizeMake(18, 22)];
+    UIBarButtonItem *addFieldReportButtonItem = [[UIBarButtonItem alloc] initWithImage:plusImage style:UIBarButtonItemStylePlain target:self action:@selector(addNewFieldReport)];
+    self.navigationItem.rightBarButtonItem = addFieldReportButtonItem;
     self.fieldReportTableView.delegate = self;
     self.fieldReportTableView.dataSource = self;
     
-    __weak __typeof(self)weakSelf = self;
-    [[WPNetworkingManager sharedManager] requestMiniSiteWithMiniSite:self.miniSite parameters:[[NSMutableDictionary alloc] init] success:^(WPMiniSite *miniSite, NSMutableArray *fieldReportList) {
-        __strong __typeof(weakSelf)strongSelf = weakSelf;
-        strongSelf.miniSite = miniSite;
-        strongSelf.fieldReportList = fieldReportList;
-        [strongSelf.fieldReportTableView reloadData];
-    }];
+    [self requestAndLoadMiniSite];
 }
 
 - (void)loadView {
@@ -79,6 +69,18 @@ static NSString *cellIdentifier = @"FieldReportCell";
     [self.navigationController pushViewController:addFieldReportViewController animated:YES];
 }
 
+#pragma mark - Networking Methods
+
+- (void)requestAndLoadMiniSite {
+    __weak __typeof(self)weakSelf = self;
+    [[WPNetworkingManager sharedManager] requestMiniSiteWithMiniSite:self.miniSite parameters:[[NSMutableDictionary alloc] init] success:^(WPMiniSite *miniSite, NSMutableArray *fieldReportList) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        strongSelf.miniSite = miniSite;
+        strongSelf.fieldReportList = fieldReportList;
+        [strongSelf.fieldReportTableView reloadData];
+    }];
+}
+
 #pragma mark - TableView Delegate/DataSource Methods
 
 - (NSInteger)tableView:(UITableView *)tableView
@@ -104,8 +106,9 @@ static NSString *cellIdentifier = @"FieldReportCell";
                                                          reuseIdentifier:cellIdentifier];
         }
         WPFieldReport *fieldReport = self.fieldReportList[indexPath.row];
-        cellView.photoView.image = fieldReport.image;
-        cellView.dateLabel.text = fieldReport.creationDate;
+        [cellView.photoView setImageWithURL:[fieldReport.imageURLs firstObject]
+                           placeholderImage:[UIImage imageNamed:@"SampleCoverPhoto2"]];
+        cellView.dateLabel.text = [fieldReport dateString];
         cellView.ratingNumberLabel.text = [fieldReport.rating stringValue];
         cellView.ratingNumberLabel.textColor = [UIColor colorForRating:[fieldReport.rating intValue]];
     }

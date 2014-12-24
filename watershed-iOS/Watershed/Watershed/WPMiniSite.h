@@ -27,6 +27,8 @@
 @property (nonatomic) WPSite *site;
 @property (nonatomic) NSMutableArray *users; //of WPUser's
 @property (nonatomic) NSString *currentTask;
+@property (nonatomic) NSNumber *taskCount;
+@property (nonatomic) NSNumber *healthRating;
 @property (nonatomic) NSMutableArray *fieldReports; // of WPFieldReport's
 @property (nonatomic) NSNumber *fieldReportCount;
 

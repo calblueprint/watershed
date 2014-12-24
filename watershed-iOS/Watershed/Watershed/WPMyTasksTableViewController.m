@@ -32,7 +32,7 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
     self.tableView.dataSource = self;
     NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
     [f setNumberStyle:NSNumberFormatterDecimalStyle];
-    NSNumber *userId = [f numberFromString:[[WPNetworkingManager sharedManager] keyChainStore][@"userId"]];
+    NSNumber *userId = [f numberFromString:[[WPNetworkingManager sharedManager] keyChainStore][@"user_id"]];
 
     [[WPNetworkingManager sharedManager] requestMyTasksListWithUser:userId parameters: [[NSMutableDictionary alloc] init] success:^(NSMutableArray *tasksList) {
         self.tasks = tasksList;

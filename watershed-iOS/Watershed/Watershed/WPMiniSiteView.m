@@ -12,6 +12,7 @@
 @interface WPMiniSiteView () <UIScrollViewDelegate>
 
 @property (nonatomic) UIImageView *navbarShadowOverlay;
+@property (nonatomic) UIView *coverPhotoOverlay;
 @property (nonatomic) UIView *tableHeaderView;
 @property (nonatomic) UIView *headingLineBreak;
 @property (nonatomic) UIImageView *tableViewShadowOverlay;
@@ -23,7 +24,7 @@
 
 @implementation WPMiniSiteView
 
-static const int COVER_PHOTO_HEIGHT = 184;
+static const int COVER_PHOTO_HEIGHT = 124;
 static int COVER_PHOTO_TRANS = 0;
 
 - (id)initWithFrame:(CGRect)frame {
@@ -133,6 +134,13 @@ static int COVER_PHOTO_TRANS = 0;
         coverPhotoView;
     }) wp_addToSuperview:self];
     
+    _coverPhotoOverlay = [({
+        UIView *overlay = [[UIView alloc] init];
+        overlay.backgroundColor = [UIColor blackColor];
+        overlay.alpha = 0.1;
+        overlay;
+    }) wp_addToSuperview:self];
+    
     [self generateBlurredPhotos];
     
     _navbarShadowOverlay = [({
@@ -158,6 +166,13 @@ static int COVER_PHOTO_TRANS = 0;
         make.trailing.equalTo(@0);
     }];
     
+    [self.coverPhotoOverlay mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@0);
+        make.bottom.equalTo(self.coverPhotoView.mas_bottom);
+        make.leading.equalTo(@0);
+        make.trailing.equalTo(@0);
+    }];
+    
     [self.navbarShadowOverlay mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(topMargin));
         make.top.equalTo(@0);
@@ -174,7 +189,7 @@ static int COVER_PHOTO_TRANS = 0;
     }];
     
     [self.tableHeaderView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(COVER_PHOTO_HEIGHT - topMargin));
+        make.top.equalTo(@(COVER_PHOTO_HEIGHT));
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
         make.bottom.equalTo(self.tableViewShadowOverlay.mas_top);
@@ -262,7 +277,7 @@ static int COVER_PHOTO_TRANS = 0;
     self.descriptionLabel.text = miniSite.info;
     self.addressLabel.label.text = [NSString stringWithFormat:@"%@, %@, %@ %@", miniSite.street, miniSite.city, miniSite.state, miniSite.zipCode];
     self.vegetationListLabel.text = miniSite.vegetations;
-    self.currentTaskLabel.text = miniSite.currentTask;
+    self.currentTaskLabel.label.text = [NSString stringWithFormat:@"%@ tasks", miniSite.taskCount];
     self.fieldReportCountLabel.label.text = [[miniSite.fieldReportCount stringValue] stringByAppendingString:@" field reports"];
 }
 
@@ -296,10 +311,11 @@ static int COVER_PHOTO_TRANS = 0;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
-    CGFloat trans = scrollView.contentOffset.y + 64.0;
+    CGFloat trans = scrollView.contentOffset.y;
     COVER_PHOTO_TRANS = trans;
-    if (COVER_PHOTO_TRANS > 120) COVER_PHOTO_TRANS = 120;
+    if (COVER_PHOTO_TRANS > 60) COVER_PHOTO_TRANS = 60;
     self.blurRadius = MIN(ABS(COVER_PHOTO_TRANS / 6), 20);
+    self.coverPhotoOverlay.alpha = 0.3 + (COVER_PHOTO_TRANS + topMargin) / 600;
     
     [self.coverPhotoView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(COVER_PHOTO_HEIGHT - COVER_PHOTO_TRANS));
@@ -309,7 +325,7 @@ static int COVER_PHOTO_TRANS = 0;
         [self.coverPhotoView setImage:self.coverPhotoArray[self.blurRadius]];
     }
     
-    CGFloat titleAlpha = (trans - COVER_PHOTO_TRANS - 20)/40;
+    CGFloat titleAlpha = (trans - COVER_PHOTO_TRANS - 20) / 30;
     
     UINavigationBar *navBar = ((UIViewController *)[self nextResponder]).navigationController.navigationBar;
     [navBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:titleAlpha]}];

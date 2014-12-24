@@ -81,13 +81,14 @@
 //  if parent is task VC, do task id, otherwise to nil
     NSNumber *taskId;
     NSString *miniSiteId;
+    UIViewController *parent;
     UIViewController *previousViewController = [((UINavigationController *)self.parentViewController).viewControllers objectAtIndex:((UINavigationController *)self.parentViewController).viewControllers.count-2];
     if ([previousViewController isKindOfClass:[WPMiniSiteViewController class]]) {
-        WPMiniSiteViewController *parent = (WPMiniSiteViewController *)previousViewController;
-        miniSiteId = [parent.miniSite.miniSiteId stringValue];
+        parent = previousViewController;
+        miniSiteId = [((WPMiniSiteViewController *)parent).miniSite.miniSiteId stringValue];
         taskId = nil;
     } else if ([previousViewController isKindOfClass:[WPTaskViewController class]]) {
-        WPTaskViewController *parent = (WPTaskViewController *)previousViewController;
+        parent = (WPTaskViewController *)previousViewController;
 //        taskId = parent.taskId;
 //        miniSiteId = parent.miniSiteId;
     }
@@ -106,8 +107,10 @@
     NSMutableDictionary *parameters = [staticParameters mutableCopy];
     
     [[WPNetworkingManager sharedManager] postFieldReportWithParameters:parameters success:^(WPFieldReport *fieldReport) {
+        if ([parent isKindOfClass:[WPMiniSiteViewController class]]) {
+            [(WPMiniSiteViewController *)parent requestAndLoadMiniSite];
+        }
         [self.navigationController popViewControllerAnimated:YES];
-        //do stuffs
     }];
 }
 

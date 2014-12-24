@@ -14,12 +14,14 @@
 @interface WPFieldReport : MTLModel <MTLJSONSerializing>
 
 @property (nonatomic) NSNumber *fieldReportId;
-@property (nonatomic) NSString *creationDate;
+@property (nonatomic) NSDate *creationDate;
 @property (nonatomic) NSString *info;
 @property (nonatomic) NSNumber *rating;
 @property (nonatomic) NSNumber *urgent;
 @property (nonatomic) UIImage *image;
+@property (nonatomic) NSMutableArray *imageURLs; //of NSURL's
 @property (nonatomic) WPUser *user;
 @property (nonatomic) WPMiniSite *miniSite;
 
+- (NSString *)dateString;
 @end

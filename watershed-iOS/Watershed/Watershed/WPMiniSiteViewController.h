@@ -11,5 +11,6 @@
 
 @interface WPMiniSiteViewController : WPViewController <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic) WPMiniSite *miniSite;
+- (void)requestAndLoadMiniSite;
 @end
 
