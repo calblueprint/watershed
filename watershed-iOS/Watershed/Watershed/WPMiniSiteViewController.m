@@ -83,6 +83,7 @@ static NSString *cellIdentifier = @"FieldReportCell";
         strongSelf.miniSite = miniSite;
         strongSelf.fieldReportList = fieldReportList;
         [strongSelf.fieldReportTableView reloadData];
+        [strongSelf.view stopIndicator];
         [strongSelf.refreshControl endRefreshing];
     }];
 }

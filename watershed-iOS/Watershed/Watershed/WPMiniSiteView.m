@@ -13,6 +13,7 @@
 
 @property (nonatomic) UIImageView *navbarShadowOverlay;
 @property (nonatomic) UIView *coverPhotoOverlay;
+@property (nonatomic) UIActivityIndicatorView *indicatorView;
 @property (nonatomic) UIView *tableHeaderView;
 @property (nonatomic) UIView *headingLineBreak;
 @property (nonatomic) UIImageView *tableViewShadowOverlay;
@@ -58,6 +59,12 @@ static int COVER_PHOTO_TRANS = 0;
         miniSiteTableView;
     }) wp_addToSuperview:self.miniSiteScrollView];
     
+    _indicatorView = [({
+        UIActivityIndicatorView *view = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        [view startAnimating];
+        view;
+    }) wp_addToSuperview:self];
+
     _tableHeaderView = [({
         UIView *tableHeaderView = [[UIView alloc] init];
         tableHeaderView;
@@ -255,8 +262,15 @@ static int COVER_PHOTO_TRANS = 0;
         make.bottom.equalTo(@0);
     }];
     
+    [self.indicatorView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.fieldReportTableView.mas_top).with.offset(2 * standardMargin);
+        make.centerX.equalTo(self.mas_centerX);
+    }];
+
     [super updateConstraints];
 }
+
+#pragma mark - Public Methods
 
 - (void)updateTableViewHeight:(NSInteger)cellCount {
     [self.fieldReportTableView mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -274,6 +288,11 @@ static int COVER_PHOTO_TRANS = 0;
     //self.vegetationListLabel.text = miniSite.vegetations;
     self.currentTaskLabel.label.text = [NSString stringWithFormat:@"%@ tasks", miniSite.taskCount];
     self.fieldReportCountLabel.label.text = [[miniSite.fieldReportCount stringValue] stringByAppendingString:@" field reports"];
+}
+
+- (void)stopIndicator {
+    [self.indicatorView stopAnimating];
+    self.indicatorView.alpha = 0;
 }
 
 #pragma mark - ScrollView Delegate Method from ViewController

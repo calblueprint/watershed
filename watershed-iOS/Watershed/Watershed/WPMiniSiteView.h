@@ -24,5 +24,6 @@
 
 - (void)updateTableViewHeight:(NSInteger)cellCount;
 - (void)configureWithMiniSite:(WPMiniSite *)miniSite;
+- (void)stopIndicator;
 
 @end
