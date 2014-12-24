@@ -39,9 +39,9 @@
         make.trailing.equalTo(@0);
         make.bottom.equalTo(@0);
     }];
-    
+
     [self.indicatorView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(2*standardMargin));
+        make.top.equalTo(@(2 * standardMargin));
         make.centerX.equalTo(self.mas_centerX);
     }];
 

@@ -23,5 +23,6 @@
 
 - (void)updateTableViewHeight:(NSInteger)cellCount;
 - (void)configureWithSite:(WPSite *)site;
+- (void)stopIndicator;
 
 @end

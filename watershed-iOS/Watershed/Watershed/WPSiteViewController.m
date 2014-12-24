@@ -127,6 +127,7 @@ static NSString *cellIdentifier = @"MiniSiteCell";
         strongSelf.site = site;
         strongSelf.miniSiteList = miniSiteList;
         [strongSelf.miniSiteTableView reloadData];
+        [strongSelf.view stopIndicator];
         [strongSelf.refreshControl endRefreshing];
     }];
 }

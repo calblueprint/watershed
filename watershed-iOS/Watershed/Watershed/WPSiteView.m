@@ -11,9 +11,9 @@
 
 @interface WPSiteView () <UIScrollViewDelegate>
 
-
 @property (nonatomic) UIImageView *navbarShadowOverlay;
 @property (nonatomic) UIView *coverPhotoOverlay;
+@property (nonatomic) UIActivityIndicatorView *indicatorView;
 @property (nonatomic) UIView *tableHeaderView;
 @property (nonatomic) UIView *headingLineBreak;
 @property (nonatomic) UIImageView *tableViewShadowOverlay;
@@ -59,6 +59,12 @@ static int COVER_PHOTO_TRANS = 0;
         miniSiteTableView;
     }) wp_addToSuperview:self.siteScrollView];
     
+    _indicatorView = [({
+        UIActivityIndicatorView *view = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        [view startAnimating];
+        view;
+    }) wp_addToSuperview:self];
+
     _tableHeaderView = [({
         UIView *tableHeaderView = [[UIView alloc] init];
         tableHeaderView;
@@ -226,8 +232,15 @@ static int COVER_PHOTO_TRANS = 0;
         make.bottom.equalTo(@0);
     }];
 
+    [self.indicatorView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.miniSiteTableView.mas_top).with.offset(2 * standardMargin);
+        make.centerX.equalTo(self.mas_centerX);
+    }];
+
     [super updateConstraints];
 }
+
+#pragma mark - Public Methods
 
 - (void)updateTableViewHeight:(NSInteger)cellCount {
     [self.miniSiteTableView mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -243,6 +256,11 @@ static int COVER_PHOTO_TRANS = 0;
     self.descriptionLabel.text = site.info;
     self.addressLabel.label.text = [NSString stringWithFormat:@"%@, %@, %@ %@", site.street, site.city, site.state, site.zipCode];
     self.siteCountLabel.label.text = [[site.miniSitesCount stringValue] stringByAppendingString:@" mini sites"];
+}
+
+- (void)stopIndicator {
+    [self.indicatorView stopAnimating];
+    self.indicatorView.alpha = 0;
 }
 
 #pragma mark - ScrollView Delegate Method from ViewController
