@@ -34,6 +34,7 @@
     [[WPNetworkingManager sharedManager] requestUserWithUser:_user parameters:[[NSMutableDictionary alloc] init] success:^(WPUser *user) {
         _user = user;
         [self.view configureWithUser:user];
+        [self.view stopIndicator];
     }];
     
     [super viewDidLoad];

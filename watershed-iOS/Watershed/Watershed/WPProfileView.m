@@ -15,6 +15,7 @@
 @interface WPProfileView ()
 
 @property (nonatomic) UITableView *infoTableView;
+@property (nonatomic) UIActivityIndicatorView *indicatorView;
 @property (nonatomic) WPUser *user;
 @property (nonatomic) UIImageView *profilePictureView;
 @property (nonatomic) UILabel *nameLabel;
@@ -32,11 +33,13 @@ static int PROFILE_PIC_HEIGHT = 65;
     self = [super initWithFrame:frame visibleNavbar:YES];
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
-
+        [self createSubviews];
     }
 
     return self;
 }
+
+#pragma mark - Public Methods
 
 - (void)configureWithUser:(WPUser *)user {
     self.user = user;
@@ -54,12 +57,17 @@ static int PROFILE_PIC_HEIGHT = 65;
     if (user.phoneNumber) {
         [_userInformationArray addObject:user.phoneNumber];
     }
-    [self createSubviews];
+
     self.infoTableView.delegate = self;
     self.infoTableView.dataSource = self;
     self.infoTableView.scrollEnabled = YES;
     [self.infoTableView reloadData];
     [self setNeedsUpdateConstraints];
+}
+
+- (void)stopIndicator {
+    [self.indicatorView stopAnimating];
+    self.indicatorView.alpha = 0;
 }
 
 #pragma mark - View Hierarchy
@@ -172,7 +180,11 @@ static int PROFILE_PIC_HEIGHT = 65;
     _infoTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self addSubview:_infoTableView];
 
-    
+    _indicatorView = [({
+        UIActivityIndicatorView *view = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        [view startAnimating];
+        view;
+    }) wp_addToSuperview:self];
 }
 
 - (void)updateConstraints {
@@ -194,6 +206,11 @@ static int PROFILE_PIC_HEIGHT = 65;
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
         make.bottom.equalTo(@0);
+    }];
+
+    [self.indicatorView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@0).with.offset(topMargin + 2 * standardMargin); // For some reason topMargin in equalTo doesn't work...
+        make.centerX.equalTo(self.mas_centerX);
     }];
 
     [super updateConstraints];
