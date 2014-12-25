@@ -8,6 +8,8 @@
 
 #import "WPSelectMiniSiteViewController.h"
 #import "WPSelectMiniSiteView.h"
+#import "WPSite.h"
+#import "WPNetworkingManager.h"
 
 @interface WPSelectMiniSiteViewController ()
 
@@ -28,11 +30,13 @@ static NSString *CellIdentifier = @"Cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     self.navigationItem.title = @"Select Site";
     self.view.backgroundColor = [UIColor whiteColor];
     self.view.selectMiniSiteTableView.delegate = self;
     self.view.selectMiniSiteTableView.dataSource = self;
-    _miniSiteArray = @[@"Mark's Motel", @"Max's Moat", @"Melissa's Mansion", @"Andrew's Antfarm"];
+    
+    [self requestAndLoadSites];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -40,10 +44,22 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    cell.textLabel.text = [_miniSiteArray objectAtIndex:indexPath.row];
-    cell.textLabel.textColor = [UIColor wp_paragraph];
-    return cell;
+    
+    UITableViewCell *cellView = nil;
+    
+    if ([tableView isEqual:self.view.selectMiniSiteTableView]) {
+        
+        cellView = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        
+        if (!cellView) {
+            cellView = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                   reuseIdentifier:CellIdentifier];
+        }
+        WPSite *site = self.miniSiteArray[indexPath.row];
+        cellView.textLabel.text = site.name;
+        cellView.textLabel.textColor = [UIColor wp_paragraph];
+    }
+    return cellView;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -51,6 +67,17 @@ static NSString *CellIdentifier = @"Cell";
         [self.selectSiteDelegate selectSiteViewControllerDismissed:[self.view.selectMiniSiteTableView cellForRowAtIndexPath:indexPath].textLabel.text];
     }
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - Networking Methods
+
+- (void)requestAndLoadSites {
+    __weak __typeof(self)weakSelf = self;
+    [[WPNetworkingManager sharedManager] requestSitesListWithParameters:[[NSMutableDictionary alloc] init] success:^(NSMutableArray *sitesList) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        strongSelf.miniSiteArray = sitesList;
+        [strongSelf.view.selectMiniSiteTableView reloadData];
+    }];
 }
 
 #pragma mark - Table View Protocols
