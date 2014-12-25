@@ -47,6 +47,10 @@ static int PROFILE_PIC_HEIGHT = 65;
         self.user.profilePictureId = [[WPNetworkingManager sharedManager] keyChainStore][@"profilePictureId"];
     }
 
+    NSURL *pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=normal", _user.profilePictureId]];
+    [self.profilePictureView setImageWithURL:pictureURL placeholderImage:[UIImage imageNamed:@"hill.png"]];
+
+
     _userInformationArray = [[NSMutableArray alloc] init];
     if (user.email) {
         [_userInformationArray addObject:user.email];
@@ -68,6 +72,7 @@ static int PROFILE_PIC_HEIGHT = 65;
 - (void)stopIndicator {
     [self.indicatorView stopAnimating];
     self.indicatorView.alpha = 0;
+    self.profilePictureView.alpha = 1;
 }
 
 #pragma mark - View Hierarchy
@@ -151,23 +156,8 @@ static int PROFILE_PIC_HEIGHT = 65;
     _profilePictureView = [[UIImageView alloc] init];
     _profilePictureView.contentMode = UIViewContentModeScaleAspectFill;
     _profilePictureView.clipsToBounds = YES;
+    _profilePictureView.alpha = 0;
     [self setRoundedView:_profilePictureView];
-    if (_user.profilePicture) {
-        //do prof pic from server
-    } else if (_user.profilePictureId) {
-        dispatch_async(dispatch_get_global_queue(0,0), ^{
-            NSData * data = [[NSData alloc] initWithContentsOfURL:
-                             [NSURL URLWithString:
-                              [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=normal", _user.profilePictureId]]];
-            if ( data == nil )
-                return;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [_profilePictureView setImage:[UIImage imageWithData:data]];
-            });
-        });
-    } else {
-        [_profilePictureView setImage:[UIImage imageNamed:@"hill.png"]];
-    }
     [self addSubview:_profilePictureView];
 
 
