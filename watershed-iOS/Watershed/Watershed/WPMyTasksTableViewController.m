@@ -30,15 +30,24 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
     [self.tableView registerClass:[WPTasksTableViewCell class] forCellReuseIdentifier:CellIdentifier];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
-    [f setNumberStyle:NSNumberFormatterDecimalStyle];
-    NSNumber *userId = [f numberFromString:[[WPNetworkingManager sharedManager] keyChainStore][@"user_id"]];
+    
+    [self requestAndLoadMyTasks];
+
+}
+
+#pragma mark - Networking Methods
+
+- (void)requestAndLoadMyTasks {
+    __weak __typeof(self)weakSelf = self;
+    NSNumberFormatter *userFormatter = [[NSNumberFormatter alloc] init];
+    [userFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    NSNumber *userId = [userFormatter numberFromString:[[WPNetworkingManager sharedManager] keyChainStore][@"user_id"]];
 
     [[WPNetworkingManager sharedManager] requestMyTasksListWithUser:userId parameters: [[NSMutableDictionary alloc] init] success:^(NSMutableArray *tasksList) {
-        self.tasks = tasksList;
-        [self.tableView reloadData];
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        strongSelf.tasks = tasksList;
+        [strongSelf.tableView reloadData];
     }];
-
 }
 
 - (void)didReceiveMemoryWarning {
@@ -57,7 +66,6 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    return _tasks.count;
     NSInteger rowCount = 0;
     
     if ([tableView isEqual:self.tableView]) rowCount = self.tasks.count;

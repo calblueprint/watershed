@@ -22,4 +22,6 @@
     SelectAssigneeDelegate
 >
 
+@property (nonatomic) WPTasksListViewController *parent;
+
 @end

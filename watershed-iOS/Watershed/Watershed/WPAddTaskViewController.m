@@ -15,6 +15,7 @@
 #import "WPSelectAssigneeViewController.h"
 #import "WPTask.h"
 #import "WPNetworkingManager.h"
+#import "WPTasksListViewController.h"
 
 
 @interface WPAddTaskViewController()
@@ -81,15 +82,20 @@ static NSString *CellIdentifier = @"Cell";
         [self presentViewController:alert animated:YES completion:nil];
     } else {
         //need to add urgent
+        NSNumberFormatter *userFormatter = [[NSNumberFormatter alloc] init];
+        [userFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+        NSNumber *userId = [userFormatter numberFromString:[[WPNetworkingManager sharedManager] keyChainStore][@"user_id"]];
         NSDictionary *taskJSON = @{
                                    @"title" : self.taskField.text,
                                    @"site_id" : self.selectedSite.siteId,
                                    @"due_date" : self.dateField.text,
-                                   @"description" : self.descriptionView.text
+                                   @"description" : self.descriptionView.text,
+                                   @"assignee_id" :userId
                                    };
         WPTask *task = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:taskJSON error:nil];
         [[WPNetworkingManager sharedManager] createTaskWithTask:task parameters:[[NSMutableDictionary alloc] init] success:^{
-        [self.navigationController popViewControllerAnimated:YES];
+            [self.parent requestAndLoadTasks];
+            [self.navigationController popViewControllerAnimated:YES];
         }];
     }
 }

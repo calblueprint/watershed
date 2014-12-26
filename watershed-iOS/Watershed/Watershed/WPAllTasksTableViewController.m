@@ -31,15 +31,23 @@ static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-    [[WPNetworkingManager sharedManager] requestTasksListWithParameters:[[NSMutableDictionary alloc] init] success:^(NSMutableArray *tasksList) {
-        self.allTasks = tasksList;
-        [self.tableView reloadData];
-    }];
+    [self requestAndLoadAllTasks];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Networking Methods
+
+- (void)requestAndLoadAllTasks {
+    __weak __typeof(self)weakSelf = self;
+    [[WPNetworkingManager sharedManager] requestTasksListWithParameters:[[NSMutableDictionary alloc] init] success:^(NSMutableArray *tasksList) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        strongSelf.allTasks = tasksList;
+        [strongSelf.tableView reloadData];
+    }];
 }
 
 #pragma mark - Table view data source
