@@ -23,6 +23,7 @@
 @property (nonatomic) UITextField *siteField;
 @property (nonatomic) UITextField *assigneeField;
 @property (nonatomic) UITextView *descriptionView;
+@property (nonatomic) WPSite *selectedSite;
 
 @end
 
@@ -62,7 +63,7 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 -(void)saveForm:(UIButton *)sender {
-    if (_taskField.text.length == 0 || _siteField.text.length == 0 || _assigneeField.text.length == 0) {
+    if (_taskField.text.length == 0 || _siteField.text.length == 0) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
                                                                        message:@"Cannot leave required fields blank."
                                                                 preferredStyle:UIAlertControllerStyleAlert];
@@ -88,8 +89,9 @@ static NSString *CellIdentifier = @"Cell";
     
 }
 
--(void)selectSiteViewControllerDismissed:(NSString *)stringForFirst {
-    _siteField.text = stringForFirst;
+-(void)selectSiteViewControllerDismissed:(WPSite *)selectedSite {
+    _siteField.text = selectedSite.name;
+    _selectedSite = selectedSite;
 }
 
 -(void)selectAssigneeViewControllerDismissed:(NSString *)stringForFirst {

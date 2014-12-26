@@ -64,7 +64,7 @@ static NSString *CellIdentifier = @"Cell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if([self.selectSiteDelegate respondsToSelector:@selector(selectSiteViewControllerDismissed:)]) {
-        [self.selectSiteDelegate selectSiteViewControllerDismissed:[self.view.selectMiniSiteTableView cellForRowAtIndexPath:indexPath].textLabel.text];
+        [self.selectSiteDelegate selectSiteViewControllerDismissed:self.miniSiteArray[indexPath.row]];
     }
     [self.navigationController popViewControllerAnimated:YES];
 }
