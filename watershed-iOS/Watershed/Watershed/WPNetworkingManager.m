@@ -144,6 +144,22 @@ static NSString * const TASKS_URL = @"tasks";
     }];
 }
 
+- (void)createTaskWithTask:(WPTask *)task parameters:(NSMutableDictionary *)parameters success:(void (^)())success {
+    NSString *taskString = [WPNetworkingManager createURLWithEndpoint:TASKS_URL];
+    [self addAuthenticationParameters:parameters];
+    NSDictionary *taskJSON = [MTLJSONAdapter JSONDictionaryFromModel:task];
+    [parameters setObject:taskJSON forKey:@"task"];
+    
+    [self POST:taskString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        success();
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not create task." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+
 - (void)requestSitesListWithParameters:(NSMutableDictionary *)parameters success:(void (^)(NSMutableArray *sitesList))success {
     NSString *sitesString = [WPNetworkingManager createURLWithEndpoint:SITES_URL];
     [self addAuthenticationParameters:parameters];

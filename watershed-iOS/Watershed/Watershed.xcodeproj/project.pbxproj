@@ -256,6 +256,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		061D6A401A4CE0B20091674D /* Create Task */ = {
+			isa = PBXGroup;
+			children = (
+				06ECE8E01A22E63B009870CA /* WPSelectTaskViewController.h */,
+				06ECE8E11A22E63C009870CA /* WPSelectTaskViewController.m */,
+				06ECE8E31A22E658009870CA /* WPSelectTaskView.h */,
+				06ECE8E41A22E658009870CA /* WPSelectTaskView.m */,
+				06ECE8E61A23436D009870CA /* WPSelectMiniSiteViewController.h */,
+				06ECE8E71A23436D009870CA /* WPSelectMiniSiteViewController.m */,
+				06ECE8E91A234381009870CA /* WPSelectMiniSiteView.h */,
+				06ECE8EA1A234381009870CA /* WPSelectMiniSiteView.m */,
+				06ECE8EC1A244A9A009870CA /* WPSelectAssigneeViewController.h */,
+				06ECE8ED1A244A9A009870CA /* WPSelectAssigneeViewController.m */,
+				06ECE8EF1A245768009870CA /* WPSelectAssigneeView.h */,
+				06ECE8F01A245768009870CA /* WPSelectAssigneeView.m */,
+				0653A8EC1A206CCA0022462B /* WPAddTaskViewController.h */,
+				0653A8ED1A206CCA0022462B /* WPAddTaskViewController.m */,
+				0653A8EF1A206CE50022462B /* WPAddTaskView.h */,
+				0653A8F01A206CE50022462B /* WPAddTaskView.m */,
+				0653A8F21A2124950022462B /* WPAddTaskTableViewCell.h */,
+				0653A8F31A2124950022462B /* WPAddTaskTableViewCell.m */,
+			);
+			name = "Create Task";
+			sourceTree = "<group>";
+		};
 		064462EE1A0739BF00C6FE8B /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -367,6 +392,7 @@
 		BA24043E19DCEFC800E9DB2F /* Tasks */ = {
 			isa = PBXGroup;
 			children = (
+				061D6A401A4CE0B20091674D /* Create Task */,
 				064462DF1A0739A500C6FE8B /* WPMyTasksTableViewController.m */,
 				064462E01A0739A500C6FE8B /* WPTaskView.h */,
 				064462E11A0739A500C6FE8B /* WPTaskView.m */,
@@ -381,26 +407,8 @@
 				06A8139719D91A7500E3EB05 /* WPTasksListView.m */,
 				06A039BC19EB973800EB83CC /* WPTasksTableViewCell.h */,
 				06A039BD19EB973800EB83CC /* WPTasksTableViewCell.m */,
-				0653A8EC1A206CCA0022462B /* WPAddTaskViewController.h */,
-				0653A8ED1A206CCA0022462B /* WPAddTaskViewController.m */,
-				0653A8EF1A206CE50022462B /* WPAddTaskView.h */,
-				0653A8F01A206CE50022462B /* WPAddTaskView.m */,
-				0653A8F21A2124950022462B /* WPAddTaskTableViewCell.h */,
-				0653A8F31A2124950022462B /* WPAddTaskTableViewCell.m */,
 				0653A8F51A21267B0022462B /* WPTask.h */,
 				0653A8F61A21267B0022462B /* WPTask.m */,
-				06ECE8E01A22E63B009870CA /* WPSelectTaskViewController.h */,
-				06ECE8E11A22E63C009870CA /* WPSelectTaskViewController.m */,
-				06ECE8E31A22E658009870CA /* WPSelectTaskView.h */,
-				06ECE8E41A22E658009870CA /* WPSelectTaskView.m */,
-				06ECE8E61A23436D009870CA /* WPSelectMiniSiteViewController.h */,
-				06ECE8E71A23436D009870CA /* WPSelectMiniSiteViewController.m */,
-				06ECE8E91A234381009870CA /* WPSelectMiniSiteView.h */,
-				06ECE8EA1A234381009870CA /* WPSelectMiniSiteView.m */,
-				06ECE8EC1A244A9A009870CA /* WPSelectAssigneeViewController.h */,
-				06ECE8ED1A244A9A009870CA /* WPSelectAssigneeViewController.m */,
-				06ECE8EF1A245768009870CA /* WPSelectAssigneeView.h */,
-				06ECE8F01A245768009870CA /* WPSelectAssigneeView.m */,
 			);
 			name = Tasks;
 			sourceTree = "<group>";

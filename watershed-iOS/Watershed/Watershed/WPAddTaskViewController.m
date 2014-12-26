@@ -13,6 +13,8 @@
 #import "WPSelectTaskViewController.h"
 #import "WPSelectMiniSiteViewController.h"
 #import "WPSelectAssigneeViewController.h"
+#import "WPTask.h"
+#import "WPNetworkingManager.h"
 
 
 @interface WPAddTaskViewController()
@@ -78,10 +80,20 @@ static NSString *CellIdentifier = @"Cell";
         [alert addAction:ok];
         [self presentViewController:alert animated:YES completion:nil];
     } else {
+        //need to add urgent
+        NSDictionary *taskJSON = @{
+                                   @"title" : self.taskField.text,
+                                   @"site_id" : self.selectedSite.siteId,
+                                   @"due_date" : self.dateField.text,
+                                   @"description" : self.descriptionView.text
+                                   };
+        WPTask *task = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:taskJSON error:nil];
+        [[WPNetworkingManager sharedManager] createTaskWithTask:task parameters:[[NSMutableDictionary alloc] init] success:^{
         [self.navigationController popViewControllerAnimated:YES];
+        }];
     }
-
 }
+
 
 
 -(void)selectTaskViewControllerDismissed:(NSString *)stringForFirst {
