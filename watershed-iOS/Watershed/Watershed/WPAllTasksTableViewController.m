@@ -17,6 +17,7 @@
 @interface WPAllTasksTableViewController ()
 
 @property (nonatomic) WPAllTasksTableView *tableView;
+@property (nonatomic) UIRefreshControl *refreshControl;
 
 @end
 
@@ -33,16 +34,10 @@ static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-    [[WPNetworkingManager sharedManager] requestTasksListWithParameters:[[NSMutableDictionary alloc] init] success:^(NSMutableArray *tasksList) {
-        self.allTasks = tasksList;
-        [self.tableView reloadData];
-        [self.tableView stopIndicator];
-    }];
-}
+    [self.refreshControl addTarget:self action:@selector(requestAndLoadAllTasks) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:self.refreshControl];
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [self requestAndLoadAllTasks];
 }
 
 #pragma mark - Table view data source
@@ -99,6 +94,17 @@ static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
     WPTask *selectedTask = self.allTasks[indexPath.row];
     taskViewController.task = selectedTask;
     [[self.parentViewController navigationController] pushViewController:taskViewController animated:YES];
+}
+
+#pragma mark - Networking Methods
+
+- (void)requestAndLoadAllTasks {
+    [[WPNetworkingManager sharedManager] requestTasksListWithParameters:[[NSMutableDictionary alloc] init] success:^(NSMutableArray *tasksList) {
+        self.allTasks = tasksList;
+        [self.tableView reloadData];
+        [self.tableView stopIndicator];
+        [self.refreshControl endRefreshing];
+    }];
 }
 
 @end
