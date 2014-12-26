@@ -8,6 +8,7 @@
 
 #import "WPTasksTableViewCell.h"
 #import "WPAllTasksTableViewController.h"
+#import "WPAllTasksTableView.h"
 #import "UIExtensions.h"
 #import "WPTaskViewController.h"
 #import "WPNetworkingManager.h"
@@ -15,7 +16,7 @@
 
 @interface WPAllTasksTableViewController ()
 
-@property (nonatomic) UITableView *tableView;
+@property (nonatomic) WPAllTasksTableView *tableView;
 
 @end
 
@@ -26,7 +27,8 @@ static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.tableView = [[UITableView alloc] init];
+    self.tableView = [[WPAllTasksTableView alloc] init];
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.tableView registerClass:[WPTasksTableViewCell class] forCellReuseIdentifier:allTasksIdentifier];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -34,6 +36,7 @@ static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
     [[WPNetworkingManager sharedManager] requestTasksListWithParameters:[[NSMutableDictionary alloc] init] success:^(NSMutableArray *tasksList) {
         self.allTasks = tasksList;
         [self.tableView reloadData];
+        [self.tableView stopIndicator];
     }];
 }
 

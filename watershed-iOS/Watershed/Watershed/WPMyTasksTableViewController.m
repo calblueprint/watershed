@@ -27,6 +27,7 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
     [super viewDidLoad];
 
     self.tableView = [[UITableView alloc] init];
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.tableView registerClass:[WPTasksTableViewCell class] forCellReuseIdentifier:CellIdentifier];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
