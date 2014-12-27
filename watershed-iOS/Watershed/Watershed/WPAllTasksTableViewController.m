@@ -33,7 +33,8 @@ static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
     [self.tableView registerClass:[WPTasksTableViewCell class] forCellReuseIdentifier:allTasksIdentifier];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    
+
+    self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(requestAndLoadAllTasks) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:self.refreshControl];
 

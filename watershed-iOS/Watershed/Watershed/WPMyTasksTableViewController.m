@@ -34,6 +34,7 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
 
+    self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(requestAndLoadMyTasks) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:self.refreshControl];
 
