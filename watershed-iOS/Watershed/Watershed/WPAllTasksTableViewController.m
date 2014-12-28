@@ -28,7 +28,6 @@ static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.tableView = [[WPAllTasksTableView alloc] init];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.tableView registerClass:[WPTasksTableViewCell class] forCellReuseIdentifier:allTasksIdentifier];
     self.tableView.delegate = self;
@@ -39,6 +38,10 @@ static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
     [self.tableView addSubview:self.refreshControl];
 
     [self requestAndLoadAllTasks];
+}
+
+- (void)loadView {
+    self.tableView = [[WPAllTasksTableView alloc] init];
 }
 
 #pragma mark - Table view data source

@@ -29,7 +29,11 @@
     [super viewDidLoad];
     self.navigationController.navigationBar.tintColor = [UIColor wp_blue];
     self.title = @"New Mini Site";
-    
+
+    self.infoTableView = self.view.infoTableView;
+    self.infoTableView.delegate = self;
+    self.infoTableView.dataSource = self;
+
     // Add white background to status bar
     UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, -20, [WPView getScreenWidth], 20)];
     statusBarView.backgroundColor = [UIColor whiteColor];
@@ -52,9 +56,6 @@
 
 - (void)loadView {
     self.view = [[WPCreateMiniSiteView alloc] init];
-    self.infoTableView = self.view.infoTableView;
-    self.infoTableView.delegate = self;
-    self.infoTableView.dataSource = self;
 }
 
 - (void)dismissSelf {
@@ -74,11 +75,11 @@
                                    };
     WPMiniSite *miniSite = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:miniSiteJSON error:nil];
     miniSite.site = self.parent.site;
-    
+
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    NSString *photo = [UIImagePNGRepresentation([self compressForUpload:self.imageInputCell.imageInput.image withScale:0.2]) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    NSString *photo = [UIImagePNGRepresentation([self compressForUpload:self.imageInputCell.imageInputView.image withScale:0.2]) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
     parameters[@"photos_attributes"] = @[ @{ @"data" : photo } ];
-    
+
     __weak __typeof(self)weakSelf = self;
     [[WPNetworkingManager sharedManager] createMiniSiteWithMiniSite:miniSite parameters:parameters success:^(WPMiniSite *miniSite) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
@@ -255,7 +256,7 @@
 - (void)presentPhotoButtonAction {
     if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
         UIActionSheet *popup = [[UIActionSheet alloc] init];
-        if (self.imageInputCell.imageInput.image) {
+        if (self.imageInputCell.imageInputView.image) {
             popup.destructiveButtonIndex = [popup addButtonWithTitle:@"Remove Photo"];
         }
         [popup addButtonWithTitle:@"Take Photo"];
@@ -292,16 +293,16 @@
                                  handler:^(UIAlertAction * action)
                                  {
                                      [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
-                                     
+
                                  }];
-        
-        if (self.imageInputCell.imageInput.image) {
+
+        if (self.imageInputCell.imageInputView.image) {
             UIAlertAction *remove = [UIAlertAction
                                      actionWithTitle:@"Remove Photo"
                                      style:UIAlertActionStyleDestructive
                                      handler:^(UIAlertAction * action)
                                      {
-                                         self.imageInputCell.imageInput.image = nil;
+                                         self.imageInputCell.imageInputView.image = nil;
                                          self.imageInputCell.viewImageButton.alpha = 0;
                                          [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
                                      }];
@@ -352,7 +353,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     switch (popup.tag) {
         case 1: {
             if (buttonIndex == popup.destructiveButtonIndex && buttonShift == 1) {
-                self.imageInputCell.imageInput.image = nil;
+                self.imageInputCell.imageInputView.image = nil;
                 self.imageInputCell.viewImageButton.alpha = 0;
             }
             else if (buttonIndex == 0 + buttonShift) {
@@ -387,7 +388,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 #pragma mark - ImagePickerController delegate methods
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    self.imageInputCell.imageInput.image = info[UIImagePickerControllerOriginalImage];
+    self.imageInputCell.imageInputView.image = info[UIImagePickerControllerOriginalImage];
     self.imageInputCell.viewImageButton.alpha = 1;
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
@@ -402,12 +403,12 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     UIViewController *viewPhotoModal = [[UIViewController alloc] init];
     viewPhotoModal.view.backgroundColor = [UIColor blackColor];
     viewPhotoModal.view.userInteractionEnabled = YES;
-    
+
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:viewPhotoModal.view.frame];
     imageView.contentMode = UIViewContentModeScaleAspectFit;
-    imageView.image = self.imageInputCell.imageInput.image;
+    imageView.image = self.imageInputCell.imageInputView.image;
     [viewPhotoModal.view addSubview:imageView];
-    
+
     UITapGestureRecognizer *modalTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissModalView:)];
     [viewPhotoModal.view addGestureRecognizer:modalTap];
     viewPhotoModal.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;

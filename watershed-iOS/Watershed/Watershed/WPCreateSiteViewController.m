@@ -27,6 +27,10 @@
     self.navigationController.navigationBar.tintColor = [UIColor blackColor];
     self.title = @"New Site";
     
+    self.infoTableView = self.view.infoTableView;
+    self.infoTableView.delegate = self;
+    self.infoTableView.dataSource = self;
+
     FAKIonIcons *closeIcon = [FAKIonIcons androidCloseIconWithSize:20];
     UIImage *closeImage = [closeIcon imageWithSize:CGSizeMake(20, 20)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithImage:closeImage style:UIBarButtonItemStylePlain target:self action:@selector(dismissSelf)];
@@ -44,9 +48,6 @@
 
 - (void)loadView {
     self.view = [[WPCreateSiteView alloc] init];
-    self.infoTableView = self.view.infoTableView;
-    self.infoTableView.delegate = self;
-    self.infoTableView.dataSource = self;
 }
 
 - (void)dismissSelf {
