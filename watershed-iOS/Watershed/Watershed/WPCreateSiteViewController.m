@@ -27,14 +27,14 @@
     self.navigationController.navigationBar.tintColor = [UIColor blackColor];
     self.title = @"New Site";
     
-    FAKFontAwesome *closeIcon = [FAKFontAwesome closeIconWithSize:22];
-    UIImage *closeImage = [closeIcon imageWithSize:CGSizeMake(22, 22)];
+    FAKIonIcons *closeIcon = [FAKIonIcons androidCloseIconWithSize:20];
+    UIImage *closeImage = [closeIcon imageWithSize:CGSizeMake(20, 20)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithImage:closeImage style:UIBarButtonItemStylePlain target:self action:@selector(dismissSelf)];
     self.navigationItem.leftBarButtonItem = cancelButton;
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor wp_blue];
     
-    FAKFontAwesome *checkIcon = [FAKFontAwesome checkIconWithSize:22];
-    UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake(22, 22)];
+    FAKIonIcons *checkIcon = [FAKIonIcons androidCheckmarkIconWithSize:20];
+    UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake(20, 20)];
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithImage:checkImage style:UIBarButtonItemStylePlain target:self action:@selector(saveAndDismissSelf)];
     self.navigationItem.rightBarButtonItem = doneButton;
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor wp_blue];

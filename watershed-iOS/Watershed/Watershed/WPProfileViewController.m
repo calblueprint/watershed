@@ -22,8 +22,8 @@
 
 - (void)viewDidLoad {
     self.navigationItem.title = @"My Profile";
-    FAKIonIcons *settingsIcon = [FAKIonIcons ios7GearOutlineIconWithSize:22];
-    UIImage *settingsImage = [settingsIcon imageWithSize:CGSizeMake(22, 22)];
+    FAKIonIcons *settingsIcon = [FAKIonIcons androidSettingsIconWithSize:20];
+    UIImage *settingsImage = [settingsIcon imageWithSize:CGSizeMake(20, 20)];
     UIBarButtonItem *settingsButtonItem = [[UIBarButtonItem alloc] initWithImage:settingsImage style:UIBarButtonItemStylePlain target:self action:@selector(openSettings)];
     settingsButtonItem.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = settingsButtonItem;

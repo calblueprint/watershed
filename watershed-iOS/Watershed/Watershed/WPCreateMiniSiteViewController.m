@@ -34,17 +34,17 @@
     UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, -20, [WPView getScreenWidth], 20)];
     statusBarView.backgroundColor = [UIColor whiteColor];
     [self.navigationController.navigationBar addSubview:statusBarView];
-    
-    FAKFontAwesome *closeIcon = [FAKFontAwesome closeIconWithSize:22];
-    UIImage *closeImage = [closeIcon imageWithSize:CGSizeMake(22, 22)];
+
+    FAKIonIcons *closeIcon = [FAKIonIcons androidCloseIconWithSize:20];
+    UIImage *closeImage = [closeIcon imageWithSize:CGSizeMake(20, 20)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithImage:closeImage style:UIBarButtonItemStylePlain target:self action:@selector(dismissSelf)];
     self.navigationItem.leftBarButtonItem = cancelButton;
-    
-    FAKFontAwesome *checkIcon = [FAKFontAwesome checkIconWithSize:22];
-    UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake(22, 22)];
+
+    FAKIonIcons *checkIcon = [FAKIonIcons androidCheckmarkIconWithSize:20];
+    UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake(20, 20)];
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithImage:checkImage style:UIBarButtonItemStylePlain target:self action:@selector(saveAndDismissSelf)];
     self.navigationItem.rightBarButtonItem = doneButton;
-   
+
     [self.imageInputCell.viewImageButton addTarget:self action:@selector(presentImageView) forControlEvents:UIControlEventTouchUpInside];
     
     self.keyboardControls.delegate = self;

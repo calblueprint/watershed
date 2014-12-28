@@ -146,8 +146,8 @@ static NSString *cellIdentifier = @"MiniSiteCell";
 #pragma mark - Add Site Button / Methods
 
 - (UIBarButtonItem *)newAddSiteButtonItem {
-    FAKFontAwesome *plusIcon = [FAKFontAwesome plusIconWithSize:22];
-    UIImage *plusImage = [plusIcon imageWithSize:CGSizeMake(18, 22)];
+    FAKIonIcons *plusIcon = [FAKIonIcons androidAddIconWithSize:18];
+    UIImage *plusImage = [plusIcon imageWithSize:CGSizeMake(18, 18)];
     UIBarButtonItem *addMiniSiteButtonItem = [[UIBarButtonItem alloc] initWithImage:plusImage style:UIBarButtonItemStylePlain target:self action:@selector(showCreateMiniSiteView)];
     addMiniSiteButtonItem.tintColor = [UIColor whiteColor];
     return addMiniSiteButtonItem;
