@@ -18,7 +18,7 @@
 
 const static float CELL_HEIGHT = 60.0f;
 const static float RADIO_BUTTON_SIZE = 30.0f;
-const static float CHECK_SIZE = RADIO_BUTTON_SIZE * 3 / 5;
+const static float CHECK_SIZE = RADIO_BUTTON_SIZE * 3 / 4;
 
 - (id)initWithStyle:(UITableViewCellStyle)style
     reuseIdentifier:(NSString *)reuseIdentifier {
@@ -42,9 +42,9 @@ const static float CHECK_SIZE = RADIO_BUTTON_SIZE * 3 / 5;
         button.alpha = 0.3;
         button;
     }) wp_addToSuperview:self];
-    
+
     _checkImageView = [({
-        FAKFontAwesome *checkIcon = [FAKFontAwesome checkIconWithSize:CHECK_SIZE];
+        FAKIonIcons *checkIcon = [FAKIonIcons androidDoneIconWithSize:CHECK_SIZE];
         UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake(CHECK_SIZE, CHECK_SIZE)];
         UIImageView *imageView = [[UIImageView alloc] initWithImage:checkImage];
         [imageView setFrame:CGRectMake((RADIO_BUTTON_SIZE - CHECK_SIZE) / 2, (RADIO_BUTTON_SIZE - CHECK_SIZE) / 2, CHECK_SIZE, CHECK_SIZE)];

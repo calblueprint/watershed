@@ -30,8 +30,8 @@ static NSString *cellIdentifier = @"FieldReportCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = self.miniSite.name;
-    FAKIonIcons *plusIcon = [FAKIonIcons androidAddIconWithSize:18];
-    UIImage *plusImage = [plusIcon imageWithSize:CGSizeMake(18, 18)];
+    FAKIonIcons *plusIcon = [FAKIonIcons androidAddIconWithSize:24];
+    UIImage *plusImage = [plusIcon imageWithSize:CGSizeMake(24, 24)];
     UIBarButtonItem *addFieldReportButtonItem = [[UIBarButtonItem alloc] initWithImage:plusImage style:UIBarButtonItemStylePlain target:self action:@selector(addNewFieldReport)];
     self.navigationItem.rightBarButtonItem = addFieldReportButtonItem;
     self.fieldReportTableView.delegate = self;

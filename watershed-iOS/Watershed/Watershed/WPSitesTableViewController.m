@@ -145,8 +145,8 @@ static NSString *cellIdentifier = @"SiteCell";
 
 - (UIBarButtonItem *)newSearchBarButtonItem {
 
-    FAKIonIcons *searchIcon = [FAKIonIcons androidSearchIconWithSize:19];
-    UIImage *searchImage = [searchIcon imageWithSize:CGSizeMake(20, 20)];
+    FAKIonIcons *searchIcon = [FAKIonIcons androidSearchIconWithSize:24];
+    UIImage *searchImage = [searchIcon imageWithSize:CGSizeMake(24, 24)];
     UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithImage:searchImage style:UIBarButtonItemStylePlain target:self action:@selector(openSearch)];
     searchButtonItem.tintColor = [UIColor whiteColor];
     
@@ -184,8 +184,8 @@ static NSString *cellIdentifier = @"SiteCell";
 #pragma mark - Add Site Button / Methods
 
 - (UIBarButtonItem *)newAddSiteButtonItem {
-    FAKIonIcons *plusIcon = [FAKIonIcons androidAddIconWithSize:18];
-    UIImage *plusImage = [plusIcon imageWithSize:CGSizeMake(18, 18)];
+    FAKIonIcons *plusIcon = [FAKIonIcons androidAddIconWithSize:24];
+    UIImage *plusImage = [plusIcon imageWithSize:CGSizeMake(24, 24)];
     UIBarButtonItem *addSiteButtonItem = [[UIBarButtonItem alloc] initWithImage:plusImage style:UIBarButtonItemStylePlain target:self action:@selector(showCreateSiteView)];
     addSiteButtonItem.tintColor = [UIColor whiteColor];
     return addSiteButtonItem;

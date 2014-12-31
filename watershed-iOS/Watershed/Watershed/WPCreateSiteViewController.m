@@ -31,14 +31,14 @@
     self.infoTableView.delegate = self;
     self.infoTableView.dataSource = self;
 
-    FAKIonIcons *closeIcon = [FAKIonIcons androidCloseIconWithSize:20];
-    UIImage *closeImage = [closeIcon imageWithSize:CGSizeMake(20, 20)];
+    FAKIonIcons *closeIcon = [FAKIonIcons androidCloseIconWithSize:24];
+    UIImage *closeImage = [closeIcon imageWithSize:CGSizeMake(24, 24)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithImage:closeImage style:UIBarButtonItemStylePlain target:self action:@selector(dismissSelf)];
     self.navigationItem.leftBarButtonItem = cancelButton;
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor wp_blue];
     
-    FAKIonIcons *checkIcon = [FAKIonIcons androidCheckmarkIconWithSize:20];
-    UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake(20, 20)];
+    FAKIonIcons *checkIcon = [FAKIonIcons androidDoneIconWithSize:24];
+    UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake(24, 24)];
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithImage:checkImage style:UIBarButtonItemStylePlain target:self action:@selector(saveAndDismissSelf)];
     self.navigationItem.rightBarButtonItem = doneButton;
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor wp_blue];
