@@ -94,7 +94,7 @@ static int COVER_PHOTO_TRANS = 0;
     }) wp_addToSuperview:self.tableHeaderView];
     
     _addressLabel = [({
-        FAKFontAwesome *mapMarkerIcon = [FAKFontAwesome mapMarkerIconWithSize:[WPLabeledIcon viewHeight]];
+        FAKIonIcons *mapMarkerIcon = [FAKIonIcons androidPinIconWithSize:[WPLabeledIcon viewHeight]];
         UIImage *mapMarkerImage = [mapMarkerIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
         WPLabeledIcon *addressLabel = [[WPLabeledIcon alloc] initWithText:@"Street Addresss Label" icon:mapMarkerImage];
         addressLabel;
@@ -108,16 +108,16 @@ static int COVER_PHOTO_TRANS = 0;
     }) wp_addToSuperview:self.tableHeaderView];
     
     _currentTaskLabel = [({
-        FAKFontAwesome *checkIcon = [FAKFontAwesome checkIconWithSize:[WPLabeledIcon viewHeight]];
+        FAKIonIcons *checkIcon = [FAKIonIcons androidDoneAllIconWithSize:[WPLabeledIcon viewHeight]];
         UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
         WPLabeledIcon *currentTaskLabel = [[WPLabeledIcon alloc] initWithText:@"Current Task" icon:checkImage];
         currentTaskLabel;
     }) wp_addToSuperview:self.tableHeaderView];
     
     _fieldReportCountLabel = [({
-        FAKFontAwesome *exclamationIcon = [FAKFontAwesome exclamationTriangleIconWithSize:[WPLabeledIcon viewHeight]];
-        UIImage *exclamationImage = [exclamationIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
-        WPLabeledIcon *fieldReportCountLabel = [[WPLabeledIcon alloc] initWithText:@"Field Report Count" icon:exclamationImage];
+        FAKIonIcons *clipboardIcon = [FAKIonIcons androidClipboardIconWithSize:[WPLabeledIcon viewHeight]];
+        UIImage *clipboardImage = [clipboardIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
+        WPLabeledIcon *fieldReportCountLabel = [[WPLabeledIcon alloc] initWithText:@"Field Report Count" icon:clipboardImage];
         fieldReportCountLabel;
     }) wp_addToSuperview:self.tableHeaderView];
     
