@@ -50,6 +50,7 @@ static int PROFILE_PIC_HEIGHT = 65;
     NSURL *pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=normal", _user.profilePictureId]];
     [self.profilePictureView setImageWithURL:pictureURL placeholderImage:[UIImage imageNamed:@"hill.png"]];
 
+    self.nameLabel.text = self.user.name;
 
     _userInformationArray = [[NSMutableArray alloc] init];
     if (user.email) {
