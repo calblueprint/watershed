@@ -94,14 +94,14 @@ static int COVER_PHOTO_TRANS = 0;
     }) wp_addToSuperview:self.tableHeaderView];
     
     _addressLabel = [({
-        FAKFontAwesome *mapMarkerIcon = [FAKFontAwesome mapMarkerIconWithSize:[WPLabeledIcon viewHeight]];
+        FAKIonIcons *mapMarkerIcon = [FAKIonIcons androidPinIconWithSize:[WPLabeledIcon viewHeight]];
         UIImage *mapMarkerImage = [mapMarkerIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
         WPLabeledIcon *addressLabel = [[WPLabeledIcon alloc] initWithText:@"Street Address" icon:mapMarkerImage];
         addressLabel;
     }) wp_addToSuperview:self.tableHeaderView];
     
     _siteCountLabel = [({
-        FAKFontAwesome *treeIcon = [FAKFontAwesome treeIconWithSize:[WPLabeledIcon viewHeight]];
+        FAKIonIcons *treeIcon = [FAKIonIcons androidImageIconWithSize:[WPLabeledIcon viewHeight]];
         UIImage *treeImage = [treeIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
         WPLabeledIcon *siteCountLabel = [[WPLabeledIcon alloc] initWithText:@"Site Count" icon:treeImage];
         siteCountLabel;
