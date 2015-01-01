@@ -184,7 +184,7 @@ static NSString *cellIdentifier = @"SiteCell";
 #pragma mark - Add Site Button / Methods
 
 - (UIBarButtonItem *)newAddSiteButtonItem {
-    FAKIonIcons *plusIcon = [FAKIonIcons androidAddIconWithSize:24];
+    FAKIonIcons *plusIcon = [FAKIonIcons androidAddIconWithSize:26];
     UIImage *plusImage = [plusIcon imageWithSize:CGSizeMake(24, 24)];
     UIBarButtonItem *addSiteButtonItem = [[UIBarButtonItem alloc] initWithImage:plusImage style:UIBarButtonItemStylePlain target:self action:@selector(showCreateSiteView)];
     addSiteButtonItem.tintColor = [UIColor whiteColor];
