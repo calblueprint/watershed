@@ -90,11 +90,11 @@ static int PROFILE_PIC_HEIGHT = 65;
     WPProfileTableViewCell *cell = [[WPProfileTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:profileReuseIdentifier];
     switch (indexPath.row) {
         case 1: {
-            FAKIonIcons *mailIcon = [FAKIonIcons iosEmailOutlineIconWithSize:30];
+            FAKIonIcons *mailIcon = [FAKIonIcons androidMailIconWithSize:26];
             [mailIcon addAttribute:NSForegroundColorAttributeName
                              value:[UIColor darkGrayColor]];
             [cell setIconImageView:[[UIImageView alloc]
-                     initWithImage:[mailIcon imageWithSize:CGSizeMake(30, 30)]]];
+                     initWithImage:[mailIcon imageWithSize:CGSizeMake(26, 26)]]];
             
             
             UILabel *infoLabel = [[UILabel alloc] init];
@@ -105,21 +105,21 @@ static int PROFILE_PIC_HEIGHT = 65;
         }
         case 2: {
             if (_user.location) {
-                FAKIonIcons *locationIcon = [FAKIonIcons iosLocationOutlineIconWithSize:30];
+                FAKIonIcons *locationIcon = [FAKIonIcons androidPinIconWithSize:26];
                 [locationIcon addAttribute:NSForegroundColorAttributeName
                                  value:[UIColor darkGrayColor]];
                 [cell setIconImageView:[[UIImageView alloc]
-                         initWithImage:[locationIcon imageWithSize:CGSizeMake(30, 30)]]];
+                         initWithImage:[locationIcon imageWithSize:CGSizeMake(26, 26)]]];
                 
                 UILabel *infoLabel = [[UILabel alloc] init];
                 infoLabel.text = self.user.location;
                 [cell setInfoLabel:infoLabel];
             } else {
-                FAKIonIcons *phoneIcon = [FAKIonIcons iosTelephoneOutlineIconWithSize:30];
+                FAKIonIcons *phoneIcon = [FAKIonIcons androidCallIconWithSize:26];
                 [phoneIcon addAttribute:NSForegroundColorAttributeName
                                   value:[UIColor darkGrayColor]];
                 [cell setIconImageView:[[UIImageView alloc]
-                                        initWithImage:[phoneIcon imageWithSize:CGSizeMake(30, 30)]]];
+                                        initWithImage:[phoneIcon imageWithSize:CGSizeMake(26, 26)]]];
                 
                 UILabel *infoLabel = [[UILabel alloc] init];
                 infoLabel.text = self.user.phoneNumber;
@@ -129,11 +129,11 @@ static int PROFILE_PIC_HEIGHT = 65;
         }
         case 3: {
             if (_user.phoneNumber) {
-                FAKIonIcons *phoneIcon = [FAKIonIcons iosTelephoneOutlineIconWithSize:30];
+                FAKIonIcons *phoneIcon = [FAKIonIcons androidCallIconWithSize:26];
                 [phoneIcon addAttribute:NSForegroundColorAttributeName
                                  value:[UIColor darkGrayColor]];
                 [cell setIconImageView:[[UIImageView alloc]
-                         initWithImage:[phoneIcon imageWithSize:CGSizeMake(30, 30)]]];
+                         initWithImage:[phoneIcon imageWithSize:CGSizeMake(26, 26)]]];
                 
                 UILabel *infoLabel = [[UILabel alloc] init];
                 infoLabel.text = self.user.phoneNumber;
