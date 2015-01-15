@@ -10,9 +10,5 @@
 #import "UIExtensions.h"
 
 @interface WPSelectVegetationTableViewCell : UITableViewCell
-<<<<<<< HEAD
 + (CGFloat)cellHeight;
-=======
-+ (CGFloat) cellHeight;
->>>>>>> Add custom radio buttons for vegetation cells
 @end
