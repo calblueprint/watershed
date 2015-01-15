@@ -242,6 +242,15 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     picker.allowsEditing = NO;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     
+    [picker.navigationBar setBackgroundColor:[UIColor whiteColor]];
+    [picker.navigationBar setShadowImage:[UIImage imageNamed:@"WPBlue"]];
+    [picker.navigationBar setTintColor:[UIColor wp_blue]];
+    [picker.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
+    UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [WPView getScreenWidth], 20)];
+    statusBarView.backgroundColor = [UIColor whiteColor];
+    [picker.view addSubview:statusBarView];
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
     [self presentViewController:picker animated:YES completion:NULL];
 }
 
@@ -253,11 +262,16 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     //    UIImage *chosenImage = info[UIImagePickerControllerOriginalImage];
     //    self.view.originalImage = chosenImage;
     //    [self setBlurredImage];
-    [picker dismissViewControllerAnimated:YES completion:NULL];
+    [picker dismissViewControllerAnimated:YES completion:^{
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    }];
+    
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [picker dismissViewControllerAnimated:YES completion:NULL];
+    [picker dismissViewControllerAnimated:YES completion:^{
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    }];
 }
 
 #pragma mark - Text Field delegate methods

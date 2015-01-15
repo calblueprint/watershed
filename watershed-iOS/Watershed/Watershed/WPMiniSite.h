@@ -22,7 +22,7 @@
 @property (nonatomic) NSString *state;
 @property (nonatomic) NSNumber *zipCode;
 @property (nonatomic) NSMutableArray *imageURLs; //of NSURL's
-@property (nonatomic) NSString *vegetations;
+@property (nonatomic) NSArray *vegetations;
 
 @property (nonatomic) WPSite *site;
 @property (nonatomic) NSMutableArray *users; //of WPUser's

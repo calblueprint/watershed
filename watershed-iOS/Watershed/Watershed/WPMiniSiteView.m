@@ -17,14 +17,11 @@
 @property (nonatomic) UIView *headingLineBreak;
 @property (nonatomic) UIImageView *tableViewShadowOverlay;
 @property (nonatomic) UIScrollView *miniSiteScrollView;
-@property (nonatomic) NSMutableArray *coverPhotoArray;
-@property (nonatomic) NSInteger blurRadius;
 
 @end
 
 @implementation WPMiniSiteView
 
-static const int COVER_PHOTO_HEIGHT = 124;
 static int COVER_PHOTO_TRANS = 0;
 
 - (id)initWithFrame:(CGRect)frame {
@@ -140,8 +137,6 @@ static int COVER_PHOTO_TRANS = 0;
         overlay.alpha = 0.1;
         overlay;
     }) wp_addToSuperview:self];
-    
-    [self generateBlurredPhotos];
     
     _navbarShadowOverlay = [({
         UIImageView *navbarShadowOverlay = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ShadowOverlay"]];
@@ -271,40 +266,14 @@ static int COVER_PHOTO_TRANS = 0;
 
 - (void)configureWithMiniSite:(WPMiniSite *)miniSite {
     [self.coverPhotoView setImageWithURL:[miniSite.imageURLs firstObject]
-                        placeholderImage:[UIImage imageNamed:@"SampleCoverPhoto2"]];
+                        placeholderImage:[UIImage imageNamed:@"WPBlue"]];
     self.originalCoverPhoto = self.coverPhotoView.image;
     self.titleLabel.text = miniSite.name;
     self.descriptionLabel.text = miniSite.info;
     self.addressLabel.label.text = [NSString stringWithFormat:@"%@, %@, %@ %@", miniSite.street, miniSite.city, miniSite.state, miniSite.zipCode];
-    self.vegetationListLabel.text = miniSite.vegetations;
+    //self.vegetationListLabel.text = miniSite.vegetations;
     self.currentTaskLabel.label.text = [NSString stringWithFormat:@"%@ tasks", miniSite.taskCount];
     self.fieldReportCountLabel.label.text = [[miniSite.fieldReportCount stringValue] stringByAppendingString:@" field reports"];
-}
-
-#pragma mark - Blurred Photo Generation
-
-- (void)generateBlurredPhotos {
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-//        for (int i = 0; i <= 20; i+= 2) {
-//            UIImage *image = self.originalCoverPhoto;
-//            image = [image applyBlurWithRadius:i
-//                                     tintColor:[UIColor clearColor]
-//                         saturationDeltaFactor:1
-//                                     maskImage:nil];
-//            
-//            [self.coverPhotoArray addObject:image];
-//            [self.coverPhotoArray addObject:image];
-//        }
-//    });
-}
-
-#pragma mark - Lazy Instantiation
-
-- (NSMutableArray *)coverPhotoArray {
-    if (!_coverPhotoArray) {
-        _coverPhotoArray = [[NSMutableArray alloc] init];
-    }
-    return _coverPhotoArray;
 }
 
 #pragma mark - ScrollView Delegate Method from ViewController
@@ -312,18 +281,12 @@ static int COVER_PHOTO_TRANS = 0;
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
     CGFloat trans = scrollView.contentOffset.y;
-    COVER_PHOTO_TRANS = trans;
-    if (COVER_PHOTO_TRANS > 60) COVER_PHOTO_TRANS = 60;
-    self.blurRadius = MIN(ABS(COVER_PHOTO_TRANS / 6), 20);
+    COVER_PHOTO_TRANS = MIN(60, trans);
     self.coverPhotoOverlay.alpha = 0.3 + (COVER_PHOTO_TRANS + topMargin) / 600;
     
     [self.coverPhotoView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(COVER_PHOTO_HEIGHT - COVER_PHOTO_TRANS));
     }];
-    
-    if (self.coverPhotoArray.count > self.blurRadius) {
-        [self.coverPhotoView setImage:self.coverPhotoArray[self.blurRadius]];
-    }
     
     CGFloat titleAlpha = (trans - COVER_PHOTO_TRANS - 20) / 30;
     

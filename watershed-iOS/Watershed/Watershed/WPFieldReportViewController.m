@@ -27,6 +27,7 @@
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         strongSelf.fieldReport = fieldReport;
         [strongSelf.view showBubbles];
+        [strongSelf setUpActions];
     }];
 }
 
@@ -51,6 +52,36 @@
     }
 }
 
+- (void)setUpActions {
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(presentImageView)];
+    [self.view.reportImageView addGestureRecognizer:tap];
+}
+
+#pragma mark - Photo Viewing Methods
+
+- (void)presentImageView {
+    UIViewController *viewPhotoModal = [[UIViewController alloc] init];
+    viewPhotoModal.view.backgroundColor = [UIColor blackColor];
+    viewPhotoModal.view.userInteractionEnabled = YES;
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:viewPhotoModal.view.frame];
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    imageView.image = self.view.reportImageView.image;
+    [viewPhotoModal.view addSubview:imageView];
+    
+    UITapGestureRecognizer *modalTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissModalView:)];
+    [viewPhotoModal.view addGestureRecognizer:modalTap];
+    viewPhotoModal.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    
+    [self presentViewController:viewPhotoModal animated:YES completion:nil];
+}
+
+- (void)dismissModalView:(UIGestureRecognizer *)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Update field report view
+
 - (void)updateFieldReportView {
     UIColor *ratingColor = [UIColor colorForRating:[self.fieldReport.rating intValue]];
     self.view.backgroundColor = ratingColor;
@@ -58,7 +89,7 @@
     self.view.ratingNumberLabel.textColor = ratingColor;
     self.view.ratingNumberLabel.layer.borderColor = [ratingColor CGColor];
     [self.view.reportImageView setImageWithURL:[self.fieldReport.imageURLs firstObject]
-                              placeholderImage:[UIImage imageNamed:@"SampleCoverPhoto2"]];
+                              placeholderImage:[UIImage imageNamed:@"WPBlue"]];
     self.view.userImageView.image = [UIImage imageNamed:@"max"];
     self.view.userImageView.layer.borderColor = [ratingColor CGColor];
     self.view.titleLabel.text = self.fieldReport.miniSite.name;

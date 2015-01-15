@@ -101,13 +101,16 @@ static NSString *cellIdentifier = @"FieldReportCell";
     if ([tableView isEqual:self.fieldReportTableView]) {
         
         cellView = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        [cellView.photoView cancelImageRequestOperation];
+        cellView.photoView.image = nil;
+        
         if (!cellView) {
             cellView = [[WPFieldReportTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                          reuseIdentifier:cellIdentifier];
         }
         WPFieldReport *fieldReport = self.fieldReportList[indexPath.row];
         [cellView.photoView setImageWithURL:[fieldReport.imageURLs firstObject]
-                           placeholderImage:[UIImage imageNamed:@"SampleCoverPhoto2"]];
+                           placeholderImage:[UIImage imageNamed:@"WPBlue"]];
         cellView.dateLabel.text = [fieldReport dateString];
         cellView.ratingNumberLabel.text = [fieldReport.rating stringValue];
         cellView.ratingNumberLabel.textColor = [UIColor colorForRating:[fieldReport.rating intValue]];
