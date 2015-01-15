@@ -6,24 +6,22 @@
 //  Copyright (c) 2015 Blueprint. All rights reserved.
 //
 
-#import "WPAddVegetationTableViewCell.h"
+#import "WPAddVegetationTextField.h"
 
-@interface WPAddVegetationTableViewCell ()
+@interface WPAddVegetationTextField ()
 
 @end
 
-@implementation WPAddVegetationTableViewCell
+@implementation WPAddVegetationTextField
 
 const static float CELL_HEIGHT = 60.0f;
 const static float RADIO_BUTTON_SIZE = 30.0f;
 const static float CHECK_SIZE = RADIO_BUTTON_SIZE * 3 / 4;
 
-- (id)initWithStyle:(UITableViewCellStyle)style
-    reuseIdentifier:(NSString *)reuseIdentifier {
-    
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+- (id)initWithFrame:(CGRect)frame {
+
+    self = [super initWithFrame:frame];
     if (self) {
-        self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self createSubviews];
         [self updateConstraints];
     }

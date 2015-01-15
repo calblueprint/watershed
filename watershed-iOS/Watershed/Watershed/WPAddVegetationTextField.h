@@ -1,5 +1,5 @@
 //
-//  WPAddVegetationTableViewCell.h
+//  WPAddVegetationTextField.h
 //  Watershed
 //
 //  Created by Andrew Millman on 1/14/15.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "UIExtensions.h"
 
-@interface WPAddVegetationTableViewCell : UITableViewCell
+@interface WPAddVegetationTextField : UIView
 
 @property (nonatomic) UITextField *textField;
 @property (nonatomic) UIButton *addButton;
