@@ -16,7 +16,7 @@
 
 - (id)initWithFrame:(CGRect)frame {
 
-    self = [super initWithFrame:frame visibleNavbar:YES];
+    self = [super initWithFrame:frame];
     if (self) {
         [self createSubviews];
         [self updateConstraints];

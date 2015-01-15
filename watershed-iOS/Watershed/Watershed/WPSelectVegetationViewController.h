@@ -13,6 +13,6 @@
 @end
 
 @interface WPSelectVegetationViewController : WPViewController <UITableViewDelegate, UITableViewDataSource>
-@property (nonatomic, assign) id<SelectVegetationDelegate> delegate;
+@property (nonatomic, weak) id<SelectVegetationDelegate> delegate;
 @property (nonatomic) NSArray *selectedIndices;
 @end
