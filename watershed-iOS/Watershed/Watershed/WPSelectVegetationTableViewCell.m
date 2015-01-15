@@ -26,6 +26,7 @@ const static float CHECK_SIZE = RADIO_BUTTON_SIZE * 3 / 4;
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.textLabel.font = [UIFont systemFontOfSize:13.0];
         [self createSubviews];
         [self updateConstraints];
     }

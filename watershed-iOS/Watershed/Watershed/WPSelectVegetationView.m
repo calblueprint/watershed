@@ -14,6 +14,8 @@
 
 @implementation WPSelectVegetationView
 
+const static float TEXT_FIELD_HEIGHT = 60.0f;
+
 - (id)initWithFrame:(CGRect)frame {
 
     self = [super initWithFrame:frame];
@@ -27,6 +29,11 @@
 #pragma mark - View Hierarchy
 
 - (void)createSubviews {
+    
+    _addVegetationTextField = [({
+        WPAddVegetationTextField *field = [[WPAddVegetationTextField alloc] init];
+        field;
+    }) wp_addToSuperview:self];
     
     _selectVegetationTableView = [({
         UITableView *selectVegetationTableView = [[UITableView alloc] init];
@@ -47,8 +54,18 @@
 
 - (void)updateConstraints {
     
+    [self.addVegetationTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(topMargin));
+        make.leading.equalTo(@0);
+        make.trailing.equalTo(@0);
+        make.height.equalTo(@(TEXT_FIELD_HEIGHT));
+    }];
+    
     [self.selectVegetationTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(@0);
+        make.top.equalTo(self.addVegetationTextField.mas_bottom);
+        make.leading.equalTo(@0);
+        make.trailing.equalTo(@0);
+        make.bottom.equalTo(@0);
     }];
     
     [self.navbarShadowOverlay mas_makeConstraints:^(MASConstraintMaker *make) {
