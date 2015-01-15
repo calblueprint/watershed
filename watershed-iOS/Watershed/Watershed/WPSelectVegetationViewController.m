@@ -13,7 +13,7 @@
 
 @interface WPSelectVegetationViewController ()
 @property (nonatomic) WPSelectVegetationView *view;
-@property (nonatomic) NSArray *vegetationList;
+@property (nonatomic) NSMutableArray *vegetationList;
 @end
 
 @implementation WPSelectVegetationViewController
@@ -35,7 +35,7 @@ static NSString *cellIdentifier = @"VegetationCell";
                                                                                 action:@selector(finishSelecting)];
     self.navigationItem.rightBarButtonItem = doneButton;
     
-    self.vegetationList = @[@"Tree", @"Plant", @"Bioswale", @"Mark Miyashita", @"Dog", @"Cup", @"Tree", @"Flower", @"Tree", @"Plant", @"Bioswale", @"Mark Miyashita", @"Dog", @"Cup", @"Tree", @"Flower"];
+    self.vegetationList = @[@"Tree", @"Plant", @"Bioswale", @"Mark Miyashita", @"Dog", @"Cup", @"Tree", @"Flower", @"Tree", @"Plant", @"Bioswale", @"Mark Miyashita", @"Dog", @"Cup", @"Tree", @"Flower"].mutableCopy;
 }
 
 #pragma mark - Table View Delegate / Data Source Methods
