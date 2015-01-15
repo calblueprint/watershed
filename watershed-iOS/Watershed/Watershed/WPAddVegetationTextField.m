@@ -1,5 +1,5 @@
 //
-//  WPAddVegetationTableViewCell.m
+//  WPAddVegetationTextField.m
 //  Watershed
 //
 //  Created by Andrew Millman on 1/14/15.
@@ -14,7 +14,6 @@
 
 @implementation WPAddVegetationTextField
 
-const static float CELL_HEIGHT = 60.0f;
 const static float RADIO_BUTTON_SIZE = 30.0f;
 const static float PLUS_SIZE = RADIO_BUTTON_SIZE * 3 / 4;
 
@@ -86,12 +85,6 @@ const static float PLUS_SIZE = RADIO_BUTTON_SIZE * 3 / 4;
     }];
     
     [super updateConstraints];
-}
-
-#pragma mark - Public Methods
-
-+ (CGFloat)cellHeight {
-    return CELL_HEIGHT;
 }
 
 @end

@@ -14,7 +14,7 @@
 
 @implementation WPSelectVegetationView
 
-const static float TEXT_FIELD_HEIGHT = 60.0f;
+const static float TEXT_FIELD_HEIGHT = 54.0f;
 
 - (id)initWithFrame:(CGRect)frame {
 

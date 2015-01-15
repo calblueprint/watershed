@@ -14,5 +14,4 @@
 @property (nonatomic) UITextField *textField;
 @property (nonatomic) UIButton *addButton;
 
-+ (CGFloat)cellHeight;
 @end
