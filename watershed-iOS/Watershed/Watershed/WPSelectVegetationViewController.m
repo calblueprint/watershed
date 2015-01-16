@@ -41,6 +41,7 @@ static NSString *cellIdentifier = @"VegetationCell";
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                                                 target:self
                                                                                 action:@selector(finishSelecting)];
+    
     self.navigationItem.rightBarButtonItem = doneButton;
     
     self.vegetationList = @[@"Tree", @"Plant", @"Bioswale", @"Mark Miyashita", @"Dog", @"Cup"].mutableCopy;
@@ -62,7 +63,6 @@ static NSString *cellIdentifier = @"VegetationCell";
     return [WPSelectVegetationTableViewCell cellHeight];
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     WPSelectVegetationTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -77,6 +77,20 @@ static NSString *cellIdentifier = @"VegetationCell";
     }
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self dismissKeyboard];
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self dismissKeyboard];
+}
+
+#pragma mark - ScrollView Delegate Methods
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self dismissKeyboard];
 }
 
 #pragma mark - TextField Delegate Methods
