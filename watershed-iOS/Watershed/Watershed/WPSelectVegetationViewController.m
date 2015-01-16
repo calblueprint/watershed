@@ -88,7 +88,7 @@ static NSString *cellIdentifier = @"VegetationCell";
 
 #pragma mark - Private Methods
 
-- (void)dissmissKeyboard {
+- (void)dismissKeyboard {
     [self.addVegetationTextField resignFirstResponder];
 }
 
@@ -97,12 +97,14 @@ static NSString *cellIdentifier = @"VegetationCell";
     self.addVegetationTextField.text = @"";
     
     if (vegetation.length) {
-        [self.addVegetationTextField resignFirstResponder];
+        [self dismissKeyboard];
         [self.vegetationList insertObject:vegetation atIndex:0];
         NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
         [self.view.selectVegetationTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
-                                                   withRowAnimation:UITableViewRowAnimationFade];
-        [self.view.selectVegetationTableView setContentOffset:CGPointZero animated:YES];
+                                                   withRowAnimation:UITableViewRowAnimationTop];
+        [self.view.selectVegetationTableView selectRowAtIndexPath:newIndexPath
+                                                         animated:YES
+                                                   scrollPosition:UITableViewScrollPositionTop];
     } else {
         [self.addVegetationTextField becomeFirstResponder];
     }
