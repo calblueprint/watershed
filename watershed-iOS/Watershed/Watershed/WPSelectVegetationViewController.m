@@ -81,17 +81,28 @@ static NSString *cellIdentifier = @"VegetationCell";
 
 #pragma mark - TextField Delegate Methods
 
-
+-(BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [self addVegetation];
+    return NO;
+}
 
 #pragma mark - Private Methods
 
+- (void)dissmissKeyboard {
+    [self.addVegetationTextField resignFirstResponder];
+}
+
 - (void)addVegetation {
     NSString *vegetation = self.addVegetationTextField.text;
+    self.addVegetationTextField.text = @"";
+    
     if (vegetation.length) {
+        [self.addVegetationTextField resignFirstResponder];
         [self.vegetationList insertObject:vegetation atIndex:0];
         NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
         [self.view.selectVegetationTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
                                                    withRowAnimation:UITableViewRowAnimationFade];
+        [self.view.selectVegetationTableView setContentOffset:CGPointZero animated:YES];
     } else {
         [self.addVegetationTextField becomeFirstResponder];
     }
