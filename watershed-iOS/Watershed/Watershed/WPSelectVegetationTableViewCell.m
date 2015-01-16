@@ -102,7 +102,7 @@ const static float CHECK_SIZE = RADIO_BUTTON_SIZE * 3 / 4;
     [super setSelected:selected animated:animated];
     
     if (selected) {
-        self.backgroundColor = [UIColor wp_lightBlue];
+        self.contentView.backgroundColor = [UIColor wp_lightBlue];
         self.textLabel.textColor = [UIColor whiteColor];
         self.radioButton.layer.borderColor = [UIColor clearColor].CGColor;
         self.radioButton.alpha = 1;
@@ -111,7 +111,7 @@ const static float CHECK_SIZE = RADIO_BUTTON_SIZE * 3 / 4;
         self.separatorView.alpha = 0.7;
     } else {
         [UIView animateWithDuration:0.2 animations:^{
-            self.backgroundColor = [UIColor clearColor];
+            self.contentView.backgroundColor = [UIColor clearColor];
             self.textLabel.textColor = [UIColor blackColor];
             self.radioButton.layer.borderColor = [UIColor grayColor].CGColor;
             self.radioButton.alpha = 0.3;
