@@ -11,9 +11,10 @@
 #import "WPSelectVegetationTableViewCell.h"
 #import "UIExtensions.h"
 
-@interface WPSelectVegetationViewController ()
+@interface WPSelectVegetationViewController () <UITextFieldDelegate>
 @property (nonatomic) WPSelectVegetationView *view;
 @property (nonatomic) NSMutableArray *vegetationList;
+@property (nonatomic) UITextField *addVegetationTextField;
 @end
 
 @implementation WPSelectVegetationViewController
@@ -30,12 +31,19 @@ static NSString *cellIdentifier = @"VegetationCell";
     self.view.selectVegetationTableView.delegate = self;
     self.view.selectVegetationTableView.dataSource = self;
     
+    // Set up Add Vegetation Text Field Response
+    self.addVegetationTextField = self.view.addVegetationTextField.textField;
+    self.addVegetationTextField.delegate = self;
+    [self.view.addVegetationTextField.addButton addTarget:self
+                                                   action:@selector(addVegetation)
+                                         forControlEvents:UIControlEventTouchUpInside];
+    
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                                                 target:self
                                                                                 action:@selector(finishSelecting)];
     self.navigationItem.rightBarButtonItem = doneButton;
     
-    self.vegetationList = @[@"Tree", @"Plant", @"Bioswale", @"Mark Miyashita", @"Dog", @"Cup", @"Tree", @"Flower", @"Tree", @"Plant", @"Bioswale", @"Mark Miyashita", @"Dog", @"Cup", @"Tree", @"Flower"].mutableCopy;
+    self.vegetationList = @[@"Tree", @"Plant", @"Bioswale", @"Mark Miyashita", @"Dog", @"Cup"].mutableCopy;
 }
 
 #pragma mark - Table View Delegate / Data Source Methods
@@ -71,7 +79,23 @@ static NSString *cellIdentifier = @"VegetationCell";
     return cell;
 }
 
+#pragma mark - TextField Delegate Methods
+
+
+
 #pragma mark - Private Methods
+
+- (void)addVegetation {
+    NSString *vegetation = self.addVegetationTextField.text;
+    if (vegetation.length) {
+        [self.vegetationList insertObject:vegetation atIndex:0];
+        NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        [self.view.selectVegetationTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+                                                   withRowAnimation:UITableViewRowAnimationFade];
+    } else {
+        [self.addVegetationTextField becomeFirstResponder];
+    }
+}
 
 - (void)finishSelecting {
     [self getSelectedVegetation];
