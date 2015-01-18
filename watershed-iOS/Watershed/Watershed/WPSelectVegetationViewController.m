@@ -44,7 +44,7 @@ static NSString *cellIdentifier = @"VegetationCell";
     
     self.navigationItem.rightBarButtonItem = doneButton;
     
-    self.vegetationList = @[@"Tree", @"Plant", @"Bioswale", @"Mark Miyashita", @"Dog", @"Cup"].mutableCopy;
+    self.vegetationList = @[@"Tree", @"Plant", @"Bioswale", @"Mark Miyashita", @"Dog", @"Cup", @"Tree", @"Plant", @"Bioswale", @"Mark Miyashita", @"Dog", @"Cup", @"Tree", @"Plant", @"Bioswale", @"Mark Miyashita", @"Dog", @"Cup"].mutableCopy;
 }
 
 #pragma mark - Table View Delegate / Data Source Methods
@@ -72,8 +72,11 @@ static NSString *cellIdentifier = @"VegetationCell";
     }
     cell.textLabel.text = self.vegetationList[indexPath.row];
     
-    if ([self.selectedIndices containsObject:@(indexPath.row)]) {
+    NSNumber *currentRow = @(indexPath.row);
+    if (self.selectedIndices.count && [self.selectedIndices containsObject:currentRow]) {
         [self.view.selectVegetationTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+        // Remove selected Index to prevent object from reselecting itself during reuse
+        [self.selectedIndices removeObject:currentRow];
     }
     
     return cell;
@@ -144,9 +147,9 @@ static NSString *cellIdentifier = @"VegetationCell";
 
 #pragma mark - Lazy Instantiation
 
-- (NSArray *)selectedIndices {
+- (NSMutableArray *)selectedIndices {
     if (!_selectedIndices) {
-        _selectedIndices = [[NSArray alloc] init];
+        _selectedIndices = [[NSMutableArray alloc] init];
     }
     return _selectedIndices;
 }

@@ -229,7 +229,7 @@
     if (textField.tag == 1) {
         WPSelectVegetationViewController *selectVegetationViewController = [[WPSelectVegetationViewController alloc] init];
         selectVegetationViewController.delegate = self;
-        selectVegetationViewController.selectedIndices = self.selectedVegetationIndices;
+        selectVegetationViewController.selectedIndices = self.selectedVegetationIndices.mutableCopy;
         [self.navigationController pushViewController:selectVegetationViewController animated:YES];
         return NO;
     }
