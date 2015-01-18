@@ -13,7 +13,6 @@
 
 @interface WPSelectVegetationViewController () <UITextFieldDelegate>
 @property (nonatomic) WPSelectVegetationView *view;
-@property (nonatomic) NSMutableArray *vegetationList;
 @property (nonatomic) UITextField *addVegetationTextField;
 @end
 
@@ -43,8 +42,6 @@ static NSString *cellIdentifier = @"VegetationCell";
                                                                                 action:@selector(finishSelecting)];
     
     self.navigationItem.rightBarButtonItem = doneButton;
-    
-    self.vegetationList = @[@"Tree", @"Plant", @"Bioswale", @"Mark Miyashita", @"Dog", @"Cup", @"Tree", @"Plant", @"Bioswale", @"Mark Miyashita", @"Dog", @"Cup", @"Tree", @"Plant", @"Bioswale", @"Mark Miyashita", @"Dog", @"Cup"].mutableCopy;
 }
 
 #pragma mark - Table View Delegate / Data Source Methods
@@ -142,7 +139,7 @@ static NSString *cellIdentifier = @"VegetationCell";
         NSString *selectedItem = self.vegetationList[index.row];
         [selectedVegetations addObject:selectedItem];
     }
-    [self.delegate vegetationFinishedSelecting:selectedVegetations withIndices:selectedIndices];
+    [self.delegate vegetationFinishedSelectingFromList:self.vegetationList vegetations:selectedVegetations indices:selectedIndices];
 }
 
 #pragma mark - Lazy Instantiation

@@ -17,6 +17,7 @@
 @property (nonatomic) WPCreateMiniSiteView *view;
 @property (nonatomic) UITableView *infoTableView;
 @property (nonatomic) NSArray *textInputViews;
+@property (nonatomic) NSArray *vegetationList;
 @property (nonatomic) NSArray *selectedVegetations;
 @property (nonatomic) NSArray *selectedVegetationIndices;
 @property (nonatomic) BSKeyboardControls *keyboardControls;
@@ -229,6 +230,7 @@
     if (textField.tag == 1) {
         WPSelectVegetationViewController *selectVegetationViewController = [[WPSelectVegetationViewController alloc] init];
         selectVegetationViewController.delegate = self;
+        selectVegetationViewController.vegetationList = self.vegetationList.mutableCopy;
         selectVegetationViewController.selectedIndices = self.selectedVegetationIndices.mutableCopy;
         [self.navigationController pushViewController:selectVegetationViewController animated:YES];
         return NO;
@@ -236,7 +238,6 @@
     
     self.keyboardControls.activeField = textField;
 
-    self.keyboardControls.activeField = textField;
     // ignore direction in here
     [self keyboardControls:self.keyboardControls selectedField:textField inDirection:BSKeyboardControlsDirectionNext];
     return YES;
@@ -370,7 +371,9 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 
 #pragma mark - SelectVegetation Delegate
 
-- (void)vegetationFinishedSelecting:(NSArray *)vegetations withIndices:(NSArray *)indices {
+- (void)vegetationFinishedSelectingFromList:(NSArray *)fullVegetationList
+                                vegetations:(NSArray *)vegetations
+                                    indices:(NSArray *)indices {
     self.vegetationTextField.text = nil;
     for (NSString *vegetationItem in vegetations) {
         if ([vegetations indexOfObject:vegetationItem] > 0) {
@@ -381,6 +384,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
         }
     }
     
+    self.vegetationList = fullVegetationList;
     self.selectedVegetations = vegetations;
     self.selectedVegetationIndices = indices;
 }
@@ -510,6 +514,13 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
         _imageInputCell.inputLabel.text = @"Photo";
     }
     return _imageInputCell;
+}
+
+- (NSArray *)vegetationList {
+    if (!_vegetationList) {
+        _vegetationList = @[@"Tree", @"Plant", @"Bioswale", @"Mark Miyashita", @"Dog", @"Cup", @"Tree", @"Plant", @"Bioswale", @"Mark Miyashita", @"Dog", @"Cup", @"Tree", @"Plant", @"Bioswale", @"Mark Miyashita", @"Dog", @"Cup"];
+    }
+    return _vegetationList;
 }
 
 - (NSArray *)selectedVegetations {
