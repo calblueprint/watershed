@@ -17,5 +17,5 @@
 @interface WPSelectVegetationViewController : WPViewController <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, weak) id<SelectVegetationDelegate> delegate;
 @property (nonatomic) NSMutableArray *vegetationList;
-@property (nonatomic) NSMutableArray *selectedIndices;
+@property (nonatomic) NSMutableArray *initialSelectedIndices;
 @end

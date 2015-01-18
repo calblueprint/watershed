@@ -70,10 +70,10 @@ static NSString *cellIdentifier = @"VegetationCell";
     cell.textLabel.text = self.vegetationList[indexPath.row];
     
     NSNumber *currentRow = @(indexPath.row);
-    if (self.selectedIndices.count && [self.selectedIndices containsObject:currentRow]) {
+    if (self.initialSelectedIndices.count && [self.initialSelectedIndices containsObject:currentRow]) {
         [self.view.selectVegetationTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
         // Remove selected Index to prevent object from reselecting itself during reuse
-        [self.selectedIndices removeObject:currentRow];
+        [self.initialSelectedIndices removeObject:currentRow];
     }
     
     return cell;
@@ -145,10 +145,10 @@ static NSString *cellIdentifier = @"VegetationCell";
 #pragma mark - Lazy Instantiation
 
 - (NSMutableArray *)selectedIndices {
-    if (!_selectedIndices) {
-        _selectedIndices = [[NSMutableArray alloc] init];
+    if (!_initialSelectedIndices) {
+        _initialSelectedIndices = [[NSMutableArray alloc] init];
     }
-    return _selectedIndices;
+    return _initialSelectedIndices;
 }
 
 @end

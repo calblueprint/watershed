@@ -231,7 +231,7 @@
         WPSelectVegetationViewController *selectVegetationViewController = [[WPSelectVegetationViewController alloc] init];
         selectVegetationViewController.delegate = self;
         selectVegetationViewController.vegetationList = self.vegetationList.mutableCopy;
-        selectVegetationViewController.selectedIndices = self.selectedVegetationIndices.mutableCopy;
+        selectVegetationViewController.initialSelectedIndices = self.selectedVegetationIndices.mutableCopy;
         [self.navigationController pushViewController:selectVegetationViewController animated:YES];
         return NO;
     }
