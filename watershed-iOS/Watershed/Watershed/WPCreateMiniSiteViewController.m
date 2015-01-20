@@ -375,8 +375,9 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
                                 vegetations:(NSArray *)vegetations
                                     indices:(NSArray *)indices {
     self.vegetationTextField.text = nil;
-    for (NSString *vegetationItem in vegetations) {
-        if ([vegetations indexOfObject:vegetationItem] > 0) {
+    for (int i = 0; i < vegetations.count; i++) {
+        NSString *vegetationItem = vegetations[i];
+        if (i > 0) {
             NSString *addOn = [@", " stringByAppendingString:vegetationItem];
             self.vegetationTextField.text = [self.vegetationTextField.text stringByAppendingString:addOn];
         } else {
