@@ -13,6 +13,7 @@
 
 - (void)viewDidLoad {
     self.navigationItem.title = @"Watershed";
+    self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
 - (void)loadView {

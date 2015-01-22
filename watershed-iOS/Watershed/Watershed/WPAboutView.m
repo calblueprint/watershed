@@ -69,7 +69,7 @@
     }];
     
     [self.aboutLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.titleLabel.mas_bottom).with.offset(standardMargin);
+        make.top.equalTo(self.titleLabel.mas_bottom).with.offset(3 * standardMargin);
         make.leading.equalTo(@(standardMargin));
         make.trailing.equalTo(@(-standardMargin));
         make.bottom.equalTo(@(-standardMargin));
