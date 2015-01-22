@@ -10,7 +10,6 @@
 
 @interface WPAboutView : WPView
 
-@property (nonatomic) UILabel *titleLabel;
-@property (nonatomic) UILabel *aboutLabel;
+@property (nonatomic) UIScrollView *scrollView;
 
 @end
