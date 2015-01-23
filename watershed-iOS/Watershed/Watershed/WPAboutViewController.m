@@ -20,5 +20,4 @@
     self.view = [[WPAboutView alloc] init];
 }
 
-
 @end
