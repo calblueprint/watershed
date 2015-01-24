@@ -48,20 +48,6 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Edit Delegate
-
--(void)dismissEdit {
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    [self dismissViewControllerAnimated:YES completion:nil];
-    self.editViewController = nil;
-    [self.navigationController popViewControllerAnimated:NO];
-}
-
--(void)saveAndDismissEdit {
-    //save
-    [self dismissEdit];
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
