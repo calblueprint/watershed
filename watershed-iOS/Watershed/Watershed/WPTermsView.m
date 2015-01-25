@@ -22,10 +22,16 @@
 
 - (void)createSubviews {
 
+    _scrollView = [({
+        UIScrollView *scrollView = [[UIScrollView alloc] init];
+        scrollView.alwaysBounceVertical = YES;
+        scrollView;
+    }) wp_addToSuperview:self];
+
     _termsLabel = [[UILabel alloc] init];
     _termsLabel.text = @"Terms";
     _termsLabel.textColor = [UIColor whiteColor];
-    [self addSubview:_termsLabel];
+    [self.scrollView addSubview:_termsLabel];
 
     _termsInfoLabel = [[UILabel alloc] init];
     _termsInfoLabel.text = @"These are our terms.";
@@ -33,12 +39,12 @@
     _termsInfoLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _termsInfoLabel.numberOfLines = 0;
     _termsInfoLabel.textColor = [UIColor whiteColor];
-    [self addSubview:_termsInfoLabel];
+    [self.scrollView addSubview:_termsInfoLabel];
 
     _privacyLabel = [[UILabel alloc] init];
     _privacyLabel.text = @"Privacy";
     _privacyLabel.textColor = [UIColor whiteColor];
-    [self addSubview:_privacyLabel];
+    [self.scrollView addSubview:_privacyLabel];
 
     _privacyInfoLabel = [[UILabel alloc] init];
     _privacyInfoLabel.text = @"This are our privacy.";
@@ -46,14 +52,21 @@
     _privacyInfoLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _privacyInfoLabel.numberOfLines = 0;
     _privacyInfoLabel.textColor = [UIColor whiteColor];
-    [self addSubview:_privacyInfoLabel];
+    [self.scrollView addSubview:_privacyInfoLabel];
 
 }
 
 - (void)updateConstraints {
 
+    [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(topMargin));
+        make.leading.equalTo(@0);
+        make.trailing.equalTo(@0);
+        make.bottom.equalTo(@0);
+    }];
+
     [self.termsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(topMargin + standardMargin));
+        make.top.equalTo(@(standardMargin));
         make.leading.equalTo(@(standardMargin));
     }];
 

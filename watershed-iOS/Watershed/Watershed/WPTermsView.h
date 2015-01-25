@@ -10,6 +10,7 @@
 
 @interface WPTermsView : WPView
 
+@property (nonatomic) UIScrollView *scrollView;
 @property (nonatomic) UILabel *termsLabel;
 @property (nonatomic) UILabel *termsInfoLabel;
 @property (nonatomic) UILabel *privacyLabel;
