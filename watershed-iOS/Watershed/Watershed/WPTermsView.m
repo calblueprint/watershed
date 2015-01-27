@@ -28,31 +28,39 @@
         scrollView;
     }) wp_addToSuperview:self];
 
-    _termsLabel = [[UILabel alloc] init];
-    _termsLabel.text = @"Terms";
-    _termsLabel.textColor = [UIColor whiteColor];
-    [self.scrollView addSubview:_termsLabel];
+    _termsLabel = [({
+        UILabel *label = [[UILabel alloc] init];
+        label.text = @"Terms";
+        label.textColor = [UIColor whiteColor];
+        label;
+    }) wp_addToSuperview:self.scrollView];
 
-    _termsInfoLabel = [[UILabel alloc] init];
-    _termsInfoLabel.text = @"These are our terms.";
-    _termsInfoLabel.font= [UIFont systemFontOfSize:10];
-    _termsInfoLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    _termsInfoLabel.numberOfLines = 0;
-    _termsInfoLabel.textColor = [UIColor whiteColor];
-    [self.scrollView addSubview:_termsInfoLabel];
+    _termsInfoLabel = [({
+        UILabel *label = [[UILabel alloc] init];
+        label.text = @"These are our terms.";
+        label.font= [UIFont systemFontOfSize:12];
+        label.lineBreakMode = NSLineBreakByWordWrapping;
+        label.numberOfLines = 0;
+        label.textColor = [UIColor whiteColor];
+        label;
+    }) wp_addToSuperview:self.scrollView];
 
-    _privacyLabel = [[UILabel alloc] init];
-    _privacyLabel.text = @"Privacy";
-    _privacyLabel.textColor = [UIColor whiteColor];
-    [self.scrollView addSubview:_privacyLabel];
+    _privacyLabel = [({
+        UILabel *label = [[UILabel alloc] init];
+        label.text = @"Privacy";
+        label.textColor = [UIColor whiteColor];
+        label;
+    }) wp_addToSuperview:self.scrollView];
 
-    _privacyInfoLabel = [[UILabel alloc] init];
-    _privacyInfoLabel.text = @"This are our privacy.";
-    _privacyInfoLabel.font= [UIFont systemFontOfSize:10];
-    _privacyInfoLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    _privacyInfoLabel.numberOfLines = 0;
-    _privacyInfoLabel.textColor = [UIColor whiteColor];
-    [self.scrollView addSubview:_privacyInfoLabel];
+    _privacyInfoLabel = [({
+        UILabel *label = [[UILabel alloc] init];
+        label.text = @"These are our privacy policies.";
+        label.font= [UIFont systemFontOfSize:12];
+        label.lineBreakMode = NSLineBreakByWordWrapping;
+        label.numberOfLines = 0;
+        label.textColor = [UIColor whiteColor];
+        label;
+    }) wp_addToSuperview:self.scrollView];
 
 }
 
