@@ -154,22 +154,28 @@ static int PROFILE_PIC_HEIGHT = 65;
 
 
 - (void)createSubviews {
-    _profilePictureView = [[UIImageView alloc] init];
-    _profilePictureView.contentMode = UIViewContentModeScaleAspectFill;
-    _profilePictureView.clipsToBounds = YES;
-    _profilePictureView.alpha = 0;
-    [self setRoundedView:_profilePictureView];
-    [self addSubview:_profilePictureView];
-
-
-    _nameLabel = [[UILabel alloc] init];
-    _nameLabel.text = self.user.name;
-    _nameLabel.textColor = [UIColor blackColor];
-    [self addSubview:_nameLabel];
     
-    _infoTableView = [[UITableView alloc] init];
-    _infoTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    [self addSubview:_infoTableView];
+    _profilePictureView = [({
+        UIImageView *pictureView = [[UIImageView alloc] init];
+        pictureView.contentMode = UIViewContentModeScaleAspectFill;
+        pictureView.clipsToBounds = YES;
+        pictureView.alpha = 0;
+        [self setRoundedView:pictureView];
+        pictureView;
+    }) wp_addToSuperview:self];
+
+    _nameLabel = [({
+        UILabel *label = [[UILabel alloc] init];
+        label.text = self.user.name;
+        label.textColor = [UIColor blackColor];
+        label;
+    }) wp_addToSuperview:self];
+
+    _infoTableView = [({
+        UITableView *tableView = [[UITableView alloc] init];
+        tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+        tableView;
+    }) wp_addToSuperview:self];
 
     _indicatorView = [({
         UIActivityIndicatorView *view = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
