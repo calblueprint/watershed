@@ -10,12 +10,12 @@
 
 @implementation WPTermsView
 
-- (instancetype)init {
-    self = [super init];
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame visibleNavbar:YES];
     if (self) {
         [self createSubviews];
         [self setNeedsUpdateConstraints];
-        self.backgroundColor = [UIColor lightGrayColor];
+        self.backgroundColor = [UIColor colorWithRed:0.80 green:0.80 blue:0.80 alpha:1];
     }
     return self;
 }
