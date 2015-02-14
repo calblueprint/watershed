@@ -88,6 +88,16 @@ static NSString *cellIdentifier = @"FieldReportCell";
     }];
 }
 
+#pragma mark - Edit Site Button / Methods
+
+- (UIBarButtonItem *)newEditSiteButtonItem {
+    FAKIonIcons *editIcon = [FAKIonIcons androidCreateIconWithSize:24];
+    UIImage *editImage = [editIcon imageWithSize:CGSizeMake(24, 24)];
+    UIBarButtonItem *editSiteButtonItem = [[UIBarButtonItem alloc] initWithImage:editImage style:UIBarButtonItemStylePlain target:self action:nil];
+    editSiteButtonItem.tintColor = [UIColor whiteColor];
+    return editSiteButtonItem;
+}
+
 #pragma mark - TableView Delegate/DataSource Methods
 
 - (NSInteger)tableView:(UITableView *)tableView
