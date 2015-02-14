@@ -139,6 +139,7 @@ static NSString *cellIdentifier = @"MiniSiteCell";
     NSString *userRole = [WPNetworkingManager sharedManager].keyChainStore[@"role"];
     if (YES) {
         [barButtonItems insertObject:[self newAddSiteButtonItem] atIndex:0];
+        [barButtonItems insertObject:[self newEditSiteButtonItem] atIndex:1];
     }
     [self.navigationItem setRightBarButtonItems:barButtonItems animated:YES];
 }
@@ -161,6 +162,16 @@ static NSString *cellIdentifier = @"MiniSiteCell";
     [createMiniSiteNavController.navigationBar setBarTintColor:[UIColor whiteColor]];
     [createMiniSiteNavController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
     [self.navigationController presentViewController:createMiniSiteNavController animated:YES completion:nil];
+}
+
+#pragma mark - Edit Site Button / Methods
+
+- (UIBarButtonItem *)newEditSiteButtonItem {
+    FAKIonIcons *editIcon = [FAKIonIcons androidCreateIconWithSize:24];
+    UIImage *editImage = [editIcon imageWithSize:CGSizeMake(24, 24)];
+    UIBarButtonItem *editSiteButtonItem = [[UIBarButtonItem alloc] initWithImage:editImage style:UIBarButtonItemStylePlain target:self action:nil];
+    editSiteButtonItem.tintColor = [UIColor whiteColor];
+    return editSiteButtonItem;
 }
 
 #pragma mark - Setter Methods
