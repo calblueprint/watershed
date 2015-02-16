@@ -30,10 +30,9 @@ static NSString *cellIdentifier = @"FieldReportCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = self.miniSite.name;
-    FAKIonIcons *plusIcon = [FAKIonIcons androidAddIconWithSize:26];
-    UIImage *plusImage = [plusIcon imageWithSize:CGSizeMake(24, 24)];
-    UIBarButtonItem *addFieldReportButtonItem = [[UIBarButtonItem alloc] initWithImage:plusImage style:UIBarButtonItemStylePlain target:self action:@selector(addNewFieldReport)];
-    self.navigationItem.rightBarButtonItem = addFieldReportButtonItem;
+
+    [self setUpRightBarButtonItems];
+
     self.fieldReportTableView.delegate = self;
     self.fieldReportTableView.dataSource = self;
     
@@ -69,11 +68,6 @@ static NSString *cellIdentifier = @"FieldReportCell";
     }
 }
 
-- (void)addNewFieldReport {
-    WPAddFieldReportViewController *addFieldReportViewController = [[WPAddFieldReportViewController alloc] init];
-    [self.navigationController pushViewController:addFieldReportViewController animated:YES];
-}
-
 #pragma mark - Networking Methods
 
 - (void)requestAndLoadMiniSite {
@@ -88,14 +82,40 @@ static NSString *cellIdentifier = @"FieldReportCell";
     }];
 }
 
-#pragma mark - Edit Site Button / Methods
+#pragma mark - Navigation Bar Setup
+
+- (void)setUpRightBarButtonItems {
+    NSMutableArray *barButtonItems = [[NSMutableArray alloc] initWithObjects:[self newAddSiteButtonItem], nil];
+    NSString *userRole = [WPNetworkingManager sharedManager].keyChainStore[@"role"];
+    if ([userRole isEqual:@"2"]) {
+        [barButtonItems insertObject:[self newEditSiteButtonItem] atIndex:1];
+    }
+    [self.navigationItem setRightBarButtonItems:barButtonItems animated:YES];
+}
+
+#pragma mark - Add Field Report Button / Methods
+
+- (UIBarButtonItem *)newAddSiteButtonItem {
+    FAKIonIcons *plusIcon = [FAKIonIcons androidAddIconWithSize:26];
+    UIImage *plusImage = [plusIcon imageWithSize:CGSizeMake(24, 24)];
+    UIBarButtonItem *addFieldReportButtonItem = [[UIBarButtonItem alloc] initWithImage:plusImage style:UIBarButtonItemStylePlain target:self action:@selector(addNewFieldReport)];
+    addFieldReportButtonItem.tintColor = [UIColor whiteColor];
+    return addFieldReportButtonItem;
+}
+
+- (void)addNewFieldReport {
+    WPAddFieldReportViewController *addFieldReportViewController = [[WPAddFieldReportViewController alloc] init];
+    [self.navigationController pushViewController:addFieldReportViewController animated:YES];
+}
+
+#pragma mark - Edit Mini Site Button / Methods
 
 - (UIBarButtonItem *)newEditSiteButtonItem {
     FAKIonIcons *editIcon = [FAKIonIcons androidCreateIconWithSize:24];
     UIImage *editImage = [editIcon imageWithSize:CGSizeMake(24, 24)];
-    UIBarButtonItem *editSiteButtonItem = [[UIBarButtonItem alloc] initWithImage:editImage style:UIBarButtonItemStylePlain target:self action:nil];
-    editSiteButtonItem.tintColor = [UIColor whiteColor];
-    return editSiteButtonItem;
+    UIBarButtonItem *editMiniSiteButtonItem = [[UIBarButtonItem alloc] initWithImage:editImage style:UIBarButtonItemStylePlain target:self action:nil];
+    editMiniSiteButtonItem.tintColor = [UIColor whiteColor];
+    return editMiniSiteButtonItem;
 }
 
 #pragma mark - TableView Delegate/DataSource Methods
