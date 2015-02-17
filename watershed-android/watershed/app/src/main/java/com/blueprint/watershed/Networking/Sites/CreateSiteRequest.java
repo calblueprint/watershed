@@ -1,4 +1,4 @@
-package com.blueprint.watershed.Networking.Tasks;
+package com.blueprint.watershed.Networking.Sites;
 
 import android.app.Activity;
 import android.util.Log;
@@ -7,8 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Networking.BaseRequest;
-import com.blueprint.watershed.Tasks.Task;
-import com.blueprint.watershed.Tasks.TaskFragment;
+import com.blueprint.watershed.Sites.Site;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -17,40 +16,40 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 /**
- * Created by Max Wolffe on 12/8/14.
+ * Created by maxwolffe on 2/16/15.
  */
-public class CreateTaskRequest extends BaseRequest {
-
-    Task mTask;
+public class CreateSiteRequest extends BaseRequest {
+    Site mSite;
     Activity mActivity;
 
-    public CreateTaskRequest(final Activity activity, final Task task, HashMap<String, JSONObject> params, final Response.Listener<Task> listener) {
-        super(Request.Method.POST, makeURL("tasks"), taskParams(activity, task),
+    public CreateSiteRequest(final Activity activity, final Site site, HashMap<String, JSONObject> params, final Response.Listener<Site> listener) {
+        super(Request.Method.POST, makeURL("sites"), siteParams(activity, site),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {
                         try {
-                            String taskJson = jsonObject.get("task").toString();
+                            String siteJson = jsonObject.get("site").toString();
                             ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
-                            Task task = mapper.readValue(taskJson, new TypeReference<Task>() {
+                            Site site = mapper.readValue(siteJson, new TypeReference<Site>() {
                             });
-                            listener.onResponse(task);
+                            listener.onResponse(site);
                         } catch (Exception e) {
                             Log.e("Json exception", e.toString());
                         }
                     }
                 }, activity);
+
+        mSite = site;
         mActivity = activity;
-        mTask = task;
     }
 
-    protected static JSONObject taskParams(final Activity activity, final Task task) {
+    protected static JSONObject siteParams(final Activity activity, final Site site) {
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
         ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
 
         try {
-            JSONObject taskJson = new JSONObject(mapper.writeValueAsString(task));
-            params.put("task", taskJson);
+            JSONObject siteJson = new JSONObject(mapper.writeValueAsString(site));
+            params.put("site", siteJson);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -58,3 +57,4 @@ public class CreateTaskRequest extends BaseRequest {
         return new JSONObject(params);
     }
 }
+
