@@ -1,20 +1,19 @@
 package com.blueprint.watershed.Tasks;
 
 import android.app.Activity;
+import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.app.Fragment;
 import android.widget.Button;
 import android.widget.EditText;
 
-
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
-import com.blueprint.watershed.Networking.FieldReports.CreateFieldReportRequest;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Tasks.CreateTaskRequest;
 import com.blueprint.watershed.R;
@@ -26,19 +25,21 @@ import java.util.HashMap;
 
 public class CreateTaskFragment extends Fragment implements View.OnClickListener {
 
+    private static final int FADE_TIMER = 500;
+
     private EditText mTitleField;
     private EditText mDescriptionField;
     private EditText mAssigneeField;
     private EditText mDueDateField;
     private EditText mMiniSiteId;
-    private MainActivity mMainActivity;
+    private MainActivity mParentActivity;
     private NetworkManager mNetworkManager;
     private OnFragmentInteractionListener mListener;
 
     public static CreateTaskFragment newInstance() {
-        CreateTaskFragment fragment = new CreateTaskFragment();
-        return fragment;
+        return new CreateTaskFragment();
     }
+
     public CreateTaskFragment() {
         // Required empty public constructor
     }
@@ -47,16 +48,21 @@ public class CreateTaskFragment extends Fragment implements View.OnClickListener
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
-        mMainActivity = (MainActivity) getActivity();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_create_task, container, false);
-
-        setButtonListeners(view);
-        return view;
+        super.onCreateView(inflater, container, savedInstanceState);
+        mParentActivity = (MainActivity) getActivity();
+        return inflater.inflate(R.layout.fragment_create_task, container, false);
+    }
+    
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setButtonListeners();
+        setFocusListeners();
     }
 
     @Override
@@ -76,14 +82,31 @@ public class CreateTaskFragment extends Fragment implements View.OnClickListener
         mListener = null;
     }
 
-    private void setButtonListeners(View view){
-        Button submitButton = (Button)view.findViewById(R.id.create_task_submit);
-        mTitleField = (EditText)view.findViewById(R.id.create_task_title);
-        mDescriptionField = (EditText)view.findViewById(R.id.create_task_description);
-        mAssigneeField = (EditText)view.findViewById(R.id.create_task_assignee);
-        mDueDateField = (EditText)view.findViewById(R.id.create_task_due_date);
-        mMiniSiteId = (EditText)view.findViewById(R.id.create_task_site);
+    private void setButtonListeners(){
+        mTitleField = (EditText) mParentActivity.findViewById(R.id.create_task_title);
+        mDescriptionField = (EditText) mParentActivity.findViewById(R.id.create_task_description);
+        mAssigneeField = (EditText) mParentActivity.findViewById(R.id.create_task_assignee);
+        mDueDateField = (EditText) mParentActivity.findViewById(R.id.create_task_due_date);
+        mMiniSiteId = (EditText) mParentActivity.findViewById(R.id.create_task_site);
+        Button submitButton = (Button) mParentActivity.findViewById(R.id.create_task_submit);
         submitButton.setOnClickListener(this);
+    }
+
+    private void setFocusListeners() {
+        View.OnFocusChangeListener listener = new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                TransitionDrawable drawable = (TransitionDrawable) view.getBackground();
+                if (b) drawable.startTransition(FADE_TIMER);
+                else drawable.reverseTransition(0);
+            }
+        };
+
+        mTitleField.setOnFocusChangeListener(listener);
+        mDescriptionField.setOnFocusChangeListener(listener);
+        mAssigneeField.setOnFocusChangeListener(listener);
+        mDueDateField.setOnFocusChangeListener(listener);
+        mMiniSiteId.setOnFocusChangeListener(listener);
     }
 
     public void onClick(View view) {
@@ -109,16 +132,17 @@ public class CreateTaskFragment extends Fragment implements View.OnClickListener
 
     private void createTask() {
         Task submitTask = new Task();
+
         submitTask.setTitle(mTitleField.getText().toString());
         submitTask.setDescription(mDescriptionField.getText().toString());
-        submitTask.setAssignerId(mMainActivity.getUser().getId());
+        submitTask.setAssignerId(mParentActivity.getUser().getId());
         submitTask.setMiniSiteId(Integer.parseInt(mMiniSiteId.getText().toString()));
         submitTask.setComplete(false);
 
         createTaskRequest(submitTask);
 
         TaskFragment taskFragment = TaskFragment.newInstance(0);
-        mMainActivity.replaceFragment(taskFragment);
+        mParentActivity.replaceFragment(taskFragment);
     }
 
     public interface OnFragmentInteractionListener {

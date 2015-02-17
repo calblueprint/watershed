@@ -50,7 +50,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:layout_marginTop">10dp</item>
-        <item name="android:background">@drawable/edit_text_form</item>
+        <item name="android:background">@drawable/edit_text_form_transition</item>
         <item name="android:padding">20dp</item>
         <item name="android:textColorHint">@color/form_gray</item>
         <item name="android:textColor">@color/form_gray</item>
