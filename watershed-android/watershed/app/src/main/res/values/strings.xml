@@ -48,4 +48,8 @@
     <string name="site">Site</string>
     <string name="assignee">Assignee</string>
 
+    <!-- Task Index -->
+    <string name="no_tasks">Looks like you don\'t have any tasks!\n Have a great day! :D</string>
+    <string name="no_tasks_refresh">Refresh</string>
+
 </resources>
