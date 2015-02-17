@@ -48,7 +48,6 @@ public class TaskFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.e("onCreate Called", "Again");
         setHasOptionsMenu(true);
         mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
         parentActivity = (MainActivity)getActivity();
