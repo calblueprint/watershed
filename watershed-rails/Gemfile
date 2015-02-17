@@ -49,6 +49,7 @@ group :development, :test do
   gem "guard"
   gem "guard-livereload"
   gem "guard-rspec"
+  gem "pry-rails"
 end
 
 group :test do
