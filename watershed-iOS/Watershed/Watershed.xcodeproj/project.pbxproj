@@ -70,6 +70,7 @@
 		27EE2DC21A2EEA0F00106803 /* WPCreateSiteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EE2DC11A2EEA0F00106803 /* WPCreateSiteView.m */; };
 		27F0B70119E2496400E848C3 /* WPSiteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F0B70019E2496400E848C3 /* WPSiteView.m */; };
 		27F0B70419E249CE00E848C3 /* WPSiteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F0B70319E249CE00E848C3 /* WPSiteViewController.m */; };
+		27F277621A743141001552DC /* WPTermsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F277611A743141001552DC /* WPTermsView.m */; };
 		BA24044519DCF06C00E9DB2F /* WPRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA24044419DCF06C00E9DB2F /* WPRootViewController.m */; };
 		BA24044F19E2477000E9DB2F /* WPProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA24044E19E2477000E9DB2F /* WPProfileViewController.m */; };
 		BA38117E1A106B9A00019447 /* WPAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA38117D1A106B9A00019447 /* WPAboutViewController.m */; };
@@ -226,6 +227,8 @@
 		27F0B70019E2496400E848C3 /* WPSiteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPSiteView.m; sourceTree = "<group>"; };
 		27F0B70219E249CE00E848C3 /* WPSiteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPSiteViewController.h; sourceTree = "<group>"; };
 		27F0B70319E249CE00E848C3 /* WPSiteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPSiteViewController.m; sourceTree = "<group>"; };
+		27F277601A743141001552DC /* WPTermsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPTermsView.h; sourceTree = "<group>"; };
+		27F277611A743141001552DC /* WPTermsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPTermsView.m; sourceTree = "<group>"; };
 		38F773F3CE0741AE9B08A802 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		79DB95E49611D8089647C47B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		999F8B69042C0FCBE07F55DB /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -555,6 +558,8 @@
 			children = (
 				BA3811801A107C4700019447 /* WPTermsViewController.h */,
 				BA3811811A107C4700019447 /* WPTermsViewController.m */,
+				27F277601A743141001552DC /* WPTermsView.h */,
+				27F277611A743141001552DC /* WPTermsView.m */,
 			);
 			name = Terms;
 			sourceTree = "<group>";
@@ -835,6 +840,7 @@
 				06305F4719D9274400BD2CE4 /* UIView+WPExtensions.m in Sources */,
 				27714CB219D93405005344B0 /* WPAppDelegate.m in Sources */,
 				064462EB1A0739A500C6FE8B /* WPTaskViewController.m in Sources */,
+				27F277621A743141001552DC /* WPTermsView.m in Sources */,
 				0653A8F71A21267B0022462B /* WPTask.m in Sources */,
 				2726394B1A3ABB9B00F7EE52 /* WPCreateMiniSiteImageTableViewCell.m in Sources */,
 				27F0B70419E249CE00E848C3 /* WPSiteViewController.m in Sources */,

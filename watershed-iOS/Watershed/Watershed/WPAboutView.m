@@ -8,7 +8,8 @@
 
 #import "WPAboutView.h"
 
-@interface WPAboutView ()
+@interface WPAboutView () <UIScrollViewDelegate>
+@property (nonatomic) UIView *navbarOverlay;
 @property (nonatomic) UILabel *titleLabel;
 @property (nonatomic) UILabel *aboutLabel;
 @end
@@ -27,9 +28,17 @@
 
 - (void)createSubviews {
     
+    _navbarOverlay = [({
+        UIView *overlay = [[UIView alloc] init];
+        overlay.backgroundColor = [UIColor whiteColor];
+        overlay.alpha = 0;
+        overlay;
+    }) wp_addToSuperview:self];
+
     _scrollView = [({
         UIScrollView *scrollView = [[UIScrollView alloc] init];
         scrollView.alwaysBounceVertical = YES;
+        scrollView.delegate = self;
         scrollView;
     }) wp_addToSuperview:self];
     
@@ -58,6 +67,13 @@
 
 - (void)updateConstraints {
     
+    [self.navbarOverlay mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@0);
+        make.height.equalTo(@(topMargin));
+        make.leading.equalTo(@0);
+        make.trailing.equalTo(@0);
+    }];
+
     [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(topMargin));
         make.leading.equalTo(@0);
@@ -82,6 +98,14 @@
     
     
     [super updateConstraints];
+}
+
+#pragma mark - ScrollView Delegate Methods
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGFloat trans = scrollView.contentOffset.y;
+    CGFloat navbarAlpha = MIN(0.30, trans / 400);
+    self.navbarOverlay.alpha = navbarAlpha;
 }
 
 @end
