@@ -32,8 +32,8 @@ const static float LABEL_WIDTH = 75.0f;
         label.font = [UIFont systemFontOfSize:13.0];
         label;
     }) wp_addToSuperview:self.contentView];
-    
-    _imageInput = [({
+
+    _imageInputView = [({
         UIImageView *imageView = [[UIImageView alloc] init];
         imageView.layer.cornerRadius = 5.0f;
         imageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -69,8 +69,8 @@ const static float LABEL_WIDTH = 75.0f;
         make.top.equalTo(@0);
         make.leading.equalTo(@15);
     }];
-    
-    [self.imageInput mas_updateConstraints:^(MASConstraintMaker *make) {
+
+    [self.imageInputView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(standardMargin));
         make.leading.equalTo(self.inputLabel.mas_trailing).with.offset(standardMargin);
         make.height.equalTo(@(IMAGE_SIZE));

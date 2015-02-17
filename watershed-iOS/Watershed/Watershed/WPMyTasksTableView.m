@@ -1,23 +1,22 @@
 //
-//  WPSitesTableView.m
+//  WPMyTasksTableView.m
 //  Watershed
 //
-//  Created by Andrew Millman on 10/26/14.
+//  Created by Andrew on 12/25/14.
 //  Copyright (c) 2014 Blueprint. All rights reserved.
 //
 
-#import "WPSitesTableView.h"
+#import "WPMyTasksTableView.h"
 
-@interface WPSitesTableView ()
+@interface WPMyTasksTableView ()
 @property (nonatomic) UIActivityIndicatorView *indicatorView;
 @end
 
-@implementation WPSitesTableView
+@implementation WPMyTasksTableView
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        [self setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         [self createSubviews];
     }
     return self;
@@ -34,7 +33,7 @@
 
 - (void)updateConstraints {
     [self mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@64);
+        make.top.equalTo(@0);
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
         make.bottom.equalTo(@0);
@@ -54,6 +53,5 @@
     [self.indicatorView stopAnimating];
     self.indicatorView.alpha = 0;
 }
-
 
 @end

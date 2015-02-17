@@ -26,18 +26,36 @@
 }
 
 - (void)viewDidLoad {
-    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
+    self.navigationController.navigationBar.tintColor = [UIColor wp_blue];
     self.title = @"Edit Profile";
-    UIBarButtonItem *dismissButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self.delegate action:@selector(saveAndDismissEdit)];
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self.delegate action:@selector(dismissEdit)];
-    self.navigationItem.rightBarButtonItem = dismissButton;
-    self.navigationItem.rightBarButtonItem.tintColor = [UIColor wp_lightGreen];
+
+    FAKIonIcons *closeIcon = [FAKIonIcons androidCloseIconWithSize:24];
+    UIImage *closeImage = [closeIcon imageWithSize:CGSizeMake(24, 24)];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithImage:closeImage style:UIBarButtonItemStylePlain target:self action:@selector(dismissSelf)];
     self.navigationItem.leftBarButtonItem = cancelButton;
+
+    FAKIonIcons *checkIcon = [FAKIonIcons androidDoneIconWithSize:24];
+    UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake(24, 24)];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithImage:checkImage style:UIBarButtonItemStylePlain target:self action:@selector(saveAndDismissSelf)];
+    self.navigationItem.rightBarButtonItem = doneButton;
+
     [self.view configureWithUser:_user];
 }
 
 -(void)loadView {
     self.view = [[WPEditView alloc] init];
+}
+
+#pragma mark - Private Methods
+
+-(void)dismissSelf {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)saveAndDismissSelf {
+    //save
+    [self dismissSelf];
 }
 
 @end

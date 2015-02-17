@@ -7,15 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WPViewController.h"
 
-@interface WPAboutViewController : UIViewController
+@interface WPAboutViewController : WPViewController
 
-
-@end
-
-@interface WPAboutView : UIView
-
-@property (nonatomic) UILabel *titleLabel;
-@property (nonatomic) UILabel *aboutLabel;
 
 @end

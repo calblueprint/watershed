@@ -12,7 +12,7 @@
 @interface WPCreateMiniSiteImageTableViewCell : UITableViewCell
 
 @property (nonatomic) UILabel *inputLabel;
-@property (nonatomic) UIImageView *imageInput;
+@property (nonatomic) UIImageView *imageInputView;
 @property (nonatomic) UIButton *viewImageButton;
 
 + (CGFloat)cellHeight;
