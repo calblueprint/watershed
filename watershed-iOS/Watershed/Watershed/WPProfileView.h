@@ -13,5 +13,6 @@
 @interface WPProfileView : WPView <UITableViewDataSource, UITableViewDelegate>
 
 - (void)configureWithUser:(WPUser *)user;
+- (void)stopIndicator;
 
 @end

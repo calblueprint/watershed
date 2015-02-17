@@ -18,14 +18,15 @@
 
 const static float CELL_HEIGHT = 60.0f;
 const static float RADIO_BUTTON_SIZE = 30.0f;
-const static float CHECK_SIZE = RADIO_BUTTON_SIZE * 3 / 5;
+const static float CHECK_SIZE = RADIO_BUTTON_SIZE * 3 / 4;
 
 - (id)initWithStyle:(UITableViewCellStyle)style
     reuseIdentifier:(NSString *)reuseIdentifier {
-    
+
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.textLabel.font = [UIFont systemFontOfSize:13.0];
         [self createSubviews];
         [self updateConstraints];
     }
@@ -43,9 +44,9 @@ const static float CHECK_SIZE = RADIO_BUTTON_SIZE * 3 / 5;
         button.alpha = 0.3;
         button;
     }) wp_addToSuperview:self];
-    
+
     _checkImageView = [({
-        FAKFontAwesome *checkIcon = [FAKFontAwesome checkIconWithSize:CHECK_SIZE];
+        FAKIonIcons *checkIcon = [FAKIonIcons androidDoneIconWithSize:CHECK_SIZE];
         UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake(CHECK_SIZE, CHECK_SIZE)];
         UIImageView *imageView = [[UIImageView alloc] initWithImage:checkImage];
         [imageView setFrame:CGRectMake((RADIO_BUTTON_SIZE - CHECK_SIZE) / 2, (RADIO_BUTTON_SIZE - CHECK_SIZE) / 2, CHECK_SIZE, CHECK_SIZE)];
@@ -71,7 +72,7 @@ const static float CHECK_SIZE = RADIO_BUTTON_SIZE * 3 / 5;
         make.centerX.equalTo(self.mas_centerX);
         make.centerY.equalTo(self.mas_centerY);
     }];
-    
+
     [self.radioButton mas_updateConstraints:^(MASConstraintMaker *make) {
         make.trailing.equalTo(@(-standardMargin));
         make.width.equalTo(@(RADIO_BUTTON_SIZE));
@@ -101,7 +102,7 @@ const static float CHECK_SIZE = RADIO_BUTTON_SIZE * 3 / 5;
     [super setSelected:selected animated:animated];
     
     if (selected) {
-        self.backgroundColor = [UIColor wp_lightBlue];
+        self.contentView.backgroundColor = [UIColor wp_lightBlue];
         self.textLabel.textColor = [UIColor whiteColor];
         self.radioButton.layer.borderColor = [UIColor clearColor].CGColor;
         self.radioButton.alpha = 1;
@@ -110,7 +111,7 @@ const static float CHECK_SIZE = RADIO_BUTTON_SIZE * 3 / 5;
         self.separatorView.alpha = 0.7;
     } else {
         [UIView animateWithDuration:0.2 animations:^{
-            self.backgroundColor = [UIColor clearColor];
+            self.contentView.backgroundColor = [UIColor clearColor];
             self.textLabel.textColor = [UIColor blackColor];
             self.radioButton.layer.borderColor = [UIColor grayColor].CGColor;
             self.radioButton.alpha = 0.3;

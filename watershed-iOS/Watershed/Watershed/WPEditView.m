@@ -31,17 +31,21 @@
 - (void)createSubviews {
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-
-    _infoTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
-    _infoTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    _infoTableView.delegate = self;
-    _infoTableView.dataSource = self;
-    _infoTableView.scrollEnabled = NO;
-    [self addSubview:_infoTableView];
     
-    _statusBarView = [[UIView alloc] init];
-    _statusBarView.backgroundColor = [UIColor whiteColor];
-    [self addSubview:_statusBarView];
+    _infoTableView = [({
+        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+        tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+        tableView.delegate = self;
+        tableView.dataSource = self;
+        tableView.scrollEnabled = NO;
+        tableView;
+    }) wp_addToSuperview:self];
+    
+    _statusBarView = [({
+        UIView *view = [[UIView alloc] init];
+        view.backgroundColor = [UIColor whiteColor];
+        view;
+    }) wp_addToSuperview:self];
 }
 
 - (void)updateConstraints {

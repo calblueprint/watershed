@@ -15,6 +15,7 @@
 @interface WPProfileView ()
 
 @property (nonatomic) UITableView *infoTableView;
+@property (nonatomic) UIActivityIndicatorView *indicatorView;
 @property (nonatomic) WPUser *user;
 @property (nonatomic) UIImageView *profilePictureView;
 @property (nonatomic) UILabel *nameLabel;
@@ -32,17 +33,24 @@ static int PROFILE_PIC_HEIGHT = 65;
     self = [super initWithFrame:frame visibleNavbar:YES];
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
-
+        [self createSubviews];
     }
 
     return self;
 }
+
+#pragma mark - Public Methods
 
 - (void)configureWithUser:(WPUser *)user {
     self.user = user;
     if ([[WPNetworkingManager sharedManager] keyChainStore][@"profilePictureId"]) {
         self.user.profilePictureId = [[WPNetworkingManager sharedManager] keyChainStore][@"profilePictureId"];
     }
+
+    NSURL *pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=normal", _user.profilePictureId]];
+    [self.profilePictureView setImageWithURL:pictureURL placeholderImage:[UIImage imageNamed:@"hill.png"]];
+
+    self.nameLabel.text = self.user.name;
 
     _userInformationArray = [[NSMutableArray alloc] init];
     if (user.email) {
@@ -54,12 +62,18 @@ static int PROFILE_PIC_HEIGHT = 65;
     if (user.phoneNumber) {
         [_userInformationArray addObject:user.phoneNumber];
     }
-    [self createSubviews];
+
     self.infoTableView.delegate = self;
     self.infoTableView.dataSource = self;
     self.infoTableView.scrollEnabled = YES;
     [self.infoTableView reloadData];
     [self setNeedsUpdateConstraints];
+}
+
+- (void)stopIndicator {
+    [self.indicatorView stopAnimating];
+    self.indicatorView.alpha = 0;
+    self.profilePictureView.alpha = 1;
 }
 
 #pragma mark - View Hierarchy
@@ -77,11 +91,11 @@ static int PROFILE_PIC_HEIGHT = 65;
     WPProfileTableViewCell *cell = [[WPProfileTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:profileReuseIdentifier];
     switch (indexPath.row) {
         case 1: {
-            FAKIonIcons *mailIcon = [FAKIonIcons ios7EmailOutlineIconWithSize:30];
+            FAKIonIcons *mailIcon = [FAKIonIcons androidMailIconWithSize:26];
             [mailIcon addAttribute:NSForegroundColorAttributeName
                              value:[UIColor darkGrayColor]];
             [cell setIconImageView:[[UIImageView alloc]
-                     initWithImage:[mailIcon imageWithSize:CGSizeMake(30, 30)]]];
+                     initWithImage:[mailIcon imageWithSize:CGSizeMake(26, 26)]]];
             
             
             UILabel *infoLabel = [[UILabel alloc] init];
@@ -92,21 +106,21 @@ static int PROFILE_PIC_HEIGHT = 65;
         }
         case 2: {
             if (_user.location) {
-                FAKIonIcons *locationIcon = [FAKIonIcons ios7LocationOutlineIconWithSize:30];
+                FAKIonIcons *locationIcon = [FAKIonIcons androidPinIconWithSize:26];
                 [locationIcon addAttribute:NSForegroundColorAttributeName
                                  value:[UIColor darkGrayColor]];
                 [cell setIconImageView:[[UIImageView alloc]
-                         initWithImage:[locationIcon imageWithSize:CGSizeMake(30, 30)]]];
+                         initWithImage:[locationIcon imageWithSize:CGSizeMake(26, 26)]]];
                 
                 UILabel *infoLabel = [[UILabel alloc] init];
                 infoLabel.text = self.user.location;
                 [cell setInfoLabel:infoLabel];
             } else {
-                FAKIonIcons *phoneIcon = [FAKIonIcons ios7TelephoneOutlineIconWithSize:30];
+                FAKIonIcons *phoneIcon = [FAKIonIcons androidCallIconWithSize:26];
                 [phoneIcon addAttribute:NSForegroundColorAttributeName
                                   value:[UIColor darkGrayColor]];
                 [cell setIconImageView:[[UIImageView alloc]
-                                        initWithImage:[phoneIcon imageWithSize:CGSizeMake(30, 30)]]];
+                                        initWithImage:[phoneIcon imageWithSize:CGSizeMake(26, 26)]]];
                 
                 UILabel *infoLabel = [[UILabel alloc] init];
                 infoLabel.text = self.user.phoneNumber;
@@ -116,11 +130,11 @@ static int PROFILE_PIC_HEIGHT = 65;
         }
         case 3: {
             if (_user.phoneNumber) {
-                FAKIonIcons *phoneIcon = [FAKIonIcons ios7TelephoneOutlineIconWithSize:30];
+                FAKIonIcons *phoneIcon = [FAKIonIcons androidCallIconWithSize:26];
                 [phoneIcon addAttribute:NSForegroundColorAttributeName
                                  value:[UIColor darkGrayColor]];
                 [cell setIconImageView:[[UIImageView alloc]
-                         initWithImage:[phoneIcon imageWithSize:CGSizeMake(30, 30)]]];
+                         initWithImage:[phoneIcon imageWithSize:CGSizeMake(26, 26)]]];
                 
                 UILabel *infoLabel = [[UILabel alloc] init];
                 infoLabel.text = self.user.phoneNumber;
@@ -143,23 +157,8 @@ static int PROFILE_PIC_HEIGHT = 65;
     _profilePictureView = [[UIImageView alloc] init];
     _profilePictureView.contentMode = UIViewContentModeScaleAspectFill;
     _profilePictureView.clipsToBounds = YES;
+    _profilePictureView.alpha = 0;
     [self setRoundedView:_profilePictureView];
-    if (_user.profilePicture) {
-        //do prof pic from server
-    } else if (_user.profilePictureId) {
-        dispatch_async(dispatch_get_global_queue(0,0), ^{
-            NSData * data = [[NSData alloc] initWithContentsOfURL:
-                             [NSURL URLWithString:
-                              [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=normal", _user.profilePictureId]]];
-            if ( data == nil )
-                return;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [_profilePictureView setImage:[UIImage imageWithData:data]];
-            });
-        });
-    } else {
-        [_profilePictureView setImage:[UIImage imageNamed:@"hill.png"]];
-    }
     [self addSubview:_profilePictureView];
 
 
@@ -172,7 +171,11 @@ static int PROFILE_PIC_HEIGHT = 65;
     _infoTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self addSubview:_infoTableView];
 
-    
+    _indicatorView = [({
+        UIActivityIndicatorView *view = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        [view startAnimating];
+        view;
+    }) wp_addToSuperview:self];
 }
 
 - (void)updateConstraints {
@@ -194,6 +197,11 @@ static int PROFILE_PIC_HEIGHT = 65;
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
         make.bottom.equalTo(@0);
+    }];
+
+    [self.indicatorView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@0).with.offset(topMargin + 2 * standardMargin); // For some reason topMargin in equalTo doesn't work...
+        make.centerX.equalTo(self.mas_centerX);
     }];
 
     [super updateConstraints];

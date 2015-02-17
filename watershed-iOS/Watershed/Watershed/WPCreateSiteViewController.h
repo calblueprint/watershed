@@ -11,7 +11,12 @@
 #import "WPSitesTableViewController.h"
 #import "BSKeyboardControls.h"
 
-@interface WPCreateSiteViewController : WPViewController <UITableViewDelegate, UITableViewDataSource, BSKeyboardControlsDelegate, UITextFieldDelegate, UITextViewDelegate>
+@interface WPCreateSiteViewController : WPViewController <
+    UITableViewDelegate,
+    UITableViewDataSource,
+    BSKeyboardControlsDelegate,
+    UITextFieldDelegate,
+    UITextViewDelegate >
 
 @property (nonatomic) UITextField *nameTextField;
 @property (nonatomic) UITextField *streetTextField;
