@@ -35,15 +35,26 @@
         <item name="android:src">@drawable/landing_page_photo</item>
     </style>
 
-    <style name="WsLabel">
-        <item name="android:gravity">bottom|left</item>
-        <item name="android:layout_width">0px</item>
-        <item name="android:layout_height">fill_parent</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/facebook_blue</item>
-    </style>
+    <!--<style name="WsLabel">-->
+        <!--<item name="android:gravity">bottom|left</item>-->
+        <!--<item name="android:layout_width">0px</item>-->
+        <!--<item name="android:layout_height">fill_parent</item>-->
+        <!--<item name="android:layout_weight">1</item>-->
+        <!--<item name="android:textSize">16sp</item>-->
+        <!--<item name="android:textColor">@color/facebook_blue</item>-->
+    <!--</style>-->
 
+    <!-- Edit Text Form -->
+    <style name="FormEditText">
+        <item name="android:layout_width">350dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:background">@drawable/edit_text_form</item>
+        <item name="android:padding">20dp</item>
+        <item name="android:textColorHint">@color/form_gray</item>
+        <item name="android:textColor">@color/form_gray</item>
+    </style>
 
 
 </resources>
