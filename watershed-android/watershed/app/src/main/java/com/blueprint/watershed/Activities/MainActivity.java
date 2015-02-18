@@ -19,6 +19,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -123,6 +124,7 @@ public class MainActivity extends ActionBarActivity
         setContentView(R.layout.activity_main);
         Bundle b = getIntent().getExtras();
         mUserId = b.getInt("userId");
+        Log.i("wat", String.valueOf(mUserId));
 
         actionBar = getActionBar();
         setTitle("Tasks");
@@ -252,6 +254,7 @@ public class MainActivity extends ActionBarActivity
         updateTitle(mtaskFragment);
         android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.add(R.id.container, mtaskFragment);
+        mProgress.setVisibility(View.VISIBLE);
         ft.commit();
     }
 
@@ -352,7 +355,6 @@ public class MainActivity extends ActionBarActivity
         switch (position) {
             case 0:
                 TaskFragment taskFragment = TaskFragment.newInstance(0);
-                mProgress.setVisibility(View.VISIBLE);
                 replaceFragment(taskFragment);
                 break;
             case 1:
@@ -429,7 +431,7 @@ public class MainActivity extends ActionBarActivity
         mUser = user;
     }
     public User getUser() { return mUser; }
-
+    public int getUserId() { return mUserId; }
     public void setFieldReportTask(Task task) { mFieldReportTask = task; }
     public Task getFieldReportTask() { return mFieldReportTask; }
 
