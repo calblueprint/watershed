@@ -46,6 +46,5 @@
                 android:layout_centerHorizontal="true"
                 android:text="@string/no_tasks_refresh"/>
         </RelativeLayout>
-
     </RelativeLayout>
 </FrameLayout>

@@ -27,20 +27,26 @@ import java.util.HashMap;
 
 public class TaskFragment extends ListFragment {
 
+    private static final String OPTION = "option";
+
     private OnFragmentInteractionListener mListener;
-    private ListView mListView1;
-    private ArrayList<Task> mTaskList;
     private MainActivity mParentActivity;
-    private TaskAdapter mTaskAdapter;
     private NetworkManager mNetworkManager;
 
+    private ArrayList<Task> mAllTaskList;
+    private ArrayList<Task> mUserTaskList;
+    private TaskAdapter mAllTaskAdapter;
+    private TaskAdapter mUserTaskAdapter;
+    
+
+    private ListView mListView;
     private Button mNoTasksRefresh;
     private SwipeRefreshLayout mSwipeLayout;
 
     public static TaskFragment newInstance(int option) {
         TaskFragment fragment = new TaskFragment();
         Bundle args = new Bundle();
-        args.putInt("option", option);
+        args.putInt(OPTION, option);
         fragment.setArguments(args);
         return fragment;
     }
@@ -54,18 +60,9 @@ public class TaskFragment extends ListFragment {
         //setHasOptionsMenu(true);
         mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
         mParentActivity = (MainActivity) getActivity();
-        mTaskList = new ArrayList<Task>();
-        if (getArguments() != null) {
-            int option = getArguments().getInt("option");
-            Log.i("option", String.valueOf(option));
-            getTasksRequest();
-            switch (option) {
-                case 0: //populates with tasks that you are assigned
-                    break;
-                case 1: //populates with all tasks
-                    break;
-            }
-        }
+        mAllTaskList = new ArrayList<Task>();
+        mUserTaskList = new ArrayList<Task>();
+        getTasksRequest();
     }
 
     @Override
@@ -76,10 +73,22 @@ public class TaskFragment extends ListFragment {
     }
 
     private void initializeViews(View view) {
-        mListView1 = (ListView) view.findViewById(android.R.id.list);
-        mTaskAdapter = new TaskAdapter(mParentActivity,R.layout.task_list_row, mTaskList);
-        mListView1.setAdapter(mTaskAdapter);
-        mListView1.setEmptyView(view.findViewById(R.id.no_tasks_layout));
+        mListView = (ListView) view.findViewById(android.R.id.list);
+        mAllTaskAdapter = new TaskAdapter(mParentActivity,R.layout.task_list_row, mAllTaskList);
+        mUserTaskAdapter = new TaskAdapter(mParentActivity,R.layout.task_list_row, mUserTaskList);
+
+        if (getArguments() != null) {
+            int option = getArguments().getInt(OPTION);
+            if (option == 1) {
+                mListView.setAdapter(mUserTaskAdapter);
+            } else {
+                mListView.setAdapter(mAllTaskAdapter);
+            }
+        } else {
+            mListView.setAdapter(mAllTaskAdapter);
+        }
+
+        mListView.setEmptyView(view.findViewById(R.id.no_tasks_layout));
 
         mNoTasksRefresh = (Button) view.findViewById(R.id.no_tasks_refresh);
         mNoTasksRefresh.setOnClickListener(new View.OnClickListener() {
@@ -101,10 +110,20 @@ public class TaskFragment extends ListFragment {
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id){
-        Task taskClicked = this.mTaskList.get(position);
-        TaskDetailFragment detailFragment = TaskDetailFragment.newInstance(taskClicked);
-        mParentActivity.replaceFragment(detailFragment);
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        if (getArguments() != null) {
+            int option = getArguments().getInt(OPTION);
+            Task taskClicked;
+            if (option == 1) {
+                 taskClicked = mUserTaskList.get(position);
+            } else {
+                taskClicked = mAllTaskList.get(position);
+            }
+            TaskDetailFragment detailFragment = TaskDetailFragment.newInstance(taskClicked);
+            mParentActivity.replaceFragment(detailFragment);
+        } else {
+            Log.i("Error", "OnListItemClick is broken!");
+        }
     }
 
     @Override
@@ -146,11 +165,14 @@ public class TaskFragment extends ListFragment {
 
         mNetworkManager.getRequestQueue().add(taskListRequest);
     }
-
+    
     private void setTasks(ArrayList<Task> tasks){
-        mTaskList.clear();
+        mAllTaskList.clear();
+        mUserTaskList.clear();
+        int id = mParentActivity.getUser().getId();
         for (Task task : tasks){
-            mTaskList.add(task);
+            mAllTaskList.add(task);
+            if (task.getAssigneeId() == id) mUserTaskList.add(task);
         }
     }
 
