@@ -12,6 +12,7 @@
 #import "WPMiniSiteTableViewCell.h"
 #import "WPMiniSiteViewController.h"
 #import "WPCreateMiniSiteViewController.h"
+#import "WPEditSiteViewController.h"
 #import "WPNetworkingManager.h"
 
 @interface WPSiteViewController ()
@@ -169,9 +170,18 @@ static NSString *cellIdentifier = @"MiniSiteCell";
 - (UIBarButtonItem *)newEditSiteButtonItem {
     FAKIonIcons *editIcon = [FAKIonIcons androidCreateIconWithSize:24];
     UIImage *editImage = [editIcon imageWithSize:CGSizeMake(24, 24)];
-    UIBarButtonItem *editSiteButtonItem = [[UIBarButtonItem alloc] initWithImage:editImage style:UIBarButtonItemStylePlain target:self action:nil];
+    UIBarButtonItem *editSiteButtonItem = [[UIBarButtonItem alloc] initWithImage:editImage style:UIBarButtonItemStylePlain target:self action:@selector(showEditSiteView)];
     editSiteButtonItem.tintColor = [UIColor whiteColor];
     return editSiteButtonItem;
+}
+
+- (void)showEditSiteView {
+    WPEditSiteViewController *editSiteViewController = [[WPEditSiteViewController alloc] init];
+    UINavigationController *editSiteNavController = [[UINavigationController alloc] initWithRootViewController:editSiteViewController];
+    [editSiteNavController.navigationBar setBackgroundColor:[UIColor whiteColor]];
+    [editSiteNavController.navigationBar setBarTintColor:[UIColor whiteColor]];
+    [editSiteNavController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
+    [self.navigationController presentViewController:editSiteNavController animated:YES completion:nil];
 }
 
 #pragma mark - Setter Methods

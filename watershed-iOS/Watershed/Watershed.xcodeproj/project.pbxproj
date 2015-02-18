@@ -60,6 +60,8 @@
 		27714CB219D93405005344B0 /* WPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 27714CB119D93405005344B0 /* WPAppDelegate.m */; };
 		277B93241A6761D6001F9CF8 /* WPAddVegetationTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 277B93231A6761D6001F9CF8 /* WPAddVegetationTextField.m */; };
 		278A358E1A3FC7E300852BF6 /* WPSelectVegetationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 278A358D1A3FC7E300852BF6 /* WPSelectVegetationTableViewCell.m */; };
+		27B80CA11A94459700BF4330 /* WPEditSiteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B80CA01A94459700BF4330 /* WPEditSiteViewController.m */; };
+		27B9CF791A18597100CEB5A8 /* WPSite.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B9CF781A18597100CEB5A8 /* WPSite.m */; };
 		27B9CF7C1A185B6700CEB5A8 /* WPMiniSite.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B9CF7B1A185B6700CEB5A8 /* WPMiniSite.m */; };
 		27B9CF7F1A185DE800CEB5A8 /* WPFieldReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B9CF7E1A185DE800CEB5A8 /* WPFieldReport.m */; };
 		27B9CF821A19AD7F00CEB5A8 /* WPNetworkingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B9CF811A19AD7F00CEB5A8 /* WPNetworkingManager.m */; };
@@ -210,6 +212,8 @@
 		277B93231A6761D6001F9CF8 /* WPAddVegetationTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPAddVegetationTextField.m; sourceTree = "<group>"; };
 		278A358C1A3FC7E300852BF6 /* WPSelectVegetationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPSelectVegetationTableViewCell.h; sourceTree = "<group>"; };
 		278A358D1A3FC7E300852BF6 /* WPSelectVegetationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPSelectVegetationTableViewCell.m; sourceTree = "<group>"; };
+		27B80C9F1A94459700BF4330 /* WPEditSiteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPEditSiteViewController.h; sourceTree = "<group>"; };
+		27B80CA01A94459700BF4330 /* WPEditSiteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPEditSiteViewController.m; sourceTree = "<group>"; };
 		27B9CF771A18597100CEB5A8 /* WPSite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPSite.h; sourceTree = "<group>"; };
 		27B9CF781A18597100CEB5A8 /* WPSite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPSite.m; sourceTree = "<group>"; };
 		27B9CF7A1A185B6700CEB5A8 /* WPMiniSite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPMiniSite.h; sourceTree = "<group>"; };
@@ -437,6 +441,15 @@
 			name = Networking;
 			sourceTree = "<group>";
 		};
+		27B80C9E1A94454A00BF4330 /* Edit Site */ = {
+			isa = PBXGroup;
+			children = (
+				27B80C9F1A94459700BF4330 /* WPEditSiteViewController.h */,
+				27B80CA01A94459700BF4330 /* WPEditSiteViewController.m */,
+			);
+			name = "Edit Site";
+			sourceTree = "<group>";
+		};
 		27BABFE61A02021200F9CCCE /* Custom View Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -559,6 +572,7 @@
 		BA24044119DCF01900E9DB2F /* Sites */ = {
 			isa = PBXGroup;
 			children = (
+				27B80C9E1A94454A00BF4330 /* Edit Site */,
 				27EE2DBC1A2EE7C700106803 /* Create Site */,
 				2749D1891A061F0400D0ECA2 /* Mini Sites */,
 				27F0B6FF19E2496400E848C3 /* WPSiteView.h */,
@@ -944,6 +958,8 @@
 				2766EC9519FDF2440062D358 /* WPSiteTableViewCell.m in Sources */,
 				064462F71A073A0F00C6FE8B /* WPSettingsTableViewController.m in Sources */,
 				0666867E1AEDE24200AFE029 /* WPUnclaimedTasksTableController.m in Sources */,
+				27B80CA11A94459700BF4330 /* WPEditSiteViewController.m in Sources */,
+				06ECE8E51A22E658009870CA /* WPSelectTaskView.m in Sources */,
 				BABC5E1C1A0B2805002825E4 /* WPEditViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
