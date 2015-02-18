@@ -72,12 +72,12 @@
 
             <Switch
                 android:id="@+id/field_report_urgent"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="16dp"
                 android:layout_toRightOf="@id/create_task_divider"
                 android:layout_marginLeft="10dp"
-                android:textOn="@string/urgent"
-                android:textOff="@string/not_urgent"
+                android:textOn="@string/yes"
+                android:textOff="@string/no"
                  />
         </RelativeLayout>
 
