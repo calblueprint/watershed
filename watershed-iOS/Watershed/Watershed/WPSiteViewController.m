@@ -177,6 +177,7 @@ static NSString *cellIdentifier = @"MiniSiteCell";
 
 - (void)showEditSiteView {
     WPEditSiteViewController *editSiteViewController = [[WPEditSiteViewController alloc] init];
+    editSiteViewController.site = self.site;
     UINavigationController *editSiteNavController = [[UINavigationController alloc] initWithRootViewController:editSiteViewController];
     [editSiteNavController.navigationBar setBackgroundColor:[UIColor whiteColor]];
     [editSiteNavController.navigationBar setBarTintColor:[UIColor whiteColor]];
