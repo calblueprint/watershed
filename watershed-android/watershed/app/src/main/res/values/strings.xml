@@ -33,6 +33,7 @@
     <!--Field Report -->
     <string name="field_report_title">Field Report</string>
     <string name="urgent">Urgent?</string>
+    <string name="not_urgent">Not Urgent</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
