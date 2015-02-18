@@ -30,8 +30,9 @@ public class TaskFragment extends ListFragment {
 
     private static int TASK_TYPE;
 
-    private static final int ALL = 0;
-    private static final int USER = 1;
+    private static final int USER = 0;
+    private static final int ALL = 1;
+
 
     private OnFragmentInteractionListener mListener;
     private MainActivity mParentActivity;
@@ -166,8 +167,8 @@ public class TaskFragment extends ListFragment {
             public void onResponse(ArrayList<Task> tasks) {
                 setTasks(tasks);
                 mParentActivity.getSpinner().setVisibility(View.GONE);
-                if (TASK_TYPE == USER) mUserTaskAdapter.notifyDataSetChanged();
-                else mAllTaskAdapter.notifyDataSetChanged();
+                mAllTaskAdapter.notifyDataSetChanged();
+                mUserTaskAdapter.notifyDataSetChanged();
                 if (mSwipeLayout != null) mSwipeLayout.setRefreshing(false);
             }
         });
