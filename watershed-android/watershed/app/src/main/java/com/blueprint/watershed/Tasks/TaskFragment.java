@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,6 +34,7 @@ public class TaskFragment extends ListFragment {
     private NetworkManager mNetworkManager;
 
     private Button mNoTasksRefresh;
+    private SwipeRefreshLayout mSwipeLayout;
 
     public static TaskFragment newInstance(int option) {
         TaskFragment fragment = new TaskFragment();
@@ -86,6 +88,15 @@ public class TaskFragment extends ListFragment {
                 getTasksRequest();
             }
         });
+
+        mSwipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.tasks_swipe_container);
+        mSwipeLayout.setColorSchemeResources(R.color.ws_blue, R.color.facebook_blue, R.color.facebook_dark_blue, R.color.dark_gray);
+        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getTasksRequest();
+            }
+        });
     }
 
     @Override
@@ -128,6 +139,7 @@ public class TaskFragment extends ListFragment {
                 setTasks(tasks);
                 mParentActivity.getSpinner().setVisibility(View.GONE);
                 mTaskAdapter.notifyDataSetChanged();
+                if (mSwipeLayout != null) mSwipeLayout.setRefreshing(false);
             }
         });
 
