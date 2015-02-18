@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -56,11 +57,11 @@ public class TaskFragment extends ListFragment {
         mTaskList = new ArrayList<Task>();
         if (getArguments() != null) {
             int option = getArguments().getInt("option");
+            Log.i("option", String.valueOf(option));
             getTasksRequest();
             switch (option) {
                 case 0: //populates with tasks that you are assigned
                     break;
-
                 case 1: //populates with all tasks
                     break;
             }
