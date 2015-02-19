@@ -11,6 +11,7 @@
 #import "WPFieldReportTableViewCell.h"
 #import "WPFieldReportViewController.h"
 #import "WPNetworkingManager.h"
+#import "WPEditMiniSiteViewController.h"
 #import "WPAddFieldReportViewController.h"
 
 @interface WPMiniSiteViewController ()
@@ -113,9 +114,18 @@ static NSString *cellIdentifier = @"FieldReportCell";
 - (UIBarButtonItem *)newEditSiteButtonItem {
     FAKIonIcons *editIcon = [FAKIonIcons androidCreateIconWithSize:24];
     UIImage *editImage = [editIcon imageWithSize:CGSizeMake(24, 24)];
-    UIBarButtonItem *editMiniSiteButtonItem = [[UIBarButtonItem alloc] initWithImage:editImage style:UIBarButtonItemStylePlain target:self action:nil];
+    UIBarButtonItem *editMiniSiteButtonItem = [[UIBarButtonItem alloc] initWithImage:editImage style:UIBarButtonItemStylePlain target:self action:@selector(showEditMiniSiteView)];
     editMiniSiteButtonItem.tintColor = [UIColor whiteColor];
     return editMiniSiteButtonItem;
+}
+
+- (void)showEditMiniSiteView {
+    WPEditMiniSiteViewController *editMiniSiteViewController = [[WPEditMiniSiteViewController alloc] init];
+    UINavigationController *editMiniSiteNavController = [[UINavigationController alloc] initWithRootViewController:editMiniSiteViewController];
+    [editMiniSiteNavController.navigationBar setBackgroundColor:[UIColor whiteColor]];
+    [editMiniSiteNavController.navigationBar setBarTintColor:[UIColor whiteColor]];
+    [editMiniSiteNavController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
+    [self.navigationController presentViewController:editMiniSiteNavController animated:YES completion:nil];
 }
 
 #pragma mark - TableView Delegate/DataSource Methods

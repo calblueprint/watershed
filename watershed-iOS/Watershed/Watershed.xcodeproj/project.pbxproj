@@ -61,6 +61,7 @@
 		277B93241A6761D6001F9CF8 /* WPAddVegetationTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 277B93231A6761D6001F9CF8 /* WPAddVegetationTextField.m */; };
 		278A358E1A3FC7E300852BF6 /* WPSelectVegetationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 278A358D1A3FC7E300852BF6 /* WPSelectVegetationTableViewCell.m */; };
 		27B80CA11A94459700BF4330 /* WPEditSiteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B80CA01A94459700BF4330 /* WPEditSiteViewController.m */; };
+		27B80CA51A96984000BF4330 /* WPEditMiniSiteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B80CA41A96984000BF4330 /* WPEditMiniSiteViewController.m */; };
 		27B9CF791A18597100CEB5A8 /* WPSite.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B9CF781A18597100CEB5A8 /* WPSite.m */; };
 		27B9CF7C1A185B6700CEB5A8 /* WPMiniSite.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B9CF7B1A185B6700CEB5A8 /* WPMiniSite.m */; };
 		27B9CF7F1A185DE800CEB5A8 /* WPFieldReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B9CF7E1A185DE800CEB5A8 /* WPFieldReport.m */; };
@@ -214,6 +215,8 @@
 		278A358D1A3FC7E300852BF6 /* WPSelectVegetationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPSelectVegetationTableViewCell.m; sourceTree = "<group>"; };
 		27B80C9F1A94459700BF4330 /* WPEditSiteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPEditSiteViewController.h; sourceTree = "<group>"; };
 		27B80CA01A94459700BF4330 /* WPEditSiteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPEditSiteViewController.m; sourceTree = "<group>"; };
+		27B80CA31A96984000BF4330 /* WPEditMiniSiteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPEditMiniSiteViewController.h; sourceTree = "<group>"; };
+		27B80CA41A96984000BF4330 /* WPEditMiniSiteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPEditMiniSiteViewController.m; sourceTree = "<group>"; };
 		27B9CF771A18597100CEB5A8 /* WPSite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPSite.h; sourceTree = "<group>"; };
 		27B9CF781A18597100CEB5A8 /* WPSite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPSite.m; sourceTree = "<group>"; };
 		27B9CF7A1A185B6700CEB5A8 /* WPMiniSite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPMiniSite.h; sourceTree = "<group>"; };
@@ -408,6 +411,7 @@
 		2749D1891A061F0400D0ECA2 /* Mini Sites */ = {
 			isa = PBXGroup;
 			children = (
+				27B80CA21A9697B800BF4330 /* Edit Mini Site */,
 				27EA5B571A3808F300E1597A /* Create Mini Site */,
 				2749D18A1A06203000D0ECA2 /* WPMiniSiteView.h */,
 				2749D18B1A06203000D0ECA2 /* WPMiniSiteView.m */,
@@ -448,6 +452,15 @@
 				27B80CA01A94459700BF4330 /* WPEditSiteViewController.m */,
 			);
 			name = "Edit Site";
+			sourceTree = "<group>";
+		};
+		27B80CA21A9697B800BF4330 /* Edit Mini Site */ = {
+			isa = PBXGroup;
+			children = (
+				27B80CA31A96984000BF4330 /* WPEditMiniSiteViewController.h */,
+				27B80CA41A96984000BF4330 /* WPEditMiniSiteViewController.m */,
+			);
+			name = "Edit Mini Site";
 			sourceTree = "<group>";
 		};
 		27BABFE61A02021200F9CCCE /* Custom View Controllers */ = {
@@ -912,6 +925,8 @@
 				063089761ADAFA1B00DB0A00 /* WPEditTaskViewController.m in Sources */,
 				BA24044519DCF06C00E9DB2F /* WPRootViewController.m in Sources */,
 				BAF96EA41A2EBDCB009CB4BC /* WPSignupViewController.m in Sources */,
+				27B9CF791A18597100CEB5A8 /* WPSite.m in Sources */,
+				27B80CA51A96984000BF4330 /* WPEditMiniSiteViewController.m in Sources */,
 				064462E91A0739A500C6FE8B /* WPMyTasksTableViewController.m in Sources */,
 				06A8139B19D91D8600E3EB05 /* UIColor+WPColors.m in Sources */,
 				27BABFE91A0202F300F9CCCE /* WPViewController.m in Sources */,
