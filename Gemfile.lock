@@ -117,6 +117,8 @@ GEM
     faraday_middleware (0.9.1)
       faraday (>= 0.7.4, < 0.10)
     ffi (1.9.5)
+    figaro (1.0.0)
+      thor (~> 0.14)
     fog (1.22.1)
       fog-brightbox
       fog-core (~> 1.22)
@@ -421,6 +423,7 @@ DEPENDENCIES
   devise (= 3.3.0)
   factory_girl_rails (~> 4.4.0)
   faker (~> 1.4.3)
+  figaro
   fog (~> 1.22.1)
   font-awesome-rails
   guard
