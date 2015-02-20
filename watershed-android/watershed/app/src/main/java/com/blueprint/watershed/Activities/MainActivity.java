@@ -1,24 +1,30 @@
 package com.blueprint.watershed.Activities;
 
 import android.app.ActionBar;
+import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.app.FragmentTransaction;
-import android.content.res.Configuration;
-import android.net.Uri;
-import android.os.Bundle;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.graphics.Typeface;
+import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.content.SharedPreferences;
-import android.graphics.Typeface;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.AboutFragment;
@@ -27,33 +33,24 @@ import com.blueprint.watershed.FieldReports.FieldReportFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Users.HomeRequest;
-import com.blueprint.watershed.Tasks.CreateTaskFragment;
-import com.blueprint.watershed.Tasks.Task;
-import com.blueprint.watershed.Users.UserFragment;
 import com.blueprint.watershed.R;
-import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Sites.SiteFragment;
 import com.blueprint.watershed.Sites.SiteListFragment;
-import com.blueprint.watershed.Utilities.TabsPagerAdapter;
+import com.blueprint.watershed.Tasks.Task;
+import com.blueprint.watershed.Tasks.TaskAbstractFragment;
 import com.blueprint.watershed.Tasks.TaskAdapter;
 import com.blueprint.watershed.Tasks.TaskDetailFragment;
 import com.blueprint.watershed.Tasks.TaskFragment;
+import com.blueprint.watershed.Users.User;
+import com.blueprint.watershed.Users.UserFragment;
+import com.blueprint.watershed.Utilities.TabsPagerAdapter;
 import com.facebook.Session;
-
-import android.view.View;
-import android.content.Context;
-import android.content.Intent;
-import android.app.ActionBar.Tab;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-
-import android.widget.ProgressBar;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class MainActivity extends ActionBarActivity
                           implements ActionBar.TabListener,
@@ -67,7 +64,7 @@ public class MainActivity extends ActionBarActivity
                                      SiteListFragment.OnFragmentInteractionListener,
                                      MiniSiteFragment.OnFragmentInteractionListener,
                                      AddFieldReportFragment.OnFragmentInteractionListener,
-                                     CreateTaskFragment.OnFragmentInteractionListener,
+                                     TaskAbstractFragment.OnFragmentInteractionListener,
                                      FieldReportFragment.OnFragmentInteractionListener {
 
     // Constants
@@ -92,7 +89,7 @@ public class MainActivity extends ActionBarActivity
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
-    private ArrayList<String> menuItems;
+    private List<String> menuItems;
 
     // View Elements
     public CharSequence mTitle;
@@ -302,10 +299,8 @@ public class MainActivity extends ActionBarActivity
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         String titles[] = { "Tasks", "Sites", "Profile", "About", "Logout" };
 
-        menuItems = new ArrayList<String>();
-        for (String title : titles) {
-            menuItems.add(title);
-        }
+        menuItems = Arrays.asList(titles);
+
         mDrawerList.setOnItemClickListener(this);
 
         mDrawerList.setAdapter(new ArrayAdapter<String>(this,

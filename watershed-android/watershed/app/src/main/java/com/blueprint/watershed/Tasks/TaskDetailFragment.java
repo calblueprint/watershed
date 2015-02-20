@@ -34,7 +34,7 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.create_task_menu, menu);
+        inflater.inflate(R.menu.edit_task_menu, menu);
     }
 
     public TaskDetailFragment() {
@@ -60,7 +60,7 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-         View view = inflater.inflate(R.layout.fragment_task, container, false);
+        View view = inflater.inflate(R.layout.fragment_task, container, false);
         view.findViewById(R.id.field_report_button).setOnClickListener(this);
         configureViewWithTask(view, mTask);
         return view;
@@ -96,12 +96,13 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
         //TODO make Task request. Do we need to get anything else from the server for this?
     }
 
+
     //TODO Move this method to TaskFragment once the duplicate menu items bug is fixed.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.add_task:
+            case R.id.edit_task:
                 CreateTaskFragment newTask = CreateTaskFragment.newInstance();
                 ((MainActivity)getActivity()).replaceFragment(newTask);
                 return true;
