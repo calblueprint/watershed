@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto" >
     <item android:id="@+id/create_task"
         android:title="Create Task"
-        android:icon="@drawable/ic_action_edit"
+        android:icon="@drawable/ic_action_new"
         app:showAsAction="ifRoom"
         />
 </menu>
