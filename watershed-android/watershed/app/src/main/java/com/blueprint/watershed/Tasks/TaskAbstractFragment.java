@@ -92,7 +92,7 @@ public abstract class TaskAbstractFragment extends Fragment {
      * Returns back to the task index fragment
      * @param task - Task object
      */
-    public void createTaskRequest(Task task, String type) {
+    public void createTaskRequest(Task task, final String type) {
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
 
         JsonObjectRequest request;
@@ -109,9 +109,11 @@ public abstract class TaskAbstractFragment extends Fragment {
             request = new EditTaskRequest(mParentActivity, task, params, new Response.Listener<Task>() {
                 @Override
                 public void onResponse(Task task) {
-                    TaskFragment taskFragment = TaskFragment.newInstance(0);
-                    mParentActivity.replaceFragment(taskFragment);
-                    Log.e("successful task", "editing");
+                    Fragment fragment;
+                    if (type.equals(EDIT)) fragment = TaskDetailFragment.newInstance(task);
+                    else fragment = TaskFragment.newInstance(0);
+                    mParentActivity.replaceFragment(fragment);
+                    Log.i("successful task", "editing");
                 }
             });
         }
@@ -125,10 +127,10 @@ public abstract class TaskAbstractFragment extends Fragment {
      */
     public void createTask(String type, Task task) {
         if (type.equals(CREATE)) task = new Task();
-        task.setTitle(mTitleField.getText().toString());
-        task.setDescription(mDescriptionField.getText().toString());
-        task.setAssignerId(mParentActivity.getUser().getId());
-        task.setMiniSiteId(Integer.parseInt(mMiniSiteId.getText().toString()));
+        if (mTitleField.getText().toString() != null) task.setTitle(mTitleField.getText().toString());
+        if (mDescriptionField.getText().toString() != null) task.setDescription(mDescriptionField.getText().toString());
+        if (mParentActivity.getUser().getId() != null) task.setAssignerId(mParentActivity.getUser().getId());
+        if (mMiniSiteId.getText().toString() != null) task.setMiniSiteId(Integer.parseInt(mMiniSiteId.getText().toString()));
         task.setComplete(false);
 
         createTaskRequest(task, type);
