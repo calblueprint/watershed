@@ -20,10 +20,14 @@ import com.blueprint.watershed.R;
 
 public class TaskDetailFragment extends Fragment implements View.OnClickListener {
 
+    private MainActivity mParentActivity;
     private Task mTask;
     private OnFragmentInteractionListener mListener;
     private NetworkManager mNetworkManager;
     private MainActivity mMainActivity;
+
+    private TextView mDetailTitle;
+    private TextView mDescription;
 
 
     public static TaskDetailFragment newInstance(Task task) {
@@ -45,25 +49,35 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
         mTask = task;
     }
 
-    public void configureViewWithTask(View view, Task task) {
-        ((TextView)view.findViewById(R.id.task_detail_title)).setText(task.getTitle());
-        ((TextView)view.findViewById(R.id.task_detail_description)).setText(task.getDescription());
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
+        mParentActivity = (MainActivity) getActivity();
+        mNetworkManager = NetworkManager.getInstance(mParentActivity.getApplicationContext());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_task, container, false);
-        view.findViewById(R.id.field_report_button).setOnClickListener(this);
-        configureViewWithTask(view, mTask);
-        return view;
+        super.onCreateView(inflater, container, savedInstanceState);
+        return inflater.inflate(R.layout.fragment_task, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initializeViews();
+
+    }
+
+    private void initializeViews() {
+        mParentActivity.findViewById(R.id.field_report_button).setOnClickListener(this);
+        mDetailTitle = (TextView) mParentActivity.findViewById(R.id.task_detail_title);
+        mDescription = (TextView) mParentActivity.findViewById(R.id.task_detail_description);
+
+        mDetailTitle.setText(mTask.getTitle());
+        mDescription.setText(mTask.getDescription());
     }
 
     public void onButtonPressed(Uri uri) {
@@ -93,7 +107,6 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
     @Override
     public void onResume() {
         super.onResume();
-        //TODO make Task request. Do we need to get anything else from the server for this?
     }
 
 
@@ -103,8 +116,8 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.edit_task:
-                CreateTaskFragment newTask = CreateTaskFragment.newInstance();
-                ((MainActivity)getActivity()).replaceFragment(newTask);
+                EditTaskFragment newTask = EditTaskFragment.newInstance(mTask);
+                mParentActivity.replaceFragment(newTask);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -116,11 +129,11 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
     public void onClick(View view){
         switch(view.getId()){
             case (R.id.field_report_button):
-                FieldReportButtonPressed(view);
+                fieldReportButtonPressed(view);
         }
     }
 
-    public void FieldReportButtonPressed(View view){
+    public void fieldReportButtonPressed(View view){
         AddFieldReportFragment fieldFragment = AddFieldReportFragment.newInstance();
         mMainActivity.setFieldReportTask(mTask);
         mMainActivity.replaceFragment(fieldFragment);

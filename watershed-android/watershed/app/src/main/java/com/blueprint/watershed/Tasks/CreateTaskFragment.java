@@ -1,5 +1,6 @@
 package com.blueprint.watershed.Tasks;
 
+import android.os.Bundle;
 import android.view.View;
 
 
@@ -15,6 +16,12 @@ public class CreateTaskFragment extends TaskAbstractFragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setButtonListeners();
+    }
+
     /**
      * Returns a listener that is applied to the submit button.
      * @return
@@ -22,7 +29,7 @@ public class CreateTaskFragment extends TaskAbstractFragment {
     public View.OnClickListener submitListener() {
         return new View.OnClickListener() {
             @Override
-            public void onClick(View view) { createTask(CREATE); }
+            public void onClick(View view) { createTask(CREATE, null); }
         };
     }
 }

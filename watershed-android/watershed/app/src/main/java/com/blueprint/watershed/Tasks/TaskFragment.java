@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -27,7 +26,7 @@ public class TaskFragment extends ListFragment {
     private OnFragmentInteractionListener mListener;
     private ListView listView1;
     private ArrayList<Task> mTaskList;
-    private MainActivity parentActivity;
+    private MainActivity mParentActivity;
     private TaskAdapter mTaskAdapter;
     private NetworkManager mNetworkManager;
     private Menu mMenu;
@@ -46,9 +45,9 @@ public class TaskFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setHasOptionsMenu(true);
+        setHasOptionsMenu(true);
         mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
-        parentActivity = (MainActivity)getActivity();
+        mParentActivity = (MainActivity)getActivity();
         mTaskList = new ArrayList<Task>();
         if (getArguments() != null) {
             int option = getArguments().getInt("option");
@@ -84,7 +83,7 @@ public class TaskFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id){
         Task taskClicked = this.mTaskList.get(position);
         TaskDetailFragment detailFragment = TaskDetailFragment.newInstance(taskClicked);
-        parentActivity.replaceFragment(detailFragment);
+        mParentActivity.replaceFragment(detailFragment);
     }
 
 
@@ -100,10 +99,24 @@ public class TaskFragment extends ListFragment {
         }
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.create_task_menu, menu);
-    }
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        inflater.inflate(R.menu.create_task_menu, menu);
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle item selection
+//        switch (item.getItemId()) {
+//            case R.id.create_task:
+//                CreateTaskFragment newTask = CreateTaskFragment.newInstance();
+//                mParentActivity.replaceFragment(newTask);
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
+
 
 
     @Override
@@ -119,7 +132,7 @@ public class TaskFragment extends ListFragment {
             @Override
             public void onResponse(ArrayList<Task> tasks) {
                 setTasks(tasks);
-                parentActivity.getSpinner().setVisibility(View.GONE);
+                mParentActivity.getSpinner().setVisibility(View.GONE);
                 mTaskAdapter.notifyDataSetChanged();
             }
         });

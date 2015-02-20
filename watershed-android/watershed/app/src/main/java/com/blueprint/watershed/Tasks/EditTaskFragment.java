@@ -1,5 +1,6 @@
 package com.blueprint.watershed.Tasks;
 
+import android.os.Bundle;
 import android.view.View;
 
 /**
@@ -10,13 +11,36 @@ public class EditTaskFragment extends TaskAbstractFragment {
 
     private static final String EDIT = "edit";
 
-    public static EditTaskFragment newInstance() { return new EditTaskFragment(); }
+    private Task mTask;
+
+    public static EditTaskFragment newInstance(Task task) {
+        EditTaskFragment fragment =  new EditTaskFragment();
+        fragment.setTask(task);
+        return fragment;
+    }
+
+    private void setTask(Task task) { mTask = task; }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setButtonListeners();
+        setTextViews();
+    }
+
+    private void setTextViews() {
+        if (mTask.getTitle() != null) mTitleField.setText(mTask.getTitle());
+        if (mTask.getDescription() != null) mDescriptionField.setText(mTask.getDescription());
+        if (mTask.getAssigneeId() != null) mAssigneeField.setText(String.valueOf(mTask.getAssigneeId()));
+        if (mTask.getDueDate() != null) mDueDateField.setText(String.valueOf(mTask.getDueDate().toString()));
+        if (mTask.getMiniSiteId() != null) mMiniSiteId.setText(String.valueOf(mTask.getMiniSiteId()));
+    }
 
     @Override
     public View.OnClickListener submitListener() {
         return new View.OnClickListener() {
             @Override
-            public void onClick(View view) { createTask(EDIT); }
+            public void onClick(View view) { createTask(EDIT, mTask); }
         };
     }
 }
