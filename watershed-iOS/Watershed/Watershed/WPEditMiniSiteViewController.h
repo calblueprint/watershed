@@ -7,7 +7,8 @@
 //
 
 #import "WPCreateMiniSiteViewController.h"
+#import "WPMiniSite.h"
 
 @interface WPEditMiniSiteViewController : WPCreateMiniSiteViewController
-
+@property (nonatomic) WPMiniSite *miniSite;
 @end
