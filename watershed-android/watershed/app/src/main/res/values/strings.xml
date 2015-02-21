@@ -48,4 +48,11 @@
     <string name="site">Site</string>
     <string name="assignee">Assignee</string>
 
+    <!-- Editing User -->
+    <string name="edit_profile_name">Name</string>
+    <string name="edit_profile_email">Email</string>
+    <string name="edit_profile_password">New Password</string>
+    <string name="edit_profile_reenter">Confirm Password</string>
+    <string name="edit_profile_confirm">Old Password</string>
+
 </resources>
