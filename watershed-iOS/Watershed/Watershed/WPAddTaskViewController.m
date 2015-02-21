@@ -27,6 +27,7 @@
 @property (nonatomic) UITextField *assigneeField;
 @property (nonatomic) UITextView *descriptionView;
 @property (nonatomic) WPSite *selectedSite;
+@property (nonatomic) WPUser *selectedAssignee;
 
 @end
 
@@ -84,19 +85,30 @@ static NSString *CellIdentifier = @"Cell";
         //need to add urgent
         NSNumberFormatter *userFormatter = [[NSNumberFormatter alloc] init];
         [userFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
-        NSNumber *userId = [userFormatter numberFromString:[[WPNetworkingManager sharedManager] keyChainStore][@"user_id"]];
+//        NSNumber *userId = [userFormatter numberFromString:[[WPNetworkingManager sharedManager] keyChainStore][@"user_id"]];
+        NSString *userId = [[WPNetworkingManager sharedManager] keyChainStore][@"user_id"];
+
         NSDictionary *taskJSON = @{
                                    @"title" : self.taskField.text,
-                                   @"site_id" : self.selectedSite.siteId,
+                                   @"mini_site_id" : [self.selectedSite.siteId stringValue],
                                    @"due_date" : self.dateField.text,
                                    @"description" : self.descriptionView.text,
-                                   @"assignee_id" :userId
+                                   @"assignee_id" :userId,
+                                   @"assigner_id" :userId
                                    };
-        WPTask *task = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:taskJSON error:nil];
+        WPTask *task = [MTLJSONAdapter modelOfClass:WPTask.class fromJSONDictionary:taskJSON error:nil];
         [[WPNetworkingManager sharedManager] createTaskWithTask:task parameters:[[NSMutableDictionary alloc] init] success:^{
             [self.parent requestAndLoadTasks];
             [self.navigationController popViewControllerAnimated:YES];
         }];
+        
+//        NSMutableDictionary *parameters = [taskJSON mutableCopy];
+//        
+//        [[WPNetworkingManager sharedManager] postTaskWithParameters:parameters success:^(WPTask *task) {
+//                [self.parent requestAndLoadTasks];
+//                [self.navigationController popViewControllerAnimated:YES];
+//            }
+//         ];
     }
 }
 
@@ -104,7 +116,6 @@ static NSString *CellIdentifier = @"Cell";
 
 -(void)selectTaskViewControllerDismissed:(NSString *)stringForFirst {
     _taskField.text = stringForFirst;
-    
 }
 
 -(void)selectSiteViewControllerDismissed:(WPSite *)selectedSite {

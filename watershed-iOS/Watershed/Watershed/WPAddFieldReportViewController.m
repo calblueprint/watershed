@@ -28,8 +28,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor blackColor];
+    self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = @"Add Field Report";
+    self.view.fieldReportTableView.delegate = self;
+    self.view.fieldReportTableView.dataSource = self;
     [self.view.addPhotoButton addTarget:self action:@selector(addPhotoButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view.viewImageButton addTarget:self action:@selector(viewImageButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view.urgentSwitch addTarget:self action:@selector(changeSwitch:) forControlEvents:UIControlEventValueChanged];
@@ -245,14 +247,61 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     [self presentViewController:picker animated:YES completion:NULL];
 }
 
+#pragma mark - Table View Delegate / Data Source Methods
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    // Return the number of sections.
+    return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 2) {
+        return 120;
+    }
+    else {
+        return 44;
+    }
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    // Return the number of rows in the section.
+    return 3;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [[UITableViewCell alloc] init];
+    
+    switch (indexPath.section) {
+            // Name
+        case 0: {
+            cell.textLabel.text = @"Name";
+            break;
+        }
+            // Address
+        case 1: {
+            cell.textLabel.text = @"Field Report";
+            break;
+        }
+        case 2: {
+            cell.textLabel.text = @"Description";
+            break;
+        }
+        default: {
+            //do nothing
+        }
+    }
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+}
+
 
 #pragma mark - Image Picker Controller delegate methods
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     self.view.selectedImageView.image = info[UIImagePickerControllerOriginalImage];
-    //    UIImage *chosenImage = info[UIImagePickerControllerOriginalImage];
-    //    self.view.originalImage = chosenImage;
-    //    [self setBlurredImage];
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 

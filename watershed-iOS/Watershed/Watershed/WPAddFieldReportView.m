@@ -49,9 +49,16 @@ int highestRating = 5;
         [self updateConstraints];
         [self setUpActions];
     }
+    [self setBackgroundColor:[UIColor whiteColor]];
     return self;
 }
 - (void)createSubviews {
+    _fieldReportTableView = [({
+        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero];
+        tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+        tableView;
+    }) wp_addToSuperview:self];
+    
     _selectedImageView = [({
 //        _originalImage = [UIImage imageNamed:@"SampleCoverPhoto"];
 //        UIImageView *imageView = [[UIImageView alloc] initWithImage:_originalImage];
@@ -185,6 +192,11 @@ int highestRating = 5;
 }
 
 - (void)updateConstraints {
+    
+    [self.fieldReportTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(@0);
+    }];
+    
     [self.urgentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(topMargin + standardMargin * 2));
         make.leading.equalTo(@(standardMargin));
@@ -269,12 +281,12 @@ int highestRating = 5;
         
     }];
     
-    [self.blackOverlay mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(topMargin));
-        make.leading.equalTo(@0);
-        make.trailing.equalTo(@0);
-        make.bottom.equalTo(@0);
-    }];
+//    [self.blackOverlay mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(@(topMargin));
+//        make.leading.equalTo(@0);
+//        make.trailing.equalTo(@0);
+//        make.bottom.equalTo(@0);
+//    }];
     
     [super updateConstraints];
 }

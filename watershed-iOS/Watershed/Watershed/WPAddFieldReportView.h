@@ -13,6 +13,7 @@
 
 @interface WPAddFieldReportView : WPView
 
+@property (nonatomic) UITableView * fieldReportTableView;
 @property (nonatomic) UITextView *fieldDescription;
 @property (nonatomic) UIPickerView *healthRating;
 @property (nonatomic) UISwitch *urgentSwitch;
