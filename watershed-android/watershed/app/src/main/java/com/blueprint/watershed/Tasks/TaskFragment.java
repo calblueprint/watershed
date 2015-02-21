@@ -48,7 +48,7 @@ public class TaskFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setHasOptionsMenu(true);
+        setHasOptionsMenu(true);
         mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
         parentActivity = (MainActivity)getActivity();
         mTaskList = new ArrayList<Task>();
@@ -71,7 +71,6 @@ public class TaskFragment extends ListFragment {
         View finalView = inflater.inflate(R.layout.fragment_task_list, container, false);
         listView1 = (ListView)finalView.findViewById(android.R.id.list);
         mTaskAdapter = new TaskAdapter(getActivity(),R.layout.task_list_row, mTaskList);
-
         listView1.setAdapter(mTaskAdapter);
         return finalView;
     }
@@ -104,9 +103,10 @@ public class TaskFragment extends ListFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
         inflater.inflate(R.menu.create_task_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
-
 
     @Override
     public void onDetach() {
@@ -125,7 +125,6 @@ public class TaskFragment extends ListFragment {
                 mTaskAdapter.notifyDataSetChanged();
             }
         });
-
         mNetworkManager.getRequestQueue().add(taskListRequest);
     }
 
