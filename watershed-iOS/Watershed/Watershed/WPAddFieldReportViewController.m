@@ -255,7 +255,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 2) {
+    if (indexPath.row == 2 || indexPath.row == 3) {
         return 120;
     }
     else {
@@ -265,21 +265,21 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return 3;
+    return 4;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc] init];
     
-    switch (indexPath.section) {
+    switch (indexPath.row) {
             // Name
         case 0: {
-            cell.textLabel.text = @"Name";
+            cell.textLabel.text = @"Urgent";
             break;
         }
             // Address
         case 1: {
-            cell.textLabel.text = @"Field Report";
+            cell.textLabel.text = @"Rating";
             break;
         }
         case 2: {
