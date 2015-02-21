@@ -106,14 +106,14 @@ public class CreateTaskFragment extends Fragment implements View.OnClickListener
     public void createTaskRequest(Task task){
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
 
-        CreateTaskRequest createFieldReportRequest = new CreateTaskRequest(getActivity(), task, params, new Response.Listener<Task>() {
+        CreateTaskRequest createTaskRequest = new CreateTaskRequest(getActivity(), task, params, new Response.Listener<Task>() {
             @Override
             public void onResponse(Task task) {
                 Log.e("successful task", "creation");
             }
         });
 
-        mNetworkManager.getRequestQueue().add(createFieldReportRequest);
+        mNetworkManager.getRequestQueue().add(createTaskRequest);
     }
 
 

@@ -55,6 +55,7 @@
     <string name="create_site_address">Address</string>
     <string name="create_site_city">City</string>
     <string name="create_site_zip">Zip Code</string>
+    <string name="create_site_state">State</string>
     <string name="create_site_submit">Create Site</string>
 
 </resources>
