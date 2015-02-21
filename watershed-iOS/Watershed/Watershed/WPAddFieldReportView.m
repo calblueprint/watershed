@@ -199,56 +199,42 @@ int highestRating = 5;
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
     }];
-    
-    
-    [self.urgentSwitch mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(topMargin + standardMargin));
-        make.trailing.equalTo(@(-standardMargin));
-    }];
 
-
-    [self.rating1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
-        make.leading.equalTo(self.ratingLabel.mas_right).with.offset(10);
-        make.height.equalTo(@(WPRatingButtonHeight));
-        make.width.equalTo(@(WPRatingButtonHeight));
-    }];
-    
-    [self.rating2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
-        make.leading.equalTo(self.rating1.mas_right).with.offset(10);
-        make.height.equalTo(@(WPRatingButtonHeight));
-        make.width.equalTo(@(WPRatingButtonHeight));
-    }];
-
-    [self.rating3 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
-        make.leading.equalTo(self.rating2.mas_right).with.offset(10);
-        make.height.equalTo(@(WPRatingButtonHeight));
-        make.width.equalTo(@(WPRatingButtonHeight));
-    }];
-    
-    [self.rating4 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
-        make.leading.equalTo(self.rating3.mas_right).with.offset(10);
-        make.height.equalTo(@(WPRatingButtonHeight));
-        make.width.equalTo(@(WPRatingButtonHeight));
-    }];
-    
-    [self.rating5 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
-        make.leading.equalTo(self.rating4.mas_right).with.offset(10);
-        make.height.equalTo(@(WPRatingButtonHeight));
-        make.width.equalTo(@(WPRatingButtonHeight));
-    }];
-    
-//    [self.fieldDescription mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.descriptionLabel.mas_bottom).with.offset(standardMargin);
-//        make.centerX.equalTo(self.mas_centerX);
-//        make.leading.equalTo(@(standardMargin));
-//        make.trailing.equalTo(@(-standardMargin));
-//        make.bottom.equalTo(self.addPhotoButton.mas_top).with.offset(-standardMargin);
+//    [self.rating1 mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
+//        make.leading.equalTo(self.ratingLabel.mas_right).with.offset(10);
+//        make.height.equalTo(@(WPRatingButtonHeight));
+//        make.width.equalTo(@(WPRatingButtonHeight));
 //    }];
+//    
+//    [self.rating2 mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
+//        make.leading.equalTo(self.rating1.mas_right).with.offset(10);
+//        make.height.equalTo(@(WPRatingButtonHeight));
+//        make.width.equalTo(@(WPRatingButtonHeight));
+//    }];
+//
+//    [self.rating3 mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
+//        make.leading.equalTo(self.rating2.mas_right).with.offset(10);
+//        make.height.equalTo(@(WPRatingButtonHeight));
+//        make.width.equalTo(@(WPRatingButtonHeight));
+//    }];
+//    
+//    [self.rating4 mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
+//        make.leading.equalTo(self.rating3.mas_right).with.offset(10);
+//        make.height.equalTo(@(WPRatingButtonHeight));
+//        make.width.equalTo(@(WPRatingButtonHeight));
+//    }];
+//    
+//    [self.rating5 mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
+//        make.leading.equalTo(self.rating4.mas_right).with.offset(10);
+//        make.height.equalTo(@(WPRatingButtonHeight));
+//        make.width.equalTo(@(WPRatingButtonHeight));
+//    }];
+    
     
     [self.selectedImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(topMargin));

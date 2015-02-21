@@ -11,6 +11,7 @@
 #import "WPNetworkingManager.h"
 #import "WPMiniSiteViewController.h"
 #import "WPTaskViewController.h"
+#import "WPAddFieldReportTableViewCell.h"
 
 @interface WPAddFieldReportViewController ()
 
@@ -269,22 +270,38 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [[UITableViewCell alloc] init];
     
+    NSString *CellIdentifier = @"Cell";
+
+    WPAddFieldReportTableViewCell *cell = [[WPAddFieldReportTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+
     switch (indexPath.row) {
-            // Name
+            // Urgent
         case 0: {
-            cell.textLabel.text = @"Urgent";
+            UISwitch *urgentSwitch = [[UISwitch alloc] init];
+            urgentSwitch.onTintColor = [UIColor wp_red];
+            cell = [[WPAddFieldReportTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:urgentSwitch];
+            cell.label.text = @"Urgent";
             break;
         }
-            // Address
         case 1: {
-            cell.textLabel.text = @"Rating";
+            UITextField *ratingField = [[UITextField alloc] init];
+            ratingField.delegate = self;
+            ratingField.placeholder = @"1-5";
+            ratingField.tag = 1;
+            ratingField.textColor = [UIColor wp_paragraph];
+            ratingField.font = [UIFont systemFontOfSize:16];
+            cell = [[WPAddFieldReportTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:ratingField];
+            cell.label.text = @"Rating";
             break;
         }
         case 2: {
-            cell.textLabel.text = @"Description";
-            break;
+            UITextView *descriptionView = [[UITextView alloc] init];
+            cell = [[WPAddFieldReportTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:descriptionView];
+            cell.label.text = @"Description";
+            descriptionView.textColor = [UIColor wp_paragraph];
+            descriptionView.font = [UIFont systemFontOfSize:12];
+            break;            break;
         }
         default: {
             //do nothing
