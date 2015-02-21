@@ -28,6 +28,7 @@ import com.blueprint.watershed.FieldReports.FieldReportFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Users.HomeRequest;
+import com.blueprint.watershed.Sites.CreateSiteFragment;
 import com.blueprint.watershed.Tasks.CreateTaskFragment;
 import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Users.UserFragment;
@@ -296,6 +297,11 @@ public class MainActivity extends ActionBarActivity
                 CreateTaskFragment newTask = CreateTaskFragment.newInstance();
                 replaceFragment(newTask);
                 return true;
+            case R.id.add_site:
+                CreateSiteFragment newSite = CreateSiteFragment.newInstance();
+                replaceFragment(newSite);
+                return true;
+
 
         }
         if (mDrawerToggle.onOptionsItemSelected(item)) {
