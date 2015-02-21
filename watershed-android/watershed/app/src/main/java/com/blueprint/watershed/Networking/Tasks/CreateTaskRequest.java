@@ -24,6 +24,14 @@ public class CreateTaskRequest extends BaseRequest {
     Task mTask;
     Activity mActivity;
 
+    /**
+     * Sends a request to the server to create a new task.
+     *
+     * @param activity - typically MainActivity, an activity that has a network manager.
+     * @param task - task to be created
+     * @param params - params for a new site. JSON Object
+     * @param listener - A response listener to be called once the reponse is returned.
+     */
     public CreateTaskRequest(final Activity activity, final Task task, HashMap<String, JSONObject> params, final Response.Listener<Task> listener) {
         super(Request.Method.POST, makeURL("tasks"), taskParams(activity, task),
                 new Response.Listener<JSONObject>() {
