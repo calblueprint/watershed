@@ -47,7 +47,7 @@ public class CreateSiteRequest extends BaseRequest {
      * Generates a JSON object of the created site to be sent to the server.
      * @param activity
      * @param site - site object to be created.
-     * @return
+     * @return Site Json object with site parameters
      */
     protected static JSONObject siteParams(final Activity activity, final Site site) {
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
