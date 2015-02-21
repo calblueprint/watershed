@@ -44,6 +44,12 @@ public class CreateTaskRequest extends BaseRequest {
         mTask = task;
     }
 
+    /**
+     * Generates a JSON object of the created task to be sent to the server.
+     * @param activity
+     * @param task - task object to be created.
+     * @return
+     */
     protected static JSONObject taskParams(final Activity activity, final Task task) {
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
         ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();

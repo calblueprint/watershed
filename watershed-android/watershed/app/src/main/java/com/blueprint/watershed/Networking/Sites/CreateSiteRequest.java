@@ -43,6 +43,12 @@ public class CreateSiteRequest extends BaseRequest {
         mActivity = activity;
     }
 
+    /**
+     * Generates a JSON object of the created site to be sent to the server.
+     * @param activity
+     * @param site - site object to be created.
+     * @return
+     */
     protected static JSONObject siteParams(final Activity activity, final Site site) {
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
         ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
