@@ -89,17 +89,16 @@
     }];
     
     [self.tasksSegmentedControl mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(@0);
-        make.top.equalTo(@20);
-        make.leading.equalTo(@(standardMargin));
-        make.trailing.equalTo(@(-standardMargin));
+        make.top.equalTo(@(standardMargin));
+        make.leading.equalTo(@0);
+        make.trailing.equalTo(@0);
     }];
     
     [self.tasksTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.segmentedTasksTabBarView.mas_bottom).with.offset(10);
-        make.bottom.equalTo(@(-standardMargin));
-        make.leading.equalTo(@(standardMargin));
-        make.trailing.equalTo(@(-standardMargin));
+        make.top.equalTo(self.segmentedTasksTabBarView.mas_bottom);
+        make.bottom.equalTo(@0);
+        make.leading.equalTo(@0);
+        make.trailing.equalTo(@0);
     }];
     
     [self.tasksTableView.subviews mas_makeConstraints:^(MASConstraintMaker *make) {

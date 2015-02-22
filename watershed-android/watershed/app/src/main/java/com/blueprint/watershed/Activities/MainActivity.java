@@ -252,7 +252,6 @@ public class MainActivity extends ActionBarActivity
         updateTitle(mtaskFragment);
         android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.add(R.id.container, mtaskFragment);
-//        mProgress.setVisibility(View.VISIBLE);
         ft.commit();
     }
 
@@ -287,6 +286,12 @@ public class MainActivity extends ActionBarActivity
                     getSupportFragmentManager().popBackStack();
                     return false;
                 }
+                break;
+            case R.id.add_task:
+                CreateTaskFragment newTask = CreateTaskFragment.newInstance();
+                replaceFragment(newTask);
+                return true;
+
         }
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;

@@ -63,7 +63,7 @@ public class TaskFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setHasOptionsMenu(true);
+        setHasOptionsMenu(true);
         mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
         mParentActivity = (MainActivity) getActivity();
         mAllTaskList = new ArrayList<Task>();
@@ -145,9 +145,10 @@ public class TaskFragment extends ListFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
         inflater.inflate(R.menu.create_task_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
-
 
     @Override
     public void onDetach() {
@@ -172,7 +173,6 @@ public class TaskFragment extends ListFragment {
                 if (mSwipeLayout != null) mSwipeLayout.setRefreshing(false);
             }
         });
-
         mNetworkManager.getRequestQueue().add(taskListRequest);
     }
 

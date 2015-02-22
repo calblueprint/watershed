@@ -22,8 +22,8 @@
 
 - (void)viewDidLoad {
     self.navigationItem.title = @"My Profile";
-    FAKIonIcons *settingsIcon = [FAKIonIcons ios7GearOutlineIconWithSize:22];
-    UIImage *settingsImage = [settingsIcon imageWithSize:CGSizeMake(22, 22)];
+    FAKIonIcons *settingsIcon = [FAKIonIcons androidSettingsIconWithSize:24];
+    UIImage *settingsImage = [settingsIcon imageWithSize:CGSizeMake(24, 24)];
     UIBarButtonItem *settingsButtonItem = [[UIBarButtonItem alloc] initWithImage:settingsImage style:UIBarButtonItemStylePlain target:self action:@selector(openSettings)];
     settingsButtonItem.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = settingsButtonItem;
@@ -34,6 +34,7 @@
     [[WPNetworkingManager sharedManager] requestUserWithUser:_user parameters:[[NSMutableDictionary alloc] init] success:^(WPUser *user) {
         _user = user;
         [self.view configureWithUser:user];
+        [self.view stopIndicator];
     }];
     
     [super viewDidLoad];
