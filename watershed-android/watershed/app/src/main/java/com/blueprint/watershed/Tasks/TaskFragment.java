@@ -4,13 +4,13 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.android.volley.Response;
@@ -26,18 +26,33 @@ import java.util.HashMap;
 
 public class TaskFragment extends ListFragment {
 
+    private static final String OPTION = "option";
+
+    private static int TASK_TYPE;
+
+    private static final int USER = 0;
+    private static final int ALL = 1;
+
+
     private OnFragmentInteractionListener mListener;
-    private ListView listView1;
-    private ArrayList<Task> mTaskList;
-    private MainActivity parentActivity;
-    private TaskAdapter mTaskAdapter;
+    private MainActivity mParentActivity;
     private NetworkManager mNetworkManager;
-    private Menu mMenu;
+
+    private ArrayList<Task> mAllTaskList;
+    private ArrayList<Task> mUserTaskList;
+    private TaskAdapter mAllTaskAdapter;
+    private TaskAdapter mUserTaskAdapter;
+    
+
+    private ListView mListView;
+    private Button mNoTasksRefresh;
+    private SwipeRefreshLayout mSwipeLayout;
+
 
     public static TaskFragment newInstance(int option) {
         TaskFragment fragment = new TaskFragment();
         Bundle args = new Bundle();
-        args.putInt("option", option);
+        args.putInt(OPTION, option);
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,49 +65,76 @@ public class TaskFragment extends ListFragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
-        parentActivity = (MainActivity)getActivity();
-        mTaskList = new ArrayList<Task>();
-        if (getArguments() != null) {
-            int option = getArguments().getInt("option");
-            getTasksRequest();
-            switch (option) {
-                case 0: //populates with tasks that you are assigned
-                    break;
-
-                case 1: //populates with all tasks
-                    break;
-            }
-        }
+        mParentActivity = (MainActivity) getActivity();
+        mAllTaskList = new ArrayList<Task>();
+        mUserTaskList = new ArrayList<Task>();
+        Bundle args = getArguments();
+        if (args != null) TASK_TYPE = args.getInt(OPTION);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View finalView = inflater.inflate(R.layout.fragment_task_list, container, false);
-        listView1 = (ListView)finalView.findViewById(android.R.id.list);
-        mTaskAdapter = new TaskAdapter(getActivity(),R.layout.task_list_row, mTaskList);
-        listView1.setAdapter(mTaskAdapter);
+        initializeViews(finalView);
+        mSwipeLayout.setRefreshing(true);
+        getTasksRequest();
         return finalView;
     }
 
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    /**
+     * Initializes all the views in the fragment.
+     * This includes the adapters, buttons, listview, etc.
+     * @param view
+     */
+    private void initializeViews(View view) {
+        mListView = (ListView) view.findViewById(android.R.id.list);
+        mAllTaskAdapter = new TaskAdapter(mParentActivity,R.layout.task_list_row, mAllTaskList);
+        mUserTaskAdapter = new TaskAdapter(mParentActivity,R.layout.task_list_row, mUserTaskList);
+
+        if (TASK_TYPE == USER) mListView.setAdapter(mUserTaskAdapter);
+        else mListView.setAdapter(mAllTaskAdapter);
+        mListView.setEmptyView(view.findViewById(R.id.no_tasks_layout));
+
+        mNoTasksRefresh = (Button) view.findViewById(R.id.no_tasks_refresh);
+        mNoTasksRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mSwipeLayout.setRefreshing(true);
+                getTasksRequest();
+            }
+        });
+
+        mSwipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.tasks_swipe_container);
+        mSwipeLayout.setColorSchemeResources(R.color.ws_blue, R.color.facebook_blue, R.color.facebook_dark_blue, R.color.dark_gray);
+        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mSwipeLayout.setRefreshing(true);
+                getTasksRequest();
+            }
+        });
     }
 
+    /**
+     * Starts a new fragment for the corresponding task view
+     * @param l
+     * @param v
+     * @param position
+     * @param id
+     */
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id){
-        Task taskClicked = this.mTaskList.get(position);
-        TaskDetailFragment detailFragment = TaskDetailFragment.newInstance(taskClicked);
-        parentActivity.replaceFragment(detailFragment);
-    }
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        Task taskClicked;
+        if (TASK_TYPE == USER) taskClicked = mUserTaskList.get(position);
+        else taskClicked = mAllTaskList.get(position);
 
+        TaskDetailFragment detailFragment = TaskDetailFragment.newInstance(taskClicked);
+        mParentActivity.replaceFragment(detailFragment);
+    }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-
         try {
             mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
@@ -114,6 +156,10 @@ public class TaskFragment extends ListFragment {
         mListener = null;
     }
 
+    /**
+     * Gets all the tasks in the server and updates the ListView accordingly,
+     * depending on what tab is being clicked on.
+     */
     private void getTasksRequest(){
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
 
@@ -121,20 +167,36 @@ public class TaskFragment extends ListFragment {
             @Override
             public void onResponse(ArrayList<Task> tasks) {
                 setTasks(tasks);
-                parentActivity.getSpinner().setVisibility(View.GONE);
-                mTaskAdapter.notifyDataSetChanged();
+                mParentActivity.getSpinner().setVisibility(View.GONE);
+                mAllTaskAdapter.notifyDataSetChanged();
+                mUserTaskAdapter.notifyDataSetChanged();
+                if (mSwipeLayout != null) mSwipeLayout.setRefreshing(false);
             }
         });
         mNetworkManager.getRequestQueue().add(taskListRequest);
     }
 
-    private void setTasks(ArrayList<Task> tasks){
-        mTaskList.clear();
-        for (Task task : tasks){
-            mTaskList.add(task);
-        }
-    };
 
+    /**
+     * Sets the tasks for all tasks list and user tasks lists
+     * @param tasks
+     */
+    private void setTasks(ArrayList<Task> tasks){
+        mAllTaskList.clear();
+        mUserTaskList.clear();
+        int id = mParentActivity.getUserId();
+        for (Task task : tasks){
+            mAllTaskList.add(task);
+            if (task.getAssigneeId() != null) {
+                if (task.getAssigneeId() == id) mUserTaskList.add(task);
+            }
+        }
+    }
+
+    /**
+     * Interface for the fragment to communicate with the activity
+     * Implemented in MainActivity.
+     */
     public interface OnFragmentInteractionListener {
         public void onFragmentInteraction(Uri uri);
     }

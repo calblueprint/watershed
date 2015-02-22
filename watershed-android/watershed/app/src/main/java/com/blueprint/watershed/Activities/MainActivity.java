@@ -1,25 +1,30 @@
 package com.blueprint.watershed.Activities;
 
 import android.app.ActionBar;
+import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.app.FragmentTransaction;
-import android.content.res.Configuration;
-import android.net.Uri;
-import android.os.Bundle;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.graphics.Typeface;
+import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.content.SharedPreferences;
-import android.graphics.Typeface;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.AboutFragment;
@@ -28,28 +33,18 @@ import com.blueprint.watershed.FieldReports.FieldReportFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Users.HomeRequest;
-import com.blueprint.watershed.Tasks.CreateTaskFragment;
-import com.blueprint.watershed.Tasks.Task;
-import com.blueprint.watershed.Users.UserFragment;
 import com.blueprint.watershed.R;
-import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Sites.SiteFragment;
 import com.blueprint.watershed.Sites.SiteListFragment;
-import com.blueprint.watershed.Utilities.TabsPagerAdapter;
+import com.blueprint.watershed.Tasks.CreateTaskFragment;
+import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Tasks.TaskAdapter;
 import com.blueprint.watershed.Tasks.TaskDetailFragment;
 import com.blueprint.watershed.Tasks.TaskFragment;
+import com.blueprint.watershed.Users.User;
+import com.blueprint.watershed.Users.UserFragment;
+import com.blueprint.watershed.Utilities.TabsPagerAdapter;
 import com.facebook.Session;
-
-import android.view.View;
-import android.content.Context;
-import android.content.Intent;
-import android.app.ActionBar.Tab;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-
-import android.widget.ProgressBar;
 
 import org.json.JSONObject;
 
@@ -335,8 +330,8 @@ public class MainActivity extends ActionBarActivity
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     @Override
@@ -363,7 +358,6 @@ public class MainActivity extends ActionBarActivity
         switch (position) {
             case 0:
                 TaskFragment taskFragment = TaskFragment.newInstance(0);
-                mProgress.setVisibility(View.VISIBLE);
                 replaceFragment(taskFragment);
                 break;
             case 1:
@@ -390,7 +384,7 @@ public class MainActivity extends ActionBarActivity
         SharedPreferences prefs = activity.getSharedPreferences(LandingPageActivity.PREFERENCES, 0);
         SharedPreferences.Editor editor = prefs.edit();
         editor.clear();
-        editor.commit();
+        editor.apply();
         Intent intent = new Intent(activity, LandingPageActivity.class);
 
         if (Session.getActiveSession() != null) {
@@ -440,7 +434,7 @@ public class MainActivity extends ActionBarActivity
         mUser = user;
     }
     public User getUser() { return mUser; }
-
+    public int getUserId() { return mUserId; }
     public void setFieldReportTask(Task task) { mFieldReportTask = task; }
     public Task getFieldReportTask() { return mFieldReportTask; }
 

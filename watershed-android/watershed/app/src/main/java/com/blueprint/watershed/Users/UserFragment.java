@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,7 +27,7 @@ import java.util.HashMap;
 public class UserFragment extends Fragment implements ListView.OnItemClickListener{
     private OnFragmentInteractionListener mListener;
     private User mUser;
-    private Activity mMainActivity;
+    private MainActivity mMainActivity;
     private NetworkManager mNetworkManager;
     private ProfileOptionsAdapter mAdapter;
 
