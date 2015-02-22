@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.R;
-import com.blueprint.watershed.Tasks.CreateTaskFragment;
 
 import java.util.ArrayList;
 
@@ -116,8 +115,7 @@ public class UserFragment extends Fragment implements ListView.OnItemClickListen
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.add_task:
-                CreateTaskFragment newTask = CreateTaskFragment.newInstance();
-                ((MainActivity)getActivity()).replaceFragment(newTask);
+                mParentActivity.replaceFragment(EditUserFragment.newInstance(mUser));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
