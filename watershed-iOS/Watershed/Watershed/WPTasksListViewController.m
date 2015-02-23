@@ -27,8 +27,8 @@
     [super viewDidLoad];
     self.navigationItem.title = @"Tasks";
     self.view.backgroundColor = [UIColor whiteColor];
-    FAKIonIcons *addIcon = [FAKIonIcons ios7PlusEmptyIconWithSize:22];
-    UIImage *addIconImage = [addIcon imageWithSize:CGSizeMake(22, 22)];
+    FAKIonIcons *addIcon = [FAKIonIcons androidAddIconWithSize:26];
+    UIImage *addIconImage = [addIcon imageWithSize:CGSizeMake(24, 24)];
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc]
                                   initWithImage:addIconImage
                                   style:UIBarButtonItemStylePlain

@@ -57,7 +57,7 @@ const static float CELL_HEIGHT = 86.0f;
     }) wp_addToSuperview:content];
 
     _taskCountLabel = [({
-        FAKFontAwesome *checkIcon = [FAKFontAwesome checkIconWithSize:[WPLabeledIcon viewHeight]];
+        FAKIonIcons *checkIcon = [FAKIonIcons androidDoneAllIconWithSize:[WPLabeledIcon viewHeight]];
         UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
         WPLabeledIcon *taskCountLabel = [[WPLabeledIcon alloc] initWithText:@"Task Count" icon:checkImage];
         taskCountLabel.alpha = 0.3;
@@ -65,9 +65,9 @@ const static float CELL_HEIGHT = 86.0f;
     }) wp_addToSuperview:content];
 
     _fieldReportCountLabel = [({
-        FAKFontAwesome *exclamationIcon = [FAKFontAwesome exclamationTriangleIconWithSize:[WPLabeledIcon viewHeight]];
-        UIImage *exclamationImage = [exclamationIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
-        WPLabeledIcon *fieldReportCountLabel = [[WPLabeledIcon alloc] initWithText:@"Field Report Count" icon:exclamationImage];
+        FAKIonIcons *clipboardIcon = [FAKIonIcons androidClipboardIconWithSize:[WPLabeledIcon viewHeight]];
+        UIImage *clipboardImage = [clipboardIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
+        WPLabeledIcon *fieldReportCountLabel = [[WPLabeledIcon alloc] initWithText:@"Field Report Count" icon:clipboardImage];
         fieldReportCountLabel.alpha = 0.3;
         fieldReportCountLabel;
     }) wp_addToSuperview:content];

@@ -13,6 +13,11 @@ public class EditTaskFragment extends TaskAbstractFragment {
 
     private Task mTask;
 
+    /**
+     * Creates a fragment and sets the task for the fragment.
+     * @param task - Task you want to edit.
+     * @return - an EditTaskFragment instance.
+     */
     public static EditTaskFragment newInstance(Task task) {
         EditTaskFragment fragment =  new EditTaskFragment();
         fragment.setTask(task);
@@ -28,6 +33,9 @@ public class EditTaskFragment extends TaskAbstractFragment {
         setTextViews();
     }
 
+    /**
+     * Presets the task with task information
+     */
     private void setTextViews() {
         if (mTask.getTitle() != null) mTitleField.setText(mTask.getTitle());
         if (mTask.getDescription() != null) mDescriptionField.setText(mTask.getDescription());

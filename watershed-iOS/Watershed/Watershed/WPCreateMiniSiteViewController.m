@@ -17,6 +17,7 @@
 @property (nonatomic) WPCreateMiniSiteView *view;
 @property (nonatomic) UITableView *infoTableView;
 @property (nonatomic) NSArray *textInputViews;
+@property (nonatomic) NSArray *vegetationList;
 @property (nonatomic) NSArray *selectedVegetations;
 @property (nonatomic) NSArray *selectedVegetationIndices;
 @property (nonatomic) BSKeyboardControls *keyboardControls;
@@ -29,22 +30,26 @@
     [super viewDidLoad];
     self.navigationController.navigationBar.tintColor = [UIColor wp_blue];
     self.title = @"New Mini Site";
-    
+
+    self.infoTableView = self.view.infoTableView;
+    self.infoTableView.delegate = self;
+    self.infoTableView.dataSource = self;
+
     // Add white background to status bar
     UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, -20, [WPView getScreenWidth], 20)];
     statusBarView.backgroundColor = [UIColor whiteColor];
     [self.navigationController.navigationBar addSubview:statusBarView];
-    
-    FAKFontAwesome *closeIcon = [FAKFontAwesome closeIconWithSize:22];
-    UIImage *closeImage = [closeIcon imageWithSize:CGSizeMake(22, 22)];
+
+    FAKIonIcons *closeIcon = [FAKIonIcons androidCloseIconWithSize:24];
+    UIImage *closeImage = [closeIcon imageWithSize:CGSizeMake(24, 24)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithImage:closeImage style:UIBarButtonItemStylePlain target:self action:@selector(dismissSelf)];
     self.navigationItem.leftBarButtonItem = cancelButton;
-    
-    FAKFontAwesome *checkIcon = [FAKFontAwesome checkIconWithSize:22];
-    UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake(22, 22)];
+
+    FAKIonIcons *checkIcon = [FAKIonIcons androidDoneIconWithSize:24];
+    UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake(24, 24)];
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithImage:checkImage style:UIBarButtonItemStylePlain target:self action:@selector(saveAndDismissSelf)];
     self.navigationItem.rightBarButtonItem = doneButton;
-    
+
     [self.imageInputCell.viewImageButton addTarget:self action:@selector(presentImageView) forControlEvents:UIControlEventTouchUpInside];
     
     self.keyboardControls.delegate = self;
@@ -52,9 +57,6 @@
 
 - (void)loadView {
     self.view = [[WPCreateMiniSiteView alloc] init];
-    self.infoTableView = self.view.infoTableView;
-    self.infoTableView.delegate = self;
-    self.infoTableView.dataSource = self;
 }
 
 - (void)dismissSelf {
@@ -74,15 +76,14 @@
                                    };
     WPMiniSite *miniSite = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:miniSiteJSON error:nil];
     miniSite.site = self.parent.site;
-    
+
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    NSString *photo = [UIImagePNGRepresentation([self compressForUpload:self.imageInputCell.imageInput.image withScale:0.2]) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    NSString *photo = [UIImagePNGRepresentation([self compressForUpload:self.imageInputCell.imageInputView.image withScale:0.2]) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
     parameters[@"photos_attributes"] = @[ @{ @"data" : photo } ];
-    
+
     __weak __typeof(self)weakSelf = self;
     [[WPNetworkingManager sharedManager] createMiniSiteWithMiniSite:miniSite parameters:parameters success:^(WPMiniSite *miniSite) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf.parent requestAndLoadSite];
         strongSelf.parent = nil;
         [strongSelf dismissSelf];
     }];
@@ -229,12 +230,14 @@
     if (textField.tag == 1) {
         WPSelectVegetationViewController *selectVegetationViewController = [[WPSelectVegetationViewController alloc] init];
         selectVegetationViewController.delegate = self;
-        selectVegetationViewController.selectedIndices = self.selectedVegetationIndices;
+        selectVegetationViewController.vegetationList = self.vegetationList.mutableCopy;
+        selectVegetationViewController.initialSelectedIndices = self.selectedVegetationIndices.mutableCopy;
         [self.navigationController pushViewController:selectVegetationViewController animated:YES];
         return NO;
     }
     
     self.keyboardControls.activeField = textField;
+
     // ignore direction in here
     [self keyboardControls:self.keyboardControls selectedField:textField inDirection:BSKeyboardControlsDirectionNext];
     return YES;
@@ -254,7 +257,7 @@
 - (void)presentPhotoButtonAction {
     if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
         UIActionSheet *popup = [[UIActionSheet alloc] init];
-        if (self.imageInputCell.imageInput.image) {
+        if (self.imageInputCell.imageInputView.image) {
             popup.destructiveButtonIndex = [popup addButtonWithTitle:@"Remove Photo"];
         }
         [popup addButtonWithTitle:@"Take Photo"];
@@ -291,16 +294,16 @@
                                  handler:^(UIAlertAction * action)
                                  {
                                      [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
-                                     
+
                                  }];
-        
-        if (self.imageInputCell.imageInput.image) {
+
+        if (self.imageInputCell.imageInputView.image) {
             UIAlertAction *remove = [UIAlertAction
                                      actionWithTitle:@"Remove Photo"
                                      style:UIAlertActionStyleDestructive
                                      handler:^(UIAlertAction * action)
                                      {
-                                         self.imageInputCell.imageInput.image = nil;
+                                         self.imageInputCell.imageInputView.image = nil;
                                          self.imageInputCell.viewImageButton.alpha = 0;
                                          [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
                                      }];
@@ -332,7 +335,6 @@
     picker.delegate = self;
     picker.allowsEditing = NO;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    
     [picker.navigationBar setBackgroundColor:[UIColor whiteColor]];
     [picker.navigationBar setShadowImage:[UIImage imageNamed:@"WPBlue"]];
     [picker.navigationBar setTintColor:[UIColor wp_blue]];
@@ -352,7 +354,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     switch (popup.tag) {
         case 1: {
             if (buttonIndex == popup.destructiveButtonIndex && buttonShift == 1) {
-                self.imageInputCell.imageInput.image = nil;
+                self.imageInputCell.imageInputView.image = nil;
                 self.imageInputCell.viewImageButton.alpha = 0;
             }
             else if (buttonIndex == 0 + buttonShift) {
@@ -369,16 +371,21 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 
 #pragma mark - SelectVegetation Delegate
 
-- (void)vegetationFinishedSelecting:(NSArray *)vegetations withIndices:(NSArray *)indices {
+- (void)vegetationFinishedSelectingFromList:(NSArray *)fullVegetationList
+                                vegetations:(NSArray *)vegetations
+                                    indices:(NSArray *)indices {
     self.vegetationTextField.text = nil;
-    for (NSString *vegetationItem in vegetations) {
-        if ([vegetations indexOfObject:vegetationItem] > 0) {
+    for (int i = 0; i < vegetations.count; i++) {
+        NSString *vegetationItem = vegetations[i];
+        if (i > 0) {
             NSString *addOn = [@", " stringByAppendingString:vegetationItem];
             self.vegetationTextField.text = [self.vegetationTextField.text stringByAppendingString:addOn];
         } else {
             self.vegetationTextField.text = vegetationItem;
         }
     }
+    
+    self.vegetationList = fullVegetationList;
     self.selectedVegetations = vegetations;
     self.selectedVegetationIndices = indices;
 }
@@ -386,7 +393,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 #pragma mark - ImagePickerController delegate methods
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    self.imageInputCell.imageInput.image = info[UIImagePickerControllerOriginalImage];
+    self.imageInputCell.imageInputView.image = info[UIImagePickerControllerOriginalImage];
     self.imageInputCell.viewImageButton.alpha = 1;
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
@@ -401,12 +408,12 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     UIViewController *viewPhotoModal = [[UIViewController alloc] init];
     viewPhotoModal.view.backgroundColor = [UIColor blackColor];
     viewPhotoModal.view.userInteractionEnabled = YES;
-    
+
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:viewPhotoModal.view.frame];
     imageView.contentMode = UIViewContentModeScaleAspectFit;
-    imageView.image = self.imageInputCell.imageInput.image;
+    imageView.image = self.imageInputCell.imageInputView.image;
     [viewPhotoModal.view addSubview:imageView];
-    
+
     UITapGestureRecognizer *modalTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissModalView:)];
     [viewPhotoModal.view addGestureRecognizer:modalTap];
     viewPhotoModal.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
@@ -508,6 +515,13 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
         _imageInputCell.inputLabel.text = @"Photo";
     }
     return _imageInputCell;
+}
+
+- (NSArray *)vegetationList {
+    if (!_vegetationList) {
+        _vegetationList = @[@"Tree", @"Plant", @"Bioswale", @"Mark Miyashita", @"Dog", @"Cup", @"Tree", @"Plant", @"Bioswale", @"Mark Miyashita", @"Dog", @"Cup", @"Tree", @"Plant", @"Bioswale", @"Mark Miyashita", @"Dog", @"Cup"];
+    }
+    return _vegetationList;
 }
 
 - (NSArray *)selectedVegetations {

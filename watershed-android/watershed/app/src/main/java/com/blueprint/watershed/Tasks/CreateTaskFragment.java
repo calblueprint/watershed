@@ -8,9 +8,10 @@ public class CreateTaskFragment extends TaskAbstractFragment {
 
     private static final String CREATE = "create";
 
-    public static CreateTaskFragment newInstance() {
-        return new CreateTaskFragment();
-    }
+    /**
+     * @return Returns CreateTaskFragment instance.
+     */
+    public static CreateTaskFragment newInstance() { return new CreateTaskFragment(); }
 
     public CreateTaskFragment() {
         // Required empty public constructor
@@ -24,12 +25,14 @@ public class CreateTaskFragment extends TaskAbstractFragment {
 
     /**
      * Returns a listener that is applied to the submit button.
-     * @return
+     * @return a listener called when submit is clicked.
      */
     public View.OnClickListener submitListener() {
         return new View.OnClickListener() {
             @Override
-            public void onClick(View view) { createTask(CREATE, null); }
+            public void onClick(View view) {
+                createTask(CREATE, null);
+            }
         };
     }
 }

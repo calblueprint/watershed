@@ -11,6 +11,8 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -70,6 +72,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
         mActivity = (MainActivity) getActivity();
     }
@@ -155,6 +158,14 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
                 startActivityForResult(takePictureIntent, CAMERA_REQUEST);
             }
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.empty, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+
     }
 
     public void onSubmitFieldReportButtonPressed(View fieldReportButton){
