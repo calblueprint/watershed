@@ -132,6 +132,9 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
         switch(view.getId()){
             case (R.id.field_report_button):
                 fieldReportButtonPressed(view);
+                break;
+            default:
+                break;
         }
     }
 
@@ -139,7 +142,6 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
         AddFieldReportFragment fieldFragment = AddFieldReportFragment.newInstance();
         mMainActivity.setFieldReportTask(mTask);
         mMainActivity.replaceFragment(fieldFragment);
-
     }
 
     public interface OnFragmentInteractionListener {
