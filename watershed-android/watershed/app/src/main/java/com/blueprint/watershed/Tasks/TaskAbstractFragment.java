@@ -44,6 +44,7 @@ public abstract class TaskAbstractFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
         mParentActivity = (MainActivity) getActivity();
     }
@@ -54,7 +55,6 @@ public abstract class TaskAbstractFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         return inflater.inflate(R.layout.fragment_create_task, container, false);
     }
-
 
     @Override
     public void onAttach(Activity activity) {
@@ -76,7 +76,7 @@ public abstract class TaskAbstractFragment extends Fragment {
     /**
      * Initializes all the views for the form.
      */
-    public void setButtonListeners(){
+    public void setButtonListeners() {
         Button submitButton = (Button) mParentActivity.findViewById(R.id.create_task_submit);
         submitButton.setOnClickListener(submitListener());
 

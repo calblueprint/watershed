@@ -5,10 +5,8 @@ import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Networking.BaseRequest;
 import com.blueprint.watershed.Tasks.Task;
-import com.blueprint.watershed.Tasks.TaskFragment;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -40,8 +38,7 @@ public class CreateTaskRequest extends BaseRequest {
                         try {
                             String taskJson = jsonObject.get("task").toString();
                             ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
-                            Task task = mapper.readValue(taskJson, new TypeReference<Task>() {
-                            });
+                            Task task = mapper.readValue(taskJson, new TypeReference<Task>() {});
                             listener.onResponse(task);
                         } catch (Exception e) {
                             Log.e("Json exception", e.toString());

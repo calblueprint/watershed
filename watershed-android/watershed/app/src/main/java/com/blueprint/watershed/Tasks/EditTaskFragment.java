@@ -1,7 +1,11 @@
 package com.blueprint.watershed.Tasks;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
+
+import com.blueprint.watershed.R;
 
 /**
  * Created by charlesx on 2/19/15.
@@ -31,6 +35,13 @@ public class EditTaskFragment extends TaskAbstractFragment {
         super.onActivityCreated(savedInstanceState);
         setButtonListeners();
         setTextViews();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.empty, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     /**
