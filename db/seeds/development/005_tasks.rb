@@ -20,7 +20,7 @@ tasks = [
 		description: tasks.sample,
 		assignee_id: User.first,
 		assigner_id: User.last,
-		site_id: Site.first,
+		mini_site_id: MiniSite.first,
 		complete: false,
 		due_date: Time.now,
 	).first_or_create
