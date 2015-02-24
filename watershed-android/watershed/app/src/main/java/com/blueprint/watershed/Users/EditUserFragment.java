@@ -19,6 +19,9 @@ import com.blueprint.watershed.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by charlesx on 2/21/15.
  * Fragment where you can edit a profile
@@ -47,7 +50,8 @@ public class EditUserFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
+        mParentActivity = (MainActivity) getActivity();
+        mNetworkManager = NetworkManager.getInstance(mParentActivity);
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -84,6 +88,19 @@ public class EditUserFragment extends Fragment {
                     hasErrors = true;
                 }
 
+                if (mName.getText().toString().isEmpty()) {
+                   mName.setError("Name can't be blank!");
+                   hasErrors = true;
+                }
+
+                Pattern regex = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+                Matcher matcher = regex.matcher(mEmail.getText().toString());
+                if (!matcher.find()) {
+                    mName.setError("Email must be valid!");
+                    hasErrors = true;
+                }
+
+                if (hasErrors) return;
 
                 sendEditUserRequest();
             }
@@ -97,10 +114,11 @@ public class EditUserFragment extends Fragment {
         JSONObject params = new JSONObject();
         JSONObject object = new JSONObject();
         try {
-            object.put("name", mName.getText())
-                  .put("email", mEmail.getText())
-                  .put("password", mPassword.getText())
-                  .put("current_password", mConfirm.getText());
+            object.put("name", mName.getText().toString())
+                  .put("email", mEmail.getText().toString())
+                  .put("password", mPassword.getText().toString())
+                  .put("password_confirmation", mReenterPassword.getText().toString())
+                  .put("current_password", mConfirm.getText().toString());
             params.put("user", object);
         } catch (JSONException e) {
             Log.i("JSONException EditUserFragment: ", e.toString());

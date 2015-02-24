@@ -49,13 +49,14 @@ public class UserFragment extends Fragment implements ListView.OnItemClickListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mParentActivity = (MainActivity) getActivity();
+        setHasOptionsMenu(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        mParentActivity = (MainActivity) getActivity();
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
