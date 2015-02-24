@@ -76,13 +76,13 @@
         [self.emailButton layoutIfNeeded];
     } completion:^(BOOL finished) {
         if (!_emailClicked) {
-            FAKIonIcons *emailIcon = [FAKIonIcons ios7EmailOutlineIconWithSize:20];
+            FAKIonIcons *emailIcon = [FAKIonIcons androidMailIconWithSize:20];
             [emailIcon addAttribute:NSForegroundColorAttributeName
                               value:[UIColor whiteColor]];
             _signInEmailIconView = [[UIImageView alloc] initWithImage:[emailIcon imageWithSize:CGSizeMake(20, 20)]];
             [self addSubview:_signInEmailIconView];
             
-            FAKIonIcons *lockIcon = [FAKIonIcons ios7LockedIconWithSize:20];
+            FAKIonIcons *lockIcon = [FAKIonIcons androidLockIconWithSize:20];
             [lockIcon addAttribute:NSForegroundColorAttributeName
                              value:[UIColor whiteColor]];
             _signInPasswordIconView = [[UIImageView alloc] initWithImage:[lockIcon imageWithSize:CGSizeMake(20, 20)]];
@@ -153,7 +153,7 @@
     [_emailButton setTitle:@"Sign in with Email" forState:UIControlStateNormal];
     _emailButton.layer.cornerRadius = 5.0;
     
-    FAKIonIcons *mailIcon = [FAKIonIcons ios7EmailOutlineIconWithSize:30];
+    FAKIonIcons *mailIcon = [FAKIonIcons androidMailIconWithSize:30];
     [mailIcon addAttribute:NSForegroundColorAttributeName
                      value:[UIColor whiteColor]];
     _emailIconView = [[UIImageView alloc] initWithImage:[mailIcon imageWithSize:CGSizeMake(30, 30)]];

@@ -19,6 +19,7 @@
 @property (nonatomic) WPSitesTableView *sitesTableView;
 @property (nonatomic) UISearchDisplayController *searchController;
 @property (nonatomic) UISearchBar *searchBar;
+@property (nonatomic) UIRefreshControl *refreshControl;
 
 @end
 
@@ -39,9 +40,13 @@ static NSString *cellIdentifier = @"SiteCell";
     
     self.sitesTableView.delegate = self;
     self.sitesTableView.dataSource = self;
+
+    [self.refreshControl addTarget:self action:@selector(requestAndLoadSites) forControlEvents:UIControlEventValueChanged];
+    [self.sitesTableView addSubview:self.refreshControl];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     [self requestAndLoadSites];
 }
 
@@ -106,6 +111,8 @@ static NSString *cellIdentifier = @"SiteCell";
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         strongSelf.sitesList = sitesList;
         [strongSelf.sitesTableView reloadData];
+        [strongSelf.sitesTableView stopIndicator];
+        [strongSelf.refreshControl endRefreshing];
     }];
 }
 
@@ -138,8 +145,8 @@ static NSString *cellIdentifier = @"SiteCell";
 
 - (UIBarButtonItem *)newSearchBarButtonItem {
 
-    FAKFontAwesome *searchIcon = [FAKFontAwesome searchIconWithSize:20];
-    UIImage *searchImage = [searchIcon imageWithSize:CGSizeMake(20, 22)];
+    FAKIonIcons *searchIcon = [FAKIonIcons androidSearchIconWithSize:24];
+    UIImage *searchImage = [searchIcon imageWithSize:CGSizeMake(24, 24)];
     UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithImage:searchImage style:UIBarButtonItemStylePlain target:self action:@selector(openSearch)];
     searchButtonItem.tintColor = [UIColor whiteColor];
     
@@ -177,8 +184,8 @@ static NSString *cellIdentifier = @"SiteCell";
 #pragma mark - Add Site Button / Methods
 
 - (UIBarButtonItem *)newAddSiteButtonItem {
-    FAKFontAwesome *plusIcon = [FAKFontAwesome plusIconWithSize:22];
-    UIImage *plusImage = [plusIcon imageWithSize:CGSizeMake(18, 22)];
+    FAKIonIcons *plusIcon = [FAKIonIcons androidAddIconWithSize:26];
+    UIImage *plusImage = [plusIcon imageWithSize:CGSizeMake(24, 24)];
     UIBarButtonItem *addSiteButtonItem = [[UIBarButtonItem alloc] initWithImage:plusImage style:UIBarButtonItemStylePlain target:self action:@selector(showCreateSiteView)];
     addSiteButtonItem.tintColor = [UIColor whiteColor];
     return addSiteButtonItem;
@@ -208,6 +215,13 @@ static NSString *cellIdentifier = @"SiteCell";
         [self.view addSubview:_sitesTableView];
     }
     return _sitesTableView;
+}
+
+- (UIRefreshControl *)refreshControl {
+    if (!_refreshControl) {
+        _refreshControl = [[UIRefreshControl alloc] init];
+    }
+    return _refreshControl;
 }
 
 

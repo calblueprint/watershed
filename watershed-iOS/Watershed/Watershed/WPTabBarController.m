@@ -46,14 +46,14 @@
                             NSLocalizedString(@"Profile", HNNoLocalizationComment)
                             ];
         
-        FAKFontAwesome *checkIcon = [FAKFontAwesome checkCircleIconWithSize:25];
-        UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake(25, 25)];
+        FAKIonIcons *checkIcon = [FAKIonIcons androidDoneAllIconWithSize:28];
+        UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake(28, 28)];
         
-        FAKFontAwesome *treeIcon = [FAKFontAwesome treeIconWithSize:25];
-        UIImage *treeImage = [treeIcon imageWithSize:CGSizeMake(25, 25)];
+        FAKIonIcons *treeIcon = [FAKIonIcons androidImageIconWithSize:28];
+        UIImage *treeImage = [treeIcon imageWithSize:CGSizeMake(28, 28)];
         
-        FAKFontAwesome *profileIcon = [FAKFontAwesome userIconWithSize:25];
-        UIImage *profileImage = [profileIcon imageWithSize:CGSizeMake(25, 25)];
+        FAKIonIcons *profileIcon = [FAKIonIcons androidPersonIconWithSize:28];
+        UIImage *profileImage = [profileIcon imageWithSize:CGSizeMake(28, 28)];
         
         NSArray *images = @[
                             checkImage,

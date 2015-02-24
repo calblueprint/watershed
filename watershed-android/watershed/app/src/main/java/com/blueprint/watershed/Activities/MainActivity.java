@@ -38,6 +38,7 @@ import com.blueprint.watershed.Sites.SiteFragment;
 import com.blueprint.watershed.Sites.SiteListFragment;
 import com.blueprint.watershed.Tasks.CreateTaskFragment;
 import com.blueprint.watershed.Tasks.Task;
+import com.blueprint.watershed.Tasks.TaskAbstractFragment;
 import com.blueprint.watershed.Tasks.TaskAdapter;
 import com.blueprint.watershed.Tasks.TaskDetailFragment;
 import com.blueprint.watershed.Tasks.TaskFragment;
@@ -48,8 +49,9 @@ import com.facebook.Session;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class MainActivity extends ActionBarActivity
                           implements ActionBar.TabListener,
@@ -62,7 +64,7 @@ public class MainActivity extends ActionBarActivity
                                      SiteListFragment.OnFragmentInteractionListener,
                                      MiniSiteFragment.OnFragmentInteractionListener,
                                      AddFieldReportFragment.OnFragmentInteractionListener,
-                                     CreateTaskFragment.OnFragmentInteractionListener,
+                                     TaskAbstractFragment.OnFragmentInteractionListener,
                                      FieldReportFragment.OnFragmentInteractionListener {
 
     // Constants
@@ -87,7 +89,7 @@ public class MainActivity extends ActionBarActivity
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
-    private ArrayList<String> menuItems;
+    private List<String> menuItems;
 
     // View Elements
     public CharSequence mTitle;
@@ -285,6 +287,12 @@ public class MainActivity extends ActionBarActivity
                     getSupportFragmentManager().popBackStack();
                     return false;
                 }
+                break;
+            case R.id.add_task:
+                CreateTaskFragment newTask = CreateTaskFragment.newInstance();
+                replaceFragment(newTask);
+                return true;
+
         }
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
@@ -297,10 +305,8 @@ public class MainActivity extends ActionBarActivity
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         String titles[] = { "Tasks", "Sites", "Profile", "About", "Logout" };
 
-        menuItems = new ArrayList<String>();
-        for (String title : titles) {
-            menuItems.add(title);
-        }
+        menuItems = Arrays.asList(titles);
+
         mDrawerList.setOnItemClickListener(this);
 
         mDrawerList.setAdapter(new ArrayAdapter<String>(this,
@@ -323,8 +329,8 @@ public class MainActivity extends ActionBarActivity
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     @Override
@@ -351,7 +357,6 @@ public class MainActivity extends ActionBarActivity
         switch (position) {
             case 0:
                 TaskFragment taskFragment = TaskFragment.newInstance(0);
-                mProgress.setVisibility(View.VISIBLE);
                 replaceFragment(taskFragment);
                 break;
             case 1:
@@ -378,7 +383,7 @@ public class MainActivity extends ActionBarActivity
         SharedPreferences prefs = activity.getSharedPreferences(LandingPageActivity.PREFERENCES, 0);
         SharedPreferences.Editor editor = prefs.edit();
         editor.clear();
-        editor.commit();
+        editor.apply();
         Intent intent = new Intent(activity, LandingPageActivity.class);
 
         if (Session.getActiveSession() != null) {
@@ -428,7 +433,7 @@ public class MainActivity extends ActionBarActivity
         mUser = user;
     }
     public User getUser() { return mUser; }
-
+    public int getUserId() { return mUserId; }
     public void setFieldReportTask(Task task) { mFieldReportTask = task; }
     public Task getFieldReportTask() { return mFieldReportTask; }
 

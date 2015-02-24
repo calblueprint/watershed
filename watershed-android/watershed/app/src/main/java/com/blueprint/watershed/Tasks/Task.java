@@ -29,7 +29,6 @@ public class Task implements APIObject {
     public Task(){
     }
 
-    @JsonIgnore
     public Integer getId() {return mId;}
     public String getTitle() { return mTitle; }
     public String getDescription() { return mDescription; }

@@ -1,29 +1,17 @@
 package com.blueprint.watershed.Activities;
 
 import android.app.Activity;
-import android.content.Context;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
-
-import android.widget.ImageView;
 import android.widget.Button;
+import android.widget.ImageView;
 
-import java.util.Arrays;
-import java.util.HashMap;
-
-import android.widget.LinearLayout;
-import android.widget.Toast;
-
-import com.android.volley.NetworkError;
-import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.blueprint.watershed.Authentication.LoginFragment;
 import com.blueprint.watershed.Authentication.Session;
 import com.blueprint.watershed.Authentication.SignUpFragment;
@@ -32,19 +20,16 @@ import com.blueprint.watershed.Networking.Sessions.FacebookLoginRequest;
 import com.blueprint.watershed.Networking.Sessions.LoginRequest;
 import com.blueprint.watershed.Networking.Sessions.SignUpRequest;
 import com.blueprint.watershed.R;
-import com.blueprint.watershed.Users.User;
-
-import com.fasterxml.jackson.core.type.TypeReference;
-
 import com.blueprint.watershed.Utilities.APIError;
 import com.facebook.AppEventsLogger;
 import com.facebook.SessionState;
 import com.facebook.model.GraphUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
 import org.json.JSONException;
-import org.json.JSONObject;
+
+import java.util.Arrays;
+import java.util.HashMap;
 
 
 public class LandingPageActivity extends Activity implements View.OnClickListener{

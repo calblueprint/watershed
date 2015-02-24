@@ -23,6 +23,7 @@ import java.util.HashMap;
 
 /**
  * Created by maxwolffe on 11/2/14.
+ * Base Requests for make api calls.
  */
 public abstract class BaseRequest extends JsonObjectRequest {
     private SharedPreferences preferences;
@@ -30,6 +31,7 @@ public abstract class BaseRequest extends JsonObjectRequest {
     private Response.Listener errorListener;
 
     private static final String baseURL = "http://10.142.36.24:3000/api/v1/";
+//    private static final String baseURL = "https://intense-reaches-1457.herokuapp.com/api/v1/";
 
     public BaseRequest(int method, String url, JSONObject jsonRequest,
                        final Response.Listener listener, final Response.Listener<APIError> errorListener,

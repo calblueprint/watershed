@@ -107,9 +107,6 @@
     NSMutableDictionary *parameters = [staticParameters mutableCopy];
     
     [[WPNetworkingManager sharedManager] postFieldReportWithParameters:parameters success:^(WPFieldReport *fieldReport) {
-        if ([parent isKindOfClass:[WPMiniSiteViewController class]]) {
-            [(WPMiniSiteViewController *)parent requestAndLoadMiniSite];
-        }
         [self.navigationController popViewControllerAnimated:YES];
     }];
 }
@@ -265,7 +262,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     [picker dismissViewControllerAnimated:YES completion:^{
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     }];
-    
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
