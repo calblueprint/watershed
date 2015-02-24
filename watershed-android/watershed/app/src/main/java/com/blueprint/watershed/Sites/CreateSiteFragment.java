@@ -76,6 +76,7 @@ public class CreateSiteFragment extends Fragment implements View.OnClickListener
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_create_site, container, false);
         setButtonListeners(view);
+        return view;
     }
 
     @Override
