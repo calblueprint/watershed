@@ -167,6 +167,7 @@ GEM
     http_parser.rb (0.6.0)
     i18n (0.6.11)
     inflecto (0.0.2)
+    interception (0.5)
     ipaddress (0.8.0)
     jquery-rails (3.1.2)
       railties (>= 3.0, < 5.0)
@@ -211,6 +212,9 @@ GEM
       slop (~> 3.4)
     pry-rails (0.3.3)
       pry (>= 0.9.10)
+    pry-rescue (1.4.1)
+      interception (>= 0.5)
+      pry
     pusher-client (0.6.0)
       json
       websocket (~> 1.0)
@@ -437,6 +441,10 @@ DEPENDENCIES
   pg (= 0.17.1)
   pg_search (~> 0.7.8)
   pry-rails
+<<<<<<< Updated upstream
+=======
+  pry-rescue
+>>>>>>> Stashed changes
   quiet_assets (~> 1.0.2)
   rails (= 4.1.4)
   rails_12factor
