@@ -47,7 +47,7 @@ const static float LABEL_WIDTH = 75.0f;
         make.centerX.equalTo(self.mas_centerX);
         make.centerY.equalTo(self.mas_centerY);
     }];
-    
+
     [self.inputLabel mas_updateConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@(LABEL_WIDTH));
         make.height.equalTo(@(CELL_HEIGHT));

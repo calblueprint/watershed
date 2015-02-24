@@ -19,6 +19,7 @@
 @property (nonatomic) WPSiteView *view;
 @property (nonatomic) UITableView *miniSiteTableView;
 @property (nonatomic) NSMutableArray *miniSiteList;
+@property (nonatomic) UIRefreshControl *refreshControl;
 
 @end
 
@@ -36,12 +37,18 @@ static NSString *cellIdentifier = @"MiniSiteCell";
     self.miniSiteTableView.delegate = self;
     self.miniSiteTableView.dataSource = self;
 
-    [self requestAndLoadSite];
+    [self.refreshControl addTarget:self action:@selector(requestAndLoadSite) forControlEvents:UIControlEventValueChanged];
+    [self.view.siteScrollView addSubview:self.refreshControl];
 }
 
 - (void)loadView {
     self.view = [[WPSiteView alloc] init];
     self.miniSiteTableView = self.view.miniSiteTableView;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self requestAndLoadSite];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -120,6 +127,8 @@ static NSString *cellIdentifier = @"MiniSiteCell";
         strongSelf.site = site;
         strongSelf.miniSiteList = miniSiteList;
         [strongSelf.miniSiteTableView reloadData];
+        [strongSelf.view stopIndicator];
+        [strongSelf.refreshControl endRefreshing];
     }];
 }
 
@@ -137,8 +146,8 @@ static NSString *cellIdentifier = @"MiniSiteCell";
 #pragma mark - Add Site Button / Methods
 
 - (UIBarButtonItem *)newAddSiteButtonItem {
-    FAKFontAwesome *plusIcon = [FAKFontAwesome plusIconWithSize:22];
-    UIImage *plusImage = [plusIcon imageWithSize:CGSizeMake(18, 22)];
+    FAKIonIcons *plusIcon = [FAKIonIcons androidAddIconWithSize:26];
+    UIImage *plusImage = [plusIcon imageWithSize:CGSizeMake(24, 24)];
     UIBarButtonItem *addMiniSiteButtonItem = [[UIBarButtonItem alloc] initWithImage:plusImage style:UIBarButtonItemStylePlain target:self action:@selector(showCreateMiniSiteView)];
     addMiniSiteButtonItem.tintColor = [UIColor whiteColor];
     return addMiniSiteButtonItem;
@@ -175,6 +184,13 @@ static NSString *cellIdentifier = @"MiniSiteCell";
         _site = [[WPSite alloc] init];
     }
     return _site;
+}
+
+- (UIRefreshControl *)refreshControl {
+    if (!_refreshControl) {
+        _refreshControl = [[UIRefreshControl alloc] init];
+    }
+    return _refreshControl;
 }
 
 @end

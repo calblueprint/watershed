@@ -5,10 +5,8 @@ import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Networking.BaseRequest;
 import com.blueprint.watershed.Tasks.Task;
-import com.blueprint.watershed.Tasks.TaskFragment;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -22,26 +20,41 @@ import java.util.HashMap;
 public class CreateTaskRequest extends BaseRequest {
 
     Task mTask;
-    MainActivity mActivity;
+    Activity mActivity;
 
+    /**
+     * Sends a request to the server to create a new task.
+     *
+     * @param activity - typically MainActivity, an activity that has a network manager.
+     * @param task - task to be created
+     * @param params - params for a new site. JSON Object
+     * @param listener - A response listener to be called once the reponse is returned.
+     */
     public CreateTaskRequest(final Activity activity, final Task task, HashMap<String, JSONObject> params, final Response.Listener<Task> listener) {
         super(Request.Method.POST, makeURL("tasks"), taskParams(activity, task),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {
                         try {
-                            String fieldReportJson = jsonObject.get("field_report").toString();
+                            String taskJson = jsonObject.get("task").toString();
                             ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
-                            Task fieldReport = mapper.readValue(fieldReportJson, new TypeReference<Task>() {
-                            });
+                            Task task = mapper.readValue(taskJson, new TypeReference<Task>() {});
                             listener.onResponse(task);
                         } catch (Exception e) {
                             Log.e("Json exception", e.toString());
                         }
                     }
                 }, activity);
+        mActivity = activity;
+        mTask = task;
     }
 
+    /**
+     * Generates a JSON object of the created task to be sent to the server.
+     * @param activity
+     * @param task - task object to be created.
+     * @return Task Json object with task parameters
+     */
     protected static JSONObject taskParams(final Activity activity, final Task task) {
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
         ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();

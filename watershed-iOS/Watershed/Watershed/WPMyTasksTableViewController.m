@@ -7,6 +7,7 @@
 //
 
 #import "WPMyTasksTableViewController.h"
+#import "WPMyTasksTableView.h"
 #import "WPTasksTableViewCell.h"
 #import "UIExtensions.h"
 #import "WPTaskViewController.h"
@@ -15,7 +16,8 @@
 
 @interface WPMyTasksTableViewController ()
 
-@property (nonatomic) UITableView *tableView;
+@property (nonatomic) WPMyTasksTableView *tableView;
+@property (nonatomic) UIRefreshControl *refreshControl;
 
 @end
 
@@ -26,24 +28,21 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.tableView = [[UITableView alloc] init];
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.tableView registerClass:[WPTasksTableViewCell class] forCellReuseIdentifier:CellIdentifier];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
-    [f setNumberStyle:NSNumberFormatterDecimalStyle];
-    NSNumber *userId = [f numberFromString:[[WPNetworkingManager sharedManager] keyChainStore][@"user_id"]];
 
-    [[WPNetworkingManager sharedManager] requestMyTasksListWithUser:userId parameters: [[NSMutableDictionary alloc] init] success:^(NSMutableArray *tasksList) {
-        self.tasks = tasksList;
-        [self.tableView reloadData];
-    }];
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(requestAndLoadMyTasks) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:self.refreshControl];
 
+    [self requestAndLoadMyTasks];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
+- (void)loadView {
+    self.tableView = [[WPMyTasksTableView alloc] init];
 }
 
 #pragma mark - Table view data source
@@ -101,6 +100,21 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
     WPTask *selectedTask = self.tasks[indexPath.row];
     taskViewController.task = selectedTask;
     [[self.parentViewController navigationController] pushViewController:taskViewController animated:YES];
+}
+
+#pragma mark - Networking Methods
+
+- (void)requestAndLoadMyTasks {
+    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+    [f setNumberStyle:NSNumberFormatterDecimalStyle];
+    NSNumber *userId = [f numberFromString:[[WPNetworkingManager sharedManager] keyChainStore][@"user_id"]];
+
+    [[WPNetworkingManager sharedManager] requestMyTasksListWithUser:userId parameters: [[NSMutableDictionary alloc] init] success:^(NSMutableArray *tasksList) {
+        self.tasks = tasksList;
+        [self.tableView reloadData];
+        [self.tableView stopIndicator];
+        [self.refreshControl endRefreshing];
+    }];
 }
 
 @end

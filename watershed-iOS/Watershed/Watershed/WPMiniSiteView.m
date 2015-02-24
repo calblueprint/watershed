@@ -13,10 +13,10 @@
 
 @property (nonatomic) UIImageView *navbarShadowOverlay;
 @property (nonatomic) UIView *coverPhotoOverlay;
+@property (nonatomic) UIActivityIndicatorView *indicatorView;
 @property (nonatomic) UIView *tableHeaderView;
 @property (nonatomic) UIView *headingLineBreak;
 @property (nonatomic) UIImageView *tableViewShadowOverlay;
-@property (nonatomic) UIScrollView *miniSiteScrollView;
 
 @end
 
@@ -46,6 +46,7 @@ static int COVER_PHOTO_TRANS = 0;
     _miniSiteScrollView = [({
         UIScrollView *miniSiteScrollView = [[UIScrollView alloc] init];
         miniSiteScrollView.delegate = self;
+        miniSiteScrollView.alwaysBounceVertical = YES;
         miniSiteScrollView;
     }) wp_addToSuperview:self];
     
@@ -58,6 +59,12 @@ static int COVER_PHOTO_TRANS = 0;
         miniSiteTableView;
     }) wp_addToSuperview:self.miniSiteScrollView];
     
+    _indicatorView = [({
+        UIActivityIndicatorView *view = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        [view startAnimating];
+        view;
+    }) wp_addToSuperview:self];
+
     _tableHeaderView = [({
         UIView *tableHeaderView = [[UIView alloc] init];
         tableHeaderView;
@@ -87,7 +94,7 @@ static int COVER_PHOTO_TRANS = 0;
     }) wp_addToSuperview:self.tableHeaderView];
     
     _addressLabel = [({
-        FAKFontAwesome *mapMarkerIcon = [FAKFontAwesome mapMarkerIconWithSize:[WPLabeledIcon viewHeight]];
+        FAKIonIcons *mapMarkerIcon = [FAKIonIcons androidPinIconWithSize:[WPLabeledIcon viewHeight]];
         UIImage *mapMarkerImage = [mapMarkerIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
         WPLabeledIcon *addressLabel = [[WPLabeledIcon alloc] initWithText:@"Street Addresss Label" icon:mapMarkerImage];
         addressLabel;
@@ -101,16 +108,16 @@ static int COVER_PHOTO_TRANS = 0;
     }) wp_addToSuperview:self.tableHeaderView];
     
     _currentTaskLabel = [({
-        FAKFontAwesome *checkIcon = [FAKFontAwesome checkIconWithSize:[WPLabeledIcon viewHeight]];
+        FAKIonIcons *checkIcon = [FAKIonIcons androidDoneAllIconWithSize:[WPLabeledIcon viewHeight]];
         UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
         WPLabeledIcon *currentTaskLabel = [[WPLabeledIcon alloc] initWithText:@"Current Task" icon:checkImage];
         currentTaskLabel;
     }) wp_addToSuperview:self.tableHeaderView];
     
     _fieldReportCountLabel = [({
-        FAKFontAwesome *exclamationIcon = [FAKFontAwesome exclamationTriangleIconWithSize:[WPLabeledIcon viewHeight]];
-        UIImage *exclamationImage = [exclamationIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
-        WPLabeledIcon *fieldReportCountLabel = [[WPLabeledIcon alloc] initWithText:@"Field Report Count" icon:exclamationImage];
+        FAKIonIcons *clipboardIcon = [FAKIonIcons androidClipboardIconWithSize:[WPLabeledIcon viewHeight]];
+        UIImage *clipboardImage = [clipboardIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
+        WPLabeledIcon *fieldReportCountLabel = [[WPLabeledIcon alloc] initWithText:@"Field Report Count" icon:clipboardImage];
         fieldReportCountLabel;
     }) wp_addToSuperview:self.tableHeaderView];
     
@@ -255,8 +262,15 @@ static int COVER_PHOTO_TRANS = 0;
         make.bottom.equalTo(@0);
     }];
     
+    [self.indicatorView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.fieldReportTableView.mas_top).with.offset(2 * standardMargin);
+        make.centerX.equalTo(self.mas_centerX);
+    }];
+
     [super updateConstraints];
 }
+
+#pragma mark - Public Methods
 
 - (void)updateTableViewHeight:(NSInteger)cellCount {
     [self.fieldReportTableView mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -276,6 +290,11 @@ static int COVER_PHOTO_TRANS = 0;
     self.fieldReportCountLabel.label.text = [[miniSite.fieldReportCount stringValue] stringByAppendingString:@" field reports"];
 }
 
+- (void)stopIndicator {
+    [self.indicatorView stopAnimating];
+    self.indicatorView.alpha = 0;
+}
+
 #pragma mark - ScrollView Delegate Method from ViewController
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -283,6 +302,7 @@ static int COVER_PHOTO_TRANS = 0;
     CGFloat trans = scrollView.contentOffset.y;
     COVER_PHOTO_TRANS = MIN(60, trans);
     self.coverPhotoOverlay.alpha = 0.3 + (COVER_PHOTO_TRANS + topMargin) / 600;
+    self.coverPhotoView.alpha = 1 + (trans + topMargin) / 70;
     
     [self.coverPhotoView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(COVER_PHOTO_HEIGHT - COVER_PHOTO_TRANS));

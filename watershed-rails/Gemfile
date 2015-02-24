@@ -24,6 +24,8 @@ gem "pg", "0.17.1"
 
 gem "travis", github: "travis-ci/travis.rb"
 
+gem "figaro"
+
 # Search
 gem "pg_search", "~> 0.7.8"
 
@@ -49,6 +51,7 @@ group :development, :test do
   gem "guard"
   gem "guard-livereload"
   gem "guard-rspec"
+  gem "pry-rails"
 end
 
 group :test do

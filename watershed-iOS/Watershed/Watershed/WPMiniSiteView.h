@@ -19,9 +19,11 @@
 @property (nonatomic) WPLabeledIcon *vegetationListLabel;
 @property (nonatomic) WPLabeledIcon *currentTaskLabel;
 @property (nonatomic) WPLabeledIcon *fieldReportCountLabel;
+@property (nonatomic) UIScrollView *miniSiteScrollView;
 @property (nonatomic) UITableView *fieldReportTableView;
 
 - (void)updateTableViewHeight:(NSInteger)cellCount;
 - (void)configureWithMiniSite:(WPMiniSite *)miniSite;
+- (void)stopIndicator;
 
 @end

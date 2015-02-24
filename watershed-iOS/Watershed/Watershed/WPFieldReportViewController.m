@@ -12,6 +12,7 @@
 
 @interface WPFieldReportViewController ()
 @property (nonatomic) WPFieldReportView *view;
+@property (nonatomic) UIRefreshControl *refreshControl;
 @end
 
 @implementation WPFieldReportViewController
@@ -22,17 +23,17 @@
     self.navigationItem.title = [self.fieldReport dateString];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    __weak __typeof(self)weakSelf = self;
-    [[WPNetworkingManager sharedManager] requestFieldReportWithFieldReport:self.fieldReport parameters:[[NSMutableDictionary alloc] init] success:^(WPFieldReport *fieldReport) {
-        __strong __typeof(weakSelf)strongSelf = weakSelf;
-        strongSelf.fieldReport = fieldReport;
-        [strongSelf.view showBubbles];
-        [strongSelf setUpActions];
-    }];
+    [self.refreshControl addTarget:self action:@selector(requestAndLoadFieldReport) forControlEvents:UIControlEventValueChanged];
+    [self.view.contentScrollView addSubview:self.refreshControl];
 }
 
 - (void)loadView {
     self.view = [[WPFieldReportView alloc] init];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self requestAndLoadFieldReport];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -80,6 +81,19 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+#pragma mark - Networking Methods
+
+- (void)requestAndLoadFieldReport {
+    __weak __typeof(self)weakSelf = self;
+    [[WPNetworkingManager sharedManager] requestFieldReportWithFieldReport:self.fieldReport parameters:[[NSMutableDictionary alloc] init] success:^(WPFieldReport *fieldReport) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        strongSelf.fieldReport = fieldReport;
+        [strongSelf.view showBubbles];
+        [strongSelf setUpActions];
+        [strongSelf.refreshControl endRefreshing];
+    }];
+}
+
 #pragma mark - Update field report view
 
 - (void)updateFieldReportView {
@@ -111,6 +125,13 @@
         _fieldReport = [[WPFieldReport alloc] init];
     }
     return _fieldReport;
+}
+
+- (UIRefreshControl *)refreshControl {
+    if (!_refreshControl) {
+        _refreshControl = [[UIRefreshControl alloc] init];
+    }
+    return _refreshControl;
 }
 
 @end
