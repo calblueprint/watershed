@@ -109,6 +109,12 @@ public class CreateSiteFragment extends Fragment implements View.OnClickListener
         submitButton.setOnClickListener(this);
     }
 
+    /**
+     * Inflates a menu into the action bar.
+     * Called by Activity if setHasOptionsMenu(true) set in OnCreate
+     * @param menu - options menu
+     * @param inflater - view inflater.
+     */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
@@ -145,8 +151,6 @@ public class CreateSiteFragment extends Fragment implements View.OnClickListener
 
         SiteListFragment returnFragment = SiteListFragment.newInstance();
         mMainActivity.replaceFragment(returnFragment);
-
-
 
     }
 }
