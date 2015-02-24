@@ -36,8 +36,9 @@ import com.blueprint.watershed.Networking.Users.HomeRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Sites.SiteFragment;
 import com.blueprint.watershed.Sites.SiteListFragment;
-import com.blueprint.watershed.Tasks.CreateTaskFragment;
 import com.blueprint.watershed.Tasks.Task;
+import com.blueprint.watershed.Tasks.TaskAbstractFragment;
+import com.blueprint.watershed.Tasks.CreateTaskFragment;
 import com.blueprint.watershed.Tasks.TaskAdapter;
 import com.blueprint.watershed.Tasks.TaskDetailFragment;
 import com.blueprint.watershed.Tasks.TaskFragment;
@@ -48,8 +49,9 @@ import com.facebook.Session;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class MainActivity extends ActionBarActivity
                           implements ActionBar.TabListener,
@@ -63,7 +65,7 @@ public class MainActivity extends ActionBarActivity
                                      SiteListFragment.OnFragmentInteractionListener,
                                      MiniSiteFragment.OnFragmentInteractionListener,
                                      AddFieldReportFragment.OnFragmentInteractionListener,
-                                     CreateTaskFragment.OnFragmentInteractionListener,
+                                     TaskAbstractFragment.OnFragmentInteractionListener,
                                      FieldReportFragment.OnFragmentInteractionListener {
 
     // Constants
@@ -88,7 +90,7 @@ public class MainActivity extends ActionBarActivity
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
-    private ArrayList<String> menuItems;
+    private List<String> menuItems;
 
     // View Elements
     public CharSequence mTitle;
@@ -304,10 +306,8 @@ public class MainActivity extends ActionBarActivity
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         String titles[] = { "Tasks", "Sites", "Profile", "About", "Logout" };
 
-        menuItems = new ArrayList<String>();
-        for (String title : titles) {
-            menuItems.add(title);
-        }
+        menuItems = Arrays.asList(titles);
+
         mDrawerList.setOnItemClickListener(this);
 
         mDrawerList.setAdapter(new ArrayAdapter<String>(this,

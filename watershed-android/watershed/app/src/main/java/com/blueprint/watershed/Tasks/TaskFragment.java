@@ -117,10 +117,10 @@ public class TaskFragment extends ListFragment {
 
     /**
      * Starts a new fragment for the corresponding task view
-     * @param l
-     * @param v
-     * @param position
-     * @param id
+     * @param l - ListView that was clicked
+     * @param v - View that was clicked
+     * @param position - Position of view
+     * @param id = id of View
      */
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
