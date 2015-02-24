@@ -37,7 +37,7 @@ import java.util.HashMap;
 public class LandingPageActivity extends Activity implements View.OnClickListener{
 
     // Constants
-    public  static final String PREFERENCES = "LOGIN_PREFERENCES";
+    public  static final String PREFERENCES = "WATERSHED_LOGIN_PREFERENCES";
     private static final String TAG         = "LandingPageActivity";
     private static final String LOGIN_URL = "https://intense-reaches-1457.herokuapp.com/api/v1/users/sign_in";
     private static final String FACEBOOK_URL = "https://intense-reaches-1457.herokuapp.com/api/v1/users/sign_up/facebook";

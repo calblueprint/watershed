@@ -125,7 +125,7 @@ public class TaskFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         Task taskClicked;
-        if (TASK_TYPE == USER) taskClicked = mUserTaskList.get(position);
+        if (TASK_TYPE == USER && mUserTaskList.size() > 0) taskClicked = mUserTaskList.get(position);
         else taskClicked = mAllTaskList.get(position);
 
         TaskDetailFragment detailFragment = TaskDetailFragment.newInstance(taskClicked);

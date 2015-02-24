@@ -1,5 +1,6 @@
 package com.blueprint.watershed.Users;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -31,6 +32,8 @@ import java.util.regex.Pattern;
  * Fragment where you can edit a profile
  */
 public class EditUserFragment extends Fragment {
+
+    public  static final String PREFERENCES = "WATERSHED_LOGIN_PREFERENCES";
 
     private MainActivity mParentActivity;
     private NetworkManager mNetworkManager;
@@ -145,10 +148,23 @@ public class EditUserFragment extends Fragment {
         EditUserRequest request = new EditUserRequest(mParentActivity, mUser, params, new Response.Listener<User>() {
             @Override
             public void onResponse(User user) {
+                Utility.hideKeyboard(mParentActivity, mLayout);
+                setUserInfo(user);
+                mParentActivity.getSupportFragmentManager().popBackStack();
                 Toast.makeText(mParentActivity, "You've updated your profile!", Toast.LENGTH_SHORT).show();
-                mParentActivity.replaceFragment(UserFragment.newInstance(user));
             }
         });
         mNetworkManager.getRequestQueue().add(request);
+    }
+
+    private void setUserInfo(User user) {
+        SharedPreferences.Editor editor = mParentActivity.getSharedPreferences(PREFERENCES, 0).edit();
+        editor.putString("email", user.getEmail());
+        editor.putInt("userId", user.getId());
+        editor.commit();
+        mUser.setEmail(user.getEmail());
+        mUser.setId(user.getId());
+        mUser.setName(user.getName());
+        Log.i("saved things", "lol");
     }
 }
