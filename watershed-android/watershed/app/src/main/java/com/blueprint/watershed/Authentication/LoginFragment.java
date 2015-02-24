@@ -13,6 +13,7 @@ import android.widget.Button;
 
 import com.blueprint.watershed.Activities.LandingPageActivity;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Utilities.Utility;
 
 import java.util.HashMap;
 
@@ -44,7 +45,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_login, container, false);
-
+//        Utility.setKeyboardListener(parentActivity, rootView);
         // Configure view
         setEmailField((EditText) rootView.findViewById(R.id.email_field));
         setPasswordField((EditText) rootView.findViewById(R.id.password_field));
@@ -79,7 +80,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     // UI Actions
     public void didTapLoginButton(View view) {
-        
+        Utility.hideKeyboard(parentActivity, rootView);
         final String emailString = getEmailField().getText().toString();
         final String passwordString = getPasswordField().getText().toString();
 
@@ -89,8 +90,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         parentActivity.findViewById(R.id.viewBlocker).setVisibility(View.VISIBLE);
         parentActivity.loginRequest(user_params);
     }
-
-
 
     // Getters
     public EditText getEmailField() { return mEmailField; }

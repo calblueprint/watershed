@@ -45,6 +45,7 @@ import com.blueprint.watershed.Tasks.TaskFragment;
 import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Users.UserFragment;
 import com.blueprint.watershed.Utilities.TabsPagerAdapter;
+import com.blueprint.watershed.Utilities.Utility;
 import com.facebook.Session;
 
 import org.json.JSONObject;
@@ -228,6 +229,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void replaceFragment(Fragment newFragment) {
+
         android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();
         if(!newFragment.isAdded()){
             ft.replace(R.id.container, newFragment);
@@ -282,6 +284,7 @@ public class MainActivity extends ActionBarActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                Utility.hideKeyboard(this, mContainer);
                 Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
                 if (!(f instanceof TaskFragment) && !(f instanceof SiteListFragment) &&!(f instanceof UserFragment) &&!(f instanceof AboutFragment)) {
                     getSupportFragmentManager().popBackStack();

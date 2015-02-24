@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -17,6 +18,7 @@ import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Users.EditUserRequest;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Utilities.Utility;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,6 +36,7 @@ public class EditUserFragment extends Fragment {
     private NetworkManager mNetworkManager;
     private User mUser;
 
+    private RelativeLayout mLayout;
     private EditText mName;
     private EditText mEmail;
     private EditText mPassword;
@@ -80,6 +83,9 @@ public class EditUserFragment extends Fragment {
      * Initializes the views and sets the fields to the current user's fields.
      */
     private void initializeViews() {
+        mLayout = (RelativeLayout) mParentActivity.findViewById(R.id.profile_edit_layout);
+        Utility.setKeyboardListener(mParentActivity, mLayout);
+
         mName = (EditText) mParentActivity.findViewById(R.id.profile_edit_name);
         mEmail = (EditText) mParentActivity.findViewById(R.id.profile_edit_email);
         mPassword = (EditText) mParentActivity.findViewById(R.id.profile_edit_password);
@@ -93,6 +99,7 @@ public class EditUserFragment extends Fragment {
         mSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Utility.hideKeyboard(mParentActivity, mLayout);
                 boolean hasErrors = false;
                 if (!mPassword.getText().toString().equals(mReenterPassword.getText().toString())) {
                     mReenterPassword.setError("Your passwords don't match!");

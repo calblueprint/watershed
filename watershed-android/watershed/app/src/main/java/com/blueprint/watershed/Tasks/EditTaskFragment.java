@@ -3,6 +3,8 @@ package com.blueprint.watershed.Tasks;
 import android.os.Bundle;
 import android.view.View;
 
+import com.blueprint.watershed.Utilities.Utility;
+
 /**
  * Created by charlesx on 2/19/15.
  * Fragment to edit tasks
@@ -48,7 +50,10 @@ public class EditTaskFragment extends TaskAbstractFragment {
     public View.OnClickListener submitListener() {
         return new View.OnClickListener() {
             @Override
-            public void onClick(View view) { createTask(EDIT, mTask); }
+            public void onClick(View view) {
+                Utility.hideKeyboard(mParentActivity, mLayout);
+                createTask(EDIT, mTask);
+            }
         };
     }
 }

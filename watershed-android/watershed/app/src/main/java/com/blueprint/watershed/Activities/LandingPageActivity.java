@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Authentication.LoginFragment;
@@ -21,6 +22,7 @@ import com.blueprint.watershed.Networking.Sessions.LoginRequest;
 import com.blueprint.watershed.Networking.Sessions.SignUpRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Utilities.APIError;
+import com.blueprint.watershed.Utilities.Utility;
 import com.facebook.AppEventsLogger;
 import com.facebook.SessionState;
 import com.facebook.model.GraphUser;
@@ -49,6 +51,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     private SharedPreferences preferences;
     private ObjectMapper mMapper;
     private View viewBlocker;
+    private LinearLayout mLayout;
 
     //User
     private Integer mUserId;
@@ -115,6 +118,9 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         mSignUpButton.setOnClickListener(this);
 
         mFacebookButton.setReadPermissions(Arrays.asList("email"));
+
+        mLayout = (LinearLayout) findViewById(R.id.container);
+        Utility.setKeyboardListener(this, mLayout);
     }
 
     public void onClick(View view){

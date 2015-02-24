@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -20,6 +21,7 @@ import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Tasks.CreateTaskRequest;
 import com.blueprint.watershed.Networking.Tasks.EditTaskRequest;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Utilities.Utility;
 
 import org.json.JSONObject;
 
@@ -34,6 +36,7 @@ public abstract class TaskAbstractFragment extends Fragment {
     private static final String CREATE = "create";
     private static final String EDIT = "edit";
 
+    protected RelativeLayout mLayout;
     protected EditText mTitleField;
     protected EditText mDescriptionField;
     protected EditText mAssigneeField;
@@ -86,6 +89,9 @@ public abstract class TaskAbstractFragment extends Fragment {
      * Initializes all the views for the form.
      */
     public void setButtonListeners() {
+        mLayout = (RelativeLayout) mParentActivity.findViewById(R.id.create_task_layout);
+        Utility.setKeyboardListener(mParentActivity, mLayout);
+
         Button submitButton = (Button) mParentActivity.findViewById(R.id.create_task_submit);
         submitButton.setOnClickListener(submitListener());
 
@@ -118,10 +124,7 @@ public abstract class TaskAbstractFragment extends Fragment {
             request = new EditTaskRequest(mParentActivity, task, params, new Response.Listener<Task>() {
                 @Override
                 public void onResponse(Task task) {
-                    Fragment fragment;
-                    if (type.equals(EDIT)) fragment = TaskDetailFragment.newInstance(task);
-                    else fragment = TaskFragment.newInstance(0);
-                    mParentActivity.replaceFragment(fragment);
+                    mParentActivity.getSupportFragmentManager().popBackStack();
                     Log.i("successful task", "editing");
                 }
             });
@@ -132,7 +135,7 @@ public abstract class TaskAbstractFragment extends Fragment {
 
     /**
      * Creates a task object that is pass to createTaskRequest
-     * @param type
+     * @param type - Type of request, CREATE or EDIT
      */
     public void createTask(String type, Task task) {
         if (type.equals(CREATE)) task = new Task();
