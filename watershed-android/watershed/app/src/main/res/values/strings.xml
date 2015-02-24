@@ -60,8 +60,12 @@
     <string name="create_site_state">State</string>
     <string name="create_site_submit">Create Site</string>
 
+    <string name="add_minisite">Add Minisite</string>
+    <string name="edit_site">Edit Site</string>
+
     <!-- Task Index -->
     <string name="no_tasks">Looks like you don\'t have any tasks!\n Have a great day! :D</string>
     <string name="no_tasks_refresh">Refresh</string>
+
 
 </resources>

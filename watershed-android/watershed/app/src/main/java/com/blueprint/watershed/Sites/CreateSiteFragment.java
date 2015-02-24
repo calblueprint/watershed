@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -105,6 +107,14 @@ public class CreateSiteFragment extends Fragment implements View.OnClickListener
         mZipField = (EditText)view.findViewById(R.id.create_site_zip);
         mStateField = (EditText)view.findViewById(R.id.create_site_state);
         submitButton.setOnClickListener(this);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.empty, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+
     }
 
     public void createSiteRequest(Site site){

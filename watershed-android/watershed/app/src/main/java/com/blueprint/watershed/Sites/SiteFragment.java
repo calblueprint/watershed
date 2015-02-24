@@ -179,7 +179,7 @@ public class SiteFragment extends Fragment
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.empty, menu);
+        inflater.inflate(R.menu.edit_site_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
 
     }
