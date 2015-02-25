@@ -69,9 +69,13 @@ public class TaskFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View finalView = inflater.inflate(R.layout.fragment_task_list, container, false);
         initializeViews(finalView);
+        return finalView;
+    }
+
+    @Override
+    public void onResume() {
         mSwipeLayout.setRefreshing(true);
         getTasksRequest();
-        return finalView;
     }
 
     /**

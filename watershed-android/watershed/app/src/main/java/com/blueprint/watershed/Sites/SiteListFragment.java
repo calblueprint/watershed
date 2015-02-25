@@ -98,6 +98,7 @@ public class SiteListFragment extends Fragment {
             public void onResponse(ArrayList<Site> sites) {
                 setSites(sites);
                 mAdapter.notifyDataSetChanged();
+                if (mSwipeLayout != null) mSwipeLayout.setRefreshing(false);
             }
         });
         mNetworkManager.getRequestQueue().add(siteListRequest);
