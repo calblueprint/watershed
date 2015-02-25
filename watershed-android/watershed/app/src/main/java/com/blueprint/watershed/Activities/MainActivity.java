@@ -10,7 +10,9 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -19,6 +21,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.util.LruCache;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -36,9 +39,9 @@ import com.blueprint.watershed.Networking.Users.HomeRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Sites.SiteFragment;
 import com.blueprint.watershed.Sites.SiteListFragment;
+import com.blueprint.watershed.Tasks.CreateTaskFragment;
 import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Tasks.TaskAbstractFragment;
-import com.blueprint.watershed.Tasks.CreateTaskFragment;
 import com.blueprint.watershed.Tasks.TaskAdapter;
 import com.blueprint.watershed.Tasks.TaskDetailFragment;
 import com.blueprint.watershed.Tasks.TaskFragment;
@@ -69,8 +72,9 @@ public class MainActivity extends ActionBarActivity
                                      FieldReportFragment.OnFragmentInteractionListener {
 
     // Constants
-    public  static final String PREFERENCES = "LOGIN_PREFERENCES";
+    private static final String PREFERENCES = "LOGIN_PREFERENCES";
     private static final String TAG         = "MainActivity";
+    private static int CACHE_SIZE = 512;
 
     // Authenticating against our own server
     public String authToken;
@@ -80,11 +84,7 @@ public class MainActivity extends ActionBarActivity
     SharedPreferences preferences;
 
     // Fragments
-    private TaskFragment mtaskFragment;
-    private SiteListFragment siteListFragment;
-    private FragmentManager fragmentManager;
-    private UserFragment mUserFragment;
-    private AboutFragment mAboutFragment;
+    private FragmentManager mFragmentManager;
 
     // Navigation Drawer
     private DrawerLayout mDrawerLayout;
@@ -108,7 +108,6 @@ public class MainActivity extends ActionBarActivity
     private View mContainer;
     private ProgressBar mProgress;
 
-
     // Networking
     private NetworkManager mNetworkManager;
 
@@ -119,6 +118,11 @@ public class MainActivity extends ActionBarActivity
     //Task for FieldReport
     private Task mFieldReportTask;
 
+    // Caching images
+    private LruCache<Integer, Drawable> mSiteImages;
+    private LruCache<Integer, Drawable> mMiniSiteImages;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,18 +130,16 @@ public class MainActivity extends ActionBarActivity
         Bundle b = getIntent().getExtras();
         mUserId = b.getInt("userId");
 
-        actionBar = getActionBar();
-        setTitle("Tasks");
-        mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
-        viewPager = (ViewPager) findViewById(R.id.pager);
-        mContainer = findViewById(R.id.container);
+        makeHomeRequest();
+
+        initializeCache();
+        initializeViews();
 
         setNetworkManager(NetworkManager.getInstance(this.getApplicationContext()));
 
         mProgress = (ProgressBar) this.findViewById(R.id.progressBar);
         initializeTabs(0);
 
-        makeHomeRequest();
         initializeNavigationDrawer();
         initializeFragments();
 
@@ -146,6 +148,28 @@ public class MainActivity extends ActionBarActivity
         authEmail = prefs.getString("auth_email", "none");
         mTitle = "Tasks";
 
+    }
+
+    private void initializeCache() {
+        mSiteImages = new LruCache<Integer, Drawable>(CACHE_SIZE) {
+            protected int sizeOf(String key, Bitmap value) {
+                return value.getByteCount();
+            }
+        };
+
+        mMiniSiteImages = new LruCache<Integer, Drawable>(CACHE_SIZE) {
+            protected int sizeOf(String key, Bitmap value) {
+                return value.getByteCount();
+            }
+        };
+    }
+
+    private void initializeViews() {
+        actionBar = getActionBar();
+        setTitle("Tasks");
+        mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        mContainer = findViewById(R.id.container);
     }
 
     public void initializeTabs(int option){
@@ -229,7 +253,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void replaceFragment(Fragment newFragment) {
-        android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();
+        android.support.v4.app.FragmentTransaction ft = mFragmentManager.beginTransaction();
         if(!newFragment.isAdded()){
             ft.replace(R.id.container, newFragment);
             updateTitle(newFragment);
@@ -239,9 +263,9 @@ public class MainActivity extends ActionBarActivity
     }
 
     private void initializeFragments() {
-        mtaskFragment = TaskFragment.newInstance(0);
-        fragmentManager = getSupportFragmentManager();
-        fragmentManager.addOnBackStackChangedListener(
+        TaskFragment mTaskFragment = TaskFragment.newInstance(0);
+        mFragmentManager = getSupportFragmentManager();
+        mFragmentManager.addOnBackStackChangedListener(
                 new FragmentManager.OnBackStackChangedListener() {
                     @Override
                     public void onBackStackChanged() {
@@ -251,19 +275,15 @@ public class MainActivity extends ActionBarActivity
                         }
                     }
                 });
-        updateTitle(mtaskFragment);
-        android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.add(R.id.container, mtaskFragment);
+        updateTitle(mTaskFragment);
+        android.support.v4.app.FragmentTransaction ft = mFragmentManager.beginTransaction();
+        ft.add(R.id.container, mTaskFragment);
         ft.commit();
     }
 
-    public void onFragmentInteraction(String id) {
-        // Deals with fragment interactions
-    }
+    public void onFragmentInteraction(String id) {}
 
-    public void onFragmentInteraction(Uri uri) {
-    }
-
+    public void onFragmentInteraction(Uri uri) {}
 
     @Override
     public void onTabReselected(Tab tab, FragmentTransaction ft) {
@@ -277,8 +297,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
-    }
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {}
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -307,9 +326,7 @@ public class MainActivity extends ActionBarActivity
         String titles[] = { "Tasks", "Sites", "Profile", "About", "Logout" };
 
         menuItems = Arrays.asList(titles);
-
         mDrawerList.setOnItemClickListener(this);
-
         mDrawerList.setAdapter(new ArrayAdapter<String>(this,
                 R.layout.menu_list_item, R.id.menu_title, titles));
 
@@ -350,31 +367,23 @@ public class MainActivity extends ActionBarActivity
     // Nav Drawer on click listener
 
     public void onItemClick(AdapterView parent, View view, int position, long id) {
-        onNavClick(position);
-    }
-
-    // View on click listener
-    public void onNavClick(int position) {
         switch (position) {
             case 0:
-                TaskFragment taskFragment = TaskFragment.newInstance(0);
-                replaceFragment(taskFragment);
+                replaceFragment(TaskFragment.newInstance(0));
                 break;
             case 1:
-                siteListFragment = new SiteListFragment();
-                mProgress.setVisibility(View.VISIBLE);
-                replaceFragment(siteListFragment);
+                replaceFragment(SiteListFragment.newInstance());
                 break;
             case 2:
-                mUserFragment = UserFragment.newInstance(mUser);
-                replaceFragment(mUserFragment);
+                replaceFragment(UserFragment.newInstance(mUser));
                 break;
             case 3:
-                mAboutFragment = new AboutFragment();
-                replaceFragment(mAboutFragment);
+                replaceFragment(AboutFragment.newInstance());
                 break;
             case 4:
                 logoutCurrentUser(this);
+                break;
+            default:
                 break;
         }
         mDrawerLayout.closeDrawer(mDrawerList);
@@ -419,20 +428,14 @@ public class MainActivity extends ActionBarActivity
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
         HomeRequest homeRequest = new HomeRequest(this, mUserId, params, new Response.Listener<User>() {
             @Override
-            public void onResponse(User home) {
-                setUser(home);
-                mUserFragment = UserFragment.newInstance(mUser);
-            }
+            public void onResponse(User home) { setUser(home); }
         });
-
         mNetworkManager.getRequestQueue().add(homeRequest);
     }
 
 
     // Setter
-    public void setUser(User user){
-        mUser = user;
-    }
+    public void setUser(User user) { mUser = user; }
     public User getUser() { return mUser; }
     public int getUserId() { return mUserId; }
     public void setFieldReportTask(Task task) { mFieldReportTask = task; }

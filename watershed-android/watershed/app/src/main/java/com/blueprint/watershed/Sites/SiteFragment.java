@@ -3,17 +3,14 @@ package com.blueprint.watershed.Sites;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.app.Fragment;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Response;
@@ -51,17 +48,16 @@ public class SiteFragment extends Fragment
         return siteFragment;
     }
 
-    public SiteFragment() {
-    }
+    public SiteFragment() {}
 
     public void configureWithSite(Site site) {
         mSite = site;
     }
 
     public void configureViewWithSite(View view, Site site) {
-        ((CoverPhotoPagerView)view.findViewById(R.id.cover_photo_pager_view)).configureWithPhotos(site.getPhotos());
-        ((TextView)view.findViewById(R.id.site_name)).setText(site.getName());
-        ((TextView)view.findViewById(R.id.site_description)).setText(site.getDescription());
+        ((CoverPhotoPagerView) view.findViewById(R.id.cover_photo_pager_view)).configureWithPhotos(site.getPhotos());
+        ((TextView) view.findViewById(R.id.site_name)).setText(site.getName());
+        ((TextView) view.findViewById(R.id.site_description)).setText(site.getDescription());
     }
 
     @Override
@@ -181,6 +177,5 @@ public class SiteFragment extends Fragment
         menu.clear();
         inflater.inflate(R.menu.empty, menu);
         super.onCreateOptionsMenu(menu, inflater);
-
     }
 }
