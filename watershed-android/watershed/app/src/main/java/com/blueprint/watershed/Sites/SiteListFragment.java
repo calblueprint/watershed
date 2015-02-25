@@ -1,7 +1,5 @@
 package com.blueprint.watershed.Sites;
 
-import android.app.Activity;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.android.volley.Response;
-import com.blueprint.watershed.Activities.LandingPageActivity;
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Sites.SiteListRequest;
@@ -25,13 +22,13 @@ import java.util.HashMap;
 
 public class SiteListFragment extends Fragment {
 
-    private OnFragmentInteractionListener mListener;
+    private MainActivity mParentActivity;
 
     private ListView mSiteListView;
     private SiteListAdapter mAdapter;
-    private SharedPreferences preferences;
     private NetworkManager mNetworkManager;
-    private MainActivity mMainActivity;
+
+
     private ArrayList<Site> mSites;
 
 
@@ -47,7 +44,7 @@ public class SiteListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        preferences = getActivity().getSharedPreferences(LandingPageActivity.PREFERENCES, 0);
+        mParentActivity = (MainActivity) getActivity();
         mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
     }
 
@@ -58,33 +55,15 @@ public class SiteListFragment extends Fragment {
 
         mSiteListView = (ListView) view.findViewById(android.R.id.list);
 
-        mAdapter = new SiteListAdapter(mMainActivity, getActivity(), R.layout.site_list_row, getSites());
+        mAdapter = new SiteListAdapter(mParentActivity, getActivity(), R.layout.site_list_row, getSites());
         mSiteListView.setAdapter(mAdapter);
         return view;
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mMainActivity = (MainActivity)activity;
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                + " must implement OnFragmentInteractionListener");
-        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
         getSitesRequest();
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
     }
 
     @Override
@@ -101,16 +80,11 @@ public class SiteListFragment extends Fragment {
             @Override
             public void onResponse(ArrayList<Site> sites) {
                 setSites(sites);
-                mMainActivity.getSpinner().setVisibility(View.GONE);
                 mAdapter.notifyDataSetChanged();
             }
         });
 
         mNetworkManager.getRequestQueue().add(siteListRequest);
-    }
-
-    public interface OnFragmentInteractionListener {
-        public void onFragmentInteraction(String id);
     }
 
     // Getters

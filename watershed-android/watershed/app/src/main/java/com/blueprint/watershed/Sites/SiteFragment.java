@@ -1,7 +1,5 @@
 package com.blueprint.watershed.Sites;
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -33,9 +31,8 @@ import java.util.HashMap;
 public class SiteFragment extends Fragment
                           implements AbsListView.OnItemClickListener {
 
-    private OnFragmentInteractionListener mListener;
     private NetworkManager mNetworkManager;
-    private MainActivity mMainActivity;
+    private MainActivity mParentActivity;
     private HeaderGridView mMiniSiteGridView;
     private MiniSiteListAdapter mMiniSiteAdapter;
     private Site mSite;
@@ -50,9 +47,7 @@ public class SiteFragment extends Fragment
 
     public SiteFragment() {}
 
-    public void configureWithSite(Site site) {
-        mSite = site;
-    }
+    public void configureWithSite(Site site) { mSite = site; }
 
     public void configureViewWithSite(View view, Site site) {
         ((CoverPhotoPagerView) view.findViewById(R.id.cover_photo_pager_view)).configureWithPhotos(site.getPhotos());
@@ -64,48 +59,22 @@ public class SiteFragment extends Fragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
+        mParentActivity = (MainActivity) getActivity();
+        mNetworkManager = NetworkManager.getInstance(mParentActivity);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_site, container, false);
-
-        // Create MiniSite grid
-        mMiniSiteGridView = (HeaderGridView) view.findViewById(R.id.mini_sites_grid);
-
+        super.onCreateView(inflater, container, savedInstanceState);
         // Add site header information to the top
-        ViewGroup header = (ViewGroup)inflater.inflate(R.layout.site_header_view, mMiniSiteGridView, false);
-        mMiniSiteGridView.addHeaderView(header, null, false);
-
-        // Configure the header
-        configureViewWithSite(header, mSite);
-
-        // Set the adapter to fill the list of mini sites
-        mMiniSiteAdapter = new MiniSiteListAdapter(mMainActivity, getActivity(), R.layout.mini_site_list_row, getMiniSites());
-        mMiniSiteGridView.setAdapter(mMiniSiteAdapter);
-
-        mMiniSiteGridView.setOnItemClickListener(this);
-        return view;
-    }
-
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+        return inflater.inflate(R.layout.fragment_site, container, false);
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mMainActivity = (MainActivity)activity;
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initializeViews();
     }
 
     @Override
@@ -114,36 +83,37 @@ public class SiteFragment extends Fragment
         getSiteRequest(mSite);
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+    private void initializeViews() {
+        // Create MiniSite grid
+        mMiniSiteGridView = (HeaderGridView) mParentActivity.findViewById(R.id.mini_sites_grid);
+        ViewGroup header = (ViewGroup) mParentActivity.getLayoutInflater().inflate(R.layout.site_header_view, mMiniSiteGridView, false);
+        mMiniSiteGridView.addHeaderView(header, null, false);
+        configureViewWithSite(header, mSite);
+
+        // Set the adapter to fill the list of mini sites
+        mMiniSiteAdapter = new MiniSiteListAdapter(mParentActivity, getActivity(), R.layout.mini_site_list_row, getMiniSites());
+        mMiniSiteGridView.setAdapter(mMiniSiteAdapter);
+        mMiniSiteGridView.setOnItemClickListener(this);
     }
+
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (mListener != null) {
-            // Load MiniSite
-            MiniSite miniSite = getMiniSite(position);
-            MiniSiteFragment miniSiteFragment = new MiniSiteFragment();
-            miniSiteFragment.configureWithMiniSite(miniSite);
-
-            mMainActivity.replaceFragment(miniSiteFragment);
-        }
+        MiniSite miniSite = getMiniSite(position);
+        MiniSiteFragment miniSiteFragment = new MiniSiteFragment();
+        miniSiteFragment.configureWithMiniSite(miniSite);
+        mParentActivity.replaceFragment(miniSiteFragment);
     }
 
-    public interface OnFragmentInteractionListener {
-        public void onFragmentInteraction(Uri uri);
-    }
 
     // Networking
-    public void getSiteRequest(Site site) {
+    private void getSiteRequest(Site site) {
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
         SiteRequest siteRequest = new SiteRequest(getActivity(), site, params, new Response.Listener<Site>() {
             @Override
             public void onResponse(Site site) {
                 setSite(site);
-                mMainActivity.getSpinner().setVisibility(View.GONE);
+                mParentActivity.getSpinner().setVisibility(View.GONE);
                 mMiniSiteAdapter.notifyDataSetChanged();
             }
         });
@@ -151,21 +121,21 @@ public class SiteFragment extends Fragment
         mNetworkManager.getRequestQueue().add(siteRequest);
     }
 
-    public void setSite(Site site) {
+    private void setSite(Site site) {
         mSite = site;
         setMiniSites(site.getMiniSites());
     }
 
-    public MiniSite getMiniSite(int position) { return mMiniSites.get(position); }
+    private MiniSite getMiniSite(int position) { return mMiniSites.get(position); }
 
-    public ArrayList<MiniSite> getMiniSites() {
+    private ArrayList<MiniSite> getMiniSites() {
         if (mMiniSites == null) {
             mMiniSites = new ArrayList<MiniSite>();
         }
         return mMiniSites;
     }
 
-    public void setMiniSites(ArrayList<MiniSite> miniSites) {
+    private void setMiniSites(ArrayList<MiniSite> miniSites) {
         mMiniSites.clear();
         for (MiniSite miniSite : miniSites) {
             mMiniSites.add(miniSite);

@@ -1,7 +1,5 @@
 package com.blueprint.watershed.Tasks;
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -33,8 +31,6 @@ public class TaskFragment extends ListFragment {
     private static final int USER = 0;
     private static final int ALL = 1;
 
-
-    private OnFragmentInteractionListener mListener;
     private MainActivity mParentActivity;
     private NetworkManager mNetworkManager;
 
@@ -57,8 +53,7 @@ public class TaskFragment extends ListFragment {
         return fragment;
     }
 
-    public TaskFragment(){
-    }
+    public TaskFragment(){}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -133,27 +128,10 @@ public class TaskFragment extends ListFragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.create_task_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
     }
 
     /**
@@ -176,7 +154,6 @@ public class TaskFragment extends ListFragment {
         mNetworkManager.getRequestQueue().add(taskListRequest);
     }
 
-
     /**
      * Sets the tasks for all tasks list and user tasks lists
      * @param tasks
@@ -192,13 +169,4 @@ public class TaskFragment extends ListFragment {
             }
         }
     }
-
-    /**
-     * Interface for the fragment to communicate with the activity
-     * Implemented in MainActivity.
-     */
-    public interface OnFragmentInteractionListener {
-        public void onFragmentInteraction(Uri uri);
-    }
-
 }

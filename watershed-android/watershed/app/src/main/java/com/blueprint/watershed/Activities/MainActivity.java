@@ -11,7 +11,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -42,8 +41,6 @@ import com.blueprint.watershed.Sites.SiteListFragment;
 import com.blueprint.watershed.Tasks.CreateTaskFragment;
 import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Tasks.TaskAbstractFragment;
-import com.blueprint.watershed.Tasks.TaskAdapter;
-import com.blueprint.watershed.Tasks.TaskDetailFragment;
 import com.blueprint.watershed.Tasks.TaskFragment;
 import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Users.UserFragment;
@@ -52,20 +49,14 @@ import com.facebook.Session;
 
 import org.json.JSONObject;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 public class MainActivity extends ActionBarActivity
                           implements ActionBar.TabListener,
                                      View.OnClickListener,
                                      ListView.OnItemClickListener,
-                                     TaskFragment.OnFragmentInteractionListener,
-                                     TaskDetailFragment.OnFragmentInteractionListener,
-                                     SiteFragment.OnFragmentInteractionListener,
                                      UserFragment.OnFragmentInteractionListener,
                                      AboutFragment.OnFragmentInteractionListener,
-                                     SiteListFragment.OnFragmentInteractionListener,
                                      MiniSiteFragment.OnFragmentInteractionListener,
                                      AddFieldReportFragment.OnFragmentInteractionListener,
                                      TaskAbstractFragment.OnFragmentInteractionListener,
@@ -80,9 +71,6 @@ public class MainActivity extends ActionBarActivity
     public String authToken;
     public String authEmail;
 
-    // For storing our credentials once we have successfully authenticated
-    SharedPreferences preferences;
-
     // Fragments
     private FragmentManager mFragmentManager;
 
@@ -90,16 +78,9 @@ public class MainActivity extends ActionBarActivity
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
-    private List<String> menuItems;
 
     // View Elements
     public CharSequence mTitle;
-
-    // UI Elements
-    public Typeface watershedFont;
-
-    // Adapters
-    public TaskAdapter arrayAdapter;
 
     // Action Bar Elements
     private ActionBar actionBar;
@@ -127,15 +108,13 @@ public class MainActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Bundle b = getIntent().getExtras();
-        mUserId = b.getInt("userId");
+        mUserId = getIntent().getExtras().getInt("userId");
 
+        setNetworkManager(NetworkManager.getInstance(this));
         makeHomeRequest();
 
         initializeCache();
         initializeViews();
-
-        setNetworkManager(NetworkManager.getInstance(this.getApplicationContext()));
 
         mProgress = (ProgressBar) this.findViewById(R.id.progressBar);
         initializeTabs(0);
@@ -255,10 +234,8 @@ public class MainActivity extends ActionBarActivity
     public void replaceFragment(Fragment newFragment) {
         android.support.v4.app.FragmentTransaction ft = mFragmentManager.beginTransaction();
         if(!newFragment.isAdded()){
-            ft.replace(R.id.container, newFragment);
             updateTitle(newFragment);
-            ft.addToBackStack(null);
-            ft.commit();
+            ft.replace(R.id.container, newFragment).addToBackStack(null).commit();
         }
     }
 
@@ -314,10 +291,7 @@ public class MainActivity extends ActionBarActivity
                 return true;
 
         }
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
     private void initializeNavigationDrawer() {
@@ -325,7 +299,6 @@ public class MainActivity extends ActionBarActivity
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         String titles[] = { "Tasks", "Sites", "Profile", "About", "Logout" };
 
-        menuItems = Arrays.asList(titles);
         mDrawerList.setOnItemClickListener(this);
         mDrawerList.setAdapter(new ArrayAdapter<String>(this,
                 R.layout.menu_list_item, R.id.menu_title, titles));
