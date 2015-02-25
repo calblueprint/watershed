@@ -2,7 +2,6 @@ package com.blueprint.watershed.Sites;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +17,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Mark Miyashita on 10/14/14.
+ * Adapter that holds all the sites.
  */
 public class SiteListAdapter extends ArrayAdapter<Site> {
 
@@ -37,7 +37,7 @@ public class SiteListAdapter extends ArrayAdapter<Site> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
-        SiteHolder holder = null;
+        SiteHolder holder;
 
         if (row == null) {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();

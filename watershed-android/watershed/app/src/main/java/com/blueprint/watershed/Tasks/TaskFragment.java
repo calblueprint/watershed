@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.android.volley.Response;
@@ -41,7 +40,6 @@ public class TaskFragment extends ListFragment {
     
 
     private ListView mListView;
-    private Button mNoTasksRefresh;
     private SwipeRefreshLayout mSwipeLayout;
 
 
@@ -90,15 +88,6 @@ public class TaskFragment extends ListFragment {
         else mListView.setAdapter(mAllTaskAdapter);
         mListView.setEmptyView(view.findViewById(R.id.no_tasks_layout));
 
-        mNoTasksRefresh = (Button) view.findViewById(R.id.no_tasks_refresh);
-        mNoTasksRefresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mSwipeLayout.setRefreshing(true);
-                getTasksRequest();
-            }
-        });
-
         mSwipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.tasks_swipe_container);
         mSwipeLayout.setColorSchemeResources(R.color.ws_blue, R.color.facebook_blue, R.color.facebook_dark_blue, R.color.dark_gray);
         mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -122,7 +111,6 @@ public class TaskFragment extends ListFragment {
         Task taskClicked;
         if (TASK_TYPE == USER) taskClicked = mUserTaskList.get(position);
         else taskClicked = mAllTaskList.get(position);
-
         TaskDetailFragment detailFragment = TaskDetailFragment.newInstance(taskClicked);
         mParentActivity.replaceFragment(detailFragment);
     }
@@ -140,12 +128,10 @@ public class TaskFragment extends ListFragment {
      */
     private void getTasksRequest(){
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
-
         TaskListRequest taskListRequest = new TaskListRequest(getActivity(), params, new Response.Listener<ArrayList<Task>>() {
             @Override
             public void onResponse(ArrayList<Task> tasks) {
                 setTasks(tasks);
-                mParentActivity.getSpinner().setVisibility(View.GONE);
                 mAllTaskAdapter.notifyDataSetChanged();
                 mUserTaskAdapter.notifyDataSetChanged();
                 if (mSwipeLayout != null) mSwipeLayout.setRefreshing(false);

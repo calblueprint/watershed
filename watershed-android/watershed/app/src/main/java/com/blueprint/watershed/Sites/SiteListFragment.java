@@ -2,6 +2,7 @@ package com.blueprint.watershed.Sites;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,14 +24,14 @@ import java.util.HashMap;
 public class SiteListFragment extends Fragment {
 
     private MainActivity mParentActivity;
-
-    private ListView mSiteListView;
-    private SiteListAdapter mAdapter;
     private NetworkManager mNetworkManager;
-
-
+    
+    // Views
+    private ListView mSiteListView;
+    private SwipeRefreshLayout mSwipeLayout;
+    
+    private SiteListAdapter mAdapter;
     private ArrayList<Site> mSites;
-
 
     public static SiteListFragment newInstance() {
         return new SiteListFragment();
@@ -49,15 +50,32 @@ public class SiteListFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_site_list, container, false);
-
-        mSiteListView = (ListView) view.findViewById(android.R.id.list);
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        return inflater.inflate(R.layout.fragment_site_list, container, false);
+    }
+    
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initializeViews();
+    }
+    
+    private void initializeViews() {
+        mSiteListView = (ListView) mParentActivity.findViewById(android.R.id.list);
+        mSiteListView.setEmptyView(mParentActivity.findViewById(R.id.site_layout));
         mAdapter = new SiteListAdapter(mParentActivity, getActivity(), R.layout.site_list_row, getSites());
         mSiteListView.setAdapter(mAdapter);
-        return view;
+
+        mSwipeLayout = (SwipeRefreshLayout) mParentActivity.findViewById(R.id.site_swipe_container);
+        mSwipeLayout.setColorSchemeResources(R.color.ws_blue, R.color.facebook_blue, R.color.facebook_dark_blue, R.color.dark_gray);
+        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mSwipeLayout.setRefreshing(true);
+                getSitesRequest();
+            }
+        });
     }
 
     @Override
@@ -75,7 +93,6 @@ public class SiteListFragment extends Fragment {
 
     public void getSitesRequest() {
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
-
         SiteListRequest siteListRequest = new SiteListRequest(getActivity(), params, new Response.Listener<ArrayList<Site>>() {
             @Override
             public void onResponse(ArrayList<Site> sites) {
@@ -83,13 +100,11 @@ public class SiteListFragment extends Fragment {
                 mAdapter.notifyDataSetChanged();
             }
         });
-
         mNetworkManager.getRequestQueue().add(siteListRequest);
     }
 
     // Getters
     public ArrayList<Site> getSites() { return mSites; }
-    public Site getSite(int position) { return mSites.get(position); }
 
     // Setters
     public void setSites(ArrayList<Site> sites) {
