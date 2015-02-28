@@ -47,8 +47,11 @@
     //white navigation items
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
 
-    [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"BackButton" ]];
-    [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"BackButton" ]];
+    //custom back arrow
+    FAKIonIcons *backIcon = [FAKIonIcons androidArrowBackIconWithSize:24];
+    UIImage *backImage = [backIcon imageWithSize:CGSizeMake(24, 24)];
+    [[UINavigationBar appearance] setBackIndicatorImage:backImage];
+    [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:backImage];
 
     if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)]) {
         // iOS 8 Notifications

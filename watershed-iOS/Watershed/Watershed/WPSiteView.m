@@ -11,21 +11,17 @@
 
 @interface WPSiteView () <UIScrollViewDelegate>
 
-
 @property (nonatomic) UIImageView *navbarShadowOverlay;
 @property (nonatomic) UIView *coverPhotoOverlay;
+@property (nonatomic) UIActivityIndicatorView *indicatorView;
 @property (nonatomic) UIView *tableHeaderView;
 @property (nonatomic) UIView *headingLineBreak;
 @property (nonatomic) UIImageView *tableViewShadowOverlay;
-@property (nonatomic) UIScrollView *miniSiteScrollView;
-@property (nonatomic) NSMutableArray *coverPhotoArray;
-@property (nonatomic) NSInteger blurRadius;
 
 @end
 
 @implementation WPSiteView
 
-static const int COVER_PHOTO_HEIGHT = 124;
 static int COVER_PHOTO_TRANS = 0;
 
 - (id)initWithFrame:(CGRect)frame {
@@ -47,10 +43,11 @@ static int COVER_PHOTO_TRANS = 0;
 
 - (void)createSubviews {
     
-    _miniSiteScrollView = [({
-        UIScrollView *miniSiteScrollView = [[UIScrollView alloc] init];
-        miniSiteScrollView.delegate = self;
-        miniSiteScrollView;
+    _siteScrollView = [({
+        UIScrollView *siteScrollView = [[UIScrollView alloc] init];
+        siteScrollView.delegate = self;
+        siteScrollView.alwaysBounceVertical = YES;
+        siteScrollView;
     }) wp_addToSuperview:self];
     
     _miniSiteTableView = [({
@@ -60,12 +57,18 @@ static int COVER_PHOTO_TRANS = 0;
         miniSiteTableView.separatorColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1];
         miniSiteTableView.scrollEnabled = NO;
         miniSiteTableView;
-    }) wp_addToSuperview:self.miniSiteScrollView];
+    }) wp_addToSuperview:self.siteScrollView];
     
+    _indicatorView = [({
+        UIActivityIndicatorView *view = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        [view startAnimating];
+        view;
+    }) wp_addToSuperview:self];
+
     _tableHeaderView = [({
         UIView *tableHeaderView = [[UIView alloc] init];
         tableHeaderView;
-    }) wp_addToSuperview:self.miniSiteScrollView];
+    }) wp_addToSuperview:self.siteScrollView];
     
     _titleLabel = [({
         UILabel *titleLabel = [[UILabel alloc] init];
@@ -91,14 +94,14 @@ static int COVER_PHOTO_TRANS = 0;
     }) wp_addToSuperview:self.tableHeaderView];
     
     _addressLabel = [({
-        FAKFontAwesome *mapMarkerIcon = [FAKFontAwesome mapMarkerIconWithSize:[WPLabeledIcon viewHeight]];
+        FAKIonIcons *mapMarkerIcon = [FAKIonIcons androidPinIconWithSize:[WPLabeledIcon viewHeight]];
         UIImage *mapMarkerImage = [mapMarkerIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
         WPLabeledIcon *addressLabel = [[WPLabeledIcon alloc] initWithText:@"Street Address" icon:mapMarkerImage];
         addressLabel;
     }) wp_addToSuperview:self.tableHeaderView];
     
     _siteCountLabel = [({
-        FAKFontAwesome *treeIcon = [FAKFontAwesome treeIconWithSize:[WPLabeledIcon viewHeight]];
+        FAKIonIcons *treeIcon = [FAKIonIcons androidImageIconWithSize:[WPLabeledIcon viewHeight]];
         UIImage *treeImage = [treeIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
         WPLabeledIcon *siteCountLabel = [[WPLabeledIcon alloc] initWithText:@"Site Count" icon:treeImage];
         siteCountLabel;
@@ -126,8 +129,6 @@ static int COVER_PHOTO_TRANS = 0;
         overlay;
     }) wp_addToSuperview:self];
     
-    [self generateBlurredPhotos];
-    
     _navbarShadowOverlay = [({
         UIImageView *navbarShadowOverlay = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ShadowOverlay"]];
         [navbarShadowOverlay setContentMode:UIViewContentModeScaleToFill];
@@ -139,7 +140,7 @@ static int COVER_PHOTO_TRANS = 0;
 }
 
 - (void)setUpActions {
-    [self addGestureRecognizer:self.miniSiteScrollView.panGestureRecognizer];
+    [self addGestureRecognizer:self.siteScrollView.panGestureRecognizer];
 }
 
 - (void)updateConstraints {
@@ -165,7 +166,7 @@ static int COVER_PHOTO_TRANS = 0;
         make.trailing.equalTo(@0);
     }];
     
-    [self.miniSiteScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.siteScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(self.mas_height);
         make.top.equalTo(@0);
         make.bottom.equalTo(@0);
@@ -231,8 +232,15 @@ static int COVER_PHOTO_TRANS = 0;
         make.bottom.equalTo(@0);
     }];
 
+    [self.indicatorView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.miniSiteTableView.mas_top).with.offset(2 * standardMargin);
+        make.centerX.equalTo(self.mas_centerX);
+    }];
+
     [super updateConstraints];
 }
+
+#pragma mark - Public Methods
 
 - (void)updateTableViewHeight:(NSInteger)cellCount {
     [self.miniSiteTableView mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -242,7 +250,7 @@ static int COVER_PHOTO_TRANS = 0;
 
 - (void)configureWithSite:(WPSite *)site {
     [self.coverPhotoView setImageWithURL:[site.imageURLs firstObject]
-                        placeholderImage:[UIImage imageNamed:@"SampleCoverPhoto"]];
+                        placeholderImage:[UIImage imageNamed:@"WPBlue"]];
     self.originalCoverPhoto = self.coverPhotoView.image;
     self.titleLabel.text = site.name;
     self.descriptionLabel.text = site.info;
@@ -250,30 +258,9 @@ static int COVER_PHOTO_TRANS = 0;
     self.siteCountLabel.label.text = [[site.miniSitesCount stringValue] stringByAppendingString:@" mini sites"];
 }
 
-#pragma mark - Blurred Photo Generation
-
-- (void)generateBlurredPhotos {
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-//        for (int i = 0; i <= 20; i+= 2) {
-//            UIImage *image = self.originalCoverPhoto;
-//            image = [image applyBlurWithRadius:i
-//                                     tintColor:[UIColor clearColor]
-//                         saturationDeltaFactor:1
-//                                     maskImage:nil];
-//            
-//            [self.coverPhotoArray addObject:image];
-//            [self.coverPhotoArray addObject:image];
-//        }
-//    });
-}
-
-#pragma mark - Lazy Instantiation
-
-- (NSMutableArray *)coverPhotoArray {
-    if (!_coverPhotoArray) {
-        _coverPhotoArray = [[NSMutableArray alloc] init];
-    }
-    return _coverPhotoArray;
+- (void)stopIndicator {
+    [self.indicatorView stopAnimating];
+    self.indicatorView.alpha = 0;
 }
 
 #pragma mark - ScrollView Delegate Method from ViewController
@@ -281,21 +268,16 @@ static int COVER_PHOTO_TRANS = 0;
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
 
     CGFloat trans = scrollView.contentOffset.y;
-    COVER_PHOTO_TRANS = trans;
-    if (COVER_PHOTO_TRANS > 60) COVER_PHOTO_TRANS = 60;
-    self.blurRadius = MIN(ABS(COVER_PHOTO_TRANS / 6), 20);
+    COVER_PHOTO_TRANS = MIN(60, trans);
     self.coverPhotoOverlay.alpha = 0.3 + (COVER_PHOTO_TRANS + topMargin) / 600;
+    self.coverPhotoView.alpha = 1 + (trans + topMargin) / 70;
     
     [self.coverPhotoView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(COVER_PHOTO_HEIGHT - COVER_PHOTO_TRANS));
     }];
     
-    if (self.coverPhotoArray.count > self.blurRadius) {
-        [self.coverPhotoView setImage:self.coverPhotoArray[self.blurRadius]];
-    }
-    
     CGFloat titleAlpha = (trans - COVER_PHOTO_TRANS - 20) / 30;
-    
+
     UINavigationBar *navBar = ((UIViewController *)[self nextResponder]).navigationController.navigationBar;
     [navBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:titleAlpha]}];
 }

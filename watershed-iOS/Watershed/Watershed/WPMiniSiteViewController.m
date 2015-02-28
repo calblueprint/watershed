@@ -18,6 +18,7 @@
 @property (nonatomic) WPMiniSiteView *view;
 @property (nonatomic) UITableView *fieldReportTableView;
 @property (nonatomic) NSMutableArray *fieldReportList;
+@property (nonatomic) UIRefreshControl *refreshControl;
 
 @end
 
@@ -29,13 +30,16 @@ static NSString *cellIdentifier = @"FieldReportCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = self.miniSite.name;
-    FAKFontAwesome *plusIcon = [FAKFontAwesome plusIconWithSize:22];
-    UIImage *plusImage = [plusIcon imageWithSize:CGSizeMake(18, 22)];
+    FAKIonIcons *plusIcon = [FAKIonIcons androidAddIconWithSize:26];
+    UIImage *plusImage = [plusIcon imageWithSize:CGSizeMake(24, 24)];
     UIBarButtonItem *addFieldReportButtonItem = [[UIBarButtonItem alloc] initWithImage:plusImage style:UIBarButtonItemStylePlain target:self action:@selector(addNewFieldReport)];
     self.navigationItem.rightBarButtonItem = addFieldReportButtonItem;
     self.fieldReportTableView.delegate = self;
     self.fieldReportTableView.dataSource = self;
     
+    [self.refreshControl addTarget:self action:@selector(requestAndLoadMiniSite) forControlEvents:UIControlEventValueChanged];
+    [self.view.miniSiteScrollView addSubview:self.refreshControl];
+
     [self requestAndLoadMiniSite];
 }
 
@@ -44,8 +48,9 @@ static NSString *cellIdentifier = @"FieldReportCell";
     self.fieldReportTableView = self.view.fieldReportTableView;
 }
 
-- (void)loadFieldReportData {
-    self.fieldReportList = @[@1, @3, @4, @2, @5, @1, @5, @2, @2, @3, @4, @0].mutableCopy;
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self requestAndLoadMiniSite];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -78,6 +83,8 @@ static NSString *cellIdentifier = @"FieldReportCell";
         strongSelf.miniSite = miniSite;
         strongSelf.fieldReportList = fieldReportList;
         [strongSelf.fieldReportTableView reloadData];
+        [strongSelf.view stopIndicator];
+        [strongSelf.refreshControl endRefreshing];
     }];
 }
 
@@ -101,13 +108,16 @@ static NSString *cellIdentifier = @"FieldReportCell";
     if ([tableView isEqual:self.fieldReportTableView]) {
         
         cellView = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        [cellView.photoView cancelImageRequestOperation];
+        cellView.photoView.image = nil;
+        
         if (!cellView) {
             cellView = [[WPFieldReportTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                          reuseIdentifier:cellIdentifier];
         }
         WPFieldReport *fieldReport = self.fieldReportList[indexPath.row];
         [cellView.photoView setImageWithURL:[fieldReport.imageURLs firstObject]
-                           placeholderImage:[UIImage imageNamed:@"SampleCoverPhoto2"]];
+                           placeholderImage:[UIImage imageNamed:@"WPBlue"]];
         cellView.dateLabel.text = [fieldReport dateString];
         cellView.ratingNumberLabel.text = [fieldReport.rating stringValue];
         cellView.ratingNumberLabel.textColor = [UIColor colorForRating:[fieldReport.rating intValue]];
@@ -148,6 +158,13 @@ static NSString *cellIdentifier = @"FieldReportCell";
         _miniSite = [[WPMiniSite alloc] init];
     }
     return _miniSite;
+}
+
+- (UIRefreshControl *)refreshControl {
+    if (!_refreshControl) {
+        _refreshControl = [[UIRefreshControl alloc] init];
+    }
+    return _refreshControl;
 }
 
 @end

@@ -21,6 +21,9 @@
              };
 }
 
+- (NSString *)description {
+    return @"Mini Site";
+}
 
 - (NSMutableArray *)imageURLs {
     if (!_imageURLs) {

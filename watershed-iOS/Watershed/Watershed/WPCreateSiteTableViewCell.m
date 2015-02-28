@@ -2,7 +2,7 @@
 //  WPCreateSiteTableViewCell.m
 //  Watershed
 //
-//  Created by Andrew on 12/3/14.
+//  Created by Andrew Millman on 12/3/14.
 //  Copyright (c) 2014 Blueprint. All rights reserved.
 //
 
@@ -63,11 +63,6 @@ const static float LABEL_WIDTH = 75.0f;
     }];
     
     [super updateConstraints];
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    
 }
 
 #pragma mark - Public Methods

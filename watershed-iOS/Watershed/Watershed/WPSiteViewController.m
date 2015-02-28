@@ -11,6 +11,7 @@
 #import "WPMiniSite.h"
 #import "WPMiniSiteTableViewCell.h"
 #import "WPMiniSiteViewController.h"
+#import "WPCreateMiniSiteViewController.h"
 #import "WPNetworkingManager.h"
 
 @interface WPSiteViewController ()
@@ -18,6 +19,7 @@
 @property (nonatomic) WPSiteView *view;
 @property (nonatomic) UITableView *miniSiteTableView;
 @property (nonatomic) NSMutableArray *miniSiteList;
+@property (nonatomic) UIRefreshControl *refreshControl;
 
 @end
 
@@ -29,21 +31,24 @@ static NSString *cellIdentifier = @"MiniSiteCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = self.site.name;
+    
+    [self setUpRightBarButtonItems];
+    
     self.miniSiteTableView.delegate = self;
     self.miniSiteTableView.dataSource = self;
 
-    __weak __typeof(self)weakSelf = self;
-    [[WPNetworkingManager sharedManager] requestSiteWithSite:self.site parameters:[[NSMutableDictionary alloc] init] success:^(WPSite *site, NSMutableArray *miniSiteList) {
-        __strong __typeof(weakSelf)strongSelf = weakSelf;
-        strongSelf.site = site;
-        strongSelf.miniSiteList = miniSiteList;
-        [strongSelf.miniSiteTableView reloadData];
-    }];
+    [self.refreshControl addTarget:self action:@selector(requestAndLoadSite) forControlEvents:UIControlEventValueChanged];
+    [self.view.siteScrollView addSubview:self.refreshControl];
 }
 
 - (void)loadView {
     self.view = [[WPSiteView alloc] init];
     self.miniSiteTableView = self.view.miniSiteTableView;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self requestAndLoadSite];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -93,7 +98,7 @@ static NSString *cellIdentifier = @"MiniSiteCell";
         WPMiniSite *miniSite = self.miniSiteList[indexPath.row];
         cellView.nameLabel.text = miniSite.name;
         [cellView.photoView setImageWithURL:[miniSite.imageURLs firstObject]
-                           placeholderImage:[UIImage imageNamed:@"SampleCoverPhoto2"]];
+                           placeholderImage:[UIImage imageNamed:@"WPBlue"]];
         cellView.ratingDotView.backgroundColor = [UIColor colorForRating:[miniSite.healthRating intValue]];
         cellView.taskCountLabel.label.text = [NSString stringWithFormat:@"%@ tasks", miniSite.taskCount];
         cellView.fieldReportCountLabel.label.text = [[miniSite.fieldReportCount stringValue] stringByAppendingString:@" field reports"];
@@ -111,6 +116,51 @@ static NSString *cellIdentifier = @"MiniSiteCell";
     WPMiniSiteViewController *miniSiteViewController = [[WPMiniSiteViewController alloc] init];
     miniSiteViewController.miniSite = selectedMiniSite;
     [self.navigationController pushViewController:miniSiteViewController animated:YES];
+}
+
+#pragma mark - Networking Methods
+
+- (void)requestAndLoadSite {
+    __weak __typeof(self)weakSelf = self;
+    [[WPNetworkingManager sharedManager] requestSiteWithSite:self.site parameters:[[NSMutableDictionary alloc] init] success:^(WPSite *site, NSMutableArray *miniSiteList) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        strongSelf.site = site;
+        strongSelf.miniSiteList = miniSiteList;
+        [strongSelf.miniSiteTableView reloadData];
+        [strongSelf.view stopIndicator];
+        [strongSelf.refreshControl endRefreshing];
+    }];
+}
+
+#pragma mark - Navigation Bar Setup
+
+- (void)setUpRightBarButtonItems {
+    NSMutableArray *barButtonItems = [[NSMutableArray alloc] init];
+    NSString *userRole = [WPNetworkingManager sharedManager].keyChainStore[@"role"];
+    if ([userRole isEqual:@"2"]) {
+        [barButtonItems insertObject:[self newAddSiteButtonItem] atIndex:0];
+    }
+    [self.navigationItem setRightBarButtonItems:barButtonItems animated:YES];
+}
+
+#pragma mark - Add Site Button / Methods
+
+- (UIBarButtonItem *)newAddSiteButtonItem {
+    FAKIonIcons *plusIcon = [FAKIonIcons androidAddIconWithSize:26];
+    UIImage *plusImage = [plusIcon imageWithSize:CGSizeMake(24, 24)];
+    UIBarButtonItem *addMiniSiteButtonItem = [[UIBarButtonItem alloc] initWithImage:plusImage style:UIBarButtonItemStylePlain target:self action:@selector(showCreateMiniSiteView)];
+    addMiniSiteButtonItem.tintColor = [UIColor whiteColor];
+    return addMiniSiteButtonItem;
+}
+
+- (void)showCreateMiniSiteView {
+    WPCreateMiniSiteViewController *createMiniSiteViewController = [[WPCreateMiniSiteViewController alloc] init];
+    createMiniSiteViewController.parent = self;
+    UINavigationController *createMiniSiteNavController = [[UINavigationController alloc] initWithRootViewController:createMiniSiteViewController];
+    [createMiniSiteNavController.navigationBar setBackgroundColor:[UIColor whiteColor]];
+    [createMiniSiteNavController.navigationBar setBarTintColor:[UIColor whiteColor]];
+    [createMiniSiteNavController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
+    [self.navigationController presentViewController:createMiniSiteNavController animated:YES completion:nil];
 }
 
 #pragma mark - Setter Methods
@@ -134,6 +184,13 @@ static NSString *cellIdentifier = @"MiniSiteCell";
         _site = [[WPSite alloc] init];
     }
     return _site;
+}
+
+- (UIRefreshControl *)refreshControl {
+    if (!_refreshControl) {
+        _refreshControl = [[UIRefreshControl alloc] init];
+    }
+    return _refreshControl;
 }
 
 @end

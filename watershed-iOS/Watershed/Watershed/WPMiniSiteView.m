@@ -13,18 +13,15 @@
 
 @property (nonatomic) UIImageView *navbarShadowOverlay;
 @property (nonatomic) UIView *coverPhotoOverlay;
+@property (nonatomic) UIActivityIndicatorView *indicatorView;
 @property (nonatomic) UIView *tableHeaderView;
 @property (nonatomic) UIView *headingLineBreak;
 @property (nonatomic) UIImageView *tableViewShadowOverlay;
-@property (nonatomic) UIScrollView *miniSiteScrollView;
-@property (nonatomic) NSMutableArray *coverPhotoArray;
-@property (nonatomic) NSInteger blurRadius;
 
 @end
 
 @implementation WPMiniSiteView
 
-static const int COVER_PHOTO_HEIGHT = 124;
 static int COVER_PHOTO_TRANS = 0;
 
 - (id)initWithFrame:(CGRect)frame {
@@ -49,6 +46,7 @@ static int COVER_PHOTO_TRANS = 0;
     _miniSiteScrollView = [({
         UIScrollView *miniSiteScrollView = [[UIScrollView alloc] init];
         miniSiteScrollView.delegate = self;
+        miniSiteScrollView.alwaysBounceVertical = YES;
         miniSiteScrollView;
     }) wp_addToSuperview:self];
     
@@ -61,6 +59,12 @@ static int COVER_PHOTO_TRANS = 0;
         miniSiteTableView;
     }) wp_addToSuperview:self.miniSiteScrollView];
     
+    _indicatorView = [({
+        UIActivityIndicatorView *view = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        [view startAnimating];
+        view;
+    }) wp_addToSuperview:self];
+
     _tableHeaderView = [({
         UIView *tableHeaderView = [[UIView alloc] init];
         tableHeaderView;
@@ -90,7 +94,7 @@ static int COVER_PHOTO_TRANS = 0;
     }) wp_addToSuperview:self.tableHeaderView];
     
     _addressLabel = [({
-        FAKFontAwesome *mapMarkerIcon = [FAKFontAwesome mapMarkerIconWithSize:[WPLabeledIcon viewHeight]];
+        FAKIonIcons *mapMarkerIcon = [FAKIonIcons androidPinIconWithSize:[WPLabeledIcon viewHeight]];
         UIImage *mapMarkerImage = [mapMarkerIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
         WPLabeledIcon *addressLabel = [[WPLabeledIcon alloc] initWithText:@"Street Addresss Label" icon:mapMarkerImage];
         addressLabel;
@@ -104,16 +108,16 @@ static int COVER_PHOTO_TRANS = 0;
     }) wp_addToSuperview:self.tableHeaderView];
     
     _currentTaskLabel = [({
-        FAKFontAwesome *checkIcon = [FAKFontAwesome checkIconWithSize:[WPLabeledIcon viewHeight]];
+        FAKIonIcons *checkIcon = [FAKIonIcons androidDoneAllIconWithSize:[WPLabeledIcon viewHeight]];
         UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
         WPLabeledIcon *currentTaskLabel = [[WPLabeledIcon alloc] initWithText:@"Current Task" icon:checkImage];
         currentTaskLabel;
     }) wp_addToSuperview:self.tableHeaderView];
     
     _fieldReportCountLabel = [({
-        FAKFontAwesome *exclamationIcon = [FAKFontAwesome exclamationTriangleIconWithSize:[WPLabeledIcon viewHeight]];
-        UIImage *exclamationImage = [exclamationIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
-        WPLabeledIcon *fieldReportCountLabel = [[WPLabeledIcon alloc] initWithText:@"Field Report Count" icon:exclamationImage];
+        FAKIonIcons *clipboardIcon = [FAKIonIcons androidClipboardIconWithSize:[WPLabeledIcon viewHeight]];
+        UIImage *clipboardImage = [clipboardIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
+        WPLabeledIcon *fieldReportCountLabel = [[WPLabeledIcon alloc] initWithText:@"Field Report Count" icon:clipboardImage];
         fieldReportCountLabel;
     }) wp_addToSuperview:self.tableHeaderView];
     
@@ -140,8 +144,6 @@ static int COVER_PHOTO_TRANS = 0;
         overlay.alpha = 0.1;
         overlay;
     }) wp_addToSuperview:self];
-    
-    [self generateBlurredPhotos];
     
     _navbarShadowOverlay = [({
         UIImageView *navbarShadowOverlay = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ShadowOverlay"]];
@@ -260,8 +262,15 @@ static int COVER_PHOTO_TRANS = 0;
         make.bottom.equalTo(@0);
     }];
     
+    [self.indicatorView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.fieldReportTableView.mas_top).with.offset(2 * standardMargin);
+        make.centerX.equalTo(self.mas_centerX);
+    }];
+
     [super updateConstraints];
 }
+
+#pragma mark - Public Methods
 
 - (void)updateTableViewHeight:(NSInteger)cellCount {
     [self.fieldReportTableView mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -271,40 +280,19 @@ static int COVER_PHOTO_TRANS = 0;
 
 - (void)configureWithMiniSite:(WPMiniSite *)miniSite {
     [self.coverPhotoView setImageWithURL:[miniSite.imageURLs firstObject]
-                        placeholderImage:[UIImage imageNamed:@"SampleCoverPhoto2"]];
+                        placeholderImage:[UIImage imageNamed:@"WPBlue"]];
     self.originalCoverPhoto = self.coverPhotoView.image;
     self.titleLabel.text = miniSite.name;
     self.descriptionLabel.text = miniSite.info;
     self.addressLabel.label.text = [NSString stringWithFormat:@"%@, %@, %@ %@", miniSite.street, miniSite.city, miniSite.state, miniSite.zipCode];
-    self.vegetationListLabel.text = miniSite.vegetations;
+    //self.vegetationListLabel.text = miniSite.vegetations;
     self.currentTaskLabel.label.text = [NSString stringWithFormat:@"%@ tasks", miniSite.taskCount];
     self.fieldReportCountLabel.label.text = [[miniSite.fieldReportCount stringValue] stringByAppendingString:@" field reports"];
 }
 
-#pragma mark - Blurred Photo Generation
-
-- (void)generateBlurredPhotos {
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-//        for (int i = 0; i <= 20; i+= 2) {
-//            UIImage *image = self.originalCoverPhoto;
-//            image = [image applyBlurWithRadius:i
-//                                     tintColor:[UIColor clearColor]
-//                         saturationDeltaFactor:1
-//                                     maskImage:nil];
-//            
-//            [self.coverPhotoArray addObject:image];
-//            [self.coverPhotoArray addObject:image];
-//        }
-//    });
-}
-
-#pragma mark - Lazy Instantiation
-
-- (NSMutableArray *)coverPhotoArray {
-    if (!_coverPhotoArray) {
-        _coverPhotoArray = [[NSMutableArray alloc] init];
-    }
-    return _coverPhotoArray;
+- (void)stopIndicator {
+    [self.indicatorView stopAnimating];
+    self.indicatorView.alpha = 0;
 }
 
 #pragma mark - ScrollView Delegate Method from ViewController
@@ -312,18 +300,13 @@ static int COVER_PHOTO_TRANS = 0;
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
     CGFloat trans = scrollView.contentOffset.y;
-    COVER_PHOTO_TRANS = trans;
-    if (COVER_PHOTO_TRANS > 60) COVER_PHOTO_TRANS = 60;
-    self.blurRadius = MIN(ABS(COVER_PHOTO_TRANS / 6), 20);
+    COVER_PHOTO_TRANS = MIN(60, trans);
     self.coverPhotoOverlay.alpha = 0.3 + (COVER_PHOTO_TRANS + topMargin) / 600;
+    self.coverPhotoView.alpha = 1 + (trans + topMargin) / 70;
     
     [self.coverPhotoView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(COVER_PHOTO_HEIGHT - COVER_PHOTO_TRANS));
     }];
-    
-    if (self.coverPhotoArray.count > self.blurRadius) {
-        [self.coverPhotoView setImage:self.coverPhotoArray[self.blurRadius]];
-    }
     
     CGFloat titleAlpha = (trans - COVER_PHOTO_TRANS - 20) / 30;
     

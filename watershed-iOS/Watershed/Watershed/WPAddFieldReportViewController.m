@@ -96,7 +96,7 @@
 //        miniSiteId = parent.miniSiteId;
     }
     NSString *photo = [UIImagePNGRepresentation([self compressForUpload:self.view.selectedImageView.image withScale:0.2]) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];;
-    
+
     NSDictionary *staticParameters = @{@"field_report": @{
                                          @"user_id": userId,
                                          @"mini_site_id": miniSiteId,
@@ -108,11 +108,8 @@
                                          }
                                  }};
     NSMutableDictionary *parameters = [staticParameters mutableCopy];
-    
+
     [[WPNetworkingManager sharedManager] postFieldReportWithParameters:parameters success:^(WPFieldReport *fieldReport) {
-        if ([parent isKindOfClass:[WPMiniSiteViewController class]]) {
-            [(WPMiniSiteViewController *)parent requestAndLoadMiniSite];
-        }
         [self.navigationController popViewControllerAnimated:YES];
     }];
 }
@@ -121,13 +118,13 @@
     // Calculate new size given scale factor.
     CGSize originalSize = original.size;
     CGSize newSize = CGSizeMake(originalSize.width * scale, originalSize.height * scale);
-    
+
     // Scale the original image to match the new size.
     UIGraphicsBeginImageContext(newSize);
     [original drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
     UIImage* compressedImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return compressedImage;
 }
 
@@ -135,17 +132,17 @@
     self.viewPhotoModal = [[UIViewController alloc] init];
     self.viewPhotoModal.view.backgroundColor = [UIColor blackColor];
     self.viewPhotoModal.view.userInteractionEnabled = YES;
-    
+
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.viewPhotoModal.view.frame];
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     imageView.image = self.view.selectedImageView.image;
-    
+
     [self.viewPhotoModal.view addSubview:imageView];
-    
+
     UITapGestureRecognizer *modalTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissModalView)];
     [self.viewPhotoModal.view addGestureRecognizer:modalTap];
     self.viewPhotoModal.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    
+
     [self presentViewController:self.viewPhotoModal animated:YES completion:nil];
 }
 
@@ -177,7 +174,7 @@
                                     {
                                         [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
                                         [self takePhoto];
-                                        
+
                                     }];
         UIAlertAction *selectPhoto = [UIAlertAction
                                       actionWithTitle:@"Choose Existing"
@@ -186,7 +183,7 @@
                                       {
                                           [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
                                           [self chooseExisting];
-                                          
+
                                       }];
         UIAlertAction *cancel = [UIAlertAction
                                  actionWithTitle:@"Cancel"
@@ -194,10 +191,10 @@
                                  handler:^(UIAlertAction * action)
                                  {
                                      [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
-                                     
+
                                  }];
-        
-        
+
+
         [addPhotoActionSheet addAction:takePhoto];
         [addPhotoActionSheet addAction:selectPhoto];
         [addPhotoActionSheet addAction:cancel];
@@ -244,7 +241,16 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     picker.delegate = self;
     picker.allowsEditing = NO;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    
+
+    [picker.navigationBar setBackgroundColor:[UIColor whiteColor]];
+    [picker.navigationBar setShadowImage:[UIImage imageNamed:@"WPBlue"]];
+    [picker.navigationBar setTintColor:[UIColor wp_blue]];
+    [picker.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
+    UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [WPView getScreenWidth], 20)];
+    statusBarView.backgroundColor = [UIColor whiteColor];
+    [picker.view addSubview:statusBarView];
+
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
     [self presentViewController:picker animated:YES completion:NULL];
 }
 
@@ -270,7 +276,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+
     NSString *CellIdentifier = @"Cell";
 
     WPAddFieldReportTableViewCell *cell = [[WPAddFieldReportTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
@@ -319,11 +325,18 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     self.view.selectedImageView.image = info[UIImagePickerControllerOriginalImage];
-    [picker dismissViewControllerAnimated:YES completion:NULL];
+    //    UIImage *chosenImage = info[UIImagePickerControllerOriginalImage];
+    //    self.view.originalImage = chosenImage;
+    //    [self setBlurredImage];
+    [picker dismissViewControllerAnimated:YES completion:^{
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    }];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [picker dismissViewControllerAnimated:YES completion:NULL];
+    [picker dismissViewControllerAnimated:YES completion:^{
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    }];
 }
 
 #pragma mark - Text Field delegate methods

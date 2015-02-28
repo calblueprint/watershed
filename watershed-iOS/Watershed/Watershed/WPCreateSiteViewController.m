@@ -27,14 +27,18 @@
     self.navigationController.navigationBar.tintColor = [UIColor blackColor];
     self.title = @"New Site";
     
-    FAKFontAwesome *closeIcon = [FAKFontAwesome closeIconWithSize:22];
-    UIImage *closeImage = [closeIcon imageWithSize:CGSizeMake(22, 22)];
+    self.infoTableView = self.view.infoTableView;
+    self.infoTableView.delegate = self;
+    self.infoTableView.dataSource = self;
+
+    FAKIonIcons *closeIcon = [FAKIonIcons androidCloseIconWithSize:24];
+    UIImage *closeImage = [closeIcon imageWithSize:CGSizeMake(24, 24)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithImage:closeImage style:UIBarButtonItemStylePlain target:self action:@selector(dismissSelf)];
     self.navigationItem.leftBarButtonItem = cancelButton;
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor wp_blue];
     
-    FAKFontAwesome *checkIcon = [FAKFontAwesome checkIconWithSize:22];
-    UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake(22, 22)];
+    FAKIonIcons *checkIcon = [FAKIonIcons androidDoneIconWithSize:24];
+    UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake(24, 24)];
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithImage:checkImage style:UIBarButtonItemStylePlain target:self action:@selector(saveAndDismissSelf)];
     self.navigationItem.rightBarButtonItem = doneButton;
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor wp_blue];
@@ -44,9 +48,6 @@
 
 - (void)loadView {
     self.view = [[WPCreateSiteView alloc] init];
-    self.infoTableView = self.view.infoTableView;
-    self.infoTableView.delegate = self;
-    self.infoTableView.dataSource = self;
 }
 
 - (void)dismissSelf {
@@ -64,10 +65,12 @@
                                @"description" : self.descriptionTextView.text
                                };
     WPSite *site = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:siteJSON error:nil];
+    
+    // Don't request the list of sites, because it is already called in the ViewController's viewWillAppear
+    __weak __typeof(self)weakSelf = self;
     [[WPNetworkingManager sharedManager] createSiteWithSite:site parameters:[[NSMutableDictionary alloc] init] success:^{
-        [self.parent requestAndLoadSites];
-        self.parent = nil;
-        [self dismissSelf];
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf dismissSelf];
     }];
 }
 
