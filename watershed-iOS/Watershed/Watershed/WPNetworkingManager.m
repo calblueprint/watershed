@@ -381,6 +381,25 @@ static NSString * const PROMOTE_URL = @"promote";
     }];
 }
 
+- (void)editSiteWithSite:(WPSite *)site parameters:(NSMutableDictionary *)parameters success:(void (^)())success {
+    NSString *siteEndpoint = [@"/" stringByAppendingString:[site.siteId stringValue]];
+    NSString *SITE_URL = [SITES_URL stringByAppendingString:siteEndpoint];
+    NSString *siteString = [WPNetworkingManager createURLWithEndpoint:SITE_URL];
+
+    [self addAuthenticationParameters:parameters];
+    NSDictionary *siteJSON = [MTLJSONAdapter JSONDictionaryFromModel:site];
+    [parameters setObject:siteJSON forKey:@"site"];
+
+    [self PUT:siteString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        success();
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not edit site." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+
 - (void)requestMiniSiteWithMiniSite:(WPMiniSite *)miniSite parameters:(NSMutableDictionary *)parameters success:(void (^)(WPMiniSite *miniSite, NSMutableArray *fieldReportList))success {
     NSString *miniSiteEndpoint = [@"/" stringByAppendingString:[miniSite.miniSiteId stringValue]];
     NSString *MINI_SITE_URL = [MINI_SITES_URL stringByAppendingString:miniSiteEndpoint];
