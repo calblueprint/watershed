@@ -32,6 +32,11 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
     [self.tableView registerClass:[WPTasksTableViewCell class] forCellReuseIdentifier:CellIdentifier];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(requestAndLoadMyTasks) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:self.refreshControl];
+    
     [self requestAndLoadMyTasks];
 
 }
@@ -48,13 +53,11 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         strongSelf.tasks = tasksList;
         [strongSelf.tableView reloadData];
+        [self.tableView stopIndicator];
+        [self.refreshControl endRefreshing];
     }];
 
-    self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(requestAndLoadMyTasks) forControlEvents:UIControlEventValueChanged];
-    [self.tableView addSubview:self.refreshControl];
-
-    [self requestAndLoadMyTasks];
+    //[self requestAndLoadMyTasks];
 }
 
 
@@ -120,17 +123,17 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
 
 #pragma mark - Networking Methods
 
-- (void)requestAndLoadMyTasks {
-    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
-    [f setNumberStyle:NSNumberFormatterDecimalStyle];
-    NSNumber *userId = [f numberFromString:[[WPNetworkingManager sharedManager] keyChainStore][@"user_id"]];
-
-    [[WPNetworkingManager sharedManager] requestMyTasksListWithUser:userId parameters: [[NSMutableDictionary alloc] init] success:^(NSMutableArray *tasksList) {
-        self.tasks = tasksList;
-        [self.tableView reloadData];
-        [self.tableView stopIndicator];
-        [self.refreshControl endRefreshing];
-    }];
-}
+//- (void)requestAndLoadMyTasks {
+//    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+//    [f setNumberStyle:NSNumberFormatterDecimalStyle];
+//    NSNumber *userId = [f numberFromString:[[WPNetworkingManager sharedManager] keyChainStore][@"user_id"]];
+//
+//    [[WPNetworkingManager sharedManager] requestMyTasksListWithUser:userId parameters: [[NSMutableDictionary alloc] init] success:^(NSMutableArray *tasksList) {
+//        self.tasks = tasksList;
+//        [self.tableView reloadData];
+//        [self.tableView stopIndicator];
+//        [self.refreshControl endRefreshing];
+//    }];
+//}
 
 @end

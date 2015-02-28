@@ -50,22 +50,18 @@ DEPENDENCIES:
   - AFNetworking (~> 2.0)
   - BSKeyboardControls (~> 2.2)
   - Facebook-iOS-SDK
-  - FontAwesomeKit (from `https://github.com/PrideChung/FontAwesomeKit.git`)
+  - FontAwesomeKit (~> 2.1.0)
   - Mantle
   - Masonry
   - UICKeyChainStore
   - UIImage+BlurredFrame
-
-EXTERNAL SOURCES:
-  FontAwesomeKit:
-    :git: https://github.com/PrideChung/FontAwesomeKit.git
 
 SPEC CHECKSUMS:
   AFNetworking: 0f54cb5d16ce38c1b76948faffb8d5fb705021c7
   Bolts: 3db0a875235e0c9042b013af13af0f00f79b102c
   BSKeyboardControls: c9aa1bdbb5ecd454aa3d0b2279f79c5dc4b6c6ad
   Facebook-iOS-SDK: 18c26e86ab25c17854a2ee2a8f60562099c6600f
-  FontAwesomeKit: a80807122684077512ed33f7c04030197ee38eb6
+  FontAwesomeKit: a2edea3111dab107b4cc43b85881b404eb063385
   Mantle: d7c5ac734579ec751c58fecbf56189853056c58c
   Masonry: 35368c2ca9577ca87722c12fc52c4bad9b1c1516
   UICKeyChainStore: 257d869d42527b9853ebb11d6dc3ac377b270e72

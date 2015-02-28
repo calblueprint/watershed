@@ -32,10 +32,11 @@ static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
     [self.tableView registerClass:[WPTasksTableViewCell class] forCellReuseIdentifier:allTasksIdentifier];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(requestAndLoadAllTasks) forControlEvents:UIControlEventValueChanged];
-    [self.tableView addSubview:self.refreshControl];
 
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(requestAndLoadMyTasks) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:self.refreshControl];
+    
     [self requestAndLoadAllTasks];
 }
 
@@ -51,6 +52,8 @@ static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         strongSelf.allTasks = tasksList;
         [strongSelf.tableView reloadData];
+        [self.tableView stopIndicator];
+        [self.refreshControl endRefreshing];
     }];
 }
 
@@ -112,13 +115,13 @@ static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
 
 #pragma mark - Networking Methods
 
-- (void)requestAndLoadAllTasks {
-    [[WPNetworkingManager sharedManager] requestTasksListWithParameters:[[NSMutableDictionary alloc] init] success:^(NSMutableArray *tasksList) {
-        self.allTasks = tasksList;
-        [self.tableView reloadData];
-        [self.tableView stopIndicator];
-        [self.refreshControl endRefreshing];
-    }];
-}
+//- (void)requestAndLoadAllTasks {
+//    [[WPNetworkingManager sharedManager] requestTasksListWithParameters:[[NSMutableDictionary alloc] init] success:^(NSMutableArray *tasksList) {
+//        self.allTasks = tasksList;
+//        [self.tableView reloadData];
+//        [self.tableView stopIndicator];
+//        [self.refreshControl endRefreshing];
+//    }];
+//}
 
 @end
