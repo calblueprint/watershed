@@ -34,7 +34,7 @@ static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
     self.tableView.dataSource = self;
 
     self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(requestAndLoadMyTasks) forControlEvents:UIControlEventValueChanged];
+    [self.refreshControl addTarget:self action:@selector(requestAndLoadAllTasks) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:self.refreshControl];
     
     [self requestAndLoadAllTasks];
@@ -112,16 +112,5 @@ static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
     taskViewController.task = selectedTask;
     [[self.parentViewController navigationController] pushViewController:taskViewController animated:YES];
 }
-
-#pragma mark - Networking Methods
-
-//- (void)requestAndLoadAllTasks {
-//    [[WPNetworkingManager sharedManager] requestTasksListWithParameters:[[NSMutableDictionary alloc] init] success:^(NSMutableArray *tasksList) {
-//        self.allTasks = tasksList;
-//        [self.tableView reloadData];
-//        [self.tableView stopIndicator];
-//        [self.refreshControl endRefreshing];
-//    }];
-//}
 
 @end

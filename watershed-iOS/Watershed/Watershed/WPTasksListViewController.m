@@ -35,13 +35,13 @@
                                   target:self
                                   action:@selector(newTaskForm:)];
     self.navigationItem.rightBarButtonItem = addButton;
-         
 }
 
 - (void)loadView {
     _myTasksTableController = [[WPMyTasksTableViewController alloc] init];
     _allTasksTableController = [[WPAllTasksTableViewController alloc] init];
-        [self addChildViewController:_allTasksTableController];
+    [self addChildViewController:_myTasksTableController];
+    [self addChildViewController:_allTasksTableController];
     self.view = [[WPTasksListView alloc] initWithFrame:CGRectZero  andTableViewController:self];
 }
 
