@@ -121,6 +121,7 @@ static NSString *cellIdentifier = @"FieldReportCell";
 
 - (void)showEditMiniSiteView {
     WPEditMiniSiteViewController *editMiniSiteViewController = [[WPEditMiniSiteViewController alloc] init];
+    editMiniSiteViewController.miniSite = self.miniSite;
     UINavigationController *editMiniSiteNavController = [[UINavigationController alloc] initWithRootViewController:editMiniSiteViewController];
     [editMiniSiteNavController.navigationBar setBackgroundColor:[UIColor whiteColor]];
     [editMiniSiteNavController.navigationBar setBarTintColor:[UIColor whiteColor]];

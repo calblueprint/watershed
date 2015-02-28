@@ -13,6 +13,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"Edit MiniSite";
+
+    [self.imageInputCell.imageInputView setImageWithURL:self.miniSite.imageURLs.firstObject];
+    self.imageInputCell.viewImageButton.alpha = 1;
 }
 
 #pragma mark - Private Methods
