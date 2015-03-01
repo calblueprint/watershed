@@ -57,6 +57,7 @@
 }
 
 - (void)saveAndDismissSelf {
+<<<<<<< HEAD
     
     if (!(self.nameTextField.text.length &&
           self.streetTextField.text.length &&
@@ -75,19 +76,23 @@
                                    };
 
         self.navigationItem.rightBarButtonItem.enabled = NO;
-
         WPSite *site = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:siteJSON error:nil];
-        __weak __typeof(self)weakSelf = self;
-        [[WPNetworkingManager sharedManager] createSiteWithSite:site parameters:[[NSMutableDictionary alloc] init] success:^{
-            __strong __typeof(weakSelf)strongSelf = weakSelf;
-            [strongSelf dismissSelf];
-        }];
+        [self updateServerWithSite:site];
     }
 }
 
 - (void)presentErrorAlert {
     UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Cannot leave fields blank." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [incorrect show];
+}
+
+- (void)updateServerWithSite:(WPSite *)site {
+    // Don't request the list of sites, because it is already called in the ViewController's viewWillAppear
+    __weak __typeof(self)weakSelf = self;
+    [[WPNetworkingManager sharedManager] createSiteWithSite:site parameters:[[NSMutableDictionary alloc] init] success:^{
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf dismissSelf];
+    }];
 }
 
 #pragma mark - Table View Delegate / Data Source Methods
