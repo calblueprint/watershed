@@ -189,6 +189,7 @@ static NSString *cellIdentifier = @"MiniSiteCell";
 
 - (void)setSite:(WPSite *)site {
     _site = site;
+    self.title = site.name;
     [self.view configureWithSite:site];
 }
 
