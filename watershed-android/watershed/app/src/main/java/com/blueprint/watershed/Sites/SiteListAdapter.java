@@ -1,11 +1,12 @@
 package com.blueprint.watershed.Sites;
 
-import android.app.Activity;
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blueprint.watershed.Activities.MainActivity;
@@ -19,65 +20,118 @@ import java.util.ArrayList;
  * Created by Mark Miyashita on 10/14/14.
  * Adapter that holds all the sites.
  */
-public class SiteListAdapter extends ArrayAdapter<Site> {
+public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHolder> {
 
-    MainActivity mMainActivity;
+    MainActivity mParentActivity;
     Context context;
     int layoutResourceId;
     ArrayList<Site> sites;
 
-    public SiteListAdapter(MainActivity mainActivity, Context context, int layoutResourceId, ArrayList<Site> sites) {
-        super(context, layoutResourceId, sites);
-        this.mMainActivity = mainActivity;
-        this.layoutResourceId = layoutResourceId;
-        this.context = context;
-        this.sites = sites;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View row = convertView;
-        SiteHolder holder;
-
-        if (row == null) {
-            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-            row = inflater.inflate(layoutResourceId, parent, false);
-
-            holder = new SiteHolder();
-            holder.photosView = (CoverPhotoPagerView) row.findViewById(R.id.cover_photo_pager_view);
-            holder.numberOfTasksView = (CircularTextView) row.findViewById(R.id.number_of_tasks_view);
-            holder.topLabel = (TextView) row.findViewById(R.id.top_label);
-            holder.bottomLabel = (TextView) row.findViewById(R.id.bottom_label);
-
-            row.setTag(holder);
-        } else {
-            holder = (SiteHolder)row.getTag();
-        }
-
-        final Site site = sites.get(position);
-
-        holder.photosView.configureWithPhotos(site.getPhotos());
-        holder.numberOfTasksView.configureLabels(Integer.toString(site.getTasksCount()), "TASKS");
-        holder.topLabel.setText(site.getName());
-        holder.bottomLabel.setText(String.format("%s Sites", site.getMiniSitesCount()));
-
-        row.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SiteFragment siteFragment = new SiteFragment();
-                siteFragment.configureWithSite(site);
-
-                mMainActivity.replaceFragment(siteFragment);
-            }
-        });
-
-        return row;
-    }
-
-    static class SiteHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        // each data item is just a string in this case
+        RelativeLayout parentView;
         CoverPhotoPagerView photosView;
         CircularTextView numberOfTasksView;
         TextView topLabel;
         TextView bottomLabel;
+        public ViewHolder(View view) {
+            super(view);
+            parentView = (RelativeLayout) view.findViewById(R.id.site_list_row);
+            photosView = (CoverPhotoPagerView) view.findViewById(R.id.cover_photo_pager_view);
+            numberOfTasksView = (CircularTextView) view.findViewById(R.id.number_of_tasks_view);
+            topLabel = (TextView) view.findViewById(R.id.top_label);
+            bottomLabel = (TextView) view.findViewById(R.id.bottom_label);
+        }
     }
+
+    public SiteListAdapter(MainActivity mainActivity, int layoutResourceId, ArrayList<Site> sites) {
+        this.mParentActivity = mainActivity;
+        this.layoutResourceId = layoutResourceId;
+        this.context = mainActivity;
+        this.sites = sites;
+    }
+
+    // Create new views (invoked by the layout manager)
+    @Override
+    public SiteListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                   int viewType) {
+        // create a new view
+        View v = LayoutInflater.from(parent.getContext()).inflate(layoutResourceId, parent, false);
+        // set the view's size, margins, paddings and layout parameters
+        return new ViewHolder(v);
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        // - get element from your dataset at this position
+        // - replace the contents of the view with that element
+        Log.i("wat", "asdasdfasddddddddddddff");
+        if (sites.size() > 0) {
+            final Site site = sites.get(position);
+            holder.photosView.configureWithPhotos(site.getPhotos());
+            holder.numberOfTasksView.configureLabels(Integer.toString(site.getTasksCount()), "TASKS");
+            holder.topLabel.setText(site.getName());
+            holder.bottomLabel.setText(String.format("%s Sites", site.getMiniSitesCount()));
+            holder.parentView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    SiteFragment siteFragment = new SiteFragment();
+                    siteFragment.configureWithSite(site);
+
+                    mParentActivity.replaceFragment(siteFragment);
+                }
+            });
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return sites.size() + 1;
+    }
+
+//    @Override
+//    public View getView(int position, View convertView, ViewGroup parent) {
+//        View row = convertView;
+//        SiteHolder holder;
+//
+//        if (row == null) {
+//            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+//            row = inflater.inflate(layoutResourceId, parent, false);
+//
+//            holder = new SiteHolder();
+//            holder.photosView = (CoverPhotoPagerView) row.findViewById(R.id.cover_photo_pager_view);
+//            holder.numberOfTasksView = (CircularTextView) row.findViewById(R.id.number_of_tasks_view);
+//            holder.topLabel = (TextView) row.findViewById(R.id.top_label);
+//            holder.bottomLabel = (TextView) row.findViewById(R.id.bottom_label);
+//            row.setTag(holder);
+//        } else {
+//            holder = (SiteHolder)row.getTag();
+//        }
+//
+//        final Site site = sites.get(position);
+//
+//        holder.photosView.configureWithPhotos(site.getPhotos());
+//        holder.numberOfTasksView.configureLabels(Integer.toString(site.getTasksCount()), "TASKS");
+//        holder.topLabel.setText(site.getName());
+//        holder.bottomLabel.setText(String.format("%s Sites", site.getMiniSitesCount()));
+//
+//        row.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                SiteFragment siteFragment = new SiteFragment();
+//                siteFragment.configureWithSite(site);
+//
+//                mParentActivity.replaceFragment(siteFragment);
+//            }
+//        });
+//
+//        return row;
+//    }
+
+//    static class SiteHolder {
+//        CoverPhotoPagerView photosView;
+//        CircularTextView numberOfTasksView;
+//        TextView topLabel;
+//        TextView bottomLabel;
+//    }
 }

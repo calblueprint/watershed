@@ -1,8 +1,10 @@
 package com.blueprint.watershed.Tasks;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -74,6 +76,7 @@ public class TaskFragment extends ListFragment {
 
     @Override
     public void onResume() {
+        super.onResume();
         mSwipeLayout.setRefreshing(true);
         getTasksRequest();
     }
@@ -97,6 +100,7 @@ public class TaskFragment extends ListFragment {
         mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                Log.i("asdf", "swpe");
                 mSwipeLayout.setRefreshing(true);
                 getTasksRequest();
             }
@@ -138,7 +142,12 @@ public class TaskFragment extends ListFragment {
                 setTasks(tasks);
                 mAllTaskAdapter.notifyDataSetChanged();
                 mUserTaskAdapter.notifyDataSetChanged();
-                if (mSwipeLayout != null) mSwipeLayout.setRefreshing(false);
+                new CountDownTimer(1000, 1000) {
+                    @Override
+                    public void onTick(long timeLeft) {}
+                    @Override
+                    public void onFinish() { mSwipeLayout.setRefreshing(false); }
+                }.start();
             }
         });
         mNetworkManager.getRequestQueue().add(taskListRequest);

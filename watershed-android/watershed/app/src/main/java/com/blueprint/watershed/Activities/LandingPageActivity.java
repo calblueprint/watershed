@@ -21,11 +21,13 @@ import com.blueprint.watershed.Networking.Sessions.LoginRequest;
 import com.blueprint.watershed.Networking.Sessions.SignUpRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Utilities.APIError;
+import com.crashlytics.android.Crashlytics;
 import com.facebook.AppEventsLogger;
 import com.facebook.SessionState;
 import com.facebook.model.GraphUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.fabric.sdk.android.Fabric;
 import org.json.JSONException;
 
 import java.util.Arrays;
@@ -63,6 +65,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_landing_page);
         mloginNetworkManager = NetworkManager.getInstance(this.getApplicationContext());
         viewBlocker = findViewById(R.id.viewBlocker);
