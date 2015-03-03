@@ -41,12 +41,19 @@ import java.util.HashMap;
  * Use the {@link CreateMiniSiteFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CreateMiniSiteFragment extends Fragment {
+public class CreateMiniSiteFragment extends Fragment implements View.OnClickListener{
 
     private Button mTakePhotoButton;
     private MainActivity mMainActivity;
     private View mView;
     private NetworkManager mNetworkManager;
+
+    private EditText mTitleField;
+    private EditText mAddressField;
+    private EditText mCityField;
+    private EditText mZipField;
+    private EditText mStateField;
+    private EditText mDescriptionField;
 
 
     // Camera Stuff
@@ -83,6 +90,7 @@ public class CreateMiniSiteFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_create_mini_site, container, false);
+        setButtonListeners(mView);
         return mView;
     }
 
@@ -102,11 +110,14 @@ public class CreateMiniSiteFragment extends Fragment {
     }
 
     public void onClick(View view) {
+        Log.e("Some Mini Site Button", "Pressed");
         switch (view.getId()) {
             case R.id.take_photo_button:
+                Log.e("Photo Mini Site Button", "Pressed");
                 onTakePhotoButtonPressed(view);
                 break;
-            case R.id.submit_field_report_button:
+            case R.id.create_mini_site_submit:
+                Log.e("Create Mini Site Button", "Pressed");
                 createMiniSite(view);
                 break;
         }
@@ -128,11 +139,11 @@ public class CreateMiniSiteFragment extends Fragment {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        ImageView fieldReportImageView = (ImageView)mView.findViewById(R.id.mini_site_image);
-        if (requestCode == CAMERA_REQUEST && resultCode == mMainActivity.RESULT_OK) {
-            Bitmap photo = (Bitmap) data.getExtras().get("data");
-            fieldReportImageView.setImageBitmap(photo);
-        }
+//        ImageView fieldReportImageView = (ImageView)mView.findViewById(R.id.mini_site_image);
+//        if (requestCode == CAMERA_REQUEST && resultCode == mMainActivity.RESULT_OK) {
+//            Bitmap photo = (Bitmap) data.getExtras().get("data");
+//            fieldReportImageView.setImageBitmap(photo);
+//        }
     }
 
     // Button Handlers
@@ -154,6 +165,17 @@ public class CreateMiniSiteFragment extends Fragment {
         }
     }
 
+    private void setButtonListeners(View view){
+        Button submitButton = (Button)view.findViewById(R.id.create_mini_site_submit);
+        mTitleField = (EditText)view.findViewById(R.id.create_mini_site_title);
+        mDescriptionField = (EditText)view.findViewById(R.id.create_mini_site_description);
+        mAddressField = (EditText)view.findViewById(R.id.create_mini_site_address);
+        mCityField = (EditText)view.findViewById(R.id.create_mini_site_city);
+        mZipField = (EditText)view.findViewById(R.id.create_mini_site_zip);
+        mStateField = (EditText)view.findViewById(R.id.create_mini_site_state);
+        submitButton.setOnClickListener(this);
+    }
+
     public void createMiniSiteRequest(MiniSite miniSite){
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
 
@@ -172,8 +194,18 @@ public class CreateMiniSiteFragment extends Fragment {
         MiniSite miniSite = new MiniSite();
 
         String miniSiteTitle = ((EditText)mView.findViewById(R.id.create_mini_site_title)).getText().toString();
-        ImageView image = (ImageView)mView.findViewById(R.id.mini_site_image);
-        Bitmap miniSitePhoto = ((BitmapDrawable)image.getDrawable()).getBitmap();
+        //ImageView image = (ImageView)mView.findViewById(R.id.mini_site_image);
+        //Bitmap miniSitePhoto = ((BitmapDrawable)image.getDrawable()).getBitmap();
+
+        miniSite.setName(miniSiteTitle);
+        miniSite.setDescription(mDescriptionField.getText().toString());
+        miniSite.setStreet(mAddressField.getText().toString());
+        miniSite.setCity(mCityField.getText().toString());
+        miniSite.setZipCode(94563);
+        miniSite.setLatitude("0");
+        miniSite.setLongitude("0");
+        miniSite.setFieldReportsCount(0);
+        miniSite.setState("CA");
 
         createMiniSiteRequest(miniSite);
 

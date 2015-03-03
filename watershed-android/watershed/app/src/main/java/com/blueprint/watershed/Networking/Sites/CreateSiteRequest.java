@@ -63,6 +63,7 @@ public class CreateSiteRequest extends BaseRequest {
 
         try {
             JSONObject siteJson = new JSONObject(mapper.writeValueAsString(site));
+            Log.e("Site Request ;)", siteJson.toString());
             params.put("site", siteJson);
         } catch (Exception e) {
             e.printStackTrace();

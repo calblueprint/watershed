@@ -6,14 +6,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <ImageView
-        style="@style/BackGroundImageView"
-        android:id = "@+id/mini_site_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        tools:ignore="ContentDescription" />
+    <!--<ImageView-->
+        <!--style="@style/BackGroundImageView"-->
+        <!--android:id = "@+id/mini_site_image"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--tools:ignore="ContentDescription" />-->
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -102,7 +102,7 @@
                 android:text="@string/create_site_state"
                 />
             <EditText
-                android:id="@+id/create_site_state"
+                android:id="@+id/create_mini_site_state"
                 android:layout_width="0px"
                 android:hint="@string/required"
 
@@ -123,7 +123,7 @@
                 android:text="@string/description"
                 />
             <EditText
-                android:id="@+id/create_site_description"
+                android:id="@+id/create_mini_site_description"
                 android:hint="@string/required"
                 android:gravity="bottom"
                 android:layout_width="0px"

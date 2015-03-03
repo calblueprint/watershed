@@ -57,6 +57,7 @@ public class CreateMiniSiteRequest extends BaseRequest {
 
         try {
             JSONObject miniSiteJson = new JSONObject(mapper.writeValueAsString(miniSite));
+            Log.e("Mini Site JSON", miniSiteJson.toString());
             params.put("mini_site", miniSiteJson);
         } catch (Exception e) {
             e.printStackTrace();

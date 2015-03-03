@@ -139,6 +139,7 @@ public class CreateSiteFragment extends Fragment implements View.OnClickListener
     private void createSite(){
         Site new_site = new Site();
         new_site.setName(mTitleField.getText().toString());
+        new_site.setDescription(mDescriptionField.getText().toString());
         new_site.setStreet(mAddressField.getText().toString());
         new_site.setCity(mCityField.getText().toString());
         new_site.setZipCode(Integer.valueOf(mZipField.getText().toString()));
