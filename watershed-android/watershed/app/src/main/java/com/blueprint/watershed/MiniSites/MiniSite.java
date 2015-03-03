@@ -44,12 +44,12 @@ public class MiniSite implements APIObject {
 
     public FieldReport getFieldReport(int position) { return mFieldReports.get(position); }
 
-    public ArrayList<Photo> getPhotos() {
-        if (mPhotos == null) {
-            mPhotos = new ArrayList<Photo>();
-        }
-        return mPhotos;
-    }
+//    public ArrayList<Photo> getPhotos() {
+//        if (mPhotos == null) {
+//            mPhotos = new ArrayList<Photo>();
+//        }
+//        return mPhotos;
+//    }
 
     public Photo getPhoto(int position) { return mPhotos.get(position); }
 

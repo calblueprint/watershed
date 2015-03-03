@@ -7,7 +7,9 @@
 //
 
 #import "WPView.h"
+#import "WPAddVegetationTextField.h"
 
 @interface WPSelectVegetationView : WPView
+@property (nonatomic) WPAddVegetationTextField *addVegetationTextField;
 @property (nonatomic) UITableView *selectVegetationTableView;
 @end

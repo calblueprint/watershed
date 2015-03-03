@@ -1,14 +1,14 @@
 package com.blueprint.watershed.Utilities;
 
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+
+import com.blueprint.watershed.Tasks.TaskFragment;
 
 /**
  * Created by Max on 10/19/2014.
  */
-
-import com.blueprint.watershed.Tasks.TaskFragment;
 
 public class TabsPagerAdapter extends FragmentPagerAdapter {
 

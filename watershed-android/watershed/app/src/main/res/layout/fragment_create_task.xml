@@ -1,141 +1,100 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.blueprint.watershed.Tasks.CreateTaskFragment">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_margin="@dimen/standard_margin"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         >
-        <LinearLayout
+
+        <EditText
+            style="@style/FormEditText"
+            android:id="@+id/create_task_title"
+            android:hint="@string/title"
+            android:layout_marginTop="20dp"
+        />
+
+        <EditText
+            style="@style/FormEditText"
+            android:id="@+id/create_task_due_date"
+            android:layout_below="@id/create_task_title"
+            android:hint="@string/task_due_date"
+        />
+
+        <EditText
+            style="@style/FormEditText"
+            android:id="@+id/create_task_site"
+            android:hint="@string/site"
+            android:layout_below="@id/create_task_due_date"
+        />
+
+        <EditText
+            style="@style/FormEditText"
+            android:id="@+id/create_task_assignee"
+            android:layout_below="@id/create_task_site"
+            android:hint="@string/assignee"
+        />
+
+
+        <EditText
+            style="@style/FormEditText"
+            android:id="@+id/create_task_description"
+            android:layout_below="@id/create_task_assignee"
+            android:hint="@string/description"
+            android:lines="4"
+        />
+
+        <RelativeLayout
+            android:id="@+id/create_task_urgent_container"
             android:layout_width="fill_parent"
-            android:layout_height="@dimen/button_standard_height"
-            android:gravity="bottom" >
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/create_task_description">
+
+            <View
+                android:id="@+id/create_task_divider"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_centerInParent="true"/>
 
             <TextView
-                style="@style/WsLabel"
-                android:text="@string/title"
-                />
-            <EditText
-                android:id="@+id/create_task_title"
-                android:hint="Required"
-
-                android:layout_width="0px"
-                android:layout_height="@dimen/button_standard_height"
-                android:layout_weight="3"
-                android:text=""/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/button_standard_height"
-            android:gravity="bottom" >
-
-            <TextView
-                style="@style/WsLabel"
-                android:text="@string/task_due_date"
-                />
-            <EditText
-                android:id="@+id/create_task_due_date"
-                android:hint="Required"
-                android:layout_width="0px"
-                android:layout_height="@dimen/button_standard_height"
-                android:layout_weight="3"
-                android:text=""/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/button_standard_height">
-         <TextView
-             style="@style/WsLabel"
-             android:text = "@string/urgent"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/create_task_divider"
+                android:layout_marginRight="10dp"
+                android:layout_centerVertical="true"
+                android:text="@string/urgent"
+                android:textColor="@color/form_gray"
+                android:textSize="20sp"/>
 
             <Switch
                 android:id="@+id/field_report_urgent"
-                android:textOn="@string/urgent"
-                android:textOff="@string/not_urgent"
-                android:layout_weight="3"
-                android:layout_width="0px"
-                android:layout_height="16dp" />
-        </LinearLayout>
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:layout_toRightOf="@id/create_task_divider"
+                android:layout_marginLeft="10dp"
+                android:textOn="@string/yes"
+                android:textOff="@string/no"
+                 />
+        </RelativeLayout>
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/button_standard_height"
-            android:gravity="bottom" >
-
-            <TextView
-                style="@style/WsLabel"
-                android:text="@string/site"
-                />
-            <EditText
-                android:id="@+id/create_task_site"
-                android:hint="Required"
-                android:layout_width="0px"
-                android:layout_height="@dimen/button_standard_height"
-                android:layout_weight="3"
-                android:text=""/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/button_standard_height"
-            android:gravity="bottom" >
-
-            <TextView
-                style="@style/WsLabel"
-                android:text="@string/assignee"
-                />
-            <EditText
-                android:id="@+id/create_task_assignee"
-                android:layout_width="0px"
-                android:hint="Required"
-
-                android:layout_height="@dimen/button_standard_height"
-                android:layout_weight="3"
-                android:text=""/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            >
-
-            <TextView
-                style="@style/WsLabel"
-                android:gravity="bottom"
-                android:layout_height="@dimen/button_standard_height"
-                android:text="@string/description"
-                />
-            <EditText
-                android:id="@+id/create_task_description"
-                android:hint="Required"
-                android:gravity="bottom"
-                android:layout_width="0px"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:lines="4"
-                android:text=""
-                />
-        </LinearLayout>
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:gravity="bottom">
+            android:layout_below="@id/create_task_urgent_container"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="20dp">
 
             <Button
                 android:id="@+id/create_task_submit"
                 android:layout_width="fill_parent"
                 android:background="@color/ws_blue"
                 android:textColor="@color/white"
-                android:text="Create Task"
+                android:text="@string/create_task_submit"
                 android:layout_height="96dp" />
-        </LinearLayout>
-
-        </LinearLayout>
-
-
-</FrameLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

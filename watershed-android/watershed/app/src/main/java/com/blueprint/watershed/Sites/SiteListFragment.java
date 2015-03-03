@@ -93,7 +93,10 @@ public class SiteListFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.create_task_menu, menu);
+        menu.clear();
+        inflater.inflate(R.menu.site_list_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+
     }
 
     public void getSitesRequest() {

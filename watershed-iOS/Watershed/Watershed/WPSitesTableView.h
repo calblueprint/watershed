@@ -10,5 +10,5 @@
 #import "WPView.h"
 
 @interface WPSitesTableView : UITableView
-
+- (void)stopIndicator;
 @end

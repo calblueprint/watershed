@@ -11,9 +11,9 @@
 #import "WPSelectVegetationTableViewCell.h"
 #import "UIExtensions.h"
 
-@interface WPSelectVegetationViewController ()
+@interface WPSelectVegetationViewController () <UITextFieldDelegate>
 @property (nonatomic) WPSelectVegetationView *view;
-@property (nonatomic) NSArray *vegetationList;
+@property (nonatomic) UITextField *addVegetationTextField;
 @end
 
 @implementation WPSelectVegetationViewController
@@ -30,12 +30,18 @@ static NSString *cellIdentifier = @"VegetationCell";
     self.view.selectVegetationTableView.delegate = self;
     self.view.selectVegetationTableView.dataSource = self;
     
+    // Set up Add Vegetation Text Field Response
+    self.addVegetationTextField = self.view.addVegetationTextField.textField;
+    self.addVegetationTextField.delegate = self;
+    [self.view.addVegetationTextField.addButton addTarget:self
+                                                   action:@selector(addVegetation)
+                                         forControlEvents:UIControlEventTouchUpInside];
+    
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                                                 target:self
                                                                                 action:@selector(finishSelecting)];
-    self.navigationItem.rightBarButtonItem = doneButton;
     
-    self.vegetationList = @[@"Tree", @"Plant", @"Bioswale", @"Mark Miyashita", @"Dog", @"Cup", @"Tree", @"Flower", @"Tree", @"Plant", @"Bioswale", @"Mark Miyashita", @"Dog", @"Cup", @"Tree", @"Flower"];
+    self.navigationItem.rightBarButtonItem = doneButton;
 }
 
 #pragma mark - Table View Delegate / Data Source Methods
@@ -54,8 +60,8 @@ static NSString *cellIdentifier = @"VegetationCell";
     return [WPSelectVegetationTableViewCell cellHeight];
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+
     WPSelectVegetationTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 
     if (!cell) {
@@ -63,14 +69,60 @@ static NSString *cellIdentifier = @"VegetationCell";
     }
     cell.textLabel.text = self.vegetationList[indexPath.row];
     
-    if ([self.selectedIndices containsObject:@(indexPath.row)]) {
+    NSNumber *currentRow = @(indexPath.row);
+    if (self.initialSelectedIndices.count && [self.initialSelectedIndices containsObject:currentRow]) {
         [self.view.selectVegetationTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+        // Remove selected Index to prevent object from reselecting itself during reuse
+        [self.initialSelectedIndices removeObject:currentRow];
     }
     
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self dismissKeyboard];
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self dismissKeyboard];
+}
+
+#pragma mark - ScrollView Delegate Methods
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self dismissKeyboard];
+}
+
+#pragma mark - TextField Delegate Methods
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [self addVegetation];
+    return NO;
+}
+
 #pragma mark - Private Methods
+
+- (void)dismissKeyboard {
+    [self.addVegetationTextField resignFirstResponder];
+}
+
+- (void)addVegetation {
+    NSString *vegetation = self.addVegetationTextField.text;
+    self.addVegetationTextField.text = @"";
+    
+    if (vegetation.length) {
+        [self dismissKeyboard];
+        [self.vegetationList insertObject:vegetation atIndex:0];
+        NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        [self.view.selectVegetationTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+                                                   withRowAnimation:UITableViewRowAnimationTop];
+        [self.view.selectVegetationTableView selectRowAtIndexPath:newIndexPath
+                                                         animated:YES
+                                                   scrollPosition:UITableViewScrollPositionTop];
+    } else {
+        [self.addVegetationTextField becomeFirstResponder];
+    }
+}
 
 - (void)finishSelecting {
     [self getSelectedVegetation];
@@ -81,22 +133,22 @@ static NSString *cellIdentifier = @"VegetationCell";
     NSArray *selectedRows = [self.view.selectVegetationTableView indexPathsForSelectedRows];
     NSMutableArray *selectedIndices = [[NSMutableArray alloc] init];
     NSMutableArray *selectedVegetations = [[NSMutableArray alloc] init];
-    
+
     for (NSIndexPath *index in selectedRows) {
         [selectedIndices addObject:@(index.row)];
         NSString *selectedItem = self.vegetationList[index.row];
         [selectedVegetations addObject:selectedItem];
     }
-    [self.delegate vegetationFinishedSelecting:selectedVegetations withIndices:selectedIndices];
+    [self.delegate vegetationFinishedSelectingFromList:self.vegetationList vegetations:selectedVegetations indices:selectedIndices];
 }
 
 #pragma mark - Lazy Instantiation
 
-- (NSArray *)selectedIndices {
-    if (!_selectedIndices) {
-        _selectedIndices = [[NSArray alloc] init];
+- (NSMutableArray *)selectedIndices {
+    if (!_initialSelectedIndices) {
+        _initialSelectedIndices = [[NSMutableArray alloc] init];
     }
-    return _selectedIndices;
+    return _initialSelectedIndices;
 }
 
 @end
