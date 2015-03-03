@@ -33,8 +33,8 @@
     self.navigationItem.title = @"Add Field Report";
     self.view.fieldReportTableView.delegate = self;
     self.view.fieldReportTableView.dataSource = self;
-    [self.view.addPhotoButton addTarget:self action:@selector(addPhotoButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view.viewImageButton addTarget:self action:@selector(viewImageButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view.addPhotoButton addTarget:self action:@selector(addPhotoButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view.viewImageButton addTarget:self action:@selector(viewImageButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view.urgentSwitch addTarget:self action:@selector(changeSwitch:) forControlEvents:UIControlEventValueChanged];
     UIBarButtonItem *saveButton = [[UIBarButtonItem alloc]
                                    initWithTitle:@"Save"
@@ -43,14 +43,16 @@
                                    action:@selector(saveForm)];
     self.navigationItem.rightBarButtonItem = saveButton;
     self.view.fieldDescription.delegate = self;
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self
-                                                                         action:@selector(dismissKeyboard)];
-    [self.view addGestureRecognizer:tap];
+//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self
+//                                                                         action:@selector(dismissKeyboard)];
+    [self.imageInputCell.viewImageButton addTarget:self action:@selector(presentImageView) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addGestureRecognizer:tap];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
+
 
 - (void)changeSwitch:(UISwitch *)sender {
     if ([sender isOn]) {
@@ -95,7 +97,7 @@
 //        taskId = parent.taskId;
 //        miniSiteId = parent.miniSiteId;
     }
-    NSString *photo = [UIImagePNGRepresentation([self compressForUpload:self.view.selectedImageView.image withScale:0.2]) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];;
+    NSString *photo = [UIImagePNGRepresentation([self compressForUpload:self.imageInputCell.imageInputView.image withScale:0.2]) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
 
     NSDictionary *staticParameters = @{@"field_report": @{
                                          @"user_id": userId,
@@ -128,26 +130,29 @@
     return compressedImage;
 }
 
-- (void)viewImageButtonAction:(UIButton *)sender {
-    self.viewPhotoModal = [[UIViewController alloc] init];
-    self.viewPhotoModal.view.backgroundColor = [UIColor blackColor];
-    self.viewPhotoModal.view.userInteractionEnabled = YES;
+#pragma mark - Photo Viewing Methods
 
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.viewPhotoModal.view.frame];
+- (void)presentImageView {
+    UIViewController *viewPhotoModal = [[UIViewController alloc] init];
+    viewPhotoModal.view.backgroundColor = [UIColor blackColor];
+    viewPhotoModal.view.userInteractionEnabled = YES;
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:viewPhotoModal.view.frame];
     imageView.contentMode = UIViewContentModeScaleAspectFit;
-    imageView.image = self.view.selectedImageView.image;
-
-    [self.viewPhotoModal.view addSubview:imageView];
-
-    UITapGestureRecognizer *modalTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissModalView)];
-    [self.viewPhotoModal.view addGestureRecognizer:modalTap];
-    self.viewPhotoModal.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-
-    [self presentViewController:self.viewPhotoModal animated:YES completion:nil];
+    imageView.image = self.imageInputCell.imageInputView.image;
+    [viewPhotoModal.view addSubview:imageView];
+    
+    UITapGestureRecognizer *modalTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissModalView:)];
+    [viewPhotoModal.view addGestureRecognizer:modalTap];
+    viewPhotoModal.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+    [self presentViewController:viewPhotoModal animated:YES completion:nil];
 }
 
-- (void)dismissModalView {
-    [self.viewPhotoModal dismissViewControllerAnimated:YES completion:nil];
+- (void)dismissModalView:(UIGestureRecognizer *)sender {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)setBlurredImage {
@@ -155,12 +160,15 @@
     self.view.selectedImageView.image = self.view.blurredImage;
 }
 
-- (void)addPhotoButtonAction:(UIButton *)sender {
+- (void)addPhotoButtonAction {
     if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
         UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
                                 @"Take Photo",
                                 @"Choose Existing",
                                 nil];
+        if (self.imageInputCell.imageInputView.image) {
+            popup.destructiveButtonIndex = [popup addButtonWithTitle:@"Remove Photo"];
+        }
         popup.tag = 1;
         [popup showInView:[UIApplication sharedApplication].keyWindow];
     } else {
@@ -193,6 +201,18 @@
                                      [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
 
                                  }];
+        if (self.imageInputCell.imageInputView.image) {
+            UIAlertAction *remove = [UIAlertAction
+                                     actionWithTitle:@"Remove Photo"
+                                     style:UIAlertActionStyleDestructive
+                                     handler:^(UIAlertAction * action)
+                                     {
+                                         self.imageInputCell.imageInputView.image = nil;
+                                         self.imageInputCell.viewImageButton.alpha = 0;
+                                         [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
+                                     }];
+            [addPhotoActionSheet addAction:remove];
+        }
 
 
         [addPhotoActionSheet addAction:takePhoto];
@@ -202,19 +222,21 @@
     }
 }
 
+#pragma mark - ActionSheet Delegate Methods
+
 - (void)actionSheet:(UIActionSheet *)popup
 clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSInteger buttonShift = popup.numberOfButtons - 3;
     switch (popup.tag) {
         case 1: {
-            switch (buttonIndex) {
-                case 0:
-                    [self takePhoto];
-                    break;
-                case 1:
-                    [self chooseExisting];
-                    break;
-                default:
-                    break;
+            if (buttonIndex == popup.destructiveButtonIndex && buttonShift == 1) {
+                self.imageInputCell.imageInputView.image = nil;
+                self.imageInputCell.viewImageButton.alpha = 0;
+            }
+            else if (buttonIndex == 0 + buttonShift) {
+                [self takePhoto];
+            } else if (buttonIndex == 1 + buttonShift) {
+                [self chooseExisting];
             }
             break;
         }
@@ -309,6 +331,9 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
             descriptionView.font = [UIFont systemFontOfSize:12];
             break;            break;
         }
+        case 3: {
+            return self.imageInputCell;
+        }
         default: {
             //do nothing
         }
@@ -317,26 +342,23 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:NO];
-}
+    NSLog(@"HELLO>????");
+    if (indexPath.row == 3) {
+        [self addPhotoButtonAction];
+    }
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];}
 
 
 #pragma mark - Image Picker Controller delegate methods
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    self.view.selectedImageView.image = info[UIImagePickerControllerOriginalImage];
-    //    UIImage *chosenImage = info[UIImagePickerControllerOriginalImage];
-    //    self.view.originalImage = chosenImage;
-    //    [self setBlurredImage];
-    [picker dismissViewControllerAnimated:YES completion:^{
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    }];
+    self.imageInputCell.imageInputView.image = info[UIImagePickerControllerOriginalImage];
+    self.imageInputCell.viewImageButton.alpha = 1;
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [picker dismissViewControllerAnimated:YES completion:^{
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    }];
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Text Field delegate methods
@@ -347,6 +369,16 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
         return NO;
     }
     return YES;
+}
+
+#pragma mark - Lazy Instantiation
+
+- (WPCreateMiniSiteImageTableViewCell *) imageInputCell {
+    if (!_imageInputCell) {
+        _imageInputCell = [[WPCreateMiniSiteImageTableViewCell alloc] init];
+        _imageInputCell.inputLabel.text = @"Photo";
+    }
+    return _imageInputCell;
 }
 
 

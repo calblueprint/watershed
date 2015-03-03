@@ -59,38 +59,38 @@ int highestRating = 5;
         tableView;
     }) wp_addToSuperview:self];
     
-    _selectedImageView = [({
-//        _originalImage = [UIImage imageNamed:@"SampleCoverPhoto"];
-//        UIImageView *imageView = [[UIImageView alloc] initWithImage:_originalImage];
-        UIImageView *imageView = [[UIImageView alloc] init];
-        imageView;
-    }) wp_addToSuperview:self];
+//    _selectedImageView = [({
+////        _originalImage = [UIImage imageNamed:@"SampleCoverPhoto"];
+////        UIImageView *imageView = [[UIImageView alloc] initWithImage:_originalImage];
+//        UIImageView *imageView = [[UIImageView alloc] init];
+//        imageView;
+//    }) wp_addToSuperview:self];
     
-    _blackOverlay = [({
-        UIView *blackOverlay = [[UIView alloc] init];
-        blackOverlay.backgroundColor = [UIColor blackColor];
-        blackOverlay.alpha = 0.3;
-        blackOverlay;
-    }) wp_addToSuperview:self];
+//    _blackOverlay = [({
+//        UIView *blackOverlay = [[UIView alloc] init];
+//        blackOverlay.backgroundColor = [UIColor blackColor];
+//        blackOverlay.alpha = 0.3;
+//        blackOverlay;
+//    }) wp_addToSuperview:self];
 
-    _urgentLabel = [({
-        UILabel *urgentLabel = [[UILabel alloc] init];
-        urgentLabel.text = @"Urgent?";
-        urgentLabel.textColor = [UIColor whiteColor];
-        urgentLabel;
-    }) wp_addToSuperview:self];
+//    _urgentLabel = [({
+//        UILabel *urgentLabel = [[UILabel alloc] init];
+//        urgentLabel.text = @"Urgent?";
+//        urgentLabel.textColor = [UIColor whiteColor];
+//        urgentLabel;
+//    }) wp_addToSuperview:self];
+//
+//    _urgentSwitch = [({
+//        UISwitch *urgent = [[UISwitch alloc] init];
+//        urgent;
+//    }) wp_addToSuperview:self];
 
-    _urgentSwitch = [({
-        UISwitch *urgent = [[UISwitch alloc] init];
-        urgent;
-    }) wp_addToSuperview:self];
-
-    _ratingLabel = [({
-        UILabel *ratingLabel = [[UILabel alloc] init];
-        ratingLabel.text = @"Rating";
-        ratingLabel.textColor = [UIColor whiteColor];
-        ratingLabel;
-    }) wp_addToSuperview:self];
+//    _ratingLabel = [({
+//        UILabel *ratingLabel = [[UILabel alloc] init];
+//        ratingLabel.text = @"Rating";
+//        ratingLabel.textColor = [UIColor whiteColor];
+//        ratingLabel;
+//    }) wp_addToSuperview:self];
 
     _rating1 = [[UIButton alloc] init];
     _rating2 = [[UIButton alloc] init];
@@ -235,28 +235,28 @@ int highestRating = 5;
 //        make.width.equalTo(@(WPRatingButtonHeight));
 //    }];
     
-    
-    [self.selectedImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(topMargin));
-        make.bottom.equalTo(@0);
-        make.leading.equalTo(@0);
-        make.trailing.equalTo(@0);
-    }];
-
-    [self.addPhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(@0);
-        make.height.equalTo(@(WPPhotoButtonHeight));
-        make.leading.equalTo(@0);
-        make.trailing.equalTo(self.mas_centerX);
-    }];
-    
-    [self.viewImageButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(@0);
-        make.leading.equalTo(self.addPhotoButton.mas_right);
-        make.height.equalTo(@(WPPhotoButtonHeight));
-        make.trailing.equalTo(@0);
-        
-    }];
+//    
+//    [self.selectedImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(@(topMargin));
+//        make.bottom.equalTo(@0);
+//        make.leading.equalTo(@0);
+//        make.trailing.equalTo(@0);
+//    }];
+//
+//    [self.addPhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.bottom.equalTo(@0);
+//        make.height.equalTo(@(WPPhotoButtonHeight));
+//        make.leading.equalTo(@0);
+//        make.trailing.equalTo(self.mas_centerX);
+//    }];
+//    
+//    [self.viewImageButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.bottom.equalTo(@0);
+//        make.leading.equalTo(self.addPhotoButton.mas_right);
+//        make.height.equalTo(@(WPPhotoButtonHeight));
+//        make.trailing.equalTo(@0);
+//        
+//    }];
     
 //    [self.blackOverlay mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.top.equalTo(@(topMargin));
