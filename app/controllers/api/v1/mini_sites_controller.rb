@@ -33,7 +33,7 @@ class Api::V1::MiniSitesController < Api::V1::BaseController
                                       :street, :city, :state,
                                       :zip_code, :latitude, :longitude,
                                       :site_id, {
-                                        photos_attributes: [
+                                        photos: [
                                           :id,
                                           :image,
                                         ],
@@ -42,8 +42,10 @@ class Api::V1::MiniSitesController < Api::V1::BaseController
 
   def convert_base64_to_images
     # TODO(mark): Consider making this a helper function for all models
-    params[:mini_site][:photos_attributes].each do |attributes|
-      attributes[:image] = Photo.convert_base64(attributes[:data])
+    unless params[:mini_site][:photos].blank?
+      params[:mini_site][:photos].each do |attributes|
+        attributes[:image] = Photo.convert_base64(attributes[:data])
+      end
     end
   end
 
