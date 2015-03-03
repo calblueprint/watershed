@@ -86,4 +86,31 @@ public class Site implements APIObject {
     public void setLongitude(String longitude) { mLongitude = longitude; }
     public void setTasksCount(Integer tasksCount) { mTasksCount = tasksCount; }
     public void setMiniSitesCount(Integer miniSitesCount) { mMiniSitesCount = miniSitesCount; }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || !(object instanceof Site)) return false;
+        Site site = (Site) object;
+        if (!getId().equals(site.getId()) ||
+            !getName().equals(site.getName()) ||
+            !getDescription().equals(site.getDescription()) ||
+            !getStreet().equals(site.getStreet()) ||
+            !getCity().equals(site.getCity()) ||
+            !getState().equals(site.getState()) ||
+            !getZipCode().equals(site.getZipCode()) ||
+            !getLatitude().equals(site.getLatitude()) ||
+            !getLongitude().equals(site.getLongitude()) ||
+            !getTasksCount().equals(site.getTasksCount()) ||
+            !getMiniSitesCount().equals(site.getMiniSitesCount()) ||
+            getPhotos().size() != site.getPhotos().size() ||
+            getMiniSites().size() != site.getMiniSites().size()) return false;
+        for (int i = 0; i < getPhotos().size(); i++) {
+            if (!getPhoto(i).getId().equals(site.getPhoto(i).getId())) return false;
+        }
+
+        for (int i = 0; i < getMiniSites().size(); i++) {
+            if (!getMiniSite(i).getId().equals(site.getMiniSite(i).getId())) return false;
+        }
+        return true;
+    }
 }

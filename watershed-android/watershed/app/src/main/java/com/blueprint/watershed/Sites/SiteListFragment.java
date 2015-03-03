@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
@@ -33,20 +34,20 @@ public class SiteListFragment extends Fragment {
     // Views
     private RecyclerView mSiteListView;
     private SwipeRefreshLayout mSwipeLayout;
+    private RelativeLayout mNoSiteLayout;
     
     private SiteListAdapter mAdapter;
-    private ArrayList<Site> mSites;
+    private SiteMapper mSites;
 
     public static SiteListFragment newInstance() { return new SiteListFragment(); }
 
 
-    public SiteListFragment() { mSites = new ArrayList<Site>(); }
+    public SiteListFragment() { mSites = new SiteMapper(); }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        Log.i("asdf", "ONCREATE");
         mParentActivity = (MainActivity) getActivity();
         mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
     }
@@ -56,8 +57,8 @@ public class SiteListFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_site_list, container, false);
         initializeViews(view);
-        mSwipeLayout.setRefreshing(true);
         getSitesRequest();
+        Log.i("ONCREATE", "ONCREATAE");
         return view;
     }
     
@@ -84,11 +85,15 @@ public class SiteListFragment extends Fragment {
                 getSitesRequest();
             }
         });
+
+        mNoSiteLayout = (RelativeLayout) mParentActivity.findViewById(R.id.no_site_layout);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        mSwipeLayout.setRefreshing(true);
+        getSitesRequest();
     }
 
     @Override
@@ -105,7 +110,10 @@ public class SiteListFragment extends Fragment {
             public void onResponse(ArrayList<Site> sites) {
                 setSites(sites);
                 if (getSites().size() == 0) hideList();
-                else mAdapter.notifyDataSetChanged();
+                else {
+                    showList();
+                    mAdapter.notifyDataSetChanged();
+                }
                 new CountDownTimer(1000, 1000) {
                     @Override
                     public void onTick(long timeLeft) {}
@@ -119,17 +127,31 @@ public class SiteListFragment extends Fragment {
     }
 
     // Getters
-    public ArrayList<Site> getSites() { return mSites; }
+    public SiteMapper getSites() { return mSites; }
 
     // Setters
     public void setSites(ArrayList<Site> sites) {
-        mSites.clear();
-        for (Site site : sites) {
-            mSites.add(site);
+        if (sites.size() != mSites.size()) {
+            mSites.setSites(sites);
+            mAdapter.notifyDataSetChanged();
+        } else {
+            for (int i = 0; i < sites.size(); i++) {
+                Site site = sites.get(i);
+                if (!site.equals(mSites.getSiteWithPosition(i))) {
+                    mSites.addSite(site, i);
+                    mAdapter.notifyItemChanged(i);
+                }
+            }
         }
     }
 
-    private void hideList() {
+    private void showList() {
+        mNoSiteLayout.setVisibility(View.GONE);
+        mSiteListView.setVisibility(View.VISIBLE);
+    }
 
+    private void hideList() {
+        mNoSiteLayout.setVisibility(View.VISIBLE);
+        mSiteListView.setVisibility(View.GONE);
     }
 }

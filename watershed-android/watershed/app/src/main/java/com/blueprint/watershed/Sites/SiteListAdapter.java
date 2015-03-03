@@ -14,8 +14,6 @@ import com.blueprint.watershed.R;
 import com.blueprint.watershed.Views.CircularTextView;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
 
-import java.util.ArrayList;
-
 /**
  * Created by Mark Miyashita on 10/14/14.
  * Adapter that holds all the sites.
@@ -25,7 +23,7 @@ public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHo
     MainActivity mParentActivity;
     Context context;
     int layoutResourceId;
-    ArrayList<Site> sites;
+    SiteMapper sites;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
@@ -44,7 +42,7 @@ public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHo
         }
     }
 
-    public SiteListAdapter(MainActivity mainActivity, int layoutResourceId, ArrayList<Site> sites) {
+    public SiteListAdapter(MainActivity mainActivity, int layoutResourceId, SiteMapper sites) {
         this.mParentActivity = mainActivity;
         this.layoutResourceId = layoutResourceId;
         this.context = mainActivity;
@@ -67,7 +65,7 @@ public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHo
         // - replace the contents of the view with that element
         Log.i("wat", "asdasdfasddddddddddddff");
         if (sites.size() > 0) {
-            final Site site = sites.get(position);
+            final Site site = sites.getSiteWithPosition(position);
             holder.photosView.configureWithPhotos(site.getPhotos());
             holder.numberOfTasksView.configureLabels(Integer.toString(site.getTasksCount()), "TASKS");
             holder.topLabel.setText(site.getName());
