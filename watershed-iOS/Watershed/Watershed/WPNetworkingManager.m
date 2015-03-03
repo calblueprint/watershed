@@ -460,6 +460,38 @@ static NSString * const PROMOTE_URL = @"promote";
     }];
 }
 
+- (void)editMiniSiteWithMiniSite:(WPMiniSite *)miniSite parameters:(NSMutableDictionary *)parameters success:(void (^)(WPMiniSite *miniSite))success {
+    NSString *miniSiteEndpoint = [@"/" stringByAppendingString:[miniSite.miniSiteId stringValue]];
+    NSString *MINI_SITE_URL = [MINI_SITES_URL stringByAppendingString:miniSiteEndpoint];
+    NSString *miniSiteString = [WPNetworkingManager createURLWithEndpoint:MINI_SITE_URL];
+
+    [self addAuthenticationParameters:parameters];
+    NSMutableDictionary *miniSiteJSON = [MTLJSONAdapter JSONDictionaryFromModel:miniSite].mutableCopy;
+    [miniSiteJSON setObject:miniSite.site.siteId forKey:@"site_id"];
+
+    //Pass photo attributes through parameters and then insert them into the miniSiteJSON
+    NSDictionary *photoAttributes = parameters[@"photos_attributes"];
+    [parameters removeObjectForKey:@"photos_attributes"];
+    [miniSiteJSON setObject:photoAttributes forKey:@"photos_attributes"];
+    [parameters setObject:miniSiteJSON forKey:@"mini_site"];
+
+    [self PUT:miniSiteString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *miniSiteJSON = (NSDictionary *)responseObject[@"mini_site"];
+        WPMiniSite *miniSiteResponse = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:miniSiteJSON error:nil];
+        miniSiteResponse.site = miniSite.site;
+        NSArray *photosListJSON = miniSiteJSON[@"photos"];
+        for (NSDictionary *photoJSON in photosListJSON) {
+            [miniSiteResponse.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];
+        }
+
+        success(miniSiteResponse);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not edit mini site." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
+}
+
 - (void)requestFieldReportWithFieldReport:(WPFieldReport *)fieldReport parameters:(NSMutableDictionary *)parameters success:(void (^)(WPFieldReport *fieldReport))success {
     NSString *fieldReportEndpoint = [@"/" stringByAppendingString:[fieldReport.fieldReportId stringValue]];
     NSString *FIELD_REPORT_URL = [FIELD_REPORTS_URL stringByAppendingString:fieldReportEndpoint];
