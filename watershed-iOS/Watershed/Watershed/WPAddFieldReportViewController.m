@@ -284,8 +284,11 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 2 || indexPath.row == 3) {
+    if (indexPath.row == 2) {
         return 120;
+    }
+    else if (indexPath.row == 3) {
+        return [WPCreateMiniSiteImageTableViewCell cellHeight];
     }
     else {
         return 44;

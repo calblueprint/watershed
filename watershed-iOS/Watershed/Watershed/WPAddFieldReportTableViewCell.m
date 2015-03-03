@@ -30,8 +30,8 @@ static const int labelWidth = 90;
 - (void)createSubviews {
     _label = [({
         UILabel *label = [[UILabel alloc] init];
-        label.textColor = [UIColor wp_header];
-        label.font = [UIFont boldSystemFontOfSize:16];
+//        label.textColor = [UIColor wp_header];
+        label.font = [UIFont systemFontOfSize:13.0];
         label;
     }) wp_addToSuperview:self.contentView];
 }
