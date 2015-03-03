@@ -68,6 +68,7 @@ public class SiteListFragment extends Fragment {
     }
     
     private void initializeViews(View view) {
+        mNoSiteLayout = (RelativeLayout) view.findViewById(R.id.no_site_layout);
         mLayoutManager = new LinearLayoutManager(mParentActivity);
         mSiteListView = (RecyclerView) view.findViewById(R.id.list);
         mSiteListView.setLayoutManager(mLayoutManager);
@@ -85,8 +86,6 @@ public class SiteListFragment extends Fragment {
                 getSitesRequest();
             }
         });
-
-        mNoSiteLayout = (RelativeLayout) mParentActivity.findViewById(R.id.no_site_layout);
     }
 
     @Override

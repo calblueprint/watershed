@@ -2,7 +2,6 @@ package com.blueprint.watershed.Sites;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +62,6 @@ public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        Log.i("wat", "asdasdfasddddddddddddff");
         if (sites.size() > 0) {
             final Site site = sites.getSiteWithPosition(position);
             holder.photosView.configureWithPhotos(site.getPhotos());
@@ -86,50 +84,4 @@ public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHo
     public int getItemCount() {
         return sites.size() + 1;
     }
-
-//    @Override
-//    public View getView(int position, View convertView, ViewGroup parent) {
-//        View row = convertView;
-//        SiteHolder holder;
-//
-//        if (row == null) {
-//            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-//            row = inflater.inflate(layoutResourceId, parent, false);
-//
-//            holder = new SiteHolder();
-//            holder.photosView = (CoverPhotoPagerView) row.findViewById(R.id.cover_photo_pager_view);
-//            holder.numberOfTasksView = (CircularTextView) row.findViewById(R.id.number_of_tasks_view);
-//            holder.topLabel = (TextView) row.findViewById(R.id.top_label);
-//            holder.bottomLabel = (TextView) row.findViewById(R.id.bottom_label);
-//            row.setTag(holder);
-//        } else {
-//            holder = (SiteHolder)row.getTag();
-//        }
-//
-//        final Site site = sites.get(position);
-//
-//        holder.photosView.configureWithPhotos(site.getPhotos());
-//        holder.numberOfTasksView.configureLabels(Integer.toString(site.getTasksCount()), "TASKS");
-//        holder.topLabel.setText(site.getName());
-//        holder.bottomLabel.setText(String.format("%s Sites", site.getMiniSitesCount()));
-//
-//        row.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                SiteFragment siteFragment = new SiteFragment();
-//                siteFragment.configureWithSite(site);
-//
-//                mParentActivity.replaceFragment(siteFragment);
-//            }
-//        });
-//
-//        return row;
-//    }
-
-//    static class SiteHolder {
-//        CoverPhotoPagerView photosView;
-//        CircularTextView numberOfTasksView;
-//        TextView topLabel;
-//        TextView bottomLabel;
-//    }
 }
