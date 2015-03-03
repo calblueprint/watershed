@@ -2,32 +2,26 @@ package com.blueprint.watershed.MiniSites;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.support.v4.app.Fragment;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RadioGroup;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Networking.MiniSites.CreateMiniSiteRequest;
 import com.blueprint.watershed.Networking.NetworkManager;
-import com.blueprint.watershed.Photos.Photo;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Sites.Site;
 import com.blueprint.watershed.Sites.SiteListFragment;
-import com.blueprint.watershed.Users.User;
 
 import org.json.JSONObject;
 
@@ -55,6 +49,7 @@ public class CreateMiniSiteFragment extends Fragment implements View.OnClickList
     private EditText mStateField;
     private EditText mDescriptionField;
 
+    private Site mSite;
 
     // Camera Stuff
     private static final int CAMERA_REQUEST = 1337;
@@ -66,12 +61,13 @@ public class CreateMiniSiteFragment extends Fragment implements View.OnClickList
      *
      * @return A new instance of fragment CreateMiniSiteFragment.
      */
-    public static CreateMiniSiteFragment newInstance() {
+    public static CreateMiniSiteFragment newInstance(Site site) {
         CreateMiniSiteFragment fragment = new CreateMiniSiteFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
+        fragment.setSite(site);
         return fragment;
     }
+
+    public void setSite(Site site) { mSite = site; }
 
     public CreateMiniSiteFragment() {
         // Required empty public constructor
@@ -182,6 +178,8 @@ public class CreateMiniSiteFragment extends Fragment implements View.OnClickList
         CreateMiniSiteRequest createMiniSiteRequest = new CreateMiniSiteRequest(getActivity(), miniSite, params, new Response.Listener<MiniSite>() {
             @Override
             public void onResponse(MiniSite miniSite) {
+                SiteListFragment siteList = SiteListFragment.newInstance();
+                mMainActivity.replaceFragment(siteList);
                 Log.e("successful mini site", "creation");
             }
         });
@@ -206,11 +204,9 @@ public class CreateMiniSiteFragment extends Fragment implements View.OnClickList
         miniSite.setLongitude("0");
         miniSite.setFieldReportsCount(0);
         miniSite.setState("CA");
+        miniSite.setSiteId(mSite.getId());
 
         createMiniSiteRequest(miniSite);
-
-        SiteListFragment siteList = SiteListFragment.newInstance();
-        mMainActivity.replaceFragment(siteList);
     }
 
     @Override
