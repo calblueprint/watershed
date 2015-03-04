@@ -26,7 +26,6 @@
 @property (nonatomic) UITextField *zipCodeTextField;
 @property (nonatomic) UITextView *descriptionTextView;
 
-- (void)saveAndDismissSelf;
 - (void)dismissSelf;
 - (void)updateServerWithSite:(WPSite *)site;
 

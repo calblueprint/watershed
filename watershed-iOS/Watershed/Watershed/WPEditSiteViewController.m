@@ -17,22 +17,9 @@
 }
 
 // Override
-- (void)saveAndDismissSelf {
-    NSDictionary *siteJSON = @{
-                               @"name" : self.nameTextField.text,
-                               @"street" : self.streetTextField.text,
-                               @"city" : self.cityTextField.text,
-                               @"state" : self.stateTextField.text,
-                               @"zip_code" : self.zipCodeTextField.text,
-                               @"description" : self.descriptionTextView.text
-                               };
-    WPSite *newSite = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:siteJSON error:nil];
-    newSite.siteId = self.site.siteId;
-    [self updateServerWithSite:newSite];
-}
-
-// Override
 - (void)updateServerWithSite:(WPSite *)site {
+    site.siteId = self.site.siteId;
+
     // Don't request the list of sites, because it is already called in the ViewController's viewWillAppear
     __weak __typeof(self)weakSelf = self;
     [[WPNetworkingManager sharedManager] editSiteWithSite:site parameters:[[NSMutableDictionary alloc] init] success:^{
