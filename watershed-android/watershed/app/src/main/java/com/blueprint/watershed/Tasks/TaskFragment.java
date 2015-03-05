@@ -11,7 +11,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.ExpandableListView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
@@ -22,11 +22,16 @@ import com.blueprint.watershed.R;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
-public class TaskFragment extends ListFragment {
+public class TaskFragment extends ListFragment implements ExpandableListView.OnChildClickListener {
 
     private static final String OPTION = "option";
+
+    private static String INCOMPLETE = "Incomplete Tasks";
+    private static String COMPLETE = "Completed Tasks";
 
     private static int TASK_TYPE;
 
@@ -38,13 +43,14 @@ public class TaskFragment extends ListFragment {
     private MainActivity mParentActivity;
     private NetworkManager mNetworkManager;
 
-    private HashMap<Integer, Task> mAllTaskList;
-    private HashMap<Integer, Task> mUserTaskList;
+    private HashMap<String, List<Task>> mAllTaskList;
+    private HashMap<String, List<Task>> mUserTaskList;
+    private List<String> mTaskListHeaders;
     private TaskAdapter mAllTaskAdapter;
     private TaskAdapter mUserTaskAdapter;
     
 
-    private ListView mListView;
+    private ExpandableListView mListView;
     private Button mNoTasksRefresh;
     private SwipeRefreshLayout mSwipeLayout;
 
@@ -66,8 +72,10 @@ public class TaskFragment extends ListFragment {
         setHasOptionsMenu(true);
         mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
         mParentActivity = (MainActivity) getActivity();
-        mAllTaskList = new HashMap<Integer, Task>();
-        mUserTaskList = new HashMap<Integer, Task>();
+        mAllTaskList = new HashMap<String, List<Task>>();
+        mUserTaskList = new HashMap<String, List<Task>>();
+        String [] headers = { INCOMPLETE, COMPLETE };
+        mTaskListHeaders = Arrays.asList(headers);
         Bundle args = getArguments();
         if (args != null) TASK_TYPE = args.getInt(OPTION);
     }
@@ -84,12 +92,12 @@ public class TaskFragment extends ListFragment {
     /**
      * Initializes all the views in the fragment.
      * This includes the adapters, buttons, listview, etc.
-     * @param view
+     * @param view - Parent view
      */
     private void initializeViews(View view) {
-        mListView = (ListView) view.findViewById(android.R.id.list);
-        mAllTaskAdapter = new TaskAdapter(mParentActivity, mAllTaskList);
-        mUserTaskAdapter = new TaskAdapter(mParentActivity, mUserTaskList);
+        mListView = (ExpandableListView) view.findViewById(android.R.id.list);
+        mAllTaskAdapter = new TaskAdapter(mParentActivity, mTaskListHeaders, mAllTaskList);
+        mUserTaskAdapter = new TaskAdapter(mParentActivity, mTaskListHeaders, mUserTaskList);
 
         if (TASK_TYPE == USER) mListView.setAdapter(mUserTaskAdapter);
         else mListView.setAdapter(mAllTaskAdapter);
@@ -116,20 +124,24 @@ public class TaskFragment extends ListFragment {
     }
 
     /**
-     * Starts a new fragment for the corresponding task view
-     * @param l
-     * @param v
-     * @param position
-     * @param id
+     * Gets the clicked position
+     * @param parent - Listview
+     * @param v - View that was clicked
+     * @param groupPosition - Group that was clicked
+     * @param childPosition - Child that was clicked
+     * @param id - id of the view
+     * @return boolean of result
      */
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
+    public boolean onChildClick(ExpandableListView parent, View v,
+                             int groupPosition, int childPosition, long id) {
         Task taskClicked;
-        if (TASK_TYPE == USER) taskClicked = mUserTaskList.get(position);
-        else taskClicked = mAllTaskList.get(position);
+        if (TASK_TYPE == USER) taskClicked = mUserTaskList.get(mTaskListHeaders.get(groupPosition)).get(childPosition);
+        else taskClicked = mAllTaskList.get(mTaskListHeaders.get(groupPosition)).get(childPosition);
 
         TaskDetailFragment detailFragment = TaskDetailFragment.newInstance(taskClicked);
         mParentActivity.replaceFragment(detailFragment);
+        return true;
     }
 
     @Override
@@ -185,30 +197,33 @@ public class TaskFragment extends ListFragment {
 
     /**
      * Sets the tasks for all tasks list and user tasks lists
-     * @param tasks
+     * @param tasks - ArrayList of all tasks from server
      */
     private void setAllTasks(ArrayList<Task> tasks){
         mAllTaskList.clear();
-        ArrayList<Task> allFinishedTasks = new ArrayList<Task>();
-        ArrayList<Task> allUncompleteTasks = new ArrayList<Task>();
+        List<Task> allFinishedTasks = new ArrayList<Task>();
+        List<Task> allUncompleteTasks = new ArrayList<Task>();
         for (Task task : tasks){
             if (task.getComplete()) allFinishedTasks.add(task);
             else allUncompleteTasks.add(task);
         }
-        if
+        mAllTaskList.put(INCOMPLETE, allUncompleteTasks);
+        mAllTaskList.put(COMPLETE, allFinishedTasks);
     }
 
     private void setUserTasks(ArrayList<Task> tasks) {
         mUserTaskList.clear();
-        ArrayList<Task> allFinishedTasks = new ArrayList<Task>();
-        ArrayList<Task> allUncompleteTasks = new ArrayList<Task>();
+        List<Task> userFinishedTasks = new ArrayList<Task>();
+        List<Task> userUncompleteTasks = new ArrayList<Task>();
         int id = mParentActivity.getUserId();
         for (Task task : tasks){
-            mAllTaskList.add(task);
-            if (task.getAssigneeId() != null) {
-                if (task.getAssigneeId() == id) mUserTaskList.add(task);
+            if (task.getAssigneeId() == id) {
+                if (task.getComplete()) userFinishedTasks.add(task);
+                else userUncompleteTasks.add(task);
             }
         }
+        mUserTaskList.put(INCOMPLETE, userUncompleteTasks);
+        mUserTaskList.put(COMPLETE, userFinishedTasks);
     }
 
     /**

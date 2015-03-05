@@ -22,13 +22,14 @@ import java.util.List;
  */
 public class TaskAdapter extends BaseExpandableListAdapter {
 
-    private Context context;
+    private Context mContext;
     private List<String> mHeaders;
     private HashMap<String, List<Task>> mData;
 
-    public TaskAdapter(Context context, HashMap<String, List<Task>> data){
+    public TaskAdapter(Context context, List<String> headers, HashMap<String, List<Task>> data){
         super();
-        this.context = context;
+        mContext = context;
+        mHeaders = headers;
         mData = data;
     }
 
@@ -42,9 +43,9 @@ public class TaskAdapter extends BaseExpandableListAdapter {
     public long getChildId(int groupPosition, int childPosition) { return childPosition; }
 
     @Override
-    public Task getChild(int groupPosition, int childPosititon) {
+    public Task getChild(int groupPosition, int childPosition) {
         return mData.get(mHeaders.get(groupPosition))
-                    .get(childPosititon);
+                    .get(childPosition);
     }
 
     @Override
@@ -54,7 +55,7 @@ public class TaskAdapter extends BaseExpandableListAdapter {
         TaskHolder holder;
 
         if (row == null) {
-            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+            LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
             row = inflater.inflate(R.layout.task_list_row, parent, false);
 
             holder = new TaskHolder();
@@ -94,7 +95,7 @@ public class TaskAdapter extends BaseExpandableListAdapter {
         TaskHolder holder;
 
         if (row == null) {
-            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+            LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
             holder = new TaskHolder();
 
             row = inflater.inflate(R.layout.task_list_header, parent, false);
