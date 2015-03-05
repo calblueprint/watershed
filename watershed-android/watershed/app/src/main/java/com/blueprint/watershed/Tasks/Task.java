@@ -1,17 +1,11 @@
 package com.blueprint.watershed.Tasks;
 
-import android.util.Log;
-
 import com.blueprint.watershed.APIObject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.core.*;
-import java.io.File;
-import java.io.IOException;
+
 import java.util.Date;
-import org.json.JSONObject;
 
 /**
  * Object to represent Tasks in Watershed Project application
@@ -32,7 +26,11 @@ public class Task implements APIObject {
     private Date mUpdatedAt;
     private Date mCreatedAt;
 
-    public Task(){
+    public Task() {}
+
+    public Task(String name) {
+        super();
+        setTitle(name);
     }
 
     @JsonIgnore

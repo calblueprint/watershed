@@ -38,8 +38,8 @@ public class TaskFragment extends ListFragment {
     private MainActivity mParentActivity;
     private NetworkManager mNetworkManager;
 
-    private ArrayList<Task> mAllTaskList;
-    private ArrayList<Task> mUserTaskList;
+    private HashMap<Integer, Task> mAllTaskList;
+    private HashMap<Integer, Task> mUserTaskList;
     private TaskAdapter mAllTaskAdapter;
     private TaskAdapter mUserTaskAdapter;
     
@@ -66,8 +66,8 @@ public class TaskFragment extends ListFragment {
         setHasOptionsMenu(true);
         mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
         mParentActivity = (MainActivity) getActivity();
-        mAllTaskList = new ArrayList<Task>();
-        mUserTaskList = new ArrayList<Task>();
+        mAllTaskList = new HashMap<Integer, Task>();
+        mUserTaskList = new HashMap<Integer, Task>();
         Bundle args = getArguments();
         if (args != null) TASK_TYPE = args.getInt(OPTION);
     }
@@ -88,8 +88,8 @@ public class TaskFragment extends ListFragment {
      */
     private void initializeViews(View view) {
         mListView = (ListView) view.findViewById(android.R.id.list);
-        mAllTaskAdapter = new TaskAdapter(mParentActivity,R.layout.task_list_row, mAllTaskList);
-        mUserTaskAdapter = new TaskAdapter(mParentActivity,R.layout.task_list_row, mUserTaskList);
+        mAllTaskAdapter = new TaskAdapter(mParentActivity, mAllTaskList);
+        mUserTaskAdapter = new TaskAdapter(mParentActivity, mUserTaskList);
 
         if (TASK_TYPE == USER) mListView.setAdapter(mUserTaskAdapter);
         else mListView.setAdapter(mAllTaskAdapter);
@@ -166,10 +166,16 @@ public class TaskFragment extends ListFragment {
         TaskListRequest taskListRequest = new TaskListRequest(getActivity(), params, new Response.Listener<ArrayList<Task>>() {
             @Override
             public void onResponse(ArrayList<Task> tasks) {
-                setTasks(tasks);
+                if (tasks.size() > 0) {
+                    if (TASK_TYPE == USER) {
+                        setUserTasks(tasks);
+                        mUserTaskAdapter.notifyDataSetChanged();
+                    } else {
+                        setAllTasks(tasks);
+                        mAllTaskAdapter.notifyDataSetChanged();
+                    }
+                }
                 mParentActivity.getSpinner().setVisibility(View.GONE);
-                mAllTaskAdapter.notifyDataSetChanged();
-                mUserTaskAdapter.notifyDataSetChanged();
                 if (mSwipeLayout != null) mSwipeLayout.setRefreshing(false);
             }
         });
@@ -181,9 +187,21 @@ public class TaskFragment extends ListFragment {
      * Sets the tasks for all tasks list and user tasks lists
      * @param tasks
      */
-    private void setTasks(ArrayList<Task> tasks){
+    private void setAllTasks(ArrayList<Task> tasks){
         mAllTaskList.clear();
+        ArrayList<Task> allFinishedTasks = new ArrayList<Task>();
+        ArrayList<Task> allUncompleteTasks = new ArrayList<Task>();
+        for (Task task : tasks){
+            if (task.getComplete()) allFinishedTasks.add(task);
+            else allUncompleteTasks.add(task);
+        }
+        if
+    }
+
+    private void setUserTasks(ArrayList<Task> tasks) {
         mUserTaskList.clear();
+        ArrayList<Task> allFinishedTasks = new ArrayList<Task>();
+        ArrayList<Task> allUncompleteTasks = new ArrayList<Task>();
         int id = mParentActivity.getUserId();
         for (Task task : tasks){
             mAllTaskList.add(task);
