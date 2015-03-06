@@ -7,6 +7,7 @@
 //
 
 #import "WPEditMiniSiteViewController.h"
+#import "WPNetworkingManager.h"
 
 @implementation WPEditMiniSiteViewController
 
@@ -16,6 +17,18 @@
 
     [self.imageInputCell.imageInputView setImageWithURL:self.miniSite.imageURLs.firstObject];
     self.imageInputCell.viewImageButton.alpha = 1;
+}
+
+// Override
+- (void)updateServerWithMiniSite:(WPMiniSite *)miniSite parameters:(NSMutableDictionary *)parameters {
+    miniSite.miniSiteId = self.miniSite.miniSiteId;
+
+    __weak __typeof(self)weakSelf = self;
+    [[WPNetworkingManager sharedManager] editMiniSiteWithMiniSite:miniSite parameters:parameters success:^(WPMiniSite *miniSite) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        strongSelf.parent = nil;
+        [strongSelf dismissSelf];
+    }];
 }
 
 #pragma mark - Private Methods
