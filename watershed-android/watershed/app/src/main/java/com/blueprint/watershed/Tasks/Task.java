@@ -33,7 +33,6 @@ public class Task implements APIObject {
         setTitle(name);
     }
 
-    @JsonIgnore
     public Integer getId() {return mId;}
     public String getTitle() { return mTitle; }
     public String getDescription() { return mDescription; }
