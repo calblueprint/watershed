@@ -11,6 +11,7 @@
 #import "BSKeyboardControls.h"
 #import "WPCreateMiniSiteImageTableViewCell.h"
 #import "WPSelectVegetationViewController.h"
+#import "WPMiniSite.h"
 
 @interface WPCreateMiniSiteViewController : WPViewController<
     UITableViewDelegate,
@@ -31,7 +32,9 @@
 @property (nonatomic) UITextField *zipCodeTextField;
 @property (nonatomic) UITextView *descriptionTextView;
 @property (nonatomic) UITextField *vegetationTextField;
-
 @property (nonatomic) WPCreateMiniSiteImageTableViewCell *imageInputCell;
+
+- (void)dismissSelf;
+- (void)updateServerWithMiniSite:(WPMiniSite *)miniSite parameters:(NSMutableDictionary *)parameters;
 
 @end

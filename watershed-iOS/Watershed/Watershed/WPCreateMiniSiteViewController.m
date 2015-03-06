@@ -66,6 +66,7 @@
 }
 
 - (void)saveAndDismissSelf {
+
     if (!(self.nameTextField.text.length &&
           self.streetTextField.text.length &&
           self.cityTextField.text.length &&
@@ -92,18 +93,22 @@
 
         self.navigationItem.rightBarButtonItem.enabled = NO;
 
-        __weak __typeof(self)weakSelf = self;
-        [[WPNetworkingManager sharedManager] createMiniSiteWithMiniSite:miniSite parameters:parameters success:^(WPMiniSite *miniSite) {
-            __strong __typeof(weakSelf)strongSelf = weakSelf;
-            strongSelf.parent = nil;
-            [strongSelf dismissSelf];
-        }];
+        [self updateServerWithMiniSite:miniSite parameters:parameters];
     }
 }
 
 - (void)presentErrorAlert {
     UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Cannot leave fields blank." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [incorrect show];
+}
+
+- (void)updateServerWithMiniSite:(WPMiniSite *)miniSite parameters:(NSMutableDictionary *)parameters {
+    __weak __typeof(self)weakSelf = self;
+    [[WPNetworkingManager sharedManager] createMiniSiteWithMiniSite:miniSite parameters:parameters success:^(WPMiniSite *miniSite) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        strongSelf.parent = nil;
+        [strongSelf dismissSelf];
+    }];
 }
 
 - (UIImage *)compressForUpload:(UIImage *)original withScale:(CGFloat)scale {
