@@ -22,6 +22,7 @@
 // Override
 - (void)updateServerWithMiniSite:(WPMiniSite *)miniSite parameters:(NSMutableDictionary *)parameters {
     miniSite.miniSiteId = self.miniSite.miniSiteId;
+    miniSite.site = self.miniSite.site;
 
     __weak __typeof(self)weakSelf = self;
     [[WPNetworkingManager sharedManager] editMiniSiteWithMiniSite:miniSite parameters:parameters success:^(WPMiniSite *miniSite) {
