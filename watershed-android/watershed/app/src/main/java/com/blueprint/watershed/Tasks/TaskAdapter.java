@@ -34,7 +34,10 @@ public class TaskAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public int getChildrenCount(int groupPosition) { return mData.get(mHeaders.get(groupPosition)).size(); }
+    public int getChildrenCount(int groupPosition) {
+        List<Task> tasks = mData.get(mHeaders.get(groupPosition));
+        return tasks == null ? 0 : tasks.size();
+    }
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) { return true; }
@@ -108,6 +111,7 @@ public class TaskAdapter extends BaseExpandableListAdapter {
 
         String taskHeader = getGroup(groupPosition);
         holder.title.setText(taskHeader);
+
         return row;
     }
 
