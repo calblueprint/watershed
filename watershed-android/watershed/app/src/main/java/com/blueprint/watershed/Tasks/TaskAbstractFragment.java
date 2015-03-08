@@ -3,6 +3,7 @@ package com.blueprint.watershed.Tasks;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -40,7 +42,7 @@ public abstract class TaskAbstractFragment extends Fragment {
     protected EditText mTitleField;
     protected EditText mDescriptionField;
     protected EditText mAssigneeField;
-    protected EditText mDueDateField;
+    protected TextView mDueDateField;
     protected EditText mMiniSiteId;
     protected MainActivity mParentActivity;
     protected NetworkManager mNetworkManager;
@@ -98,8 +100,19 @@ public abstract class TaskAbstractFragment extends Fragment {
         mTitleField = (EditText) mParentActivity.findViewById(R.id.create_task_title);
         mDescriptionField = (EditText) mParentActivity.findViewById(R.id.create_task_description);
         mAssigneeField = (EditText) mParentActivity.findViewById(R.id.create_task_assignee);
-        mDueDateField = (EditText) mParentActivity.findViewById(R.id.create_task_due_date);
+        mDueDateField = (TextView) mParentActivity.findViewById(R.id.create_task_due_date);
+        mDueDateField.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openDateDialog();
+            }
+        });
         mMiniSiteId = (EditText) mParentActivity.findViewById(R.id.create_task_site);
+    }
+
+    private void openDateDialog() {
+        DialogFragment newFragment = new TaskDateDialog();
+        newFragment.show(mParentActivity.getSupportFragmentManager(), "timePicker");
     }
 
     /**
