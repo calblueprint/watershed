@@ -34,8 +34,6 @@ public class TaskFragment extends ListFragment {
     private static String INCOMPLETE = "Incomplete Tasks";
     private static String COMPLETE = "Completed Tasks";
 
-    private static int TASK_TYPE;
-
     private static final int USER = 0;
     private static final int ALL = 1;
 
@@ -50,6 +48,7 @@ public class TaskFragment extends ListFragment {
     private TaskAdapter mAllTaskAdapter;
     private TaskAdapter mUserTaskAdapter;
     
+    private Bundle mArgs;
 
     private ExpandableListView mListView;
     private RelativeLayout mNoTasks;
@@ -77,8 +76,7 @@ public class TaskFragment extends ListFragment {
         mUserTaskList = new HashMap<String, List<Task>>();
         mTaskListHeaders = new ArrayList<String>();
 
-        Bundle args = getArguments();
-        TASK_TYPE = args.getInt(OPTION);
+        mArgs = getArguments();
     }
 
     @Override
@@ -113,7 +111,7 @@ public class TaskFragment extends ListFragment {
             public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
                 Log.i("asdf", "clicked");
                 Task taskClicked;
-                if (TASK_TYPE == USER) taskClicked = mUserTaskList.get(mTaskListHeaders.get(groupPosition)).get(childPosition);
+                if (mArgs.getInt(OPTION) == USER) taskClicked = mUserTaskList.get(mTaskListHeaders.get(groupPosition)).get(childPosition);
                 else taskClicked = mAllTaskList.get(mTaskListHeaders.get(groupPosition)).get(childPosition);
 
                 TaskDetailFragment detailFragment = TaskDetailFragment.newInstance(taskClicked);
@@ -123,9 +121,7 @@ public class TaskFragment extends ListFragment {
         });
         mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-            }
+            public void onScrollStateChanged(AbsListView view, int scrollState) {}
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
@@ -135,11 +131,15 @@ public class TaskFragment extends ListFragment {
             }
         });
         mNoTasks = (RelativeLayout) view.findViewById(R.id.no_tasks_layout);
-        mAllTaskAdapter = new TaskAdapter(mParentActivity, mTaskListHeaders, mAllTaskList);
-        mUserTaskAdapter = new TaskAdapter(mParentActivity, mTaskListHeaders, mUserTaskList);
 
-        if (TASK_TYPE == USER) mListView.setAdapter(mUserTaskAdapter);
-        else mListView.setAdapter(mAllTaskAdapter);
+        if (mArgs.getInt(OPTION) == USER) {
+            mUserTaskAdapter = new TaskAdapter(mParentActivity, mTaskListHeaders, mUserTaskList);
+            mListView.setAdapter(mUserTaskAdapter);
+        }
+        else {
+            mAllTaskAdapter = new TaskAdapter(mParentActivity, mTaskListHeaders, mAllTaskList);
+            mListView.setAdapter(mAllTaskAdapter);
+        }
 //        mListView.setEmptyView(mNoTasks);
     }
 
@@ -172,18 +172,19 @@ public class TaskFragment extends ListFragment {
      * depending on what tab is being clicked on.
      */
     private void getTasksRequest(){
-        Log.i("watasdfasdf", String.valueOf(TASK_TYPE));
+        Log.i("watasdfasdf", String.valueOf(mArgs.getInt(OPTION)));
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
 
         TaskListRequest taskListRequest = new TaskListRequest(getActivity(), params, new Response.Listener<ArrayList<Task>>() {
             @Override
             public void onResponse(ArrayList<Task> tasks) {
-                if (TASK_TYPE == USER) {
+                if (mArgs.getInt(OPTION) == USER) {
                     tasks = getUserTasks(tasks);
                     if (tasks.size() > 0) {
                         showList();
                         setUserTasks(tasks);
                         mUserTaskAdapter.notifyDataSetChanged();
+                        for(int i=0; i < mUserTaskAdapter.getGroupCount(); i++) mListView.expandGroup(i);
                     } else {
                         hideList();
                     }
@@ -192,15 +193,15 @@ public class TaskFragment extends ListFragment {
                         showList();
                         setAllTasks(tasks);
                         mAllTaskAdapter.notifyDataSetChanged();
+                        for(int i=0; i < mAllTaskAdapter.getGroupCount(); i++) mListView.expandGroup(i);
                     } else {
                         hideList();
                     }
                 }
-                mListView.expandGroup(0, true);
-                mParentActivity.getSpinner().setVisibility(View.GONE);
+
                 if (mSwipeLayout != null) mSwipeLayout.setRefreshing(false);
             }
-        });
+        }, mSwipeLayout);
         mNetworkManager.getRequestQueue().add(taskListRequest);
     }
 
@@ -251,7 +252,8 @@ public class TaskFragment extends ListFragment {
     private ArrayList<Task> getUserTasks(ArrayList<Task> tasks) {
         ArrayList<Task> userTasks = new ArrayList<Task>();
         for (Task task : tasks) {
-            if (task.getAssigneeId() == mParentActivity.getUserId()) userTasks.add(task);
+            Integer id = task.getAssigneeId();
+            if (id != null && id ==  mParentActivity.getUserId()) userTasks.add(task);
         }
         return userTasks;
     }

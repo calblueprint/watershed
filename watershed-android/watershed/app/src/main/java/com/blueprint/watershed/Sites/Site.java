@@ -31,8 +31,7 @@ public class Site implements APIObject {
     private ArrayList<MiniSite> mMiniSites;
     private ArrayList<Photo> mPhotos;
 
-    public Site() {
-    }
+    public Site() {}
 
     public String toString() {
         return "Site: " + getName();
