@@ -33,8 +33,6 @@
     self.navigationItem.title = @"Add Field Report";
     self.view.fieldReportTableView.delegate = self;
     self.view.fieldReportTableView.dataSource = self;
-//    [self.view.addPhotoButton addTarget:self action:@selector(addPhotoButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view.viewImageButton addTarget:self action:@selector(viewImageButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view.urgentSwitch addTarget:self action:@selector(changeSwitch:) forControlEvents:UIControlEventValueChanged];
     UIBarButtonItem *saveButton = [[UIBarButtonItem alloc]
                                    initWithTitle:@"Save"

@@ -28,6 +28,8 @@
 @property (nonatomic) UITextView *descriptionView;
 @property (nonatomic) WPSite *selectedSite;
 @property (nonatomic) WPUser *selectedAssignee;
+@property (nonatomic) WPUser *currUser;
+
 
 @end
 
@@ -86,17 +88,26 @@ static NSString *CellIdentifier = @"Cell";
         NSNumberFormatter *userFormatter = [[NSNumberFormatter alloc] init];
         [userFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
 //        NSNumber *userId = [userFormatter numberFromString:[[WPNetworkingManager sharedManager] keyChainStore][@"user_id"]];
-        NSString *userId = [[WPNetworkingManager sharedManager] keyChainStore][@"user_id"];
 
         NSDictionary *taskJSON = @{
                                    @"title" : self.taskField.text,
                                    @"mini_site_id" : [self.selectedSite.siteId stringValue],
                                    @"due_date" : self.dateField.text,
-                                   @"description" : self.descriptionView.text,
-                                   @"assignee_id" :userId,
-                                   @"assigner_id" :userId
+                                   @"description" : self.descriptionView.text
                                    };
         WPTask *task = [MTLJSONAdapter modelOfClass:WPTask.class fromJSONDictionary:taskJSON error:nil];
+        _currUser = [[WPUser alloc] init];
+        NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+        [f setNumberStyle:NSNumberFormatterDecimalStyle];
+        _currUser.userId = [f numberFromString:[[WPNetworkingManager sharedManager] keyChainStore][@"user_id"]];
+        task.assigner = _currUser;
+        task.assignee = _currUser;
+//        [[WPNetworkingManager sharedManager] requestUserWithUser:_currUser parameters:[[NSMutableDictionary alloc] init] success:^(WPUser *user) {
+//            _currUser = user;
+//            task.assignee = _currUser;
+//            task.assigner = _currUser;
+//        }];
+//        
         [[WPNetworkingManager sharedManager] createTaskWithTask:task parameters:[[NSMutableDictionary alloc] init] success:^{
             [self.parent requestAndLoadTasks];
             [self.navigationController popViewControllerAnimated:YES];

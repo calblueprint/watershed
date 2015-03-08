@@ -17,8 +17,12 @@
              @"taskId" : @"id",
              @"taskDescription" : @"description",
              @"completed" : @"complete",
-             @"dueDate" : @"due_date",
+             @"dueDate" : @"due_date"
              };
+}
+
+- (NSString *)description {
+    return @"Task";
 }
 
 + (NSValueTransformer *)booleanJSONTransformer {

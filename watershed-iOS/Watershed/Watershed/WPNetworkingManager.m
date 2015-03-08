@@ -103,6 +103,8 @@ static NSString * const TASKS_URL = @"tasks";
     }];
 }
 
+//- (void)
+
 - (void)requestTasksListWithParameters:(NSMutableDictionary *)parameters success:(void (^)(NSMutableArray *tasksList))success {
 
     NSString *tasksString = [WPNetworkingManager createURLWithEndpoint:TASKS_URL];
@@ -147,10 +149,14 @@ static NSString * const TASKS_URL = @"tasks";
 - (void)createTaskWithTask:(WPTask *)task parameters:(NSMutableDictionary *)parameters success:(void (^)())success {
     NSString *taskString = [WPNetworkingManager createURLWithEndpoint:TASKS_URL];
     [self addAuthenticationParameters:parameters];
-    NSDictionary *taskJSON = [MTLJSONAdapter JSONDictionaryFromModel:task];
+    NSMutableDictionary *taskJSON = [MTLJSONAdapter JSONDictionaryFromModel:task].mutableCopy;
+    NSLog(@"%@", task.assigner.userId);
+    [taskJSON setObject:task.assignee.userId forKey:@"assignee_id"];
+    [taskJSON setObject:task.assigner.userId forKey:@"assigner_id"];
     [parameters setObject:taskJSON forKey:@"task"];
-    
+    NSLog(@"%@", taskJSON);
     [self POST:taskString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"%@", parameters);
         NSLog(@"JSON: %@", responseObject);
         success();
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -160,21 +166,22 @@ static NSString * const TASKS_URL = @"tasks";
     }];
 }
 
-- (void)postTaskWithParameters:(NSMutableDictionary *)parameters success:(void (^)(WPTask *task))success {
-    NSString *taskString = [WPNetworkingManager createURLWithEndpoint:TASKS_URL];
-    [self addAuthenticationParameters:parameters];
-    
-    [self POST:taskString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSDictionary *responseDictionary = responseObject;
-        
-        WPTask *task = [MTLJSONAdapter modelOfClass:WPTask.class fromJSONDictionary:responseDictionary error:nil];
-        success(task);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not create task" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [incorrect show];
-        NSLog(@"Error: %@", error);
-    }];
-}
+//- (void)postTaskWithParameters:(NSMutableDictionary *)parameters success:(void (^)(WPTask *task))success {
+//    NSString *taskString = [WPNetworkingManager createURLWithEndpoint:TASKS_URL];
+//    [self addAuthenticationParameters:parameters];
+//    
+//    [self POST:taskString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        NSDictionary *responseDictionary = responseObject;
+//        [];
+//        WPTask *task = [MTLJSONAdapter modelOfClass:WPTask.class fromJSONDictionary:responseDictionary error:nil];
+//        NSLog(@"%@", parameters);
+//        success(task);
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not create task" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//        [incorrect show];
+//        NSLog(@"Error: %@", error);
+//    }];
+//}
 
 
 - (void)requestSitesListWithParameters:(NSMutableDictionary *)parameters success:(void (^)(NSMutableArray *sitesList))success {

@@ -20,7 +20,7 @@ PODS:
   - AFNetworking/UIKit (2.5.0):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - Bolts (1.1.3)
+  - Bolts (1.1.4)
   - BSKeyboardControls (2.2)
   - Facebook-iOS-SDK (3.21.1):
     - Bolts (~> 1.0)
@@ -58,7 +58,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: 0f54cb5d16ce38c1b76948faffb8d5fb705021c7
-  Bolts: 3db0a875235e0c9042b013af13af0f00f79b102c
+  Bolts: dd9fb8433d67f5acc3b6b4d1379bbc5513d716c1
   BSKeyboardControls: c9aa1bdbb5ecd454aa3d0b2279f79c5dc4b6c6ad
   Facebook-iOS-SDK: 18c26e86ab25c17854a2ee2a8f60562099c6600f
   FontAwesomeKit: a2edea3111dab107b4cc43b85881b404eb063385
