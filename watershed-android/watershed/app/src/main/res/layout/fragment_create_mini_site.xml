@@ -6,14 +6,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <!--<ImageView-->
-        <!--style="@style/BackGroundImageView"-->
-        <!--android:id = "@+id/mini_site_image"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--tools:ignore="ContentDescription" />-->
+    <ImageView
+        style="@style/BackGroundImageView"
+        android:id = "@+id/mini_site_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        tools:ignore="ContentDescription" />
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -134,13 +134,27 @@
                 />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/take_photo_button"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="@dimen/button_large_height"
-            android:layout_marginTop="8dp"
-            android:text="Take Photo"
-            />
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/select_mini_site_photo_button"
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_height="@dimen/button_large_height"
+                android:layout_marginTop="8dp"
+                android:text="Select Photo"
+                />
+            <Button
+                android:id="@+id/take_mini_site_photo_button"
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_height="@dimen/button_large_height"
+                android:layout_marginTop="8dp"
+                android:text="Take Photo"
+                />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"

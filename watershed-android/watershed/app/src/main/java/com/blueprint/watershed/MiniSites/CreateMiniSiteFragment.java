@@ -3,6 +3,7 @@ package com.blueprint.watershed.MiniSites;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ import com.blueprint.watershed.Users.User;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -58,6 +60,7 @@ public class CreateMiniSiteFragment extends Fragment implements View.OnClickList
 
     // Camera Stuff
     private static final int CAMERA_REQUEST = 1337;
+    private static final int SELECT_PHOTO_REQUEST = 69;
     private String mCurrentPhotoPath;
 
     /**
@@ -110,15 +113,15 @@ public class CreateMiniSiteFragment extends Fragment implements View.OnClickList
     }
 
     public void onClick(View view) {
-        Log.e("Some Mini Site Button", "Pressed");
         switch (view.getId()) {
-            case R.id.take_photo_button:
-                Log.e("Photo Mini Site Button", "Pressed");
+            case R.id.take_mini_site_photo_button:
                 onTakePhotoButtonPressed(view);
                 break;
             case R.id.create_mini_site_submit:
-                Log.e("Create Mini Site Button", "Pressed");
                 createMiniSite(view);
+                break;
+            case R.id.select_mini_site_photo_button:
+                onSelectPhotoButtonPressed(view);
                 break;
         }
     }
@@ -139,15 +142,25 @@ public class CreateMiniSiteFragment extends Fragment implements View.OnClickList
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        ImageView fieldReportImageView = (ImageView)mView.findViewById(R.id.mini_site_image);
-//        if (requestCode == CAMERA_REQUEST && resultCode == mMainActivity.RESULT_OK) {
-//            Bitmap photo = (Bitmap) data.getExtras().get("data");
-//            fieldReportImageView.setImageBitmap(photo);
-//        }
+        ImageView miniSiteImageView = (ImageView)mView.findViewById(R.id.mini_site_image);
+        if (requestCode == CAMERA_REQUEST && resultCode == MainActivity.RESULT_OK) {
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            miniSiteImageView.setImageBitmap(photo);
+        }
+        else if (requestCode == SELECT_PHOTO_REQUEST && resultCode == MainActivity.RESULT_OK){
+            Uri targetUri = data.getData();
+            try {
+                Bitmap photo = BitmapFactory.decodeStream(mMainActivity.getContentResolver().openInputStream(targetUri));
+                miniSiteImageView.setImageBitmap(photo);
+            }
+            catch (FileNotFoundException e){
+                e.printStackTrace();
+            }
+
+        }
     }
 
     // Button Handlers
-
     public void onTakePhotoButtonPressed(View takePhotoButton){
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(mMainActivity.getPackageManager()) != null) {
@@ -165,14 +178,24 @@ public class CreateMiniSiteFragment extends Fragment implements View.OnClickList
         }
     }
 
+    public void onSelectPhotoButtonPressed(View selectPhotoButton){
+        Intent intent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, SELECT_PHOTO_REQUEST);
+    }
+
     private void setButtonListeners(View view){
         Button submitButton = (Button)view.findViewById(R.id.create_mini_site_submit);
+        Button takePhoto = (Button)view.findViewById(R.id.take_mini_site_photo_button);
+        Button selectPhoto = (Button)view.findViewById(R.id.select_mini_site_photo_button);
         mTitleField = (EditText)view.findViewById(R.id.create_mini_site_title);
         mDescriptionField = (EditText)view.findViewById(R.id.create_mini_site_description);
         mAddressField = (EditText)view.findViewById(R.id.create_mini_site_address);
         mCityField = (EditText)view.findViewById(R.id.create_mini_site_city);
         mZipField = (EditText)view.findViewById(R.id.create_mini_site_zip);
         mStateField = (EditText)view.findViewById(R.id.create_mini_site_state);
+        takePhoto.setOnClickListener(this);
+        selectPhoto.setOnClickListener(this);
         submitButton.setOnClickListener(this);
     }
 
@@ -194,8 +217,8 @@ public class CreateMiniSiteFragment extends Fragment implements View.OnClickList
         MiniSite miniSite = new MiniSite();
 
         String miniSiteTitle = ((EditText)mView.findViewById(R.id.create_mini_site_title)).getText().toString();
-        //ImageView image = (ImageView)mView.findViewById(R.id.mini_site_image);
-        //Bitmap miniSitePhoto = ((BitmapDrawable)image.getDrawable()).getBitmap();
+        ImageView image = (ImageView)mView.findViewById(R.id.mini_site_image);
+        Bitmap miniSitePhoto = ((BitmapDrawable)image.getDrawable()).getBitmap();
 
         miniSite.setName(miniSiteTitle);
         miniSite.setDescription(mDescriptionField.getText().toString());
