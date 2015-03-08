@@ -7,16 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WPViewController.h"
 
-@interface WPTermsViewController : UIViewController
-
-@end
-
-@interface WPTermsView : UIView
-
-@property (nonatomic) UILabel *termsLabel;
-@property (nonatomic) UILabel *termsInfoLabel;
-@property (nonatomic) UILabel *privacyLabel;
-@property (nonatomic) UILabel *privacyInfoLabel;
+@interface WPTermsViewController : WPViewController
 
 @end
