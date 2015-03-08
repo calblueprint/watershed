@@ -19,11 +19,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Networking.MiniSites.CreateMiniSiteRequest;
 import com.blueprint.watershed.Networking.NetworkManager;
+import com.blueprint.watershed.Photos.Photo;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Sites.Site;
 import com.blueprint.watershed.Sites.SiteListFragment;
@@ -34,6 +36,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -220,18 +223,32 @@ public class CreateMiniSiteFragment extends Fragment implements View.OnClickList
 
         String miniSiteTitle = ((EditText)mView.findViewById(R.id.create_mini_site_title)).getText().toString();
         ImageView image = (ImageView)mView.findViewById(R.id.mini_site_image);
+        int zipCode = 0;
+
+        try {
+            zipCode = Integer.valueOf(mZipField.getText().toString());
+        }
+        catch (Exception e){
+            Toast toast = Toast.makeText(mMainActivity.getApplicationContext(), "Please use a valid Zip Code", Toast.LENGTH_SHORT);
+            toast.show();
+            return;
+        }
         Bitmap miniSitePhoto = ((BitmapDrawable)image.getDrawable()).getBitmap();
 
         miniSite.setName(miniSiteTitle);
         miniSite.setDescription(mDescriptionField.getText().toString());
         miniSite.setStreet(mAddressField.getText().toString());
         miniSite.setCity(mCityField.getText().toString());
-        miniSite.setZipCode(94563);
+        miniSite.setZipCode(zipCode);
         miniSite.setLatitude("0");
         miniSite.setLongitude("0");
         miniSite.setFieldReportsCount(0);
         miniSite.setState("CA");
         miniSite.setSiteId(mSite.getId());
+        ArrayList<Photo> Photos = new ArrayList<Photo>();
+        Photos.add(new Photo(miniSitePhoto));
+
+        //miniSite.setPhotos(Photos);
 
         createMiniSiteRequest(miniSite);
     }

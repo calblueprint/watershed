@@ -87,5 +87,6 @@ public class MiniSite implements APIObject {
     public void setLatitude(String latitude) { mLatitude = latitude; }
     public void setLongitude(String longitude) { mLongitude = longitude; }
     public void setFieldReportsCount(Integer fieldReportsCount) { mFieldReportsCount = fieldReportsCount; }
+    public void setPhotos(ArrayList<Photo> Photos){mPhotos = Photos;}
     public void setSiteId(Integer siteId) { mSiteId = siteId; }
 }
