@@ -54,10 +54,10 @@ public abstract class BaseRequest extends JsonObjectRequest {
                     ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
                     apiError = mapper.readValue(errorJson, new TypeReference<APIError>() {
                     });
-                    errorListener.onResponse(apiError);
                 } catch (Exception e) {
                     Log.e("Json exception in Base Request", e.toString());
                 }
+                errorListener.onResponse(apiError);
 
                 Toast toast = Toast.makeText(activity.getApplicationContext(), apiError.getMessage(), Toast.LENGTH_SHORT);
                 toast.show();

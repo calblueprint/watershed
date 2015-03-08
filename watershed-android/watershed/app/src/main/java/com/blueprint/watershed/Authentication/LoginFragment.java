@@ -45,7 +45,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_login, container, false);
-//        Utility.setKeyboardListener(parentActivity, rootView);
+        Utility.setKeyboardListener(parentActivity, rootView);
         // Configure view
         setEmailField((EditText) rootView.findViewById(R.id.email_field));
         setPasswordField((EditText) rootView.findViewById(R.id.password_field));
