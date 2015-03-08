@@ -7,13 +7,9 @@ import android.widget.ImageView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.APIObject;
-import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.Networking.NetworkManager;
-import com.blueprint.watershed.Tasks.Task;
-import com.blueprint.watershed.Users.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.ByteArrayOutputStream;
 

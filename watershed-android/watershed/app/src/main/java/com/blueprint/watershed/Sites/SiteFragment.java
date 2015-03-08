@@ -1,23 +1,21 @@
 package com.blueprint.watershed.Sites;
 
-import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.app.Fragment;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
+import com.blueprint.watershed.MiniSites.CreateMiniSiteFragment;
 import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteListAdapter;
@@ -36,6 +34,7 @@ import java.util.HashMap;
 public class SiteFragment extends Fragment
                           implements AbsListView.OnItemClickListener {
 
+    private MainActivity mParentActivity;
     private OnFragmentInteractionListener mListener;
     private NetworkManager mNetworkManager;
     private MainActivity mMainActivity;
@@ -68,7 +67,8 @@ public class SiteFragment extends Fragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
+        mParentActivity = (MainActivity) getActivity();
+        mNetworkManager = NetworkManager.getInstance(mParentActivity);
     }
 
     @Override
@@ -87,28 +87,22 @@ public class SiteFragment extends Fragment
         configureViewWithSite(header, mSite);
 
         // Set the adapter to fill the list of mini sites
-        mMiniSiteAdapter = new MiniSiteListAdapter(mMainActivity, getActivity(), R.layout.mini_site_list_row, getMiniSites());
+        mMiniSiteAdapter = new MiniSiteListAdapter(mMainActivity, mParentActivity, R.layout.mini_site_list_row, getMiniSites());
         mMiniSiteGridView.setAdapter(mMiniSiteAdapter);
 
         mMiniSiteGridView.setOnItemClickListener(this);
         return view;
     }
 
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mMainActivity = (MainActivity)activity;
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add_minisite:
+                CreateMiniSiteFragment newMiniSite = CreateMiniSiteFragment.newInstance(mSite);
+                mParentActivity.replaceFragment(newMiniSite);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 

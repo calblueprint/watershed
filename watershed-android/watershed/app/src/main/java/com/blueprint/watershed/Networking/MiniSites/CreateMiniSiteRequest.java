@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.Networking.BaseRequest;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -53,7 +52,7 @@ public class CreateMiniSiteRequest extends BaseRequest {
      */
     protected static JSONObject miniSiteParams(final Activity activity, final MiniSite miniSite) {
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
-        ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
+        ObjectMapper mapper = getNetworkManager(activity).getObjectMapper();
 
         try {
             JSONObject miniSiteJson = new JSONObject(mapper.writeValueAsString(miniSite));
@@ -62,7 +61,6 @@ public class CreateMiniSiteRequest extends BaseRequest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return new JSONObject(params);
     }
 }

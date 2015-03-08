@@ -30,20 +30,16 @@ import com.android.volley.Response;
 import com.blueprint.watershed.AboutFragment;
 import com.blueprint.watershed.FieldReports.AddFieldReportFragment;
 import com.blueprint.watershed.FieldReports.FieldReportFragment;
-import com.blueprint.watershed.MiniSites.CreateMiniSiteFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Users.HomeRequest;
-import com.blueprint.watershed.Sites.CreateSiteFragment;
-import com.blueprint.watershed.Tasks.CreateTaskFragment;
-import com.blueprint.watershed.Tasks.Task;
-import com.blueprint.watershed.Users.UserFragment;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Sites.CreateSiteFragment;
 import com.blueprint.watershed.Sites.SiteFragment;
 import com.blueprint.watershed.Sites.SiteListFragment;
+import com.blueprint.watershed.Tasks.CreateTaskFragment;
 import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Tasks.TaskAbstractFragment;
-import com.blueprint.watershed.Tasks.CreateTaskFragment;
 import com.blueprint.watershed.Tasks.TaskAdapter;
 import com.blueprint.watershed.Tasks.TaskDetailFragment;
 import com.blueprint.watershed.Tasks.TaskFragment;
@@ -302,11 +298,6 @@ public class MainActivity extends ActionBarActivity
                 CreateSiteFragment newSite = CreateSiteFragment.newInstance();
                 replaceFragment(newSite);
                 return true;
-            case R.id.add_minisite:
-                CreateMiniSiteFragment newMiniSite = CreateMiniSiteFragment.newInstance();
-                replaceFragment(newMiniSite);
-                return true;
-
         }
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
