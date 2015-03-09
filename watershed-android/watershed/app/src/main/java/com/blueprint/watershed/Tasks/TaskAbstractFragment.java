@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -47,7 +48,6 @@ import java.util.List;
 public abstract class TaskAbstractFragment extends Fragment {
 
     private static final String CREATE = "create";
-    private static final String EDIT = "edit";
     private static final int REQUEST_CODE = 200;
 
     protected RelativeLayout mLayout;
@@ -107,9 +107,7 @@ public abstract class TaskAbstractFragment extends Fragment {
     private void getUsers() {
         UsersRequest request = new UsersRequest(mParentActivity, new Response.Listener<ArrayList<User>>() {
             @Override
-            public void onResponse(ArrayList<User> users) {
-                mUsers = users;
-            }
+            public void onResponse(ArrayList<User> users) { mUsers = users; }
         });
         mNetworkManager.getRequestQueue().add(request);
     }
@@ -151,17 +149,34 @@ public abstract class TaskAbstractFragment extends Fragment {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                submitListener()
+                boolean hasErrors = false;
+                if (mTitleField.getText().toString().length() == 0) {
+                    setEmpty("Title", mTitleField);
+                    hasErrors = true;
+                }
+
+                if (mDescriptionField.getText().toString().length() == 0) {
+                    setEmpty("Description", mDescriptionField);
+                    hasErrors = true;
+                }
+
+                if (hasErrors) return;
+
+                submitListener();
             }
         };
     }
 
-    private void openUserDialog() {
+    private void setEmpty(String field, EditText editText) { editText.setError(field + " can't be blank!"); }
 
+    private void openUserDialog() {
+        PickUserDialog newFragment = PickUserDialog.newInstance(mUsers);
+        newFragment.setTargetFragment(this, REQUEST_CODE);
+        newFragment.show(mParentActivity.getSupportFragmentManager(), "userPicker");
     }
 
     private void openDateDialog() {
-        DialogFragment newFragment = new TaskDateDialog();
+        TaskDateDialog newFragment = TaskDateDialog.newInstance();
         newFragment.setTargetFragment(this, REQUEST_CODE);
         newFragment.show(mParentActivity.getSupportFragmentManager(), "timePicker");
     }
@@ -223,6 +238,11 @@ public abstract class TaskAbstractFragment extends Fragment {
         mDueDateField.setText(mDate.toString());
     }
 
+    public void setUser(User user) {
+        mUser = user;
+        mAssigneeField.setText(mUser.getName());
+    }
+
     public interface OnFragmentInteractionListener {
         public void onFragmentInteraction(Uri uri);
     }
@@ -233,7 +253,10 @@ public abstract class TaskAbstractFragment extends Fragment {
     public static class TaskDateDialog extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
 
+        public static TaskDateDialog newInstance() { return new TaskDateDialog(); }
+
         @Override
+        @NonNull
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // Use the current date as the default date in the picker
             final Calendar c = Calendar.getInstance();
@@ -259,16 +282,16 @@ public abstract class TaskAbstractFragment extends Fragment {
      */
     public static class PickUserDialog extends DialogFragment {
 
-        protected User mPickedUser;
-        protected ArrayList<User> mUsers;
+        protected List<User> mUsers;
 
-        public static PickUserDialog newInstance(ArrayList<User> users) {
+        public static PickUserDialog newInstance(List<User> users) {
             PickUserDialog dialog = new PickUserDialog();
             dialog.setUsers(users);
             return dialog;
         }
 
         @Override
+        @NonNull
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle(R.string.pick_user)
@@ -279,12 +302,14 @@ public abstract class TaskAbstractFragment extends Fragment {
                        }
                    });
 
-            if (mUsers.size() > 0) {
+            if (mUsers != null && mUsers.size() > 0) {
                 builder.setItems(getUserNames(), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Log.i("user", mUsers.get(i).getName());
-                        setUser(mUsers.get(i));
+                        if (!(getTargetFragment() instanceof TaskAbstractFragment)) Log.e("can't", "even fragment");
+                        TaskAbstractFragment fragment = (TaskAbstractFragment) getTargetFragment();
+                        fragment.setUser(mUsers.get(i));
                     }
                 });
             } else {
@@ -301,8 +326,6 @@ public abstract class TaskAbstractFragment extends Fragment {
             return names;
         }
 
-        private void setUser(User user) { mPickedUser = user; }
-
-        private void setUsers(ArrayList<User> users) { mUsers = users; }
+        private void setUsers(List<User> users) { mUsers = users; }
     }
 }
