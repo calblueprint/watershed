@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Networking.NetworkManager;
@@ -26,6 +27,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SiteListFragment extends Fragment {
+
+    public static final String SITELISTREQUEST = "SiteListTag";
 
     private MainActivity mParentActivity;
     private NetworkManager mNetworkManager;
@@ -96,6 +99,16 @@ public class SiteListFragment extends Fragment {
     }
 
     @Override
+    public void onPause(){
+        super.onPause();
+        RequestQueue requestQueue = mNetworkManager.getRequestQueue();
+        if (requestQueue != null) {
+            requestQueue.cancelAll(SITELISTREQUEST);
+        }
+
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.empty, menu);
@@ -123,6 +136,7 @@ public class SiteListFragment extends Fragment {
             }
 
         });
+        siteListRequest.setTag(SITELISTREQUEST);
         mNetworkManager.getRequestQueue().add(siteListRequest);
     }
 

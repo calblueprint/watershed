@@ -82,6 +82,6 @@ public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return sites.size() + 1;
+        return sites.size();
     }
 }
