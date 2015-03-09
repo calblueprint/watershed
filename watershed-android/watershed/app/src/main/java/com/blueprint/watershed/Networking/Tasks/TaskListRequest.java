@@ -28,8 +28,7 @@ public class TaskListRequest extends BaseRequest {
                     try {
                         String sitesJson = jsonObject.get("tasks").toString();
                         ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
-                        ArrayList<Task> tasks = mapper.readValue(sitesJson, new TypeReference<ArrayList<Task>>() {
-                        });
+                        ArrayList<Task> tasks = mapper.readValue(sitesJson, new TypeReference<ArrayList<Task>>() {});
                         listener.onResponse(tasks);
                     } catch (Exception e) {
                         Log.e("Json exception", e.toString());
