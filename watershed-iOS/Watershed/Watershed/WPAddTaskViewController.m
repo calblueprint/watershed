@@ -29,6 +29,8 @@
 @property (nonatomic) WPSite *selectedSite;
 @property (nonatomic) WPUser *selectedAssignee;
 @property (nonatomic) WPUser *currUser;
+@property (nonatomic) WPSite *currSite;
+@property (nonatomic) UISwitch *urgentSwitch;
 
 
 @end
@@ -68,6 +70,13 @@ static NSString *CellIdentifier = @"Cell";
     [super didReceiveMemoryWarning];
 }
 
+-(int)isUrgent {
+    if (_urgentSwitch.on) {
+        return 1;
+    }
+    return 0;
+}
+
 -(void)saveForm:(UIButton *)sender {
     if (_taskField.text.length == 0 || _siteField.text.length == 0) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
@@ -87,8 +96,9 @@ static NSString *CellIdentifier = @"Cell";
         //need to add urgent
         NSNumberFormatter *userFormatter = [[NSNumberFormatter alloc] init];
         [userFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
-//        NSNumber *userId = [userFormatter numberFromString:[[WPNetworkingManager sharedManager] keyChainStore][@"user_id"]];
-
+        int isUrgentInt = [self isUrgent];
+        BOOL hi = _urgentSwitch.isOn;
+        NSString *strValue = [NSString stringWithFormat:@"%@", _urgentSwitch.isOn ? @"true" : @"false"];
         NSDictionary *taskJSON = @{
                                    @"title" : self.taskField.text,
                                    @"mini_site_id" : [self.selectedSite.siteId stringValue],
@@ -97,29 +107,19 @@ static NSString *CellIdentifier = @"Cell";
                                    };
         WPTask *task = [MTLJSONAdapter modelOfClass:WPTask.class fromJSONDictionary:taskJSON error:nil];
         _currUser = [[WPUser alloc] init];
+        _currSite = [[WPSite alloc] init];
         NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
         [f setNumberStyle:NSNumberFormatterDecimalStyle];
         _currUser.userId = [f numberFromString:[[WPNetworkingManager sharedManager] keyChainStore][@"user_id"]];
+        _currSite.siteId = self.selectedSite.siteId;
         task.assigner = _currUser;
         task.assignee = _currUser;
-//        [[WPNetworkingManager sharedManager] requestUserWithUser:_currUser parameters:[[NSMutableDictionary alloc] init] success:^(WPUser *user) {
-//            _currUser = user;
-//            task.assignee = _currUser;
-//            task.assigner = _currUser;
-//        }];
-//        
+        task.site = _currSite;
         [[WPNetworkingManager sharedManager] createTaskWithTask:task parameters:[[NSMutableDictionary alloc] init] success:^{
             [self.parent requestAndLoadTasks];
             [self.navigationController popViewControllerAnimated:YES];
         }];
-        
-//        NSMutableDictionary *parameters = [taskJSON mutableCopy];
-//        
-//        [[WPNetworkingManager sharedManager] postTaskWithParameters:parameters success:^(WPTask *task) {
-//                [self.parent requestAndLoadTasks];
-//                [self.navigationController popViewControllerAnimated:YES];
-//            }
-//         ];
+
     }
 }
 
@@ -210,9 +210,9 @@ static NSString *CellIdentifier = @"Cell";
             break;
         }
         case 2: {
-            UISwitch *urgentSwitch = [[UISwitch alloc] init];
-            urgentSwitch.onTintColor = [UIColor wp_red];
-            cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:urgentSwitch];
+            _urgentSwitch = [[UISwitch alloc] init];
+            _urgentSwitch.onTintColor = [UIColor wp_red];
+            cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:_urgentSwitch];
             cell.label.text = @"Urgent";
             break;
         }

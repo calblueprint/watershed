@@ -8,12 +8,15 @@
 
 #import "WPSelectAssigneeViewController.h"
 #import "WPSelectAssigneeView.h"
+#import "WPUser.h"
+#import "WPNetworkingManager.h"
 
 @interface WPSelectAssigneeViewController ()
 
 @property (nonatomic) WPSelectAssigneeView *view;
+@property NSArray *managerArray;
 @property NSArray *employeeArray;
-@property NSArray *communityArray;
+@property NSArray *userArray;
 
 @end
 
@@ -33,21 +36,44 @@ static NSString *CellIdentifier = @"Cell";
     self.view.selectAssigneeTableView.delegate = self;
     self.view.selectAssigneeTableView.dataSource = self;
     _employeeArray = @[@"Mark", @"Max", @"Melissa", @"Andrew"];
-    _communityArray = @[@"Community 1", @"Community 2", @"Community 3",  @"Community 4",  @"Community 5",  @"Community 6",  @"Community 7"];
+    _userArray = @[@"Community 1", @"Community 2", @"Community 3",  @"Community 4",  @"Community 5",  @"Community 6",  @"Community 7"];
+    _managerArray = @[@"Derek"];
+//    [self requestAndLoadUsers];
     [super viewDidLoad];
-
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
+#pragma mark - Networking Methods
+
+- (void)requestAndLoadUsers {
+    __weak __typeof(self)weakSelf = self;
+    [[WPNetworkingManager sharedManager] requestUsersListWithParameters:[[NSMutableDictionary alloc] init] success:^(NSMutableArray *usersList) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        strongSelf.userArray = usersList;
+        [strongSelf.view.selectAssigneeTableView reloadData];
+    }];
+}
+
+#pragma mark - Table View Protocols
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    if(indexPath.section == 0) {
-        cell.textLabel.text = [_employeeArray objectAtIndex:indexPath.row];
-    } else {
-        cell.textLabel.text = [_communityArray objectAtIndex:indexPath.row];
+    switch (indexPath.section)
+    {
+        case 0:
+            cell.textLabel.text = [_managerArray objectAtIndex:indexPath.row];
+            break;
+        case 1:
+            cell.textLabel.text = [_employeeArray objectAtIndex:indexPath.row];
+            break;
+        case 2:
+            cell.textLabel.text = [_userArray objectAtIndex:indexPath.row];
+            break;
+        default:
+            break;
     }
     cell.textLabel.textColor = [UIColor wp_paragraph];
     return cell;
@@ -63,7 +89,7 @@ static NSString *CellIdentifier = @"Cell";
 #pragma mark - Table View Protocols
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 3;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -71,18 +97,30 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0) {
-        return [_employeeArray count];
-    } else {
-        return [_communityArray count];
+    switch (section)
+    {
+        case 0:
+            return [_managerArray count];
+        case 1:
+            return [_employeeArray count];
+        case 2:
+            return [_userArray count];
+        default:
+            return 0;
     }
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if(section == 0) {
-        return @"Employees";
-    } else {
-        return @"Community Members";
+    switch (section)
+    {
+        case 0:
+            return @"Managers";
+        case 1:
+            return @"Employees";
+        case 2:
+            return @"Community Members";
+        default:
+            return @"";
     }
 }
 

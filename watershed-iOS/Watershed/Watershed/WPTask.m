@@ -25,9 +25,9 @@
     return @"Task";
 }
 
-+ (NSValueTransformer *)booleanJSONTransformer {
-    return [NSValueTransformer valueTransformerForName:MTLBooleanValueTransformerName];
-}
+//+ (NSValueTransformer *)urgentJSONTransformer {
+//    return [NSValueTransformer valueTransformerForName:MTLBooleanValueTransformerName];
+//}
 
 + (NSValueTransformer *)assigneeJSONTransformer {
     return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[WPUser class]];
