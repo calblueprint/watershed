@@ -57,8 +57,7 @@
 }
 
 - (void)saveAndDismissSelf {
-<<<<<<< HEAD
-    
+
     if (!(self.nameTextField.text.length &&
           self.streetTextField.text.length &&
           self.cityTextField.text.length &&
@@ -82,8 +81,20 @@
 }
 
 - (void)presentErrorAlert {
-    UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Cannot leave fields blank." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [incorrect show];
+
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                   message:@"Cannot leave any field blank."
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* ok = [UIAlertAction
+                         actionWithTitle:@"OK"
+                         style:UIAlertActionStyleDefault
+                         handler:^(UIAlertAction * action)
+                         {
+                             [alert dismissViewControllerAnimated:YES completion:nil];
+                         }];
+
+    [alert addAction:ok];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)updateServerWithSite:(WPSite *)site {
