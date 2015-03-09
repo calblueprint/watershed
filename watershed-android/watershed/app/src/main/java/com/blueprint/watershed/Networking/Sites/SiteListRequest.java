@@ -31,7 +31,7 @@ public class SiteListRequest extends BaseRequest {
                         ArrayList<Site> sites = mapper.readValue(sitesJson, new TypeReference<ArrayList<Site>>() {});
                         listener.onResponse(sites);
                     } catch (Exception e) {
-                        Log.e("Json exception", e.toString());
+                        Log.e("Site Json exception", e.toString());
                     }
                 }
 

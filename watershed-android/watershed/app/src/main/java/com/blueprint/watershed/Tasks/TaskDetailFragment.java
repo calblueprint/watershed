@@ -21,7 +21,6 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
     private MainActivity mParentActivity;
     private Task mTask;
     private NetworkManager mNetworkManager;
-    private MainActivity mMainActivity;
 
     private TextView mDetailTitle;
     private TextView mDescription;
@@ -107,7 +106,7 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
 
     public void fieldReportButtonPressed(View view){
         AddFieldReportFragment fieldFragment = AddFieldReportFragment.newInstance();
-        mMainActivity.setFieldReportTask(mTask);
-        mMainActivity.replaceFragment(fieldFragment);
+        mParentActivity.setFieldReportTask(mTask);
+        mParentActivity.replaceFragment(fieldFragment);
     }
 }

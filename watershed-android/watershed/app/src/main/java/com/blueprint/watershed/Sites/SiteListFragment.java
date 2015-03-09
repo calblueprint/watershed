@@ -108,6 +108,7 @@ public class SiteListFragment extends Fragment {
             @Override
             public void onResponse(ArrayList<Site> sites) {
                 setSites(sites);
+                Log.e("Site Response", "Returned");
                 if (getSites().size() == 0) hideList();
                 else {
                     showList();

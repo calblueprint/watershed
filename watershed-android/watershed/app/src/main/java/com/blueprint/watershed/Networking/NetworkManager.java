@@ -2,6 +2,7 @@ package com.blueprint.watershed.Networking;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.util.LruCache;
 import android.util.Log;
 
@@ -15,12 +16,16 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.MiniSites.MiniSite;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 
 /*
 Singleton Request Handler to interface with Network.
@@ -59,6 +64,9 @@ public class NetworkManager {
 
                     @Override
                     public void putBitmap(String url, Bitmap bitmap) {
+                        ByteArrayOutputStream out = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, out);
+                        bitmap = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
                         cache.put(url, bitmap);
                     }
                 });

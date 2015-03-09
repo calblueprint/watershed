@@ -30,7 +30,7 @@ public class EditTaskRequest extends BaseRequest {
                             Task task = mapper.readValue(taskJson, new TypeReference<Task>() {});
                             listener.onResponse(task);
                         } catch (Exception e) {
-                            Log.e("Json exception", e.toString());
+                            Log.e("Edit Task Request Json exception", e.toString());
                         }
                     }
                 }, activity);
