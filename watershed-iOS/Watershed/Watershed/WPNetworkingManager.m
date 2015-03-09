@@ -363,6 +363,7 @@ static NSString * const TASKS_URL = @"tasks";
 }
 
 - (void)requestUsersListWithParameters:(NSMutableDictionary *)parameters success:(void (^)(NSMutableArray *usersList))success {
+
     NSString *usersString = [WPNetworkingManager createURLWithEndpoint:USERS_URL];
     [self addAuthenticationParameters:parameters];
 

@@ -31,15 +31,16 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 - (void)viewDidLoad {
+    [super viewDidLoad];
+
     self.navigationItem.title = @"Select Assignee";
     self.view.backgroundColor = [UIColor whiteColor];
     self.view.selectAssigneeTableView.delegate = self;
     self.view.selectAssigneeTableView.dataSource = self;
-    _employeeArray = @[@"Mark", @"Max", @"Melissa", @"Andrew"];
-    _userArray = @[@"Community 1", @"Community 2", @"Community 3",  @"Community 4",  @"Community 5",  @"Community 6",  @"Community 7"];
-    _managerArray = @[@"Derek"];
-//    [self requestAndLoadUsers];
-    [super viewDidLoad];
+//    _employeeArray = @[@"Mark", @"Max", @"Melissa", @"Andrew"];
+//    _userArray = @[@"Community 1", @"Community 2", @"Community 3",  @"Community 4",  @"Community 5",  @"Community 6",  @"Community 7"];
+//    _managerArray = @[@"Derek"];
+    [self requestAndLoadUsers];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -61,20 +62,22 @@ static NSString *CellIdentifier = @"Cell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    WPUser *user = [[WPUser alloc] init];
     switch (indexPath.section)
     {
         case 0:
-            cell.textLabel.text = [_managerArray objectAtIndex:indexPath.row];
+            user = [_managerArray objectAtIndex:indexPath.row];
             break;
         case 1:
-            cell.textLabel.text = [_employeeArray objectAtIndex:indexPath.row];
+            user = [_employeeArray objectAtIndex:indexPath.row];
             break;
         case 2:
-            cell.textLabel.text = [_userArray objectAtIndex:indexPath.row];
+            user = [_userArray objectAtIndex:indexPath.row];
             break;
         default:
             break;
     }
+    cell.textLabel.text = user.name;
     cell.textLabel.textColor = [UIColor wp_paragraph];
     return cell;
 }
