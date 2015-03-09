@@ -62,7 +62,7 @@ public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        if (sites.size() > 0) {
+        if (sites.size() > 0 && position < sites.size()) {
             final Site site = sites.getSiteWithPosition(position);
             holder.photosView.configureWithPhotos(site.getPhotos());
             holder.numberOfTasksView.configureLabels(Integer.toString(site.getTasksCount()), "TASKS");
