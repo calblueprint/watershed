@@ -14,9 +14,9 @@
 @interface WPSelectAssigneeViewController ()
 
 @property (nonatomic) WPSelectAssigneeView *view;
-@property NSArray *managerArray;
-@property NSArray *employeeArray;
-@property NSArray *userArray;
+@property NSMutableArray *managerArray;
+@property NSMutableArray *employeeArray;
+@property NSMutableArray *userArray;
 
 @end
 
@@ -37,9 +37,9 @@ static NSString *CellIdentifier = @"Cell";
     self.view.backgroundColor = [UIColor whiteColor];
     self.view.selectAssigneeTableView.delegate = self;
     self.view.selectAssigneeTableView.dataSource = self;
-//    _employeeArray = @[@"Mark", @"Max", @"Melissa", @"Andrew"];
-//    _userArray = @[@"Community 1", @"Community 2", @"Community 3",  @"Community 4",  @"Community 5",  @"Community 6",  @"Community 7"];
-//    _managerArray = @[@"Derek"];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
     [self requestAndLoadUsers];
 }
 
@@ -55,6 +55,21 @@ static NSString *CellIdentifier = @"Cell";
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         strongSelf.userArray = usersList;
         [strongSelf.view.selectAssigneeTableView reloadData];
+        NSMutableArray *toBeRemoved = [[NSMutableArray alloc] init];
+        _managerArray = [[NSMutableArray alloc] init];
+        _employeeArray = [[NSMutableArray alloc] init];
+        for (WPUser *u in _userArray) {
+            NSLog(@"%@", u.role);
+            if ([u.role isEqualToNumber:[NSNumber numberWithInt:2]]) {
+                [_managerArray addObject:u];
+                [toBeRemoved addObject:u];
+            }
+            else if ([u.role isEqualToNumber:[NSNumber numberWithInt:1]]) {
+                [_employeeArray addObject:u];
+                [toBeRemoved addObject:u];
+            }
+        }
+        [_userArray removeObjectsInArray:toBeRemoved];
     }];
 }
 
