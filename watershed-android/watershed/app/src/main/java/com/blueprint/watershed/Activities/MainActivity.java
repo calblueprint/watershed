@@ -54,13 +54,7 @@ import java.util.HashMap;
 public class MainActivity extends ActionBarActivity
                           implements ActionBar.TabListener,
                                      View.OnClickListener,
-                                     ListView.OnItemClickListener,
-                                     UserFragment.OnFragmentInteractionListener,
-                                     AboutFragment.OnFragmentInteractionListener,
-                                     MiniSiteFragment.OnFragmentInteractionListener,
-                                     AddFieldReportFragment.OnFragmentInteractionListener,
-                                     TaskAbstractFragment.OnFragmentInteractionListener,
-                                     FieldReportFragment.OnFragmentInteractionListener {
+                                     ListView.OnItemClickListener {
 
     // Constants
     private static final String PREFERENCES = "LOGIN_PREFERENCES";
@@ -257,10 +251,6 @@ public class MainActivity extends ActionBarActivity
         ft.add(R.id.container, mTaskFragment);
         ft.commit();
     }
-
-    public void onFragmentInteraction(String id) {}
-
-    public void onFragmentInteraction(Uri uri) {}
 
     @Override
     public void onTabReselected(Tab tab, FragmentTransaction ft) {

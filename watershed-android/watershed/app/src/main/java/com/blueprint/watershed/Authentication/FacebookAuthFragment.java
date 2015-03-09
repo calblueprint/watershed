@@ -17,7 +17,6 @@ import com.facebook.UiLifecycleHelper;
 
 public class FacebookAuthFragment extends Fragment {
 
-    private OnFragmentInteractionListener mListener;
     private UiLifecycleHelper uiHelper;
 
     public static FacebookAuthFragment newInstance() {
@@ -41,26 +40,4 @@ public class FacebookAuthFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_facebook_auth, container, false);
     }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    public interface OnFragmentInteractionListener {
-        public void onFragmentInteraction(Uri uri);
-    }
-
 }

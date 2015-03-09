@@ -32,7 +32,6 @@ import java.util.HashMap;
 
 public class FieldReportFragment extends Fragment implements AbsListView.OnItemClickListener {
 
-    private OnFragmentInteractionListener mListener;
     private NetworkManager mNetworkManager;
     private MainActivity mMainActivity;
     private FieldReport mFieldReport;
@@ -80,24 +79,6 @@ public class FieldReportFragment extends Fragment implements AbsListView.OnItemC
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mMainActivity = (MainActivity)activity;
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -105,20 +86,7 @@ public class FieldReportFragment extends Fragment implements AbsListView.OnItemC
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (null != mListener) {
-
-        }
-    }
-
-    public interface OnFragmentInteractionListener {
-        public void onFragmentInteraction(Uri uri);
     }
 
     // Networking

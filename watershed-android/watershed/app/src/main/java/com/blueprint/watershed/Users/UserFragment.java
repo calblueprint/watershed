@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UserFragment extends Fragment implements ListView.OnItemClickListener{
-    private OnFragmentInteractionListener mListener;
     private User mUser;
     private MainActivity mMainActivity;
     private NetworkManager mNetworkManager;
@@ -86,29 +85,11 @@ public class UserFragment extends Fragment implements ListView.OnItemClickListen
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.empty, menu);
         super.onCreateOptionsMenu(menu, inflater);
 
-    }
-
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
     }
 
     @Override
@@ -117,17 +98,12 @@ public class UserFragment extends Fragment implements ListView.OnItemClickListen
         makeUserRequest(mUser);
     }
 
-    public interface OnFragmentInteractionListener {
-        public void onFragmentInteraction(Uri uri);
-    }
-
     public void configureProfilewithUser(User user) {
         mUser = user;
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (null != mListener) {
             // Direct to list of User Tasks, Field Reports, or Sites
             switch (position) {
                 case 0:
@@ -137,7 +113,6 @@ public class UserFragment extends Fragment implements ListView.OnItemClickListen
                 case 2:
                     // Sites
             }
-        }
     }
 
 
