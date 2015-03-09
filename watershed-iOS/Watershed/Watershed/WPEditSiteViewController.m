@@ -8,12 +8,22 @@
 
 #import "WPEditSiteViewController.h"
 #import "WPNetworkingManager.h"
+#import "UIExtensions.h"
 
 @implementation WPEditSiteViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"Edit Site";
+
+    UIBarButtonItem *cancelButton = self.navigationItem.leftBarButtonItem;
+
+    FAKIonIcons *trashIcon = [FAKIonIcons androidDeleteIconWithSize:24];
+    UIImage *trashImage = [trashIcon imageWithSize:CGSizeMake(24, 24)];
+    UIBarButtonItem *trashButton = [[UIBarButtonItem alloc] initWithImage:trashImage style:UIBarButtonItemStylePlain target:self action:nil];
+    trashButton.tintColor = [UIColor wp_red];
+
+    [self.navigationItem setLeftBarButtonItems:@[cancelButton, trashButton]];
 }
 
 // Override
