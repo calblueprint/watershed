@@ -42,6 +42,7 @@ public abstract class BaseRequest extends JsonObjectRequest {
                 Log.e("Request Error", "Custom ErrorListener detected");
                 NetworkResponse networkResponse = volleyError.networkResponse;
                 if (networkResponse != null && networkResponse.statusCode == HttpStatus.SC_FORBIDDEN) {
+                    Toast.makeText(activity, "You must sign in!", Toast.LENGTH_SHORT).show();
                     MainActivity.logoutCurrentUser(activity);
                     return;
                 }
@@ -59,7 +60,7 @@ public abstract class BaseRequest extends JsonObjectRequest {
                 }
                 errorListener.onResponse(apiError);
 
-                Toast toast = Toast.makeText(activity.getApplicationContext(), apiError.getMessage(), Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(activity, apiError.getMessage(), Toast.LENGTH_SHORT);
                 toast.show();
             }});
 

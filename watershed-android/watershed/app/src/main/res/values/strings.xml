@@ -46,9 +46,12 @@
     <!-- Task Creation -->
     <string name="title">Title</string>
     <string name="description">Description</string>
-    <string name="task_due_date">Due Date</string>
+    <string name="task_due_date">Pick a Date</string>
     <string name="site">Site</string>
-    <string name="assignee">Assignee</string>
+    <string name="assignee">Assign to user</string>
+    <string name="pick_user">Pick User</string>
+    <string name="loading_users">Loading Users..</string>
+    <string name="cancel">Cancel</string>
 
     <!-- Editing User -->
     <string name="edit_profile_name">Name</string>

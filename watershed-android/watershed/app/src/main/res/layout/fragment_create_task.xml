@@ -18,11 +18,12 @@
             android:layout_marginTop="20dp"
         />
 
-        <EditText
+        <TextView
             style="@style/FormEditText"
             android:id="@+id/create_task_due_date"
             android:layout_below="@id/create_task_title"
             android:hint="@string/task_due_date"
+            android:textSize="16sp"
         />
 
         <EditText
@@ -32,7 +33,7 @@
             android:layout_below="@id/create_task_due_date"
         />
 
-        <EditText
+        <TextView
             style="@style/FormEditText"
             android:id="@+id/create_task_assignee"
             android:layout_below="@id/create_task_site"
