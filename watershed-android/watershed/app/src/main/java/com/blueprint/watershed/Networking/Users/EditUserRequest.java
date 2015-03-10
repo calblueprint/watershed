@@ -12,15 +12,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONObject;
 
-import java.util.HashMap;
-
 /**
- * Created by Max Wolffe on 12/3/14.
+ * Created by charlesx on 2/21/15.
  */
-public class UserRequest extends BaseRequest {
+public class EditUserRequest extends BaseRequest {
 
-    public UserRequest(final Activity activity, User user, HashMap<String, JSONObject> params, final Response.Listener<User> listener) {
-        super(Request.Method.GET, makeObjectURL("users", user), new JSONObject(params),
+    public EditUserRequest(final Activity activity, User user, JSONObject params, final Response.Listener<User> listener) {
+        super(Request.Method.PUT, makeObjectURL("users", user), params,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {

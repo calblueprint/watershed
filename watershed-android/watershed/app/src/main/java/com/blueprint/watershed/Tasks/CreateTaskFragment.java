@@ -3,6 +3,8 @@ package com.blueprint.watershed.Tasks;
 import android.os.Bundle;
 import android.view.View;
 
+import com.blueprint.watershed.Utilities.Utility;
+
 
 public class CreateTaskFragment extends TaskAbstractFragment {
 
@@ -31,6 +33,7 @@ public class CreateTaskFragment extends TaskAbstractFragment {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Utility.hideKeyboard(mParentActivity, mLayout);
                 createTask(CREATE, null);
             }
         };

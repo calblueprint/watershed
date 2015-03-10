@@ -19,6 +19,7 @@
 
 # Ignore the database.yml file
 /config/database.yml
+*/application.yml
 
 .DS_Store
 
