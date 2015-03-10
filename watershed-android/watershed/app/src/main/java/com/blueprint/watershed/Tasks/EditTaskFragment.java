@@ -1,11 +1,9 @@
 package com.blueprint.watershed.Tasks;
 
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 
-import com.blueprint.watershed.R;
+import com.blueprint.watershed.Utilities.Utility;
 
 /**
  * Created by charlesx on 2/19/15.
@@ -37,13 +35,6 @@ public class EditTaskFragment extends TaskAbstractFragment {
         setTextViews();
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-        inflater.inflate(R.menu.empty, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
     /**
      * Presets the task with task information
      */
@@ -59,7 +50,10 @@ public class EditTaskFragment extends TaskAbstractFragment {
     public View.OnClickListener submitListener() {
         return new View.OnClickListener() {
             @Override
-            public void onClick(View view) { createTask(EDIT, mTask); }
+            public void onClick(View view) {
+                Utility.hideKeyboard(mParentActivity, mLayout);
+                createTask(EDIT, mTask);
+            }
         };
     }
 }

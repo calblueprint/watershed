@@ -36,7 +36,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def update
-    if @user.update(user_params)
+    if @user.update_with_password(user_params)
       render json: @user, serializer: UserSerializer
     else
       error_response(@user)
@@ -46,7 +46,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   private
 
   def user_params
-    params.require(:user).permit(:email, :name, :role, :password,
+    params.require(:user).permit(:email, :name, :role, :password, :current_password,
                                  :password_confirmation, :facebook_auth_token)
   end
 

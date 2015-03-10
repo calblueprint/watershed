@@ -30,7 +30,6 @@ public abstract class BaseRequest extends JsonObjectRequest {
     private Response.Listener listener;
     private Response.Listener errorListener;
 
-//    private static final String baseURL = "https://intense-reaches-1457.herokuapp.com/api/v1/";
     private static final String baseURL = "https://intense-reaches-1457.herokuapp.com/api/v1/";
 
     public BaseRequest(int method, String url, JSONObject jsonRequest,
@@ -54,10 +53,10 @@ public abstract class BaseRequest extends JsonObjectRequest {
                     ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
                     apiError = mapper.readValue(errorJson, new TypeReference<APIError>() {
                     });
-                    errorListener.onResponse(apiError);
                 } catch (Exception e) {
                     Log.e("Json exception in Base Request", e.toString());
                 }
+                errorListener.onResponse(apiError);
 
                 Toast toast = Toast.makeText(activity.getApplicationContext(), apiError.getMessage(), Toast.LENGTH_SHORT);
                 toast.show();
