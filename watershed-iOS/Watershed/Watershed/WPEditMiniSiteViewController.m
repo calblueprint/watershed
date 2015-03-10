@@ -16,7 +16,18 @@
     self.navigationItem.title = @"Edit MiniSite";
 
     [self.imageInputCell.imageInputView setImageWithURL:self.miniSite.imageURLs.firstObject];
-    self.imageInputCell.viewImageButton.alpha = 1;
+    if (self.imageInputCell.imageInputView.image) {
+        self.imageInputCell.viewImageButton.alpha = 1;
+    }
+
+    UIBarButtonItem *cancelButton = self.navigationItem.leftBarButtonItem;
+
+    FAKIonIcons *trashIcon = [FAKIonIcons androidDeleteIconWithSize:24];
+    UIImage *trashImage = [trashIcon imageWithSize:CGSizeMake(24, 24)];
+    UIBarButtonItem *trashButton = [[UIBarButtonItem alloc] initWithImage:trashImage style:UIBarButtonItemStylePlain target:self action:nil];
+    trashButton.tintColor = [UIColor wp_red];
+
+    [self.navigationItem setLeftBarButtonItems:@[cancelButton, trashButton]];
 }
 
 // Override
