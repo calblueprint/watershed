@@ -44,7 +44,6 @@ public abstract class TaskAbstractFragment extends Fragment {
     protected EditText mMiniSiteId;
     protected MainActivity mParentActivity;
     protected NetworkManager mNetworkManager;
-    protected OnFragmentInteractionListener mListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,27 +61,10 @@ public abstract class TaskAbstractFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.empty, menu);
         super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
     }
 
     /**
@@ -149,8 +131,4 @@ public abstract class TaskAbstractFragment extends Fragment {
     }
 
     public abstract View.OnClickListener submitListener();
-
-    public interface OnFragmentInteractionListener {
-        public void onFragmentInteraction(Uri uri);
-    }
 }

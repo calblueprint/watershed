@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,33 +18,12 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <RelativeLayout
+    <TextView
         android:id="@+id/no_tasks_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
         android:visibility="gone"
-        >
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true">
-
-            <TextView
-                android:id="@+id/no_tasks_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/no_tasks"/>
-
-            <Button
-                android:id="@+id/no_tasks_refresh"
-                android:layout_height="@dimen/button_standard_height"
-                android:layout_width="100dp"
-                android:layout_below="@id/no_tasks_text"
-                android:layout_marginTop="@dimen/standard_margin"
-                android:layout_centerHorizontal="true"
-                android:text="@string/no_tasks_refresh"/>
-        </RelativeLayout>
-    </RelativeLayout>
-</FrameLayout>
+        android:text="@string/no_tasks"/>
+</RelativeLayout>

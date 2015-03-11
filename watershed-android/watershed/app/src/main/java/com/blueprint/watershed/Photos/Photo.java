@@ -2,19 +2,18 @@ package com.blueprint.watershed.Photos;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Base64;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.APIObject;
-import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.Networking.NetworkManager;
-import com.blueprint.watershed.Tasks.Task;
-import com.blueprint.watershed.Users.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 /**
@@ -27,8 +26,7 @@ public class Photo implements APIObject {
     private String mURL;
     private Bitmap mImage;
 
-    public Photo() {
-    }
+    public Photo() {}
 
     public Photo(Bitmap image) {
         mImage = image;
@@ -67,6 +65,7 @@ public class Photo implements APIObject {
                 @Override
                 public void onResponse(Bitmap bitmap) {
                     mImage = bitmap;
+                    Log.e("Photo", "Response Returned");
                     imageView.setImageBitmap(mImage);
                     imageView.refreshDrawableState();
                 }

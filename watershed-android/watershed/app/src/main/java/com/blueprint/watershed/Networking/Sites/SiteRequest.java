@@ -32,7 +32,7 @@ public class SiteRequest extends BaseRequest {
                         });
                         listener.onResponse(site);
                     } catch (Exception e) {
-                        Log.e("Json exception", e.toString());
+                        Log.e("Site Detail Json exception", e.toString());
                     }
                 }
 

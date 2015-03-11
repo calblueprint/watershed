@@ -13,13 +13,8 @@ import android.view.ViewGroup;
 
 public class AboutFragment extends Fragment{
 
+    public static AboutFragment newInstance() { return new AboutFragment(); }
 
-    private OnFragmentInteractionListener mListener;
-
-    public static AboutFragment newInstance(String param1, String param2) {
-        AboutFragment fragment = new AboutFragment();
-        return fragment;
-    }
     public AboutFragment() {
         // Required empty public constructor
     }
@@ -31,31 +26,8 @@ public class AboutFragment extends Fragment{
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_about, container, false);
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-
-    public interface OnFragmentInteractionListener {
-        public void onFragmentInteraction(Uri uri);
     }
 
     @Override
