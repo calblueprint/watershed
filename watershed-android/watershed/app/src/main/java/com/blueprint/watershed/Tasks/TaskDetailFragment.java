@@ -1,7 +1,5 @@
 package com.blueprint.watershed.Tasks;
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -22,9 +20,7 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
 
     private MainActivity mParentActivity;
     private Task mTask;
-    private OnFragmentInteractionListener mListener;
     private NetworkManager mNetworkManager;
-    private MainActivity mMainActivity;
 
     private TextView mDetailTitle;
     private TextView mDescription;
@@ -82,36 +78,6 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
         mDescription.setText(mTask.getDescription());
     }
 
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mMainActivity = (MainActivity)activity;
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-
     //TODO Move this method to TaskFragment once the duplicate menu items bug is fixed.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -140,12 +106,7 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
 
     public void fieldReportButtonPressed(View view){
         AddFieldReportFragment fieldFragment = AddFieldReportFragment.newInstance();
-        mMainActivity.setFieldReportTask(mTask);
-        mMainActivity.replaceFragment(fieldFragment);
+        mParentActivity.setFieldReportTask(mTask);
+        mParentActivity.replaceFragment(fieldFragment);
     }
-
-    public interface OnFragmentInteractionListener {
-        public void onFragmentInteraction(Uri uri);
-    }
-
 }

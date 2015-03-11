@@ -34,7 +34,6 @@ import java.util.HashMap;
 public class MiniSiteFragment extends Fragment
                               implements AbsListView.OnItemClickListener {
 
-    private OnFragmentInteractionListener mListener;
     private NetworkManager mNetworkManager;
     private MainActivity mMainActivity;
     private HeaderGridView mFieldReportGirdView;
@@ -92,24 +91,6 @@ public class MiniSiteFragment extends Fragment
         return view;
     }
 
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mMainActivity = (MainActivity)activity;
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
@@ -124,24 +105,12 @@ public class MiniSiteFragment extends Fragment
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (null != mListener) {
-            // Load Field Report
-            FieldReport fieldReport = getFieldReport(position);
-            AddFieldReportFragment addFieldReportFragment = new AddFieldReportFragment();
-            addFieldReportFragment.configureWithFieldReport(fieldReport);
-            mMainActivity.replaceFragment(addFieldReportFragment);
-        }
-    }
-
-    public interface OnFragmentInteractionListener {
-        public void onFragmentInteraction(Uri uri);
+        // Load Field Report
+        FieldReport fieldReport = getFieldReport(position);
+        AddFieldReportFragment addFieldReportFragment = new AddFieldReportFragment();
+        addFieldReportFragment.configureWithFieldReport(fieldReport);
+        mMainActivity.replaceFragment(addFieldReportFragment);
     }
 
     // Networking

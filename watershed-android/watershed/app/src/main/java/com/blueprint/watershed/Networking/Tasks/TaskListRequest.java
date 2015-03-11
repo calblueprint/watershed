@@ -32,7 +32,7 @@ public class TaskListRequest extends BaseRequest {
                         });
                         listener.onResponse(tasks);
                     } catch (Exception e) {
-                        Log.e("Json exception", e.toString());
+                        Log.e("Task List Json exception", e.toString());
                     }
                 }
             }, activity);

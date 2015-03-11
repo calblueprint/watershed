@@ -27,12 +27,11 @@ public class SiteListRequest extends BaseRequest {
                 public void onResponse(JSONObject jsonObject) {
                     try {
                         String sitesJson = jsonObject.get("sites").toString();
-                        ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
-                        ArrayList<Site> sites = mapper.readValue(sitesJson, new TypeReference<ArrayList<Site>>() {
-                        });
+                        ObjectMapper mapper = getNetworkManager(activity).getObjectMapper();
+                        ArrayList<Site> sites = mapper.readValue(sitesJson, new TypeReference<ArrayList<Site>>() {});
                         listener.onResponse(sites);
                     } catch (Exception e) {
-                        Log.e("Json exception", e.toString());
+                        Log.e("Site Json exception", e.toString());
                     }
                 }
 

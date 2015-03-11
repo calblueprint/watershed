@@ -42,7 +42,7 @@ public class CreateSiteRequest extends BaseRequest {
                             });
                             listener.onResponse(site);
                         } catch (Exception e) {
-                            Log.e("Json exception", e.toString());
+                            Log.e("Create Site Json exception", e.toString());
                         }
                     }
                 }, activity);

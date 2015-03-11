@@ -5,6 +5,7 @@
     tools:context="com.blueprint.watershed.Tasks.CreateTaskFragment">
 
     <RelativeLayout
+        android:id="@+id/create_task_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -93,7 +94,7 @@
                 android:layout_width="fill_parent"
                 android:background="@color/ws_blue"
                 android:textColor="@color/white"
-                android:text="@string/create_task_submit"
+                android:text="Submit Task"
                 android:layout_height="96dp" />
         </RelativeLayout>
     </RelativeLayout>

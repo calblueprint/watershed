@@ -1,16 +1,15 @@
 package com.blueprint.watershed.Tasks;
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.android.volley.Response;
@@ -33,8 +32,6 @@ public class TaskFragment extends ListFragment {
     private static final int USER = 0;
     private static final int ALL = 1;
 
-
-    private OnFragmentInteractionListener mListener;
     private MainActivity mParentActivity;
     private NetworkManager mNetworkManager;
 
@@ -45,7 +42,6 @@ public class TaskFragment extends ListFragment {
     
 
     private ListView mListView;
-    private Button mNoTasksRefresh;
     private SwipeRefreshLayout mSwipeLayout;
 
 
@@ -57,8 +53,7 @@ public class TaskFragment extends ListFragment {
         return fragment;
     }
 
-    public TaskFragment(){
-    }
+    public TaskFragment(){}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,9 +71,14 @@ public class TaskFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View finalView = inflater.inflate(R.layout.fragment_task_list, container, false);
         initializeViews(finalView);
+        return finalView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         mSwipeLayout.setRefreshing(true);
         getTasksRequest();
-        return finalView;
     }
 
     /**
@@ -94,15 +94,6 @@ public class TaskFragment extends ListFragment {
         if (TASK_TYPE == USER) mListView.setAdapter(mUserTaskAdapter);
         else mListView.setAdapter(mAllTaskAdapter);
         mListView.setEmptyView(view.findViewById(R.id.no_tasks_layout));
-
-        mNoTasksRefresh = (Button) view.findViewById(R.id.no_tasks_refresh);
-        mNoTasksRefresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mSwipeLayout.setRefreshing(true);
-                getTasksRequest();
-            }
-        });
 
         mSwipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.tasks_swipe_container);
         mSwipeLayout.setColorSchemeResources(R.color.ws_blue, R.color.facebook_blue, R.color.facebook_dark_blue, R.color.dark_gray);
@@ -127,20 +118,8 @@ public class TaskFragment extends ListFragment {
         Task taskClicked;
         if (TASK_TYPE == USER) taskClicked = mUserTaskList.get(position);
         else taskClicked = mAllTaskList.get(position);
-
         TaskDetailFragment detailFragment = TaskDetailFragment.newInstance(taskClicked);
         mParentActivity.replaceFragment(detailFragment);
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
     }
 
     @Override
@@ -150,32 +129,28 @@ public class TaskFragment extends ListFragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
     /**
      * Gets all the tasks in the server and updates the ListView accordingly,
      * depending on what tab is being clicked on.
      */
     private void getTasksRequest(){
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
-
         TaskListRequest taskListRequest = new TaskListRequest(getActivity(), params, new Response.Listener<ArrayList<Task>>() {
             @Override
             public void onResponse(ArrayList<Task> tasks) {
                 setTasks(tasks);
-                mParentActivity.getSpinner().setVisibility(View.GONE);
                 mAllTaskAdapter.notifyDataSetChanged();
                 mUserTaskAdapter.notifyDataSetChanged();
-                if (mSwipeLayout != null) mSwipeLayout.setRefreshing(false);
+                new CountDownTimer(1000, 1000) {
+                    @Override
+                    public void onTick(long timeLeft) {}
+                    @Override
+                    public void onFinish() { mSwipeLayout.setRefreshing(false); }
+                }.start();
             }
         });
         mNetworkManager.getRequestQueue().add(taskListRequest);
     }
-
 
     /**
      * Sets the tasks for all tasks list and user tasks lists
@@ -192,13 +167,4 @@ public class TaskFragment extends ListFragment {
             }
         }
     }
-
-    /**
-     * Interface for the fragment to communicate with the activity
-     * Implemented in MainActivity.
-     */
-    public interface OnFragmentInteractionListener {
-        public void onFragmentInteraction(Uri uri);
-    }
-
 }
