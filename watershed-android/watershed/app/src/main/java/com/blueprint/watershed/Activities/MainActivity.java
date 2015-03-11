@@ -231,7 +231,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     private void initializeFragments() {
-        TaskFragment mTaskFragment = TaskFragment.newInstance(0);
+        TaskFragment taskFragment = TaskFragment.newInstance(0);
         mFragmentManager = getSupportFragmentManager();
         mFragmentManager.addOnBackStackChangedListener(
                 new FragmentManager.OnBackStackChangedListener() {
@@ -243,20 +243,17 @@ public class MainActivity extends ActionBarActivity
                         }
                     }
                 });
-        updateTitle(mTaskFragment);
+        updateTitle(taskFragment);
         android.support.v4.app.FragmentTransaction ft = mFragmentManager.beginTransaction();
-        ft.add(R.id.container, mTaskFragment);
+        ft.add(R.id.container, taskFragment);
         ft.commit();
     }
 
     @Override
-    public void onTabReselected(Tab tab, FragmentTransaction ft) {
-    }
+    public void onTabReselected(Tab tab, FragmentTransaction ft) {}
 
     @Override
     public void onTabSelected(Tab tab, FragmentTransaction ft) {
-        // on tab selected
-        // show respected fragment view
         viewPager.setCurrentItem(tab.getPosition());
     }
 

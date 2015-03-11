@@ -33,7 +33,6 @@ import java.util.HashMap;
 public class FieldReportFragment extends Fragment implements AbsListView.OnItemClickListener {
 
     private NetworkManager mNetworkManager;
-    private MainActivity mMainActivity;
     private FieldReport mFieldReport;
 
 

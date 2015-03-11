@@ -100,7 +100,6 @@ public class TaskFragment extends ListFragment {
         mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Log.i("asdf", "swpe");
                 mSwipeLayout.setRefreshing(true);
                 getTasksRequest();
             }

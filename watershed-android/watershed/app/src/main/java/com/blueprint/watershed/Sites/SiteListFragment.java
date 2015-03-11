@@ -28,7 +28,7 @@ import java.util.HashMap;
 
 public class SiteListFragment extends Fragment {
 
-    public static final String SITELISTREQUEST = "SiteListTag";
+    public static final String SITE_LIST_REQUEST = "SiteListTag";
 
     private MainActivity mParentActivity;
     private NetworkManager mNetworkManager;
@@ -61,7 +61,6 @@ public class SiteListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_site_list, container, false);
         initializeViews(view);
         getSitesRequest();
-        Log.i("ONCREATE", "ONCREATAE");
         return view;
     }
     
@@ -75,7 +74,6 @@ public class SiteListFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(mParentActivity);
         mSiteListView = (RecyclerView) view.findViewById(R.id.list);
         mSiteListView.setLayoutManager(mLayoutManager);
-//        mSiteListView.setEmptyView(mParentActivity.findViewById(R.id.site_layout));
         if (getSites().size() == 0) hideList();
         mAdapter = new SiteListAdapter(mParentActivity, R.layout.site_list_row, getSites());
         mSiteListView.setAdapter(mAdapter);
@@ -103,7 +101,7 @@ public class SiteListFragment extends Fragment {
         super.onPause();
         RequestQueue requestQueue = mNetworkManager.getRequestQueue();
         if (requestQueue != null) {
-            requestQueue.cancelAll(SITELISTREQUEST);
+            requestQueue.cancelAll(SITE_LIST_REQUEST);
         }
 
     }
@@ -136,7 +134,7 @@ public class SiteListFragment extends Fragment {
             }
 
         });
-        siteListRequest.setTag(SITELISTREQUEST);
+        siteListRequest.setTag(SITE_LIST_REQUEST);
         mNetworkManager.getRequestQueue().add(siteListRequest);
     }
 

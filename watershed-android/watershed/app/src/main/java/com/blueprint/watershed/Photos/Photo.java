@@ -76,12 +76,6 @@ public class Photo implements APIObject {
         }
     }
 
-    public void compressImage(){
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        mImage.compress(Bitmap.CompressFormat.JPEG, 50, out);
-        mImage = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
-    }
-
     // Setters
     public void setId(Integer id) { mId = id; }
     public void setURL(String URL) { mURL = URL; }
