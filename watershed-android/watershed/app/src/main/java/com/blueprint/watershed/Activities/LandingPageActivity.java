@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Authentication.LoginFragment;
@@ -22,6 +23,7 @@ import com.blueprint.watershed.Networking.Sessions.SignUpRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Utilities.APIError;
 import com.crashlytics.android.Crashlytics;
+import com.blueprint.watershed.Utilities.Utility;
 import com.facebook.AppEventsLogger;
 import com.facebook.SessionState;
 import com.facebook.model.GraphUser;
@@ -37,7 +39,7 @@ import java.util.HashMap;
 public class LandingPageActivity extends Activity implements View.OnClickListener{
 
     // Constants
-    public  static final String PREFERENCES = "LOGIN_PREFERENCES";
+    public  static final String PREFERENCES = "WATERSHED_LOGIN_PREFERENCES";
     private static final String TAG         = "LandingPageActivity";
     private static final String LOGIN_URL = "https://intense-reaches-1457.herokuapp.com/api/v1/users/sign_in";
     private static final String FACEBOOK_URL = "https://intense-reaches-1457.herokuapp.com/api/v1/users/sign_up/facebook";
@@ -51,6 +53,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     private SharedPreferences preferences;
     private ObjectMapper mMapper;
     private View viewBlocker;
+    private LinearLayout mLayout;
 
     //User
     private Integer mUserId;
@@ -118,6 +121,9 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         mSignUpButton.setOnClickListener(this);
 
         mFacebookButton.setReadPermissions(Arrays.asList("email"));
+
+        mLayout = (LinearLayout) findViewById(R.id.container);
+        Utility.setKeyboardListener(this, mLayout);
     }
 
     public void onClick(View view){

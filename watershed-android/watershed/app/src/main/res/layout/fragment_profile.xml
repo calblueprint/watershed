@@ -1,15 +1,13 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/ws_blue"
+    android:orientation="vertical"
     tools:context="com.blueprint.watershed.Users.UserFragment">
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/profile_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/standard_margin"
@@ -58,10 +56,8 @@
         android:id="@+id/profile_options"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_below="@id/profile_container"
         >
 
     </ListView>
-
-    </LinearLayout>
-
-</FrameLayout>
+</RelativeLayout>

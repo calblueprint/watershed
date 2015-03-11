@@ -12,7 +12,6 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -30,9 +29,6 @@ import android.widget.ProgressBar;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.AboutFragment;
-import com.blueprint.watershed.FieldReports.AddFieldReportFragment;
-import com.blueprint.watershed.FieldReports.FieldReportFragment;
-import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Users.HomeRequest;
 import com.blueprint.watershed.R;
@@ -40,11 +36,11 @@ import com.blueprint.watershed.Sites.SiteFragment;
 import com.blueprint.watershed.Sites.SiteListFragment;
 import com.blueprint.watershed.Tasks.CreateTaskFragment;
 import com.blueprint.watershed.Tasks.Task;
-import com.blueprint.watershed.Tasks.TaskAbstractFragment;
 import com.blueprint.watershed.Tasks.TaskFragment;
 import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Users.UserFragment;
 import com.blueprint.watershed.Utilities.TabsPagerAdapter;
+import com.blueprint.watershed.Utilities.Utility;
 import com.facebook.Session;
 
 import org.json.JSONObject;
@@ -55,6 +51,7 @@ public class MainActivity extends ActionBarActivity
                           implements ActionBar.TabListener,
                                      View.OnClickListener,
                                      ListView.OnItemClickListener {
+
 
     // Constants
     private static final String PREFERENCES = "LOGIN_PREFERENCES";
@@ -269,6 +266,7 @@ public class MainActivity extends ActionBarActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                Utility.hideKeyboard(this, mContainer);
                 Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
                 if (!(f instanceof TaskFragment) && !(f instanceof SiteListFragment) &&!(f instanceof UserFragment) &&!(f instanceof AboutFragment)) {
                     getSupportFragmentManager().popBackStack();
