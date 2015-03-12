@@ -48,7 +48,7 @@ public class TaskFragment extends ListFragment {
     private Bundle mArgs;
 
     private ExpandableListView mListView;
-    private TextViewg mNoTasks;
+    private TextView mNoTasks;
     private SwipeRefreshLayout mSwipeLayout;
 
 
