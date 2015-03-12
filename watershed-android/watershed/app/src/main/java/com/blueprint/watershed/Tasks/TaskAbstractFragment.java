@@ -167,6 +167,21 @@ public abstract class TaskAbstractFragment extends Fragment {
                     hasErrors = true;
                 }
 
+                if (mMiniSite == null) {
+                    setEmpty("Minisite", mDescriptionField);
+                    hasErrors = true;
+                }
+
+                if (mDate == null) {
+                    setEmpty("Deadline", mDescriptionField);
+                    hasErrors = true;
+                }
+
+                if (mUser == null) {
+                    setEmpty("User", mDescriptionField);
+                    hasErrors = true;
+                }
+
                 if (hasErrors) return;
 
                 submitListener();
@@ -231,13 +246,12 @@ public abstract class TaskAbstractFragment extends Fragment {
      */
     public void createTask(String type, Task task) {
         if (type.equals(CREATE)) task = new Task();
-        if (mTitleField.getText().toString() != null) task.setTitle(mTitleField.getText().toString());
-        if (mDescriptionField.getText().toString() != null) task.setDescription(mDescriptionField.getText().toString());
-        if (mParentActivity.getUser().getId() != null) task.setAssignerId(mParentActivity.getUser().getId());
-        if (mDate != null) task.setDueDate(mDate);
-        if (mUser != null) task.setAssigneeId(mUser.getId());
-        if (mMiniSiteId.getText().toString() != null) task.setMiniSiteId(Integer.parseInt(mMiniSiteId.getText().toString()));
-        task.setComplete(false);
+        task.setTitle(mTitleField.getText().toString());
+        task.setDescription(mDescriptionField.getText().toString());
+        task.setAssignerId(mParentActivity.getUserId());
+        task.setDueDate(mDate);
+        task.setAssigneeId(mUser.getId());
+        task.setMiniSiteId(mMiniSite.getId());
 
         createTaskRequest(task, type);
     }
