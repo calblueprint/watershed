@@ -23,10 +23,9 @@
             android:id="@+id/create_task_due_date"
             android:layout_below="@id/create_task_title"
             android:hint="@string/task_due_date"
-            android:textSize="16sp"
         />
 
-        <EditText
+        <TextView
             style="@style/FormEditText"
             android:id="@+id/create_task_site"
             android:hint="@string/site"
