@@ -135,21 +135,21 @@ public abstract class TaskAbstractFragment extends Fragment {
         mAssigneeField = (TextView) mParentActivity.findViewById(R.id.create_task_assignee);
         mAssigneeField.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                openUserDialog();
-            }
+            public void onClick(View view) { openUserDialog(); }
         });
 
 
         mDueDateField = (TextView) mParentActivity.findViewById(R.id.create_task_due_date);
         mDueDateField.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                openDateDialog();
-            }
+            public void onClick(View view) { openDateDialog(); }
         });
 
         mMiniSiteId = (TextView) mParentActivity.findViewById(R.id.create_task_site);
+        mMiniSiteId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { openSiteDialog(); }
+        });
     }
 
     private View.OnClickListener validateAndSubmit() {
