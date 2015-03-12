@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
 /**
@@ -61,6 +62,7 @@ public class CreateTaskRequest extends BaseRequest {
 
         try {
             JSONObject taskJson = new JSONObject(mapper.writeValueAsString(task));
+            taskJson.put("due_date", new SimpleDateFormat("yyyy/MM/dd").format(task.getDueDate()));
             params.put("task", taskJson);
         } catch (Exception e) {
             e.printStackTrace();

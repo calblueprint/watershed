@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ExpandableListView;
-import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
@@ -48,7 +48,7 @@ public class TaskFragment extends ListFragment {
     private Bundle mArgs;
 
     private ExpandableListView mListView;
-    private RelativeLayout mNoTasks;
+    private TextViewg mNoTasks;
     private SwipeRefreshLayout mSwipeLayout;
 
 
@@ -125,7 +125,7 @@ public class TaskFragment extends ListFragment {
                 mSwipeLayout.setEnabled((topRowVerticalPosition >= 0));
             }
         });
-        mNoTasks = (RelativeLayout) view.findViewById(R.id.no_tasks_layout);
+        mNoTasks = (TextView) view.findViewById(R.id.no_tasks_layout);
 
         if (mArgs.getInt(OPTION) == USER) {
             mUserTaskAdapter = new TaskAdapter(mParentActivity, mTaskListHeaders, mUserTaskList);
@@ -149,6 +149,7 @@ public class TaskFragment extends ListFragment {
      * depending on what tab is being clicked on.
      */
     private void getTasksRequest(){
+        mSwipeLayout.setRefreshing(true);
         Log.i("watasdfasdf", String.valueOf(mArgs.getInt(OPTION)));
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
         TaskListRequest taskListRequest = new TaskListRequest(getActivity(), params, new Response.Listener<ArrayList<Task>>() {

@@ -14,9 +14,7 @@ public class CreateTaskFragment extends TaskAbstractFragment {
      */
     public static CreateTaskFragment newInstance() { return new CreateTaskFragment(); }
 
-    public CreateTaskFragment() {
-        // Required empty public constructor
-    }
+    public CreateTaskFragment() {}
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {

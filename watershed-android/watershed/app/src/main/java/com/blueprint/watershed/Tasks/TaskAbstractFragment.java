@@ -35,6 +35,7 @@ import com.blueprint.watershed.Utilities.Utility;
 
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -262,7 +263,7 @@ public abstract class TaskAbstractFragment extends Fragment {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day);
         mDate = calendar.getTime();
-        mDueDateField.setText(mDate.toString());
+        mDueDateField.setText(new SimpleDateFormat("MM/dd/yyyy").format(mDate));
     }
 
     public void setUser(User user) {
