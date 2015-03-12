@@ -1,11 +1,9 @@
 package com.blueprint.watershed.Tasks;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -25,6 +23,8 @@ import android.widget.TextView;
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.blueprint.watershed.Activities.MainActivity;
+import com.blueprint.watershed.MiniSites.MiniSite;
+import com.blueprint.watershed.Networking.MiniSites.MiniSiteInfoListRequest;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Tasks.CreateTaskRequest;
 import com.blueprint.watershed.Networking.Tasks.EditTaskRequest;
@@ -55,13 +55,15 @@ public abstract class TaskAbstractFragment extends Fragment {
     protected EditText mDescriptionField;
     protected TextView mAssigneeField;
     protected TextView mDueDateField;
-    protected EditText mMiniSiteId;
+    protected TextView mMiniSiteId;
     protected MainActivity mParentActivity;
     protected NetworkManager mNetworkManager;
 
     private Date mDate;
     private User mUser;
+    private MiniSite mMiniSite;
     private List<User> mUsers;
+    private List<MiniSite> mMiniSites;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,7 +71,16 @@ public abstract class TaskAbstractFragment extends Fragment {
         setHasOptionsMenu(true);
         mParentActivity = (MainActivity) getActivity();
         mNetworkManager = NetworkManager.getInstance(mParentActivity);
-        getUsers();
+        getFieldObjects();
+    }
+
+    /**
+     * Gets the users and sites so that we can pick from them.
+     */
+    private void getFieldObjects() {
+        mUsers = mParentActivity.getUsers();
+        if (mUsers == null) getUsers();
+        getMiniSites();
     }
 
     @Override
@@ -86,16 +97,24 @@ public abstract class TaskAbstractFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
+    /**
+     * Gets users, and checks if the MainActivity has it loaded already. If it doesn't might as well use it there!
+     */
     private void getUsers() {
         UsersRequest request = new UsersRequest(mParentActivity, new Response.Listener<ArrayList<User>>() {
             @Override
-            public void onResponse(ArrayList<User> users) { mUsers = users; }
+            public void onResponse(ArrayList<User> users) {
+                mUsers = users;
+                mParentActivity.setUsers(users);
+            }
+        });
+        mNetworkManager.getRequestQueue().add(request);
+    }
+
+    private void getMiniSites() {
+        MiniSiteInfoListRequest request = new MiniSiteInfoListRequest(mParentActivity, new Response.Listener<ArrayList<MiniSite>>() {
+            @Override
+            public void onResponse(ArrayList<MiniSite> miniSites) { mMiniSites = miniSites; }
         });
         mNetworkManager.getRequestQueue().add(request);
     }
@@ -130,7 +149,7 @@ public abstract class TaskAbstractFragment extends Fragment {
             }
         });
 
-        mMiniSiteId = (EditText) mParentActivity.findViewById(R.id.create_task_site);
+        mMiniSiteId = (TextView) mParentActivity.findViewById(R.id.create_task_site);
     }
 
     private View.OnClickListener validateAndSubmit() {
@@ -165,6 +184,12 @@ public abstract class TaskAbstractFragment extends Fragment {
 
     private void openDateDialog() {
         TaskDateDialog newFragment = TaskDateDialog.newInstance();
+        newFragment.setTargetFragment(this, REQUEST_CODE);
+        newFragment.show(mParentActivity.getSupportFragmentManager(), "timePicker");
+    }
+
+    private void openSiteDialog() {
+        PickMiniSite newFragment = PickMiniSite.newInstance(mMiniSites);
         newFragment.setTargetFragment(this, REQUEST_CODE);
         newFragment.show(mParentActivity.getSupportFragmentManager(), "timePicker");
     }
@@ -231,9 +256,11 @@ public abstract class TaskAbstractFragment extends Fragment {
         mAssigneeField.setText(mUser.getName());
     }
 
-    public interface OnFragmentInteractionListener {
-        public void onFragmentInteraction(Uri uri);
+    public void setMiniSite(MiniSite site) {
+        mMiniSite = site;
+        mMiniSiteId.setText(site.getName());
     }
+
 
     /**
      * Creates a dialog allowing you to pick a date
@@ -315,5 +342,57 @@ public abstract class TaskAbstractFragment extends Fragment {
         }
 
         private void setUsers(List<User> users) { mUsers = users; }
+    }
+
+    /**
+     * Creates a dialog that picks a user
+     */
+    public static class PickMiniSite extends DialogFragment {
+
+        protected List<MiniSite> mMiniSites;
+
+        public static PickMiniSite newInstance(List<MiniSite> miniSites) {
+            PickMiniSite dialog = new PickMiniSite();
+            dialog.setUsers(miniSites);
+            return dialog;
+        }
+
+        @Override
+        @NonNull
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(R.string.pick_user)
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+
+            if (mMiniSites != null && mMiniSites.size() > 0) {
+                builder.setItems(getUserNames(), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Log.i("user", mMiniSites.get(i).getName());
+                        if (!(getTargetFragment() instanceof TaskAbstractFragment)) Log.e("can't", "even fragment");
+                        TaskAbstractFragment fragment = (TaskAbstractFragment) getTargetFragment();
+                        fragment.setMiniSite(mMiniSites.get(i));
+                    }
+                });
+            } else {
+                builder.setMessage(R.string.loading_users);
+            }
+
+            return builder.create();
+
+        }
+
+        public String[] getUserNames() {
+            String[] names = new String[mMiniSites.size()];
+            for (int i = 0; i < mMiniSites.size(); i++) names[i] = mMiniSites.get(i).getName();
+            return names;
+        }
+
+        private void setUsers(List<MiniSite> miniSites) { mMiniSites = miniSites; }
     }
 }

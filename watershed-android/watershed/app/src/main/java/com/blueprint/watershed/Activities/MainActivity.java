@@ -45,7 +45,13 @@ import com.facebook.Session;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+<<<<<<<Updated upstream
+        =======
+        >>>>>>>Stashed changes
 
 public class MainActivity extends ActionBarActivity
                           implements ActionBar.TabListener,
@@ -90,10 +96,15 @@ public class MainActivity extends ActionBarActivity
     //Task for FieldReport
     private Task mFieldReportTask;
 
+<<<<<<< Updated upstream
     // Caching images
     private LruCache<Integer, Drawable> mSiteImages;
     private LruCache<Integer, Drawable> mMiniSiteImages;
 
+=======
+    // Params (so we don't have to set them later)
+    private List<User> mUsers;
+>>>>>>> Stashed changes
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -392,7 +403,9 @@ public class MainActivity extends ActionBarActivity
     }
 
 
-    // Setter
+    /*
+        Getter and setter zones;
+     */
     public void setUser(User user) { mUser = user; }
     public User getUser() { return mUser; }
     public int getUserId() { return mUserId; }
@@ -400,4 +413,7 @@ public class MainActivity extends ActionBarActivity
     public Task getFieldReportTask() { return mFieldReportTask; }
 
     public ProgressBar getSpinner() { return mProgress; }
+
+    public void setUsers(ArrayList<User> users) { mUsers = users; }
+    public List<User> getUsers() { return mUsers; }
 }
