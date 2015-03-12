@@ -58,7 +58,6 @@ public abstract class TaskAbstractFragment extends Fragment {
     protected EditText mMiniSiteId;
     protected MainActivity mParentActivity;
     protected NetworkManager mNetworkManager;
-    protected OnFragmentInteractionListener mListener;
 
     private Date mDate;
     private User mUser;
@@ -78,17 +77,6 @@ public abstract class TaskAbstractFragment extends Fragment {
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         return inflater.inflate(R.layout.fragment_create_task, container, false);
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
     }
 
     @Override

@@ -61,6 +61,10 @@
     <string name="edit_profile_confirm">Old Password</string>
 
     <!-- Task Index -->
-    <string name="no_tasks">Looks like you don\'t have any tasks!\n Have a great day! :D</string>
+    <string name="no_tasks">Looks like you don\'t have any tasks!\nSwipe up to refresh.</string>
     <string name="no_tasks_refresh">Refresh</string>
+    <!-- Site Index -->
+    <string name="no_site">Looks like you don\'t have any sites!\nSwipe up to refresh.</string>
+    <string name="no_site_refresh">Refresh</string>
+
 </resources>

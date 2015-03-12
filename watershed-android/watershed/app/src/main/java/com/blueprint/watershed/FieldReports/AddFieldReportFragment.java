@@ -45,7 +45,6 @@ import java.util.HashMap;
 
 public class AddFieldReportFragment extends Fragment implements View.OnClickListener {
 
-    private OnFragmentInteractionListener mListener;
     private MainActivity mActivity;
     private NetworkManager mNetworkManager;
     private View view;
@@ -92,23 +91,6 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
         return view;
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mActivity = (MainActivity) activity;
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
 
     /*
      * Networking
@@ -219,10 +201,6 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             fieldReportImageView.setImageBitmap(photo);
         }
-    }
-
-    public interface OnFragmentInteractionListener {
-        public void onFragmentInteraction(Uri uri);
     }
 
     // Getters

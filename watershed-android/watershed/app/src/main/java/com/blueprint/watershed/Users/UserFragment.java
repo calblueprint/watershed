@@ -67,11 +67,6 @@ public class UserFragment extends Fragment implements ListView.OnItemClickListen
         initializeListLayout();
     }
 
-    @Override
-    public void onResume(){
-        super.onResume();
-    }
-
     /**
      * Displays a user's name, email, and role
      */
@@ -114,6 +109,14 @@ public class UserFragment extends Fragment implements ListView.OnItemClickListen
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+    }
+
+    public void configureProfilewithUser(User user) {
+        mUser = user;
+    }
+
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
@@ -127,6 +130,7 @@ public class UserFragment extends Fragment implements ListView.OnItemClickListen
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            // Direct to list of User Tasks, Field Reports, or Sites
         switch (position) {
             case 0:
                 //Field Reports

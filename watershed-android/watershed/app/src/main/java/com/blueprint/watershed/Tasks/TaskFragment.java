@@ -1,8 +1,8 @@
 package com.blueprint.watershed.Tasks;
 
-import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ExpandableListView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.android.volley.Response;
@@ -37,8 +38,6 @@ public class TaskFragment extends ListFragment {
     private static final int USER = 0;
     private static final int ALL = 1;
 
-
-    private OnFragmentInteractionListener mListener;
     private MainActivity mParentActivity;
     private NetworkManager mNetworkManager;
 
@@ -63,8 +62,7 @@ public class TaskFragment extends ListFragment {
         return fragment;
     }
 
-    public TaskFragment(){
-    }
+    public TaskFragment(){}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,9 +82,7 @@ public class TaskFragment extends ListFragment {
         View finalView = inflater.inflate(R.layout.fragment_task_list, container, false);
         initializeViews(finalView);
         hideList();
-        mSwipeLayout.setRefreshing(true);
         getTasksRequest();
-        return finalView;
     }
 
     /**
@@ -140,18 +136,6 @@ public class TaskFragment extends ListFragment {
             mAllTaskAdapter = new TaskAdapter(mParentActivity, mTaskListHeaders, mAllTaskList);
             mListView.setAdapter(mAllTaskAdapter);
         }
-//        mListView.setEmptyView(mNoTasks);
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
     }
 
     @Override
@@ -161,12 +145,6 @@ public class TaskFragment extends ListFragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
     /**
      * Gets all the tasks in the server and updates the ListView accordingly,
      * depending on what tab is being clicked on.
@@ -174,7 +152,6 @@ public class TaskFragment extends ListFragment {
     private void getTasksRequest(){
         Log.i("watasdfasdf", String.valueOf(mArgs.getInt(OPTION)));
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
-
         TaskListRequest taskListRequest = new TaskListRequest(getActivity(), params, new Response.Listener<ArrayList<Task>>() {
             @Override
             public void onResponse(ArrayList<Task> tasks) {
@@ -204,7 +181,6 @@ public class TaskFragment extends ListFragment {
         }, mSwipeLayout);
         mNetworkManager.getRequestQueue().add(taskListRequest);
     }
-
 
     /**
      * Sets the tasks for all tasks list and user tasks lists
@@ -275,5 +251,4 @@ public class TaskFragment extends ListFragment {
         mNoTasks.setVisibility(View.VISIBLE);
         mListView.setVisibility(View.GONE);
     }
-
 }

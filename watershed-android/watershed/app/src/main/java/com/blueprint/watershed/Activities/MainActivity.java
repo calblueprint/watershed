@@ -10,8 +10,8 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.graphics.Typeface;
-import android.net.Uri;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -19,6 +19,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.util.LruCache;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,9 +29,6 @@ import android.widget.ProgressBar;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.AboutFragment;
-import com.blueprint.watershed.FieldReports.AddFieldReportFragment;
-import com.blueprint.watershed.FieldReports.FieldReportFragment;
-import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Users.HomeRequest;
 import com.blueprint.watershed.R;
@@ -38,9 +36,6 @@ import com.blueprint.watershed.Sites.SiteFragment;
 import com.blueprint.watershed.Sites.SiteListFragment;
 import com.blueprint.watershed.Tasks.CreateTaskFragment;
 import com.blueprint.watershed.Tasks.Task;
-import com.blueprint.watershed.Tasks.TaskAbstractFragment;
-import com.blueprint.watershed.Tasks.TaskAdapter;
-import com.blueprint.watershed.Tasks.TaskDetailFragment;
 import com.blueprint.watershed.Tasks.TaskFragment;
 import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Users.UserFragment;
@@ -50,56 +45,33 @@ import com.facebook.Session;
 
 import org.json.JSONObject;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 public class MainActivity extends ActionBarActivity
                           implements ActionBar.TabListener,
                                      View.OnClickListener,
-                                     ListView.OnItemClickListener,
-                                     TaskFragment.OnFragmentInteractionListener,
-                                     TaskDetailFragment.OnFragmentInteractionListener,
-                                     SiteFragment.OnFragmentInteractionListener,
-                                     AboutFragment.OnFragmentInteractionListener,
-                                     SiteListFragment.OnFragmentInteractionListener,
-                                     MiniSiteFragment.OnFragmentInteractionListener,
-                                     AddFieldReportFragment.OnFragmentInteractionListener,
-                                     TaskAbstractFragment.OnFragmentInteractionListener,
-                                     FieldReportFragment.OnFragmentInteractionListener {
+                                     ListView.OnItemClickListener {
+
 
     // Constants
-    public  static final String PREFERENCES = "LOGIN_PREFERENCES";
+    private static final String PREFERENCES = "LOGIN_PREFERENCES";
     private static final String TAG         = "MainActivity";
+    private static int CACHE_SIZE = 512;
 
     // Authenticating against our own server
     public String authToken;
     public String authEmail;
 
-    // For storing our credentials once we have successfully authenticated
-    SharedPreferences preferences;
-
     // Fragments
-    private TaskFragment mtaskFragment;
-    private SiteListFragment siteListFragment;
-    private FragmentManager fragmentManager;
-    private UserFragment mUserFragment;
-    private AboutFragment mAboutFragment;
+    private FragmentManager mFragmentManager;
 
     // Navigation Drawer
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
-    private List<String> menuItems;
 
     // View Elements
     public CharSequence mTitle;
-
-    // UI Elements
-    public Typeface watershedFont;
-
-    // Adapters
-    public TaskAdapter arrayAdapter;
 
     // Action Bar Elements
     private ActionBar actionBar;
@@ -107,7 +79,6 @@ public class MainActivity extends ActionBarActivity
     private TabsPagerAdapter mAdapter;
     private View mContainer;
     private ProgressBar mProgress;
-
 
     // Networking
     private NetworkManager mNetworkManager;
@@ -119,25 +90,26 @@ public class MainActivity extends ActionBarActivity
     //Task for FieldReport
     private Task mFieldReportTask;
 
+    // Caching images
+    private LruCache<Integer, Drawable> mSiteImages;
+    private LruCache<Integer, Drawable> mMiniSiteImages;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Bundle b = getIntent().getExtras();
-        mUserId = b.getInt("userId");
+        mUserId = getIntent().getExtras().getInt("userId");
 
-        actionBar = getActionBar();
-        setTitle("Tasks");
-        mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
-        viewPager = (ViewPager) findViewById(R.id.pager);
-        mContainer = findViewById(R.id.container);
+        setNetworkManager(NetworkManager.getInstance(this));
+        makeHomeRequest();
 
-        setNetworkManager(NetworkManager.getInstance(this.getApplicationContext()));
+        initializeCache();
+        initializeViews();
 
         mProgress = (ProgressBar) this.findViewById(R.id.progressBar);
         initializeTabs(0);
 
-        makeHomeRequest();
         initializeNavigationDrawer();
         initializeFragments();
 
@@ -146,6 +118,28 @@ public class MainActivity extends ActionBarActivity
         authEmail = prefs.getString("auth_email", "none");
         mTitle = "Tasks";
 
+    }
+
+    private void initializeCache() {
+        mSiteImages = new LruCache<Integer, Drawable>(CACHE_SIZE) {
+            protected int sizeOf(String key, Bitmap value) {
+                return value.getByteCount();
+            }
+        };
+
+        mMiniSiteImages = new LruCache<Integer, Drawable>(CACHE_SIZE) {
+            protected int sizeOf(String key, Bitmap value) {
+                return value.getByteCount();
+            }
+        };
+    }
+
+    private void initializeViews() {
+        actionBar = getActionBar();
+        setTitle("Tasks");
+        mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        mContainer = findViewById(R.id.container);
     }
 
     public void initializeTabs(int option){
@@ -229,20 +223,17 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void replaceFragment(Fragment newFragment) {
-
-        android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();
+        android.support.v4.app.FragmentTransaction ft = mFragmentManager.beginTransaction();
         if(!newFragment.isAdded()){
-            ft.replace(R.id.container, newFragment);
             updateTitle(newFragment);
-            ft.addToBackStack(null);
-            ft.commit();
+            ft.replace(R.id.container, newFragment).addToBackStack(null).commit();
         }
     }
 
     private void initializeFragments() {
-        mtaskFragment = TaskFragment.newInstance(0);
-        fragmentManager = getSupportFragmentManager();
-        fragmentManager.addOnBackStackChangedListener(
+        TaskFragment taskFragment = TaskFragment.newInstance(0);
+        mFragmentManager = getSupportFragmentManager();
+        mFragmentManager.addOnBackStackChangedListener(
                 new FragmentManager.OnBackStackChangedListener() {
                     @Override
                     public void onBackStackChanged() {
@@ -252,34 +243,22 @@ public class MainActivity extends ActionBarActivity
                         }
                     }
                 });
-        updateTitle(mtaskFragment);
-        android.support.v4.app.FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.add(R.id.container, mtaskFragment);
+        updateTitle(taskFragment);
+        android.support.v4.app.FragmentTransaction ft = mFragmentManager.beginTransaction();
+        ft.add(R.id.container, taskFragment);
         ft.commit();
     }
 
-    public void onFragmentInteraction(String id) {
-        // Deals with fragment interactions
-    }
-
-    public void onFragmentInteraction(Uri uri) {
-    }
-
-
     @Override
-    public void onTabReselected(Tab tab, FragmentTransaction ft) {
-    }
+    public void onTabReselected(Tab tab, FragmentTransaction ft) {}
 
     @Override
     public void onTabSelected(Tab tab, FragmentTransaction ft) {
-        // on tab selected
-        // show respected fragment view
         viewPager.setCurrentItem(tab.getPosition());
     }
 
     @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
-    }
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {}
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -297,10 +276,7 @@ public class MainActivity extends ActionBarActivity
                 return true;
 
         }
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
     private void initializeNavigationDrawer() {
@@ -308,10 +284,7 @@ public class MainActivity extends ActionBarActivity
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         String titles[] = { "Tasks", "Sites", "Profile", "About", "Logout" };
 
-        menuItems = Arrays.asList(titles);
-
         mDrawerList.setOnItemClickListener(this);
-
         mDrawerList.setAdapter(new ArrayAdapter<String>(this,
                 R.layout.menu_list_item, R.id.menu_title, titles));
 
@@ -352,31 +325,23 @@ public class MainActivity extends ActionBarActivity
     // Nav Drawer on click listener
 
     public void onItemClick(AdapterView parent, View view, int position, long id) {
-        onNavClick(position);
-    }
-
-    // View on click listener
-    public void onNavClick(int position) {
         switch (position) {
             case 0:
-                TaskFragment taskFragment = TaskFragment.newInstance(0);
-                replaceFragment(taskFragment);
+                replaceFragment(TaskFragment.newInstance(0));
                 break;
             case 1:
-                siteListFragment = new SiteListFragment();
-                mProgress.setVisibility(View.VISIBLE);
-                replaceFragment(siteListFragment);
+                replaceFragment(SiteListFragment.newInstance());
                 break;
             case 2:
-                mUserFragment = UserFragment.newInstance(mUser);
-                replaceFragment(mUserFragment);
+                replaceFragment(UserFragment.newInstance(mUser));
                 break;
             case 3:
-                mAboutFragment = new AboutFragment();
-                replaceFragment(mAboutFragment);
+                replaceFragment(AboutFragment.newInstance());
                 break;
             case 4:
                 logoutCurrentUser(this);
+                break;
+            default:
                 break;
         }
         mDrawerLayout.closeDrawer(mDrawerList);
@@ -421,20 +386,14 @@ public class MainActivity extends ActionBarActivity
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
         HomeRequest homeRequest = new HomeRequest(this, mUserId, params, new Response.Listener<User>() {
             @Override
-            public void onResponse(User home) {
-                setUser(home);
-                mUserFragment = UserFragment.newInstance(mUser);
-            }
+            public void onResponse(User home) { setUser(home); }
         });
-
         mNetworkManager.getRequestQueue().add(homeRequest);
     }
 
 
     // Setter
-    public void setUser(User user){
-        mUser = user;
-    }
+    public void setUser(User user) { mUser = user; }
     public User getUser() { return mUser; }
     public int getUserId() { return mUserId; }
     public void setFieldReportTask(Task task) { mFieldReportTask = task; }
