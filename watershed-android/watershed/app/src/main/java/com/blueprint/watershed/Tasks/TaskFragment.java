@@ -2,7 +2,6 @@ package com.blueprint.watershed.Tasks;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.android.volley.Response;
@@ -83,6 +81,7 @@ public class TaskFragment extends ListFragment {
         initializeViews(finalView);
         hideList();
         getTasksRequest();
+        return finalView;
     }
 
     /**
