@@ -33,8 +33,9 @@ import java.util.HashMap;
  */
 public abstract class TaskAbstractFragment extends Fragment {
 
-    private static final String CREATE = "create";
-    private static final String EDIT = "edit";
+    protected static final String CREATE = "create";
+    protected static final String EDIT = "edit";
+    protected static final String COMPLETE = "complete";
 
     protected RelativeLayout mLayout;
     protected EditText mTitleField;
@@ -126,6 +127,7 @@ public abstract class TaskAbstractFragment extends Fragment {
         if (mParentActivity.getUser().getId() != null) task.setAssignerId(mParentActivity.getUser().getId());
         if (mMiniSiteId.getText().toString() != null) task.setMiniSiteId(Integer.parseInt(mMiniSiteId.getText().toString()));
         task.setComplete(false);
+        if (task.equals(COMPLETE)) task.setComplete(true);
 
         createTaskRequest(task, type);
     }

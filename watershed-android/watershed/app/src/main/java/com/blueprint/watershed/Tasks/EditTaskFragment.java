@@ -11,8 +11,6 @@ import com.blueprint.watershed.Utilities.Utility;
  */
 public class EditTaskFragment extends TaskAbstractFragment {
 
-    private static final String EDIT = "edit";
-
     private Task mTask;
 
     /**

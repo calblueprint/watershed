@@ -8,8 +8,6 @@ import com.blueprint.watershed.Utilities.Utility;
 
 public class CreateTaskFragment extends TaskAbstractFragment {
 
-    private static final String CREATE = "create";
-
     /**
      * @return Returns CreateTaskFragment instance.
      */

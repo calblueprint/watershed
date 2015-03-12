@@ -14,9 +14,10 @@ import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.FieldReports.AddFieldReportFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Utilities.Utility;
 
 
-public class TaskDetailFragment extends Fragment implements View.OnClickListener {
+public class TaskDetailFragment extends TaskAbstractFragment{
 
     private MainActivity mParentActivity;
     private Task mTask;
@@ -70,7 +71,8 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
     }
 
     private void initializeViews() {
-        mParentActivity.findViewById(R.id.field_report_button).setOnClickListener(this);
+        mParentActivity.findViewById(R.id.field_report_button).setOnClickListener(submitListener());
+        mParentActivity.findViewById(R.id.complete_button).setOnClickListener(submitListener());
         mDetailTitle = (TextView) mParentActivity.findViewById(R.id.task_detail_title);
         mDescription = (TextView) mParentActivity.findViewById(R.id.task_detail_description);
 
@@ -94,19 +96,35 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
 
     // Button Events
 
-    public void onClick(View view){
-        switch(view.getId()){
-            case (R.id.field_report_button):
-                fieldReportButtonPressed(view);
-                break;
-            default:
-                break;
-        }
-    }
 
     public void fieldReportButtonPressed(View view){
         AddFieldReportFragment fieldFragment = AddFieldReportFragment.newInstance();
         mParentActivity.setFieldReportTask(mTask);
         mParentActivity.replaceFragment(fieldFragment);
     }
+
+    public void completeTask(){
+        Utility.hideKeyboard(mParentActivity, mLayout);
+        createTask(COMPLETE, mTask);
+    }
+
+    @Override
+    public View.OnClickListener submitListener() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch(view.getId()){
+                    case (R.id.field_report_button):
+                        fieldReportButtonPressed(view);
+                        break;
+                    case (R.id.complete_button):
+                        completeTask();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        };
+    }
+
 }
