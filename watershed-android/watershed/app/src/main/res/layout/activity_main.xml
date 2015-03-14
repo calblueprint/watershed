@@ -21,15 +21,17 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_below="@id/toolbar">
 
             <android.support.v4.view.PagerTabStrip
                 android:id="@+id/pager_title_strip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp" />
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:background="@color/light_gray"/>
 
         </android.support.v4.view.ViewPager>
 
