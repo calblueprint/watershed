@@ -4,7 +4,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -104,14 +103,15 @@ public class TaskFragment extends ListFragment {
         mListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
-                Log.i("asdf", "clicked");
                 Task taskClicked;
                 if (mArgs.getInt(OPTION) == USER) taskClicked = mUserTaskList.get(mTaskListHeaders.get(groupPosition)).get(childPosition);
                 else taskClicked = mAllTaskList.get(mTaskListHeaders.get(groupPosition)).get(childPosition);
 
+                if (taskClicked == null) return false;
+
                 TaskDetailFragment detailFragment = TaskDetailFragment.newInstance(taskClicked);
                 mParentActivity.replaceFragment(detailFragment);
-                return false;
+                return true;
             }
         });
         mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -150,7 +150,6 @@ public class TaskFragment extends ListFragment {
      */
     private void getTasksRequest(){
         mSwipeLayout.setRefreshing(true);
-        Log.i("watasdfasdf", String.valueOf(mArgs.getInt(OPTION)));
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
         TaskListRequest taskListRequest = new TaskListRequest(getActivity(), params, new Response.Listener<ArrayList<Task>>() {
             @Override

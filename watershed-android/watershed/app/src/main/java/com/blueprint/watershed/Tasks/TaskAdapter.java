@@ -43,7 +43,7 @@ public class TaskAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) { return true; }
 
     @Override
-    public long getChildId(int groupPosition, int childPosition) { return childPosition; }
+    public long getChildId(int groupPosition, int childPosition) { return getChild(groupPosition, childPosition).getId(); }
 
     @Override
     public Task getChild(int groupPosition, int childPosition) {
