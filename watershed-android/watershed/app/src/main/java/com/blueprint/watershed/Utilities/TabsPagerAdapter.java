@@ -35,4 +35,15 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
         return 2;
     }
 
+    @Override
+    public CharSequence getPageTitle(int position) {
+        switch (position) {
+            case 0:
+                return "User Tasks";
+            case 1:
+                return "All Tasks";
+        }
+        return null;
+    }
+
 }

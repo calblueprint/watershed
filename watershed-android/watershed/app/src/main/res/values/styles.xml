@@ -6,11 +6,13 @@
     </style>
 
     <style name="AppThemeTranslucent" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
     </style>
 
     <style name="WsAppTheme" parent="Theme.AppCompat.Light">
+        <item name="windowActionBar">false</item>
         <item name="android:actionBarStyle">@style/WsActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/WsActionBarTabText</item>
         <item name="android:actionBarTabBarStyle">@style/WsActionBarTabView</item>
@@ -55,6 +57,5 @@
         <item name="android:textColorHint">@color/form_gray</item>
         <item name="android:textColor">@color/form_gray</item>
     </style>
-
 
 </resources>

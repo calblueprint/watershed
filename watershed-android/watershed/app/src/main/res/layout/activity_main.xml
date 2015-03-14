@@ -1,4 +1,4 @@
-<android.support.v7.widget.DrawerLayout
+<android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
@@ -16,13 +16,21 @@
             android:id="@+id/toolbar"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:minHeight="?attr/actionBarSize"
-            android:background="?attr/colorPrimary" />
+            android:background="@color/ws_blue" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <android.support.v4.view.PagerTabStrip
+                android:id="@+id/pager_title_strip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp" />
+
         </android.support.v4.view.ViewPager>
 
         <FrameLayout
@@ -55,4 +63,4 @@
         android:dividerHeight="0dp"
         android:background="@color/ws_blue"/>
 
-</android.support.v7.widget.DrawerLayout>
+</android.support.v4.widget.DrawerLayout>
