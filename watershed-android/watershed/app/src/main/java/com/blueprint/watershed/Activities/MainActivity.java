@@ -21,7 +21,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.util.LruCache;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,7 +31,6 @@ import android.widget.ProgressBar;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.AboutFragment;
-import com.blueprint.watershed.BackArrowInterface;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Users.HomeRequest;
 import com.blueprint.watershed.R;
@@ -113,9 +111,6 @@ public class MainActivity extends ActionBarActivity
         initializeNavigationDrawer();
 
         setSupportActionBar(mToolBar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-
         initializeFragments();
 
         SharedPreferences prefs = getSharedPreferences(PREFERENCES, 0);
@@ -220,6 +215,7 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {}
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -262,6 +258,7 @@ public class MainActivity extends ActionBarActivity
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
+
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
@@ -357,34 +354,38 @@ public class MainActivity extends ActionBarActivity
 
     public ProgressBar getSpinner() { return mProgress; }
 
-    public void setBackArrow(final BackArrowInterface backArrowInterface) {
+    public void setMenuAction(boolean setMenu) {
+        if (setMenu) setMenu();
+        else setBackArrow();
+    }
+
+    public void setBackArrow() {
         mToolBar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
         mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                backArrowInterface.back();
-                Log.i("back", "bac");
+                getSupportFragmentManager().popBackStack();
             }
         });
     }
 
     public void setMenu() {
-//        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-//                mToolBar, R.string.draw_open_close , R.string.draw_open_close) {
-//
-//            /** Called when a drawer has settled in a completely closed state. */
-//            public void onDrawerClosed(View view) {
-//                super.onDrawerClosed(view);
-//                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-//            }
-//
-//            /** Called when a drawer has settled in a completely open state. */
-//            public void onDrawerOpened(View drawerView) {
-//                super.onDrawerOpened(drawerView);
-//                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-//            }
-//        };
-//        mToolBar.setNavigationOnClickListener(null);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                mToolBar, R.string.draw_open_close , R.string.draw_open_close) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+        mToolBar.setNavigationOnClickListener(null);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
     }
