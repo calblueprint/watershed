@@ -99,6 +99,7 @@ public class MiniSiteFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
+        mParentActivity.setMenuAction(false);
         getMiniSiteRequest(mMiniSite);
     }
 

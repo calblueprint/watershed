@@ -75,6 +75,12 @@ public class EditUserFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mParentActivity.setMenuAction(false);
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.empty, menu);

@@ -66,7 +66,12 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initializeViews();
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mParentActivity.setMenuAction(false);
     }
 
     private void initializeViews() {
