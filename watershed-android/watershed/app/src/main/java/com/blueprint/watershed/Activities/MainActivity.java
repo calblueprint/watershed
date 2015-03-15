@@ -373,22 +373,6 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void setMenu() {
-//        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-//                mToolBar, R.string.draw_open_close , R.string.draw_open_close) {
-//
-//            /** Called when a drawer has settled in a completely closed state. */
-//            public void onDrawerClosed(View view) {
-//                super.onDrawerClosed(view);
-//                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-//            }
-//
-//            /** Called when a drawer has settled in a completely open state. */
-//            public void onDrawerOpened(View drawerView) {
-//                super.onDrawerOpened(drawerView);
-//                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-//            }
-//        };
-//        mToolBar.setNavigationOnClickListener(null);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
     }
