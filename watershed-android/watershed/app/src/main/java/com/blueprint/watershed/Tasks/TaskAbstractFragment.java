@@ -15,7 +15,6 @@ import android.widget.RelativeLayout;
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.blueprint.watershed.Activities.MainActivity;
-import com.blueprint.watershed.BackArrowInterface;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Tasks.CreateTaskRequest;
 import com.blueprint.watershed.Networking.Tasks.EditTaskRequest;
@@ -30,7 +29,7 @@ import java.util.HashMap;
  * Created by charlesx on 2/19/15.
  * Abstract fragment from
  */
-public abstract class TaskAbstractFragment extends Fragment implements BackArrowInterface{
+public abstract class TaskAbstractFragment extends Fragment {
 
     private static final String CREATE = "create";
     private static final String EDIT = "edit";
@@ -50,7 +49,6 @@ public abstract class TaskAbstractFragment extends Fragment implements BackArrow
         setHasOptionsMenu(true);
         mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
         mParentActivity = (MainActivity) getActivity();
-        mParentActivity.setBackArrow(this);
     }
 
     @Override
@@ -61,12 +59,17 @@ public abstract class TaskAbstractFragment extends Fragment implements BackArrow
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mParentActivity.setMenuAction(false);
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.empty, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
-
 
     /**
      * Initializes all the views for the form.
@@ -132,9 +135,4 @@ public abstract class TaskAbstractFragment extends Fragment implements BackArrow
     }
 
     public abstract View.OnClickListener submitListener();
-
-    @Override
-    public void back() {
-        mParentActivity.getSupportFragmentManager().popBackStack();
-    }
 }

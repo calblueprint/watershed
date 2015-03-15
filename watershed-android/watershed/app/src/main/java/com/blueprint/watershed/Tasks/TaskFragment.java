@@ -78,7 +78,7 @@ public class TaskFragment extends ListFragment {
     public void onResume() {
         super.onResume();
         mSwipeLayout.setRefreshing(true);
-        mParentActivity.setMenuAction(false);
+        mParentActivity.setMenuAction(true);
         getTasksRequest();
     }
 

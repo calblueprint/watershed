@@ -111,6 +111,9 @@ public class MainActivity extends ActionBarActivity
         initializeNavigationDrawer();
 
         setSupportActionBar(mToolBar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
         initializeFragments();
 
         SharedPreferences prefs = getSharedPreferences(PREFERENCES, 0);
@@ -215,7 +218,6 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {}
 
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -258,7 +260,6 @@ public class MainActivity extends ActionBarActivity
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
-
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
@@ -361,31 +362,33 @@ public class MainActivity extends ActionBarActivity
 
     public void setBackArrow() {
         mToolBar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
-        mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
+        mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getSupportFragmentManager().popBackStack();
+                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
             }
         });
+
     }
 
     public void setMenu() {
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                mToolBar, R.string.draw_open_close , R.string.draw_open_close) {
-
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-        };
-        mToolBar.setNavigationOnClickListener(null);
+//        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+//                mToolBar, R.string.draw_open_close , R.string.draw_open_close) {
+//
+//            /** Called when a drawer has settled in a completely closed state. */
+//            public void onDrawerClosed(View view) {
+//                super.onDrawerClosed(view);
+//                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+//            }
+//
+//            /** Called when a drawer has settled in a completely open state. */
+//            public void onDrawerOpened(View drawerView) {
+//                super.onDrawerOpened(drawerView);
+//                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+//            }
+//        };
+//        mToolBar.setNavigationOnClickListener(null);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
     }
