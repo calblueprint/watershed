@@ -138,6 +138,7 @@ public class TaskFragment extends ListFragment {
         TaskListRequest taskListRequest = new TaskListRequest(getActivity(), params, new Response.Listener<ArrayList<Task>>() {
             @Override
             public void onResponse(ArrayList<Task> tasks) {
+                Log.e("TASKS", "Returned!");
                 setTasks(tasks);
                 mAllTaskAdapter.notifyDataSetChanged();
                 mUserTaskAdapter.notifyDataSetChanged();
