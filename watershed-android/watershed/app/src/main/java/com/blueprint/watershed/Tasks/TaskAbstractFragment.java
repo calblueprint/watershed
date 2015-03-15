@@ -50,6 +50,7 @@ public abstract class TaskAbstractFragment extends Fragment implements BackArrow
         setHasOptionsMenu(true);
         mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
         mParentActivity = (MainActivity) getActivity();
+        mParentActivity.setBackArrow(this);
     }
 
     @Override
