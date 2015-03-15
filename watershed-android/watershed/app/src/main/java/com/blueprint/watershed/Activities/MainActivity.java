@@ -13,13 +13,13 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.view.PagerTabStrip;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.LruCache;
 import android.view.MenuItem;
@@ -36,7 +36,6 @@ import com.blueprint.watershed.Networking.Users.HomeRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Sites.SiteFragment;
 import com.blueprint.watershed.Sites.SiteListFragment;
-import com.blueprint.watershed.Tasks.CreateTaskFragment;
 import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Tasks.TaskFragment;
 import com.blueprint.watershed.Users.User;
@@ -48,8 +47,6 @@ import com.facebook.Session;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-
-;
 
 public class MainActivity extends ActionBarActivity
                           implements ActionBar.TabListener,
@@ -113,6 +110,8 @@ public class MainActivity extends ActionBarActivity
         initializeViews();
 
         setSupportActionBar(mToolBar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         initializeNavigationDrawer();
         initializeFragments();
@@ -141,6 +140,8 @@ public class MainActivity extends ActionBarActivity
     private void initializeViews() {
         setTitle("Tasks");
         mPagerTabStrip = (PagerTabStrip) findViewById(R.id.pager_title_strip);
+        mPagerTabStrip.setDrawFullUnderline(true);
+
         mProgress = (ProgressBar) findViewById(R.id.progressBar);
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
         mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
@@ -227,10 +228,8 @@ public class MainActivity extends ActionBarActivity
                     return false;
                 }
                 break;
-            case R.id.add_task:
-                CreateTaskFragment newTask = CreateTaskFragment.newInstance();
-                replaceFragment(newTask);
-                return true;
+            default:
+                super.onOptionsItemSelected(item);
 
         }
         return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
@@ -262,9 +261,6 @@ public class MainActivity extends ActionBarActivity
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     @Override
@@ -358,4 +354,14 @@ public class MainActivity extends ActionBarActivity
     public Task getFieldReportTask() { return mFieldReportTask; }
 
     public ProgressBar getSpinner() { return mProgress; }
+
+    public void setBackArrow(final View.OnClickListener listener) {
+        mToolBar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
+        mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onClick(v);
+            }
+        });
+    }
 }

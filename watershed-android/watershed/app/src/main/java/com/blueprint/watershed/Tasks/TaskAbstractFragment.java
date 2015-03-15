@@ -1,7 +1,5 @@
 package com.blueprint.watershed.Tasks;
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -17,6 +15,7 @@ import android.widget.RelativeLayout;
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.blueprint.watershed.Activities.MainActivity;
+import com.blueprint.watershed.BackArrowInterface;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Tasks.CreateTaskRequest;
 import com.blueprint.watershed.Networking.Tasks.EditTaskRequest;
@@ -31,7 +30,7 @@ import java.util.HashMap;
  * Created by charlesx on 2/19/15.
  * Abstract fragment from
  */
-public abstract class TaskAbstractFragment extends Fragment {
+public abstract class TaskAbstractFragment extends Fragment implements BackArrowInterface{
 
     private static final String CREATE = "create";
     private static final String EDIT = "edit";
@@ -66,6 +65,7 @@ public abstract class TaskAbstractFragment extends Fragment {
         inflater.inflate(R.menu.empty, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
+
 
     /**
      * Initializes all the views for the form.
@@ -131,4 +131,9 @@ public abstract class TaskAbstractFragment extends Fragment {
     }
 
     public abstract View.OnClickListener submitListener();
+
+    @Override
+    public void back() {
+        mParentActivity.getSupportFragmentManager().popBackStack();
+    }
 }
