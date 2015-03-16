@@ -319,18 +319,6 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onClick(View view){}
 
-    // System level attributes
-    private static int getAppVersion(Context context) {
-        try {
-            PackageInfo packageInfo = context.getPackageManager()
-                    .getPackageInfo(context.getPackageName(), 0);
-            return packageInfo.versionCode;
-        } catch (PackageManager.NameNotFoundException e) {
-            // should never happen
-            throw new RuntimeException("Could not get package name: " + e);
-        }
-    }
-
     // Networking
     public NetworkManager getNetworkManager() { return mNetworkManager; }
     public void setNetworkManager(NetworkManager networkManager) { mNetworkManager = networkManager; }
