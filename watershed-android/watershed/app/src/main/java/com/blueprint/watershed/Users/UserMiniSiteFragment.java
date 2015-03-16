@@ -45,7 +45,6 @@ public class UserMiniSiteFragment extends Fragment implements AbsListView.OnItem
     private HeaderGridView mMiniSiteGridView;
     private MiniSiteListAdapter mMiniSiteAdapter;
 
-    private static String ID = "id";
     private int mId;
 
 
@@ -100,7 +99,7 @@ public class UserMiniSiteFragment extends Fragment implements AbsListView.OnItem
     @Override
     public void onResume() {
         super.onResume();
-        //getMiniSiteRequest();
+        getMiniSiteRequest();
     }
 
 
@@ -119,6 +118,9 @@ public class UserMiniSiteFragment extends Fragment implements AbsListView.OnItem
     }
 
     private ArrayList<MiniSite> getMiniSites(){
+        if (mUserMiniSiteList == null) {
+            mUserMiniSiteList = new ArrayList<MiniSite>();
+        }
         return mUserMiniSiteList;
     }
 
