@@ -97,13 +97,13 @@ static NSString *CellIdentifier = @"Cell";
         NSNumberFormatter *userFormatter = [[NSNumberFormatter alloc] init];
         [userFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
         int isUrgentInt = [self isUrgent];
-        BOOL hi = _urgentSwitch.isOn;
-        NSString *strValue = [NSString stringWithFormat:@"%@", _urgentSwitch.isOn ? @"true" : @"false"];
+        NSString *isUrgentString = [NSString stringWithFormat:@"%i", isUrgentInt];
         NSDictionary *taskJSON = @{
                                    @"title" : self.taskField.text,
                                    @"mini_site_id" : [self.selectedSite.siteId stringValue],
                                    @"due_date" : self.dateField.text,
-                                   @"description" : self.descriptionView.text
+                                   @"description" : self.descriptionView.text,
+                                   @"urgent" : isUrgentString
                                    };
         WPTask *task = [MTLJSONAdapter modelOfClass:WPTask.class fromJSONDictionary:taskJSON error:nil];
         _currUser = [[WPUser alloc] init];

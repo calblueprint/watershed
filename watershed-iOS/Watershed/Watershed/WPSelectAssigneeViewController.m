@@ -58,18 +58,18 @@ static NSString *CellIdentifier = @"Cell";
         NSMutableArray *toBeRemoved = [[NSMutableArray alloc] init];
         _managerArray = [[NSMutableArray alloc] init];
         _employeeArray = [[NSMutableArray alloc] init];
-        for (WPUser *u in _userArray) {
-            NSLog(@"%@", u.role);
-            if ([u.role isEqualToNumber:[NSNumber numberWithInt:2]]) {
-                [_managerArray addObject:u];
-                [toBeRemoved addObject:u];
-            }
-            else if ([u.role isEqualToNumber:[NSNumber numberWithInt:1]]) {
-                [_employeeArray addObject:u];
-                [toBeRemoved addObject:u];
-            }
-        }
-        [_userArray removeObjectsInArray:toBeRemoved];
+//        for (WPUser *u in _userArray) {
+//            NSLog(@"%@", u.role);
+//            if ([u.role isEqualToNumber:[NSNumber numberWithInt:2]]) {
+//                [_managerArray addObject:u];
+//                [toBeRemoved addObject:u];
+//            }
+//            else if ([u.role isEqualToNumber:[NSNumber numberWithInt:1]]) {
+//                [_employeeArray addObject:u];
+//                [toBeRemoved addObject:u];
+//            }
+//        }
+//        [_userArray removeObjectsInArray:toBeRemoved];
     }];
 }
 
