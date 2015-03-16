@@ -1,16 +1,11 @@
 package com.blueprint.watershed.Networking.Sessions;
 
 import android.app.Activity;
-import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.android.volley.NetworkError;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.blueprint.watershed.Authentication.Session;
-import com.blueprint.watershed.FieldReports.FieldReport;
 import com.blueprint.watershed.Networking.BaseRequest;
 import com.blueprint.watershed.Utilities.APIError;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -50,5 +45,4 @@ public class LoginRequest extends BaseRequest {
         params.put("user", userJson);
         return new JSONObject(params);
     }
-
 }

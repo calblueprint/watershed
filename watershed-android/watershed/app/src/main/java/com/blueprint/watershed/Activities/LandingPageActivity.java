@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Authentication.LoginFragment;
@@ -21,11 +22,14 @@ import com.blueprint.watershed.Networking.Sessions.LoginRequest;
 import com.blueprint.watershed.Networking.Sessions.SignUpRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Utilities.APIError;
+import com.crashlytics.android.Crashlytics;
+import com.blueprint.watershed.Utilities.Utility;
 import com.facebook.AppEventsLogger;
 import com.facebook.SessionState;
 import com.facebook.model.GraphUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.fabric.sdk.android.Fabric;
 import org.json.JSONException;
 
 import java.util.Arrays;
@@ -37,8 +41,6 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     // Constants
     public  static final String PREFERENCES = "LOGIN_PREFERENCES";
     private static final String TAG         = "LandingPageActivity";
-    private static final String LOGIN_URL = "https://intense-reaches-1457.herokuapp.com/api/v1/users/sign_in";
-    private static final String FACEBOOK_URL = "https://intense-reaches-1457.herokuapp.com/api/v1/users/sign_up/facebook";
 
     // UI Elements
     private ImageView mLandingPageImage;
@@ -49,6 +51,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     private SharedPreferences preferences;
     private ObjectMapper mMapper;
     private View viewBlocker;
+    private LinearLayout mLayout;
 
     //User
     private Integer mUserId;
@@ -63,6 +66,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_landing_page);
         mloginNetworkManager = NetworkManager.getInstance(this.getApplicationContext());
         viewBlocker = findViewById(R.id.viewBlocker);
@@ -115,6 +119,9 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         mSignUpButton.setOnClickListener(this);
 
         mFacebookButton.setReadPermissions(Arrays.asList("email"));
+
+        mLayout = (LinearLayout) findViewById(R.id.container);
+        Utility.setKeyboardListener(this, mLayout);
     }
 
     public void onClick(View view){
@@ -264,14 +271,15 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         editor.putString("authentication_token", session.getAuthenticationToken());
         editor.putString("email", session.getEmail());
         editor.putInt("userId", session.getUser().getId());
-        editor.commit();
+        editor.apply();
 
         Bundle bundle = new Bundle();
         bundle.putInt("userId", session.getUser().getId());
         intent.putExtras(bundle);
 
-        LandingPageActivity.this.finish();
         startActivity(intent);
+        finish();
+
     }
 
     // Getters

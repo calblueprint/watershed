@@ -33,7 +33,7 @@ public class MiniSiteRequest extends BaseRequest {
                             });
                             listener.onResponse(miniSite);
                         } catch (Exception e) {
-                            Log.e("Json exception", e.toString());
+                            Log.e("Mini Site Request Json exception", e.toString());
                         }
                     }
 
