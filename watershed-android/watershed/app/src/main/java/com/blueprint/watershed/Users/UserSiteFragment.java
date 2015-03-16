@@ -4,107 +4,136 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
+import com.blueprint.watershed.Activities.MainActivity;
+import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Sites.Site;
+import com.blueprint.watershed.Sites.SiteListAdapter;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link UserSiteFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link UserSiteFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+
+
 public class UserSiteFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    MainActivity mParentActivity;
+    NetworkManager mNetworkManager;
+    private LinearLayoutManager mLayoutManager;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private ArrayList<Site> mUserSiteList;
+    private SiteListAdapter mUserTaskAdapter;
 
-    private OnFragmentInteractionListener mListener;
+    private static String ID = "id";
+    private int mId;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment UserSiteFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static UserSiteFragment newInstance(String param1, String param2) {
-        UserSiteFragment fragment = new UserSiteFragment();
+
+    private ListView mListView;
+    private SwipeRefreshLayout mSwipeLayout;
+
+    public static UserTaskFragment newInstance(int id) {
+        UserTaskFragment fragment = new UserTaskFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putInt(ID, id);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public UserSiteFragment() {
-        // Required empty public constructor
-    }
+    public UserSiteFragment(){}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        setHasOptionsMenu(true);
+        mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
+        mParentActivity = (MainActivity) getActivity();
+        mUserSiteList = new ArrayList<Site>();
+        Bundle args = getArguments();
+        if (args != null) mId = args.getInt(ID);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_site, container, false);
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View finalView = inflater.inflate(R.layout.fragment_user_task, container, false);
+        initializeViews(finalView);
+        return finalView;
     }
 
     /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
+     * Initializes all the views in the fragment.
+     * This includes the adapters, buttons, listview, etc.
+     * @param view
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+    private void initializeViews(View view) {
+        mListView = (ListView) view.findViewById(android.R.id.list);
+        mUserTaskAdapter = new SiteListAdapter(mParentActivity, R.layout.site_list_row, mUserSiteList);
+
+        mListView.setAdapter(mUserTaskAdapter);
+        mListView.setEmptyView(view.findViewById(R.id.no_tasks_layout));
+
+        mSwipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.tasks_swipe_container);
+        mSwipeLayout.setColorSchemeResources(R.color.ws_blue, R.color.facebook_blue, R.color.facebook_dark_blue, R.color.dark_gray);
+        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mSwipeLayout.setRefreshing(true);
+                getTasksRequest();
+            }
+        });
     }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mSwipeLayout.setRefreshing(true);
+        getTasksRequest();
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.empty, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    private void setTasks(ArrayList<Task> tasks, int id){
+        mUserTaskList.clear();
+        for (Task task : tasks){
+            if (task.getAssigneeId() != null) {
+                if (task.getAssigneeId() == id) mUserTaskList.add(task);
+            }
+        }
+    }
+
+    private ArrayList<Task> getTasks(){
+        return mUserTaskList;
+    }
+
+    protected void getTasksRequest() {
+        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
+        TaskListRequest taskListRequest = new TaskListRequest(getActivity(), params, new Response.Listener<ArrayList<Task>>() {
+            @Override
+            public void onResponse(ArrayList<Task> tasks) {
+                setTasks(tasks, mId);
+                mUserTaskAdapter.notifyDataSetChanged();
+                new CountDownTimer(1000, 1000) {
+                    @Override
+                    public void onTick(long timeLeft) {
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        mSwipeLayout.setRefreshing(false);
+                    }
+                }.start();
+            }
+        });
+        mNetworkManager.getRequestQueue().add(taskListRequest);
 
 }
