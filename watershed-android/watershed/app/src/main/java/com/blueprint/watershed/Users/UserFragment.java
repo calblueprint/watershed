@@ -134,10 +134,14 @@ public class UserFragment extends Fragment implements ListView.OnItemClickListen
         switch (position) {
             case 0:
                 //Field Reports
+                break;
             case 1:
-                // Tasks
+                UserTaskFragment taskFragment = UserTaskFragment.newInstance(mParentActivity.getUserId());
+                mParentActivity.replaceFragment(taskFragment);
+                break;
             case 2:
                 // Sites
+                break;
         }
     }
 }
