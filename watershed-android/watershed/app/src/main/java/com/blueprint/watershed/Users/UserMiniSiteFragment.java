@@ -16,6 +16,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
@@ -41,63 +42,64 @@ public class UserMiniSiteFragment extends Fragment implements AbsListView.OnItem
     NetworkManager mNetworkManager;
 
     private ArrayList<MiniSite> mUserMiniSiteList;
-    private BasicMiniSiteListAdapter mMiniSiteAdapter;
+    private HeaderGridView mMiniSiteGridView;
+    private MiniSiteListAdapter mMiniSiteAdapter;
 
     private static String ID = "id";
     private int mId;
 
-    private ListView mListView;
-    private SwipeRefreshLayout mSwipeLayout;
 
     public static UserMiniSiteFragment newInstance(int id) {
         UserMiniSiteFragment fragment = new UserMiniSiteFragment();
-        Bundle args = new Bundle();
-        args.putInt(ID, id);
-        fragment.setArguments(args);
+        fragment.configureWithId(id);
         return fragment;
     }
 
     public UserMiniSiteFragment(){}
+
+    public void configureWithId(int Id) {
+        mId = Id;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         mParentActivity = (MainActivity) getActivity();
-        mNetworkManager = NetworkManager.getInstance(mParentActivity);
-        mUserMiniSiteList = new ArrayList<MiniSite>();
-        Bundle args = getArguments();
-        if (args != null) mId = args.getInt(ID);
+        mNetworkManager = NetworkManager.getInstance(mParentActivity.getApplicationContext());
+    }
+
+    public void configureViewWithUser(View view, int Id) {
+        ((TextView)view.findViewById(R.id.user_name)).setText(String.valueOf(mId));
+        ((TextView)view.findViewById(R.id.user_objects)).setText("7");//mFieldReports.size());
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_about, container, false);
-        //initializeViews(finalView);
-        //return finalView;
-    }
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_user_site, container, false);
 
-    private void initializeViews(View view) {
-        mListView = (ListView) view.findViewById(android.R.id.list);
-        mMiniSiteAdapter = new BasicMiniSiteListAdapter(mParentActivity,mParentActivity, R.layout.basic_mini_site_list_row, mUserMiniSiteList);
+        // Create FieldReportGridView
+        mMiniSiteGridView = (HeaderGridView) view.findViewById(R.id.mini_sites_grid);
 
-        mListView.setAdapter(mMiniSiteAdapter);
-        mListView.setEmptyView(view.findViewById(R.id.no_site_layout));
+        // Add mini site header information to the top
+        ViewGroup header = (ViewGroup)inflater.inflate(R.layout.user_header_view, mMiniSiteGridView, false);
+        mMiniSiteGridView.addHeaderView(header, null, false);
 
-        mSwipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.site_swipe_container);
-        mSwipeLayout.setColorSchemeResources(R.color.ws_blue, R.color.facebook_blue, R.color.facebook_dark_blue, R.color.dark_gray);
-        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mSwipeLayout.setRefreshing(true);
-                //getMiniSiteRequest();
-            }
-        });
+        // Configure the header
+        configureViewWithUser(header, mId);
+
+        // Set the adapter to fill the list of field reports
+        mMiniSiteAdapter = new MiniSiteListAdapter(mParentActivity, getActivity(), R.layout.mini_site_list_row, getMiniSites());
+        mMiniSiteGridView.setAdapter(mMiniSiteAdapter);
+
+        mMiniSiteGridView.setOnItemClickListener(this);
+        return view;
     }
 
     @Override
     public void onResume() {
+        super.onResume();
         //getMiniSiteRequest();
     }
 
@@ -122,10 +124,11 @@ public class UserMiniSiteFragment extends Fragment implements AbsListView.OnItem
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        // Load MiniSite
         MiniSite miniSite = getMiniSite(position);
-        MiniSiteFragment miniSiteFragment = new MiniSiteFragment();
-        miniSiteFragment.configureWithMiniSite(miniSite);
-        mParentActivity.replaceFragment(miniSiteFragment);
+        MiniSiteFragment addFieldReportFragment = new MiniSiteFragment();
+        addFieldReportFragment.configureWithMiniSite(miniSite);
+        mParentActivity.replaceFragment(addFieldReportFragment);
     }
 
     private MiniSite getMiniSite(int position) { return mUserMiniSiteList.get(position); }

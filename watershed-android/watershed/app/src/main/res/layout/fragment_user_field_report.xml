@@ -1,12 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.blueprint.watershed.Users.UserMiniSiteFragment">
+    tools:context="com.blueprint.watershed.Users.UserFieldReportFragment">
 
     <com.blueprint.watershed.Views.HeaderGridView
-        android:id="@+id/mini_sites_grid"
+        android:id="@+id/field_reports_grid"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_marginTop="@dimen/no_margin"
@@ -18,4 +16,4 @@
         android:horizontalSpacing="@dimen/tight_margin">
     </com.blueprint.watershed.Views.HeaderGridView>
 
-</RelativeLayout>
+</FrameLayout>
