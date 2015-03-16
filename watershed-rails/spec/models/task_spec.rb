@@ -8,7 +8,7 @@
 #  mini_site_id :integer
 #  assigner_id  :integer
 #  assignee_id  :integer
-#  complete     :boolean
+#  complete     :boolean          default(FALSE)
 #  due_date     :datetime
 #  created_at   :datetime
 #  updated_at   :datetime

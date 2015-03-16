@@ -30,6 +30,7 @@ public abstract class BaseRequest extends JsonObjectRequest {
     private Response.Listener listener;
     private Response.Listener errorListener;
 
+//    private static final String baseURL = "http://192.168.0.107:3000/api/v1/";
     private static final String baseURL = "https://intense-reaches-1457.herokuapp.com/api/v1/";
 
     public BaseRequest(int method, String url, JSONObject jsonRequest,
@@ -41,6 +42,7 @@ public abstract class BaseRequest extends JsonObjectRequest {
                 Log.e("Request Error", "Custom ErrorListener detected");
                 NetworkResponse networkResponse = volleyError.networkResponse;
                 if (networkResponse != null && networkResponse.statusCode == HttpStatus.SC_FORBIDDEN) {
+                    Toast.makeText(activity, "You must sign in!", Toast.LENGTH_SHORT).show();
                     MainActivity.logoutCurrentUser(activity);
                     return;
                 }
@@ -58,7 +60,7 @@ public abstract class BaseRequest extends JsonObjectRequest {
                 }
                 errorListener.onResponse(apiError);
 
-                Toast toast = Toast.makeText(activity.getApplicationContext(), apiError.getMessage(), Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(activity, apiError.getMessage(), Toast.LENGTH_SHORT);
                 toast.show();
             }});
 
