@@ -19,7 +19,7 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :sites, only: [:index, :show, :create, :update] do
+      resources :sites, except: [:new, :edit] do
         collection do
           match "search", to: "sites#search", via: :get
         end
@@ -27,7 +27,7 @@ Rails.application.routes.draw do
 
       resources :mini_sites,    except: [:new, :edit]
       resources :tasks,         except: [:new, :edit]
-      resources :field_reports, except: [:new, :edit]
+      resources :field_reports, except: [:new, :edit, :destroy]
     end
   end
 
