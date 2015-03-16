@@ -25,9 +25,9 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :mini_sites,    only: [:index, :show, :create, :update]
-      resources :tasks,         only: [:index, :show, :create, :update]
-      resources :field_reports, only: [:index, :show, :create, :update]
+      resources :mini_sites,    except: [:new, :edit]
+      resources :tasks,         except: [:new, :edit]
+      resources :field_reports, except: [:new, :edit]
     end
   end
 
