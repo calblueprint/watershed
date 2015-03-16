@@ -31,6 +31,14 @@ class Api::V1::MiniSitesController < Api::V1::BaseController
     end
   end
 
+  def destroy
+    if @mini_site && @mini_site.destroy
+      render json: { message: "Deleted your account!" }, status: :redirect
+    else
+      error_response(@mini_site)
+    end
+  end
+
   private
 
   def mini_site_params
