@@ -25,6 +25,7 @@ import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Tasks.TaskListRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Sites.SiteListAdapter;
+import com.blueprint.watershed.Tasks.BasicTaskAdapter;
 import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Tasks.TaskAdapter;
 import com.blueprint.watershed.Tasks.TaskFragment;
@@ -42,7 +43,7 @@ public class UserTaskFragment extends ListFragment {
     private LinearLayoutManager mLayoutManager;
 
     private ArrayList<Task> mUserTaskList;
-    private TaskAdapter mUserTaskAdapter;
+    private BasicTaskAdapter mUserTaskAdapter;
 
     private static String ID = "id";
     private int mId;
@@ -74,6 +75,7 @@ public class UserTaskFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         View finalView = inflater.inflate(R.layout.fragment_user_task, container, false);
         initializeViews(finalView);
         return finalView;
@@ -86,7 +88,7 @@ public class UserTaskFragment extends ListFragment {
      */
     private void initializeViews(View view) {
         mListView = (ListView) view.findViewById(android.R.id.list);
-        mUserTaskAdapter = new TaskAdapter(mParentActivity,R.layout.task_list_row, mUserTaskList);
+        mUserTaskAdapter = new BasicTaskAdapter(mParentActivity,R.layout.task_list_row, mUserTaskList);
 
         mListView.setAdapter(mUserTaskAdapter);
         mListView.setEmptyView(view.findViewById(R.id.no_tasks_layout));
@@ -149,7 +151,7 @@ public class UserTaskFragment extends ListFragment {
                     }
                 }.start();
             }
-        });
+        }, mSwipeLayout);
         mNetworkManager.getRequestQueue().add(taskListRequest);
     }
 

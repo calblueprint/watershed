@@ -39,6 +39,7 @@ import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Tasks.TaskFragment;
 import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Users.UserFragment;
+import com.blueprint.watershed.Users.UserMiniSiteFragment;
 import com.blueprint.watershed.Utilities.TabsPagerAdapter;
 import com.blueprint.watershed.Utilities.Utility;
 import com.facebook.Session;
@@ -198,7 +199,7 @@ public class MainActivity extends ActionBarActivity
             displayTaskView(true);
             return;
         }
-        else if (f instanceof SiteListFragment || f instanceof SiteFragment) {
+        else if (f instanceof SiteListFragment || f instanceof SiteFragment || f instanceof UserMiniSiteFragment) {
             setTitle("Sites");
         }
         else if (f instanceof AboutFragment) {

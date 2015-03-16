@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.blueprint.watershed.Tasks.TaskFragment">
+    tools:context="com.blueprint.watershed.Users.UserTaskFragment">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/tasks_swipe_container"

@@ -32,7 +32,7 @@ public class UserMiniSitesRequest extends BaseRequest {
                             ArrayList<MiniSite> miniSites = mapper.readValue(sitesJson, new TypeReference<ArrayList<MiniSite>>() {});
                             listener.onResponse(miniSites);
                         } catch (Exception e) {
-                            Log.e("Site Json exception", e.toString());
+                            Log.e("UMSite Json exception", e.toString());
                         }
                     }
 

@@ -133,15 +133,16 @@ public class UserFragment extends Fragment implements ListView.OnItemClickListen
             // Direct to list of User Tasks, Field Reports, or Sites
         switch (position) {
             case 0:
-                //Field Reports
+                UserMiniSiteFragment miniSiteFragment = UserMiniSiteFragment.newInstance(mParentActivity.getUserId());
+                mParentActivity.replaceFragment(miniSiteFragment);
                 break;
             case 1:
                 UserTaskFragment taskFragment = UserTaskFragment.newInstance(mParentActivity.getUserId());
                 mParentActivity.replaceFragment(taskFragment);
                 break;
             case 2:
-                // Sites
-                break;
+                UserMiniSiteFragment siteFragment = UserMiniSiteFragment.newInstance(mParentActivity.getUserId());
+                mParentActivity.replaceFragment(siteFragment);
         }
     }
 }
