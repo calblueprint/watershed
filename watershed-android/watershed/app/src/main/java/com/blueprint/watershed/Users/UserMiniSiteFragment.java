@@ -1,11 +1,7 @@
 package com.blueprint.watershed.Users;
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,21 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
-import com.blueprint.watershed.MiniSites.BasicMiniSiteListAdapter;
 import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteListAdapter;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Users.UserMiniSitesRequest;
 import com.blueprint.watershed.R;
-import com.blueprint.watershed.Sites.Site;
-import com.blueprint.watershed.Sites.SiteListAdapter;
 import com.blueprint.watershed.Views.HeaderGridView;
 
 import org.json.JSONObject;
@@ -45,19 +36,19 @@ public class UserMiniSiteFragment extends Fragment implements AbsListView.OnItem
     private HeaderGridView mMiniSiteGridView;
     private MiniSiteListAdapter mMiniSiteAdapter;
 
-    private int mId;
+    private User mUser;
 
 
-    public static UserMiniSiteFragment newInstance(int id) {
+    public static UserMiniSiteFragment newInstance(User user) {
         UserMiniSiteFragment fragment = new UserMiniSiteFragment();
-        fragment.configureWithId(id);
+        fragment.configureWithUser(user);
         return fragment;
     }
 
     public UserMiniSiteFragment(){}
 
-    public void configureWithId(int Id) {
-        mId = Id;
+    public void configureWithUser(User user) {
+        mUser =  user;
     }
 
     @Override
@@ -69,8 +60,8 @@ public class UserMiniSiteFragment extends Fragment implements AbsListView.OnItem
     }
 
     public void configureViewWithUser(View view, int Id) {
-        ((TextView)view.findViewById(R.id.user_name)).setText(String.valueOf(mId));
-        ((TextView)view.findViewById(R.id.user_objects)).setText("7");//mFieldReports.size());
+        ((TextView)view.findViewById(R.id.user_name)).setText(mUser.getName() + "\'s Sites");
+        ((TextView)view.findViewById(R.id.user_objects)).setText(String.valueOf(getMiniSites().size()) + " Sites");
     }
 
     @Override
@@ -78,17 +69,18 @@ public class UserMiniSiteFragment extends Fragment implements AbsListView.OnItem
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_site, container, false);
 
-        // Create FieldReportGridView
+        // Create MiniSite Grid View
         mMiniSiteGridView = (HeaderGridView) view.findViewById(R.id.mini_sites_grid);
 
-        // Add mini site header information to the top
+        // Add user header information to the top
         ViewGroup header = (ViewGroup)inflater.inflate(R.layout.user_header_view, mMiniSiteGridView, false);
         mMiniSiteGridView.addHeaderView(header, null, false);
+        mMiniSiteGridView.setEmptyView(view.findViewById(R.id.no_site_layout));
 
         // Configure the header
-        configureViewWithUser(header, mId);
+        configureViewWithUser(header, mUser.getId());
 
-        // Set the adapter to fill the list of field reports
+        // Set the adapter to fill the list of miniSites
         mMiniSiteAdapter = new MiniSiteListAdapter(mParentActivity, getActivity(), R.layout.mini_site_list_row, getMiniSites());
         mMiniSiteGridView.setAdapter(mMiniSiteAdapter);
 
@@ -144,7 +136,7 @@ public class UserMiniSiteFragment extends Fragment implements AbsListView.OnItem
                 setMiniSites(miniSites);
                 mMiniSiteAdapter.notifyDataSetChanged();
             }
-        }, mId);
+        }, mUser.getId());
         mNetworkManager.getRequestQueue().add(miniSitesRequest);
     }
 

@@ -25,5 +25,5 @@
         android:layout_centerInParent="true"
         android:gravity="center"
         android:visibility="gone"
-        android:text="@string/no_tasks"/>
+        android:text="@string/no_user_tasks"/>
 </RelativeLayout>

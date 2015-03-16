@@ -46,21 +46,24 @@ public class UserTaskFragment extends ListFragment {
     private BasicTaskAdapter mUserTaskAdapter;
 
     private static String ID = "id";
-    private int mId;
+    private User mUser;
 
 
     private ListView mListView;
     private SwipeRefreshLayout mSwipeLayout;
 
-    public static UserTaskFragment newInstance(int id) {
+    public static UserTaskFragment newInstance(User user) {
         UserTaskFragment fragment = new UserTaskFragment();
-        Bundle args = new Bundle();
-        args.putInt(ID, id);
-        fragment.setArguments(args);
+        fragment.configureWithUser(user);
         return fragment;
     }
 
+
     public UserTaskFragment(){}
+
+    public void configureWithUser(User user) {
+        mUser = user;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,7 +73,6 @@ public class UserTaskFragment extends ListFragment {
         mParentActivity = (MainActivity) getActivity();
         mUserTaskList = new ArrayList<Task>();
         Bundle args = getArguments();
-        if (args != null) mId = args.getInt(ID);
     }
 
     @Override
@@ -138,7 +140,7 @@ public class UserTaskFragment extends ListFragment {
         TaskListRequest taskListRequest = new TaskListRequest(getActivity(), params, new Response.Listener<ArrayList<Task>>() {
             @Override
             public void onResponse(ArrayList<Task> tasks) {
-                setTasks(tasks, mId);
+                setTasks(tasks, mUser.getId());
                 mUserTaskAdapter.notifyDataSetChanged();
                 new CountDownTimer(1000, 1000) {
                     @Override

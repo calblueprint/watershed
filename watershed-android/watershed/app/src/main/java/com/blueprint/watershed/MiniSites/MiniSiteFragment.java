@@ -36,7 +36,7 @@ public class MiniSiteFragment extends Fragment
 
     private NetworkManager mNetworkManager;
     private MainActivity mMainActivity;
-    private HeaderGridView mFieldReportGirdView;
+    private HeaderGridView mFieldReportGridView;
     private FieldReportListAdapter mFieldReportAdapter;
     private MiniSite mMiniSite;
     private ArrayList<FieldReport> mFieldReports;
@@ -75,20 +75,20 @@ public class MiniSiteFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_mini_site, container, false);
 
         // Create FieldReportGridView
-        mFieldReportGirdView = (HeaderGridView) view.findViewById(R.id.field_reports_grid);
+        mFieldReportGridView = (HeaderGridView) view.findViewById(R.id.field_reports_grid);
 
         // Add mini site header information to the top
-        ViewGroup header = (ViewGroup)inflater.inflate(R.layout.mini_site_header_view, mFieldReportGirdView, false);
-        mFieldReportGirdView.addHeaderView(header, null, false);
+        ViewGroup header = (ViewGroup)inflater.inflate(R.layout.mini_site_header_view, mFieldReportGridView, false);
+        mFieldReportGridView.addHeaderView(header, null, false);
 
         // Configure the header
         configureViewWithMiniSite(header, mMiniSite);
 
         // Set the adapter to fill the list of field reports
         mFieldReportAdapter = new FieldReportListAdapter(mMainActivity, getActivity(), R.layout.field_report_list_row, getFieldReports());
-        mFieldReportGirdView.setAdapter(mFieldReportAdapter);
+        mFieldReportGridView.setAdapter(mFieldReportAdapter);
 
-        mFieldReportGirdView.setOnItemClickListener(this);
+        mFieldReportGridView.setOnItemClickListener(this);
         return view;
     }
 

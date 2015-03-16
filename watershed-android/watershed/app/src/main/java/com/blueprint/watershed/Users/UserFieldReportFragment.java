@@ -35,28 +35,28 @@ public class UserFieldReportFragment extends Fragment
                                      implements AbsListView.OnItemClickListener{
     private NetworkManager mNetworkManager;
     private MainActivity mMainActivity;
-    private HeaderGridView mFieldReportGirdView;
+    private HeaderGridView mFieldReportGridView;
     private FieldReportListAdapter mFieldReportAdapter;
-    private int mId;
+    private User mUser;
     private ArrayList<FieldReport> mFieldReports;
 
 
-    public static UserFieldReportFragment newInstance(int Id) {
+    public static UserFieldReportFragment newInstance(User user) {
         UserFieldReportFragment miniSiteFragment = new UserFieldReportFragment();
-        miniSiteFragment.configureWithId(Id);
+        miniSiteFragment.configureWithUser(user);
         return miniSiteFragment;
     }
 
     public UserFieldReportFragment() {
     }
 
-    public void configureWithId(int Id) {
-        mId = Id;
+    public void configureWithUser(User user) {
+        mUser = user;
     }
 
     public void configureViewWithUser(View view, int Id) {
-        ((TextView)view.findViewById(R.id.user_name)).setText(String.valueOf(mId));
-        ((TextView)view.findViewById(R.id.user_objects)).setText("7");//mFieldReports.size());
+        ((TextView)view.findViewById(R.id.user_name)).setText(mUser.getName() + "\'s Reports");
+        ((TextView)view.findViewById(R.id.user_objects)).setText(String.valueOf(getFieldReports().size()) + " Reports");
     }
 
     @Override
@@ -73,20 +73,21 @@ public class UserFieldReportFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_user_field_report, container, false);
 
         // Create FieldReportGridView
-        mFieldReportGirdView = (HeaderGridView) view.findViewById(R.id.field_reports_grid);
+        mFieldReportGridView = (HeaderGridView) view.findViewById(R.id.field_reports_grid);
 
         // Add mini site header information to the top
-        ViewGroup header = (ViewGroup)inflater.inflate(R.layout.user_header_view, mFieldReportGirdView, false);
-        mFieldReportGirdView.addHeaderView(header, null, false);
+        ViewGroup header = (ViewGroup)inflater.inflate(R.layout.user_header_view, mFieldReportGridView, false);
+        mFieldReportGridView.addHeaderView(header, null, false);
+        mFieldReportGridView.setEmptyView(view.findViewById(R.id.no_reports_layout));
 
         // Configure the header
-        configureViewWithUser(header, mId);
+        configureViewWithUser(header, mUser.getId());
 
         // Set the adapter to fill the list of field reports
         mFieldReportAdapter = new FieldReportListAdapter(mMainActivity, getActivity(), R.layout.field_report_list_row, getFieldReports());
-        mFieldReportGirdView.setAdapter(mFieldReportAdapter);
+        mFieldReportGridView.setAdapter(mFieldReportAdapter);
 
-        mFieldReportGirdView.setOnItemClickListener(this);
+        mFieldReportGridView.setOnItemClickListener(this);
         return view;
     }
 
@@ -100,7 +101,7 @@ public class UserFieldReportFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
-        getFieldReportRequest(mId);
+        getFieldReportRequest(mUser.getId());
     }
 
     @Override
