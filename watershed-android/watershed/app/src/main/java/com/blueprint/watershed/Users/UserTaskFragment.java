@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -29,6 +30,7 @@ import com.blueprint.watershed.Tasks.BasicTaskAdapter;
 import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Tasks.TaskAdapter;
 import com.blueprint.watershed.Tasks.TaskFragment;
+import com.blueprint.watershed.Views.HeaderGridView;
 
 import org.json.JSONObject;
 
@@ -36,7 +38,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class UserTaskFragment extends ListFragment {
+public class UserTaskFragment extends Fragment {
 
     MainActivity mParentActivity;
     NetworkManager mNetworkManager;
@@ -45,7 +47,8 @@ public class UserTaskFragment extends ListFragment {
     private ArrayList<Task> mUserTaskList;
     private BasicTaskAdapter mUserTaskAdapter;
 
-    private static String ID = "id";
+    private HeaderGridView mTaskGridView;
+
     private User mUser;
 
 
@@ -72,15 +75,45 @@ public class UserTaskFragment extends ListFragment {
         mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
         mParentActivity = (MainActivity) getActivity();
         mUserTaskList = new ArrayList<Task>();
-        Bundle args = getArguments();
+    }
+
+    public void configureViewWithUser(View view, User user) {
+        int taskNumber;
+        if (user.getTasksCount() != null){
+            taskNumber = user.getTasksCount();
+        }
+        else{
+            taskNumber = 0;
+        }
+        ((TextView)view.findViewById(R.id.user_name)).setText(mUser.getName() + "\'s Tasks");
+
+        ((TextView)view.findViewById(R.id.user_objects)).setText(String.valueOf(taskNumber) + " Tasks");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View finalView = inflater.inflate(R.layout.fragment_user_task, container, false);
-        initializeViews(finalView);
-        return finalView;
+        View view = inflater.inflate(R.layout.fragment_user_task, container, false);
+
+        // Create MiniSite Grid View
+        mTaskGridView = (HeaderGridView) view.findViewById(R.id.mini_sites_grid);
+
+        // Add user header information to the top
+        ViewGroup header = (ViewGroup)inflater.inflate(R.layout.user_header_view, mTaskGridView, false);
+        mTaskGridView.addHeaderView(header, null, false);
+        mTaskGridView.setEmptyView(view.findViewById(R.id.no_tasks_layout));
+
+        // Configure the header
+        configureViewWithUser(header, mUser);
+
+        // Set the adapter to fill the list of miniSites
+        mUserTaskAdapter = new BasicTaskAdapter(mParentActivity, R.layout.task_list_row, getTasks());
+        mTaskGridView.setAdapter(mUserTaskAdapter);
+
+        //mTaskGridView.setOnItemClickListener(this);
+
+
+        return view;
     }
 
     /**
@@ -110,7 +143,7 @@ public class UserTaskFragment extends ListFragment {
     @Override
     public void onResume() {
         super.onResume();
-        mSwipeLayout.setRefreshing(true);
+        //mSwipeLayout.setRefreshing(true);
         getTasksRequest();
     }
 
@@ -142,16 +175,6 @@ public class UserTaskFragment extends ListFragment {
             public void onResponse(ArrayList<Task> tasks) {
                 setTasks(tasks, mUser.getId());
                 mUserTaskAdapter.notifyDataSetChanged();
-                new CountDownTimer(1000, 1000) {
-                    @Override
-                    public void onTick(long timeLeft) {
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        mSwipeLayout.setRefreshing(false);
-                    }
-                }.start();
             }
         }, mSwipeLayout);
         mNetworkManager.getRequestQueue().add(taskListRequest);

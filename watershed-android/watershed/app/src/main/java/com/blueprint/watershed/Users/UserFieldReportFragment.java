@@ -54,9 +54,16 @@ public class UserFieldReportFragment extends Fragment
         mUser = user;
     }
 
-    public void configureViewWithUser(View view, int Id) {
+    public void configureViewWithUser(View view, User user) {
+        int reportNum;
+        if (user.getFieldReportsCount() != null){
+            reportNum = user.getFieldReportsCount();
+        }
+        else{
+            reportNum = 0;
+        }
         ((TextView)view.findViewById(R.id.user_name)).setText(mUser.getName() + "\'s Reports");
-        ((TextView)view.findViewById(R.id.user_objects)).setText(String.valueOf(getFieldReports().size()) + " Reports");
+        ((TextView)view.findViewById(R.id.user_objects)).setText(String.valueOf(reportNum) + " Reports");
     }
 
     @Override
@@ -81,7 +88,7 @@ public class UserFieldReportFragment extends Fragment
         mFieldReportGridView.setEmptyView(view.findViewById(R.id.no_reports_layout));
 
         // Configure the header
-        configureViewWithUser(header, mUser.getId());
+        configureViewWithUser(header, mUser);
 
         // Set the adapter to fill the list of field reports
         mFieldReportAdapter = new FieldReportListAdapter(mMainActivity, getActivity(), R.layout.field_report_list_row, getFieldReports());

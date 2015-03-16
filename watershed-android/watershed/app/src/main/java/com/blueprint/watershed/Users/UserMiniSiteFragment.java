@@ -59,9 +59,16 @@ public class UserMiniSiteFragment extends Fragment implements AbsListView.OnItem
         mNetworkManager = NetworkManager.getInstance(mParentActivity.getApplicationContext());
     }
 
-    public void configureViewWithUser(View view, int Id) {
+    public void configureViewWithUser(View view, User user) {
+        int siteNum;
+        if (user.getTasksCount() != null){
+            siteNum = user.getSitesCount();
+        }
+        else{
+            siteNum = 0;
+        }
         ((TextView)view.findViewById(R.id.user_name)).setText(mUser.getName() + "\'s Sites");
-        ((TextView)view.findViewById(R.id.user_objects)).setText(String.valueOf(getMiniSites().size()) + " Sites");
+        ((TextView)view.findViewById(R.id.user_objects)).setText(String.valueOf(siteNum) + " Sites");
     }
 
     @Override
@@ -78,7 +85,7 @@ public class UserMiniSiteFragment extends Fragment implements AbsListView.OnItem
         mMiniSiteGridView.setEmptyView(view.findViewById(R.id.no_site_layout));
 
         // Configure the header
-        configureViewWithUser(header, mUser.getId());
+        configureViewWithUser(header, mUser);
 
         // Set the adapter to fill the list of miniSites
         mMiniSiteAdapter = new MiniSiteListAdapter(mParentActivity, getActivity(), R.layout.mini_site_list_row, getMiniSites());

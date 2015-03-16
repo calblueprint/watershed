@@ -5,18 +5,18 @@
     android:layout_height="match_parent"
     tools:context="com.blueprint.watershed.Users.UserTaskFragment">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/tasks_swipe_container"
+    <com.blueprint.watershed.Views.HeaderGridView
+        android:id="@+id/mini_sites_grid"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <ListView
-            android:id="@android:id/list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-
-    </android.support.v4.widget.SwipeRefreshLayout>
+        android:layout_height="fill_parent"
+        android:layout_marginTop="@dimen/no_margin"
+        android:layout_marginLeft="@dimen/no_margin"
+        android:layout_marginRight="@dimen/no_margin"
+        android:background="@color/medium_gray"
+        android:numColumns="1"
+        android:verticalSpacing="@dimen/tight_margin"
+        android:horizontalSpacing="@dimen/tight_margin">
+    </com.blueprint.watershed.Views.HeaderGridView>
 
     <TextView
         android:id="@+id/no_tasks_layout"
