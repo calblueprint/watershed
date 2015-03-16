@@ -8,6 +8,7 @@ import com.blueprint.watershed.Tasks.TaskFragment;
 
 /**
  * Created by Max on 10/19/2014.
+ * Sets up adapter for view pager
  */
 
 public class TabsPagerAdapter extends FragmentPagerAdapter {

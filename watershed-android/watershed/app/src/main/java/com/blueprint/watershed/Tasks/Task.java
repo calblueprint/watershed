@@ -3,6 +3,7 @@ package com.blueprint.watershed.Tasks;
 import com.blueprint.watershed.APIObject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Date;
@@ -11,6 +12,7 @@ import java.util.Date;
  * Object to represent Tasks in Watershed Project application
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Task implements APIObject {
 
     private ObjectMapper mMapper = new ObjectMapper();
@@ -26,7 +28,12 @@ public class Task implements APIObject {
     private Date mUpdatedAt;
     private Date mCreatedAt;
 
-    public Task(){
+
+    public Task() {}
+
+    public Task(String name) {
+        super();
+        setTitle(name);
     }
 
     public Integer getId() {return mId;}
