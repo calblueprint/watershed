@@ -1,27 +1,31 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="64dp"
+    android:paddingRight="@dimen/standard_margin"
+    android:paddingLeft="@dimen/standard_margin"
     android:gravity="center"
-    android:paddingTop="15dp">
+    >
 
-    <ImageView
+    <com.blueprint.watershed.Views.CircularImageView
+        android:id="@+id/menu_icon"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginBottom="@dimen/tight_margin"
-        android:gravity="center"
-        android:scaleType="fitCenter"
+        android:layout_centerVertical="true"
+        android:scaleType="centerCrop"
         android:src="@drawable/watershed_logo"
-        android:id="@+id/menu_icon"/>
+        android:background="@color/ws_blue"
+        />
 
     <TextView
+        android:id="@+id/menu_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
-        android:layout_marginBottom="@dimen/tight_margin"
-        android:textSize="18sp"
+        android:layout_toRightOf="@id/menu_icon"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:id="@+id/menu_title"/>
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        />
 
-</LinearLayout>
+</RelativeLayout>

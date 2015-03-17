@@ -77,7 +77,7 @@ public class EditUserFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        mParentActivity.setMenuAction(false);
+        mParentActivity.setMenuAction(true);
     }
 
     @Override

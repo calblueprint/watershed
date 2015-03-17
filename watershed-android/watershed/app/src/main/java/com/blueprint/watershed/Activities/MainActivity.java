@@ -382,6 +382,7 @@ public class MainActivity extends ActionBarActivity
                 Fragment fragment = EditUserFragment.newInstance(getUser());
                 replaceFragment(fragment);
                 updateTitle(fragment);
+                mDrawerLayout.closeDrawer(mDrawer);
                 break;
         }
 
