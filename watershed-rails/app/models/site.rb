@@ -46,4 +46,14 @@ class Site < ActiveRecord::Base
     mini_sites.try(:first).try(:photos) || []
   end
 
+  def subscribe(user)
+    mini_sites.each { |mini_site| mini_site.users << user }
+  end
+
+  def unsubscribe(user)
+    mini_sites.each do |mini_site|
+      user_mini_site = mini_site.user_mini_sites.find_by(user_id: user.id)
+      user_mini_site.destroy unless user_mini_site.blank?
+    end
+  end
 end
