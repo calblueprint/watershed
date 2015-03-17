@@ -31,8 +31,10 @@ import com.blueprint.watershed.AboutFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Users.HomeRequest;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Sites.CreateSiteFragment;
 import com.blueprint.watershed.Sites.SiteFragment;
 import com.blueprint.watershed.Sites.SiteListFragment;
+import com.blueprint.watershed.Tasks.CreateTaskFragment;
 import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Tasks.TaskFragment;
 import com.blueprint.watershed.Users.User;
@@ -237,9 +239,14 @@ public class MainActivity extends ActionBarActivity
                     return false;
                 }
                 break;
-            default:
-                super.onOptionsItemSelected(item);
-
+            case R.id.add_task:
+                CreateTaskFragment newTask = CreateTaskFragment.newInstance();
+                replaceFragment(newTask);
+                return true;
+            case R.id.add_site:
+                CreateSiteFragment newSite = CreateSiteFragment.newInstance();
+                replaceFragment(newSite);
+                return true;
         }
         return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }

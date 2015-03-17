@@ -1,9 +1,12 @@
 package com.blueprint.watershed.MiniSites;
+
 import com.blueprint.watershed.APIObject;
 import com.blueprint.watershed.FieldReports.FieldReport;
+import com.blueprint.watershed.Networking.MiniSites.MiniSiteSerializer;
 import com.blueprint.watershed.Photos.Photo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.ArrayList;
 
@@ -11,6 +14,7 @@ import java.util.ArrayList;
  * Created by Mark Miyashita on 11/16/14.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonSerialize(using = MiniSiteSerializer.class)
 public class MiniSite implements APIObject {
 
     private Integer mId;
@@ -20,9 +24,10 @@ public class MiniSite implements APIObject {
     private String mCity;
     private String mState;
     private Integer mZipCode;
-    private String mLatitude;
-    private String mLongitude;
+    private Float mLatitude;
+    private Float mLongitude;
     private Integer mFieldReportsCount;
+    private Integer mSiteId;
 
     private ArrayList<FieldReport> mFieldReports;
     private ArrayList<Photo> mPhotos;
@@ -61,9 +66,10 @@ public class MiniSite implements APIObject {
     public String getCity() { return mCity; }
     public String getState() { return mState; }
     public Integer getZipCode() { return mZipCode; }
-    public String getLatitude() { return mLatitude; }
-    public String getLongitude() { return mLongitude; }
+    public Float getLatitude() { return mLatitude; }
+    public Float getLongitude() { return mLongitude; }
     public Integer getFieldReportsCount() { return mFieldReportsCount; }
+    public Integer getSiteId() { return mSiteId; }
 
     @JsonIgnore
     public String getLocation() {
@@ -78,7 +84,9 @@ public class MiniSite implements APIObject {
     public void setCity(String city) { mCity = city; }
     public void setState(String state) { mState = state; }
     public void setZipCode(Integer zipCode) { mZipCode = zipCode; }
-    public void setLatitude(String latitude) { mLatitude = latitude; }
-    public void setLongitude(String longitude) { mLongitude = longitude; }
+    public void setLatitude(Float latitude) { mLatitude = latitude; }
+    public void setLongitude(Float longitude) { mLongitude = longitude; }
     public void setFieldReportsCount(Integer fieldReportsCount) { mFieldReportsCount = fieldReportsCount; }
+    public void setPhotos(ArrayList<Photo> Photos){mPhotos = Photos;}
+    public void setSiteId(Integer siteId) { mSiteId = siteId; }
 }
