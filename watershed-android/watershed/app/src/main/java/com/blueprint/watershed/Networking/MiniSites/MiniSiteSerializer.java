@@ -25,14 +25,14 @@ public class MiniSiteSerializer extends JsonSerializer<MiniSite> {
         jgen.writeStringField("city", value.getCity());
         jgen.writeStringField("state", value.getState());
         jgen.writeNumberField("zip_code", value.getZipCode());
-        jgen.writeStringField("latitude", value.getLatitude());
-        jgen.writeStringField("longitude", value.getLongitude());
+        jgen.writeNumberField("latitude", value.getLatitude());
+        jgen.writeNumberField("longitude", value.getLongitude());
         jgen.writeNumberField("site_id", value.getSiteId());
-        jgen.writeArrayFieldStart("photos");
+        jgen.writeArrayFieldStart("photos_attributes");
         for (Photo photo : value.getPhotos()) {
             jgen.writeStartObject();
-            jgen.writeNumberField("id", photo.getId());
-            jgen.writeObjectField("image", photo.getData());
+//            jgen.writeNumberField("id", photo.getId());
+            jgen.writeObjectField("data", photo.getData());
             jgen.writeEndObject();
         }
         jgen.writeEndArray();

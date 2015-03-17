@@ -55,8 +55,8 @@ public class CreateMiniSiteRequest extends BaseRequest {
         ObjectMapper mapper = getNetworkManager(activity).getObjectMapper();
 
         try {
+//            Log.e("Mini Site JSON", miniSiteJson.toString());
             JSONObject miniSiteJson = new JSONObject(mapper.writeValueAsString(miniSite));
-            Log.e("Mini Site JSON", miniSiteJson.toString());
             params.put("mini_site", miniSiteJson);
         } catch (Exception e) {
             e.printStackTrace();

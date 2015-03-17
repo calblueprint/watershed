@@ -24,8 +24,8 @@ public class MiniSite implements APIObject {
     private String mCity;
     private String mState;
     private Integer mZipCode;
-    private String mLatitude;
-    private String mLongitude;
+    private Float mLatitude;
+    private Float mLongitude;
     private Integer mFieldReportsCount;
     private Integer mSiteId;
 
@@ -66,8 +66,8 @@ public class MiniSite implements APIObject {
     public String getCity() { return mCity; }
     public String getState() { return mState; }
     public Integer getZipCode() { return mZipCode; }
-    public String getLatitude() { return mLatitude; }
-    public String getLongitude() { return mLongitude; }
+    public Float getLatitude() { return mLatitude; }
+    public Float getLongitude() { return mLongitude; }
     public Integer getFieldReportsCount() { return mFieldReportsCount; }
     public Integer getSiteId() { return mSiteId; }
 
@@ -84,8 +84,8 @@ public class MiniSite implements APIObject {
     public void setCity(String city) { mCity = city; }
     public void setState(String state) { mState = state; }
     public void setZipCode(Integer zipCode) { mZipCode = zipCode; }
-    public void setLatitude(String latitude) { mLatitude = latitude; }
-    public void setLongitude(String longitude) { mLongitude = longitude; }
+    public void setLatitude(Float latitude) { mLatitude = latitude; }
+    public void setLongitude(Float longitude) { mLongitude = longitude; }
     public void setFieldReportsCount(Integer fieldReportsCount) { mFieldReportsCount = fieldReportsCount; }
     public void setPhotos(ArrayList<Photo> Photos){mPhotos = Photos;}
     public void setSiteId(Integer siteId) { mSiteId = siteId; }

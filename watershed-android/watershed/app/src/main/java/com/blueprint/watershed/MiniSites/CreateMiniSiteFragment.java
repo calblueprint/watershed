@@ -213,7 +213,7 @@ public class CreateMiniSiteFragment extends Fragment implements View.OnClickList
 
         String miniSiteTitle = ((EditText)mView.findViewById(R.id.create_mini_site_title)).getText().toString();
         ImageView image = (ImageView)mView.findViewById(R.id.mini_site_image);
-        int zipCode = 0;
+        int zipCode;
 
         try {
             zipCode = Integer.valueOf(mZipField.getText().toString());
@@ -230,15 +230,15 @@ public class CreateMiniSiteFragment extends Fragment implements View.OnClickList
         miniSite.setStreet(mAddressField.getText().toString());
         miniSite.setCity(mCityField.getText().toString());
         miniSite.setZipCode(zipCode);
-        miniSite.setLatitude("0");
-        miniSite.setLongitude("0");
+        miniSite.setLatitude(0f);
+        miniSite.setLongitude(0f);
         miniSite.setFieldReportsCount(0);
         miniSite.setState("CA");
         miniSite.setSiteId(mSite.getId());
-        ArrayList<Photo> Photos = new ArrayList<Photo>();
-        Photos.add(new Photo(miniSitePhoto));
+        ArrayList<Photo> photos = new ArrayList<Photo>();
+        photos.add(new Photo(miniSitePhoto));
 
-        //miniSite.setPhotos(Photos);
+        miniSite.setPhotos(photos);
 
         createMiniSiteRequest(miniSite);
     }

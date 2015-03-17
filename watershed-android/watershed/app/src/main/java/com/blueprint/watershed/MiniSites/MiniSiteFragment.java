@@ -53,7 +53,7 @@ public class MiniSiteFragment extends Fragment
     }
 
     public void configureViewWithMiniSite(View view, MiniSite miniSite) {
-//        ((CoverPhotoPagerView)view.findViewById(R.id.cover_photo_pager_view)).configureWithPhotos(miniSite.getPhotos());
+        ((CoverPhotoPagerView)view.findViewById(R.id.cover_photo_pager_view)).configureWithPhotos(miniSite.getPhotos());
         ((TextView)view.findViewById(R.id.mini_site_name)).setText(miniSite.getName());
         ((TextView)view.findViewById(R.id.mini_site_description)).setText(miniSite.getDescription());
     }
@@ -99,7 +99,7 @@ public class MiniSiteFragment extends Fragment
     public void onResume() {
         super.onResume();
         mParentActivity.setMenuAction(false);
-        getMiniSiteRequest(mMiniSite);
+//        getMiniSiteRequest(mMiniSite);
     }
 
     @Override
