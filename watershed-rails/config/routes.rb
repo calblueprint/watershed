@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       devise_for :users, skip: [:registrations, :passwords]
       resources :users, only: [:index, :show, :create, :update] do
         collection do
-          match "search",           to: "users#search",         via: :get
+          get :search
           match "sign_up/facebook", to: "users#facebook_login", via: :post
         end
 
@@ -20,8 +20,13 @@ Rails.application.routes.draw do
       end
 
       resources :sites, except: [:new, :edit] do
+        member do
+          post :subscribe
+          delete :unsubscribe
+        end
+
         collection do
-          match "search", to: "sites#search", via: :get
+          get :search
         end
       end
 
