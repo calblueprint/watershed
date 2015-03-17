@@ -4,21 +4,20 @@ import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.util.LruCache;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,14 +38,16 @@ import com.blueprint.watershed.Tasks.CreateTaskFragment;
 import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Tasks.TaskFragment;
 import com.blueprint.watershed.Users.User;
+import com.blueprint.watershed.Users.UserFieldReportFragment;
 import com.blueprint.watershed.Users.UserFragment;
+import com.blueprint.watershed.Users.UserMiniSiteFragment;
+import com.blueprint.watershed.Users.UserTaskFragment;
 import com.blueprint.watershed.Utilities.TabsPagerAdapter;
 import com.blueprint.watershed.Utilities.Utility;
 import com.facebook.Session;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -77,11 +78,12 @@ public class MainActivity extends ActionBarActivity
     public CharSequence mTitle;
 
     // Action Bar Elements
-    private ActionBar actionBar;
+    private PagerTabStrip mPagerTabStrip;
     private ViewPager viewPager;
     private TabsPagerAdapter mAdapter;
     private View mContainer;
     private ProgressBar mProgress;
+    private Toolbar mToolBar;
 
     // Networking
     private NetworkManager mNetworkManager;
@@ -111,11 +113,12 @@ public class MainActivity extends ActionBarActivity
 
         initializeCache();
         initializeViews();
-
-        mProgress = (ProgressBar) this.findViewById(R.id.progressBar);
-        initializeTabs(0);
-
         initializeNavigationDrawer();
+
+        setSupportActionBar(mToolBar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
         initializeFragments();
 
         SharedPreferences prefs = getSharedPreferences(PREFERENCES, 0);
@@ -140,70 +143,35 @@ public class MainActivity extends ActionBarActivity
     }
 
     private void initializeViews() {
-        actionBar = getActionBar();
         setTitle("Tasks");
+        mPagerTabStrip = (PagerTabStrip) findViewById(R.id.pager_title_strip);
+        mPagerTabStrip.setDrawFullUnderline(true);
+
+        mProgress = (ProgressBar) findViewById(R.id.progressBar);
+        mToolBar = (Toolbar) findViewById(R.id.toolbar);
         mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
         viewPager = (ViewPager) findViewById(R.id.pager);
         mContainer = findViewById(R.id.container);
-    }
-
-    public void initializeTabs(int option){
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        ActionBar.TabListener tabListener = new ActionBar.TabListener() {
-            public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
-            public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
-                // hide the given tab
-            }
-            public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
-                // probably ignore this event
-            }
-        };
-
         viewPager.setAdapter(mAdapter);
-        actionBar.setHomeButtonEnabled(false);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
-        if (option == 0) {
-            actionBar.addTab(
-                    actionBar.newTab()
-                            .setText("Your Tasks")
-                            .setTabListener(tabListener));
-            actionBar.addTab(
-                    actionBar.newTab()
-                            .setText("All Tasks")
-                            .setTabListener(tabListener));
-        }
-
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
-            @Override
-            public void onPageSelected(int position) {
-                // on changing the page
-                // make respected tab selected
-                actionBar.setSelectedNavigationItem(position);
-            }
-
-            @Override
-            public void onPageScrolled(int arg0, float arg1, int arg2) {}
-
-            @Override
-            public void onPageScrollStateChanged(int arg0) {}
-        });
     }
 
     public void updateTitle(Fragment f) {
-        if (f instanceof TaskFragment){
+        if (f instanceof TaskFragment) {
             setTitle("Tasks");
             displayTaskView(true);
             return;
         }
-        else if (f instanceof SiteListFragment || f instanceof SiteFragment) {
+        else if (f instanceof UserTaskFragment){
+            setTitle("Tasks");
+        }
+        else if (f instanceof SiteListFragment || f instanceof SiteFragment || f instanceof UserMiniSiteFragment) {
             setTitle("Sites");
         }
         else if (f instanceof AboutFragment) {
             setTitle("About");
+        }
+        else if (f instanceof UserFieldReportFragment){
+            setTitle("Field Reports");
         }
         else if (f instanceof UserFragment) {
             setTitle("Profile");
@@ -214,12 +182,10 @@ public class MainActivity extends ActionBarActivity
 
     public void displayTaskView(boolean toggle) {
         if (toggle){
-            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
             viewPager.setVisibility(View.VISIBLE);
             mContainer.setVisibility(View.INVISIBLE);
         }
         else {
-            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
             viewPager.setVisibility(View.INVISIBLE);
             mContainer.setVisibility(View.VISIBLE);
         }
@@ -287,15 +253,16 @@ public class MainActivity extends ActionBarActivity
 
     private void initializeNavigationDrawer() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout.setStatusBarBackgroundColor(getResources().getColor(R.color.ws_blue));
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         String titles[] = { "Tasks", "Sites", "Profile", "About", "Logout" };
 
         mDrawerList.setOnItemClickListener(this);
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
+        mDrawerList.setAdapter(new ArrayAdapter<>(this,
                 R.layout.menu_list_item, R.id.menu_title, titles));
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                R.drawable.ic_drawer, R.string.draw_open_close , R.string.draw_open_close) {
+                mToolBar, R.string.draw_open_close , R.string.draw_open_close) {
 
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
@@ -310,9 +277,6 @@ public class MainActivity extends ActionBarActivity
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     @Override
@@ -371,18 +335,6 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onClick(View view){}
 
-    // System level attributes
-    private static int getAppVersion(Context context) {
-        try {
-            PackageInfo packageInfo = context.getPackageManager()
-                    .getPackageInfo(context.getPackageName(), 0);
-            return packageInfo.versionCode;
-        } catch (PackageManager.NameNotFoundException e) {
-            // should never happen
-            throw new RuntimeException("Could not get package name: " + e);
-        }
-    }
-
     // Networking
     public NetworkManager getNetworkManager() { return mNetworkManager; }
     public void setNetworkManager(NetworkManager networkManager) { mNetworkManager = networkManager; }
@@ -403,12 +355,33 @@ public class MainActivity extends ActionBarActivity
      */
     public void setUser(User user) { mUser = user; }
     public User getUser() { return mUser; }
+    public void setUsers(List<User> users) { mUsers = users; }
+    public List<User> getUsers() { return mUsers; }
     public int getUserId() { return mUserId; }
     public void setFieldReportTask(Task task) { mFieldReportTask = task; }
     public Task getFieldReportTask() { return mFieldReportTask; }
 
     public ProgressBar getSpinner() { return mProgress; }
 
-    public void setUsers(ArrayList<User> users) { mUsers = users; }
-    public List<User> getUsers() { return mUsers; }
+    public void setMenuAction(boolean setMenu) {
+        if (setMenu) setMenu();
+        else setBackArrow();
+    }
+
+    public void setBackArrow() {
+        mToolBar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
+        mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSupportFragmentManager().popBackStack();
+                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            }
+        });
+
+    }
+
+    public void setMenu() {
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerToggle.syncState();
+    }
 }

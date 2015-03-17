@@ -7,6 +7,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -78,9 +79,15 @@ public class TaskFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View finalView = inflater.inflate(R.layout.fragment_task_list, container, false);
         initializeViews(finalView);
-        hideList();
-        getTasksRequest();
         return finalView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mSwipeLayout.setRefreshing(true);
+        mParentActivity.setMenuAction(true);
+        getTasksRequest();
     }
 
     /**
@@ -144,11 +151,25 @@ public class TaskFragment extends ListFragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add_task:
+                CreateTaskFragment newTask = CreateTaskFragment.newInstance();
+                mParentActivity.replaceFragment(newTask);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+
     /**
      * Gets all the tasks in the server and updates the ListView accordingly,
      * depending on what tab is being clicked on.
      */
-    private void getTasksRequest(){
+
+    protected void getTasksRequest(){
         mSwipeLayout.setRefreshing(true);
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
         TaskListRequest taskListRequest = new TaskListRequest(getActivity(), params, new Response.Listener<ArrayList<Task>>() {

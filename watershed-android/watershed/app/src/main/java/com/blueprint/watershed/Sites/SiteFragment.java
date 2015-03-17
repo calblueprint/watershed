@@ -93,6 +93,7 @@ public class SiteFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
+        mParentActivity.setMenuAction(false);
         getSiteRequest(mSite);
     }
 

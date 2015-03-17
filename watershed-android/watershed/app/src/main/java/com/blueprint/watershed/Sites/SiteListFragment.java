@@ -92,6 +92,7 @@ public class SiteListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        mParentActivity.setMenuAction(true);
         mSwipeLayout.setRefreshing(true);
         getSitesRequest();
     }
