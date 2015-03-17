@@ -1,6 +1,5 @@
 package com.blueprint.watershed.MiniSites;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -105,26 +104,18 @@ public class CreateMiniSiteFragment extends Fragment implements View.OnClickList
         menu.clear();
         inflater.inflate(R.menu.empty, menu);
         super.onCreateOptionsMenu(menu, inflater);
-
-    }
-
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
     }
 
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.take_mini_site_photo_button:
-                onTakePhotoButtonPressed(view);
+                onTakePhotoButtonPressed();
                 break;
             case R.id.create_mini_site_submit:
-                createMiniSite(view);
+                createMiniSite();
                 break;
             case R.id.select_mini_site_photo_button:
-                onSelectPhotoButtonPressed(view);
+                onSelectPhotoButtonPressed();
                 break;
         }
     }
@@ -164,7 +155,7 @@ public class CreateMiniSiteFragment extends Fragment implements View.OnClickList
     }
 
     // Button Handlers
-    public void onTakePhotoButtonPressed(View takePhotoButton){
+    public void onTakePhotoButtonPressed(){
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(mMainActivity.getPackageManager()) != null) {
             File photoFile = null;
@@ -181,7 +172,7 @@ public class CreateMiniSiteFragment extends Fragment implements View.OnClickList
         }
     }
 
-    public void onSelectPhotoButtonPressed(View selectPhotoButton){
+    public void onSelectPhotoButtonPressed() {
         Intent intent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, SELECT_PHOTO_REQUEST);
@@ -217,8 +208,7 @@ public class CreateMiniSiteFragment extends Fragment implements View.OnClickList
         mNetworkManager.getRequestQueue().add(createMiniSiteRequest);
     }
 
-    public void createMiniSite(View MiniSiteButton){
-
+    public void createMiniSite(){
         MiniSite miniSite = new MiniSite();
 
         String miniSiteTitle = ((EditText)mView.findViewById(R.id.create_mini_site_title)).getText().toString();
@@ -252,10 +242,4 @@ public class CreateMiniSiteFragment extends Fragment implements View.OnClickList
 
         createMiniSiteRequest(miniSite);
     }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
 }

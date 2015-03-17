@@ -48,7 +48,6 @@
     <string name="description">Description</string>
     <string name="task_due_date">Pick a Date</string>
     <string name="site">Site</string>
-    <string name="assignee">Assignee</string>
     <string name="create_task_submit">Create Task</string>
     <string name="required">Required</string>
 
