@@ -353,7 +353,7 @@ public class MainActivity extends ActionBarActivity
             default:
                 break;
         }
-        mDrawerLayout.closeDrawer(mDrawerList);
+        mDrawerLayout.closeDrawer(mDrawer);
     }
 
     public static void logoutCurrentUser(Activity activity) {

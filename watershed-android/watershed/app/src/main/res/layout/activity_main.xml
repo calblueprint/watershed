@@ -99,7 +99,18 @@
                 android:layout_above="@id/nav_bar_user_name"
                 android:layout_marginBottom="@dimen/tight_margin"
                 android:src="@drawable/watershed_logo"
+                android:scaleType="centerCrop"
                 />
+            
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/arrow"
+                android:rotation="180"
+            />
 
         </RelativeLayout>
 
