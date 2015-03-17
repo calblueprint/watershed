@@ -38,6 +38,7 @@ import com.blueprint.watershed.Sites.SiteFragment;
 import com.blueprint.watershed.Sites.SiteListFragment;
 import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Tasks.TaskFragment;
+import com.blueprint.watershed.Users.EditUserFragment;
 import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Users.UserFieldReportFragment;
 import com.blueprint.watershed.Users.UserFragment;
@@ -297,7 +298,7 @@ public class MainActivity extends ActionBarActivity
         mDrawerLayout.setStatusBarBackgroundColor(getResources().getColor(R.color.ws_blue));
         mDrawer = (RelativeLayout) findViewById(R.id.left_drawer);
         mDrawerList = (ListView) findViewById(R.id.left_drawer_list_view);
-        String titles[] = { "Tasks", "Sites", "Profile", "About", "Logout" };
+        String titles[] = { "Tasks", "Sites", "About", "Logout" };
 
         mDrawerList.setOnItemClickListener(this);
         mDrawerList.setAdapter(new ArrayAdapter<>(this,
@@ -375,7 +376,16 @@ public class MainActivity extends ActionBarActivity
     }
 
     @Override
-    public void onClick(View view){}
+    public void onClick(View view){
+        switch (view.getId()) {
+            case R.id.nav_bar_user_info:
+                Fragment fragment = EditUserFragment.newInstance(getUser());
+                replaceFragment(fragment);
+                updateTitle(fragment);
+                break;
+        }
+
+    }
 
     // Networking
     public NetworkManager getNetworkManager() { return mNetworkManager; }
