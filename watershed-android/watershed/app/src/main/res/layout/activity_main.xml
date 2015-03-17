@@ -60,13 +60,68 @@
 
     </RelativeLayout>
 
-    <ListView android:id="@+id/left_drawer"
+    <RelativeLayout
+        android:id="@+id/left_drawer"
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
-        android:background="@color/ws_blue"/>
+        android:background="@color/ws_nav_background">
+        <RelativeLayout
+            android:id="@+id/nav_bar_user_info"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/ws_nav_info"
+            android:paddingTop="@dimen/tight_margin"
+            android:paddingBottom="@dimen/tight_margin"
+            android:paddingRight="@dimen/standard_margin"
+            android:paddingLeft="@dimen/standard_margin">
+
+            <TextView
+                android:id="@+id/nav_bar_user_role"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:textColor="@color/white"
+            />
+
+            <TextView
+                android:id="@+id/nav_bar_user_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/nav_bar_user_role"
+                android:layout_marginBottom="@dimen/tight_margin"
+                android:textColor="@color/white"
+                />
+
+            <TextView
+                android:id="@+id/nav_bar_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/nav_bar_user_role"
+                android:layout_marginBottom="@dimen/tight_margin"
+                android:textColor="@color/white"
+                />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_above="@id/nav_bar_user_name"
+                android:layout_marginBottom="50dp"
+                android:src="@drawable/watershed_logo"
+                />
+
+        </RelativeLayout>
+        <ListView
+            android:id="@+id/left_drawer_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/nav_bar_user_info"
+            />
+    </RelativeLayout>
+
+
 
 </android.support.v4.widget.DrawerLayout>
