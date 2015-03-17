@@ -46,7 +46,9 @@ import com.facebook.Session;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class MainActivity extends ActionBarActivity
                           implements ActionBar.TabListener,
@@ -95,6 +97,8 @@ public class MainActivity extends ActionBarActivity
     private LruCache<Integer, Drawable> mSiteImages;
     private LruCache<Integer, Drawable> mMiniSiteImages;
 
+    // Params (so we don't have to set them later)
+    private List<User> mUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,12 +186,10 @@ public class MainActivity extends ActionBarActivity
             }
 
             @Override
-            public void onPageScrolled(int arg0, float arg1, int arg2) {
-            }
+            public void onPageScrolled(int arg0, float arg1, int arg2) {}
 
             @Override
-            public void onPageScrollStateChanged(int arg0) {
-            }
+            public void onPageScrollStateChanged(int arg0) {}
         });
     }
 
@@ -396,7 +398,9 @@ public class MainActivity extends ActionBarActivity
     }
 
 
-    // Setter
+    /*
+        Getter and setter zones;
+     */
     public void setUser(User user) { mUser = user; }
     public User getUser() { return mUser; }
     public int getUserId() { return mUserId; }
@@ -404,4 +408,7 @@ public class MainActivity extends ActionBarActivity
     public Task getFieldReportTask() { return mFieldReportTask; }
 
     public ProgressBar getSpinner() { return mProgress; }
+
+    public void setUsers(ArrayList<User> users) { mUsers = users; }
+    public List<User> getUsers() { return mUsers; }
 }

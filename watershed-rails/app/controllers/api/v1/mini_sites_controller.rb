@@ -3,7 +3,12 @@ class Api::V1::MiniSitesController < Api::V1::BaseController
   load_and_authorize_resource param_method: :mini_site_params
 
   def index
-    render json: @mini_sites, each_serializer: MiniSiteListSerializer
+    if params[:get_photos]
+      render json: @mini_sites, each_serializer: MiniSitePhotoListSerializer
+    else
+      render json: @mini_sites, each_serializer: MiniSiteInfoListSerializer
+    end
+
   end
 
   def show
