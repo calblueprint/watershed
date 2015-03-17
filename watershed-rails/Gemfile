@@ -53,6 +53,7 @@ group :development, :test do
   gem "guard-rspec"
   gem "pry-rails"
   gem 'pry-rescue'
+  gem 'pry-byebug'
 end
 
 group :test do
