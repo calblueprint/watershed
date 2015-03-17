@@ -55,10 +55,8 @@ class Api::V1::MiniSitesController < Api::V1::BaseController
 
   def convert_base64_to_images
     # TODO(mark): Consider making this a helper function for all models
-    unless params[:mini_site][:photos_attributes].blank?
-      params[:mini_site][:photos_attributes].each do |attributes|
-        attributes[:image] = Photo.convert_base64(attributes[:data])
-      end
+    params[:mini_site][:photos_attributes].each do |attributes|
+      attributes[:image] = Photo.convert_base64(attributes[:data])
     end
   end
 
