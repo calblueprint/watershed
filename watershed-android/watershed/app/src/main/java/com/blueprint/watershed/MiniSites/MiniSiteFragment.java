@@ -33,7 +33,7 @@ public class MiniSiteFragment extends Fragment
 
     private NetworkManager mNetworkManager;
     private MainActivity mParentActivity;
-    private HeaderGridView mFieldReportGirdView;
+    private HeaderGridView mFieldReportGridView;
     private FieldReportListAdapter mFieldReportAdapter;
     private MiniSite mMiniSite;
     private ArrayList<FieldReport> mFieldReports;
@@ -83,7 +83,7 @@ public class MiniSiteFragment extends Fragment
 
         // Set the adapter to fill the list of field reports
         mFieldReportAdapter = new FieldReportListAdapter(mParentActivity, mParentActivity, R.layout.field_report_list_row, getFieldReports());
-        mFieldReportGirdView.setAdapter(mFieldReportAdapter);
+        mFieldReportGridView.setAdapter(mFieldReportAdapter);
         mFieldReportGridView.setOnItemClickListener(this);
         return view;
     }

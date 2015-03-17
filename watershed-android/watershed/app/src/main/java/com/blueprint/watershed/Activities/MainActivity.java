@@ -348,6 +348,8 @@ public class MainActivity extends ActionBarActivity
      */
     public void setUser(User user) { mUser = user; }
     public User getUser() { return mUser; }
+    public void setUsers(List<User> users) { mUsers = users; }
+    public List<User> getUsers() { return mUsers; }
     public int getUserId() { return mUserId; }
     public void setFieldReportTask(Task task) { mFieldReportTask = task; }
     public Task getFieldReportTask() { return mFieldReportTask; }

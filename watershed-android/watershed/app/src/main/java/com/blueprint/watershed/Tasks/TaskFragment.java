@@ -88,7 +88,6 @@ public class TaskFragment extends ListFragment {
         mSwipeLayout.setRefreshing(true);
         mParentActivity.setMenuAction(true);
         getTasksRequest();
-        return finalView;
     }
 
     /**
