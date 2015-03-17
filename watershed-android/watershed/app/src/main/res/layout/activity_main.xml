@@ -8,7 +8,8 @@
         android:background="@android:color/white"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <!-- We use a Toolbar so that our drawer can be displayed
         in front of the action bar -->
@@ -66,7 +67,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/ws_nav_background"
-        android:clickable="true">
+        android:elevation="5dp"
+        android:clickable="true"
+        >
         <RelativeLayout
             android:id="@+id/nav_bar_user_info"
             android:layout_width="match_parent"
