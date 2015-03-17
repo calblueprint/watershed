@@ -114,7 +114,6 @@ public class TaskFragment extends ListFragment {
                 else taskClicked = mAllTaskList.get(mTaskListHeaders.get(groupPosition)).get(childPosition);
 
                 if (taskClicked == null) return false;
-
                 TaskDetailFragment detailFragment = TaskDetailFragment.newInstance(taskClicked);
                 mParentActivity.replaceFragment(detailFragment);
                 return true;

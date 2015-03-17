@@ -1,5 +1,6 @@
 package com.blueprint.watershed.Activities;
 
+import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
@@ -196,6 +197,22 @@ public class MainActivity extends ActionBarActivity
         setNavInfo();
     }
 
+    @SuppressWarnings("deprecation")
+    @TargetApi(21)
+    public void setToolBarColor(int toolbar, int statusBar) {
+        if (Utility.currentVersion() >= 21) getWindow().setStatusBarColor(statusBar);
+        mToolBar.setBackgroundColor(toolbar);
+        mToolBar.invalidate();
+    }
+
+    @SuppressWarnings("deprecation")
+    @TargetApi(21)
+    public void setToolBarDefault() {
+        if (Utility.currentVersion() >= 21) getWindow().setStatusBarColor(R.color.ws_title_bar);
+        mToolBar.setBackgroundColor(R.color.ws_blue);
+        mToolBar.invalidate();
+    }
+
     public void setNavInfo() {
         mUserRole.setText(getUser().getRoleString());
         mUserName.setText(getUser().getName());
@@ -344,7 +361,7 @@ public class MainActivity extends ActionBarActivity
             case 1:
                 replaceFragment(SiteListFragment.newInstance());
                 break;
-            case 3:
+            case 2:
                 replaceFragment(AboutFragment.newInstance());
                 break;
             case 4:
