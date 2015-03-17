@@ -2,8 +2,6 @@ package com.blueprint.watershed.Tasks;
 
 import android.os.Bundle;
 
-import com.blueprint.watershed.Utilities.Utility;
-
 
 public class CreateTaskFragment extends TaskAbstractFragment {
 
@@ -26,8 +24,5 @@ public class CreateTaskFragment extends TaskAbstractFragment {
      * Returns a listener that is applied to the submit button.
      * @return a listener called when submit is clicked.
      */
-    public void submitListener() {
-        Utility.hideKeyboard(mParentActivity, mLayout);
-        createTask(CREATE, null);
-    }
+    public void submitListener() { createTask(CREATE, null); }
 }

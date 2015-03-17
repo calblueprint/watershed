@@ -1,11 +1,10 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.blueprint.watershed.MiniSites.CreateMiniSiteFragment">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
     <ImageView
         style="@style/BackGroundImageView"
         android:id = "@+id/mini_site_image"
@@ -170,5 +169,4 @@
                 android:layout_height="96dp" />
         </LinearLayout>
     </LinearLayout>
-    </RelativeLayout>
-</FrameLayout>
+</RelativeLayout>

@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/edit_task"
-        android:title="Edit Task"
+    <item android:id="@+id/edit"
+        android:title="Edit"
         android:icon="@drawable/ic_action_edit"
         app:showAsAction="ifRoom"
         />

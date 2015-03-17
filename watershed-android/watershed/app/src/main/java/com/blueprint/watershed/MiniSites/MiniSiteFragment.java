@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -45,8 +46,7 @@ public class MiniSiteFragment extends Fragment
         return miniSiteFragment;
     }
 
-    public MiniSiteFragment() {
-    }
+    public MiniSiteFragment() {}
 
     public void configureWithMiniSite(MiniSite miniSite) {
         mMiniSite = miniSite;
@@ -91,15 +91,24 @@ public class MiniSiteFragment extends Fragment
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.empty, menu);
+        inflater.inflate(R.menu.edit_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.edit:
+            default:
+                super.onOptionsItemSelected(item);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         mParentActivity.setMenuAction(false);
-//        getMiniSiteRequest(mMiniSite);
     }
 
     @Override
