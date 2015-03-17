@@ -139,7 +139,8 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
 
     public boolean hasAuthCredentials(SharedPreferences preferences) {
         return !preferences.getString("authentication_token", "none").equals("none") &&
-               !preferences.getString("email", "none").equals("none");
+               !preferences.getString("email", "none").equals("none") &&
+               !preferences.getString("user", "none").equals("none");
     }
 
     // UI Actions
@@ -263,14 +264,13 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         super.onActivityResult(requestCode, resultCode, data);
 
         com.facebook.Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
-
-        com.facebook.Session session = com.facebook.Session.getActiveSession();
     }
 
     public void storeSessionAndStartMainActivity(Intent intent, Session session) {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("authentication_token", session.getAuthenticationToken());
         editor.putString("email", session.getEmail());
+        editor.putString("user", session.getUser().toString());
         editor.putInt("userId", session.getUser().getId());
         editor.apply();
 
