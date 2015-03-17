@@ -27,6 +27,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.AboutFragment;
@@ -76,6 +77,10 @@ public class MainActivity extends ActionBarActivity
     private RelativeLayout mDrawer;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
+
+    private TextView mUserEmail;
+    private TextView mUserName;
+    private TextView mUserRole;
 
     // View Elements
     public CharSequence mTitle;
@@ -133,13 +138,13 @@ public class MainActivity extends ActionBarActivity
 
     private void setUserObject() {
         String userObject = mPreferences.getString("user", "none");
-        if (userObject.equals("none")) getUserFromPreferences();
+        if (!userObject.equals("none")) getUserFromPreferences(userObject);
         else makeHomeRequest();
     }
 
-    private void getUserFromPreferences() {
+    private void getUserFromPreferences(String user) {
         try {
-            JSONObject jsonObject = new JSONObject();
+            JSONObject jsonObject = new JSONObject(user);
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             setUser(objectMapper.readValue(jsonObject.toString(), User.class));
@@ -182,6 +187,13 @@ public class MainActivity extends ActionBarActivity
         viewPager = (ViewPager) findViewById(R.id.pager);
         mContainer = findViewById(R.id.container);
         viewPager.setAdapter(mAdapter);
+
+        mUserEmail = (TextView) findViewById(R.id.nav_bar_user_email);
+        mUserEmail.setText(getUser().getEmail());
+        mUserRole = (TextView) findViewById(R.id.nav_bar_user_role);
+        mUserRole.setText(getUser().getRoleString());
+        mUserName = (TextView) findViewById(R.id.nav_bar_user_name);
+        mUserName.setText(getUser().getName());
     }
 
     public void updateTitle(Fragment f) {
@@ -367,7 +379,9 @@ public class MainActivity extends ActionBarActivity
     /*
         Getter and setter zones;
      */
-    public void setUser(User user) { mUser = user; }
+    public void setUser(User user) {
+        mUser = user;
+    }
     public User getUser() { return mUser; }
     public void setUsers(List<User> users) { mUsers = users; }
     public List<User> getUsers() { return mUsers; }
