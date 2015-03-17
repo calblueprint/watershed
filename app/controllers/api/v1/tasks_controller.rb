@@ -25,6 +25,14 @@ class Api::V1::TasksController < Api::V1::BaseController
     end
   end
 
+  def destroy
+    if @task.destroy
+      render json: { message: "Deleted task!" }, status: :ok
+    else
+      error_response(@task)
+    end
+  end
+
   private
 
   def task_params
