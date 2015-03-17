@@ -143,7 +143,6 @@ public class MainActivity extends ActionBarActivity
     private void initializeViews() {
         setTitle("Tasks");
         mPagerTabStrip = (PagerTabStrip) findViewById(R.id.pager_title_strip);
-        mPagerTabStrip.setDrawFullUnderline(true);
 
         mProgress = (ProgressBar) findViewById(R.id.progressBar);
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
