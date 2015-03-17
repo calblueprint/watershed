@@ -32,9 +32,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UserFieldReportFragment extends Fragment
-                                     implements AbsListView.OnItemClickListener{
+                                     {
     private NetworkManager mNetworkManager;
-    private MainActivity mMainActivity;
+    private MainActivity mParentActivity;
     private HeaderGridView mFieldReportGridView;
     private FieldReportListAdapter mFieldReportAdapter;
     private User mUser;
@@ -71,7 +71,7 @@ public class UserFieldReportFragment extends Fragment
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
-        mMainActivity = (MainActivity) getActivity();
+        mParentActivity = (MainActivity) getActivity();
     }
 
     @Override
@@ -91,10 +91,9 @@ public class UserFieldReportFragment extends Fragment
         configureViewWithUser(header, mUser);
 
         // Set the adapter to fill the list of field reports
-        mFieldReportAdapter = new FieldReportListAdapter(mMainActivity, getActivity(), R.layout.field_report_list_row, getFieldReports());
+        mFieldReportAdapter = new FieldReportListAdapter(mParentActivity, getActivity(), R.layout.field_report_list_row, getFieldReports());
         mFieldReportGridView.setAdapter(mFieldReportAdapter);
 
-        mFieldReportGridView.setOnItemClickListener(this);
         return view;
     }
 
@@ -111,27 +110,19 @@ public class UserFieldReportFragment extends Fragment
         getFieldReportRequest(mUser.getId());
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // Load Field Report
-        FieldReport fieldReport = getFieldReport(position);
-        AddFieldReportFragment addFieldReportFragment = new AddFieldReportFragment();
-        addFieldReportFragment.configureWithFieldReport(fieldReport);
-        mMainActivity.replaceFragment(addFieldReportFragment);
-    }
-
     // Networking
     public void getFieldReportRequest(int id) {
-        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
 
-        UserFieldReportRequest fieldReportRequest = new UserFieldReportRequest(getActivity(), params, new Response.Listener<ArrayList<FieldReport>>() {
-            @Override
-            public void onResponse(ArrayList<FieldReport> fieldReports) {
-                Log.e("Field Response", "Sucess");
-                setFieldReports(fieldReports);
-                mFieldReportAdapter.notifyDataSetChanged();
-            }
-        }, id);
+
+        UserFieldReportRequest fieldReportRequest = new UserFieldReportRequest(mParentActivity,
+                new HashMap<String, JSONObject>(),
+                new Response.Listener<ArrayList<FieldReport>>() {
+                @Override
+                public void onResponse(ArrayList<FieldReport> fieldReports) {
+                    setFieldReports(fieldReports);
+                    mFieldReportAdapter.notifyDataSetChanged();
+                }},
+                id);
 
         mNetworkManager.getRequestQueue().add(fieldReportRequest);
     }

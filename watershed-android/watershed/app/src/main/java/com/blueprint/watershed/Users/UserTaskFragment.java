@@ -106,37 +106,11 @@ public class UserTaskFragment extends Fragment {
         // Configure the header
         configureViewWithUser(header, mUser);
 
-        // Set the adapter to fill the list of miniSites
+        // Set the adapter to fill the list of tasks
         mUserTaskAdapter = new BasicTaskAdapter(mParentActivity, R.layout.task_list_row, getTasks());
         mTaskGridView.setAdapter(mUserTaskAdapter);
 
-        //mTaskGridView.setOnItemClickListener(this);
-
-
         return view;
-    }
-
-    /**
-     * Initializes all the views in the fragment.
-     * This includes the adapters, buttons, listview, etc.
-     * @param view
-     */
-    private void initializeViews(View view) {
-        mListView = (ListView) view.findViewById(android.R.id.list);
-        mUserTaskAdapter = new BasicTaskAdapter(mParentActivity,R.layout.task_list_row, mUserTaskList);
-
-        mListView.setAdapter(mUserTaskAdapter);
-        mListView.setEmptyView(view.findViewById(R.id.no_tasks_layout));
-
-        mSwipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.tasks_swipe_container);
-        mSwipeLayout.setColorSchemeResources(R.color.ws_blue, R.color.facebook_blue, R.color.facebook_dark_blue, R.color.dark_gray);
-        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mSwipeLayout.setRefreshing(true);
-                getTasksRequest();
-            }
-        });
     }
 
 
@@ -169,8 +143,9 @@ public class UserTaskFragment extends Fragment {
     }
 
     protected void getTasksRequest() {
-        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
-        TaskListRequest taskListRequest = new TaskListRequest(getActivity(), params, new Response.Listener<ArrayList<Task>>() {
+        TaskListRequest taskListRequest = new TaskListRequest(mParentActivity,
+                new HashMap<String, JSONObject>(),
+                new Response.Listener<ArrayList<Task>>() {
             @Override
             public void onResponse(ArrayList<Task> tasks) {
                 setTasks(tasks, mUser.getId());

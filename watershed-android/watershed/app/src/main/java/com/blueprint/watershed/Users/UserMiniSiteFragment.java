@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class UserMiniSiteFragment extends Fragment implements AbsListView.OnItemClickListener{
+public class UserMiniSiteFragment extends Fragment{
     MainActivity mParentActivity;
     NetworkManager mNetworkManager;
 
@@ -91,7 +91,6 @@ public class UserMiniSiteFragment extends Fragment implements AbsListView.OnItem
         mMiniSiteAdapter = new MiniSiteListAdapter(mParentActivity, getActivity(), R.layout.mini_site_list_row, getMiniSites());
         mMiniSiteGridView.setAdapter(mMiniSiteAdapter);
 
-        mMiniSiteGridView.setOnItemClickListener(this);
         return view;
     }
 
@@ -123,20 +122,12 @@ public class UserMiniSiteFragment extends Fragment implements AbsListView.OnItem
         return mUserMiniSiteList;
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // Load MiniSite
-        MiniSite miniSite = getMiniSite(position);
-        MiniSiteFragment addFieldReportFragment = new MiniSiteFragment();
-        addFieldReportFragment.configureWithMiniSite(miniSite);
-        mParentActivity.replaceFragment(addFieldReportFragment);
-    }
-
     private MiniSite getMiniSite(int position) { return mUserMiniSiteList.get(position); }
 
     protected void getMiniSiteRequest() {
-        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
-        UserMiniSitesRequest miniSitesRequest = new UserMiniSitesRequest(getActivity(), params, new Response.Listener<ArrayList<MiniSite>>() {
+        UserMiniSitesRequest miniSitesRequest = new UserMiniSitesRequest(mParentActivity,
+                new HashMap<String, JSONObject>(),
+                new Response.Listener<ArrayList<MiniSite>>() {
             @Override
             public void onResponse(ArrayList<MiniSite> miniSites) {
                 Log.e("Good ", "MiniSite Request");

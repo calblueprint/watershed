@@ -196,10 +196,13 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void updateTitle(Fragment f) {
-        if (f instanceof TaskFragment || f instanceof UserTaskFragment){
+        if (f instanceof TaskFragment) {
             setTitle("Tasks");
             displayTaskView(true);
             return;
+        }
+        else if (f instanceof UserTaskFragment){
+            setTitle("Tasks");
         }
         else if (f instanceof SiteListFragment || f instanceof SiteFragment || f instanceof UserMiniSiteFragment) {
             setTitle("Sites");
