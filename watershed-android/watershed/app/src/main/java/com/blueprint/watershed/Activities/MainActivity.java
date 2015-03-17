@@ -78,7 +78,6 @@ public class MainActivity extends ActionBarActivity
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
 
-    private TextView mUserEmail;
     private TextView mUserName;
     private TextView mUserRole;
 
@@ -188,11 +187,14 @@ public class MainActivity extends ActionBarActivity
         mContainer = findViewById(R.id.container);
         viewPager.setAdapter(mAdapter);
 
-        mUserEmail = (TextView) findViewById(R.id.nav_bar_user_email);
-        mUserEmail.setText(getUser().getEmail());
         mUserRole = (TextView) findViewById(R.id.nav_bar_user_role);
-        mUserRole.setText(getUser().getRoleString());
         mUserName = (TextView) findViewById(R.id.nav_bar_user_name);
+
+        setNavInfo();
+    }
+
+    public void setNavInfo() {
+        mUserRole.setText(getUser().getRoleString());
         mUserName.setText(getUser().getName());
     }
 

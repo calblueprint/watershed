@@ -85,20 +85,11 @@
             />
 
             <TextView
-                android:id="@+id/nav_bar_user_email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/nav_bar_user_role"
-                android:layout_marginBottom="@dimen/tight_margin"
-                android:textColor="@color/white"
-                />
-
-            <TextView
                 android:id="@+id/nav_bar_user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_above="@id/nav_bar_user_role"
-                android:layout_marginBottom="@dimen/tight_margin"
+                android:layout_marginBottom="3dp"
                 android:textColor="@color/white"
                 />
 
