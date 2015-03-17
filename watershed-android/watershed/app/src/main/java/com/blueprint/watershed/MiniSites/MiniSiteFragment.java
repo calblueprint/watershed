@@ -1,23 +1,20 @@
 package com.blueprint.watershed.MiniSites;
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.app.Fragment;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
-import com.blueprint.watershed.FieldReports.FieldReport;
 import com.blueprint.watershed.FieldReports.AddFieldReportFragment;
+import com.blueprint.watershed.FieldReports.FieldReport;
 import com.blueprint.watershed.FieldReports.FieldReportListAdapter;
 import com.blueprint.watershed.Networking.MiniSites.MiniSiteRequest;
 import com.blueprint.watershed.Networking.NetworkManager;
@@ -35,7 +32,7 @@ public class MiniSiteFragment extends Fragment
                               implements AbsListView.OnItemClickListener {
 
     private NetworkManager mNetworkManager;
-    private MainActivity mMainActivity;
+    private MainActivity mParentActivity;
     private HeaderGridView mFieldReportGridView;
     private FieldReportListAdapter mFieldReportAdapter;
     private MiniSite mMiniSite;
@@ -65,8 +62,8 @@ public class MiniSiteFragment extends Fragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
-        mMainActivity = (MainActivity) getActivity();
+        mParentActivity = (MainActivity) getActivity();
+        mNetworkManager = NetworkManager.getInstance(mParentActivity);
     }
 
     @Override
@@ -85,9 +82,8 @@ public class MiniSiteFragment extends Fragment
         configureViewWithMiniSite(header, mMiniSite);
 
         // Set the adapter to fill the list of field reports
-        mFieldReportAdapter = new FieldReportListAdapter(mMainActivity, getActivity(), R.layout.field_report_list_row, getFieldReports());
+        mFieldReportAdapter = new FieldReportListAdapter(mParentActivity, mParentActivity, R.layout.field_report_list_row, getFieldReports());
         mFieldReportGridView.setAdapter(mFieldReportAdapter);
-
         mFieldReportGridView.setOnItemClickListener(this);
         return view;
     }
@@ -102,6 +98,7 @@ public class MiniSiteFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
+        mParentActivity.setMenuAction(false);
         getMiniSiteRequest(mMiniSite);
     }
 
@@ -111,7 +108,7 @@ public class MiniSiteFragment extends Fragment
         FieldReport fieldReport = getFieldReport(position);
         AddFieldReportFragment addFieldReportFragment = new AddFieldReportFragment();
         addFieldReportFragment.configureWithFieldReport(fieldReport);
-        mMainActivity.replaceFragment(addFieldReportFragment);
+        mParentActivity.replaceFragment(addFieldReportFragment);
     }
 
     // Networking

@@ -2,8 +2,6 @@ package com.blueprint.watershed.Authentication;
 
 
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.blueprint.watershed.R;
-import com.facebook.Session;
-import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 
 public class FacebookAuthFragment extends Fragment {
@@ -20,9 +16,7 @@ public class FacebookAuthFragment extends Fragment {
     private UiLifecycleHelper uiHelper;
 
     public static FacebookAuthFragment newInstance() {
-        FacebookAuthFragment fragment = new FacebookAuthFragment();
-
-        return fragment;
+        return new FacebookAuthFragment();
     }
     public FacebookAuthFragment() {
         // Required empty public constructor

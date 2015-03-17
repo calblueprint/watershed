@@ -22,18 +22,19 @@ import com.blueprint.watershed.Networking.Sessions.LoginRequest;
 import com.blueprint.watershed.Networking.Sessions.SignUpRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Utilities.APIError;
-import com.crashlytics.android.Crashlytics;
 import com.blueprint.watershed.Utilities.Utility;
+import com.crashlytics.android.Crashlytics;
 import com.facebook.AppEventsLogger;
 import com.facebook.SessionState;
 import com.facebook.model.GraphUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import io.fabric.sdk.android.Fabric;
 import org.json.JSONException;
 
 import java.util.Arrays;
 import java.util.HashMap;
+
+import io.fabric.sdk.android.Fabric;
 
 
 public class LandingPageActivity extends Activity implements View.OnClickListener{

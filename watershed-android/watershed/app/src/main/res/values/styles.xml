@@ -6,11 +6,13 @@
     </style>
 
     <style name="AppThemeTranslucent" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
     </style>
 
     <style name="WsAppTheme" parent="Theme.AppCompat.Light">
+        <item name="windowActionBar">false</item>
         <item name="android:actionBarStyle">@style/WsActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/WsActionBarTabText</item>
         <item name="android:actionBarTabBarStyle">@style/WsActionBarTabView</item>
@@ -57,5 +59,17 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+    <!-- Arrows -->
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@android:color/white</item>
+    </style>
 
+    <!-- ToolBar -->
+    <style name="ToolBarStyle" parent="Theme.AppCompat">
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+    </style>
 </resources>

@@ -7,6 +7,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -78,9 +79,15 @@ public class TaskFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View finalView = inflater.inflate(R.layout.fragment_task_list, container, false);
         initializeViews(finalView);
-        hideList();
-        getTasksRequest();
         return finalView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mSwipeLayout.setRefreshing(true);
+        mParentActivity.setMenuAction(true);
+        getTasksRequest();
     }
 
     /**
@@ -142,6 +149,19 @@ public class TaskFragment extends ListFragment {
         menu.clear();
         inflater.inflate(R.menu.create_task_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add_task:
+                CreateTaskFragment newTask = CreateTaskFragment.newInstance();
+                mParentActivity.replaceFragment(newTask);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
     }
 
     /**

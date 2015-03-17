@@ -92,6 +92,12 @@ public abstract class TaskAbstractFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mParentActivity.setMenuAction(false);
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.empty, menu);
@@ -216,7 +222,7 @@ public abstract class TaskAbstractFragment extends Fragment {
      * @param task - Task object
      */
     public void createTaskRequest(Task task, final String type) {
-        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
+        HashMap<String, JSONObject> params = new HashMap<>();
 
         JsonObjectRequest request;
         if (type.equals(CREATE)) {

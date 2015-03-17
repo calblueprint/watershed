@@ -111,6 +111,7 @@ public class UserFragment extends Fragment implements ListView.OnItemClickListen
     @Override
     public void onResume(){
         super.onResume();
+        mParentActivity.setMenuAction(true);
     }
 
     public void configureProfilewithUser(User user) {
