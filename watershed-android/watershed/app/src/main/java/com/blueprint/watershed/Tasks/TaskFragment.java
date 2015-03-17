@@ -148,7 +148,8 @@ public class TaskFragment extends ListFragment {
      * Gets all the tasks in the server and updates the ListView accordingly,
      * depending on what tab is being clicked on.
      */
-    private void getTasksRequest(){
+
+    protected void getTasksRequest(){
         mSwipeLayout.setRefreshing(true);
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
         TaskListRequest taskListRequest = new TaskListRequest(getActivity(), params, new Response.Listener<ArrayList<Task>>() {

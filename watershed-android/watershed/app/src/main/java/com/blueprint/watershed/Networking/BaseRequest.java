@@ -87,6 +87,10 @@ public abstract class BaseRequest extends JsonObjectRequest {
         return String.format("%s/%s", makeURL(endpoint), object.getId().toString());
     }
 
+    public static String makeUserResourceURL(int id, String endpoint){
+        return String.format("%s/%s/%s", makeURL("users"), String.valueOf(id), endpoint);
+    }
+
     public static NetworkManager getNetworkManager(Context context) {
         return NetworkManager.getInstance(context);
     }

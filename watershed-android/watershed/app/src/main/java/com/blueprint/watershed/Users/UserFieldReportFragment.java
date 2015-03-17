@@ -1,26 +1,27 @@
-package com.blueprint.watershed.MiniSites;
+package com.blueprint.watershed.Users;
 
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.app.Fragment;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
-import com.blueprint.watershed.FieldReports.FieldReport;
 import com.blueprint.watershed.FieldReports.AddFieldReportFragment;
+import com.blueprint.watershed.FieldReports.FieldReport;
 import com.blueprint.watershed.FieldReports.FieldReportListAdapter;
-import com.blueprint.watershed.Networking.MiniSites.MiniSiteRequest;
+import com.blueprint.watershed.Networking.FieldReports.FieldReportRequest;
 import com.blueprint.watershed.Networking.NetworkManager;
+import com.blueprint.watershed.Networking.Users.UserFieldReportRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
 import com.blueprint.watershed.Views.HeaderGridView;
@@ -30,35 +31,39 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
-public class MiniSiteFragment extends Fragment
-                              implements AbsListView.OnItemClickListener {
-
+public class UserFieldReportFragment extends Fragment
+                                     {
     private NetworkManager mNetworkManager;
-    private MainActivity mMainActivity;
+    private MainActivity mParentActivity;
     private HeaderGridView mFieldReportGridView;
     private FieldReportListAdapter mFieldReportAdapter;
-    private MiniSite mMiniSite;
+    private User mUser;
     private ArrayList<FieldReport> mFieldReports;
 
 
-    public static MiniSiteFragment newInstance(MiniSite miniSite) {
-        MiniSiteFragment miniSiteFragment = new MiniSiteFragment();
-        miniSiteFragment.configureWithMiniSite(miniSite);
+    public static UserFieldReportFragment newInstance(User user) {
+        UserFieldReportFragment miniSiteFragment = new UserFieldReportFragment();
+        miniSiteFragment.configureWithUser(user);
         return miniSiteFragment;
     }
 
-    public MiniSiteFragment() {
+    public UserFieldReportFragment() {
     }
 
-    public void configureWithMiniSite(MiniSite miniSite) {
-        mMiniSite = miniSite;
+    public void configureWithUser(User user) {
+        mUser = user;
     }
 
-    public void configureViewWithMiniSite(View view, MiniSite miniSite) {
-        ((CoverPhotoPagerView)view.findViewById(R.id.cover_photo_pager_view)).configureWithPhotos(miniSite.getPhotos());
-        ((TextView)view.findViewById(R.id.mini_site_name)).setText(miniSite.getName());
-        ((TextView)view.findViewById(R.id.mini_site_description)).setText(miniSite.getDescription());
+    public void configureViewWithUser(View view, User user) {
+        int reportNum;
+        if (user.getFieldReportsCount() != null){
+            reportNum = user.getFieldReportsCount();
+        }
+        else{
+            reportNum = 0;
+        }
+        ((TextView)view.findViewById(R.id.user_name)).setText(mUser.getName() + "\'s Reports");
+        ((TextView)view.findViewById(R.id.user_objects)).setText(String.valueOf(reportNum) + " Reports");
     }
 
     @Override
@@ -66,29 +71,29 @@ public class MiniSiteFragment extends Fragment
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
-        mMainActivity = (MainActivity) getActivity();
+        mParentActivity = (MainActivity) getActivity();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_mini_site, container, false);
+        View view = inflater.inflate(R.layout.fragment_user_field_report, container, false);
 
         // Create FieldReportGridView
         mFieldReportGridView = (HeaderGridView) view.findViewById(R.id.field_reports_grid);
 
         // Add mini site header information to the top
-        ViewGroup header = (ViewGroup)inflater.inflate(R.layout.mini_site_header_view, mFieldReportGridView, false);
+        ViewGroup header = (ViewGroup)inflater.inflate(R.layout.user_header_view, mFieldReportGridView, false);
         mFieldReportGridView.addHeaderView(header, null, false);
+        mFieldReportGridView.setEmptyView(view.findViewById(R.id.no_reports_layout));
 
         // Configure the header
-        configureViewWithMiniSite(header, mMiniSite);
+        configureViewWithUser(header, mUser);
 
         // Set the adapter to fill the list of field reports
-        mFieldReportAdapter = new FieldReportListAdapter(mMainActivity, getActivity(), R.layout.field_report_list_row, getFieldReports());
+        mFieldReportAdapter = new FieldReportListAdapter(mParentActivity, getActivity(), R.layout.field_report_list_row, getFieldReports());
         mFieldReportGridView.setAdapter(mFieldReportAdapter);
 
-        mFieldReportGridView.setOnItemClickListener(this);
         return view;
     }
 
@@ -102,38 +107,27 @@ public class MiniSiteFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
-        getMiniSiteRequest(mMiniSite);
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // Load Field Report
-        FieldReport fieldReport = getFieldReport(position);
-        AddFieldReportFragment addFieldReportFragment = new AddFieldReportFragment();
-        addFieldReportFragment.configureWithFieldReport(fieldReport);
-        mMainActivity.replaceFragment(addFieldReportFragment);
+        getFieldReportRequest(mUser.getId());
     }
 
     // Networking
-    public void getMiniSiteRequest(MiniSite miniSite) {
-        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
+    public void getFieldReportRequest(int id) {
 
-        MiniSiteRequest miniSiteRequest = new MiniSiteRequest(getActivity(), miniSite, params, new Response.Listener<MiniSite>() {
-            @Override
-            public void onResponse(MiniSite miniSite) {
-                setMiniSite(miniSite);
-                mFieldReportAdapter.notifyDataSetChanged();
-            }
-        });
 
-        mNetworkManager.getRequestQueue().add(miniSiteRequest);
+        UserFieldReportRequest fieldReportRequest = new UserFieldReportRequest(mParentActivity,
+                new HashMap<String, JSONObject>(),
+                new Response.Listener<ArrayList<FieldReport>>() {
+                @Override
+                public void onResponse(ArrayList<FieldReport> fieldReports) {
+                    setFieldReports(fieldReports);
+                    mFieldReportAdapter.notifyDataSetChanged();
+                }},
+                id);
+
+        mNetworkManager.getRequestQueue().add(fieldReportRequest);
     }
 
     // Objects
-    public void setMiniSite(MiniSite miniSite) {
-        mMiniSite = miniSite;
-        setFieldReports(miniSite.getFieldReports());
-    }
 
     public FieldReport getFieldReport(int position) { return mFieldReports.get(position); }
 

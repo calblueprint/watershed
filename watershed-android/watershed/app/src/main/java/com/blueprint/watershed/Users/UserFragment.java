@@ -27,9 +27,9 @@ public class UserFragment extends Fragment implements ListView.OnItemClickListen
     private ProfileOptionsAdapter mAdapter;
 
     // Views
-    private TextView mName;
-    private TextView mEmail;
-    private TextView mRole;
+    private TextView mNameView;
+    private TextView mEmailView;
+    private TextView mRoleView;
     private ListView mList;
 
     public static UserFragment newInstance(User user) {
@@ -71,15 +71,15 @@ public class UserFragment extends Fragment implements ListView.OnItemClickListen
      * Displays a user's name, email, and role
      */
     private void initializeViews() {
-        mName = (TextView) mParentActivity.findViewById(R.id.profile_name);
-        mName.setText(mUser.getName());
-        mEmail = (TextView) mParentActivity.findViewById(R.id.profile_email);
-        mEmail.setText(mUser.getEmail());
-        mRole = (TextView) mParentActivity.findViewById(R.id.profile_role);
+        mNameView = (TextView) mParentActivity.findViewById(R.id.profile_name);
+        mNameView.setText(mUser.getName());
+        mEmailView = (TextView) mParentActivity.findViewById(R.id.profile_email);
+        mEmailView.setText(mUser.getEmail());
+        mRoleView = (TextView) mParentActivity.findViewById(R.id.profile_role);
 
-        if (mUser.isCommunityMember()) mRole.setText("Community Member");
-        else if (mUser.isEmployee()) mRole.setText("Employee");
-        else mRole.setText("Manager");
+        if (mUser.isCommunityMember()) mRoleView.setText("Community Member");
+        else if (mUser.isEmployee()) mRoleView.setText("Employee");
+        else mRoleView.setText("Manager");
     }
 
     /**
@@ -133,11 +133,16 @@ public class UserFragment extends Fragment implements ListView.OnItemClickListen
             // Direct to list of User Tasks, Field Reports, or Sites
         switch (position) {
             case 0:
-                //Field Reports
+                UserFieldReportFragment fieldReportFragment = UserFieldReportFragment.newInstance(mUser);
+                mParentActivity.replaceFragment(fieldReportFragment);
+                break;
             case 1:
-                // Tasks
+                UserTaskFragment taskFragment = UserTaskFragment.newInstance(mUser);
+                mParentActivity.replaceFragment(taskFragment);
+                break;
             case 2:
-                // Sites
+                UserMiniSiteFragment siteFragment = UserMiniSiteFragment.newInstance(mUser);
+                mParentActivity.replaceFragment(siteFragment);
         }
     }
 }

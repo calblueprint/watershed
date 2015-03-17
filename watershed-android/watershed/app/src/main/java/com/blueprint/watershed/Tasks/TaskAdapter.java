@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.blueprint.watershed.R;
 
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -119,11 +120,7 @@ public class TaskAdapter extends BaseExpandableListAdapter {
     public boolean hasStableIds() { return false; }
 
     private String parseDate(Date date) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        int month = cal.get(Calendar.MONTH) + 1;
-        int day = cal.get(Calendar.DAY_OF_MONTH);
-        return month + "/" + day;
+        return DateFormat.getDateInstance().format(date);
     }
 
     static class TaskHolder {

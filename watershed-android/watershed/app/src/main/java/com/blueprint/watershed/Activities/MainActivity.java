@@ -38,7 +38,10 @@ import com.blueprint.watershed.Tasks.CreateTaskFragment;
 import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Tasks.TaskFragment;
 import com.blueprint.watershed.Users.User;
+import com.blueprint.watershed.Users.UserFieldReportFragment;
 import com.blueprint.watershed.Users.UserFragment;
+import com.blueprint.watershed.Users.UserMiniSiteFragment;
+import com.blueprint.watershed.Users.UserTaskFragment;
 import com.blueprint.watershed.Utilities.TabsPagerAdapter;
 import com.blueprint.watershed.Utilities.Utility;
 import com.facebook.Session;
@@ -193,16 +196,22 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void updateTitle(Fragment f) {
-        if (f instanceof TaskFragment){
+        if (f instanceof TaskFragment) {
             setTitle("Tasks");
             displayTaskView(true);
             return;
         }
-        else if (f instanceof SiteListFragment || f instanceof SiteFragment) {
+        else if (f instanceof UserTaskFragment){
+            setTitle("Tasks");
+        }
+        else if (f instanceof SiteListFragment || f instanceof SiteFragment || f instanceof UserMiniSiteFragment) {
             setTitle("Sites");
         }
         else if (f instanceof AboutFragment) {
             setTitle("About");
+        }
+        else if (f instanceof UserFieldReportFragment){
+            setTitle("Field Reports");
         }
         else if (f instanceof UserFragment) {
             setTitle("Profile");
