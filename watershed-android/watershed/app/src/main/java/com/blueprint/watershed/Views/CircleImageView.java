@@ -156,36 +156,6 @@ public class CircleImageView extends ImageView {
     }
 
     /**
-     * getBorderedBitmap adds a white, circular border to a bitmap
-     *
-     * @param bitmap the bitmap to add a border to
-     * @param diameter the width/height of ImageView (which is a square)
-     * @param strokeWidth the width of the border
-     * @return a bitmap
-     */
-    public static Bitmap getBorderedBitmap(Bitmap bitmap, int diameter, float strokeWidth) {
-        Bitmap output;
-        if (bitmap != null) {
-            output = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-        } else {
-            Log.d("DEBUG", "Drawing empty circle");
-            output = Bitmap.createBitmap(diameter, diameter, Bitmap.Config.ARGB_8888);
-        }
-        Canvas canvas = new Canvas(output);
-        if (bitmap == null) { canvas.drawARGB(0, 0, 0, 0); }
-
-        final Paint paint = new Paint();
-        paint.setAntiAlias(true);
-        paint.setFilterBitmap(true);
-        paint.setDither(true);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(strokeWidth);
-        paint.setColor(Color.WHITE);
-        canvas.drawCircle(diameter / 2, diameter / 2, diameter / 2 - strokeWidth, paint);
-        return output;
-    }
-
-    /**
      * getBorderedBitmap adds a circular border to a bitmap
      *
      * @param bitmap the bitmap to add a border to
@@ -293,7 +263,7 @@ public class CircleImageView extends ImageView {
         }
 
         bitmap = getCroppedBitmap(bitmap, biggest);
-        bitmap = getBorderedBitmap(bitmap, biggest, STROKE_WIDTH, WHITE_STROKE_COLOR);
+//        bitmap = getBorderedBitmap(bitmap, biggest, STROKE_WIDTH, WHITE_STROKE_COLOR);
         if (this.isSuperFaded()) {
             this.setAlpha(UNSELECTABLE_ALPHA / 255f);
         } else if ((this.isSelectEnabled() && !this.isSelected()) || this.isFaded()) {
