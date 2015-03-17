@@ -28,7 +28,7 @@ public class CreateSiteRequest extends BaseRequest {
      * @param activity - typically MainActivity, an activity that has a network manager.
      * @param site - site to be created
      * @param params - params for a new site. JSON Object
-     * @param listener - A response listener to be called once the reponse is returned.
+     * @param listener - A response listener to be called once the response is returned.
      */
     public CreateSiteRequest(final Activity activity, final Site site, HashMap<String, JSONObject> params, final Response.Listener<Site> listener) {
         super(Request.Method.POST, makeURL("sites"), siteParams(activity, site),
@@ -63,6 +63,7 @@ public class CreateSiteRequest extends BaseRequest {
 
         try {
             JSONObject siteJson = new JSONObject(mapper.writeValueAsString(site));
+            Log.e("Site Request ;)", siteJson.toString());
             params.put("site", siteJson);
         } catch (Exception e) {
             e.printStackTrace();
