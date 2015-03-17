@@ -78,6 +78,7 @@ public class MainActivity extends ActionBarActivity
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
 
+    private RelativeLayout mUserInfo;
     private TextView mUserName;
     private TextView mUserRole;
 
@@ -187,6 +188,8 @@ public class MainActivity extends ActionBarActivity
         mContainer = findViewById(R.id.container);
         viewPager.setAdapter(mAdapter);
 
+        mUserInfo = (RelativeLayout) findViewById(R.id.nav_bar_user_info);
+        mUserInfo.setOnClickListener(this);
         mUserRole = (TextView) findViewById(R.id.nav_bar_user_role);
         mUserName = (TextView) findViewById(R.id.nav_bar_user_name);
 

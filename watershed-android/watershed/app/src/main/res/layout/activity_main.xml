@@ -65,7 +65,8 @@
         android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/ws_nav_background">
+        android:background="@color/ws_nav_background"
+        android:clickable="true">
         <RelativeLayout
             android:id="@+id/nav_bar_user_info"
             android:layout_width="match_parent"
