@@ -165,8 +165,6 @@ public class CreateMiniSiteFragment extends Fragment implements View.OnClickList
                 Log.e("Mini Site Photo", "Error");
             }
             if (photoFile != null) {
-                //takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
-                //Uri.fromFile(photoFile));
                 startActivityForResult(takePictureIntent, CAMERA_REQUEST);
             }
         }
@@ -196,14 +194,15 @@ public class CreateMiniSiteFragment extends Fragment implements View.OnClickList
     public void createMiniSiteRequest(MiniSite miniSite){
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
 
-        CreateMiniSiteRequest createMiniSiteRequest = new CreateMiniSiteRequest(getActivity(), miniSite, params, new Response.Listener<MiniSite>() {
-            @Override
-            public void onResponse(MiniSite miniSite) {
-                SiteListFragment siteList = SiteListFragment.newInstance();
-                mMainActivity.replaceFragment(siteList);
-                Log.e("successful mini site", "creation");
-            }
-        });
+        CreateMiniSiteRequest createMiniSiteRequest =
+            new CreateMiniSiteRequest(getActivity(), miniSite, params, new Response.Listener<MiniSite>() {
+                @Override
+                public void onResponse(MiniSite miniSite) {
+                    SiteListFragment siteList = SiteListFragment.newInstance();
+                    mMainActivity.replaceFragment(siteList);
+                    Log.e("successful mini site", "creation");
+                }
+            });
 
         mNetworkManager.getRequestQueue().add(createMiniSiteRequest);
     }

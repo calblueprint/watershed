@@ -31,7 +31,7 @@ public class MiniSiteSerializer extends JsonSerializer<MiniSite> {
         jgen.writeArrayFieldStart("photos_attributes");
         for (Photo photo : value.getPhotos()) {
             jgen.writeStartObject();
-//            jgen.writeNumberField("id", photo.getId());
+            if (photo.getId() != null) jgen.writeNumberField("id", photo.getId());
             jgen.writeObjectField("data", photo.getData());
             jgen.writeEndObject();
         }
