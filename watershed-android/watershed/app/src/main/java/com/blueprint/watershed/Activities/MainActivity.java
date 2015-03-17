@@ -38,7 +38,6 @@ import com.blueprint.watershed.Sites.SiteFragment;
 import com.blueprint.watershed.Sites.SiteListFragment;
 import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Tasks.TaskFragment;
-import com.blueprint.watershed.Users.EditUserFragment;
 import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Users.UserFieldReportFragment;
 import com.blueprint.watershed.Users.UserFragment;
@@ -345,9 +344,6 @@ public class MainActivity extends ActionBarActivity
             case 1:
                 replaceFragment(SiteListFragment.newInstance());
                 break;
-            case 2:
-                replaceFragment(UserFragment.newInstance(mUser));
-                break;
             case 3:
                 replaceFragment(AboutFragment.newInstance());
                 break;
@@ -379,7 +375,7 @@ public class MainActivity extends ActionBarActivity
     public void onClick(View view){
         switch (view.getId()) {
             case R.id.nav_bar_user_info:
-                Fragment fragment = EditUserFragment.newInstance(getUser());
+                Fragment fragment = UserFragment.newInstance(getUser());
                 replaceFragment(fragment);
                 updateTitle(fragment);
                 mDrawerLayout.closeDrawer(mDrawer);

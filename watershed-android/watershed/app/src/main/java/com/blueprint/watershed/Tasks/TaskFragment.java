@@ -1,6 +1,5 @@
 package com.blueprint.watershed.Tasks;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -252,14 +251,6 @@ public class TaskFragment extends ListFragment {
             if (id != null && id ==  mParentActivity.getUserId()) userTasks.add(task);
         }
         return userTasks;
-    }
-
-    /**
-     * Interface for the fragment to communicate with the activity
-     * Implemented in MainActivity.
-     */
-    public interface OnFragmentInteractionListener {
-        public void onFragmentInteraction(Uri uri);
     }
 
     public void showList() {
