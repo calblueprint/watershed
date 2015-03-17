@@ -3,15 +3,14 @@ package com.blueprint.watershed.MiniSites;
 import android.util.Log;
 
 import com.android.volley.Response;
-import com.blueprint.watershed.Networking.MiniSites.CreateMiniSiteRequest;
+import com.blueprint.watershed.Networking.MiniSites.EditMiniSiteRequest;
 import com.blueprint.watershed.Sites.Site;
 import com.blueprint.watershed.Sites.SiteListFragment;
 
 /**
- * Use the {@link CreateMiniSiteFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Created by charlesx on 3/17/15.
  */
-public class CreateMiniSiteFragment extends MiniSiteAbstractFragment {
+public class EditMiniSiteFragment extends MiniSiteAbstractFragment {
 
     /**
      * Use this factory method to create a new instance of
@@ -19,18 +18,19 @@ public class CreateMiniSiteFragment extends MiniSiteAbstractFragment {
      *
      * @return A new instance of fragment CreateMiniSiteFragment.
      */
-    public static CreateMiniSiteFragment newInstance(Site site) {
-        CreateMiniSiteFragment fragment = new CreateMiniSiteFragment();
+    public static EditMiniSiteFragment newInstance(Site site, MiniSite miniSite) {
+        EditMiniSiteFragment fragment = new EditMiniSiteFragment();
         fragment.setSite(site);
+        fragment.setMiniSite(miniSite);
         return fragment;
     }
 
-    public CreateMiniSiteFragment() {}
+    public EditMiniSiteFragment() {}
 
     @Override
     public void submitMiniSite(MiniSite miniSite) {
-        CreateMiniSiteRequest createMiniSiteRequest =
-                new CreateMiniSiteRequest(mParentActivity, miniSite, new Response.Listener<MiniSite>() {
+        EditMiniSiteRequest createMiniSiteRequest =
+                new EditMiniSiteRequest(mParentActivity, miniSite, new Response.Listener<MiniSite>() {
                     @Override
                     public void onResponse(MiniSite miniSite) {
                         SiteListFragment siteList = SiteListFragment.newInstance();
@@ -38,7 +38,6 @@ public class CreateMiniSiteFragment extends MiniSiteAbstractFragment {
                         Log.e("successful mini site", "creation");
                     }
                 });
-
         mNetworkManager.getRequestQueue().add(createMiniSiteRequest);
     }
 }
