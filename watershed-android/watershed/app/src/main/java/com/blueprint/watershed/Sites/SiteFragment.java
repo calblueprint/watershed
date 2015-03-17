@@ -78,7 +78,6 @@ public class SiteFragment extends Fragment
             case R.id.add_minisite:
                 CreateMiniSiteFragment newMiniSite = CreateMiniSiteFragment.newInstance(mSite);
                 mParentActivity.replaceFragment(newMiniSite);
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -114,8 +113,7 @@ public class SiteFragment extends Fragment
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         MiniSite miniSite = getMiniSite(position);
-        MiniSiteFragment miniSiteFragment = new MiniSiteFragment();
-        miniSiteFragment.configureWithMiniSite(miniSite);
+        MiniSiteFragment miniSiteFragment = MiniSiteFragment.newInstance(mSite, miniSite);
         mParentActivity.replaceFragment(miniSiteFragment);
     }
 

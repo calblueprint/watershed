@@ -12,21 +12,17 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
-import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.FieldReports.AddFieldReportFragment;
 import com.blueprint.watershed.FieldReports.FieldReport;
 import com.blueprint.watershed.FieldReports.FieldReportListAdapter;
-import com.blueprint.watershed.Networking.MiniSites.MiniSiteRequest;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Sites.Site;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
 import com.blueprint.watershed.Views.HeaderGridView;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 
 
 public class MiniSiteFragment extends Fragment
@@ -37,19 +33,21 @@ public class MiniSiteFragment extends Fragment
     private HeaderGridView mFieldReportGridView;
     private FieldReportListAdapter mFieldReportAdapter;
     private MiniSite mMiniSite;
+    private Site mSite;
     private ArrayList<FieldReport> mFieldReports;
 
 
-    public static MiniSiteFragment newInstance(MiniSite miniSite) {
+    public static MiniSiteFragment newInstance(Site site, MiniSite miniSite) {
         MiniSiteFragment miniSiteFragment = new MiniSiteFragment();
-        miniSiteFragment.configureWithMiniSite(miniSite);
+        miniSiteFragment.setMiniSite(miniSite);
+        miniSiteFragment.setSite(site);
         return miniSiteFragment;
     }
 
     public MiniSiteFragment() {}
 
-    public void configureWithMiniSite(MiniSite miniSite) {
-        mMiniSite = miniSite;
+    public void setSite(Site site) {
+        mSite = site;
     }
 
     public void configureViewWithMiniSite(View view, MiniSite miniSite) {
@@ -99,10 +97,11 @@ public class MiniSiteFragment extends Fragment
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.edit:
+                EditMiniSiteFragment fragment = EditMiniSiteFragment.newInstance(mSite, mMiniSite);
+                mParentActivity.replaceFragment(fragment);
             default:
-                super.onOptionsItemSelected(item);
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -120,21 +119,6 @@ public class MiniSiteFragment extends Fragment
         mParentActivity.replaceFragment(addFieldReportFragment);
     }
 
-    // Networking
-    public void getMiniSiteRequest(MiniSite miniSite) {
-        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
-
-        MiniSiteRequest miniSiteRequest = new MiniSiteRequest(getActivity(), miniSite, params, new Response.Listener<MiniSite>() {
-            @Override
-            public void onResponse(MiniSite miniSite) {
-                setMiniSite(miniSite);
-                mFieldReportAdapter.notifyDataSetChanged();
-            }
-        });
-
-        mNetworkManager.getRequestQueue().add(miniSiteRequest);
-    }
-
     // Objects
     public void setMiniSite(MiniSite miniSite) {
         mMiniSite = miniSite;
@@ -145,7 +129,7 @@ public class MiniSiteFragment extends Fragment
 
     public ArrayList<FieldReport> getFieldReports() {
         if (mFieldReports == null) {
-            mFieldReports = new ArrayList<FieldReport>();
+            mFieldReports = new ArrayList<>();
         }
         return mFieldReports;
     }
