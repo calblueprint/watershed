@@ -67,7 +67,6 @@ public class SiteFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        // Add site header information to the top
         return inflater.inflate(R.layout.fragment_site, container, false);
     }
 

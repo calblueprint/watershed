@@ -4,11 +4,8 @@ import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -39,14 +36,19 @@ import com.blueprint.watershed.Sites.SiteListFragment;
 import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Tasks.TaskFragment;
 import com.blueprint.watershed.Users.User;
+import com.blueprint.watershed.Users.UserFieldReportFragment;
 import com.blueprint.watershed.Users.UserFragment;
+import com.blueprint.watershed.Users.UserMiniSiteFragment;
+import com.blueprint.watershed.Users.UserTaskFragment;
 import com.blueprint.watershed.Utilities.TabsPagerAdapter;
 import com.blueprint.watershed.Utilities.Utility;
 import com.facebook.Session;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class MainActivity extends ActionBarActivity
                           implements ActionBar.TabListener,
@@ -96,6 +98,8 @@ public class MainActivity extends ActionBarActivity
     private LruCache<Integer, Drawable> mSiteImages;
     private LruCache<Integer, Drawable> mMiniSiteImages;
 
+    // Params (so we don't have to set them later)
+    private List<User> mUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,16 +155,22 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void updateTitle(Fragment f) {
-        if (f instanceof TaskFragment){
+        if (f instanceof TaskFragment) {
             setTitle("Tasks");
             displayTaskView(true);
             return;
         }
-        else if (f instanceof SiteListFragment || f instanceof SiteFragment) {
+        else if (f instanceof UserTaskFragment){
+            setTitle("Tasks");
+        }
+        else if (f instanceof SiteListFragment || f instanceof SiteFragment || f instanceof UserMiniSiteFragment) {
             setTitle("Sites");
         }
         else if (f instanceof AboutFragment) {
             setTitle("About");
+        }
+        else if (f instanceof UserFieldReportFragment){
+            setTitle("Field Reports");
         }
         else if (f instanceof UserFragment) {
             setTitle("Profile");
@@ -181,7 +191,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void replaceFragment(Fragment newFragment) {
-        android.support.v4.app.FragmentTransaction ft = mFragmentManager.beginTransaction();
+        FragmentTransaction ft = mFragmentManager.beginTransaction();
         if(!newFragment.isAdded()){
             updateTitle(newFragment);
             ft.replace(R.id.container, newFragment).addToBackStack(null).commit();
@@ -202,7 +212,7 @@ public class MainActivity extends ActionBarActivity
                     }
                 });
         updateTitle(taskFragment);
-        android.support.v4.app.FragmentTransaction ft = mFragmentManager.beginTransaction();
+        FragmentTransaction ft = mFragmentManager.beginTransaction();
         ft.add(R.id.container, taskFragment);
         ft.commit();
     }
@@ -334,7 +344,9 @@ public class MainActivity extends ActionBarActivity
     }
 
 
-    // Setter
+    /*
+        Getter and setter zones;
+     */
     public void setUser(User user) { mUser = user; }
     public User getUser() { return mUser; }
     public int getUserId() { return mUserId; }

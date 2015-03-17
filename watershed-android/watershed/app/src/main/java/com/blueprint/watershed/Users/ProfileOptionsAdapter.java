@@ -39,8 +39,7 @@ public class ProfileOptionsAdapter extends ArrayAdapter<String> {
             row = inflater.inflate(layoutResourceId, parent, false);
 
             holder = new OptionHolder();
-            holder.option = (TextView) row.findViewById(R.id.primary_label);
-            holder.count = (TextView) row.findViewById(R.id.secondary_label);
+            holder.option = (TextView) row.findViewById(R.id.option_label);
 
             row.setTag(holder);
         } else {
@@ -55,13 +54,11 @@ public class ProfileOptionsAdapter extends ArrayAdapter<String> {
         else {
             holder.option.setText(option);
         }
-        holder.count.setText("");
 
         return row;
     }
 
     static class OptionHolder {
         TextView option;
-        TextView count;
     }
 }

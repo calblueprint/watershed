@@ -42,8 +42,6 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     // Constants
     public  static final String PREFERENCES = "LOGIN_PREFERENCES";
     private static final String TAG         = "LandingPageActivity";
-    private static final String LOGIN_URL = "https://intense-reaches-1457.herokuapp.com/api/v1/users/sign_in";
-    private static final String FACEBOOK_URL = "https://intense-reaches-1457.herokuapp.com/api/v1/users/sign_up/facebook";
 
     // UI Elements
     private ImageView mLandingPageImage;
@@ -274,14 +272,15 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         editor.putString("authentication_token", session.getAuthenticationToken());
         editor.putString("email", session.getEmail());
         editor.putInt("userId", session.getUser().getId());
-        editor.commit();
+        editor.apply();
 
         Bundle bundle = new Bundle();
         bundle.putInt("userId", session.getUser().getId());
         intent.putExtras(bundle);
 
-        LandingPageActivity.this.finish();
         startActivity(intent);
+        finish();
+
     }
 
     // Getters

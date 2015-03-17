@@ -2,7 +2,11 @@ class Api::V1::SitesController < Api::V1::BaseController
   load_and_authorize_resource param_method: :site_params
 
   def index
-    render json: @sites, each_serializer: SiteListSerializer
+    if params[:get_photos]
+      render json: @sites, each_serializer: SitePhotoListSerializer
+    else
+      render json: @sites, each_serializer: SiteInfoListSerializer
+    end
   end
 
   def show
@@ -11,7 +15,7 @@ class Api::V1::SitesController < Api::V1::BaseController
 
   def search
     @sites = @sites.search(params[:q])
-    render json: @sites, each_serializer: SiteListSerializer
+    render json: @sites, each_serializer: SitePhotoListSerializer
   end
 
   def create
