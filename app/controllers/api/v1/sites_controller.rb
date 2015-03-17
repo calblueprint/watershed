@@ -34,6 +34,24 @@ class Api::V1::SitesController < Api::V1::BaseController
     end
   end
 
+  def destroy
+    if @site.update(site_params)
+      render json: { message: "Deleted site!" }, status: :ok
+    else
+      error_response(@site)
+    end
+  end
+
+  def subscribe
+    @site.subscribe(current_user)
+    render json: { message: "Subscribed to site!" }, status: :ok
+  end
+
+  def unsubscribe
+    @site.unsubscribe(current_user)
+    render json: { message: "Unsubscribed to site!" }, status: :ok
+  end
+
   private
 
   def site_params
