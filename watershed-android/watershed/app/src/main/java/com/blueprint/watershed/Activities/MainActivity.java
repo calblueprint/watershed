@@ -46,7 +46,6 @@ import com.facebook.Session;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -191,7 +190,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void replaceFragment(Fragment newFragment) {
-        FragmentTransaction ft = mFragmentManager.beginTransaction();
+        android.support.v4.app.FragmentTransaction ft = mFragmentManager.beginTransaction();
         if(!newFragment.isAdded()){
             updateTitle(newFragment);
             ft.replace(R.id.container, newFragment).addToBackStack(null).commit();
@@ -212,7 +211,7 @@ public class MainActivity extends ActionBarActivity
                     }
                 });
         updateTitle(taskFragment);
-        FragmentTransaction ft = mFragmentManager.beginTransaction();
+        android.support.v4.app.FragmentTransaction ft = mFragmentManager.beginTransaction();
         ft.add(R.id.container, taskFragment);
         ft.commit();
     }
