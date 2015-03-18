@@ -6,6 +6,7 @@ import android.util.Log;
 import com.android.volley.Response;
 import com.blueprint.watershed.Networking.MiniSites.CreateMiniSiteRequest;
 import com.blueprint.watershed.Sites.SiteListFragment;
+import com.blueprint.watershed.Utilities.Utility;
 
 /**
  * Use the {@link CreateMiniSiteFragment#newInstance} factory method to
@@ -39,6 +40,7 @@ public class CreateMiniSiteFragment extends MiniSiteAbstractFragment {
                 new CreateMiniSiteRequest(mParentActivity, miniSite, new Response.Listener<MiniSite>() {
                     @Override
                     public void onResponse(MiniSite miniSite) {
+                        Utility.hideKeyboard(mParentActivity, mLayout);
                         SiteListFragment siteList = SiteListFragment.newInstance();
                         mParentActivity.replaceFragment(siteList);
                         Log.e("successful mini site", "creation");

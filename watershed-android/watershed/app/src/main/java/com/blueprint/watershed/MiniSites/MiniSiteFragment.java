@@ -18,7 +18,6 @@ import com.blueprint.watershed.FieldReports.FieldReport;
 import com.blueprint.watershed.FieldReports.FieldReportListAdapter;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.R;
-import com.blueprint.watershed.Sites.Site;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
 import com.blueprint.watershed.Views.HeaderGridView;
 
@@ -35,7 +34,7 @@ public class MiniSiteFragment extends Fragment
     private FieldReportListAdapter mFieldReportAdapter;
     private MiniSite mMiniSite;
     private Integer mSiteID;
-    private ArrayList<FieldReport> mFieldReports;
+    private List<FieldReport> mFieldReports = new ArrayList<>();
 
 
     public static MiniSiteFragment newInstance(Integer site, MiniSite miniSite) {

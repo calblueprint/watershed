@@ -30,7 +30,6 @@ import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Photos.Photo;
 import com.blueprint.watershed.Photos.PhotoPagerAdapter;
 import com.blueprint.watershed.R;
-import com.blueprint.watershed.Utilities.Utility;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
 
 import java.io.File;
@@ -130,6 +129,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         mImageAdapter = new PhotoPagerAdapter(mParentActivity, mPhotoList);
         mImagePager.setAdapter(mImageAdapter);
 
+        mLayout = (RelativeLayout) mParentActivity.findViewById(R.id.mini_site_create_layout);
         mTitleField = (EditText) mParentActivity.findViewById(R.id.create_mini_site_title);
         mDescriptionField = (EditText) mParentActivity.findViewById(R.id.create_mini_site_description);
         mAddressField = (EditText) mParentActivity.findViewById(R.id.create_mini_site_address);
@@ -212,14 +212,13 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         miniSite.setStreet(mAddressField.getText().toString());
         miniSite.setCity(mCityField.getText().toString());
         miniSite.setZipCode(Integer.valueOf(mZipField.getText().toString()));
-        miniSite.setLatitude(0f); // ?
-        miniSite.setLongitude(0f); // ?
-        miniSite.setFieldReportsCount(mMiniSite.getFieldReportsCount());
+        miniSite.setLatitude(0f); // Get this later
+        miniSite.setLongitude(0f); // Get this later
+        miniSite.setFieldReportsCount(miniSite.getFieldReportsCount());
         miniSite.setState(mStateField.getText().toString());
         miniSite.setSiteId(mSiteID);
         miniSite.setPhotos(mPhotoList);
 
-        Utility.hideKeyboard(mParentActivity, mLayout);
         submitMiniSite(miniSite);
     }
 

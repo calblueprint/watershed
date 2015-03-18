@@ -84,6 +84,7 @@ public class PhotoPagerAdapter extends PagerAdapter {
     public void setPhotos(List<Photo> photos) { mPhotos = photos; }
 
     public void deletePhoto(int position) {
+        if (mPhotos.size() == 0) return;
         mPhotos.remove(position);
         notifyDataSetChanged();
     }
