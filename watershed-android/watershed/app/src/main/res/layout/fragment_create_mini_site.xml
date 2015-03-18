@@ -53,7 +53,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/button_standard_height"
                 android:layout_below="@id/mini_site_photo_container"
-                android:layout_margin="20dp"
+                android:layout_margin="25dp"
                 >
                 <EditText
                     android:id="@+id/create_mini_site_title"
@@ -61,6 +61,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/button_standard_height"
                     android:background="@color/transparent"
+                    android:textSize="25sp"
                     />
             </RelativeLayout>
 
@@ -95,6 +96,7 @@
                     android:layout_toRightOf="@id/location_image"
                     android:layout_marginLeft="20dp"
                     android:background="@color/transparent"
+                    android:textSize="20sp"
                     />
 
                 <LinearLayout
@@ -111,6 +113,7 @@
                         android:layout_weight="0.9"
                         android:background="@color/transparent"
                         android:maxLines="1"
+                        android:textSize="20sp"
                         />
                     <EditText
                         android:id="@+id/create_mini_site_state"
@@ -122,6 +125,7 @@
                         android:layout_weight="1"
                         android:background="@color/transparent"
                         android:maxLines="1"
+                        android:textSize="20sp"
                         />
                     <EditText
                         android:id="@+id/create_mini_site_zip"
@@ -133,6 +137,7 @@
                         android:layout_weight="1.1"
                         android:background="@color/transparent"
                         android:maxLines="1"
+                        android:textSize="20sp"
                         />
                 </LinearLayout>
             </RelativeLayout>
@@ -146,34 +151,43 @@
                 android:background="@color/dark_gray"/>
 
 
-                <RelativeLayout
-                    android:id="@+id/mini_site_description_container"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/mini_site_address_container"
-                    >
+            <RelativeLayout
+                android:id="@+id/mini_site_description_container"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layer_2"
+                android:layout_margin="20dp"
+                >
 
-                    <TextView
-                        style="@style/WsLabel"
-                        android:gravity="bottom"
-                        android:layout_height="@dimen/button_standard_height"
-                        android:text="@string/description"
-                        />
-                    <EditText
-                        android:id="@+id/create_mini_site_description"
-                        android:hint="@string/required"
-                        android:gravity="bottom"
-                        android:layout_height="wrap_content"
-                        android:layout_width="fill_parent"
-                        android:lines="4"
-                        />
+                <ImageView
+                    android:id="@+id/description_image"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_description"
+                    android:scaleType="centerCrop"
+                    />
+
+                <EditText
+                    android:id="@+id/create_mini_site_description"
+                    android:hint="@string/description"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toEndOf="@id/description_image"
+                    android:layout_toRightOf="@id/description_image"
+                    android:gravity="top"
+                    android:lines="4"
+                    android:textSize="20sp"
+                    />
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
     <Button
         android:id="@+id/create_mini_site_submit"
         android:layout_width="fill_parent"
-        android:layout_height="30dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:background="@color/ws_blue"
         android:textColor="@color/white"
