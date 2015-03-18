@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blueprint.watershed.R;
@@ -41,7 +40,7 @@ public class PhotoPagerAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return view == ((LinearLayout) object);
+        return view == object;
     }
 
     @Override
@@ -83,4 +82,9 @@ public class PhotoPagerAdapter extends PagerAdapter {
 
     // Setters
     public void setPhotos(List<Photo> photos) { mPhotos = photos; }
+
+    public void deletePhoto(int position) {
+        mPhotos.remove(position);
+        notifyDataSetChanged();
+    }
 }
