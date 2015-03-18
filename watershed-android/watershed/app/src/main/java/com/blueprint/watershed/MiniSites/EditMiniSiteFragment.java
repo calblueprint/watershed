@@ -57,6 +57,7 @@ public class EditMiniSiteFragment extends MiniSiteAbstractFragment {
                         Log.e("successful mini site", "creation");
                     }
                 });
+
         mNetworkManager.getRequestQueue().add(createMiniSiteRequest);
     }
 }

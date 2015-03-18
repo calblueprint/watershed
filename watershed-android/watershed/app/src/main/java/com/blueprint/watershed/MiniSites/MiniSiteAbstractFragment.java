@@ -1,5 +1,8 @@
 package com.blueprint.watershed.MiniSites;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,6 +10,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,7 +37,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -217,15 +221,39 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
 
     public abstract void submitMiniSite(MiniSite site);
 
-//    public static class PickPhotoTypeDialog extends DialogFragment {
-//
-//        @Override
-//        public Dialog onCreateDialog(Bundle savedInstanceState) {
-//            String[] photoArray =
-//            List<String> photoTypesList = Arrays.asList();
-//            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), );
-//        }
-//
-//
-//    }
+    public static class PickPhotoTypeDialog extends DialogFragment {
+
+        public static PickPhotoTypeDialog newInstance() { return new PickPhotoTypeDialog(); }
+
+        @Override
+        @NonNull
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            String[] photoArray = { "Select Photo", "Take Photo" };
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("Select a Photo Option!")
+                   .setItems(photoArray, new DialogInterface.OnClickListener() {
+                       @Override
+                       public void onClick(DialogInterface dialog, int which) {
+                           if (!(getTargetFragment() instanceof MiniSiteAbstractFragment)) {
+                               Log.e("Fragment Error", "Can't even fragment");
+                               return;
+                           }
+                           MiniSiteAbstractFragment fragment = (MiniSiteAbstractFragment) getTargetFragment();
+
+                           if (which == 0) fragment.onSelectPhotoButtonPressed();
+                           else fragment.onTakePhotoButtonPressed();
+                       }
+                   })
+                   .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                       @Override
+                       public void onClick(DialogInterface dialog, int which) {
+                           dialog.dismiss();
+                       }
+                   });
+
+            return builder.create();
+        }
+
+
+    }
 }

@@ -127,25 +127,3 @@
         </RelativeLayout>
     </RelativeLayout>
 </ScrollView>
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="fill_parent"-->
-    <!--android:layout_height="@dimen/button_large_height"-->
-    <!--android:orientation="horizontal">-->
-    <!--<Button-->
-    <!--android:id="@+id/select_mini_site_photo_button"-->
-    <!--android:layout_width="0px"-->
-    <!--android:layout_weight="1"-->
-    <!--android:layout_height="@dimen/button_large_height"-->
-    <!--android:layout_marginTop="8dp"-->
-    <!--android:text="Select Photo"-->
-    <!--/>-->
-    <!--<Button-->
-    <!--android:id="@+id/take_mini_site_photo_button"-->
-    <!--android:layout_width="0px"-->
-    <!--android:layout_weight="1"-->
-    <!--android:layout_height="@dimen/button_large_height"-->
-    <!--android:layout_marginTop="8dp"-->
-    <!--android:text="Take Photo"-->
-    <!--/>-->
-    <!--</LinearLayout>-->
