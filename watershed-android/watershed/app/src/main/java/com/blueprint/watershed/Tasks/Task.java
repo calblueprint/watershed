@@ -28,7 +28,6 @@ public class Task implements APIObject {
     private Date mUpdatedAt;
     private Date mCreatedAt;
 
-
     public Task() {}
 
     public Task(String name) {
