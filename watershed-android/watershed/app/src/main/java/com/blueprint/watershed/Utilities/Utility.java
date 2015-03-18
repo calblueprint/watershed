@@ -54,4 +54,9 @@ public class Utility {
         }
     }
 
+    /**
+     * Gets current api version
+     * @return Current api version
+     */
+    public static int currentVersion() { return android.os.Build.VERSION.SDK_INT; }
 }

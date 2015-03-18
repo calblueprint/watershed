@@ -1,5 +1,6 @@
 package com.blueprint.watershed.Activities;
 
+import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
@@ -18,6 +19,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.LruCache;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +27,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.AboutFragment;
@@ -45,6 +49,8 @@ import com.blueprint.watershed.Users.UserTaskFragment;
 import com.blueprint.watershed.Utilities.TabsPagerAdapter;
 import com.blueprint.watershed.Utilities.Utility;
 import com.facebook.Session;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONObject;
 
@@ -71,8 +77,13 @@ public class MainActivity extends ActionBarActivity
 
     // Navigation Drawer
     private DrawerLayout mDrawerLayout;
+    private RelativeLayout mDrawer;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
+
+    private RelativeLayout mUserInfo;
+    private TextView mUserName;
+    private TextView mUserRole;
 
     // View Elements
     public CharSequence mTitle;
@@ -87,6 +98,7 @@ public class MainActivity extends ActionBarActivity
 
     // Networking
     private NetworkManager mNetworkManager;
+    private SharedPreferences mPreferences;
 
     // User
     private User mUser;
@@ -109,7 +121,10 @@ public class MainActivity extends ActionBarActivity
         mUserId = getIntent().getExtras().getInt("userId");
 
         setNetworkManager(NetworkManager.getInstance(this));
-        makeHomeRequest();
+        mPreferences = getSharedPreferences(PREFERENCES, 0);
+        authToken = mPreferences.getString("auth_token", "none");
+        authEmail = mPreferences.getString("auth_email", "none");
+        setUserObject();
 
         initializeCache();
         initializeViews();
@@ -120,13 +135,36 @@ public class MainActivity extends ActionBarActivity
         getSupportActionBar().setHomeButtonEnabled(true);
 
         initializeFragments();
-
-        SharedPreferences prefs = getSharedPreferences(PREFERENCES, 0);
-        authToken = prefs.getString("auth_token", "none");
-        authEmail = prefs.getString("auth_email", "none");
         mTitle = "Tasks";
 
     }
+
+    private void setUserObject() {
+        String userObject = mPreferences.getString("user", "none");
+        if (!userObject.equals("none")) getUserFromPreferences(userObject);
+        else makeHomeRequest();
+    }
+
+    private void getUserFromPreferences(String user) {
+        try {
+            JSONObject jsonObject = new JSONObject(user);
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            setUser(objectMapper.readValue(jsonObject.toString(), User.class));
+        } catch (Exception e) {
+            Log.i("Exception", e.toString());
+        }
+    }
+
+    public void makeHomeRequest(){
+        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
+        HomeRequest homeRequest = new HomeRequest(this, mUserId, params, new Response.Listener<User>() {
+            @Override
+            public void onResponse(User home) { setUser(home); }
+        });
+        mNetworkManager.getRequestQueue().add(homeRequest);
+    }
+
 
     private void initializeCache() {
         mSiteImages = new LruCache<Integer, Drawable>(CACHE_SIZE) {
@@ -145,7 +183,6 @@ public class MainActivity extends ActionBarActivity
     private void initializeViews() {
         setTitle("Tasks");
         mPagerTabStrip = (PagerTabStrip) findViewById(R.id.pager_title_strip);
-        mPagerTabStrip.setDrawFullUnderline(true);
 
         mProgress = (ProgressBar) findViewById(R.id.progressBar);
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
@@ -153,6 +190,34 @@ public class MainActivity extends ActionBarActivity
         viewPager = (ViewPager) findViewById(R.id.pager);
         mContainer = findViewById(R.id.container);
         viewPager.setAdapter(mAdapter);
+
+        mUserInfo = (RelativeLayout) findViewById(R.id.nav_bar_user_info);
+        mUserInfo.setOnClickListener(this);
+        mUserRole = (TextView) findViewById(R.id.nav_bar_user_role);
+        mUserName = (TextView) findViewById(R.id.nav_bar_user_name);
+
+        setNavInfo();
+    }
+
+    @SuppressWarnings("deprecation")
+    @TargetApi(21)
+    public void setToolBarColor(int toolbar, int statusBar) {
+        if (Utility.currentVersion() >= 21) getWindow().setStatusBarColor(statusBar);
+        mToolBar.setBackgroundColor(toolbar);
+        mToolBar.invalidate();
+    }
+
+    @SuppressWarnings("deprecation")
+    @TargetApi(21)
+    public void setToolBarDefault() {
+        if (Utility.currentVersion() >= 21) getWindow().setStatusBarColor(R.color.ws_title_bar);
+        mToolBar.setBackgroundColor(R.color.ws_blue);
+        mToolBar.invalidate();
+    }
+
+    public void setNavInfo() {
+        mUserRole.setText(getUser().getRoleString());
+        mUserName.setText(getUser().getName());
     }
 
     public void updateTitle(Fragment f) {
@@ -254,8 +319,9 @@ public class MainActivity extends ActionBarActivity
     private void initializeNavigationDrawer() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerLayout.setStatusBarBackgroundColor(getResources().getColor(R.color.ws_blue));
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        String titles[] = { "Tasks", "Sites", "Profile", "About", "Logout" };
+        mDrawer = (RelativeLayout) findViewById(R.id.left_drawer);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer_list_view);
+        String titles[] = { "Tasks", "Sites", "About", "Logout" };
 
         mDrawerList.setOnItemClickListener(this);
         mDrawerList.setAdapter(new ArrayAdapter<>(this,
@@ -303,9 +369,6 @@ public class MainActivity extends ActionBarActivity
                 replaceFragment(SiteListFragment.newInstance());
                 break;
             case 2:
-                replaceFragment(UserFragment.newInstance(mUser));
-                break;
-            case 3:
                 replaceFragment(AboutFragment.newInstance());
                 break;
             case 4:
@@ -314,11 +377,11 @@ public class MainActivity extends ActionBarActivity
             default:
                 break;
         }
-        mDrawerLayout.closeDrawer(mDrawerList);
+        mDrawerLayout.closeDrawer(mDrawer);
     }
 
     public static void logoutCurrentUser(Activity activity) {
-        SharedPreferences prefs = activity.getSharedPreferences(LandingPageActivity.PREFERENCES, 0);
+        SharedPreferences prefs = activity.getSharedPreferences(PREFERENCES, 0);
         SharedPreferences.Editor editor = prefs.edit();
         editor.clear();
         editor.apply();
@@ -333,27 +396,28 @@ public class MainActivity extends ActionBarActivity
     }
 
     @Override
-    public void onClick(View view){}
+    public void onClick(View view){
+        switch (view.getId()) {
+            case R.id.nav_bar_user_info:
+                Fragment fragment = UserFragment.newInstance(getUser());
+                replaceFragment(fragment);
+                updateTitle(fragment);
+                mDrawerLayout.closeDrawer(mDrawer);
+                break;
+        }
+
+    }
 
     // Networking
     public NetworkManager getNetworkManager() { return mNetworkManager; }
     public void setNetworkManager(NetworkManager networkManager) { mNetworkManager = networkManager; }
 
-    public void makeHomeRequest(){
-        // TODO: Change to an actual home request, and not just a user request.
-        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
-        HomeRequest homeRequest = new HomeRequest(this, mUserId, params, new Response.Listener<User>() {
-            @Override
-            public void onResponse(User home) { setUser(home); }
-        });
-        mNetworkManager.getRequestQueue().add(homeRequest);
-    }
-
-
     /*
         Getter and setter zones;
      */
-    public void setUser(User user) { mUser = user; }
+    public void setUser(User user) {
+        mUser = user;
+    }
     public User getUser() { return mUser; }
     public void setUsers(List<User> users) { mUsers = users; }
     public List<User> getUsers() { return mUsers; }
