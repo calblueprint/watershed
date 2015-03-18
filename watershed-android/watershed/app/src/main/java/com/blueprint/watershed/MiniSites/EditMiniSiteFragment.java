@@ -36,7 +36,7 @@ public class EditMiniSiteFragment extends MiniSiteAbstractFragment {
         if (mMiniSite.getName() != null) mTitleField.setText(mMiniSite.getName());
         if (mMiniSite.getStreet() != null) mAddressField.setText(mMiniSite.getStreet());
         if (mMiniSite.getCity() != null) mCityField.setText(mMiniSite.getCity());
-        if (mMiniSite.getZipCode() != null) mZipField.setText(mMiniSite.getZipCode());
+        if (mMiniSite.getZipCode() != null) mZipField.setText(String.valueOf(mMiniSite.getZipCode()));
         if (mMiniSite.getState() != null) mStateField.setText(mMiniSite.getState());
         if (mMiniSite.getDescription() != null) mStateField.setText(mMiniSite.getDescription());
         if (mMiniSite.getPhotos() != null) {

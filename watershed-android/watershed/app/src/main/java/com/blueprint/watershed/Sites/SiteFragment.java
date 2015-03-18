@@ -109,14 +109,12 @@ public class SiteFragment extends Fragment
         mMiniSiteGridView.setOnItemClickListener(this);
     }
 
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         MiniSite miniSite = getMiniSite(position);
         MiniSiteFragment miniSiteFragment = MiniSiteFragment.newInstance(mSite.getId(), miniSite);
         mParentActivity.replaceFragment(miniSiteFragment);
     }
-
 
     // Networking
     private void getSiteRequest(Site site) {

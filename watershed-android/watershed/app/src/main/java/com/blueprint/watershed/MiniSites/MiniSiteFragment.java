@@ -12,10 +12,12 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
+import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.FieldReports.AddFieldReportFragment;
 import com.blueprint.watershed.FieldReports.FieldReport;
 import com.blueprint.watershed.FieldReports.FieldReportListAdapter;
+import com.blueprint.watershed.Networking.MiniSites.MiniSiteRequest;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
@@ -34,7 +36,7 @@ public class MiniSiteFragment extends Fragment
     private FieldReportListAdapter mFieldReportAdapter;
     private MiniSite mMiniSite;
     private Integer mSiteID;
-    private List<FieldReport> mFieldReports = new ArrayList<>();
+    private List<FieldReport> mFieldReports;
 
 
     public static MiniSiteFragment newInstance(Integer site, MiniSite miniSite) {
@@ -50,10 +52,17 @@ public class MiniSiteFragment extends Fragment
         mSiteID = siteID;
     }
 
+    // Objects
+    public void setMiniSite(MiniSite miniSite) {
+        mMiniSite = miniSite;
+        setFieldReports(miniSite.getFieldReports());
+    }
+
     public void configureViewWithMiniSite(View view, MiniSite miniSite) {
         ((CoverPhotoPagerView)view.findViewById(R.id.cover_photo_pager_view)).configureWithPhotos(miniSite.getPhotos());
-        ((TextView)view.findViewById(R.id.mini_site_name)).setText(miniSite.getName());
-        ((TextView)view.findViewById(R.id.mini_site_description)).setText(miniSite.getDescription());
+        ((TextView) view.findViewById(R.id.mini_site_name)).setText(miniSite.getName());
+        ((TextView) view.findViewById(R.id.mini_site_description)).setText(miniSite.getDescription());
+        ((TextView) view.findViewById(R.id.mini_site_location)).setText(miniSite.getLocation());
     }
 
     @Override
@@ -68,12 +77,29 @@ public class MiniSiteFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mini_site, container, false);
+        initializeViews(view, inflater);
+        getMiniSite(mMiniSite);
+        return view;
+    }
 
+    private void getMiniSite(MiniSite miniSite) {
+        MiniSiteRequest request = new MiniSiteRequest(mParentActivity, miniSite, new Response.Listener<MiniSite>() {
+            @Override
+            public void onResponse(MiniSite miniSite) {
+                setFieldReports(miniSite.getFieldReports());
+                mFieldReportAdapter.notifyDataSetChanged();
+            }
+        });
+
+        mNetworkManager.getRequestQueue().add(request);
+    }
+
+    private void initializeViews(View view, LayoutInflater inflater) {
         // Create FieldReportGridView
         mFieldReportGridView = (HeaderGridView) view.findViewById(R.id.field_reports_grid);
 
         // Add mini site header information to the top
-        ViewGroup header = (ViewGroup)inflater.inflate(R.layout.mini_site_header_view, mFieldReportGridView, false);
+        ViewGroup header = (ViewGroup) inflater.inflate(R.layout.mini_site_header_view, mFieldReportGridView, false);
         mFieldReportGridView.addHeaderView(header, null, false);
 
         // Configure the header
@@ -83,7 +109,6 @@ public class MiniSiteFragment extends Fragment
         mFieldReportAdapter = new FieldReportListAdapter(mParentActivity, mParentActivity, R.layout.field_report_list_row, getFieldReports());
         mFieldReportGridView.setAdapter(mFieldReportAdapter);
         mFieldReportGridView.setOnItemClickListener(this);
-        return view;
     }
 
     @Override
@@ -119,22 +144,15 @@ public class MiniSiteFragment extends Fragment
         mParentActivity.replaceFragment(addFieldReportFragment);
     }
 
-    // Objects
-    public void setMiniSite(MiniSite miniSite) {
-        mMiniSite = miniSite;
-        setFieldReports(miniSite.getFieldReports());
-    }
-
     public FieldReport getFieldReport(int position) { return mFieldReports.get(position); }
 
     public List<FieldReport> getFieldReports() {
-        if (mFieldReports == null) {
-            mFieldReports = new ArrayList<>();
-        }
+        if (mFieldReports == null) mFieldReports = new ArrayList<>();
         return mFieldReports;
     }
 
     public void setFieldReports(List<FieldReport> fieldReports) {
+        if (mFieldReports == null) mFieldReports = new ArrayList<>();
         mFieldReports.clear();
         for (FieldReport fieldReport : fieldReports) {
             mFieldReports.add(fieldReport);
