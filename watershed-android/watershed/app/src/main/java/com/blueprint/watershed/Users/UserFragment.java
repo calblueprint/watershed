@@ -76,10 +76,7 @@ public class UserFragment extends Fragment implements ListView.OnItemClickListen
         mEmailView = (TextView) mParentActivity.findViewById(R.id.profile_email);
         mEmailView.setText(mUser.getEmail());
         mRoleView = (TextView) mParentActivity.findViewById(R.id.profile_role);
-
-        if (mUser.isCommunityMember()) mRoleView.setText("Community Member");
-        else if (mUser.isEmployee()) mRoleView.setText("Employee");
-        else mRoleView.setText("Manager");
+        mRoleView.setText(mUser.getRoleString());
     }
 
     /**

@@ -156,6 +156,8 @@ public class EditUserFragment extends Fragment {
             public void onResponse(User user) {
                 Utility.hideKeyboard(mParentActivity, mLayout);
                 setUserInfo(user);
+                mParentActivity.setUser(user);
+                mParentActivity.setNavInfo();
                 mParentActivity.getSupportFragmentManager().popBackStack();
                 Toast.makeText(mParentActivity, "You've updated your profile!", Toast.LENGTH_SHORT).show();
             }

@@ -16,6 +16,8 @@
         <item name="android:actionBarStyle">@style/WsActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/WsActionBarTabText</item>
         <item name="android:actionBarTabBarStyle">@style/WsActionBarTabView</item>
+        <item name="colorPrimary">@color/ws_blue</item>
+        <item name="colorPrimaryDark">@color/ws_title_bar</item>
     </style>
 
     <style name="WsActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
