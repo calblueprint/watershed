@@ -1,5 +1,7 @@
 package com.blueprint.watershed.MiniSites;
 
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -27,13 +30,17 @@ import com.blueprint.watershed.Photos.Photo;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Sites.Site;
 import com.blueprint.watershed.Utilities.Utility;
+import com.blueprint.watershed.Views.CoverPhotoPagerView;
+import com.facebook.Request;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by charlesx on 3/17/15.
@@ -43,9 +50,9 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     
     protected Button mTakePhotoButton;
     protected MainActivity mParentActivity;
-    protected View mView;
     protected NetworkManager mNetworkManager;
 
+    protected CoverPhotoPagerView mImagePager;
     protected EditText mTitleField;
     protected EditText mAddressField;
     protected EditText mCityField;
@@ -78,9 +85,8 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView = inflater.inflate(R.layout.fragment_create_mini_site, container, false);
-        setButtonListeners(mView);
-        return mView;
+        super.onCreateView(inflater, container, savedInstanceState);
+        return inflater.inflate(R.layout.fragment_create_mini_site, container, false);
     }
 
     @Override
@@ -115,7 +121,6 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        ImageView miniSiteImageView = (ImageView)mView.findViewById(R.id.mini_site_image);
         if (requestCode == CAMERA_REQUEST && resultCode == MainActivity.RESULT_OK) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             miniSiteImageView.setImageBitmap(photo);
@@ -154,16 +159,19 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         startActivityForResult(intent, SELECT_PHOTO_REQUEST);
     }
 
-    private void setButtonListeners(View view){
-        Button submitButton = (Button)view.findViewById(R.id.create_mini_site_submit);
-        Button takePhoto = (Button)view.findViewById(R.id.take_mini_site_photo_button);
-        Button selectPhoto = (Button)view.findViewById(R.id.select_mini_site_photo_button);
-        mTitleField = (EditText)view.findViewById(R.id.create_mini_site_title);
-        mDescriptionField = (EditText)view.findViewById(R.id.create_mini_site_description);
-        mAddressField = (EditText)view.findViewById(R.id.create_mini_site_address);
-        mCityField = (EditText)view.findViewById(R.id.create_mini_site_city);
-        mZipField = (EditText)view.findViewById(R.id.create_mini_site_zip);
-        mStateField = (EditText)view.findViewById(R.id.create_mini_site_state);
+    protected void setButtonListeners() {
+        Button submitButton = (Button) mParentActivity.findViewById(R.id.create_mini_site_submit);
+        Button takePhoto = (Button) mParentActivity.findViewById(R.id.take_mini_site_photo_button);
+        Button selectPhoto = (Button) mParentActivity.findViewById(R.id.select_mini_site_photo_button);
+
+        mImagePager = (CoverPhotoPagerView) mParentActivity.findViewById(R.id.mini_site_photo_pager_view);
+        mTitleField = (EditText) mParentActivity.findViewById(R.id.create_mini_site_title);
+        mDescriptionField = (EditText) mParentActivity.findViewById(R.id.create_mini_site_description);
+        mAddressField = (EditText) mParentActivity.findViewById(R.id.create_mini_site_address);
+        mCityField = (EditText) mParentActivity.findViewById(R.id.create_mini_site_city);
+        mZipField = (EditText) mParentActivity.findViewById(R.id.create_mini_site_zip);
+        mStateField = (EditText) mParentActivity.findViewById(R.id.create_mini_site_state);
+
         takePhoto.setOnClickListener(this);
         selectPhoto.setOnClickListener(this);
         submitButton.setOnClickListener(this);
@@ -172,8 +180,6 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     public void validateAndSubmitMiniSite() {
         MiniSite miniSite = mMiniSite == null ? new MiniSite() : mMiniSite;
 
-        String miniSiteTitle = ((EditText)mView.findViewById(R.id.create_mini_site_title)).getText().toString();
-        ImageView image = (ImageView)mView.findViewById(R.id.mini_site_image);
         int zipCode;
 
         try {
@@ -186,7 +192,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         }
         Bitmap miniSitePhoto = ((BitmapDrawable)image.getDrawable()).getBitmap();
 
-        miniSite.setName(miniSiteTitle);
+        miniSite.setName(mTitleField.getText().toString());
         miniSite.setDescription(mDescriptionField.getText().toString());
         miniSite.setStreet(mAddressField.getText().toString());
         miniSite.setCity(mCityField.getText().toString());
@@ -206,4 +212,16 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     }
 
     public abstract void submitMiniSite(MiniSite site);
+
+//    public static class PickPhotoTypeDialog extends DialogFragment {
+//
+//        @Override
+//        public Dialog onCreateDialog(Bundle savedInstanceState) {
+//            String[] photoArray =
+//            List<String> photoTypesList = Arrays.asList();
+//            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), );
+//        }
+//
+//
+//    }
 }

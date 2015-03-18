@@ -1,5 +1,6 @@
 package com.blueprint.watershed.MiniSites;
 
+import android.os.Bundle;
 import android.util.Log;
 
 import com.android.volley.Response;
@@ -25,7 +26,11 @@ public class EditMiniSiteFragment extends MiniSiteAbstractFragment {
         return fragment;
     }
 
-    public EditMiniSiteFragment() {}
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setButtonListeners();
+    }
 
     @Override
     public void submitMiniSite(MiniSite miniSite) {
