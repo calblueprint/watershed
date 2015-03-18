@@ -38,9 +38,9 @@ public class EditMiniSiteFragment extends MiniSiteAbstractFragment {
         if (mMiniSite.getCity() != null) mCityField.setText(mMiniSite.getCity());
         if (mMiniSite.getZipCode() != null) mZipField.setText(String.valueOf(mMiniSite.getZipCode()));
         if (mMiniSite.getState() != null) mStateField.setText(mMiniSite.getState());
-        if (mMiniSite.getDescription() != null) mStateField.setText(mMiniSite.getDescription());
+        if (mMiniSite.getDescription() != null) mDescriptionField.setText(mMiniSite.getDescription());
         if (mMiniSite.getPhotos() != null) {
-            mPhotoList = mMiniSite.getPhotos();
+            setPhotos(mMiniSite.getPhotos());
             mImageAdapter.notifyDataSetChanged();
         }
     }

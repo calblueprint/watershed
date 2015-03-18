@@ -60,7 +60,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     // Cover Photo Pager
     protected CoverPhotoPagerView mImagePager;
     protected PhotoPagerAdapter mImageAdapter;
-    protected List<Photo> mPhotoList = new ArrayList<>();
+    protected List<Photo> mPhotoList;
 
     // Buttons
     protected ImageButton mDeletePhotoButton;
@@ -126,7 +126,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
 
         // Sets up Image Pager
         mImagePager = (CoverPhotoPagerView) mParentActivity.findViewById(R.id.mini_site_photo_pager_view);
-        mImageAdapter = new PhotoPagerAdapter(mParentActivity, mPhotoList);
+        mImageAdapter = new PhotoPagerAdapter(mParentActivity, getPhotos());
         mImagePager.setAdapter(mImageAdapter);
 
         mLayout = (RelativeLayout) mParentActivity.findViewById(R.id.mini_site_create_layout);
@@ -140,6 +140,16 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         mDeletePhotoButton.setOnClickListener(this);
         mAddPhotoButton.setOnClickListener(this);
         mSubmit.setOnClickListener(this);
+    }
+
+    public List<Photo> getPhotos() {
+        if (mPhotoList == null) mPhotoList = new ArrayList<>();
+        return mPhotoList;
+    }
+
+    public void setPhotos(List<Photo> photos) {
+        if (mPhotoList == null) mPhotoList = new ArrayList<>();
+        mPhotoList = photos;
     }
 
     /**
@@ -179,7 +189,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
      * Validates and makes a submit request
      */
     public void validateAndSubmitMiniSite() {
-        MiniSite miniSite = mMiniSite == null ? new MiniSite() : mMiniSite;
+        final MiniSite miniSite = mMiniSite == null ? new MiniSite() : mMiniSite;
 
         boolean hasErrors = false;
 
@@ -219,7 +229,13 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         miniSite.setSiteId(mSiteID);
         miniSite.setPhotos(mPhotoList);
 
-        submitMiniSite(miniSite);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                submitMiniSite(miniSite);
+            }
+        }).start();
+
     }
 
     private void deleteMiniSite() {
