@@ -32,6 +32,8 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.AboutFragment;
+import com.blueprint.watershed.MiniSites.MiniSiteAbstractFragment;
+import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Users.HomeRequest;
 import com.blueprint.watershed.R;
@@ -226,21 +228,15 @@ public class MainActivity extends ActionBarActivity
             displayTaskView(true);
             return;
         }
-        else if (f instanceof UserTaskFragment){
-            setTitle("Tasks");
-        }
-        else if (f instanceof SiteListFragment || f instanceof SiteFragment || f instanceof UserMiniSiteFragment) {
-            setTitle("Sites");
-        }
-        else if (f instanceof AboutFragment) {
-            setTitle("About");
-        }
-        else if (f instanceof UserFieldReportFragment){
-            setTitle("Field Reports");
-        }
-        else if (f instanceof UserFragment) {
-            setTitle("Profile");
-        }
+        else if (f instanceof UserTaskFragment)           setTitle("Tasks");
+        else if (f instanceof SiteListFragment ||
+                 f instanceof SiteFragment ||
+                 f instanceof UserMiniSiteFragment)       setTitle("Sites");
+        else if (f instanceof AboutFragment)              setTitle("About");
+        else if (f instanceof UserFieldReportFragment)    setTitle("Field Reports");
+        else if (f instanceof UserFragment)               setTitle("Profile");
+        else if (f instanceof MiniSiteAbstractFragment ||
+                 f instanceof MiniSiteFragment)           setTitle("MiniSite");
         displayTaskView(false);
 
     }

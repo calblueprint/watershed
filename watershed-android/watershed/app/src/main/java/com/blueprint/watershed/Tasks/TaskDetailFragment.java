@@ -35,7 +35,7 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.edit_task_menu, menu);
+        inflater.inflate(R.menu.edit_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -88,7 +88,7 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.edit_task:
+            case R.id.edit:
                 EditTaskFragment newTask = EditTaskFragment.newInstance(mTask);
                 mParentActivity.replaceFragment(newTask);
                 return true;
