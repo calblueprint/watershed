@@ -255,14 +255,24 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         }
     }
 
+    /**
+     * Handles selecting a photo - starts new activity
+     */
     public void onSelectPhotoButtonPressed() {
         Intent intent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, SELECT_PHOTO_REQUEST);
     }
 
+    /**
+     * A method the children of this class must implement
+     * @param site Site to submit
+     */
     public abstract void submitMiniSite(MiniSite site);
 
+    /**
+     * Dialog that allows users to choose between taking and selecting a photo.
+     */
     public static class PickPhotoTypeDialog extends DialogFragment {
 
         public static PickPhotoTypeDialog newInstance() { return new PickPhotoTypeDialog(); }
