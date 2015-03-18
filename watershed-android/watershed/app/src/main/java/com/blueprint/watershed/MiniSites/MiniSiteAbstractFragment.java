@@ -107,6 +107,9 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    /**
+     * Sets all the views in the fragment
+     */
     protected void setButtonListeners() {
         mSubmit = (Button) mParentActivity.findViewById(R.id.create_mini_site_submit);
         mDeletePhotoButton = (ImageButton) mParentActivity.findViewById(R.id.mini_site_delete_photo);
@@ -129,6 +132,10 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         mSubmit.setOnClickListener(this);
     }
 
+    /**
+     * onClickListeners for the buttons on the page.
+     * @param view View that was clicked
+     */
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.mini_site_delete_photo:
@@ -143,14 +150,24 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         }
     }
 
-    public void deletePhoto() { mImageAdapter.deletePhoto(mImagePager.getCurrentItem()); }
+    /**
+     * Deletes a photo from the PagerView
+     */
+    public void deletePhoto() {
+        mImageAdapter.deletePhoto(mImagePager.getCurrentItem()); }
 
+    /**
+     * Opens dialog to pick between taking or selecting a photo
+     */
     public void openAddPhotoDialog() {
         PickPhotoTypeDialog dialog = PickPhotoTypeDialog.newInstance();
         dialog.setTargetFragment(this, DIALOG_REQUEST_CODE);
         dialog.show(mParentActivity.getSupportFragmentManager(), DIALOG_TAG);
     }
 
+    /**
+     * Validates and makes a submit request
+     */
     public void validateAndSubmitMiniSite() {
         MiniSite miniSite = mMiniSite == null ? new MiniSite() : mMiniSite;
 
@@ -182,7 +199,11 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         submitMiniSite(miniSite);
     }
 
-    // Image Handling
+    /**
+     * Creates an Image File
+     * @return A file
+     * @throws IOException
+     */
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
@@ -192,6 +213,12 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         return image;
     }
 
+    /**
+     * Handing our activity results
+     * @param requestCode Number telling us which intent was called
+     * @param resultCode Number telling us if the request was ok
+     * @param data Data passed back by the activity
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Bitmap photo = null;
         if (requestCode == CAMERA_REQUEST && resultCode == MainActivity.RESULT_OK) {
@@ -211,7 +238,9 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         }
     }
 
-    // Button Handlers
+    /**
+     * Handles taking a photo - starts new activity
+     */
     public void onTakePhotoButtonPressed(){
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(mParentActivity.getPackageManager()) != null) {

@@ -27,7 +27,7 @@ public class CoverPhotoPagerView extends ViewPager {
     }
 
     public void initializeViews(Context context) {
-        mAdapter = new PhotoPagerAdapter(context);
+        mAdapter = new PhotoPagerAdapter(context, new ArrayList<Photo>());
         this.setAdapter(mAdapter);
     }
 
