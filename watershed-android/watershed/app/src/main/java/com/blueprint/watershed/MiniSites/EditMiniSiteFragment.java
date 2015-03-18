@@ -41,6 +41,7 @@ public class EditMiniSiteFragment extends MiniSiteAbstractFragment {
         if (mMiniSite.getDescription() != null) mDescriptionField.setText(mMiniSite.getDescription());
         if (mMiniSite.getPhotos() != null) {
             setPhotos(mMiniSite.getPhotos());
+            mImageAdapter.setPhotos(getPhotos());
             mImageAdapter.notifyDataSetChanged();
         }
     }

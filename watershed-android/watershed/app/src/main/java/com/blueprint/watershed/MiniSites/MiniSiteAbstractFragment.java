@@ -173,8 +173,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     /**
      * Deletes a photo from the PagerView
      */
-    public void deletePhoto() {
-        mImageAdapter.deletePhoto(mImagePager.getCurrentItem()); }
+    public void deletePhoto() { mImageAdapter.deletePhoto(mImagePager.getCurrentItem()); }
 
     /**
      * Opens dialog to pick between taking or selecting a photo
