@@ -1,11 +1,8 @@
 package com.blueprint.watershed.MiniSites;
 
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -17,10 +14,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -31,14 +26,12 @@ import com.blueprint.watershed.R;
 import com.blueprint.watershed.Sites.Site;
 import com.blueprint.watershed.Utilities.Utility;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
-import com.facebook.Request;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -52,13 +45,16 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     protected MainActivity mParentActivity;
     protected NetworkManager mNetworkManager;
 
-    protected CoverPhotoPagerView mImagePager;
     protected EditText mTitleField;
     protected EditText mAddressField;
     protected EditText mCityField;
     protected EditText mZipField;
     protected EditText mStateField;
     protected EditText mDescriptionField;
+
+    // Cover Photo Pager
+    protected CoverPhotoPagerView mImagePager;
+    protected List<Photo> mPhotoList;
 
     protected RelativeLayout mLayout;
 
@@ -123,13 +119,11 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_REQUEST && resultCode == MainActivity.RESULT_OK) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
-            miniSiteImageView.setImageBitmap(photo);
         }
         else if (requestCode == SELECT_PHOTO_REQUEST && resultCode == MainActivity.RESULT_OK){
             Uri targetUri = data.getData();
             try {
                 Bitmap photo = BitmapFactory.decodeStream(mParentActivity.getContentResolver().openInputStream(targetUri));
-                miniSiteImageView.setImageBitmap(photo);
             }
             catch (FileNotFoundException e){
                 e.printStackTrace();
@@ -190,7 +184,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
             toast.show();
             return;
         }
-        Bitmap miniSitePhoto = ((BitmapDrawable)image.getDrawable()).getBitmap();
+//        Bitmap miniSitePhoto = ((BitmapDrawable)image.getDrawable()).getBitmap();
 
         miniSite.setName(mTitleField.getText().toString());
         miniSite.setDescription(mDescriptionField.getText().toString());
@@ -203,7 +197,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         miniSite.setState("CA");
         miniSite.setSiteId(mSite.getId());
         ArrayList<Photo> photos = new ArrayList<Photo>();
-        photos.add(new Photo(miniSitePhoto));
+//        photos.add(new Photo(miniSitePhoto));
 
         miniSite.setPhotos(photos);
 
