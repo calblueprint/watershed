@@ -10,6 +10,7 @@ import com.blueprint.watershed.Photos.PhotoPagerAdapter;
 import com.blueprint.watershed.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Mark Miyashita on 10/5/14.
@@ -31,7 +32,7 @@ public class CoverPhotoPagerView extends ViewPager {
         this.setAdapter(mAdapter);
     }
 
-    public void configureWithPhotos(ArrayList<Photo> photos) {
+    public void configureWithPhotos(List<Photo> photos) {
         mAdapter.configureWithPhotos(photos);
         mAdapter.notifyDataSetChanged();
     }

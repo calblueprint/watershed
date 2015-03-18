@@ -29,7 +29,7 @@ public class PhotoPagerAdapter extends PagerAdapter {
         setPhotos(photos);
     }
 
-    public void configureWithPhotos(ArrayList<Photo> photos) {
+    public void configureWithPhotos(List<Photo> photos) {
         setPhotos(photos);
     }
 

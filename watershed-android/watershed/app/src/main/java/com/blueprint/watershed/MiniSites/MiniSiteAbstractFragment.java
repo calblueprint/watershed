@@ -305,7 +305,5 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
 
             return builder.create();
         }
-
-
     }
 }

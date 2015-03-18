@@ -23,6 +23,7 @@ import com.blueprint.watershed.Views.CoverPhotoPagerView;
 import com.blueprint.watershed.Views.HeaderGridView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MiniSiteFragment extends Fragment
@@ -127,14 +128,14 @@ public class MiniSiteFragment extends Fragment
 
     public FieldReport getFieldReport(int position) { return mFieldReports.get(position); }
 
-    public ArrayList<FieldReport> getFieldReports() {
+    public List<FieldReport> getFieldReports() {
         if (mFieldReports == null) {
             mFieldReports = new ArrayList<>();
         }
         return mFieldReports;
     }
 
-    public void setFieldReports(ArrayList<FieldReport> fieldReports) {
+    public void setFieldReports(List<FieldReport> fieldReports) {
         mFieldReports.clear();
         for (FieldReport fieldReport : fieldReports) {
             mFieldReports.add(fieldReport);
