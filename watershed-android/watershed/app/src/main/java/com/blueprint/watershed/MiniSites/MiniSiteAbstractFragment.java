@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Photos.Photo;
+import com.blueprint.watershed.Photos.PhotoPagerAdapter;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Sites.Site;
 import com.blueprint.watershed.Utilities.Utility;
@@ -54,6 +55,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
 
     // Cover Photo Pager
     protected CoverPhotoPagerView mImagePager;
+    protected PhotoPagerAdapter mImageAdapter;
     protected List<Photo> mPhotoList;
 
     protected RelativeLayout mLayout;
@@ -117,17 +119,24 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Bitmap photo = null;
         if (requestCode == CAMERA_REQUEST && resultCode == MainActivity.RESULT_OK) {
-            Bitmap photo = (Bitmap) data.getExtras().get("data");
+             photo = (Bitmap) data.getExtras().get("data");
+
         }
         else if (requestCode == SELECT_PHOTO_REQUEST && resultCode == MainActivity.RESULT_OK){
             Uri targetUri = data.getData();
             try {
-                Bitmap photo = BitmapFactory.decodeStream(mParentActivity.getContentResolver().openInputStream(targetUri));
+                photo = BitmapFactory.decodeStream(mParentActivity.getContentResolver().openInputStream(targetUri));
             }
             catch (FileNotFoundException e){
                 e.printStackTrace();
             }
+        }
+
+        if (photo != null) {
+            mPhotoList.add(new Photo(photo));
+            mImageAdapter.notifyDataSetChanged();
         }
     }
 
@@ -158,7 +167,11 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         Button takePhoto = (Button) mParentActivity.findViewById(R.id.take_mini_site_photo_button);
         Button selectPhoto = (Button) mParentActivity.findViewById(R.id.select_mini_site_photo_button);
 
+        // Sets up Image Pager
         mImagePager = (CoverPhotoPagerView) mParentActivity.findViewById(R.id.mini_site_photo_pager_view);
+        mImageAdapter = new PhotoPagerAdapter(mParentActivity, mPhotoList);
+        mImagePager.setAdapter(mImageAdapter);
+
         mTitleField = (EditText) mParentActivity.findViewById(R.id.create_mini_site_title);
         mDescriptionField = (EditText) mParentActivity.findViewById(R.id.create_mini_site_description);
         mAddressField = (EditText) mParentActivity.findViewById(R.id.create_mini_site_address);
@@ -190,16 +203,13 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         miniSite.setDescription(mDescriptionField.getText().toString());
         miniSite.setStreet(mAddressField.getText().toString());
         miniSite.setCity(mCityField.getText().toString());
-        miniSite.setZipCode(zipCode);
-        miniSite.setLatitude(0f);
-        miniSite.setLongitude(0f);
-        miniSite.setFieldReportsCount(0);
-        miniSite.setState("CA");
+        miniSite.setZipCode(Integer.valueOf(mZipField.getText().toString()));
+        miniSite.setLatitude(0f); // ?
+        miniSite.setLongitude(0f); // ?
+        miniSite.setFieldReportsCount(mMiniSite.getFieldReportsCount());
+        miniSite.setState(mStateField.getText().toString());
         miniSite.setSiteId(mSite.getId());
-        ArrayList<Photo> photos = new ArrayList<Photo>();
-//        photos.add(new Photo(miniSitePhoto));
-
-        miniSite.setPhotos(photos);
+        miniSite.setPhotos(mPhotoList);
 
         Utility.hideKeyboard(mParentActivity, mLayout);
         submitMiniSite(miniSite);
