@@ -88,7 +88,6 @@
                     android:id="@+id/description_image"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_centerVertical="true"
                     android:src="@drawable/ic_description"
                     android:scaleType="centerCrop"
                     />
@@ -131,7 +130,6 @@
                     android:id="@+id/location_image"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_centerVertical="true"
                     android:src="@drawable/ic_location"
                     android:scaleType="centerCrop"
                     />
