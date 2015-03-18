@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -103,10 +104,19 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.empty, menu);
+        inflater.inflate(R.menu.save_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.save:
+                validateAndSubmitMiniSite();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
     /**
      * Sets all the views in the fragment
      */
@@ -145,7 +155,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
                 openAddPhotoDialog();
                 break;
             case R.id.create_mini_site_submit:
-                validateAndSubmitMiniSite();
+                deleteMiniSite();
                 break;
         }
     }
@@ -199,6 +209,9 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         submitMiniSite(miniSite);
     }
 
+    private void deleteMiniSite() {
+        
+    }
     /**
      * Creates an Image File
      * @return A file
@@ -235,6 +248,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         if (photo != null) {
             mPhotoList.add(new Photo(photo));
             mImageAdapter.notifyDataSetChanged();
+            mImagePager.setCurrentItem(mPhotoList.size() - 1);
         }
     }
 
