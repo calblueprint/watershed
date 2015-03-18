@@ -181,17 +181,31 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     public void validateAndSubmitMiniSite() {
         MiniSite miniSite = mMiniSite == null ? new MiniSite() : mMiniSite;
 
-//        int zipCode;
-//
-//        try {
-//            zipCode = Integer.valueOf(mZipField.getText().toString());
-//        }
-//        catch (Exception e){
-//            Toast toast = Toast.makeText(mParentActivity.getApplicationContext(), "Please use a valid Zip Code", Toast.LENGTH_SHORT);
-//            toast.show();
-//            return;
-//        }
-//        Bitmap miniSitePhoto = ((BitmapDrawable)image.getDrawable()).getBitmap();
+        boolean hasErrors = false;
+
+        try {
+            int zipCode = Integer.parseInt(mZipField.getText().toString());
+            if (zipCode < 0) {
+                mZipField.setError("Invalid zip code");
+                hasErrors = true;
+            }
+        }
+        catch (Exception e) {
+            mZipField.setError("Invalid zip code");
+            hasErrors = true;
+        }
+
+        EditText[] textFields = { mTitleField, mDescriptionField, mAddressField,
+                                  mCityField, mStateField, mZipField };
+
+        for (EditText editText : textFields) {
+            if (editText.getText().toString().length() == 0) {
+                editText.setError("Cannot be blank!");
+                hasErrors = true;
+            }
+        }
+
+        if (hasErrors) return;
 
         miniSite.setName(mTitleField.getText().toString());
         miniSite.setDescription(mDescriptionField.getText().toString());

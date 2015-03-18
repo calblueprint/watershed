@@ -138,6 +138,7 @@
                         android:background="@color/transparent"
                         android:maxLines="1"
                         android:textSize="20sp"
+                        android:inputType="number"
                         />
                 </LinearLayout>
             </RelativeLayout>
