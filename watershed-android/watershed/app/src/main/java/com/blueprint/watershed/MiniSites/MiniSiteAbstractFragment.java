@@ -29,7 +29,6 @@ import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Photos.Photo;
 import com.blueprint.watershed.Photos.PhotoPagerAdapter;
 import com.blueprint.watershed.R;
-import com.blueprint.watershed.Sites.Site;
 import com.blueprint.watershed.Utilities.Utility;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
 
@@ -37,6 +36,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -60,7 +60,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     // Cover Photo Pager
     protected CoverPhotoPagerView mImagePager;
     protected PhotoPagerAdapter mImageAdapter;
-    protected List<Photo> mPhotoList;
+    protected List<Photo> mPhotoList = new ArrayList<>();
 
     // Buttons
     protected ImageButton mDeletePhotoButton;
@@ -69,7 +69,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
 
     protected RelativeLayout mLayout;
 
-    protected Site mSite;
+    protected Integer mSiteID;
     protected MiniSite mMiniSite;
 
     // Camera Stuff
@@ -81,7 +81,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     protected static final String DIALOG_TAG = "PickPhotoTypeDialog";
     protected static final int DIALOG_REQUEST_CODE = 200;
 
-    public void setSite(Site site) { mSite = site; }
+    public void setSite(Integer site) { mSiteID = site; }
     public void setMiniSite(MiniSite miniSite) { mMiniSite = miniSite; }
 
     @Override
@@ -192,7 +192,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         miniSite.setLongitude(0f); // ?
         miniSite.setFieldReportsCount(mMiniSite.getFieldReportsCount());
         miniSite.setState(mStateField.getText().toString());
-        miniSite.setSiteId(mSite.getId());
+        miniSite.setSiteId(mSiteID);
         miniSite.setPhotos(mPhotoList);
 
         Utility.hideKeyboard(mParentActivity, mLayout);

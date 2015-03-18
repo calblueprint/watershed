@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.R;
-import com.blueprint.watershed.Sites.Site;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
 
 import java.util.ArrayList;
@@ -21,13 +20,11 @@ public class MiniSiteListAdapter extends ArrayAdapter<MiniSite> {
 
     private MainActivity mActivity;
     private ArrayList<MiniSite> mMiniSites;
-    private Site mSite;
 
-    public MiniSiteListAdapter(MainActivity activity, ArrayList<MiniSite> miniSites, Site site) {
+    public MiniSiteListAdapter(MainActivity activity, ArrayList<MiniSite> miniSites) {
         super(activity, R.layout.mini_site_list_row, miniSites);
         mActivity = activity;
         mMiniSites = miniSites;
-        mSite = site;
     }
 
     @Override
@@ -59,7 +56,7 @@ public class MiniSiteListAdapter extends ArrayAdapter<MiniSite> {
         row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MiniSiteFragment miniSiteFragment = MiniSiteFragment.newInstance(mSite, miniSite);
+                MiniSiteFragment miniSiteFragment = MiniSiteFragment.newInstance(miniSite.getSiteId(), miniSite);
                 mActivity.replaceFragment(miniSiteFragment);
             }
         });

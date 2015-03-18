@@ -34,21 +34,21 @@ public class MiniSiteFragment extends Fragment
     private HeaderGridView mFieldReportGridView;
     private FieldReportListAdapter mFieldReportAdapter;
     private MiniSite mMiniSite;
-    private Site mSite;
+    private Integer mSiteID;
     private ArrayList<FieldReport> mFieldReports;
 
 
-    public static MiniSiteFragment newInstance(Site site, MiniSite miniSite) {
+    public static MiniSiteFragment newInstance(Integer site, MiniSite miniSite) {
         MiniSiteFragment miniSiteFragment = new MiniSiteFragment();
         miniSiteFragment.setMiniSite(miniSite);
-        miniSiteFragment.setSite(site);
+        miniSiteFragment.setSiteID(site);
         return miniSiteFragment;
     }
 
     public MiniSiteFragment() {}
 
-    public void setSite(Site site) {
-        mSite = site;
+    public void setSiteID(Integer siteID) {
+        mSiteID = siteID;
     }
 
     public void configureViewWithMiniSite(View view, MiniSite miniSite) {
@@ -98,7 +98,7 @@ public class MiniSiteFragment extends Fragment
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.edit:
-                EditMiniSiteFragment fragment = EditMiniSiteFragment.newInstance(mSite, mMiniSite);
+                EditMiniSiteFragment fragment = EditMiniSiteFragment.newInstance(mSiteID, mMiniSite);
                 mParentActivity.replaceFragment(fragment);
             default:
                 return super.onOptionsItemSelected(item);

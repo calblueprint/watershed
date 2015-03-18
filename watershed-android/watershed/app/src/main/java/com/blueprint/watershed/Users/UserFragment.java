@@ -121,7 +121,7 @@ public class UserFragment extends Fragment implements ListView.OnItemClickListen
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.edit_task:
+            case R.id.edit:
                 mParentActivity.replaceFragment(EditUserFragment.newInstance(mUser));
                 return true;
             default:

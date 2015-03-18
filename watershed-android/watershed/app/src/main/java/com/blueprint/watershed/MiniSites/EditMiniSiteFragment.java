@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Networking.MiniSites.EditMiniSiteRequest;
-import com.blueprint.watershed.Sites.Site;
 import com.blueprint.watershed.Sites.SiteListFragment;
 
 /**
@@ -19,9 +18,9 @@ public class EditMiniSiteFragment extends MiniSiteAbstractFragment {
      *
      * @return A new instance of fragment CreateMiniSiteFragment.
      */
-    public static EditMiniSiteFragment newInstance(Site site, MiniSite miniSite) {
+    public static EditMiniSiteFragment newInstance(Integer siteID, MiniSite miniSite) {
         EditMiniSiteFragment fragment = new EditMiniSiteFragment();
-        fragment.setSite(site);
+        fragment.setSite(siteID);
         fragment.setMiniSite(miniSite);
         return fragment;
     }
