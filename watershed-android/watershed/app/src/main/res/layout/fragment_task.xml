@@ -25,6 +25,7 @@
         android:layout_below="@id/task_title_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:paddingRight="20dp"
@@ -34,7 +35,7 @@
             android:id="@+id/task_due_date_image"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@drawable/ic_launcher"/>
+            android:background="@drawable/ic_schedule"/>
 
         <TextView
             android:id="@+id/task_due_date"
