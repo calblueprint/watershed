@@ -23,5 +23,6 @@
 
     <!-- Form Colors -->
     <color name="form_gray">#FFAAAAAA</color>
-    <color name="transparent_black">#CC000000</color>
+    <color name="transparent_black">#AA000000</color>
+    <color name="black">#000000</color>
 </resources>

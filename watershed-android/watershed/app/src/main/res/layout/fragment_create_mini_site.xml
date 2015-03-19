@@ -64,7 +64,7 @@
                     android:layout_height="@dimen/button_standard_height"
                     android:background="@color/transparent"
                     android:textSize="25sp"
-                    android:textColor="@color/form_gray"
+                    android:textColor="@color/black"
                     android:textColorHint="@color/form_gray"
                     />
             </RelativeLayout>
@@ -101,7 +101,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_toEndOf="@id/description_image"
                     android:layout_toRightOf="@id/description_image"
-                    android:textColor="@color/form_gray"
+                    android:textColor="@color/black"
                     android:textColorHint="@color/form_gray"
                     android:background="@color/transparent"
                     android:gravity="top"
@@ -141,7 +141,7 @@
                     android:layout_width="fill_parent"
                     android:layout_toRightOf="@id/location_image"
                     android:layout_marginLeft="20dp"
-                    android:textColor="@color/form_gray"
+                    android:textColor="@color/black"
                     android:textColorHint="@color/form_gray"
                     android:background="@color/transparent"
                     />
@@ -160,7 +160,7 @@
                         android:layout_weight="0.9"
                         android:background="@color/transparent"
                         android:maxLines="1"
-                        android:textColor="@color/form_gray"
+                        android:textColor="@color/black"
                         android:textColorHint="@color/form_gray"
                         />
                     <EditText
@@ -173,7 +173,7 @@
                         android:layout_weight="1"
                         android:background="@color/transparent"
                         android:maxLines="1"
-                        android:textColor="@color/form_gray"
+                        android:textColor="@color/black"
                         android:textColorHint="@color/form_gray"
                         />
                     <EditText
@@ -187,7 +187,7 @@
                         android:background="@color/transparent"
                         android:maxLines="1"
                         android:inputType="number"
-                        android:textColor="@color/form_gray"
+                        android:textColor="@color/black"
                         android:textColorHint="@color/form_gray"
                         />
                 </LinearLayout>
