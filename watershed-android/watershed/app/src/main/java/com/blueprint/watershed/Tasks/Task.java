@@ -1,6 +1,9 @@
 package com.blueprint.watershed.Tasks;
 
 import com.blueprint.watershed.APIObject;
+import com.blueprint.watershed.FieldReports.FieldReport;
+import com.blueprint.watershed.MiniSites.MiniSite;
+import com.blueprint.watershed.Users.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -27,6 +30,10 @@ public class Task implements APIObject {
     private Date mDueDate;
     private Date mUpdatedAt;
     private Date mCreatedAt;
+
+    private User mAssigner;
+    private FieldReport mFieldReport;
+    private MiniSite mMiniSite;
 
     public Task() {}
 
@@ -68,4 +75,11 @@ public class Task implements APIObject {
     }
     public void setUpdatedAt(Date updatedAt) { mUpdatedAt = updatedAt;}
     public void setCreatedAt(Date createdAt) { mCreatedAt = createdAt;}
+
+    public void setAssigner(User assigner) { mAssigner = assigner; }
+    public User getAssigner() { return mAssigner; }
+    public void setFieldReport(FieldReport assigner) { mFieldReport = assigner; }
+    public FieldReport getFieldReport() { return mFieldReport; }
+    public void setMiniSite(MiniSite assigner) { mMiniSite = assigner; }
+    public MiniSite getMiniSite() { return mMiniSite; }
 }
