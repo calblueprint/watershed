@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -16,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -38,11 +38,7 @@ import com.blueprint.watershed.Tasks.Task;
 
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 
 public class AddFieldReportFragment extends Fragment implements View.OnClickListener {
@@ -125,6 +121,23 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
         mParentActivity.setMenuAction(false);
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.save_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.save:
+                onSubmitFieldReportButtonPressed();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     /*
      * Networking
      */
@@ -185,14 +198,6 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
         startActivityForResult(intent, SELECT_PHOTO_REQUEST);
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-        inflater.inflate(R.menu.empty, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-
-    }
-
     public void onSubmitFieldReportButtonPressed() {
         boolean hasErrors = false;
 
@@ -228,21 +233,6 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
                                                   mPhoto, mParentActivity.getUser(), mMiniSite, mTask);
 
         createFieldReportRequest(fieldReport);
-    }
-
-    // Image Handling
-    private File createImageFile() throws IOException {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,
-                ".jpg",
-                storageDir
-        );
-        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
-        return image;
     }
 
     /**
