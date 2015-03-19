@@ -26,10 +26,12 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
     private NetworkManager mNetworkManager;
 
     private Button mFieldReportButton;
+    private Button mCompleteButton;
     private TextView mDetailTitle;
     private TextView mDescription;
     private TextView mAssigner;
     private TextView mDueDate;
+    private TextView mLocation;
 
 
     public static TaskDetailFragment newInstance(Task task) {
@@ -78,15 +80,34 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
     private void initializeViews() {
         mFieldReportButton = (Button) mParentActivity.findViewById(R.id.field_report_button);
         mFieldReportButton.setOnClickListener(this);
+        mCompleteButton = (Button) mParentActivity.findViewById(R.id.complete_button);
+        mCompleteButton.setOnClickListener(this);
+
+        String submit = mTask.getFieldReport() == null ? "ADD FIELD REPORT" : "VIEW FIELD REPORT";
+        mFieldReportButton.setText(submit);
+
+        String complete = mTask.getComplete() ? "UNDO COMPLETION" : "COMPLETE";
+        mCompleteButton.setText(complete);
 
         mDetailTitle = (TextView) mParentActivity.findViewById(R.id.task_title);
         mDescription = (TextView) mParentActivity.findViewById(R.id.task_description);
         mDueDate = (TextView) mParentActivity.findViewById(R.id.task_due_date);
         mAssigner = (TextView) mParentActivity.findViewById(R.id.task_assigner);
+        mLocation = (TextView) mParentActivity.findViewById(R.id.task_location);
 
         mDetailTitle.setText(mTask.getTitle());
         mDescription.setText(mTask.getDescription());
         mDueDate.setText(new SimpleDateFormat("MM/dd/yyyy").format(mTask.getDueDate()));
+
+        String assigner;
+        if (mTask.getAssigner() == null) assigner = "None";
+        else assigner = mTask.getAssigner().getName();
+        mAssigner.setText(assigner);
+
+        String location;
+        if (mTask.getMiniSite() == null) location = "MiniSite " + String.valueOf(mTask.getMiniSiteId());
+        else location = mTask.getMiniSite().getLocation();
+        mLocation.setText(location);
     }
 
     //TODO Move this method to TaskFragment once the duplicate menu items bug is fixed.
