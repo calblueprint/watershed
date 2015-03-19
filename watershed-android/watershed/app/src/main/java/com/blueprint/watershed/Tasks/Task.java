@@ -31,6 +31,7 @@ public class Task implements APIObject {
     private Date mUpdatedAt;
     private Date mCreatedAt;
 
+    private User mAssignee;
     private User mAssigner;
     private FieldReport mFieldReport;
     private MiniSite mMiniSite;
@@ -82,4 +83,7 @@ public class Task implements APIObject {
     public FieldReport getFieldReport() { return mFieldReport; }
     public void setMiniSite(MiniSite assigner) { mMiniSite = assigner; }
     public MiniSite getMiniSite() { return mMiniSite; }
+    public User getAssignee() { return mAssignee; }
+    public void setAssignee(User mAssignee) { mAssignee = mAssignee; }
+
 }
