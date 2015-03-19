@@ -6,7 +6,7 @@
     <RelativeLayout
         android:id="@+id/task_title_container"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="75dp"
         android:background="@color/ws_blue"
         android:padding="20dp">
 
@@ -39,7 +39,7 @@
 
         <TextView
             android:id="@+id/task_due_date"
-            android:layout_height="@dimen/text_field_standard_height"
+            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_toRightOf="@id/task_due_date_image"
             android:layout_marginLeft="20dp"
@@ -66,7 +66,7 @@
 
         <TextView
             android:id="@+id/task_description"
-            android:layout_height="@dimen/text_field_standard_height"
+            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_toRightOf="@id/task_description_image"
             android:layout_marginLeft="20dp"
@@ -93,7 +93,7 @@
 
         <TextView
             android:id="@+id/task_assigner"
-            android:layout_height="@dimen/text_field_standard_height"
+            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_toRightOf="@id/task_assigner_image"
             android:layout_marginLeft="20dp"
@@ -120,7 +120,7 @@
 
         <TextView
             android:id="@+id/task_location"
-            android:layout_height="@dimen/text_field_standard_height"
+            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_toRightOf="@id/task_location_image"
             android:layout_marginLeft="20dp"
