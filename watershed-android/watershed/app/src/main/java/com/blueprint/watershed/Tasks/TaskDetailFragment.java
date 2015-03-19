@@ -8,12 +8,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.FieldReports.AddFieldReportFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.R;
+
+import java.text.SimpleDateFormat;
 
 
 public class TaskDetailFragment extends Fragment implements View.OnClickListener {
@@ -22,8 +25,11 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
     private Task mTask;
     private NetworkManager mNetworkManager;
 
+    private Button mFieldReportButton;
     private TextView mDetailTitle;
     private TextView mDescription;
+    private TextView mAssigner;
+    private TextView mDueDate;
 
 
     public static TaskDetailFragment newInstance(Task task) {
@@ -32,19 +38,15 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
         return taskFragment;
     }
 
+    public void configureWithTask(Task task) {
+        mTask = task;
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.edit_task_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    public TaskDetailFragment() {
-        // Required empty public constructor
-    }
-
-    public void configureWithTask(Task task) {
-        mTask = task;
     }
 
     @Override
@@ -56,8 +58,7 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         return inflater.inflate(R.layout.fragment_task, container, false);
     }
@@ -75,12 +76,17 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
     }
 
     private void initializeViews() {
-        mParentActivity.findViewById(R.id.field_report_button).setOnClickListener(this);
-        mDetailTitle = (TextView) mParentActivity.findViewById(R.id.task_detail_title);
-        mDescription = (TextView) mParentActivity.findViewById(R.id.task_detail_description);
+        mFieldReportButton = (Button) mParentActivity.findViewById(R.id.field_report_button);
+        mFieldReportButton.setOnClickListener(this);
+
+        mDetailTitle = (TextView) mParentActivity.findViewById(R.id.task_title);
+        mDescription = (TextView) mParentActivity.findViewById(R.id.task_description);
+        mDueDate = (TextView) mParentActivity.findViewById(R.id.task_due_date);
+        mAssigner = (TextView) mParentActivity.findViewById(R.id.task_assigner);
 
         mDetailTitle.setText(mTask.getTitle());
         mDescription.setText(mTask.getDescription());
+        mDueDate.setText(new SimpleDateFormat("MM/dd/yyyy").format(mTask.getDueDate()));
     }
 
     //TODO Move this method to TaskFragment once the duplicate menu items bug is fixed.
