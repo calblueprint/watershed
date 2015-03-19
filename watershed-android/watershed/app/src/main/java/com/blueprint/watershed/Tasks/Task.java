@@ -84,6 +84,6 @@ public class Task implements APIObject {
     public void setMiniSite(MiniSite assigner) { mMiniSite = assigner; }
     public MiniSite getMiniSite() { return mMiniSite; }
     public User getAssignee() { return mAssignee; }
-    public void setAssignee(User mAssignee) { mAssignee = mAssignee; }
+    public void setAssignee(User mAssignee) { this.mAssignee = mAssignee; }
 
 }
