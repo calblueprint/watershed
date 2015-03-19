@@ -38,7 +38,7 @@ public class EditTaskFragment extends TaskAbstractFragment {
     private void setTextViews() {
         if (mTask.getTitle() != null) mTitleField.setText(mTask.getTitle());
         if (mTask.getDescription() != null) mDescriptionField.setText(mTask.getDescription());
-        if (mTask.getAssigneeId() != null) mAssigneeField.setText(String.valueOf(mTask.getAssignee().getName()));
+        if (mTask.getAssignee() != null) mAssigneeField.setText(String.valueOf(mTask.getAssignee().getName()));
         if (mTask.getDueDate() != null) mDueDateField.setText(String.valueOf(mTask.getDueDate().toString()));
         if (mTask.getMiniSiteId() != null) mMiniSiteId.setText(String.valueOf(mTask.getMiniSite().getName()));
     }
