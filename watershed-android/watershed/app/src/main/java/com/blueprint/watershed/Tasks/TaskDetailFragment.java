@@ -67,7 +67,12 @@ public class TaskDetailFragment extends TaskAbstractFragment{
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initializeViews();
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mParentActivity.setMenuAction(false);
     }
 
     private void initializeViews() {

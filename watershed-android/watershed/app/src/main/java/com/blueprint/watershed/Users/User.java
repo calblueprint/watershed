@@ -1,13 +1,10 @@
 package com.blueprint.watershed.Users;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+import com.blueprint.watershed.APIObject;
 import com.blueprint.watershed.FieldReports.FieldReport;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import com.blueprint.watershed.APIObject;
 
 /**
  * Created by maxwolffe on 10/29/14.
@@ -51,6 +48,12 @@ public class User implements APIObject {
     public Boolean isManager() { return mRole == Role.MANAGER.getValue(); }
     public Boolean isEmployee() { return mRole == Role.EMPLOYEE.getValue(); }
     public Boolean isCommunityMember() { return mRole == Role.COMMUNITY_MEMBER.getValue(); }
+
+    public String getRoleString() {
+        if (isManager()) return "Manager";
+        else if (isCommunityMember()) return "Community Member";
+        else return "Employee";
+    }
 
     // Getters
     public Integer getId() { return mId; }

@@ -1,10 +1,8 @@
 package com.blueprint.watershed.FieldReports;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -27,7 +25,6 @@ import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.Networking.FieldReports.CreateFieldReportRequest;
-import com.blueprint.watershed.Networking.MiniSites.MiniSiteRequest;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Photos.Photo;
 import com.blueprint.watershed.R;
@@ -45,7 +42,7 @@ import java.util.HashMap;
 
 public class AddFieldReportFragment extends Fragment implements View.OnClickListener {
 
-    private MainActivity mActivity;
+    private MainActivity mParentActivity;
     private NetworkManager mNetworkManager;
     private View view;
     private Button mTakePhotoButton;
@@ -57,8 +54,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
 
 
     public static AddFieldReportFragment newInstance() {
-        AddFieldReportFragment addFieldReportFragment = new AddFieldReportFragment();
-        return addFieldReportFragment;
+        return new AddFieldReportFragment();
     }
 
     public AddFieldReportFragment() {
@@ -73,7 +69,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
-        mActivity = (MainActivity) getActivity();
+        mParentActivity = (MainActivity) getActivity();
     }
 
     @Override
@@ -91,12 +87,16 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mParentActivity.setMenuAction(false);
+    }
 
     /*
      * Networking
      */
     public void createFieldReportRequest(FieldReport fieldReport) {
-        Log.e("HIT DAT ENDPOINT", "Hit It");
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
 
         CreateFieldReportRequest createFieldReportRequest = new CreateFieldReportRequest(getActivity(), fieldReport, params, new Response.Listener<FieldReport>() {
@@ -127,7 +127,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
 
     public void onTakePhotoButtonPressed(View takePhotoButton){
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(mActivity.getPackageManager()) != null) {
+        if (takePictureIntent.resolveActivity(mParentActivity.getPackageManager()) != null) {
             File photoFile = null;
             try {
                 photoFile = createImageFile();
@@ -156,7 +156,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
         RadioGroup healthGroup = (RadioGroup)view.findViewById(R.id.health_group);
         Integer selectId = healthGroup.getCheckedRadioButtonId();
         if (selectId == -1) {
-            Toast toast = Toast.makeText(mActivity.getApplicationContext(), "Please select a health rating", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(mParentActivity.getApplicationContext(), "Please select a health rating", Toast.LENGTH_SHORT);
             toast.show();
             return;
         }
@@ -169,7 +169,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
         Boolean urgency = ((Switch)view.findViewById(R.id.field_report_urgent)).isChecked();
 
         // TODO(max): Make sure to replace user, minisite, and task with the corresponding objects.
-        Task fieldReportTask = mActivity.getFieldReportTask();
+        Task fieldReportTask = mParentActivity.getFieldReportTask();
         MiniSite fieldReportMiniSite = new MiniSite();
         fieldReportMiniSite.setId(fieldReportTask.getMiniSiteId());
         FieldReport fieldReport = new FieldReport(fieldReportDescription, fieldReportHealthInt, urgency, new Photo(fieldReportPhoto), new User(), fieldReportMiniSite, fieldReportTask);
@@ -177,7 +177,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
         createFieldReportRequest(fieldReport);
 
         TaskFragment taskFragment = TaskFragment.newInstance(0);
-        mActivity.replaceFragment(taskFragment);
+        mParentActivity.replaceFragment(taskFragment);
     }
 
     // Image Handling
@@ -197,7 +197,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         ImageView fieldReportImageView = (ImageView)view.findViewById(R.id.field_report_image);
-        if (requestCode == CAMERA_REQUEST && resultCode == mActivity.RESULT_OK) {
+        if (requestCode == CAMERA_REQUEST && resultCode == mParentActivity.RESULT_OK) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             fieldReportImageView.setImageBitmap(photo);
         }

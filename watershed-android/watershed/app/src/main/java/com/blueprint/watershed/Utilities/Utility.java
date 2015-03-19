@@ -1,6 +1,9 @@
 package com.blueprint.watershed.Utilities;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.support.v4.app.FragmentActivity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,4 +37,26 @@ public class Utility {
             if (viewFocus != null) inputMethodManager.hideSoftInputFromWindow(layout.getWindowToken(), 0);
         }
     }
+
+    /**
+     * Gets the current app version
+     * @param context Context to get information from
+     * @return Version of the application
+     */
+    private static int getAppVersion(Context context) {
+        try {
+            PackageInfo packageInfo = context.getPackageManager()
+                    .getPackageInfo(context.getPackageName(), 0);
+            return packageInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            // should never happen
+            throw new RuntimeException("Could not get package name: " + e);
+        }
+    }
+
+    /**
+     * Gets current api version
+     * @return Current api version
+     */
+    public static int currentVersion() { return android.os.Build.VERSION.SDK_INT; }
 }

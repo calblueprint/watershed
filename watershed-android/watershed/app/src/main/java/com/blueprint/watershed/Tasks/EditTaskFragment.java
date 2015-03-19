@@ -1,7 +1,6 @@
 package com.blueprint.watershed.Tasks;
 
 import android.os.Bundle;
-import android.view.View;
 
 import com.blueprint.watershed.Utilities.Utility;
 
@@ -45,13 +44,8 @@ public class EditTaskFragment extends TaskAbstractFragment {
     }
 
     @Override
-    public View.OnClickListener submitListener() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Utility.hideKeyboard(mParentActivity, mLayout);
-                createTask(EDIT, mTask);
-            }
-        };
+    public void submitListener() {
+        Utility.hideKeyboard(mParentActivity, mLayout);
+        createTask(EDIT, mTask);
     }
 }

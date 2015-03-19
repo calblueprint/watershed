@@ -75,6 +75,12 @@ public class EditUserFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mParentActivity.setMenuAction(false);
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.empty, menu);
@@ -150,6 +156,8 @@ public class EditUserFragment extends Fragment {
             public void onResponse(User user) {
                 Utility.hideKeyboard(mParentActivity, mLayout);
                 setUserInfo(user);
+                mParentActivity.setUser(user);
+                mParentActivity.setNavInfo();
                 mParentActivity.getSupportFragmentManager().popBackStack();
                 Toast.makeText(mParentActivity, "You've updated your profile!", Toast.LENGTH_SHORT).show();
             }

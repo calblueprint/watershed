@@ -1,24 +1,18 @@
 package com.blueprint.watershed.FieldReports;
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.app.Fragment;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
-import com.blueprint.watershed.FieldReports.FieldReport;
-import com.blueprint.watershed.FieldReports.AddFieldReportFragment;
-import com.blueprint.watershed.FieldReports.FieldReportListAdapter;
 import com.blueprint.watershed.Networking.FieldReports.FieldReportRequest;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.R;
@@ -26,15 +20,15 @@ import com.blueprint.watershed.Views.CoverPhotoPagerView;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 
 public class FieldReportFragment extends Fragment implements AbsListView.OnItemClickListener {
 
+
     private NetworkManager mNetworkManager;
     private FieldReport mFieldReport;
-
+    private MainActivity mParentActivity;
 
     public static FieldReportFragment newInstance(FieldReport fieldReport) {
         FieldReportFragment fieldReportFragment = new FieldReportFragment();
@@ -59,7 +53,8 @@ public class FieldReportFragment extends Fragment implements AbsListView.OnItemC
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
+        mParentActivity = (MainActivity) getActivity();
+        mNetworkManager = NetworkManager.getInstance(mParentActivity);
     }
 
     @Override
@@ -67,7 +62,6 @@ public class FieldReportFragment extends Fragment implements AbsListView.OnItemC
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_field_report, container, false);
         configureViewWithFieldReport(view, mFieldReport);
-
         return view;
     }
 
@@ -81,6 +75,7 @@ public class FieldReportFragment extends Fragment implements AbsListView.OnItemC
     @Override
     public void onResume() {
         super.onResume();
+        mParentActivity.setMenuAction(false);
         getFieldReportRequest(mFieldReport);
     }
 

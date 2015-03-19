@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
 /**
@@ -27,8 +28,8 @@ public class CreateTaskRequest extends BaseRequest {
      *
      * @param activity - typically MainActivity, an activity that has a network manager.
      * @param task - task to be created
-     * @param params - params for a new site. JSON Object
-     * @param listener - A response listener to be called once the reponse is returned.
+     * @param params - params for a new task. JSON Object
+     * @param listener - A response listener to be called once the response is returned.
      */
     public CreateTaskRequest(final Activity activity, final Task task, HashMap<String, JSONObject> params, final Response.Listener<Task> listener) {
         super(Request.Method.POST, makeURL("tasks"), taskParams(activity, task),
@@ -61,6 +62,7 @@ public class CreateTaskRequest extends BaseRequest {
 
         try {
             JSONObject taskJson = new JSONObject(mapper.writeValueAsString(task));
+            taskJson.put("due_date", new SimpleDateFormat("yyyy/MM/dd").format(task.getDueDate()));
             params.put("task", taskJson);
         } catch (Exception e) {
             e.printStackTrace();

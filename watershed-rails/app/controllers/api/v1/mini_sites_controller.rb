@@ -3,7 +3,12 @@ class Api::V1::MiniSitesController < Api::V1::BaseController
   load_and_authorize_resource param_method: :mini_site_params
 
   def index
-    render json: @mini_sites, each_serializer: MiniSiteListSerializer
+    if params[:get_photos]
+      render json: @mini_sites, each_serializer: MiniSitePhotoListSerializer
+    else
+      render json: @mini_sites, each_serializer: MiniSiteInfoListSerializer
+    end
+
   end
 
   def show
@@ -26,6 +31,14 @@ class Api::V1::MiniSitesController < Api::V1::BaseController
     end
   end
 
+  def destroy
+    if @mini_site.destroy
+      render json: { message: "Deleted minisite!" }, status: :ok
+    else
+      error_response(@mini_site)
+    end
+  end
+
   private
 
   def mini_site_params
@@ -42,8 +55,10 @@ class Api::V1::MiniSitesController < Api::V1::BaseController
 
   def convert_base64_to_images
     # TODO(mark): Consider making this a helper function for all models
-    params[:mini_site][:photos_attributes].each do |attributes|
-      attributes[:image] = Photo.convert_base64(attributes[:data])
+    unless params[:mini_site][:photos_attributes].blank?
+      params[:mini_site][:photos_attributes].each do |attributes|
+        attributes[:image] = Photo.convert_base64(attributes[:data])
+      end
     end
   end
 

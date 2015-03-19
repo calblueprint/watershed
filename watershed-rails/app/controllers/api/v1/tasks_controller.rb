@@ -2,7 +2,6 @@ class Api::V1::TasksController < Api::V1::BaseController
   load_and_authorize_resource param_method: :task_params
 
   def index
-    @tasks = @tasks.unassigned.for_mini_sites(current_user.mini_sites)
     render json: @tasks, each_serializer: TaskListSerializer
   end
 
@@ -21,6 +20,14 @@ class Api::V1::TasksController < Api::V1::BaseController
   def update
     if @task.update(task_params)
       render json: @task, serializer: TaskSerializer
+    else
+      error_response(@task)
+    end
+  end
+
+  def destroy
+    if @task.destroy
+      render json: { message: "Deleted task!" }, status: :ok
     else
       error_response(@task)
     end

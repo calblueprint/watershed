@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Authentication.LoginFragment;
@@ -22,34 +23,34 @@ import com.blueprint.watershed.Networking.Sessions.LoginRequest;
 import com.blueprint.watershed.Networking.Sessions.SignUpRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Utilities.APIError;
-import com.crashlytics.android.Crashlytics;
 import com.blueprint.watershed.Utilities.Utility;
+import com.crashlytics.android.Crashlytics;
 import com.facebook.AppEventsLogger;
 import com.facebook.SessionState;
 import com.facebook.model.GraphUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import io.fabric.sdk.android.Fabric;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.HashMap;
+
+import io.fabric.sdk.android.Fabric;
 
 
 public class LandingPageActivity extends Activity implements View.OnClickListener{
 
     // Constants
-    public  static final String PREFERENCES = "WATERSHED_LOGIN_PREFERENCES";
+    public  static final String PREFERENCES = "LOGIN_PREFERENCES";
     private static final String TAG         = "LandingPageActivity";
-    private static final String LOGIN_URL = "https://intense-reaches-1457.herokuapp.com/api/v1/users/sign_in";
-    private static final String FACEBOOK_URL = "https://intense-reaches-1457.herokuapp.com/api/v1/users/sign_up/facebook";
 
     // UI Elements
     private ImageView mLandingPageImage;
     private Button mLoginButton;
     private com.facebook.widget.LoginButton mFacebookButton;
     private Button mSignUpButton;
-    private NetworkManager mloginNetworkManager;
+    private NetworkManager mLoginNetworkManager;
     private SharedPreferences preferences;
     private ObjectMapper mMapper;
     private View viewBlocker;
@@ -70,7 +71,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_landing_page);
-        mloginNetworkManager = NetworkManager.getInstance(this.getApplicationContext());
+        mLoginNetworkManager = NetworkManager.getInstance(this.getApplicationContext());
         viewBlocker = findViewById(R.id.viewBlocker);
         viewBlocker.setVisibility(View.GONE);
         initializeViews();
@@ -140,7 +141,8 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
 
     public boolean hasAuthCredentials(SharedPreferences preferences) {
         return !preferences.getString("authentication_token", "none").equals("none") &&
-               !preferences.getString("email", "none").equals("none");
+               !preferences.getString("email", "none").equals("none") &&
+               !preferences.getString("user", "none").equals("none");
     }
 
     // UI Actions
@@ -219,7 +221,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
             }
         });
 
-        mloginNetworkManager.getRequestQueue().add(facebookLoginRequest);
+        mLoginNetworkManager.getRequestQueue().add(facebookLoginRequest);
     }
 
     public void loginRequest(HashMap<String, String> params) {
@@ -237,7 +239,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
             }
         });
 
-        mloginNetworkManager.getRequestQueue().add(loginRequest);
+        mLoginNetworkManager.getRequestQueue().add(loginRequest);
     }
 
 
@@ -256,7 +258,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
             }
         });
 
-        mloginNetworkManager.getRequestQueue().add(signUpRequest);
+        mLoginNetworkManager.getRequestQueue().add(signUpRequest);
     }
 
     @Override
@@ -264,23 +266,32 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         super.onActivityResult(requestCode, resultCode, data);
 
         com.facebook.Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
-
-        com.facebook.Session session = com.facebook.Session.getActiveSession();
     }
 
     public void storeSessionAndStartMainActivity(Intent intent, Session session) {
+        ObjectMapper mapper = mLoginNetworkManager.getObjectMapper();
+        JSONObject userJson = null;
+        try {  userJson = new JSONObject(mapper.writeValueAsString(session.getUser())); }
+        catch (Exception e) { Log.i("Exception", e.toString()); }
+
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("authentication_token", session.getAuthenticationToken());
         editor.putString("email", session.getEmail());
+        if (userJson != null) editor.putString("user", userJson.toString());
+        else {
+            Toast.makeText(this, "Something went wrong - try again!", Toast.LENGTH_SHORT).show();
+            return;
+        }
         editor.putInt("userId", session.getUser().getId());
-        editor.commit();
+        editor.apply();
 
         Bundle bundle = new Bundle();
         bundle.putInt("userId", session.getUser().getId());
         intent.putExtras(bundle);
 
-        LandingPageActivity.this.finish();
         startActivity(intent);
+        finish();
+
     }
 
     // Getters
@@ -288,7 +299,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     public Button getLoginButton() { return mLoginButton; }
     public Button getFacebookButton() { return mFacebookButton; }
     public Button getSignUpButton() { return mSignUpButton; }
-    public NetworkManager getRequestHandler(){return mloginNetworkManager;}
+    public NetworkManager getRequestHandler(){return mLoginNetworkManager;}
 
     // Setters
     public void setLandingPageImage(ImageView imageView) { mLandingPageImage = imageView; }
