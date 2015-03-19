@@ -124,18 +124,6 @@
                     android:scaleType="centerCrop"
                     />
 
-                <EditText
-                    android:id="@+id/create_mini_site_address"
-                    android:hint="@string/create_site_address"
-                    android:layout_height="@dimen/button_standard_height"
-                    android:layout_width="fill_parent"
-                    android:layout_toRightOf="@id/location_image"
-                    android:layout_marginLeft="20dp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/form_gray"
-                    android:background="@color/transparent"
-                    />
-
                 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                     android:id="@+id/health_group"
                     android:layout_height="wrap_content"
