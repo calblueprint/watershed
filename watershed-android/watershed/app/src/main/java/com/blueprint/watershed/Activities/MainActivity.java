@@ -32,6 +32,8 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.AboutFragment;
+import com.blueprint.watershed.MiniSites.MiniSiteAbstractFragment;
+import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Users.HomeRequest;
 import com.blueprint.watershed.R;
@@ -228,21 +230,15 @@ public class MainActivity extends ActionBarActivity
             return;
         }
         else if (f instanceof TaskDetailFragment) setTitle("");
-        else if (f instanceof UserTaskFragment){
-            setTitle("Tasks");
-        }
-        else if (f instanceof SiteListFragment || f instanceof SiteFragment || f instanceof UserMiniSiteFragment) {
-            setTitle("Sites");
-        }
-        else if (f instanceof AboutFragment) {
-            setTitle("About");
-        }
-        else if (f instanceof UserFieldReportFragment){
-            setTitle("Field Reports");
-        }
-        else if (f instanceof UserFragment) {
-            setTitle("Profile");
-        }
+        else if (f instanceof UserTaskFragment)           setTitle("Tasks");
+        else if (f instanceof SiteListFragment ||
+                 f instanceof SiteFragment ||
+                 f instanceof UserMiniSiteFragment)       setTitle("Sites");
+        else if (f instanceof AboutFragment)              setTitle("About");
+        else if (f instanceof UserFieldReportFragment)    setTitle("Field Reports");
+        else if (f instanceof UserFragment)               setTitle("Profile");
+        else if (f instanceof MiniSiteAbstractFragment ||
+                 f instanceof MiniSiteFragment)           setTitle("MiniSite");
         displayTaskView(false);
 
     }
@@ -259,7 +255,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void replaceFragment(Fragment newFragment) {
-        FragmentTransaction ft = mFragmentManager.beginTransaction();
+        android.support.v4.app.FragmentTransaction ft = mFragmentManager.beginTransaction();
         if(!newFragment.isAdded()){
             updateTitle(newFragment);
             ft.replace(R.id.container, newFragment).addToBackStack(null).commit();
@@ -280,7 +276,7 @@ public class MainActivity extends ActionBarActivity
                     }
                 });
         updateTitle(taskFragment);
-        FragmentTransaction ft = mFragmentManager.beginTransaction();
+        android.support.v4.app.FragmentTransaction ft = mFragmentManager.beginTransaction();
         ft.add(R.id.container, taskFragment);
         ft.commit();
     }
