@@ -199,7 +199,7 @@ public class TaskFragment extends ListFragment {
                         hideList();
                     }
                 }
-                    new CountDownTimer(2000, 1000) {
+                    new CountDownTimer(1000, 1000) {
                         public void onTick(long millisUntilFinished) {}
                         public void onFinish() {
                             if (mSwipeLayout != null) mSwipeLayout.setRefreshing(false);
