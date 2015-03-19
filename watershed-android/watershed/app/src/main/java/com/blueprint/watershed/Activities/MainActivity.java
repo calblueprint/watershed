@@ -229,7 +229,7 @@ public class MainActivity extends ActionBarActivity
             displayTaskView(true);
             return;
         }
-        else if (f instanceof TaskDetailFragment) setTitle("");
+        else if (f instanceof TaskDetailFragment)         setTitle("");
         else if (f instanceof UserTaskFragment)           setTitle("Tasks");
         else if (f instanceof SiteListFragment ||
                  f instanceof SiteFragment ||
