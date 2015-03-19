@@ -140,7 +140,7 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
     public void fieldReportButtonPressed() {
         if (mTask.getFieldReport() == null) {
             mParentActivity.setFieldReportTask(mTask);
-            mParentActivity.replaceFragment(AddFieldReportFragment.newInstance(mTask));
+            mParentActivity.replaceFragment(AddFieldReportFragment.newInstance(mTask, mTask.getMiniSite()));
         } else {
             mParentActivity.replaceFragment(FieldReportFragment.newInstance(mTask.getFieldReport()));
         }

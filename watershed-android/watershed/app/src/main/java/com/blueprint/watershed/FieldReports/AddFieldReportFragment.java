@@ -15,10 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -44,24 +46,33 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
 
     private MainActivity mParentActivity;
     private NetworkManager mNetworkManager;
-    private View view;
-    private Button mTakePhotoButton;
-    private Button mSubmitFieldReportButton;
+
+    private ImageButton mPickPhotoButton;
+    private TextView mTitle;
+    private RadioGroup mRating;
+    private EditText mDescription;
+    private Switch mUrgent;
+    private ImageView mImage;
+
+    private Photo mPhoto;
 
     private Task mTask;
+    private MiniSite mMiniSite;
 
     // Camera Stuff
     private static final int CAMERA_REQUEST = 1337;
     private String mCurrentPhotoPath;
 
 
-    public static AddFieldReportFragment newInstance(Task task) {
+    public static AddFieldReportFragment newInstance(Task task, MiniSite site) {
         AddFieldReportFragment fragment = new AddFieldReportFragment();
         fragment.setTask(task);
+        fragment.setMiniSite(site);
         return fragment;
     }
 
     public void setTask(Task task) { mTask = task; }
+    public void setMiniSite(MiniSite site) { mMiniSite = site; }
 
     public void configureWithFieldReport(FieldReport fieldReport) {
     }
@@ -70,16 +81,15 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
         mParentActivity = (MainActivity) getActivity();
+        mNetworkManager = NetworkManager.getInstance(mParentActivity);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_add_field_report, container, false);
-        setTakePhotoButton((Button) view.findViewById(R.id.take_photo_button));
-        setSubmitFieldReportButton((Button) view.findViewById(R.id.submit_field_report_button));
+        View view = inflater.inflate(R.layout.fragment_add_field_report, container, false);
+        initializeViews(view);
 
 
         // Set OnClickListeners
@@ -87,6 +97,24 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
         getSubmitFieldReportButton().setOnClickListener(this);
 
         return view;
+    }
+
+    public void initializeViews(View view) {
+        mPickPhotoButton = (ImageButton) view.findViewById(R.id.report_add_photo);
+        mPickPhotoButton.setOnClickListener(this);
+
+        mRating = (RadioGroup) view.findViewById(R.id.health_group);
+        mRating.check(R.id.health_3);
+
+        mUrgent = (Switch) view.findViewById(R.id.field_report_urgent);
+        mDescription = (EditText) view.findViewById(R.id.field_report_description);
+        mImage = (ImageView) view.findViewById(R.id.report_photo);
+
+        mTitle = (TextView) view.findViewById(R.id.report_title);
+        String siteName;
+        if (mMiniSite != null && mMiniSite.getName() != null) siteName = mMiniSite.getName();
+        else siteName = "Mini Site";
+        mTitle.setText("Field Report for " + siteName);
     }
 
     @Override
@@ -105,6 +133,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
             @Override
             public void onResponse(FieldReport fieldReport) {
                 Log.e("successful field report", "creation");
+                mParentActivity.getSupportFragmentManager().popBackStack();
             }
         });
 
@@ -116,29 +145,19 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
      */
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.take_photo_button:
-                // Take the photo
-                onTakePhotoButtonPressed(view);
-                break;
-            case R.id.submit_field_report_button:
-                // Send the request to make the field report
-                onSubmitFieldReportButtonPressed(view);
+            case R.id.report_add_photo:
+                onTakePhotoButtonPressed();
                 break;
         }
     }
 
-    public void onTakePhotoButtonPressed(View takePhotoButton){
+    public void onTakePhotoButtonPressed() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(mParentActivity.getPackageManager()) != null) {
             File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-                Log.e("Field Report Photo", "Error");
-            }
+            try { photoFile = createImageFile(); }
+            catch (IOException ex) { Log.e("Field Report Photo", "Error"); }
             if (photoFile != null) {
-                //takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
-                //Uri.fromFile(photoFile));
                 startActivityForResult(takePictureIntent, CAMERA_REQUEST);
             }
         }
@@ -152,34 +171,41 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
 
     }
 
-    public void onSubmitFieldReportButtonPressed(View fieldReportButton){
-        String fieldReportDescription = ((EditText)view.findViewById(R.id.field_report_description)).getText().toString();
+    public void onSubmitFieldReportButtonPressed() {
+        boolean hasErrors = false;
 
-        RadioGroup healthGroup = (RadioGroup)view.findViewById(R.id.health_group);
-        Integer selectId = healthGroup.getCheckedRadioButtonId();
+        if (mDescription.getText().toString().length() == 0) {
+            mDescription.setError("Description can't be blank!");
+            hasErrors = true;
+        }
+
+        Integer selectId = mRating.getCheckedRadioButtonId();
+
         if (selectId == -1) {
-            Toast toast = Toast.makeText(mParentActivity.getApplicationContext(), "Please select a health rating", Toast.LENGTH_SHORT);
-            toast.show();
+            Toast.makeText(mParentActivity, "Please select a health rating", Toast.LENGTH_SHORT).show();
             return;
         }
-        String fieldReportHealth = ((RadioButton)view.findViewById(selectId)).getText().toString();
-        Integer fieldReportHealthInt = Integer.parseInt(fieldReportHealth);
 
-        ImageView image = (ImageView)view.findViewById(R.id.field_report_image);
-        Bitmap fieldReportPhoto = ((BitmapDrawable)image.getDrawable()).getBitmap();
+        RadioButton chosenRating = (RadioButton) mParentActivity.findViewById(selectId);
+        String fieldReportHealth = chosenRating.getText().toString();
+        Integer health = Integer.parseInt(fieldReportHealth);
 
-        Boolean urgency = ((Switch)view.findViewById(R.id.field_report_urgent)).isChecked();
+        if (health < 1 || health > 5) {
+            Toast.makeText(mParentActivity, "Invalid health rating", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        // TODO(max): Make sure to replace user, minisite, and task with the corresponding objects.
-        Task fieldReportTask = mParentActivity.getFieldReportTask();
-        MiniSite fieldReportMiniSite = new MiniSite();
-        fieldReportMiniSite.setId(fieldReportTask.getMiniSiteId());
-        FieldReport fieldReport = new FieldReport(fieldReportDescription, fieldReportHealthInt, urgency, new Photo(fieldReportPhoto), new User(), fieldReportMiniSite, fieldReportTask);
+        if (mPhoto == null) {
+            Toast.makeText(mParentActivity, "Don't forget a photo!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (hasErrors) return;
+
+        FieldReport fieldReport = new FieldReport(mDescription.getText().toString(), health, mUrgent.isChecked(),
+                                                  mPhoto, mParentActivity.getUser(), mMiniSite, mTask);
 
         createFieldReportRequest(fieldReport);
-
-        TaskFragment taskFragment = TaskFragment.newInstance(0);
-        mParentActivity.replaceFragment(taskFragment);
     }
 
     // Image Handling
