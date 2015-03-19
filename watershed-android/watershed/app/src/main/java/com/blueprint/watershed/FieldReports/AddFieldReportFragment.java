@@ -48,18 +48,20 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
     private Button mTakePhotoButton;
     private Button mSubmitFieldReportButton;
 
+    private Task mTask;
+
     // Camera Stuff
     private static final int CAMERA_REQUEST = 1337;
     private String mCurrentPhotoPath;
 
 
-    public static AddFieldReportFragment newInstance() {
-        return new AddFieldReportFragment();
+    public static AddFieldReportFragment newInstance(Task task) {
+        AddFieldReportFragment fragment = new AddFieldReportFragment();
+        fragment.setTask(task);
+        return fragment;
     }
 
-    public AddFieldReportFragment() {
-        // Required empty public constructor
-    }
+    public void setTask(Task task) { mTask = task; }
 
     public void configureWithFieldReport(FieldReport fieldReport) {
     }

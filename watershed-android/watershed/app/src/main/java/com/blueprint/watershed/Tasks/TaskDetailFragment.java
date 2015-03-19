@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.FieldReports.AddFieldReportFragment;
+import com.blueprint.watershed.FieldReports.FieldReportFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.R;
 
@@ -129,16 +130,19 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
     public void onClick(View view){
         switch(view.getId()){
             case (R.id.field_report_button):
-                fieldReportButtonPressed(view);
+                fieldReportButtonPressed();
                 break;
             default:
                 break;
         }
     }
 
-    public void fieldReportButtonPressed(View view){
-        AddFieldReportFragment fieldFragment = AddFieldReportFragment.newInstance();
-        mParentActivity.setFieldReportTask(mTask);
-        mParentActivity.replaceFragment(fieldFragment);
+    public void fieldReportButtonPressed() {
+        if (mTask.getFieldReport() == null) {
+            mParentActivity.setFieldReportTask(mTask);
+            mParentActivity.replaceFragment(AddFieldReportFragment.newInstance(mTask));
+        } else {
+            mParentActivity.replaceFragment(FieldReportFragment.newInstance(mTask.getFieldReport()));
+        }
     }
 }
