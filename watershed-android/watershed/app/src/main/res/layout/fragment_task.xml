@@ -62,7 +62,7 @@
             android:id="@+id/task_description_image"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@drawable/ic_launcher"/>
+            android:background="@drawable/ic_description"/>
 
         <TextView
             android:id="@+id/task_description"
