@@ -1,174 +1,206 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+<RelativeLayout
+    android:id="@+id/mini_site_create_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.blueprint.watershed.MiniSites.CreateMiniSiteFragment">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <ImageView
-        style="@style/BackGroundImageView"
-        android:id = "@+id/mini_site_image"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        tools:ignore="ContentDescription" />
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_margin="@dimen/standard_margin"
-        android:orientation="vertical" >
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/button_standard_height"
-            android:gravity="bottom" >
+        android:paddingBottom="50dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <TextView
-                style="@style/WsLabel"
-                android:text="@string/title"
-                />
-            <EditText
-                android:id="@+id/create_mini_site_title"
-                android:hint="@string/required"
+            <RelativeLayout
+                android:id="@+id/mini_site_photo_container"
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
 
-                android:layout_width="0px"
-                android:layout_height="@dimen/button_standard_height"
-                android:layout_weight="3"
-                android:text=""/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/button_standard_height"
-            android:gravity="bottom" >
+                <com.blueprint.watershed.Views.CoverPhotoPagerView
+                    android:id="@+id/mini_site_photo_pager_view"
+                    android:background="@color/ws_blue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/transparent_black"
+                    android:padding="10dp">
+                    <ImageButton
+                        android:id="@+id/mini_site_delete_photo"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/ic_delete"
+                        />
+                    <ImageButton
+                        android:id="@+id/mini_site_add_photo"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_toRightOf="@id/mini_site_delete_photo"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/ic_camera"
+                    />
+                </RelativeLayout>
+            </RelativeLayout>
 
-            <TextView
-                style="@style/WsLabel"
-                android:text="@string/create_site_address"
-                />
-            <EditText
-                android:id="@+id/create_mini_site_address"
-                android:hint="@string/required"
-                android:layout_width="0px"
-                android:layout_height="@dimen/button_standard_height"
-                android:layout_weight="3"
-                android:text=""/>
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/button_standard_height"
-            android:gravity="bottom" >
-
-            <TextView
-                style="@style/WsLabel"
-                android:text="@string/create_site_city"
-                />
-            <EditText
-                android:id="@+id/create_mini_site_city"
-                android:hint="@string/required"
-                android:layout_width="0px"
-                android:layout_height="@dimen/button_standard_height"
-                android:layout_weight="3"
-                android:text=""/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/button_standard_height"
-            android:gravity="bottom" >
-
-            <TextView
-                style="@style/WsLabel"
-                android:text="@string/create_site_zip"
-                />
-            <EditText
-                android:id="@+id/create_mini_site_zip"
-                android:layout_width="0px"
-                android:hint="@string/required"
-
-                android:layout_height="@dimen/button_standard_height"
-                android:layout_weight="3"
-                android:text=""/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/button_standard_height"
-            android:gravity="bottom" >
-
-            <TextView
-                style="@style/WsLabel"
-                android:text="@string/create_site_state"
-                />
-            <EditText
-                android:id="@+id/create_mini_site_state"
-                android:layout_width="0px"
-                android:hint="@string/required"
-
-                android:layout_height="@dimen/button_standard_height"
-                android:layout_weight="3"
-                android:text=""/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            >
-
-            <TextView
-                style="@style/WsLabel"
-                android:gravity="bottom"
-                android:layout_height="@dimen/button_standard_height"
-                android:text="@string/description"
-                />
-            <EditText
-                android:id="@+id/create_mini_site_description"
-                android:hint="@string/required"
-                android:gravity="bottom"
-                android:layout_width="0px"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:lines="4"
-                android:text=""
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/button_large_height"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/select_mini_site_photo_button"
-                android:layout_width="0px"
-                android:layout_weight="1"
-                android:layout_height="@dimen/button_large_height"
-                android:layout_marginTop="8dp"
-                android:text="Select Photo"
-                />
-            <Button
-                android:id="@+id/take_mini_site_photo_button"
-                android:layout_width="0px"
-                android:layout_weight="1"
-                android:layout_height="@dimen/button_large_height"
-                android:layout_marginTop="8dp"
-                android:text="Take Photo"
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:gravity="bottom">
-
-            <Button
-                android:id="@+id/create_mini_site_submit"
+            <RelativeLayout
+                android:id="@+id/mini_site_title_container"
                 android:layout_width="fill_parent"
-                android:background="@color/ws_blue"
-                android:textColor="@color/white"
-                android:text="@string/create_mini_site_submit"
-                android:layout_height="96dp" />
-        </LinearLayout>
-    </LinearLayout>
-    </RelativeLayout>
-</FrameLayout>
+                android:layout_height="@dimen/button_standard_height"
+                android:layout_below="@id/mini_site_photo_container"
+                android:layout_margin="20dp"
+                >
+                <EditText
+                    android:id="@+id/create_mini_site_title"
+                    android:hint="@string/title"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/button_standard_height"
+                    android:background="@color/transparent"
+                    android:textSize="25sp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/form_gray"
+                    />
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/layer_1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/mini_site_title_container"
+                android:background="@color/form_gray"/>
+
+            <RelativeLayout
+                android:id="@+id/mini_site_description_container"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layer_1"
+                android:layout_margin="20dp"
+                >
+
+                <ImageView
+                    android:id="@+id/description_image"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_description"
+                    android:scaleType="centerCrop"
+                    />
+
+                <EditText
+                    android:id="@+id/create_mini_site_description"
+                    android:hint="@string/description"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toEndOf="@id/description_image"
+                    android:layout_toRightOf="@id/description_image"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/form_gray"
+                    android:background="@color/transparent"
+                    android:gravity="top"
+                    android:lines="6"
+                    />
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/layer_2"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/mini_site_description_container"
+                android:background="@color/form_gray"/>
+
+            <RelativeLayout
+                android:id="@+id/mini_site_address_container"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layer_2"
+                android:layout_margin="20dp"
+                >
+
+                <ImageView
+                    android:id="@+id/location_image"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_location"
+                    android:scaleType="centerCrop"
+                    />
+
+                <EditText
+                    android:id="@+id/create_mini_site_address"
+                    android:hint="@string/create_site_address"
+                    android:layout_height="@dimen/button_standard_height"
+                    android:layout_width="fill_parent"
+                    android:layout_toRightOf="@id/location_image"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/form_gray"
+                    android:background="@color/transparent"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/button_standard_height"
+                    android:layout_below="@id/create_mini_site_address"
+                    android:layout_toRightOf="@id/location_image"
+                    android:layout_marginLeft="20dp">
+                    <EditText
+                        android:id="@+id/create_mini_site_city"
+                        android:hint="@string/create_site_city"
+                        android:layout_height="@dimen/button_standard_height"
+                        android:layout_width="fill_parent"
+                        android:layout_weight="0.9"
+                        android:background="@color/transparent"
+                        android:maxLines="1"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/form_gray"
+                        />
+                    <EditText
+                        android:id="@+id/create_mini_site_state"
+                        android:hint="@string/create_site_state"
+                        android:layout_height="@dimen/button_standard_height"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginLeft="2dp"
+                        android:layout_width="fill_parent"
+                        android:layout_weight="1"
+                        android:background="@color/transparent"
+                        android:maxLines="1"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/form_gray"
+                        />
+                    <EditText
+                        android:id="@+id/create_mini_site_zip"
+                        android:hint="@string/create_site_zip"
+                        android:layout_height="@dimen/button_standard_height"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginLeft="2dp"
+                        android:layout_width="fill_parent"
+                        android:layout_weight="1.1"
+                        android:background="@color/transparent"
+                        android:maxLines="1"
+                        android:inputType="number"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/form_gray"
+                        />
+                </LinearLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+    <Button
+        android:id="@+id/create_mini_site_submit"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/ws_blue"
+        android:textColor="@color/white"
+        android:text="@string/mini_site_destroy"
+        />
+</RelativeLayout>
