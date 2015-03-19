@@ -40,6 +40,7 @@ import com.blueprint.watershed.Sites.SiteFragment;
 import com.blueprint.watershed.Sites.SiteListFragment;
 import com.blueprint.watershed.Tasks.CreateTaskFragment;
 import com.blueprint.watershed.Tasks.Task;
+import com.blueprint.watershed.Tasks.TaskDetailFragment;
 import com.blueprint.watershed.Tasks.TaskFragment;
 import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Users.UserFieldReportFragment;
@@ -226,6 +227,7 @@ public class MainActivity extends ActionBarActivity
             displayTaskView(true);
             return;
         }
+        else if (f instanceof TaskDetailFragment) setTitle("");
         else if (f instanceof UserTaskFragment){
             setTitle("Tasks");
         }
@@ -257,7 +259,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void replaceFragment(Fragment newFragment) {
-        android.support.v4.app.FragmentTransaction ft = mFragmentManager.beginTransaction();
+        FragmentTransaction ft = mFragmentManager.beginTransaction();
         if(!newFragment.isAdded()){
             updateTitle(newFragment);
             ft.replace(R.id.container, newFragment).addToBackStack(null).commit();
@@ -278,7 +280,7 @@ public class MainActivity extends ActionBarActivity
                     }
                 });
         updateTitle(taskFragment);
-        android.support.v4.app.FragmentTransaction ft = mFragmentManager.beginTransaction();
+        FragmentTransaction ft = mFragmentManager.beginTransaction();
         ft.add(R.id.container, taskFragment);
         ft.commit();
     }
