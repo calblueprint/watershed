@@ -8,6 +8,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -38,7 +40,11 @@ import com.blueprint.watershed.Tasks.Task;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 public class AddFieldReportFragment extends Fragment implements View.OnClickListener {
@@ -161,15 +167,12 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.report_add_photo:
-                onTakePhotoButtonPressed();
+                onPickPhotoButtonPressed();
                 break;
         }
     }
 
-    /**
-     * Handles taking a photo - starts new activity
-     */
-    public void onTakePhotoButtonPressed() {
+    private void onPickPhotoButtonPressed() {
         if (mPhoto != null) {
             mPhoto = null;
             mImage.setImageDrawable(null);
@@ -177,6 +180,37 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
         } else {
             openAddPhotoDialog();
         }
+    }
+
+    /**
+     * Handles taking a photo - starts new activity
+     */
+    public void onTakePhotoButtonPressed(){
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(mParentActivity.getPackageManager()) != null) {
+            File photoFile = null;
+
+            try { photoFile = createImageFile(); }
+            catch (IOException ex) { Log.e("Mini Site Photo", "Error"); }
+
+            if (photoFile != null) {
+                startActivityForResult(takePictureIntent, CAMERA_REQUEST);
+            }
+        }
+    }
+
+    /**
+     * Creates an Image File
+     * @return A file
+     * @throws IOException
+     */
+    private File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
+        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+        return image;
     }
 
     /**

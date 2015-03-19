@@ -240,6 +240,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     private void deleteMiniSite() {
         
     }
+
     /**
      * Creates an Image File
      * @return A file
