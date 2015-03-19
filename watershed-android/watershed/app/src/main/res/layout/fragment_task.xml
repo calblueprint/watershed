@@ -1,101 +1,156 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.blueprint.watershed.Tasks.TaskDetailFragment">
-
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/task_title_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginLeft="@dimen/standard_margin"
-        android:layout_marginRight="@dimen/standard_margin"
-        android:layout_marginStart="@dimen/standard_margin"
-        android:layout_marginEnd="@dimen/standard_margin">
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal">
-            <TextView
-                android:id = "@+id/task_detail_title"
-                android:layout_height="fill_parent"
-                android:layout_width="0px"
-                android:layout_weight="2"
-                android:text = "Title"
-                android:padding="4dp"
-                android:layout_gravity="start|top"
-                android:textSize="20sp" />
-            <TextView
-                android:id = "@+id/task_due_date"
-                android:layout_height="fill_parent"
-                android:layout_width="0px"
-                android:layout_weight="1"
-                android:text = "Date"
-                android:padding="4dp"
-                android:gravity="right"
-                android:textSize="20sp" />
-        </LinearLayout>
+        android:layout_height="75dp"
+        android:background="@color/ws_blue"
+        android:padding="20dp">
 
         <TextView
-            android:id = "@+id/task_detail_assigner"
+            android:id="@+id/task_title"
             android:layout_height="wrap_content"
-            android:layout_width="200dp"
-            android:text = "Assigned By"
-            android:padding="4dp"
-            android:layout_marginTop="8dp"
-            android:layout_gravity="start|top"
-            android:textSize="15sp" />
+            android:layout_width="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="Title"
+            android:textSize="30sp"
+            android:textColor="@color/white"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/task_due_date_container"
+        android:layout_below="@id/task_title_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        >
+        <ImageView
+            android:id="@+id/task_due_date_image"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_schedule"/>
 
         <TextView
-            android:id = "@+id/task_detail_assignee"
+            android:id="@+id/task_due_date"
             android:layout_height="wrap_content"
-            android:layout_width="200dp"
-            android:text = "Assigned To"
-            android:padding="4dp"
-            android:layout_marginTop="8dp"
-            android:layout_gravity="start|top"
-            android:textSize="15sp" />
+            android:layout_width="wrap_content"
+            android:layout_toRightOf="@id/task_due_date_image"
+            android:layout_marginLeft="20dp"
+            android:text="Date"
+            android:textSize="20sp"
+        />
+    </RelativeLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="8dp"
-            android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/task_description_container"
+        android:layout_below="@id/task_due_date_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        >
+        <ImageView
+            android:id="@+id/task_description_image"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_description"/>
 
-            <TextView
-                android:id = "@+id/task_detail_description"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:text = "Description Text"
-                android:padding="4dp"
-                android:layout_gravity="start|top"
-                android:textSize="15sp" />
-        </LinearLayout>
-    </LinearLayout>
+        <TextView
+            android:id="@+id/task_description"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_toRightOf="@id/task_description_image"
+            android:layout_marginLeft="20dp"
+            android:text="Date"
+            android:textSize="20sp"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/task_assigner_container"
+        android:layout_below="@id/task_description_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        >
+        <ImageView
+            android:id="@+id/task_assigner_image"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_face"/>
+
+        <TextView
+            android:id="@+id/task_assigner"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_toRightOf="@id/task_assigner_image"
+            android:layout_marginLeft="20dp"
+            android:text="Date"
+            android:textSize="20sp"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/task_location_container"
+        android:layout_below="@id/task_assigner_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        >
+        <ImageView
+            android:id="@+id/task_location_image"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_location"/>
+
+        <TextView
+            android:id="@+id/task_location"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_toRightOf="@id/task_location_image"
+            android:layout_marginLeft="20dp"
+            android:text="Date"
+            android:textSize="20sp"
+            />
+    </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="bottom">
         <Button
-            android:id = "@+id/field_report_button"
+            android:id="@+id/field_report_button"
             android:gravity="center"
-            android:text = "FIELD REPORT"
+            android:text="FIELD REPORT"
             android:background="@color/ws_blue"
             android:textColor="@color/white"
             android:layout_width="0px"
             android:layout_weight="1"
-            android:layout_height="96dp"
-            android:onClick="FieldReportButtonPressed"/>
+            android:layout_height="75dp"
+        />
         <Button
-            android:id = "@+id/complete_button"
-            android:text = "COMPLETE"
+            android:id="@+id/complete_button"
+            android:text="COMPLETE"
             android:background="@color/facebook_blue"
             android:textColor="@color/white"
             android:gravity="center"
             android:layout_width="0px"
             android:layout_weight="1"
-            android:layout_height="96dp" />
+            android:layout_height="75dp" />
     </LinearLayout>
-</FrameLayout>
+
+</RelativeLayout>

@@ -42,6 +42,7 @@ import com.blueprint.watershed.Sites.SiteFragment;
 import com.blueprint.watershed.Sites.SiteListFragment;
 import com.blueprint.watershed.Tasks.CreateTaskFragment;
 import com.blueprint.watershed.Tasks.Task;
+import com.blueprint.watershed.Tasks.TaskDetailFragment;
 import com.blueprint.watershed.Tasks.TaskFragment;
 import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Users.UserFieldReportFragment;
@@ -228,6 +229,7 @@ public class MainActivity extends ActionBarActivity
             displayTaskView(true);
             return;
         }
+        else if (f instanceof TaskDetailFragment)         setTitle("");
         else if (f instanceof UserTaskFragment)           setTitle("Tasks");
         else if (f instanceof SiteListFragment ||
                  f instanceof SiteFragment ||
