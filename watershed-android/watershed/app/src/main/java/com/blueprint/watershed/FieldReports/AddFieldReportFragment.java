@@ -177,6 +177,8 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
             mPhoto = null;
             mImage.setImageDrawable(null);
             mPickPhotoButton.setImageDrawable(mParentActivity.getResources().getDrawable(R.drawable.ic_camera));
+            mImage.invalidate();
+            mPickPhotoButton.invalidate();
         } else {
             openAddPhotoDialog();
         }
@@ -263,10 +265,15 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
 
         if (hasErrors) return;
 
-        FieldReport fieldReport = new FieldReport(mDescription.getText().toString(), health, mUrgent.isChecked(),
-                                                  mPhoto, mParentActivity.getUser(), mMiniSite, mTask);
+        final FieldReport fieldReport = new FieldReport(mDescription.getText().toString(), health, mUrgent.isChecked(),
+                                                        mPhoto, mParentActivity.getUser(), mMiniSite, mTask);
 
-        createFieldReportRequest(fieldReport);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                createFieldReportRequest(fieldReport);
+            }
+        }).start();
     }
 
     /**
@@ -291,7 +298,9 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
         if (photo != null) {
             mPhoto = new Photo(photo);
             mImage.setImageBitmap(photo);
+            mImage.invalidate();
             mPickPhotoButton.setImageDrawable(mParentActivity.getResources().getDrawable(R.drawable.ic_delete));
+            mPickPhotoButton.invalidate();
         }
     }
 

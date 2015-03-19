@@ -234,7 +234,6 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
                 submitMiniSite(miniSite);
             }
         }).start();
-
     }
 
     private void deleteMiniSite() {
