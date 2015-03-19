@@ -34,7 +34,7 @@
                         android:id="@+id/report_add_photo"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:background="@drawable/ic_delete"
+                        android:background="@drawable/ic_camera"
                         />
                 </RelativeLayout>
             </RelativeLayout>

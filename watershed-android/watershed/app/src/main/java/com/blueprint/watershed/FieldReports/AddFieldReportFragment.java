@@ -1,11 +1,16 @@
 package com.blueprint.watershed.FieldReports;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,7 +18,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -31,12 +35,11 @@ import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Photos.Photo;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Tasks.Task;
-import com.blueprint.watershed.Tasks.TaskFragment;
-import com.blueprint.watershed.Users.User;
 
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -60,8 +63,13 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
     private MiniSite mMiniSite;
 
     // Camera Stuff
-    private static final int CAMERA_REQUEST = 1337;
-    private String mCurrentPhotoPath;
+    protected static final int CAMERA_REQUEST = 1337;
+    protected static final int SELECT_PHOTO_REQUEST = 69;
+    protected String mCurrentPhotoPath;
+
+    // Dialog Stuff
+    protected static final String DIALOG_TAG = "PickPhotoTypeDialog";
+    protected static final int DIALOG_REQUEST_CODE = 200;
 
 
     public static AddFieldReportFragment newInstance(Task task, MiniSite site) {
@@ -86,16 +94,10 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_add_field_report, container, false);
         initializeViews(view);
-
-
-        // Set OnClickListeners
-        getTakePhotoButton().setOnClickListener(this);
-        getSubmitFieldReportButton().setOnClickListener(this);
-
         return view;
     }
 
@@ -107,7 +109,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
         mRating.check(R.id.health_3);
 
         mUrgent = (Switch) view.findViewById(R.id.field_report_urgent);
-        mDescription = (EditText) view.findViewById(R.id.field_report_description);
+        mDescription = (EditText) view.findViewById(R.id.report_description);
         mImage = (ImageView) view.findViewById(R.id.report_photo);
 
         mTitle = (TextView) view.findViewById(R.id.report_title);
@@ -151,16 +153,36 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
         }
     }
 
+    /**
+     * Handles taking a photo - starts new activity
+     */
     public void onTakePhotoButtonPressed() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(mParentActivity.getPackageManager()) != null) {
-            File photoFile = null;
-            try { photoFile = createImageFile(); }
-            catch (IOException ex) { Log.e("Field Report Photo", "Error"); }
-            if (photoFile != null) {
-                startActivityForResult(takePictureIntent, CAMERA_REQUEST);
-            }
+        if (mPhoto != null) {
+            mPhoto = null;
+            mImage.setImageDrawable(null);
+            mPickPhotoButton.setImageDrawable(mParentActivity.getResources().getDrawable(R.drawable.ic_camera));
+        } else {
+            openAddPhotoDialog();
         }
+    }
+
+    /**
+     * Opens dialog to pick between taking or selecting a photo
+     */
+    public void openAddPhotoDialog() {
+        PickPhotoTypeDialog dialog = PickPhotoTypeDialog.newInstance();
+        dialog.setTargetFragment(this, DIALOG_REQUEST_CODE);
+        dialog.show(mParentActivity.getSupportFragmentManager(), DIALOG_TAG);
+    }
+
+
+    /**
+     * Handles selecting a photo - starts new activity
+     */
+    public void onSelectPhotoButtonPressed() {
+        Intent intent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, SELECT_PHOTO_REQUEST);
     }
 
     @Override
@@ -223,19 +245,67 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
         return image;
     }
 
+    /**
+     * Handing our activity results
+     * @param requestCode Number telling us which intent was called
+     * @param resultCode Number telling us if the request was ok
+     * @param data Data passed back by the activity
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        ImageView fieldReportImageView = (ImageView)view.findViewById(R.id.field_report_image);
-        if (requestCode == CAMERA_REQUEST && resultCode == mParentActivity.RESULT_OK) {
-            Bitmap photo = (Bitmap) data.getExtras().get("data");
-            fieldReportImageView.setImageBitmap(photo);
+        Bitmap photo = null;
+        if (requestCode == CAMERA_REQUEST && resultCode == MainActivity.RESULT_OK) {
+            photo = (Bitmap) data.getExtras().get("data");
+
+        }
+        else if (requestCode == SELECT_PHOTO_REQUEST && resultCode == MainActivity.RESULT_OK){
+            Uri targetUri = data.getData();
+
+            try { photo = BitmapFactory.decodeStream(mParentActivity.getContentResolver().openInputStream(targetUri)); }
+            catch (FileNotFoundException e) { e.printStackTrace(); }
+        }
+
+        if (photo != null) {
+            mPhoto = new Photo(photo);
+            mImage.setImageBitmap(photo);
+            mPickPhotoButton.setImageDrawable(mParentActivity.getResources().getDrawable(R.drawable.ic_delete));
         }
     }
 
-    // Getters
-    public Button getTakePhotoButton() { return mTakePhotoButton; }
-    public Button getSubmitFieldReportButton() { return mSubmitFieldReportButton; }
 
-    // Setters
-    public void setTakePhotoButton(Button takePhotoButton) { mTakePhotoButton = takePhotoButton; }
-    public void setSubmitFieldReportButton(Button submitFieldReportButton) { mSubmitFieldReportButton = submitFieldReportButton; }
+    /**
+     * Dialog that allows users to choose between taking and selecting a photo.
+     */
+    public static class PickPhotoTypeDialog extends DialogFragment {
+
+        public static PickPhotoTypeDialog newInstance() { return new PickPhotoTypeDialog(); }
+
+        @Override
+        @NonNull
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            String[] photoArray = { "Select Photo", "Take Photo" };
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("Select a Photo Option!")
+                    .setItems(photoArray, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (!(getTargetFragment() instanceof AddFieldReportFragment)) {
+                                Log.e("Fragment Error", "Can't even fragment");
+                                return;
+                            }
+                            AddFieldReportFragment fragment = (AddFieldReportFragment) getTargetFragment();
+
+                            if (which == 0) fragment.onSelectPhotoButtonPressed();
+                            else fragment.onTakePhotoButtonPressed();
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+
+            return builder.create();
+        }
+    }
 }
