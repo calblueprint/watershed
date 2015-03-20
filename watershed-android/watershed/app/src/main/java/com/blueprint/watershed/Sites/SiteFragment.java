@@ -82,7 +82,6 @@ public class SiteFragment extends Fragment
         switch (item.getItemId()) {
             case R.id.add_minisite:
                 mParentActivity.replaceFragment(CreateMiniSiteFragment.newInstance(mSite.getId()));
-            case R.id.edit_site:
             default:
                 return super.onOptionsItemSelected(item);
         }

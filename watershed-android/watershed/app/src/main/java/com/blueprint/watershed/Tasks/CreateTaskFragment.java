@@ -5,8 +5,6 @@ import android.os.Bundle;
 
 public class CreateTaskFragment extends TaskAbstractFragment {
 
-    private static final String CREATE = "create";
-
     /**
      * @return Returns CreateTaskFragment instance.
      */
