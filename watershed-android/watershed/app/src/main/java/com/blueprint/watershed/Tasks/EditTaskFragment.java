@@ -8,8 +8,6 @@ import android.os.Bundle;
  */
 public class EditTaskFragment extends TaskAbstractFragment {
 
-    private static final String EDIT = "edit";
-
     private Task mTask;
 
     /**

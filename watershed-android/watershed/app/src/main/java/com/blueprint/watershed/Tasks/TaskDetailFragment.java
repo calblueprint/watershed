@@ -2,6 +2,7 @@ package com.blueprint.watershed.Tasks;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,11 +17,14 @@ import com.blueprint.watershed.FieldReports.AddFieldReportFragment;
 import com.blueprint.watershed.FieldReports.FieldReportFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Utilities.Utility;
 
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 
-public class TaskDetailFragment extends Fragment implements View.OnClickListener {
+public class TaskDetailFragment extends TaskAbstractFragment
+                                implements View.OnClickListener{
 
     private MainActivity mParentActivity;
     private Task mTask;
@@ -79,9 +83,12 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
     }
 
     private void initializeViews() {
+
+        View completeButton = mParentActivity.findViewById(R.id.complete_button);
+
         mFieldReportButton = (Button) mParentActivity.findViewById(R.id.field_report_button);
         mFieldReportButton.setOnClickListener(this);
-        mCompleteButton = (Button) mParentActivity.findViewById(R.id.complete_button);
+        mCompleteButton = (Button) completeButton;
         mCompleteButton.setOnClickListener(this);
 
         String submit = mTask.getFieldReport() == null ? "ADD FIELD REPORT" : "VIEW FIELD REPORT";
@@ -89,6 +96,9 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
 
         String complete = mTask.getComplete() ? "UNDO COMPLETION" : "COMPLETE";
         mCompleteButton.setText(complete);
+        if (mTask.getComplete()) completeButton.setBackgroundColor(getResources().getColor(R.color.ws_green));
+        else completeButton.setBackgroundColor(getResources().getColor(R.color.ws_blue));
+
 
         mDetailTitle = (TextView) mParentActivity.findViewById(R.id.task_title);
         mDescription = (TextView) mParentActivity.findViewById(R.id.task_description);
@@ -97,8 +107,9 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
         mLocation = (TextView) mParentActivity.findViewById(R.id.task_location);
 
         mDetailTitle.setText(mTask.getTitle());
-        mDescription.setText(mTask.getDescription());
-        mDueDate.setText(new SimpleDateFormat("MM/dd/yyyy").format(mTask.getDueDate()));
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+        if (mTask.getDueDate() != null) mDueDate.setText(sdf.format(mTask.getDueDate()));
+
 
         String assigner;
         if (mTask.getAssigner() == null) assigner = "None";
@@ -109,6 +120,7 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
         if (mTask.getMiniSite() == null) location = "MiniSite " + String.valueOf(mTask.getMiniSiteId());
         else location = mTask.getMiniSite().getLocation();
         mLocation.setText(location);
+
     }
 
     //TODO Move this method to TaskFragment once the duplicate menu items bug is fixed.
@@ -127,15 +139,40 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
 
     // Button Events
 
-    public void onClick(View view){
+    @Override
+    public void onClick(View view) {
         switch(view.getId()){
             case (R.id.field_report_button):
                 fieldReportButtonPressed();
+                break;
+            case (R.id.complete_button):
+                if (!mTask.getComplete()) {
+                    completeTask(view);
+                }
+                else {
+                    unCompleteTask(view);
+                }
                 break;
             default:
                 break;
         }
     }
+
+    @Override
+    public void submitListener() {}
+
+    public void completeTask(View view) {
+        Utility.hideKeyboard(mParentActivity, mLayout);
+        createTask(COMPLETE, mTask);
+        view.setBackgroundColor(getResources().getColor(R.color.ws_green));
+    }
+
+    public void unCompleteTask(View view) {
+        Utility.hideKeyboard(mParentActivity, mLayout);
+        createTask(UNCOMPLETE, mTask);
+        view.setBackgroundColor(getResources().getColor(R.color.ws_blue));
+    }
+
 
     public void fieldReportButtonPressed() {
         if (mTask.getFieldReport() == null) {
@@ -145,4 +182,5 @@ public class TaskDetailFragment extends Fragment implements View.OnClickListener
             mParentActivity.replaceFragment(FieldReportFragment.newInstance(mTask.getFieldReport()));
         }
     }
+
 }
