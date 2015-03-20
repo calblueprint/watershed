@@ -8,9 +8,10 @@
         app:showAsAction="ifRoom"
         />
 
-    <item android:id="@+id/edit_site"
-        android:title="@string/edit_site"
-        android:icon="@drawable/ic_action_edit"
-        app:showAsAction="ifRoom"
-        />
+    <!-- TODO ADD EDIT SITE FUNCTIONALITY -->
+    <!--<item android:id="@+id/edit_site"-->
+        <!--android:title="@string/edit_site"-->
+        <!--android:icon="@drawable/ic_action_edit"-->
+        <!--app:showAsAction="ifRoom"-->
+        <!--/>-->
 </menu>

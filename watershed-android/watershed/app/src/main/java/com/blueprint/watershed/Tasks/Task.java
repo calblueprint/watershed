@@ -17,7 +17,6 @@ import java.util.Date;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-//@JsonSerialize(using = TaskSerializer.class)
 public class Task implements APIObject {
 
     private ObjectMapper mMapper = new ObjectMapper();
