@@ -29,6 +29,8 @@ class MiniSite < ActiveRecord::Base
 
   has_many :photos, as: :parent
 
+  scope :with_photos, -> { select { |mini_site| mini_site.photos.size > 0 } }
+
   accepts_nested_attributes_for :photos
 
   # TODO(mark): Make these counts into counter caches
