@@ -90,7 +90,7 @@ int WPButtonHeight = 75;
     [_completed setTitle:@"Mark as\nComplete" forState:UIControlStateNormal];
     [_completed setTitleColor:[UIColor wp_darkBlue] forState:UIControlStateNormal];
     [_completed setTitle:@"Completed" forState:UIControlStateSelected];
-//    [_completed setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+    [_completed setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
     [_completed addTarget:self action:@selector(onClick) forControlEvents:UIControlEventTouchUpInside];
     [_addFieldReportButton setTitle:@"Add Field\nReport" forState:UIControlStateNormal];
     [_addFieldReportButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -99,17 +99,6 @@ int WPButtonHeight = 75;
 
 -(void)onClick {
     self.completed.selected = !self.completed.selected;
-
-//    if ([_completed.titleLabel.text isEqualToString:@"Completed"]) {
-//        [_completed setTitle:@"Mark as\nComplete" forState:UIControlStateNormal];
-//        [_completed setTitleColor:[UIColor wp_darkBlue] forState:UIControlStateNormal];
-//        _completed.backgroundColor = [UIColor wp_lightBlue];
-//    } else {
-//        [_completed setTitle:@"Completed" forState:UIControlStateNormal];
-//        _completed.backgroundColor = [UIColor wp_green];
-//        [_completed setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//        _completed.layer.borderWidth = 0;
-//    }
 }
 
 - (void)configureWithTask:(WPTask *)task {
