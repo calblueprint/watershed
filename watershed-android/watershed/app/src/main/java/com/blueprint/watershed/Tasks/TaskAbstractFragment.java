@@ -257,7 +257,7 @@ public abstract class TaskAbstractFragment extends Fragment {
     public void createTask(String type, Task task) {
         if (type.equals(CREATE)) task = new Task();
 
-        if (task.equals(COMPLETE)){
+        if (type.equals(COMPLETE)){
             task.setComplete(true);
             createTaskRequest(task, type);
             return;

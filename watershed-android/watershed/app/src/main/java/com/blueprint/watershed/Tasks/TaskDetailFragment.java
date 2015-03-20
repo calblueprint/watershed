@@ -79,13 +79,16 @@ public class TaskDetailFragment extends TaskAbstractFragment
     }
 
     private void initializeViews() {
+        View completeButton = mParentActivity.findViewById(R.id.complete_button);
         mParentActivity.findViewById(R.id.field_report_button).setOnClickListener(this);
-        mParentActivity.findViewById(R.id.complete_button).setOnClickListener(this);
+        completeButton.setOnClickListener(this);
         mDetailTitle = (TextView) mParentActivity.findViewById(R.id.task_detail_title);
         mDescription = (TextView) mParentActivity.findViewById(R.id.task_detail_description);
 
         mDetailTitle.setText(mTask.getTitle());
         mDescription.setText(mTask.getDescription());
+        completeButton.setBackgroundColor(getResources().getColor(R.color.ws_blue));
+        if (mTask.getComplete()) completeButton.setBackgroundColor(getResources().getColor(R.color.ws_green));
     }
 
     //TODO Move this method to TaskFragment once the duplicate menu items bug is fixed.
@@ -118,7 +121,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
                 fieldReportButtonPressed(view);
                 break;
             case (R.id.complete_button):
-                submitListener();
+                submitListener(view);
                 break;
             default:
                 break;
@@ -126,11 +129,12 @@ public class TaskDetailFragment extends TaskAbstractFragment
     }
 
     @Override
-    public void submitListener() {
+    public void submitListener() {}
+
+    public void submitListener(View view) {
         Utility.hideKeyboard(mParentActivity, mLayout);
         createTask(COMPLETE, mTask);
-        View completeButton =  mParentActivity.findViewById(R.id.complete_button);
-        completeButton.setBackgroundColor(getResources().getColor(R.color.green));
+        view.setBackgroundColor(getResources().getColor(R.color.ws_green));
 
     }
 

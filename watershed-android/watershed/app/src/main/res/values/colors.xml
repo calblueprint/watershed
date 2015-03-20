@@ -25,6 +25,6 @@
     <color name="form_gray">#FFAAAAAA</color>
 
     <!-- Button Colors -->
-    <color name="green">#66CD00</color>
+    <color name="ws_green">#66CD00</color>
 
 </resources>
