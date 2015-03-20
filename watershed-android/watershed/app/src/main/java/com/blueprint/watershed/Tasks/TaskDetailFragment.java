@@ -2,6 +2,7 @@ package com.blueprint.watershed.Tasks;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -121,7 +122,12 @@ public class TaskDetailFragment extends TaskAbstractFragment
                 fieldReportButtonPressed(view);
                 break;
             case (R.id.complete_button):
-                submitListener(view);
+                if (!mTask.getComplete()) {
+                    completeTask(view);
+                }
+                else {
+                    unCompleteTask(view);
+                }
                 break;
             default:
                 break;
@@ -131,11 +137,16 @@ public class TaskDetailFragment extends TaskAbstractFragment
     @Override
     public void submitListener() {}
 
-    public void submitListener(View view) {
+    public void completeTask(View view) {
         Utility.hideKeyboard(mParentActivity, mLayout);
         createTask(COMPLETE, mTask);
         view.setBackgroundColor(getResources().getColor(R.color.ws_green));
+    }
 
+    public void unCompleteTask(View view) {
+        Utility.hideKeyboard(mParentActivity, mLayout);
+        createTask(UNCOMPLETE, mTask);
+        view.setBackgroundColor(getResources().getColor(R.color.ws_blue));
     }
 
 }
