@@ -33,8 +33,7 @@ static NSString *CellIdentifier = @"Cell";
     self.view.backgroundColor = [UIColor whiteColor];
     self.view.selectTaskTableView.delegate = self;
     self.view.selectTaskTableView.dataSource = self;
-    _taskArray = @[@"Water Tree", @"Kill Tree", @"Plant Tree", @"Feed Tree"];
-}
+    _taskArray = @[@"Water", @"Prune", @"Weed", @"Clear inlet/outlet", @"Re-Plant", @"Hardware Fix", @"Outreach", @"Other"];}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

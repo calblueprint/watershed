@@ -40,6 +40,23 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
     [self requestAndLoadMyTasks];
 }
 
+#pragma mark - Networking Methods
+
+- (void)requestAndLoadMyTasks {
+    __weak __typeof(self)weakSelf = self;
+    NSNumberFormatter *userFormatter = [[NSNumberFormatter alloc] init];
+    [userFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    NSNumber *userId = [userFormatter numberFromString:[[WPNetworkingManager sharedManager] keyChainStore][@"user_id"]];
+
+    [[WPNetworkingManager sharedManager] requestMyTasksListWithUser:userId parameters: [[NSMutableDictionary alloc] init] success:^(NSMutableArray *tasksList) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        strongSelf.tasks = tasksList;
+        [strongSelf.tableView reloadData];
+        [self.tableView stopIndicator];
+        [self.refreshControl endRefreshing];
+    }];
+}
+
 
 - (void)loadView {
     self.tableView = [[WPMyTasksTableView alloc] init];
@@ -56,21 +73,20 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    return _tasks.count;
     NSInteger rowCount = 0;
-    
+
     if ([tableView isEqual:self.tableView]) rowCount = self.tasks.count;
     return rowCount;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+
     WPTasksTableViewCell *cellView = nil;
-    
+
     if ([tableView isEqual:self.tableView]) {
-        
+
         cellView = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        
+
         if (!cellView) {
             cellView = [[WPTasksTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                    reuseIdentifier:CellIdentifier];
@@ -96,25 +112,10 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     WPTaskViewController *taskViewController = [[WPTaskViewController alloc] init];
-    
+
     WPTask *selectedTask = self.tasks[indexPath.row];
     taskViewController.task = selectedTask;
     [[self.parentViewController navigationController] pushViewController:taskViewController animated:YES];
-}
-
-#pragma mark - Networking Methods
-
-- (void)requestAndLoadMyTasks {
-    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
-    [f setNumberStyle:NSNumberFormatterDecimalStyle];
-    NSNumber *userId = [f numberFromString:[[WPNetworkingManager sharedManager] keyChainStore][@"user_id"]];
-
-    [[WPNetworkingManager sharedManager] requestMyTasksListWithUser:userId parameters: [[NSMutableDictionary alloc] init] success:^(NSMutableArray *tasksList) {
-        self.tasks = tasksList;
-        [self.tableView reloadData];
-        [self.tableView stopIndicator];
-        [self.refreshControl endRefreshing];
-    }];
 }
 
 @end

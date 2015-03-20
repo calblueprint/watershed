@@ -11,12 +11,16 @@
 #import "WPNetworkingManager.h"
 #import "WPMiniSiteViewController.h"
 #import "WPTaskViewController.h"
+#import "WPAddFieldReportTableViewCell.h"
 
 @interface WPAddFieldReportViewController ()
 
 @property (nonatomic) NSMutableArray *pickerData;
 @property (nonatomic) WPAddFieldReportView *view;
 @property (nonatomic) UIViewController *viewPhotoModal;
+@property (nonatomic) UITextField *ratingField;
+@property (nonatomic) UITextView *descriptionView;
+@property (nonatomic) UISwitch *urgentSwitch;
 
 @end
 
@@ -28,11 +32,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor blackColor];
+    self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = @"Add Field Report";
-    [self.view.addPhotoButton addTarget:self action:@selector(addPhotoButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view.viewImageButton addTarget:self action:@selector(viewImageButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view.urgentSwitch addTarget:self action:@selector(changeSwitch:) forControlEvents:UIControlEventValueChanged];
+    self.view.fieldReportTableView.delegate = self;
+    self.view.fieldReportTableView.dataSource = self;
+    [self.urgentSwitch addTarget:self action:@selector(changeSwitch:) forControlEvents:UIControlEventValueChanged];
     UIBarButtonItem *saveButton = [[UIBarButtonItem alloc]
                                    initWithTitle:@"Save"
                                    style:UIBarButtonItemStyleBordered
@@ -40,14 +44,16 @@
                                    action:@selector(saveForm)];
     self.navigationItem.rightBarButtonItem = saveButton;
     self.view.fieldDescription.delegate = self;
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self
-                                                                         action:@selector(dismissKeyboard)];
-    [self.view addGestureRecognizer:tap];
+    //    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self
+    //                                                                         action:@selector(dismissKeyboard)];
+    [self.imageInputCell.viewImageButton addTarget:self action:@selector(presentImageView) forControlEvents:UIControlEventTouchUpInside];
+    //    [self.view addGestureRecognizer:tap];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
+
 
 - (void)changeSwitch:(UISwitch *)sender {
     if ([sender isOn]) {
@@ -61,54 +67,70 @@
     }
 }
 
+-(BOOL)getValidRating {
+    int test = [self.ratingField.text intValue];
+    return test >= 1 && test <= 5;
+}
+
+
 - (void)saveForm {
     [self dismissKeyboard];
-    NSString *userId = [[WPNetworkingManager sharedManager] keyChainStore][@"user_id"];
-    NSString *fieldReportDescription = self.view.fieldDescription.text;
-    NSNumber *healthRating;
-    if (self.view.rating1.isSelected) {
-        healthRating = @1;
-    } else if (self.view.rating2.isSelected) {
-        healthRating = @2;
-    } else if (self.view.rating3.isSelected) {
-        healthRating = @3;
-    } else if (self.view.rating4.isSelected) {
-        healthRating = @4;
-    } else if (self.view.rating5.isSelected) {
-        healthRating = @5;
+    BOOL isValidRating = [self getValidRating];
+    if (self.ratingField.text.length == 0 || self.descriptionView.text.length == 0 || !self.imageInputCell.imageInputView.image || !isValidRating) {
+        NSString *errorMessage = @"All fields must be filled out.";
+        if (!isValidRating) {
+            errorMessage = @"Rating must be a number between 1 and 5.";
+        }
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                       message:errorMessage
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* ok = [UIAlertAction
+                             actionWithTitle:@"OK"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action)
+                             {
+                                 [alert dismissViewControllerAnimated:YES completion:nil];
+                             }];
+        
+        [alert addAction:ok];
+        [self presentViewController:alert animated:YES completion:nil];
+    } else {
+        NSString *userId = [[WPNetworkingManager sharedManager] keyChainStore][@"user_id"];
+        NSString *fieldReportDescription = self.descriptionView.text;
+        NSNumber *healthRating = [NSNumber numberWithInt:[self.ratingField.text intValue]];
+        NSNumber *urgent = @(self.urgentSwitch.isOn);
+        //  if parent is task VC, do task id, otherwise to nil
+        NSNumber *taskId;
+        NSString *miniSiteId;
+        UIViewController *parent;
+        UIViewController *previousViewController = [((UINavigationController *)self.parentViewController).viewControllers objectAtIndex:((UINavigationController *)self.parentViewController).viewControllers.count-2];
+        if ([previousViewController isKindOfClass:[WPMiniSiteViewController class]]) {
+            parent = previousViewController;
+            miniSiteId = [((WPMiniSiteViewController *)parent).miniSite.miniSiteId stringValue];
+            taskId = nil;
+        } else if ([previousViewController isKindOfClass:[WPTaskViewController class]]) {
+            parent = (WPTaskViewController *)previousViewController;
+            //        taskId = parent.taskId;
+            //        miniSiteId = parent.miniSiteId;
+        }
+        NSString *photo = [UIImagePNGRepresentation([self compressForUpload:self.imageInputCell.imageInputView.image withScale:0.2]) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+        
+        NSDictionary *staticParameters = @{@"field_report": @{
+                                                   @"user_id": userId,
+                                                   @"mini_site_id": miniSiteId,
+                                                   @"description": fieldReportDescription,
+                                                   @"health_rating": healthRating,
+                                                   @"urgent": urgent,
+                                                   @"photo_attributes": @{
+                                                           @"data": photo
+                                                           }
+                                                   }};
+        NSMutableDictionary *parameters = [staticParameters mutableCopy];
+        
+        [[WPNetworkingManager sharedManager] postFieldReportWithParameters:parameters success:^(WPFieldReport *fieldReport) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
     }
-    NSNumber *urgent = @(self.view.urgentSwitch.isOn);
-//  if parent is task VC, do task id, otherwise to nil
-    NSNumber *taskId;
-    NSString *miniSiteId;
-    UIViewController *parent;
-    UIViewController *previousViewController = [((UINavigationController *)self.parentViewController).viewControllers objectAtIndex:((UINavigationController *)self.parentViewController).viewControllers.count-2];
-    if ([previousViewController isKindOfClass:[WPMiniSiteViewController class]]) {
-        parent = previousViewController;
-        miniSiteId = [((WPMiniSiteViewController *)parent).miniSite.miniSiteId stringValue];
-        taskId = nil;
-    } else if ([previousViewController isKindOfClass:[WPTaskViewController class]]) {
-        parent = (WPTaskViewController *)previousViewController;
-//        taskId = parent.taskId;
-//        miniSiteId = parent.miniSiteId;
-    }
-    NSString *photo = [UIImagePNGRepresentation([self compressForUpload:self.view.selectedImageView.image withScale:0.2]) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];;
-    
-    NSDictionary *staticParameters = @{@"field_report": @{
-                                         @"user_id": userId,
-                                         @"mini_site_id": miniSiteId,
-                                         @"description": fieldReportDescription,
-                                         @"health_rating": healthRating,
-                                         @"urgent": urgent,
-                                         @"photo_attributes": @{
-                                                 @"data": photo
-                                         }
-                                 }};
-    NSMutableDictionary *parameters = [staticParameters mutableCopy];
-    
-    [[WPNetworkingManager sharedManager] postFieldReportWithParameters:parameters success:^(WPFieldReport *fieldReport) {
-        [self.navigationController popViewControllerAnimated:YES];
-    }];
 }
 
 - (UIImage *)compressForUpload:(UIImage *)original withScale:(CGFloat)scale {
@@ -125,26 +147,29 @@
     return compressedImage;
 }
 
-- (void)viewImageButtonAction:(UIButton *)sender {
-    self.viewPhotoModal = [[UIViewController alloc] init];
-    self.viewPhotoModal.view.backgroundColor = [UIColor blackColor];
-    self.viewPhotoModal.view.userInteractionEnabled = YES;
+#pragma mark - Photo Viewing Methods
+
+- (void)presentImageView {
+    UIViewController *viewPhotoModal = [[UIViewController alloc] init];
+    viewPhotoModal.view.backgroundColor = [UIColor blackColor];
+    viewPhotoModal.view.userInteractionEnabled = YES;
     
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.viewPhotoModal.view.frame];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:viewPhotoModal.view.frame];
     imageView.contentMode = UIViewContentModeScaleAspectFit;
-    imageView.image = self.view.selectedImageView.image;
+    imageView.image = self.imageInputCell.imageInputView.image;
+    [viewPhotoModal.view addSubview:imageView];
     
-    [self.viewPhotoModal.view addSubview:imageView];
+    UITapGestureRecognizer *modalTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissModalView:)];
+    [viewPhotoModal.view addGestureRecognizer:modalTap];
+    viewPhotoModal.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     
-    UITapGestureRecognizer *modalTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissModalView)];
-    [self.viewPhotoModal.view addGestureRecognizer:modalTap];
-    self.viewPhotoModal.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    
-    [self presentViewController:self.viewPhotoModal animated:YES completion:nil];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+    [self presentViewController:viewPhotoModal animated:YES completion:nil];
 }
 
-- (void)dismissModalView {
-    [self.viewPhotoModal dismissViewControllerAnimated:YES completion:nil];
+- (void)dismissModalView:(UIGestureRecognizer *)sender {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)setBlurredImage {
@@ -152,12 +177,15 @@
     self.view.selectedImageView.image = self.view.blurredImage;
 }
 
-- (void)addPhotoButtonAction:(UIButton *)sender {
+- (void)addPhotoButtonAction {
     if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
         UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
                                 @"Take Photo",
                                 @"Choose Existing",
                                 nil];
+        if (self.imageInputCell.imageInputView.image) {
+            popup.destructiveButtonIndex = [popup addButtonWithTitle:@"Remove Photo"];
+        }
         popup.tag = 1;
         [popup showInView:[UIApplication sharedApplication].keyWindow];
     } else {
@@ -190,6 +218,18 @@
                                      [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
                                      
                                  }];
+        if (self.imageInputCell.imageInputView.image) {
+            UIAlertAction *remove = [UIAlertAction
+                                     actionWithTitle:@"Remove Photo"
+                                     style:UIAlertActionStyleDestructive
+                                     handler:^(UIAlertAction * action)
+                                     {
+                                         self.imageInputCell.imageInputView.image = nil;
+                                         self.imageInputCell.viewImageButton.alpha = 0;
+                                         [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
+                                     }];
+            [addPhotoActionSheet addAction:remove];
+        }
         
         
         [addPhotoActionSheet addAction:takePhoto];
@@ -199,19 +239,21 @@
     }
 }
 
+#pragma mark - ActionSheet Delegate Methods
+
 - (void)actionSheet:(UIActionSheet *)popup
 clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSInteger buttonShift = popup.numberOfButtons - 3;
     switch (popup.tag) {
         case 1: {
-            switch (buttonIndex) {
-                case 0:
-                    [self takePhoto];
-                    break;
-                case 1:
-                    [self chooseExisting];
-                    break;
-                default:
-                    break;
+            if (buttonIndex == popup.destructiveButtonIndex && buttonShift == 1) {
+                self.imageInputCell.imageInputView.image = nil;
+                self.imageInputCell.viewImageButton.alpha = 0;
+            }
+            else if (buttonIndex == 0 + buttonShift) {
+                [self takePhoto];
+            } else if (buttonIndex == 1 + buttonShift) {
+                [self chooseExisting];
             }
             break;
         }
@@ -251,23 +293,92 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     [self presentViewController:picker animated:YES completion:NULL];
 }
 
+#pragma mark - Table View Delegate / Data Source Methods
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    // Return the number of sections.
+    return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 2) {
+        return 120;
+    }
+    else if (indexPath.row == 3) {
+        return [WPCreateMiniSiteImageTableViewCell cellHeight];
+    }
+    else {
+        return 44;
+    }
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    // Return the number of rows in the section.
+    return 4;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSString *CellIdentifier = @"Cell";
+    
+    WPAddFieldReportTableViewCell *cell = [[WPAddFieldReportTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    
+    switch (indexPath.row) {
+            // Urgent
+        case 0: {
+            _urgentSwitch = [[UISwitch alloc] init];
+            _urgentSwitch.onTintColor = [UIColor wp_red];
+            cell = [[WPAddFieldReportTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:_urgentSwitch];
+            cell.label.text = @"Urgent";
+            break;
+        }
+        case 1: {
+            _ratingField = [[UITextField alloc] init];
+            _ratingField.delegate = self;
+            _ratingField.placeholder = @"1-5";
+            _ratingField.tag = 1;
+            _ratingField.textColor = [UIColor wp_paragraph];
+            _ratingField.font = [UIFont systemFontOfSize:16];
+            cell = [[WPAddFieldReportTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:_ratingField];
+            cell.label.text = @"Rating";
+            break;
+        }
+        case 2: {
+            _descriptionView = [[UITextView alloc] init];
+            cell = [[WPAddFieldReportTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:_descriptionView];
+            cell.label.text = @"Description";
+            _descriptionView.textColor = [UIColor wp_paragraph];
+            _descriptionView.font = [UIFont systemFontOfSize:12];
+            break;            break;
+        }
+        case 3: {
+            return self.imageInputCell;
+        }
+        default: {
+            //do nothing
+        }
+    }
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"HELLO>????");
+    if (indexPath.row == 3) {
+        [self addPhotoButtonAction];
+    }
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];}
+
 
 #pragma mark - Image Picker Controller delegate methods
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    self.view.selectedImageView.image = info[UIImagePickerControllerOriginalImage];
-    //    UIImage *chosenImage = info[UIImagePickerControllerOriginalImage];
-    //    self.view.originalImage = chosenImage;
-    //    [self setBlurredImage];
-    [picker dismissViewControllerAnimated:YES completion:^{
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    }];
+    self.imageInputCell.imageInputView.image = info[UIImagePickerControllerOriginalImage];
+    self.imageInputCell.viewImageButton.alpha = 1;
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [picker dismissViewControllerAnimated:YES completion:^{
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    }];
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Text Field delegate methods
@@ -278,6 +389,16 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
         return NO;
     }
     return YES;
+}
+
+#pragma mark - Lazy Instantiation
+
+- (WPCreateMiniSiteImageTableViewCell *) imageInputCell {
+    if (!_imageInputCell) {
+        _imageInputCell = [[WPCreateMiniSiteImageTableViewCell alloc] init];
+        _imageInputCell.inputLabel.text = @"Photo";
+    }
+    return _imageInputCell;
 }
 
 

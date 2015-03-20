@@ -12,4 +12,6 @@
 
 @property (copy, nonatomic) NSArray *allTasks;
 
+- (void)requestAndLoadAllTasks;
+
 @end
