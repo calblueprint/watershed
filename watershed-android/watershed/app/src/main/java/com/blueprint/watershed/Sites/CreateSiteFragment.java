@@ -172,12 +172,12 @@ public class CreateSiteFragment extends Fragment implements View.OnClickListener
             new_site.setCity(mCityField.getText().toString());
         }
 
-        if (mDescriptionField.getText().toString().length() == 0){
+        if (mStateField.getText().toString().length() == 0){
             has_errors = true;
-            mDescriptionField.setError("Description can't be blank!");
+            mStateField.setError("State can't be blank!");
         }
         else {
-            new_site.setDescription(mDescriptionField.getText().toString());
+            new_site.setState(mStateField.getText().toString());
         }
 
         try{
