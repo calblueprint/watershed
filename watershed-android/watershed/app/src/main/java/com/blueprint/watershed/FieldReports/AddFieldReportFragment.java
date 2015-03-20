@@ -1,5 +1,6 @@
 package com.blueprint.watershed.FieldReports;
 
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -37,6 +38,7 @@ import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Photos.Photo;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Tasks.Task;
+import com.blueprint.watershed.Utilities.Utility;
 
 import org.json.JSONObject;
 
@@ -172,11 +174,17 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
         }
     }
 
+    @SuppressWarnings("deprecation")
+    @TargetApi(16)
     private void onPickPhotoButtonPressed() {
         if (mPhoto != null) {
             mPhoto = null;
             mImage.setImageDrawable(null);
-            mPickPhotoButton.setImageDrawable(mParentActivity.getResources().getDrawable(R.drawable.ic_camera));
+            if (Utility.currentVersion() >= 16) {
+                mPickPhotoButton.setBackground(mParentActivity.getResources().getDrawable(R.drawable.ic_camera));
+            } else {
+                mPickPhotoButton.setBackgroundDrawable(mParentActivity.getResources().getDrawable(R.drawable.ic_camera));
+            }
             mImage.invalidate();
             mPickPhotoButton.invalidate();
         } else {
@@ -196,6 +204,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
             catch (IOException ex) { Log.e("Mini Site Photo", "Error"); }
 
             if (photoFile != null) {
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
                 startActivityForResult(takePictureIntent, CAMERA_REQUEST);
             }
         }
@@ -211,7 +220,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(imageFileName, ".jpg", storageDir);
-        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+        mCurrentPhotoPath = image.getAbsolutePath();
         return image;
     }
 
@@ -276,17 +285,39 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
         }).start();
     }
 
+
     /**
      * Handing our activity results
      * @param requestCode Number telling us which intent was called
      * @param resultCode Number telling us if the request was ok
      * @param data Data passed back by the activity
      */
+    @SuppressWarnings("deprecation")
+    @TargetApi(16)
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Bitmap photo = null;
         if (requestCode == CAMERA_REQUEST && resultCode == MainActivity.RESULT_OK) {
-            photo = (Bitmap) data.getExtras().get("data");
+            // Get the dimensions of the View
+            int targetW = mImage.getWidth();
+            int targetH = mImage.getHeight();
 
+            // Get the dimensions of the bitmap
+            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+            bmOptions.inJustDecodeBounds = true;
+            BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+            int photoW = bmOptions.outWidth;
+            int photoH = bmOptions.outHeight;
+
+            // Determine how much to scale down the image
+            int scaleFactor = 0;
+            if (targetW > 0 && targetH > 0) scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+
+            // Decode the image file into a Bitmap sized to fill the View
+            bmOptions.inJustDecodeBounds = false;
+            bmOptions.inSampleSize = scaleFactor;
+            bmOptions.inPurgeable = true;
+
+            photo = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
         }
         else if (requestCode == SELECT_PHOTO_REQUEST && resultCode == MainActivity.RESULT_OK){
             Uri targetUri = data.getData();
@@ -299,7 +330,12 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
             mPhoto = new Photo(photo);
             mImage.setImageBitmap(photo);
             mImage.invalidate();
-            mPickPhotoButton.setImageDrawable(mParentActivity.getResources().getDrawable(R.drawable.ic_delete));
+            if (Utility.currentVersion() >= 16) {
+                mPickPhotoButton.setBackground(mParentActivity.getResources().getDrawable(R.drawable.ic_delete));
+            } else {
+                mPickPhotoButton.setBackgroundDrawable(mParentActivity.getResources().getDrawable(R.drawable.ic_delete));
+            }
+
             mPickPhotoButton.invalidate();
         }
     }

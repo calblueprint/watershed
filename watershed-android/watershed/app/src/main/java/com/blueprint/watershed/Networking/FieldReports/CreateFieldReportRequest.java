@@ -30,8 +30,7 @@ public class CreateFieldReportRequest extends BaseRequest {
                         try {
                             String fieldReportJson = jsonObject.get("field_report").toString();
                             ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
-                            FieldReport fieldReport = mapper.readValue(fieldReportJson, new TypeReference<FieldReport>() {
-                            });
+                            FieldReport fieldReport = mapper.readValue(fieldReportJson, new TypeReference<FieldReport>() {});
                             listener.onResponse(fieldReport);
                         } catch (Exception e) {
                             Log.e("Json exception", e.toString());
