@@ -38,7 +38,7 @@ class Api::V1::TasksController < Api::V1::BaseController
   def task_params
     params.require(:task).permit(:title, :description, :mini_site_id,
                                  :assigner_id, :assignee_id, :complete,
-                                 :due_date)
+                                 :due_date, :urgent)
   end
 
 end
