@@ -20,6 +20,7 @@ import com.blueprint.watershed.R;
 import com.blueprint.watershed.Utilities.Utility;
 
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 
 public class TaskDetailFragment extends TaskAbstractFragment
@@ -87,7 +88,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
 
         mFieldReportButton = (Button) mParentActivity.findViewById(R.id.field_report_button);
         mFieldReportButton.setOnClickListener(this);
-        mCompleteButton = (Button) mParentActivity.findViewById(R.id.complete_button);
+        mCompleteButton = (Button) completeButton;
         mCompleteButton.setOnClickListener(this);
 
         String submit = mTask.getFieldReport() == null ? "ADD FIELD REPORT" : "VIEW FIELD REPORT";
@@ -106,8 +107,9 @@ public class TaskDetailFragment extends TaskAbstractFragment
         mLocation = (TextView) mParentActivity.findViewById(R.id.task_location);
 
         mDetailTitle.setText(mTask.getTitle());
-        mDescription.setText(mTask.getDescription());
-        mDueDate.setText(new SimpleDateFormat("MM/dd/yyyy").format(mTask.getDueDate()));
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+        if (mTask.getDueDate() != null) mDueDate.setText(sdf.format(mTask.getDueDate()));
+
 
         String assigner;
         if (mTask.getAssigner() == null) assigner = "None";
@@ -118,6 +120,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
         if (mTask.getMiniSite() == null) location = "MiniSite " + String.valueOf(mTask.getMiniSiteId());
         else location = mTask.getMiniSite().getLocation();
         mLocation.setText(location);
+
     }
 
     //TODO Move this method to TaskFragment once the duplicate menu items bug is fixed.

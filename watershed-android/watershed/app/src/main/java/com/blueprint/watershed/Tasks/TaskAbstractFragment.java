@@ -257,6 +257,7 @@ public abstract class TaskAbstractFragment extends Fragment {
      * @param type - Type of request, CREATE or EDIT
      */
     public void createTask(String type, Task task) {
+        Log.e("Create a new task", "Called");
         if (type.equals(CREATE)) task = new Task();
 
         if (type.equals(COMPLETE)){
