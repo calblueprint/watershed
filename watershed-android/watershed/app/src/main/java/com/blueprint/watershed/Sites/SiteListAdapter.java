@@ -81,7 +81,6 @@ public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHo
             };
             holder.parentView.setOnClickListener(listener);
             holder.numberOfTasksView.setOnClickListener(listener);
-            holder.photosView.setOnClickListener(listener);
         }
     }
 

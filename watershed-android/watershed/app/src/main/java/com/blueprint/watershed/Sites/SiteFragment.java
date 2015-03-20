@@ -50,14 +50,13 @@ public class SiteFragment extends Fragment
         return siteFragment;
     }
 
-    public SiteFragment() {}
-
     public void configureWithSite(Site site) { mSite = site; }
 
     public void configureViewWithSite(View view, Site site) {
         ((CoverPhotoPagerView) view.findViewById(R.id.cover_photo_pager_view)).configureWithPhotos(site.getPhotos());
         ((TextView) view.findViewById(R.id.site_name)).setText(site.getName());
         ((TextView) view.findViewById(R.id.site_description)).setText(site.getDescription());
+        ((TextView) view.findViewById(R.id.site_location)).setText(site.getLocation());
     }
 
     @Override
