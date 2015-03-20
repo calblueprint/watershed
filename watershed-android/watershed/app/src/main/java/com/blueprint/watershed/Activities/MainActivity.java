@@ -371,7 +371,7 @@ public class MainActivity extends ActionBarActivity
             case 2:
                 replaceFragment(AboutFragment.newInstance());
                 break;
-            case 4:
+            case 3:
                 logoutCurrentUser(this);
                 break;
             default:
