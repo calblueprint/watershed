@@ -35,8 +35,11 @@ public class SiteFragment extends Fragment
 
     private NetworkManager mNetworkManager;
     private MainActivity mParentActivity;
+
     private HeaderGridView mMiniSiteGridView;
     private MiniSiteListAdapter mMiniSiteAdapter;
+    private ViewGroup mHeader;
+
     private Site mSite;
     private ArrayList<MiniSite> mMiniSites;
 
@@ -95,9 +98,9 @@ public class SiteFragment extends Fragment
     private void initializeViews(View view) {
         // Create MiniSite grid
         mMiniSiteGridView = (HeaderGridView) view.findViewById(R.id.mini_sites_grid);
-        ViewGroup header = (ViewGroup) mParentActivity.getLayoutInflater().inflate(R.layout.site_header_view, mMiniSiteGridView, false);
-        mMiniSiteGridView.addHeaderView(header, null, false);
-        configureViewWithSite(header, mSite);
+        mHeader = (ViewGroup) mParentActivity.getLayoutInflater().inflate(R.layout.site_header_view, mMiniSiteGridView, false);
+        mMiniSiteGridView.addHeaderView(mHeader, null, false);
+        configureViewWithSite(mHeader, mSite);
 
         // Set the adapter to fill the list of mini sites
         mMiniSiteAdapter = new MiniSiteListAdapter(mParentActivity, getMiniSites());
