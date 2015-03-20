@@ -24,8 +24,6 @@ public class CreateTaskFragment extends TaskAbstractFragment {
      * Returns a listener that is applied to the submit button.
      * @return a listener called when submit is clicked.
      */
-    public void submitListener() {
-        Utility.hideKeyboard(mParentActivity, mLayout);
-        createTask(CREATE, null);
-    }
+    public void submitListener() { createTask(CREATE, null); }
+
 }

@@ -23,4 +23,8 @@
 
     <!-- Form Colors -->
     <color name="form_gray">#FFAAAAAA</color>
+
+    <!-- Button Colors -->
+    <color name="green">#66CD00</color>
+
 </resources>

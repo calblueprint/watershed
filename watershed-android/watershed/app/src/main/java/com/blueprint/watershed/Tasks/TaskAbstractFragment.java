@@ -51,7 +51,7 @@ public abstract class TaskAbstractFragment extends Fragment {
 
     protected static final String EDIT = "edit";
     protected static final String COMPLETE = "complete";
-    private static final String CREATE = "create";
+    protected static final String CREATE = "create";
     private static final int REQUEST_CODE = 200;
 
     protected RelativeLayout mLayout;
@@ -257,6 +257,12 @@ public abstract class TaskAbstractFragment extends Fragment {
     public void createTask(String type, Task task) {
         if (type.equals(CREATE)) task = new Task();
 
+        if (task.equals(COMPLETE)){
+            task.setComplete(true);
+            createTaskRequest(task, type);
+            return;
+        }
+
         task.setTitle(mTitleField.getText().toString());
         task.setDescription(mDescriptionField.getText().toString());
         task.setAssignerId(mParentActivity.getUserId());
@@ -264,7 +270,6 @@ public abstract class TaskAbstractFragment extends Fragment {
         task.setAssigneeId(mUser.getId());
         task.setMiniSiteId(mMiniSite.getId());
         task.setComplete(false);
-        if (task.equals(COMPLETE)) task.setComplete(true);
 
         createTaskRequest(task, type);
     }

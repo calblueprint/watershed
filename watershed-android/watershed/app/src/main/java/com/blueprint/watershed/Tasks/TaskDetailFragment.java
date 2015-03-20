@@ -8,6 +8,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.blueprint.watershed.Activities.MainActivity;
@@ -17,7 +19,8 @@ import com.blueprint.watershed.R;
 import com.blueprint.watershed.Utilities.Utility;
 
 
-public class TaskDetailFragment extends TaskAbstractFragment{
+public class TaskDetailFragment extends TaskAbstractFragment
+                                implements View.OnClickListener{
 
     private MainActivity mParentActivity;
     private Task mTask;
@@ -76,8 +79,8 @@ public class TaskDetailFragment extends TaskAbstractFragment{
     }
 
     private void initializeViews() {
-        mParentActivity.findViewById(R.id.field_report_button).setOnClickListener(submitListener());
-        mParentActivity.findViewById(R.id.complete_button).setOnClickListener(submitListener());
+        mParentActivity.findViewById(R.id.field_report_button).setOnClickListener(this);
+        mParentActivity.findViewById(R.id.complete_button).setOnClickListener(this);
         mDetailTitle = (TextView) mParentActivity.findViewById(R.id.task_detail_title);
         mDescription = (TextView) mParentActivity.findViewById(R.id.task_detail_description);
 
@@ -108,28 +111,27 @@ public class TaskDetailFragment extends TaskAbstractFragment{
         mParentActivity.replaceFragment(fieldFragment);
     }
 
-    public void completeTask(){
-        Utility.hideKeyboard(mParentActivity, mLayout);
-        createTask(COMPLETE, mTask);
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()){
+            case (R.id.field_report_button):
+                fieldReportButtonPressed(view);
+                break;
+            case (R.id.complete_button):
+                submitListener();
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
-    public View.OnClickListener submitListener() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switch(view.getId()){
-                    case (R.id.field_report_button):
-                        fieldReportButtonPressed(view);
-                        break;
-                    case (R.id.complete_button):
-                        completeTask();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        };
+    public void submitListener() {
+        Utility.hideKeyboard(mParentActivity, mLayout);
+        createTask(COMPLETE, mTask);
+        View completeButton =  mParentActivity.findViewById(R.id.complete_button);
+        completeButton.setBackgroundColor(getResources().getColor(R.color.green));
+
     }
 
 }
