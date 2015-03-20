@@ -17,13 +17,17 @@
              @"taskId" : @"id",
              @"taskDescription" : @"description",
              @"completed" : @"complete",
-             @"dueDate" : @"due_date",
+             @"dueDate" : @"due_date"
              };
 }
 
-+ (NSValueTransformer *)booleanJSONTransformer {
-    return [NSValueTransformer valueTransformerForName:MTLBooleanValueTransformerName];
+- (NSString *)description {
+    return @"Task";
 }
+
+//+ (NSValueTransformer *)urgentJSONTransformer {
+//    return [NSValueTransformer valueTransformerForName:MTLBooleanValueTransformerName];
+//}
 
 + (NSValueTransformer *)assigneeJSONTransformer {
     return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[WPUser class]];

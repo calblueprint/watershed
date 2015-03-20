@@ -7,7 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WPCreateMiniSiteImageTableViewCell.h"
 
-@interface WPAddFieldReportViewController : UIViewController<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate, UITextViewDelegate>
+@interface WPAddFieldReportViewController : UIViewController<
+    UITableViewDataSource,
+    UITableViewDelegate,
+    UIImagePickerControllerDelegate,
+    UINavigationControllerDelegate,
+    UIActionSheetDelegate,
+    UITextViewDelegate>
+
+@property (nonatomic) WPCreateMiniSiteImageTableViewCell *imageInputCell;
+
 
 @end
