@@ -20,7 +20,6 @@ import org.apache.http.HttpStatus;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-
 /**
  * Created by maxwolffe on 11/2/14.
  * Base Requests for make api calls.
@@ -30,7 +29,7 @@ public abstract class BaseRequest extends JsonObjectRequest {
     private Response.Listener listener;
     private Response.Listener errorListener;
 
-//    private static final String baseURL = "http://192.168.0.111:3000/api/v1/";
+//    private static final String baseURL = "http://10.142.38.242:3000/api/v1/";
     private static final String baseURL = "https://intense-reaches-1457.herokuapp.com/api/v1/";
 
     public BaseRequest(int method, String url, JSONObject jsonRequest,

@@ -2,8 +2,6 @@ package com.blueprint.watershed.Tasks;
 
 import android.os.Bundle;
 
-import com.blueprint.watershed.Utilities.Utility;
-
 
 public class CreateTaskFragment extends TaskAbstractFragment {
 
@@ -25,5 +23,4 @@ public class CreateTaskFragment extends TaskAbstractFragment {
      * @return a listener called when submit is clicked.
      */
     public void submitListener() { createTask(CREATE, null); }
-
 }

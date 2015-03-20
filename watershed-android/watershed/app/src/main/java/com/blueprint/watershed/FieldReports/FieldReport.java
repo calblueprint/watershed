@@ -1,24 +1,22 @@
 package com.blueprint.watershed.FieldReports;
 
-import android.graphics.Bitmap;
-import android.util.Log;
-
 import com.blueprint.watershed.APIObject;
 import com.blueprint.watershed.MiniSites.MiniSite;
+import com.blueprint.watershed.Networking.FieldReports.FieldReportSerializer;
 import com.blueprint.watershed.Photos.Photo;
 import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Users.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 /**
  * Created by maxwolffe on 11/18/14.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonSerialize(using = FieldReportSerializer.class)
 public class FieldReport implements APIObject {
 
     // Attributes

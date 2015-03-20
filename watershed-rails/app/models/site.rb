@@ -43,7 +43,7 @@ class Site < ActiveRecord::Base
 
   def photos
     # For now, show the first mini_site's photos
-    mini_sites.try(:first).try(:photos) || []
+    mini_sites.with_photos.sample(6).map { |mini_site| mini_site.photos.first }
   end
 
   def subscribe(user)

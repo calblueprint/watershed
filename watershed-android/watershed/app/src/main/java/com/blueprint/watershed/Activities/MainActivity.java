@@ -32,6 +32,8 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.AboutFragment;
+import com.blueprint.watershed.MiniSites.MiniSiteAbstractFragment;
+import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Users.HomeRequest;
 import com.blueprint.watershed.R;
@@ -40,6 +42,7 @@ import com.blueprint.watershed.Sites.SiteFragment;
 import com.blueprint.watershed.Sites.SiteListFragment;
 import com.blueprint.watershed.Tasks.CreateTaskFragment;
 import com.blueprint.watershed.Tasks.Task;
+import com.blueprint.watershed.Tasks.TaskDetailFragment;
 import com.blueprint.watershed.Tasks.TaskFragment;
 import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Users.UserFieldReportFragment;
@@ -202,16 +205,16 @@ public class MainActivity extends ActionBarActivity
     @SuppressWarnings("deprecation")
     @TargetApi(21)
     public void setToolBarColor(int toolbar, int statusBar) {
-        if (Utility.currentVersion() >= 21) getWindow().setStatusBarColor(statusBar);
-        mToolBar.setBackgroundColor(toolbar);
+        if (Utility.currentVersion() >= 21) getWindow().setStatusBarColor(getResources().getColor(statusBar));
+        mToolBar.setBackgroundColor(getResources().getColor(toolbar));
         mToolBar.invalidate();
     }
 
     @SuppressWarnings("deprecation")
     @TargetApi(21)
     public void setToolBarDefault() {
-        if (Utility.currentVersion() >= 21) getWindow().setStatusBarColor(R.color.ws_title_bar);
-        mToolBar.setBackgroundColor(R.color.ws_blue);
+        if (Utility.currentVersion() >= 21) getWindow().setStatusBarColor(getResources().getColor(R.color.ws_title_bar));
+        mToolBar.setBackgroundColor(getResources().getColor(R.color.ws_blue));
         mToolBar.invalidate();
     }
 
@@ -226,21 +229,16 @@ public class MainActivity extends ActionBarActivity
             displayTaskView(true);
             return;
         }
-        else if (f instanceof UserTaskFragment){
-            setTitle("Tasks");
-        }
-        else if (f instanceof SiteListFragment || f instanceof SiteFragment || f instanceof UserMiniSiteFragment) {
-            setTitle("Sites");
-        }
-        else if (f instanceof AboutFragment) {
-            setTitle("About");
-        }
-        else if (f instanceof UserFieldReportFragment){
-            setTitle("Field Reports");
-        }
-        else if (f instanceof UserFragment) {
-            setTitle("Profile");
-        }
+        else if (f instanceof TaskDetailFragment)         setTitle("");
+        else if (f instanceof UserTaskFragment)           setTitle("Tasks");
+        else if (f instanceof SiteListFragment ||
+                 f instanceof SiteFragment ||
+                 f instanceof UserMiniSiteFragment)       setTitle("Sites");
+        else if (f instanceof AboutFragment)              setTitle("About");
+        else if (f instanceof UserFieldReportFragment)    setTitle("Field Reports");
+        else if (f instanceof UserFragment)               setTitle("Profile");
+        else if (f instanceof MiniSiteAbstractFragment ||
+                 f instanceof MiniSiteFragment)           setTitle("MiniSite");
         displayTaskView(false);
 
     }

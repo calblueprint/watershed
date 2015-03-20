@@ -21,7 +21,7 @@ import java.util.HashMap;
 public class SiteListRequest extends BaseRequest {
 
     public SiteListRequest(final Activity activity, HashMap<String, JSONObject> params, final Response.Listener<ArrayList<Site>> listener) {
-        super(Request.Method.GET, makeURL("sites"), new JSONObject(params),
+        super(Request.Method.GET, makeURL("sites?get_photos=true"), new JSONObject(params),
             new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject jsonObject) {

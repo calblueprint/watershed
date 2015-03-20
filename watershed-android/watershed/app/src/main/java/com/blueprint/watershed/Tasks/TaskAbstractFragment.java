@@ -226,6 +226,7 @@ public abstract class TaskAbstractFragment extends Fragment {
      * @param task - Task object
      */
     public void createTaskRequest(Task task, final String type) {
+
         HashMap<String, JSONObject> params = new HashMap<>();
 
         JsonObjectRequest request;
@@ -277,6 +278,7 @@ public abstract class TaskAbstractFragment extends Fragment {
         task.setMiniSiteId(mMiniSite.getId());
         task.setComplete(false);
 
+        Utility.hideKeyboard(mParentActivity, mLayout);
         createTaskRequest(task, type);
     }
 

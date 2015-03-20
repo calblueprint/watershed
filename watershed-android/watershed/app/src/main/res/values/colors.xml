@@ -27,4 +27,6 @@
     <!-- Button Colors -->
     <color name="ws_green">#66CD00</color>
 
+    <color name="transparent_black">#AA000000</color>
+    <color name="black">#000000</color>
 </resources>

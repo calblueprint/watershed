@@ -11,7 +11,7 @@
         android:background="@color/ws_blue"
         android:layout_width="wrap_content"
         android:layout_height="200dp"
-        android:clickable="false"
+        android:clickable="true"
         />
 
     <LinearLayout
@@ -53,6 +53,7 @@
         android:layout_alignBottom="@+id/cover_photo_pager_view"
         android:layout_marginRight="30dp"
         android:layout_marginBottom="-30dp"
+        android:clickable="true"
         />
 
 </RelativeLayout>

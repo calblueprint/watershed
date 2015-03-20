@@ -40,7 +40,9 @@ class Api::V1::FieldReportsController < Api::V1::BaseController
   end
 
   def convert_base64_to_image
-    params[:field_report][:photo_attributes][:image] = Photo.convert_base64(params[:field_report][:photo_attributes][:data])
+    unless params[:field_report][:photo_attributes].blank?
+      params[:field_report][:photo_attributes][:image] = Photo.convert_base64(params[:field_report][:photo_attributes][:data])
+    end
   end
 
 end
