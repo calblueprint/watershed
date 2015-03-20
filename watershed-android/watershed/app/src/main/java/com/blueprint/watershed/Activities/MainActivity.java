@@ -205,16 +205,16 @@ public class MainActivity extends ActionBarActivity
     @SuppressWarnings("deprecation")
     @TargetApi(21)
     public void setToolBarColor(int toolbar, int statusBar) {
-        if (Utility.currentVersion() >= 21) getWindow().setStatusBarColor(statusBar);
-        mToolBar.setBackgroundColor(toolbar);
+        if (Utility.currentVersion() >= 21) getWindow().setStatusBarColor(getResources().getColor(statusBar));
+        mToolBar.setBackgroundColor(getResources().getColor(toolbar));
         mToolBar.invalidate();
     }
 
     @SuppressWarnings("deprecation")
     @TargetApi(21)
     public void setToolBarDefault() {
-        if (Utility.currentVersion() >= 21) getWindow().setStatusBarColor(R.color.ws_title_bar);
-        mToolBar.setBackgroundColor(R.color.ws_blue);
+        if (Utility.currentVersion() >= 21) getWindow().setStatusBarColor(getResources().getColor(R.color.ws_title_bar));
+        mToolBar.setBackgroundColor(getResources().getColor(R.color.ws_blue));
         mToolBar.invalidate();
     }
 
