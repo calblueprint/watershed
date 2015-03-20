@@ -89,7 +89,6 @@ static NSString *CellIdentifier = @"Cell";
                              {
                                  [alert dismissViewControllerAnimated:YES completion:nil];
                              }];
-
         [alert addAction:ok];
         [self presentViewController:alert animated:YES completion:nil];
     } else {
@@ -119,11 +118,8 @@ static NSString *CellIdentifier = @"Cell";
             [self.parent requestAndLoadTasks];
             [self.navigationController popViewControllerAnimated:YES];
         }];
-
     }
 }
-
-
 
 -(void)selectTaskViewControllerDismissed:(NSString *)stringForFirst {
     _taskField.text = stringForFirst;
