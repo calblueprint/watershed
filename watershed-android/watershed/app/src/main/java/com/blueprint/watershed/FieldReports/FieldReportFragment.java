@@ -23,7 +23,6 @@ import java.util.HashMap;
 
 public class FieldReportFragment extends Fragment {
 
-
     private NetworkManager mNetworkManager;
     private FieldReport mFieldReport;
     private MainActivity mParentActivity;
