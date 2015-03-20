@@ -81,8 +81,8 @@ public class SiteFragment extends Fragment
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_minisite:
-                CreateMiniSiteFragment newMiniSite = CreateMiniSiteFragment.newInstance(mSite.getId());
-                mParentActivity.replaceFragment(newMiniSite);
+                mParentActivity.replaceFragment(CreateMiniSiteFragment.newInstance(mSite.getId()));
+            case R.id.edit_site:
             default:
                 return super.onOptionsItemSelected(item);
         }
