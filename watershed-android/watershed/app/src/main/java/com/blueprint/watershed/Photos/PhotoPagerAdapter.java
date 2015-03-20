@@ -1,21 +1,17 @@
 package com.blueprint.watershed.Photos;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Mark Miyashita on 11/24/14.
@@ -25,14 +21,15 @@ public class PhotoPagerAdapter extends PagerAdapter {
     private LayoutInflater mLayoutInflater;
     private Context mContext;
 
-    private ArrayList<Photo> mPhotos;
+    private List<Photo> mPhotos;
 
-    public PhotoPagerAdapter(Context context) {
+    public PhotoPagerAdapter(Context context, List<Photo> photos) {
         mContext = context;
         mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        setPhotos(photos);
     }
 
-    public void configureWithPhotos(ArrayList<Photo> photos) {
+    public void configureWithPhotos(List<Photo> photos) {
         setPhotos(photos);
     }
 
@@ -43,7 +40,7 @@ public class PhotoPagerAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return view == ((LinearLayout) object);
+        return view == object;
     }
 
     @Override
@@ -76,20 +73,19 @@ public class PhotoPagerAdapter extends PagerAdapter {
     }
 
     // Getters
-    public ArrayList<Photo> getPhotos() {
-        if (mPhotos == null) {
-            mPhotos = new ArrayList<Photo>();
-        }
+    public List<Photo> getPhotos() {
+        if (mPhotos == null) {  mPhotos = new ArrayList<>(); }
         return mPhotos;
     }
 
     public Photo getPhoto(int position) { return mPhotos.get(position); }
 
     // Setters
-    public void setPhotos(ArrayList<Photo> photos) {
-        mPhotos.clear();
-        for (Photo photo : photos) {
-            mPhotos.add(photo);
-        }
+    public void setPhotos(List<Photo> photos) { mPhotos = photos; }
+
+    public void deletePhoto(int position) {
+        if (mPhotos.size() == 0) return;
+        mPhotos.remove(position);
+        notifyDataSetChanged();
     }
 }

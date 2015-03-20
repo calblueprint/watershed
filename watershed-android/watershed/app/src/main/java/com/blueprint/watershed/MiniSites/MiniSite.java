@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Mark Miyashita on 11/16/14.
@@ -29,8 +30,8 @@ public class MiniSite implements APIObject {
     private Integer mFieldReportsCount;
     private Integer mSiteId;
 
-    private ArrayList<FieldReport> mFieldReports;
-    private ArrayList<Photo> mPhotos;
+    private List<FieldReport> mFieldReports;
+    private List<Photo> mPhotos;
 
     public MiniSite() {
     }
@@ -40,7 +41,7 @@ public class MiniSite implements APIObject {
     }
 
     // Relationships
-    public ArrayList<FieldReport> getFieldReports() {
+    public List<FieldReport> getFieldReports() {
         if (mFieldReports == null) {
             mFieldReports = new ArrayList<FieldReport>();
         }
@@ -49,7 +50,7 @@ public class MiniSite implements APIObject {
 
     public FieldReport getFieldReport(int position) { return mFieldReports.get(position); }
 
-    public ArrayList<Photo> getPhotos() {
+    public List<Photo> getPhotos() {
         if (mPhotos == null) {
             mPhotos = new ArrayList<Photo>();
         }
@@ -73,7 +74,7 @@ public class MiniSite implements APIObject {
 
     @JsonIgnore
     public String getLocation() {
-        return String.format("%s, %s, %s %s", getStreet(), getCity(), getState(), getZipCode());
+        return String.format("%s\n%s, %s %d", getStreet(), getCity(), getState(), getZipCode());
     }
 
     // Setters
@@ -87,6 +88,6 @@ public class MiniSite implements APIObject {
     public void setLatitude(Float latitude) { mLatitude = latitude; }
     public void setLongitude(Float longitude) { mLongitude = longitude; }
     public void setFieldReportsCount(Integer fieldReportsCount) { mFieldReportsCount = fieldReportsCount; }
-    public void setPhotos(ArrayList<Photo> Photos){mPhotos = Photos;}
+    public void setPhotos(List<Photo> Photos){mPhotos = Photos;}
     public void setSiteId(Integer siteId) { mSiteId = siteId; }
 }

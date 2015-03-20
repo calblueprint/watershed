@@ -1,6 +1,7 @@
 package com.blueprint.watershed.Tasks;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -11,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ExpandableListView;
-import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
@@ -47,7 +47,7 @@ public class TaskFragment extends ListFragment {
     private Bundle mArgs;
 
     private ExpandableListView mListView;
-    private TextView mNoTasks;
+    private SwipeRefreshLayout mNoTasks;
     private SwipeRefreshLayout mSwipeLayout;
 
 
@@ -78,15 +78,11 @@ public class TaskFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View finalView = inflater.inflate(R.layout.fragment_task_list, container, false);
         initializeViews(finalView);
-        return finalView;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mSwipeLayout.setRefreshing(true);
+        hideList();
+        mNoTasks.setRefreshing(true);
         mParentActivity.setMenuAction(true);
         getTasksRequest();
+        return finalView;
     }
 
     /**
@@ -130,7 +126,16 @@ public class TaskFragment extends ListFragment {
                 mSwipeLayout.setEnabled((topRowVerticalPosition >= 0));
             }
         });
-        mNoTasks = (TextView) view.findViewById(R.id.no_tasks_layout);
+
+        mNoTasks = (SwipeRefreshLayout) view.findViewById(R.id.no_tasks_layout);
+        mNoTasks.setColorSchemeResources(R.color.ws_blue, R.color.facebook_blue, R.color.facebook_dark_blue, R.color.dark_gray);
+        mNoTasks.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mNoTasks.setRefreshing(true);
+                getTasksRequest();
+            }
+        });
 
         if (mArgs.getInt(OPTION) == USER) {
             mUserTaskAdapter = new TaskAdapter(mParentActivity, mTaskListHeaders, mUserTaskList);
@@ -189,12 +194,18 @@ public class TaskFragment extends ListFragment {
                         setAllTasks(tasks);
                         mAllTaskAdapter.notifyDataSetChanged();
                         for(int i=0; i < mAllTaskAdapter.getGroupCount(); i++) mListView.expandGroup(i);
+
                     } else {
                         hideList();
                     }
                 }
-
-                if (mSwipeLayout != null) mSwipeLayout.setRefreshing(false);
+                    new CountDownTimer(1000, 1000) {
+                        public void onTick(long millisUntilFinished) {}
+                        public void onFinish() {
+                            if (mSwipeLayout != null) mSwipeLayout.setRefreshing(false);
+                            if (mNoTasks != null) mNoTasks.setRefreshing(false);
+                        }
+                    }.start();
             }
         }, mSwipeLayout);
         mNetworkManager.getRequestQueue().add(taskListRequest);
@@ -254,11 +265,11 @@ public class TaskFragment extends ListFragment {
 
     public void showList() {
         mNoTasks.setVisibility(View.GONE);
-        mListView.setVisibility(View.VISIBLE);
+        mSwipeLayout.setVisibility(View.VISIBLE);
     }
 
     public void hideList() {
         mNoTasks.setVisibility(View.VISIBLE);
-        mListView.setVisibility(View.GONE);
+        mSwipeLayout.setVisibility(View.GONE);
     }
 }

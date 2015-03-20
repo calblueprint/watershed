@@ -28,7 +28,7 @@ public class TaskListRequest extends BaseRequest {
                 public void onResponse(JSONObject jsonObject) {
                     try {
                         String tasksJson = jsonObject.get("tasks").toString();
-                        ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
+                        ObjectMapper mapper = getNetworkManager(activity).getObjectMapper();
                         ArrayList<Task> tasks = mapper.readValue(tasksJson, new TypeReference<ArrayList<Task>>() {});
                         listener.onResponse(tasks);
                     } catch (Exception e) {

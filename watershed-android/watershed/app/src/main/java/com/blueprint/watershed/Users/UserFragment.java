@@ -101,7 +101,7 @@ public class UserFragment extends Fragment implements ListView.OnItemClickListen
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.edit_task_menu, menu);
+        inflater.inflate(R.menu.edit_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -118,7 +118,7 @@ public class UserFragment extends Fragment implements ListView.OnItemClickListen
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.edit_task:
+            case R.id.edit:
                 mParentActivity.replaceFragment(EditUserFragment.newInstance(mUser));
                 return true;
             default:

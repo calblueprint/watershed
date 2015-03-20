@@ -2,8 +2,6 @@ package com.blueprint.watershed.Tasks;
 
 import android.os.Bundle;
 
-import com.blueprint.watershed.Utilities.Utility;
-
 /**
  * Created by charlesx on 2/19/15.
  * Fragment to edit tasks
@@ -40,14 +38,11 @@ public class EditTaskFragment extends TaskAbstractFragment {
     private void setTextViews() {
         if (mTask.getTitle() != null) mTitleField.setText(mTask.getTitle());
         if (mTask.getDescription() != null) mDescriptionField.setText(mTask.getDescription());
-        if (mTask.getAssigneeId() != null) mAssigneeField.setText(String.valueOf(mTask.getAssigneeId()));
+        if (mTask.getAssignee() != null) mAssigneeField.setText(String.valueOf(mTask.getAssignee().getName()));
         if (mTask.getDueDate() != null) mDueDateField.setText(String.valueOf(mTask.getDueDate().toString()));
-        if (mTask.getMiniSiteId() != null) mMiniSiteId.setText(String.valueOf(mTask.getMiniSiteId()));
+        if (mTask.getMiniSiteId() != null) mMiniSiteId.setText(String.valueOf(mTask.getMiniSite().getName()));
     }
 
     @Override
-    public void submitListener() {
-        Utility.hideKeyboard(mParentActivity, mLayout);
-        createTask(EDIT, mTask);
-    }
+    public void submitListener() { createTask(EDIT, mTask); }
 }

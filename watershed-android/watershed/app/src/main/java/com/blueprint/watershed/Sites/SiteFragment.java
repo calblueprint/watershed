@@ -76,9 +76,8 @@ public class SiteFragment extends Fragment
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_minisite:
-                CreateMiniSiteFragment newMiniSite = CreateMiniSiteFragment.newInstance(mSite);
+                CreateMiniSiteFragment newMiniSite = CreateMiniSiteFragment.newInstance(mSite.getId());
                 mParentActivity.replaceFragment(newMiniSite);
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -105,20 +104,17 @@ public class SiteFragment extends Fragment
         configureViewWithSite(header, mSite);
 
         // Set the adapter to fill the list of mini sites
-        mMiniSiteAdapter = new MiniSiteListAdapter(mParentActivity, getActivity(), R.layout.mini_site_list_row, getMiniSites());
+        mMiniSiteAdapter = new MiniSiteListAdapter(mParentActivity, getMiniSites());
         mMiniSiteGridView.setAdapter(mMiniSiteAdapter);
         mMiniSiteGridView.setOnItemClickListener(this);
     }
 
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         MiniSite miniSite = getMiniSite(position);
-        MiniSiteFragment miniSiteFragment = new MiniSiteFragment();
-        miniSiteFragment.configureWithMiniSite(miniSite);
+        MiniSiteFragment miniSiteFragment = MiniSiteFragment.newInstance(mSite.getId(), miniSite);
         mParentActivity.replaceFragment(miniSiteFragment);
     }
-
 
     // Networking
     private void getSiteRequest(Site site) {
@@ -144,7 +140,7 @@ public class SiteFragment extends Fragment
 
     private ArrayList<MiniSite> getMiniSites() {
         if (mMiniSites == null) {
-            mMiniSites = new ArrayList<MiniSite>();
+            mMiniSites = new ArrayList<>();
         }
         return mMiniSites;
     }
