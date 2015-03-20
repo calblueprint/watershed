@@ -1,11 +1,7 @@
 package com.blueprint.watershed.Tasks;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,30 +46,19 @@ public class TaskDetailFragment extends TaskAbstractFragment
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-        inflater.inflate(R.menu.edit_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         mParentActivity = (MainActivity) getActivity();
-        mNetworkManager = NetworkManager.getInstance(mParentActivity.getApplicationContext());
+        mNetworkManager = NetworkManager.getInstance(mParentActivity);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_task, container, false);
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        initializeViews();
+        View view = inflater.inflate(R.layout.fragment_task, container, false);
+        initializeViews(view);
+        return view;
     }
 
     @Override
@@ -82,11 +67,11 @@ public class TaskDetailFragment extends TaskAbstractFragment
         mParentActivity.setMenuAction(false);
     }
 
-    private void initializeViews() {
+    private void initializeViews(View view) {
 
-        View completeButton = mParentActivity.findViewById(R.id.complete_button);
+        View completeButton = view.findViewById(R.id.complete_button);
 
-        mFieldReportButton = (Button) mParentActivity.findViewById(R.id.field_report_button);
+        mFieldReportButton = (Button) view.findViewById(R.id.field_report_button);
         mFieldReportButton.setOnClickListener(this);
         mCompleteButton = (Button) completeButton;
         mCompleteButton.setOnClickListener(this);
@@ -100,11 +85,11 @@ public class TaskDetailFragment extends TaskAbstractFragment
         else completeButton.setBackgroundColor(getResources().getColor(R.color.ws_blue));
 
 
-        mDetailTitle = (TextView) mParentActivity.findViewById(R.id.task_title);
-        mDescription = (TextView) mParentActivity.findViewById(R.id.task_description);
-        mDueDate = (TextView) mParentActivity.findViewById(R.id.task_due_date);
-        mAssigner = (TextView) mParentActivity.findViewById(R.id.task_assigner);
-        mLocation = (TextView) mParentActivity.findViewById(R.id.task_location);
+        mDetailTitle = (TextView) view.findViewById(R.id.task_title);
+        mDescription = (TextView) view.findViewById(R.id.task_description);
+        mDueDate = (TextView) view.findViewById(R.id.task_due_date);
+        mAssigner = (TextView) view.findViewById(R.id.task_assigner);
+        mLocation = (TextView) view.findViewById(R.id.task_location);
 
         mDetailTitle.setText(mTask.getTitle());
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
@@ -123,7 +108,6 @@ public class TaskDetailFragment extends TaskAbstractFragment
 
     }
 
-    //TODO Move this method to TaskFragment once the duplicate menu items bug is fixed.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
@@ -131,7 +115,6 @@ public class TaskDetailFragment extends TaskAbstractFragment
             case R.id.edit:
                 EditTaskFragment newTask = EditTaskFragment.newInstance(mTask);
                 mParentActivity.replaceFragment(newTask);
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -277,7 +277,7 @@ public class MainActivity extends ActionBarActivity
                 });
         updateTitle(taskFragment);
         android.support.v4.app.FragmentTransaction ft = mFragmentManager.beginTransaction();
-        ft.add(R.id.container, taskFragment);
+        ft.replace(R.id.container, taskFragment);
         ft.commit();
     }
 
@@ -292,6 +292,7 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {}
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
