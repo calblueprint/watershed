@@ -143,19 +143,24 @@ public class SiteListFragment extends Fragment {
     public SiteMapper getSites() { return mSites; }
 
     // Setters
+//    public void setSites(ArrayList<Site> sites) {
+//        if (sites.size() != mSites.size()) {
+//            mSites.setSites(sites);
+//            mAdapter.notifyDataSetChanged();
+//        } else {
+//            for (int i = 0; i < sites.size(); i++) {
+//                Site site = sites.get(i);
+//                if (!site.equals(mSites.getSiteWithPosition(i))) {
+//                    mSites.addSite(site, i);
+//                    mAdapter.notifyItemChanged(i);
+//                }
+//            }
+//        }
+//    }
+
     public void setSites(ArrayList<Site> sites) {
-        if (sites.size() != mSites.size()) {
-            mSites.setSites(sites);
-            mAdapter.notifyDataSetChanged();
-        } else {
-            for (int i = 0; i < sites.size(); i++) {
-                Site site = sites.get(i);
-                if (!site.equals(mSites.getSiteWithPosition(i))) {
-                    mSites.addSite(site, i);
-                    mAdapter.notifyItemChanged(i);
-                }
-            }
-        }
+        mSites.setSites(sites);
+        mAdapter.notifyDataSetChanged();
     }
 
     private void showList() {
