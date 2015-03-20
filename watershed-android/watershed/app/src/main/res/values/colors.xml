@@ -10,7 +10,12 @@
     <color name="dark_transparent_gray">#CC656D78</color>
 
     <!-- Watershed Colors -->
-    <color name="ws_blue">#81B4DE</color>
+    <color name="ws_title_bar">#1976D2</color>
+    <color name="ws_nav_info">#FF0D47A1</color>
+    <color name="ws_nav_info_pressed">#EE0D47A1</color>
+    <color name="ws_blue">#2196F3</color>
+    <color name="ws_nav_background">#ECEFF1</color>
+    <!--<color name="ws_blue">#81B4DE</color>-->
 
     <!-- Other Colors -->
     <color name="facebook_blue">#3B5998</color>
@@ -18,4 +23,10 @@
 
     <!-- Form Colors -->
     <color name="form_gray">#FFAAAAAA</color>
+
+    <!-- Button Colors -->
+    <color name="ws_green">#66CD00</color>
+
+    <color name="transparent_black">#AA000000</color>
+    <color name="black">#000000</color>
 </resources>

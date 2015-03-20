@@ -21,18 +21,17 @@ import java.util.HashMap;
 public class SiteListRequest extends BaseRequest {
 
     public SiteListRequest(final Activity activity, HashMap<String, JSONObject> params, final Response.Listener<ArrayList<Site>> listener) {
-        super(Request.Method.GET, makeURL("sites"), new JSONObject(params),
+        super(Request.Method.GET, makeURL("sites?get_photos=true"), new JSONObject(params),
             new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject jsonObject) {
                     try {
                         String sitesJson = jsonObject.get("sites").toString();
-                        ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
-                        ArrayList<Site> sites = mapper.readValue(sitesJson, new TypeReference<ArrayList<Site>>() {
-                        });
+                        ObjectMapper mapper = getNetworkManager(activity).getObjectMapper();
+                        ArrayList<Site> sites = mapper.readValue(sitesJson, new TypeReference<ArrayList<Site>>() {});
                         listener.onResponse(sites);
                     } catch (Exception e) {
-                        Log.e("Json exception", e.toString());
+                        Log.e("Site Json exception", e.toString());
                     }
                 }
 

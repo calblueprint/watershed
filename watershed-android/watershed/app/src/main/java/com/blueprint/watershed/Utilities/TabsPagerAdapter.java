@@ -8,6 +8,7 @@ import com.blueprint.watershed.Tasks.TaskFragment;
 
 /**
  * Created by Max on 10/19/2014.
+ * Sets up adapter for view pager
  */
 
 public class TabsPagerAdapter extends FragmentPagerAdapter {
@@ -33,6 +34,17 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         // get item count - equal to number of tabs
         return 2;
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        switch (position) {
+            case 0:
+                return "User Tasks";
+            case 1:
+                return "All Tasks";
+        }
+        return null;
     }
 
 }

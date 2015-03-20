@@ -46,12 +46,47 @@
     <!-- Task Creation -->
     <string name="title">Title</string>
     <string name="description">Description</string>
-    <string name="task_due_date">Due Date</string>
+    <string name="task_due_date">Pick a Date</string>
     <string name="site">Site</string>
-    <string name="assignee">Assignee</string>
+    <string name="create_task_submit">Create Task</string>
+    <string name="required">Required</string>
+    <string name="assignee">Assign to user</string>
+    <string name="pick_user">Pick User</string>
+    <string name="loading_users">Loading Users..</string>
+    <string name="cancel">Cancel</string>
+
+    <!-- Site Creation -->
+    <string name="create_site_title">Title</string>
+    <string name="create_site_address">Address</string>
+    <string name="create_site_city">City</string>
+    <string name="create_site_zip">Zip</string>
+    <string name="create_site_state">State</string>
+    <string name="create_site_submit">Create Site</string>
+
+    <string name="add_minisite">Add Minisite</string>
+    <string name="edit_site">Edit Site</string>
+
+    <!-- Mini Site Creation -->
+    <string name="create_mini_site_submit">Create Mini Site</string>
+    <string name="mini_site_destroy">Delete Mini Site</string>
+
+    <!-- Editing User -->
+    <string name="edit_profile_name">Name</string>
+    <string name="edit_profile_email">Email</string>
+    <string name="edit_profile_password">New Password</string>
+    <string name="edit_profile_reenter">Confirm Password</string>
+    <string name="edit_profile_confirm">Old Password</string>
 
     <!-- Task Index -->
-    <string name="no_tasks">Looks like you don\'t have any tasks!\n Have a great day! :D</string>
+    <string name="no_tasks">Looks like you don\'t have any tasks!\nSwipe up to refresh.</string>
     <string name="no_tasks_refresh">Refresh</string>
+    <!-- Site Index -->
+    <string name="no_site">Looks like you don\'t have any sites!\nSwipe up to refresh.</string>
+    <string name="no_site_refresh">Refresh</string>
+
+    <!-- User Lists -->
+    <string name="no_user_tasks">Looks like this user has no tasks!</string>
+    <string name="no_user_sites">Looks like this user has no sites!</string>
+    <string name="no_user_reports">Looks like this user hasn\'t submitted any field reports yet!</string>
 
 </resources>

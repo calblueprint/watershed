@@ -2,8 +2,6 @@ package com.blueprint.watershed.Authentication;
 
 
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,19 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.blueprint.watershed.R;
-import com.facebook.Session;
-import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 
 public class FacebookAuthFragment extends Fragment {
 
-    private OnFragmentInteractionListener mListener;
     private UiLifecycleHelper uiHelper;
 
     public static FacebookAuthFragment newInstance() {
-        FacebookAuthFragment fragment = new FacebookAuthFragment();
-
-        return fragment;
+        return new FacebookAuthFragment();
     }
     public FacebookAuthFragment() {
         // Required empty public constructor
@@ -41,26 +34,4 @@ public class FacebookAuthFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_facebook_auth, container, false);
     }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    public interface OnFragmentInteractionListener {
-        public void onFragmentInteraction(Uri uri);
-    }
-
 }

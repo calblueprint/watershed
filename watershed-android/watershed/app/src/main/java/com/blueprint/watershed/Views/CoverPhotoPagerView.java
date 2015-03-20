@@ -3,18 +3,14 @@ package com.blueprint.watershed.Views;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewParent;
-import android.widget.ImageView;
 
 import com.blueprint.watershed.Photos.Photo;
 import com.blueprint.watershed.Photos.PhotoPagerAdapter;
 import com.blueprint.watershed.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Mark Miyashita on 10/5/14.
@@ -32,11 +28,11 @@ public class CoverPhotoPagerView extends ViewPager {
     }
 
     public void initializeViews(Context context) {
-        mAdapter = new PhotoPagerAdapter(context);
+        mAdapter = new PhotoPagerAdapter(context, new ArrayList<Photo>());
         this.setAdapter(mAdapter);
     }
 
-    public void configureWithPhotos(ArrayList<Photo> photos) {
+    public void configureWithPhotos(List<Photo> photos) {
         mAdapter.configureWithPhotos(photos);
         mAdapter.notifyDataSetChanged();
     }

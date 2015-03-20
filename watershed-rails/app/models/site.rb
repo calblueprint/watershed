@@ -43,7 +43,17 @@ class Site < ActiveRecord::Base
 
   def photos
     # For now, show the first mini_site's photos
-    mini_sites.try(:first).try(:photos) || []
+    mini_sites.with_photos.sample(6).map { |mini_site| mini_site.photos.first }
   end
 
+  def subscribe(user)
+    mini_sites.each { |mini_site| mini_site.users << user }
+  end
+
+  def unsubscribe(user)
+    mini_sites.each do |mini_site|
+      user_mini_site = mini_site.user_mini_sites.find_by(user_id: user.id)
+      user_mini_site.destroy unless user_mini_site.blank?
+    end
+  end
 end

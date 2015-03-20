@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,7 +8,7 @@
     <com.blueprint.watershed.Views.HeaderGridView
         android:id="@+id/field_reports_grid"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="@dimen/no_margin"
         android:layout_marginLeft="@dimen/no_margin"
         android:layout_marginRight="@dimen/no_margin"
@@ -18,4 +18,4 @@
         android:horizontalSpacing="@dimen/tight_margin">
     </com.blueprint.watershed.Views.HeaderGridView>
 
-</FrameLayout>
+</RelativeLayout>
