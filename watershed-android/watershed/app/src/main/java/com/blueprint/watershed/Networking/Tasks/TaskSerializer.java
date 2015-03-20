@@ -1,5 +1,6 @@
 package com.blueprint.watershed.Networking.Tasks;
 
+import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.Tasks.Task;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
@@ -19,7 +20,8 @@ public class TaskSerializer extends JsonSerializer<Task> {
         jgen.writeStartObject();
         jgen.writeStringField("title", value.getTitle());
         jgen.writeStringField("description", value.getDescription());
-        jgen.writeNumberField("mini_site_id", value.getMiniSite().getId());
+        MiniSite mini = value.getMiniSite();
+        jgen.writeNumberField("mini_site_id", mini.getId());
         jgen.writeNumberField("assigner_id", value.getAssignerId());
         jgen.writeNumberField("assignee_id", value.getAssigneeId());
         if (value.getComplete() != null) jgen.writeBooleanField("complete", value.getComplete());
