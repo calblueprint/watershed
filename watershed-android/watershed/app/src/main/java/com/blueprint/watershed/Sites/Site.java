@@ -47,6 +47,8 @@ public class Site implements APIObject {
 
     public MiniSite getMiniSite(int position) { return mMiniSites.get(position); }
 
+    public boolean isMiniSiteEmpty() { return mMiniSites == null; }
+
     public ArrayList<Photo> getPhotos() {
         if (mPhotos == null) {
             mPhotos = new ArrayList<Photo>();

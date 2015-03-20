@@ -74,7 +74,7 @@ public class SiteFragment extends Fragment
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_site, container, false);
         initializeViews(view);
-        getSiteRequest(mSite);
+        if (mSite.isMiniSiteEmpty()) getSiteRequest(mSite);
         return view;
     }
 
@@ -138,13 +138,12 @@ public class SiteFragment extends Fragment
     private MiniSite getMiniSite(int position) { return mMiniSites.get(position); }
 
     private ArrayList<MiniSite> getMiniSites() {
-        if (mMiniSites == null) {
-            mMiniSites = new ArrayList<>();
-        }
+        if (mMiniSites == null) mMiniSites = new ArrayList<>();
         return mMiniSites;
     }
 
     private void setMiniSites(ArrayList<MiniSite> miniSites) {
+        if (mMiniSites == null) mMiniSites = new ArrayList<>();
         mMiniSites.clear();
         for (MiniSite miniSite : miniSites) {
             mMiniSites.add(miniSite);
