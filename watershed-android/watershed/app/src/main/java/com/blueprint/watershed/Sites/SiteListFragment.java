@@ -44,9 +44,6 @@ public class SiteListFragment extends Fragment {
 
     public static SiteListFragment newInstance() { return new SiteListFragment(); }
 
-
-    public SiteListFragment() { mSites = new SiteMapper(); }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,23 +57,15 @@ public class SiteListFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_site_list, container, false);
         initializeViews(view);
-        getSitesRequest();
+        Log.i("asdf", "asdfsdf");
         return view;
     }
-    
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-    
+
     private void initializeViews(View view) {
         mNoSiteLayout = (RelativeLayout) view.findViewById(R.id.no_site_layout);
         mLayoutManager = new LinearLayoutManager(mParentActivity);
         mSiteListView = (RecyclerView) view.findViewById(R.id.list);
         mSiteListView.setLayoutManager(mLayoutManager);
-        if (getSites().size() == 0) hideList();
-        mAdapter = new SiteListAdapter(mParentActivity, R.layout.site_list_row, getSites());
-        mSiteListView.setAdapter(mAdapter);
 
         mSwipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.site_swipe_container);
         mSwipeLayout.setColorSchemeResources(R.color.ws_blue, R.color.facebook_blue, R.color.facebook_dark_blue, R.color.dark_gray);
@@ -87,14 +76,22 @@ public class SiteListFragment extends Fragment {
                 getSitesRequest();
             }
         });
+
+        if (mSites == null) {
+            hideList();
+            mSwipeLayout.setRefreshing(true);
+            getSitesRequest();
+        }
+
+        mAdapter = new SiteListAdapter(mParentActivity, R.layout.site_list_row, getSites());
+        mSiteListView.setAdapter(mAdapter);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         mParentActivity.setMenuAction(true);
-        mSwipeLayout.setRefreshing(true);
-        getSitesRequest();
+//        getSitesRequest();
     }
 
     @Override
@@ -140,7 +137,10 @@ public class SiteListFragment extends Fragment {
     }
 
     // Getters
-    public SiteMapper getSites() { return mSites; }
+    public SiteMapper getSites() {
+        if (mSites == null) mSites = new SiteMapper();
+        return mSites;
+    }
 
     // Setters
 //    public void setSites(ArrayList<Site> sites) {
@@ -159,8 +159,8 @@ public class SiteListFragment extends Fragment {
 //    }
 
     public void setSites(ArrayList<Site> sites) {
+        if (mSites == null) mSites = new SiteMapper();
         mSites.setSites(sites);
-        mAdapter.notifyDataSetChanged();
     }
 
     private void showList() {

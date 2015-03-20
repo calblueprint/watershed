@@ -69,7 +69,10 @@ public class SiteFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_site, container, false);
+        View view = inflater.inflate(R.layout.fragment_site, container, false);
+        initializeViews(view);
+        getSiteRequest(mSite);
+        return view;
     }
 
     @Override
@@ -84,21 +87,14 @@ public class SiteFragment extends Fragment
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        initializeViews();
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         mParentActivity.setMenuAction(false);
-        getSiteRequest(mSite);
     }
 
-    private void initializeViews() {
+    private void initializeViews(View view) {
         // Create MiniSite grid
-        mMiniSiteGridView = (HeaderGridView) mParentActivity.findViewById(R.id.mini_sites_grid);
+        mMiniSiteGridView = (HeaderGridView) view.findViewById(R.id.mini_sites_grid);
         ViewGroup header = (ViewGroup) mParentActivity.getLayoutInflater().inflate(R.layout.site_header_view, mMiniSiteGridView, false);
         mMiniSiteGridView.addHeaderView(header, null, false);
         configureViewWithSite(header, mSite);
