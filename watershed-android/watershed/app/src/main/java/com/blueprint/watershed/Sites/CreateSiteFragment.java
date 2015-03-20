@@ -137,16 +137,65 @@ public class CreateSiteFragment extends Fragment implements View.OnClickListener
     }
 
     private void createSite(){
+        boolean has_errors = false;
         Site new_site = new Site();
-        new_site.setName(mTitleField.getText().toString());
-        new_site.setDescription(mDescriptionField.getText().toString());
-        new_site.setStreet(mAddressField.getText().toString());
-        new_site.setCity(mCityField.getText().toString());
-        new_site.setZipCode(Integer.valueOf(mZipField.getText().toString()));
+
+        if (mTitleField.getText().toString().length() == 0){
+            has_errors = true;
+            mTitleField.setError("Title can't be blank!");
+        }
+        else {
+            new_site.setName(mTitleField.getText().toString());
+        }
+
+        if (mDescriptionField.getText().toString().length() == 0){
+            has_errors = true;
+            mDescriptionField.setError("Description can't be blank!");
+        }
+        else {
+            new_site.setDescription(mDescriptionField.getText().toString());
+        }
+
+        if (mAddressField.getText().toString().length() == 0){
+            has_errors = true;
+            mAddressField.setError("Address can't be blank!");
+        }
+        else {
+            new_site.setStreet(mAddressField.getText().toString());
+        }
+
+        if (mCityField.getText().toString().length() == 0){
+            has_errors = true;
+            mCityField.setError("City can't be blank!");
+        }
+        else {
+            new_site.setCity(mCityField.getText().toString());
+        }
+
+        if (mDescriptionField.getText().toString().length() == 0){
+            has_errors = true;
+            mDescriptionField.setError("Description can't be blank!");
+        }
+        else {
+            new_site.setDescription(mDescriptionField.getText().toString());
+        }
+
+        try{
+            new_site.setZipCode(Integer.valueOf(mZipField.getText().toString()));
+        }
+        catch (Exception e){
+            has_errors = true;
+            mZipField.setError("Please enter a valid ZIP code");
+        }
+
         new_site.setLatitude("0");
         new_site.setLongitude("0");
         new_site.setTasksCount(0);
         new_site.setMiniSitesCount(0);
+
+        if (has_errors){
+            return;
+        }
 
         createSiteRequest(new_site);
 
