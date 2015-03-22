@@ -210,18 +210,21 @@ public class TaskFragment extends ListFragment {
                         hideList();
                     }
                 }
-                    new CountDownTimer(1000, 1000) {
-                        public void onTick(long millisUntilFinished) {}
-                        public void onFinish() {
-                            if (mSwipeLayout != null) mSwipeLayout.setRefreshing(false);
-                            if (mNoTasks != null) mNoTasks.setRefreshing(false);
-                        }
-                    }.start();
+                setSwipeFalse();
             }
-        }, mSwipeLayout);
+        }, this);
         mNetworkManager.getRequestQueue().add(taskListRequest);
     }
 
+    public void setSwipeFalse() {
+        new CountDownTimer(1000, 1000) {
+            public void onTick(long millisUntilFinished) {}
+            public void onFinish() {
+                if (mSwipeLayout != null) mSwipeLayout.setRefreshing(false);
+                if (mNoTasks != null) mNoTasks.setRefreshing(false);
+            }
+        }.start();
+    }
     /**
      * Sets the tasks for all tasks list and user tasks lists
      * @param tasks - ArrayList of all tasks from server
