@@ -43,7 +43,7 @@
 
     <com.blueprint.watershed.Views.Material.FloatingActionButton
         style="@style/AddFABRightCorner"
-        android:id="@+id/semi_transparent"
+        android:id="@+id/create_task_button"
         fab:fab_plusIconColor="@color/white"
         fab:fab_colorNormal="@color/pink"
         fab:fab_colorPressed="@color/pink_pressed"

@@ -19,15 +19,4 @@
         android:horizontalSpacing="@dimen/tight_margin">
     </com.blueprint.watershed.Views.HeaderGridView>
 
-    <com.blueprint.watershed.Views.Material.FloatingActionButton
-        style="@style/AddFABCenterBottom"
-        android:id="@+id/semi_transparent"
-        fab:fab_plusIconColor="@color/white"
-        fab:fab_colorNormal="@color/pink"
-        fab:fab_colorPressed="@color/pink_pressed"
-        fab:fab_size="normal"
-        fab:fab_icon="@drawable/ic_add"
-        />
-
-
 </RelativeLayout>
