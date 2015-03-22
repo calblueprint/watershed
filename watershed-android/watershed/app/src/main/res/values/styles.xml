@@ -77,11 +77,6 @@
     <style name="AddFAB">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="fab:fab_plusIconColor">@color/white</item>
-        <item name="fab:fab_colorNormal">@color/pink</item>
-        <item name="fab:fab_colorPressed">@color/pink_pressed</item>
-        <item name="fab:fab_size">normal</item>
-        <item name="fab:fab_icon">@drawable/ic_add</item>
     </style>
 
     <style name="AddFABRightCorner" parent="AddFAB">
