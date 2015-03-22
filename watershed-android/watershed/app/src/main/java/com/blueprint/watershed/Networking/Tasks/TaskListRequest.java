@@ -8,6 +8,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.blueprint.watershed.Networking.BaseRequest;
 import com.blueprint.watershed.Tasks.Task;
+import com.blueprint.watershed.Utilities.APIError;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -36,6 +37,11 @@ public class TaskListRequest extends BaseRequest {
                         Log.e("Json exception", e.toString());
                     }
                 }
+            }, new Response.Listener<APIError>() {
+                    @Override
+                    public void onResponse(APIError apiError) {
+                        if (refresh != null) refresh.setRefreshing(false);
+                    }
             }, activity);
     }
 }

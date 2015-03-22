@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v4.app.FragmentActivity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -59,4 +61,15 @@ public class Utility {
      * @return Current api version
      */
     public static int currentVersion() { return android.os.Build.VERSION.SDK_INT; }
+
+    /**
+     * Checks if device is connected to the internet....
+     * @param context - Context of call
+     * @return
+     */
+    public static boolean isConnectedToInternet(Context context) {
+        ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = manager.getActiveNetworkInfo();
+        return info != null && info.isConnected();
+    }
 }
