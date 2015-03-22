@@ -40,18 +40,15 @@
             android:layout_height="wrap_content"
             />
     </android.support.v4.widget.SwipeRefreshLayout>
+
     <com.blueprint.watershed.Views.Material.FloatingActionButton
+        style="@style/AddFABRightCorner"
         android:id="@+id/semi_transparent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         fab:fab_plusIconColor="@color/white"
         fab:fab_colorNormal="@color/pink"
         fab:fab_colorPressed="@color/pink_pressed"
         fab:fab_size="normal"
         fab:fab_icon="@drawable/ic_add"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="16dp"
-        android:layout_marginRight="16dp"/>
+        />
 
 </RelativeLayout>

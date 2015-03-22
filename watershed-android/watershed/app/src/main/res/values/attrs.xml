@@ -25,6 +25,7 @@
     <declare-styleable name="CircularImageViewStyle">
         <attr name="circularImageViewDefault" format="reference" />
     </declare-styleable>
+
     <declare-styleable name="FAB">
         <attr name="fab_colorPressed" format="color"/>
         <attr name="fab_colorDisabled" format="color"/>
