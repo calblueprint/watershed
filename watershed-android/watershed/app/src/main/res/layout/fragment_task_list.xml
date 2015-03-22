@@ -48,7 +48,7 @@
         fab:fab_colorNormal="@color/pink"
         fab:fab_colorPressed="@color/pink_pressed"
         fab:fab_size="normal"
-        fab:fab_icon="@drawable/ic_action_new"
+        fab:fab_icon="@drawable/ic_add"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="16dp"
