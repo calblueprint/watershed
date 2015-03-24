@@ -156,11 +156,30 @@ static NSString * const TASKS_URL = @"tasks";
     [taskJSON setObject:task.site.siteId forKey:@"mini_site_id"];
     [parameters setObject:taskJSON forKey:@"task"];
     [self POST:taskString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"%@", parameters);
-        NSLog(@"JSON: %@", responseObject);
         success();
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not create task." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+
+- (void)editTaskWithTask:(WPTask *)task parameters:(NSMutableDictionary *)parameters success:(void (^)(WPTask *task))success {
+    NSString *taskEndpoint = [@"/" stringByAppendingString:[task.taskId stringValue]];
+    NSString *TASK_URL = [TASKS_URL stringByAppendingString:taskEndpoint];
+    NSString *taskString = [WPNetworkingManager createURLWithEndpoint:TASK_URL];
+    [self addAuthenticationParameters:parameters];
+    NSMutableDictionary *taskJSON = [MTLJSONAdapter JSONDictionaryFromModel:task].mutableCopy;
+    [taskJSON setObject:task.taskId forKey:@"task_id"];
+    [parameters setObject:taskJSON forKey:@"task"];
+
+    [self PUT:taskString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSMutableDictionary *taskJSON = (NSMutableDictionary *)responseObject[@"task"];
+        WPTask *taskResponse = [MTLJSONAdapter modelOfClass:WPTask.class fromJSONDictionary:taskJSON error:nil];
+        success(taskResponse);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not edit task." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [incorrect show];
         NSLog(@"Error: %@", error);
     }];
@@ -256,7 +275,7 @@ static NSString * const TASKS_URL = @"tasks";
         // for (NSDictionary *photoJSON in photosListJSON) {
         //     [miniSiteResponse.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];
         // }
-        
+
         NSArray *fieldReportListJSON = miniSiteJSON[@"field_reports"];
         NSMutableArray *fieldReportList = [[NSMutableArray alloc] init];
         for (NSDictionary *fieldReportJSON in fieldReportListJSON) {

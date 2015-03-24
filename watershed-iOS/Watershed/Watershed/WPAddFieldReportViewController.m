@@ -26,7 +26,7 @@
 
 @implementation WPAddFieldReportViewController
 
--(void)loadView {
+- (void)loadView {
     self.view = [[WPAddFieldReportView alloc] init];
 }
 
@@ -61,13 +61,13 @@
     }
 }
 
--(void)dismissKeyboard {
+- (void)dismissKeyboard {
     if([self.view.fieldDescription isFirstResponder]) {
         [self.view.fieldDescription resignFirstResponder];
     }
 }
 
--(BOOL)getValidRating {
+- (BOOL)getValidRating {
     int test = [self.ratingField.text intValue];
     return test >= 1 && test <= 5;
 }
