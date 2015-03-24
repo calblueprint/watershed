@@ -33,10 +33,22 @@
         taskDescriptionValue.font = [UIFont systemFontOfSize:12];
         [self.contentView addSubview:taskDescriptionValue];
         
-        CGRect dueDateValueRect = CGRectMake(15, 5, 260, 30);
+        CGRect dueDateValueRect = CGRectMake([WPView getScreenWidth] - 275, 0, 260, 30);
         dueDateValue = [[UILabel alloc] initWithFrame:dueDateValueRect];
         dueDateValue.font = [UIFont systemFontOfSize:12];
         [self.contentView addSubview:dueDateValue];
+
+        CGRect completedRect = CGRectMake([WPView getScreenWidth] - 60, 25, 45, 25);
+        completedValue = [[UILabel alloc] initWithFrame:completedRect];
+        completedValue.font = [UIFont boldSystemFontOfSize:12];
+        completedValue.text = @"DONE";
+        completedValue.textAlignment = NSTextAlignmentCenter;
+        completedValue.textColor = [UIColor whiteColor];
+        completedValue.alpha = 0;
+        completedValue.backgroundColor = [UIColor wp_lightGreen];
+        completedValue.layer.cornerRadius = 5.0;
+        completedValue.clipsToBounds = YES;
+        [self.contentView addSubview:completedValue];
     }
     return self;
 }
@@ -71,4 +83,13 @@
         dueDateValue.textColor = [UIColor wp_blue];
     }
 }
+
+- (void)setCompleted:(BOOL)completed {
+    if (completed) {
+        completedValue.alpha = 1;
+    } else {
+        completedValue.alpha = 0;
+    }
+}
+
 @end

@@ -36,7 +36,15 @@ static NSString *CellIdentifier = @"CellTaskIdentifier";
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(requestAndLoadMyTasks) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:self.refreshControl];
+}
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self requestAndLoadMyTasks];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
     [self requestAndLoadMyTasks];
 }
 
