@@ -144,10 +144,16 @@
     if (indexPath.section == 2) {
         return [WPCreateMiniSiteTableViewCell cellDescriptionHeight];
     }
+
+    else if (indexPath.section == 3) {
+        return 0;
+    }
+
     //Uploading Photo
     else if (indexPath.section == 4) {
         return [WPCreateMiniSiteImageTableViewCell cellHeight];
     }
+
     else {
         return [WPCreateMiniSiteTableViewCell cellHeight];
     }
