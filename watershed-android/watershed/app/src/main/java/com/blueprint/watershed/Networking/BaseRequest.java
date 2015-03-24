@@ -13,6 +13,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.blueprint.watershed.APIObject;
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Utilities.APIError;
+import com.blueprint.watershed.Utilities.Utility;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -20,7 +21,6 @@ import org.apache.http.HttpStatus;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-
 /**
  * Created by maxwolffe on 11/2/14.
  * Base Requests for make api calls.
@@ -30,8 +30,8 @@ public abstract class BaseRequest extends JsonObjectRequest {
     private Response.Listener listener;
     private Response.Listener errorListener;
 
-//    private static final String baseURL = "http://192.168.0.100:3000/api/v1/";
-    private static final String baseURL = "https://intense-reaches-1457.herokuapp.com/api/v1/";
+    private static final String baseURL = "http://192.168.1.79:3000/api/v1/";
+//    private static final String baseURL = "https://intense-reaches-1457.herokuapp.com/api/v1/";
 
     public BaseRequest(int method, String url, JSONObject jsonRequest,
                        final Response.Listener listener, final Response.Listener<APIError> errorListener,
@@ -41,27 +41,33 @@ public abstract class BaseRequest extends JsonObjectRequest {
             public void onErrorResponse(VolleyError volleyError) {
                 Log.e("Request Error", "Custom ErrorListener detected");
                 NetworkResponse networkResponse = volleyError.networkResponse;
-                if (networkResponse != null && networkResponse.statusCode == HttpStatus.SC_FORBIDDEN) {
-                    Toast.makeText(activity, "You must sign in!", Toast.LENGTH_SHORT).show();
-                    MainActivity.logoutCurrentUser(activity);
-                    return;
-                }
-
                 APIError apiError = new APIError();
-                try {
-                    String errorJson = new String(networkResponse.data);
-                    JSONObject errorJsonObject = new JSONObject(errorJson);
-                    errorJson = errorJsonObject.getString("error");
-                    ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
-                    apiError = mapper.readValue(errorJson, new TypeReference<APIError>() {
-                    });
-                } catch (Exception e) {
-                    Log.e("Json exception in Base Request", e.toString());
+                if (networkResponse == null) {
+                    if (!Utility.isConnectedToInternet(activity)) {
+                        Toast.makeText(activity, "You're not connected to the internet!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(activity, "Server error - please try again!", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    if (networkResponse.statusCode == HttpStatus.SC_FORBIDDEN) {
+                        Toast.makeText(activity, "You must sign in!", Toast.LENGTH_SHORT).show();
+                        MainActivity.logoutCurrentUser(activity);
+                    } else {
+                        try {
+                            String errorJson = new String(networkResponse.data);
+                            JSONObject errorJsonObject = new JSONObject(errorJson);
+                            errorJson = errorJsonObject.getString("error");
+                            ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
+                            apiError = mapper.readValue(errorJson, new TypeReference<APIError>() {
+                            });
+                        } catch (Exception e) {
+                            Log.e("Json exception base", e.toString());
+                        }
+                        Toast.makeText(activity, apiError.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
                 }
                 errorListener.onResponse(apiError);
-
-                Toast toast = Toast.makeText(activity, apiError.getMessage(), Toast.LENGTH_SHORT);
-                toast.show();
             }});
 
         this.listener = listener;

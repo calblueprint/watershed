@@ -27,7 +27,7 @@ static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.tableView registerClass:[WPTasksTableViewCell class] forCellReuseIdentifier:allTasksIdentifier];
     self.tableView.delegate = self;
@@ -36,12 +36,25 @@ static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(requestAndLoadAllTasks) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:self.refreshControl];
-
+    
     [self requestAndLoadAllTasks];
 }
 
 - (void)loadView {
     self.tableView = [[WPAllTasksTableView alloc] init];
+}
+
+#pragma mark - Networking Methods
+
+- (void)requestAndLoadAllTasks {
+    __weak __typeof(self)weakSelf = self;
+    [[WPNetworkingManager sharedManager] requestTasksListWithParameters:[[NSMutableDictionary alloc] init] success:^(NSMutableArray *tasksList) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        strongSelf.allTasks = tasksList;
+        [strongSelf.tableView reloadData];
+        [self.tableView stopIndicator];
+        [self.refreshControl endRefreshing];
+    }];
 }
 
 #pragma mark - Table view data source
@@ -54,9 +67,9 @@ static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
     return 60;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {    
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger rowCount = 0;
-    
+
     if ([tableView isEqual:self.tableView]) rowCount = self.allTasks.count;
     return rowCount;
 }
@@ -64,11 +77,11 @@ static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     WPTasksTableViewCell *cellView = nil;
-    
+
     if ([tableView isEqual:self.tableView]) {
-        
+
         cellView = [tableView dequeueReusableCellWithIdentifier:allTasksIdentifier];
-        
+
         if (!cellView) {
             cellView = [[WPTasksTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                   reuseIdentifier:allTasksIdentifier];
@@ -98,17 +111,6 @@ static NSString *allTasksIdentifier = @"allTasksCellIdentifier";
     WPTask *selectedTask = self.allTasks[indexPath.row];
     taskViewController.task = selectedTask;
     [[self.parentViewController navigationController] pushViewController:taskViewController animated:YES];
-}
-
-#pragma mark - Networking Methods
-
-- (void)requestAndLoadAllTasks {
-    [[WPNetworkingManager sharedManager] requestTasksListWithParameters:[[NSMutableDictionary alloc] init] success:^(NSMutableArray *tasksList) {
-        self.allTasks = tasksList;
-        [self.tableView reloadData];
-        [self.tableView stopIndicator];
-        [self.refreshControl endRefreshing];
-    }];
 }
 
 @end

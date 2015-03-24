@@ -48,7 +48,11 @@ import java.util.List;
  */
 public abstract class TaskAbstractFragment extends Fragment {
 
-    private static final String CREATE = "create";
+
+    protected static final String EDIT = "edit";
+    protected static final String COMPLETE = "complete";
+    protected static final String UNCOMPLETE = "uncomplete";
+    protected static final String CREATE = "create";
     private static final int REQUEST_CODE = 200;
 
     protected RelativeLayout mLayout;
@@ -118,6 +122,9 @@ public abstract class TaskAbstractFragment extends Fragment {
         mNetworkManager.getRequestQueue().add(request);
     }
 
+    /**
+     * Gets all the minisites for the task to choose.
+     */
     private void getMiniSites() {
         MiniSiteInfoListRequest request = new MiniSiteInfoListRequest(mParentActivity, new Response.Listener<ArrayList<MiniSite>>() {
             @Override
@@ -253,13 +260,27 @@ public abstract class TaskAbstractFragment extends Fragment {
      * @param type - Type of request, CREATE or EDIT
      */
     public void createTask(String type, Task task) {
+        Log.e("Create a new task", "Called");
         if (type.equals(CREATE)) task = new Task();
+
+        if (type.equals(COMPLETE)){
+            task.setComplete(true);
+            createTaskRequest(task, type);
+            return;
+        }
+        if (type.equals(UNCOMPLETE)){
+            task.setComplete(false);
+            createTaskRequest(task, type);
+            return;
+        }
+
         task.setTitle(mTitleField.getText().toString());
         task.setDescription(mDescriptionField.getText().toString());
         task.setAssignerId(mParentActivity.getUserId());
         task.setDueDate(mDate);
         task.setAssigneeId(mUser.getId());
         task.setMiniSiteId(mMiniSite.getId());
+        task.setComplete(false);
 
         Utility.hideKeyboard(mParentActivity, mLayout);
         createTaskRequest(task, type);

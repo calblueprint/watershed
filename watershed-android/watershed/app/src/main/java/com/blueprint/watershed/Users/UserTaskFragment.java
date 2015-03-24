@@ -1,41 +1,25 @@
 package com.blueprint.watershed.Users;
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Networking.NetworkManager;
-import com.blueprint.watershed.Networking.Tasks.TaskListRequest;
 import com.blueprint.watershed.R;
-import com.blueprint.watershed.Sites.SiteListAdapter;
 import com.blueprint.watershed.Tasks.BasicTaskAdapter;
 import com.blueprint.watershed.Tasks.Task;
-import com.blueprint.watershed.Tasks.TaskAdapter;
-import com.blueprint.watershed.Tasks.TaskFragment;
 import com.blueprint.watershed.Views.HeaderGridView;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 
 
 public class UserTaskFragment extends Fragment {
@@ -143,16 +127,16 @@ public class UserTaskFragment extends Fragment {
     }
 
     protected void getTasksRequest() {
-        TaskListRequest taskListRequest = new TaskListRequest(mParentActivity,
-                new HashMap<String, JSONObject>(),
-                new Response.Listener<ArrayList<Task>>() {
-            @Override
-            public void onResponse(ArrayList<Task> tasks) {
-                setTasks(tasks, mUser.getId());
-                mUserTaskAdapter.notifyDataSetChanged();
-            }
-        }, mSwipeLayout);
-        mNetworkManager.getRequestQueue().add(taskListRequest);
+//        TaskListRequest taskListRequest = new TaskListRequest(mParentActivity,
+//                new HashMap<String, JSONObject>(),
+//                new Response.Listener<ArrayList<Task>>() {
+//            @Override
+//            public void onResponse(ArrayList<Task> tasks) {
+//                setTasks(tasks, mUser.getId());
+//                mUserTaskAdapter.notifyDataSetChanged();
+//            }
+//        }, mSwipeLayout);
+//        mNetworkManager.getRequestQueue().add(taskListRequest);
     }
 
 

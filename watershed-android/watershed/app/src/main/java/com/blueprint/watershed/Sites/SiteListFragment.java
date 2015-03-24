@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -21,10 +20,7 @@ import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Sites.SiteListRequest;
 import com.blueprint.watershed.R;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class SiteListFragment extends Fragment {
 
@@ -37,15 +33,12 @@ public class SiteListFragment extends Fragment {
     // Views
     private RecyclerView mSiteListView;
     private SwipeRefreshLayout mSwipeLayout;
-    private RelativeLayout mNoSiteLayout;
+    private SwipeRefreshLayout mNoSiteLayout;
     
     private SiteListAdapter mAdapter;
     private SiteMapper mSites;
 
     public static SiteListFragment newInstance() { return new SiteListFragment(); }
-
-
-    public SiteListFragment() { mSites = new SiteMapper(); }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,23 +53,22 @@ public class SiteListFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_site_list, container, false);
         initializeViews(view);
-        getSitesRequest();
+        Log.i("asdf", "asdfsdf");
         return view;
     }
-    
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-    
+
     private void initializeViews(View view) {
-        mNoSiteLayout = (RelativeLayout) view.findViewById(R.id.no_site_layout);
+        mNoSiteLayout = (SwipeRefreshLayout) view.findViewById(R.id.no_site_layout);
+        mNoSiteLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mNoSiteLayout.setRefreshing(true);
+                getSitesRequest();
+            }
+        });
         mLayoutManager = new LinearLayoutManager(mParentActivity);
         mSiteListView = (RecyclerView) view.findViewById(R.id.list);
         mSiteListView.setLayoutManager(mLayoutManager);
-        if (getSites().size() == 0) hideList();
-        mAdapter = new SiteListAdapter(mParentActivity, R.layout.site_list_row, getSites());
-        mSiteListView.setAdapter(mAdapter);
 
         mSwipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.site_swipe_container);
         mSwipeLayout.setColorSchemeResources(R.color.ws_blue, R.color.facebook_blue, R.color.facebook_dark_blue, R.color.dark_gray);
@@ -87,14 +79,22 @@ public class SiteListFragment extends Fragment {
                 getSitesRequest();
             }
         });
+
+        if (mSites == null) {
+            hideList();
+            mNoSiteLayout.setRefreshing(true);
+            getSitesRequest();
+        }
+
+        mAdapter = new SiteListAdapter(mParentActivity, R.layout.site_list_row, getSites());
+        mSiteListView.setAdapter(mAdapter);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         mParentActivity.setMenuAction(true);
-        mSwipeLayout.setRefreshing(true);
-        getSitesRequest();
+//        getSitesRequest();
     }
 
     @Override
@@ -115,8 +115,7 @@ public class SiteListFragment extends Fragment {
     }
 
     public void getSitesRequest() {
-        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
-        SiteListRequest siteListRequest = new SiteListRequest(getActivity(), params, new Response.Listener<ArrayList<Site>>() {
+        SiteListRequest siteListRequest = new SiteListRequest(mParentActivity, new Response.Listener<ArrayList<Site>>() {
             @Override
             public void onResponse(ArrayList<Site> sites) {
                 setSites(sites);
@@ -126,36 +125,49 @@ public class SiteListFragment extends Fragment {
                     showList();
                     mAdapter.notifyDataSetChanged();
                 }
-                new CountDownTimer(1000, 1000) {
-                    @Override
-                    public void onTick(long timeLeft) {}
-                    @Override
-                    public void onFinish() { mSwipeLayout.setRefreshing(false); }
-                }.start();
+                setSwipeFalse();
             }
 
-        });
+        }, this);
         siteListRequest.setTag(SITE_LIST_REQUEST);
         mNetworkManager.getRequestQueue().add(siteListRequest);
     }
 
+    public void setSwipeFalse() {
+        new CountDownTimer(1000, 1000) {
+            public void onTick(long millisUntilFinished) {}
+            public void onFinish() {
+                if (mSwipeLayout != null) mSwipeLayout.setRefreshing(false);
+                if (mNoSiteLayout != null) mNoSiteLayout.setRefreshing(false);
+            }
+        }.start();
+    }
+
     // Getters
-    public SiteMapper getSites() { return mSites; }
+    public SiteMapper getSites() {
+        if (mSites == null) mSites = new SiteMapper();
+        return mSites;
+    }
 
     // Setters
+//    public void setSites(ArrayList<Site> sites) {
+//        if (sites.size() != mSites.size()) {
+//            mSites.setSites(sites);
+//            mAdapter.notifyDataSetChanged();
+//        } else {
+//            for (int i = 0; i < sites.size(); i++) {
+//                Site site = sites.get(i);
+//                if (!site.equals(mSites.getSiteWithPosition(i))) {
+//                    mSites.addSite(site, i);
+//                    mAdapter.notifyItemChanged(i);
+//                }
+//            }
+//        }
+//    }
+
     public void setSites(ArrayList<Site> sites) {
-        if (sites.size() != mSites.size()) {
-            mSites.setSites(sites);
-            mAdapter.notifyDataSetChanged();
-        } else {
-            for (int i = 0; i < sites.size(); i++) {
-                Site site = sites.get(i);
-                if (!site.equals(mSites.getSiteWithPosition(i))) {
-                    mSites.addSite(site, i);
-                    mAdapter.notifyItemChanged(i);
-                }
-            }
-        }
+        if (mSites == null) mSites = new SiteMapper();
+        mSites.setSites(sites);
     }
 
     private void showList() {

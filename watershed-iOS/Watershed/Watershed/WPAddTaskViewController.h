@@ -11,6 +11,7 @@
 #import "WPSelectTaskViewController.h"
 #import "WPSelectMiniSiteViewController.h"
 #import "WPSelectAssigneeViewController.h"
+#import "WPTasksListViewController.h"
 
 @interface WPAddTaskViewController : WPViewController<
     UITableViewDataSource,
@@ -20,5 +21,7 @@
     SelectSiteDelegate,
     SelectAssigneeDelegate
 >
+
+@property (nonatomic) WPTasksListViewController *parent;
 
 @end

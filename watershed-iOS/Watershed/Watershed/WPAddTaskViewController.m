@@ -13,6 +13,9 @@
 #import "WPSelectTaskViewController.h"
 #import "WPSelectMiniSiteViewController.h"
 #import "WPSelectAssigneeViewController.h"
+#import "WPTask.h"
+#import "WPNetworkingManager.h"
+#import "WPTasksListViewController.h"
 
 
 @interface WPAddTaskViewController()
@@ -23,6 +26,12 @@
 @property (nonatomic) UITextField *siteField;
 @property (nonatomic) UITextField *assigneeField;
 @property (nonatomic) UITextView *descriptionView;
+@property (nonatomic) WPSite *selectedSite;
+@property (nonatomic) WPUser *selectedAssignee;
+@property (nonatomic) WPUser *currUser;
+@property (nonatomic) WPSite *currSite;
+@property (nonatomic) UISwitch *urgentSwitch;
+
 
 @end
 
@@ -61,8 +70,15 @@ static NSString *CellIdentifier = @"Cell";
     [super didReceiveMemoryWarning];
 }
 
+-(int)isUrgent {
+    if (_urgentSwitch.on) {
+        return 1;
+    }
+    return 0;
+}
+
 -(void)saveForm:(UIButton *)sender {
-    if (_taskField.text.length == 0 || _siteField.text.length == 0 || _assigneeField.text.length == 0) {
+    if (_taskField.text.length == 0 || _siteField.text.length == 0) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
                                                                        message:@"Cannot leave required fields blank."
                                                                 preferredStyle:UIAlertControllerStyleAlert];
@@ -77,19 +93,45 @@ static NSString *CellIdentifier = @"Cell";
         [alert addAction:ok];
         [self presentViewController:alert animated:YES completion:nil];
     } else {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
+        //need to add urgent
+        NSNumberFormatter *userFormatter = [[NSNumberFormatter alloc] init];
+        [userFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+        int isUrgentInt = [self isUrgent];
+        NSString *isUrgentString = [NSString stringWithFormat:@"%i", isUrgentInt];
+        NSDictionary *taskJSON = @{
+                                   @"title" : self.taskField.text,
+                                   @"mini_site_id" : [self.selectedSite.siteId stringValue],
+                                   @"due_date" : self.dateField.text,
+                                   @"description" : self.descriptionView.text,
+                                   @"urgent" : isUrgentString
+                                   };
+        WPTask *task = [MTLJSONAdapter modelOfClass:WPTask.class fromJSONDictionary:taskJSON error:nil];
+        _currUser = [[WPUser alloc] init];
+        _currSite = [[WPSite alloc] init];
+        NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+        [f setNumberStyle:NSNumberFormatterDecimalStyle];
+        _currUser.userId = [f numberFromString:[[WPNetworkingManager sharedManager] keyChainStore][@"user_id"]];
+        _currSite.siteId = self.selectedSite.siteId;
+        task.assigner = _currUser;
+        task.assignee = _currUser;
+        task.site = _currSite;
+        [[WPNetworkingManager sharedManager] createTaskWithTask:task parameters:[[NSMutableDictionary alloc] init] success:^{
+            [self.parent requestAndLoadTasks];
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
 
+    }
 }
+
 
 
 -(void)selectTaskViewControllerDismissed:(NSString *)stringForFirst {
     _taskField.text = stringForFirst;
-    
 }
 
--(void)selectSiteViewControllerDismissed:(NSString *)stringForFirst {
-    _siteField.text = stringForFirst;
+-(void)selectSiteViewControllerDismissed:(WPSite *)selectedSite {
+    _siteField.text = selectedSite.name;
+    _selectedSite = selectedSite;
 }
 
 -(void)selectAssigneeViewControllerDismissed:(NSString *)stringForFirst {
@@ -168,9 +210,9 @@ static NSString *CellIdentifier = @"Cell";
             break;
         }
         case 2: {
-            UISwitch *urgentSwitch = [[UISwitch alloc] init];
-            urgentSwitch.onTintColor = [UIColor wp_red];
-            cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:urgentSwitch];
+            _urgentSwitch = [[UISwitch alloc] init];
+            _urgentSwitch.onTintColor = [UIColor wp_red];
+            cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:_urgentSwitch];
             cell.label.text = @"Urgent";
             break;
         }

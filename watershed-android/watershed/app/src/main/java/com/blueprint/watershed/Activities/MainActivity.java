@@ -42,6 +42,7 @@ import com.blueprint.watershed.Sites.SiteFragment;
 import com.blueprint.watershed.Sites.SiteListFragment;
 import com.blueprint.watershed.Tasks.CreateTaskFragment;
 import com.blueprint.watershed.Tasks.Task;
+import com.blueprint.watershed.Tasks.TaskDetailFragment;
 import com.blueprint.watershed.Tasks.TaskFragment;
 import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Users.UserFieldReportFragment;
@@ -92,7 +93,7 @@ public class MainActivity extends ActionBarActivity
 
     // Action Bar Elements
     private PagerTabStrip mPagerTabStrip;
-    private ViewPager viewPager;
+    private ViewPager mViewPager;
     private TabsPagerAdapter mAdapter;
     private View mContainer;
     private ProgressBar mProgress;
@@ -189,9 +190,9 @@ public class MainActivity extends ActionBarActivity
         mProgress = (ProgressBar) findViewById(R.id.progressBar);
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
         mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
-        viewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager = (ViewPager) findViewById(R.id.pager);
         mContainer = findViewById(R.id.container);
-        viewPager.setAdapter(mAdapter);
+        mViewPager.setAdapter(mAdapter);
 
         mUserInfo = (RelativeLayout) findViewById(R.id.nav_bar_user_info);
         mUserInfo.setOnClickListener(this);
@@ -204,16 +205,16 @@ public class MainActivity extends ActionBarActivity
     @SuppressWarnings("deprecation")
     @TargetApi(21)
     public void setToolBarColor(int toolbar, int statusBar) {
-        if (Utility.currentVersion() >= 21) getWindow().setStatusBarColor(statusBar);
-        mToolBar.setBackgroundColor(toolbar);
+        if (Utility.currentVersion() >= 21) getWindow().setStatusBarColor(getResources().getColor(statusBar));
+        mToolBar.setBackgroundColor(getResources().getColor(toolbar));
         mToolBar.invalidate();
     }
 
     @SuppressWarnings("deprecation")
     @TargetApi(21)
     public void setToolBarDefault() {
-        if (Utility.currentVersion() >= 21) getWindow().setStatusBarColor(R.color.ws_title_bar);
-        mToolBar.setBackgroundColor(R.color.ws_blue);
+        if (Utility.currentVersion() >= 21) getWindow().setStatusBarColor(getResources().getColor(R.color.ws_title_bar));
+        mToolBar.setBackgroundColor(getResources().getColor(R.color.ws_blue));
         mToolBar.invalidate();
     }
 
@@ -228,6 +229,7 @@ public class MainActivity extends ActionBarActivity
             displayTaskView(true);
             return;
         }
+        else if (f instanceof TaskDetailFragment)         setTitle("");
         else if (f instanceof UserTaskFragment)           setTitle("Tasks");
         else if (f instanceof SiteListFragment ||
                  f instanceof SiteFragment ||
@@ -243,19 +245,25 @@ public class MainActivity extends ActionBarActivity
 
     public void displayTaskView(boolean toggle) {
         if (toggle){
-            viewPager.setVisibility(View.VISIBLE);
+            mViewPager.setVisibility(View.VISIBLE);
             mContainer.setVisibility(View.INVISIBLE);
         }
         else {
-            viewPager.setVisibility(View.INVISIBLE);
+            mViewPager.setVisibility(View.INVISIBLE);
             mContainer.setVisibility(View.VISIBLE);
         }
     }
-
+    @SuppressWarnings("deprecation")
+    @TargetApi(21)
     public void replaceFragment(Fragment newFragment) {
         android.support.v4.app.FragmentTransaction ft = mFragmentManager.beginTransaction();
         if(!newFragment.isAdded()){
             updateTitle(newFragment);
+
+            if (newFragment instanceof TaskFragment) mToolBar.setElevation(0);
+            else mToolBar.setElevation(Utility.convertDptoPix(this, 4));
+
+            mToolBar.invalidate();
             ft.replace(R.id.container, newFragment).addToBackStack(null).commit();
         }
     }
@@ -268,14 +276,14 @@ public class MainActivity extends ActionBarActivity
                     @Override
                     public void onBackStackChanged() {
                         Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
-                        if (f != null){
+                        if (f != null) {
                             updateTitle(f);
                         }
                     }
                 });
         updateTitle(taskFragment);
         android.support.v4.app.FragmentTransaction ft = mFragmentManager.beginTransaction();
-        ft.add(R.id.container, taskFragment);
+        ft.replace(R.id.container, taskFragment);
         ft.commit();
     }
 
@@ -284,12 +292,13 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onTabSelected(Tab tab, FragmentTransaction ft) {
-        viewPager.setCurrentItem(tab.getPosition());
+        mViewPager.setCurrentItem(tab.getPosition());
     }
 
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {}
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -367,7 +376,7 @@ public class MainActivity extends ActionBarActivity
             case 2:
                 replaceFragment(AboutFragment.newInstance());
                 break;
-            case 4:
+            case 3:
                 logoutCurrentUser(this);
                 break;
             default:

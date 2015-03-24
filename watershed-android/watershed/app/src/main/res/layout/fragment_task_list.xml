@@ -1,9 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.blueprint.watershed.Tasks.TaskFragment">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/no_tasks_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/no_tasks"
+                    />
+            </LinearLayout>
+
+        </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/tasks_swipe_container"
@@ -15,15 +39,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
-
-        <TextView
-            android:id="@+id/no_tasks_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/no_tasks"/>
-
     </android.support.v4.widget.SwipeRefreshLayout>
 
+    <com.blueprint.watershed.Views.Material.FloatingActionButton
+        style="@style/AddFABRightCorner"
+        android:id="@+id/create_task_button"
+        fab:fab_plusIconColor="@color/white"
+        fab:fab_colorNormal="@color/pink"
+        fab:fab_colorPressed="@color/pink_pressed"
+        fab:fab_size="normal"
+        fab:fab_icon="@drawable/ic_add"
+        />
 
-</FrameLayout>
+</RelativeLayout>

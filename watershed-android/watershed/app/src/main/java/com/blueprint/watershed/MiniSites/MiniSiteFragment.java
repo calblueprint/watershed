@@ -136,13 +136,13 @@ public class MiniSiteFragment extends Fragment
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // Load Field Report
-        FieldReport fieldReport = getFieldReport(position);
-        AddFieldReportFragment addFieldReportFragment = new AddFieldReportFragment();
-        addFieldReportFragment.configureWithFieldReport(fieldReport);
-        mParentActivity.replaceFragment(addFieldReportFragment);
-    }
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {}
+//        // Load Field Report
+//        FieldReport fieldReport = getFieldReport(position);
+//        AddFieldReportFragment addFieldReportFragment = new AddFieldReportFragment();
+//        addFieldReportFragment.configureWithFieldReport(fieldReport);
+//        mParentActivity.replaceFragment(addFieldReportFragment);
+//    }
 
     public FieldReport getFieldReport(int position) { return mFieldReports.get(position); }
 

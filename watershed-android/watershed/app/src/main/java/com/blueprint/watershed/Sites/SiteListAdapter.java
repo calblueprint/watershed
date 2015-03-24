@@ -2,6 +2,7 @@ package com.blueprint.watershed.Sites;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,15 +69,18 @@ public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHo
             holder.numberOfTasksView.configureLabels(Integer.toString(site.getTasksCount()), "TASKS");
             holder.topLabel.setText(site.getName());
             holder.bottomLabel.setText(String.format("%s Sites", site.getMiniSitesCount()));
-            holder.parentView.setOnClickListener(new View.OnClickListener() {
+            View.OnClickListener listener = new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Log.i("click","asdfasdf");
                     SiteFragment siteFragment = new SiteFragment();
                     siteFragment.configureWithSite(site);
 
                     mParentActivity.replaceFragment(siteFragment);
                 }
-            });
+            };
+            holder.parentView.setOnClickListener(listener);
+            holder.numberOfTasksView.setOnClickListener(listener);
         }
     }
 
