@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -21,10 +20,7 @@ import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Sites.SiteListRequest;
 import com.blueprint.watershed.R;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class SiteListFragment extends Fragment {
 
@@ -37,7 +33,7 @@ public class SiteListFragment extends Fragment {
     // Views
     private RecyclerView mSiteListView;
     private SwipeRefreshLayout mSwipeLayout;
-    private RelativeLayout mNoSiteLayout;
+    private SwipeRefreshLayout mNoSiteLayout;
     
     private SiteListAdapter mAdapter;
     private SiteMapper mSites;
@@ -62,7 +58,14 @@ public class SiteListFragment extends Fragment {
     }
 
     private void initializeViews(View view) {
-        mNoSiteLayout = (RelativeLayout) view.findViewById(R.id.no_site_layout);
+        mNoSiteLayout = (SwipeRefreshLayout) view.findViewById(R.id.no_site_layout);
+        mNoSiteLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mNoSiteLayout.setRefreshing(true);
+                getSitesRequest();
+            }
+        });
         mLayoutManager = new LinearLayoutManager(mParentActivity);
         mSiteListView = (RecyclerView) view.findViewById(R.id.list);
         mSiteListView.setLayoutManager(mLayoutManager);
@@ -112,8 +115,7 @@ public class SiteListFragment extends Fragment {
     }
 
     public void getSitesRequest() {
-        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
-        SiteListRequest siteListRequest = new SiteListRequest(getActivity(), params, new Response.Listener<ArrayList<Site>>() {
+        SiteListRequest siteListRequest = new SiteListRequest(mParentActivity, new Response.Listener<ArrayList<Site>>() {
             @Override
             public void onResponse(ArrayList<Site> sites) {
                 setSites(sites);
@@ -123,17 +125,22 @@ public class SiteListFragment extends Fragment {
                     showList();
                     mAdapter.notifyDataSetChanged();
                 }
-                new CountDownTimer(1000, 1000) {
-                    @Override
-                    public void onTick(long timeLeft) {}
-                    @Override
-                    public void onFinish() { mSwipeLayout.setRefreshing(false); }
-                }.start();
+                setSwipeFalse();
             }
 
-        });
+        }, this);
         siteListRequest.setTag(SITE_LIST_REQUEST);
         mNetworkManager.getRequestQueue().add(siteListRequest);
+    }
+
+    public void setSwipeFalse() {
+        new CountDownTimer(1000, 1000) {
+            public void onTick(long millisUntilFinished) {}
+            public void onFinish() {
+                if (mSwipeLayout != null) mSwipeLayout.setRefreshing(false);
+                if (mNoSiteLayout != null) mNoSiteLayout.setRefreshing(false);
+            }
+        }.start();
     }
 
     // Getters

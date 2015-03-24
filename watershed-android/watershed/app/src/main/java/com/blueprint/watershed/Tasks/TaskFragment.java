@@ -225,6 +225,7 @@ public class TaskFragment extends ListFragment {
             }
         }.start();
     }
+
     /**
      * Sets the tasks for all tasks list and user tasks lists
      * @param tasks - ArrayList of all tasks from server
