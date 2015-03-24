@@ -82,7 +82,7 @@ public class SiteListFragment extends Fragment {
 
         if (mSites == null) {
             hideList();
-            mSwipeLayout.setRefreshing(true);
+            mNoSiteLayout.setRefreshing(true);
             getSitesRequest();
         }
 

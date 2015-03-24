@@ -179,16 +179,6 @@ public class TaskFragment extends ListFragment {
         TaskListRequest taskListRequest = new TaskListRequest(getActivity(), params, new Response.Listener<ArrayList<Task>>() {
             @Override
             public void onResponse(ArrayList<Task> tasks) {
-//                Log.e("TASKS", "Returned!");
-//                setTasks(tasks);
-//                mAllTaskAdapter.notifyDataSetChanged();
-//                mUserTaskAdapter.notifyDataSetChanged();
-//                new CountDownTimer(1000, 1000) {
-//                    @Override
-//                    public void onTick(long timeLeft) {}
-//                    @Override
-//                    public void onFinish() { mSwipeLayout.setRefreshing(false); }
-//                }.start();
                 if (mArgs.getInt(OPTION) == USER) {
                     tasks = getUserTasks(tasks);
                     if (tasks.size() > 0) {
@@ -205,7 +195,6 @@ public class TaskFragment extends ListFragment {
                         setAllTasks(tasks);
                         mAllTaskAdapter.notifyDataSetChanged();
                         for(int i=0; i < mAllTaskAdapter.getGroupCount(); i++) mListView.expandGroup(i);
-
                     } else {
                         hideList();
                     }

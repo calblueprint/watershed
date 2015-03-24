@@ -18,23 +18,25 @@
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/no_site_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/no_site_layout">
-        <RelativeLayout
+        >
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            >
-
-            <TextView
-                android:id="@+id/site_tasks_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:text="@string/no_site"/>
-        </RelativeLayout>
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <TextView
+                    android:id="@+id/site_tasks_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/no_site"/>
+            </LinearLayout>
+        </ScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <com.blueprint.watershed.Views.Material.FloatingActionButton
