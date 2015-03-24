@@ -99,7 +99,7 @@ static NSString *CellIdentifier = @"Cell";
         [f setNumberStyle:NSNumberFormatterDecimalStyle];
         _currUser.userId = [f numberFromString:[[WPNetworkingManager sharedManager] keyChainStore][@"user_id"]];
         task.assigner = _currUser;
-        task.assignee = _currUser;
+        task.assignee = _selectedAssignee;
         task.miniSite = self.selectedMiniSite;
         [[WPNetworkingManager sharedManager] createTaskWithTask:task parameters:[[NSMutableDictionary alloc] init] success:^{
             [self.parent requestAndLoadTasks];
@@ -117,8 +117,9 @@ static NSString *CellIdentifier = @"Cell";
     _selectedMiniSite = selectedMiniSite;
 }
 
--(void)selectAssigneeViewControllerDismissed:(NSString *)stringForFirst {
-    _assigneeField.text = stringForFirst;
+-(void)selectAssigneeViewControllerDismissed:(WPUser *)assignee {
+    _assigneeField.text = assignee.name;
+    _selectedAssignee = assignee;
 }
 
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
