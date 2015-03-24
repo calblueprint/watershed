@@ -189,6 +189,7 @@ static NSString * const TASKS_URL = @"tasks";
 - (void)requestSitesListWithParameters:(NSMutableDictionary *)parameters success:(void (^)(NSMutableArray *sitesList))success {
     NSString *sitesString = [WPNetworkingManager createURLWithEndpoint:SITES_URL];
     [self addAuthenticationParameters:parameters];
+    parameters[@"get_photos"] = @"true";
     
     [self GET:sitesString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSArray *sitesListJSON = (NSArray *)responseObject[@"sites"];
