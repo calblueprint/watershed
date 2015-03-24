@@ -210,6 +210,7 @@
             cell.textInput = self.vegetationTextField;
             cell.inputLabel.text = @"Vegetation";
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.clipsToBounds = YES;
             break;
         }
         // MiniSite Photo

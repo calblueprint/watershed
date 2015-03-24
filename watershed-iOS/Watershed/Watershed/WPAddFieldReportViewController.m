@@ -44,10 +44,11 @@
                                    action:@selector(saveForm)];
     self.navigationItem.rightBarButtonItem = saveButton;
     self.view.fieldDescription.delegate = self;
-    //    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self
-    //                                                                         action:@selector(dismissKeyboard)];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self
+                                                                         action:@selector(dismissKeyboard)];
+    tap.cancelsTouchesInView = NO;
     [self.imageInputCell.viewImageButton addTarget:self action:@selector(presentImageView) forControlEvents:UIControlEventTouchUpInside];
-    //    [self.view addGestureRecognizer:tap];
+    [self.view addGestureRecognizer:tap];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -62,9 +63,8 @@
 }
 
 - (void)dismissKeyboard {
-    if([self.view.fieldDescription isFirstResponder]) {
-        [self.view.fieldDescription resignFirstResponder];
-    }
+    [self.descriptionView resignFirstResponder];
+    [self.ratingField resignFirstResponder];
 }
 
 - (BOOL)getValidRating {
