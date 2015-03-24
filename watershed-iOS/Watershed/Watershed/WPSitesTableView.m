@@ -25,14 +25,13 @@
 
 - (void)createSubviews {
 
-    self.backgroundView = [[UIView alloc] init];
-    [self.backgroundView setClipsToBounds:NO];
+    self.tableHeaderView = [[UIView alloc] init];
 
     _indicatorView = [({
         UIActivityIndicatorView *view = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         [view startAnimating];
         view;
-    }) wp_addToSuperview:self.backgroundView];
+    }) wp_addToSuperview:self.tableHeaderView];
 }
 
 - (void)updateConstraints {
