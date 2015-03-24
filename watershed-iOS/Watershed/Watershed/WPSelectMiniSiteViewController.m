@@ -14,7 +14,7 @@
 @interface WPSelectMiniSiteViewController ()
 
 @property (nonatomic) WPSelectMiniSiteView *view;
-@property NSArray *miniSiteArray;
+@property NSMutableArray *miniSiteArray;
 
 @end
 
@@ -31,7 +31,7 @@ static NSString *CellIdentifier = @"Cell";
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.navigationItem.title = @"Select Site";
+    self.navigationItem.title = @"Select Mini Site";
     self.view.backgroundColor = [UIColor whiteColor];
     self.view.selectMiniSiteTableView.delegate = self;
     self.view.selectMiniSiteTableView.dataSource = self;
@@ -55,7 +55,7 @@ static NSString *CellIdentifier = @"Cell";
             cellView = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                    reuseIdentifier:CellIdentifier];
         }
-        WPSite *site = self.miniSiteArray[indexPath.row];
+        WPMiniSite *site = self.miniSiteArray[indexPath.row];
         cellView.textLabel.text = site.name;
         cellView.textLabel.textColor = [UIColor wp_paragraph];
     }
@@ -72,11 +72,17 @@ static NSString *CellIdentifier = @"Cell";
 #pragma mark - Networking Methods
 
 - (void)requestAndLoadSites {
+    self.miniSiteArray = [[NSMutableArray alloc] init];
+
     __weak __typeof(self)weakSelf = self;
     [[WPNetworkingManager sharedManager] requestSitesListWithParameters:[[NSMutableDictionary alloc] init] success:^(NSMutableArray *sitesList) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        strongSelf.miniSiteArray = sitesList;
-        [strongSelf.view.selectMiniSiteTableView reloadData];
+        for (WPSite *site in sitesList) {
+            [[WPNetworkingManager sharedManager] requestSiteWithSite:site parameters:[[NSMutableDictionary alloc] init] success:^(WPSite *site, NSMutableArray *miniSiteList) {
+                [strongSelf.miniSiteArray addObjectsFromArray:miniSiteList];
+                [strongSelf.view.selectMiniSiteTableView reloadData];
+            }];
+        }
     }];
 }
 

@@ -115,10 +115,10 @@ int WPButtonHeight = 75;
     self.taskDescription.text = task.taskDescription;
     self.assigneeLabel.text = [NSString stringWithFormat:@"Assigned to %@ by %@", task.assignee.name, task.assigner.name];
     self.title.text = task.title;
-    if (!task.site.name) {
-        [self.siteLinkButton setTitle:@"Not assigned to a site" forState:UIControlStateNormal];
+    if (!task.miniSite.name) {
+        [self.siteLinkButton setTitle:@"Not assigned to a mini site" forState:UIControlStateNormal];
     } else {
-        [self.siteLinkButton setTitle:task.site.name forState:UIControlStateNormal];
+        [self.siteLinkButton setTitle:task.miniSite.name forState:UIControlStateNormal];
     }
     if (task.completed) {
         [self.completed setSelected:YES];

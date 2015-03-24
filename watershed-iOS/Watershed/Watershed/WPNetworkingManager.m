@@ -153,7 +153,7 @@ static NSString * const TASKS_URL = @"tasks";
     NSLog(@"%@", task.assigner.userId);
     [taskJSON setObject:task.assignee.userId forKey:@"assignee_id"];
     [taskJSON setObject:task.assigner.userId forKey:@"assigner_id"];
-    [taskJSON setObject:task.site.siteId forKey:@"mini_site_id"];
+    [taskJSON setObject:task.miniSite.miniSiteId forKey:@"mini_site_id"];
     [parameters setObject:taskJSON forKey:@"task"];
     [self POST:taskString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         success();
