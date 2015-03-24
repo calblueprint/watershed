@@ -115,6 +115,7 @@ static NSString * const TASKS_URL = @"tasks";
         NSMutableArray *tasksList = [[NSMutableArray alloc] init];
         for (NSDictionary *taskJSON in tasksListJSON) {
             WPTask *task = [MTLJSONAdapter modelOfClass:WPTask.class fromJSONDictionary:taskJSON error:nil];
+            task.miniSite = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:taskJSON[@"mini_site"] error:nil];
             [tasksList addObject:task];
         }
         success(tasksList);
@@ -136,6 +137,7 @@ static NSString * const TASKS_URL = @"tasks";
         NSMutableArray *tasksList = [[NSMutableArray alloc] init];
         for (NSDictionary *taskJSON in tasksListJSON) {
             WPTask *task = [MTLJSONAdapter modelOfClass:WPTask.class fromJSONDictionary:taskJSON error:nil];
+            task.miniSite = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:taskJSON[@"mini_site"] error:nil];
             [tasksList addObject:task];
         }
         success(tasksList);

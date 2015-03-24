@@ -111,7 +111,7 @@
         } else if ([previousViewController isKindOfClass:[WPTaskViewController class]]) {
             parent = (WPTaskViewController *)previousViewController;
             //        taskId = parent.taskId;
-            //        miniSiteId = parent.miniSiteId;
+            miniSiteId = [((WPTaskViewController *)parent).task.miniSite.miniSiteId stringValue];
         }
         NSString *photo = [UIImagePNGRepresentation([self compressForUpload:self.imageInputCell.imageInputView.image withScale:0.2]) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
         
