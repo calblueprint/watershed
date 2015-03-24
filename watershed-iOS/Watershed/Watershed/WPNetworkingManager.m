@@ -115,6 +115,7 @@ static NSString * const TASKS_URL = @"tasks";
         NSMutableArray *tasksList = [[NSMutableArray alloc] init];
         for (NSDictionary *taskJSON in tasksListJSON) {
             WPTask *task = [MTLJSONAdapter modelOfClass:WPTask.class fromJSONDictionary:taskJSON error:nil];
+            task.miniSite = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:taskJSON[@"mini_site"] error:nil];
             [tasksList addObject:task];
         }
         success(tasksList);
@@ -136,6 +137,7 @@ static NSString * const TASKS_URL = @"tasks";
         NSMutableArray *tasksList = [[NSMutableArray alloc] init];
         for (NSDictionary *taskJSON in tasksListJSON) {
             WPTask *task = [MTLJSONAdapter modelOfClass:WPTask.class fromJSONDictionary:taskJSON error:nil];
+            task.miniSite = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:taskJSON[@"mini_site"] error:nil];
             [tasksList addObject:task];
         }
         success(tasksList);
@@ -153,7 +155,7 @@ static NSString * const TASKS_URL = @"tasks";
     NSLog(@"%@", task.assigner.userId);
     [taskJSON setObject:task.assignee.userId forKey:@"assignee_id"];
     [taskJSON setObject:task.assigner.userId forKey:@"assigner_id"];
-    [taskJSON setObject:task.site.siteId forKey:@"mini_site_id"];
+    [taskJSON setObject:task.miniSite.miniSiteId forKey:@"mini_site_id"];
     [parameters setObject:taskJSON forKey:@"task"];
     [self POST:taskString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         success();
@@ -189,6 +191,7 @@ static NSString * const TASKS_URL = @"tasks";
 - (void)requestSitesListWithParameters:(NSMutableDictionary *)parameters success:(void (^)(NSMutableArray *sitesList))success {
     NSString *sitesString = [WPNetworkingManager createURLWithEndpoint:SITES_URL];
     [self addAuthenticationParameters:parameters];
+    parameters[@"get_photos"] = @"true";
     
     [self GET:sitesString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSArray *sitesListJSON = (NSArray *)responseObject[@"sites"];
@@ -336,6 +339,7 @@ static NSString * const TASKS_URL = @"tasks";
         WPFieldReport *fieldReportResponse = [MTLJSONAdapter modelOfClass:WPFieldReport.class fromJSONDictionary:fieldReportJSON error:nil];
         fieldReportResponse.miniSite = fieldReport.miniSite;
         fieldReportResponse.imageURLs = fieldReport.imageURLs;
+        fieldReportResponse.user = [MTLJSONAdapter modelOfClass:WPUser.class fromJSONDictionary:fieldReportJSON[@"user"] error:nil];
         // NSDictionary *photoJSON = fieldReportJSON[@"photo"];
         // if (!([photoJSON isEqual:[NSNull null]]) && photoJSON) {
         //     [fieldReport.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];

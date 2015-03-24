@@ -7,9 +7,10 @@
 //
 
 #import "WPViewController.h"
+#import "WPUser.h"
 
 @protocol SelectAssigneeDelegate <NSObject>
--(void) selectAssigneeViewControllerDismissed:(NSString *)assigneeString;
+- (void)selectAssigneeViewControllerDismissed:(WPUser *)assignee;
 @end
 
 @interface WPSelectAssigneeViewController : WPViewController<UITableViewDataSource, UITableViewDelegate>

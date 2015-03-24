@@ -26,7 +26,7 @@
 @property (nonatomic) UITextField *siteField;
 @property (nonatomic) UITextField *assigneeField;
 @property (nonatomic) UITextView *descriptionView;
-@property (nonatomic) WPSite *selectedSite;
+@property (nonatomic) WPMiniSite *selectedMiniSite;
 @property (nonatomic) WPUser *selectedAssignee;
 @property (nonatomic) WPUser *currUser;
 @property (nonatomic) WPSite *currSite;
@@ -79,18 +79,8 @@ static NSString *CellIdentifier = @"Cell";
 
 -(void)saveForm:(UIButton *)sender {
     if (_taskField.text.length == 0 || _siteField.text.length == 0) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
-                                                                       message:@"Cannot leave required fields blank."
-                                                                preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction* ok = [UIAlertAction
-                             actionWithTitle:@"OK"
-                             style:UIAlertActionStyleDefault
-                             handler:^(UIAlertAction * action)
-                             {
-                                 [alert dismissViewControllerAnimated:YES completion:nil];
-                             }];
-        [alert addAction:ok];
-        [self presentViewController:alert animated:YES completion:nil];
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Cannot leave fields blank." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
     } else {
         //need to add urgent
         NSNumberFormatter *userFormatter = [[NSNumberFormatter alloc] init];
@@ -99,21 +89,18 @@ static NSString *CellIdentifier = @"Cell";
         NSString *isUrgentString = [NSString stringWithFormat:@"%i", isUrgentInt];
         NSDictionary *taskJSON = @{
                                    @"title" : self.taskField.text,
-                                   @"mini_site_id" : [self.selectedSite.siteId stringValue],
+                                   @"mini_site_id" : [self.selectedMiniSite.miniSiteId stringValue],
                                    @"due_date" : self.dateField.text,
-                                   @"description" : self.descriptionView.text,
-                                   @"urgent" : isUrgentString
+                                   @"description" : self.descriptionView.text
                                    };
         WPTask *task = [MTLJSONAdapter modelOfClass:WPTask.class fromJSONDictionary:taskJSON error:nil];
         _currUser = [[WPUser alloc] init];
-        _currSite = [[WPSite alloc] init];
         NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
         [f setNumberStyle:NSNumberFormatterDecimalStyle];
         _currUser.userId = [f numberFromString:[[WPNetworkingManager sharedManager] keyChainStore][@"user_id"]];
-        _currSite.siteId = self.selectedSite.siteId;
         task.assigner = _currUser;
-        task.assignee = _currUser;
-        task.site = _currSite;
+        task.assignee = _selectedAssignee;
+        task.miniSite = self.selectedMiniSite;
         [[WPNetworkingManager sharedManager] createTaskWithTask:task parameters:[[NSMutableDictionary alloc] init] success:^{
             [self.parent requestAndLoadTasks];
             [self.navigationController popViewControllerAnimated:YES];
@@ -125,13 +112,14 @@ static NSString *CellIdentifier = @"Cell";
     _taskField.text = stringForFirst;
 }
 
--(void)selectSiteViewControllerDismissed:(WPSite *)selectedSite {
-    _siteField.text = selectedSite.name;
-    _selectedSite = selectedSite;
+-(void)selectSiteViewControllerDismissed:(WPMiniSite *)selectedMiniSite {
+    _siteField.text = selectedMiniSite.name;
+    _selectedMiniSite = selectedMiniSite;
 }
 
--(void)selectAssigneeViewControllerDismissed:(NSString *)stringForFirst {
-    _assigneeField.text = stringForFirst;
+-(void)selectAssigneeViewControllerDismissed:(WPUser *)assignee {
+    _assigneeField.text = assignee.name;
+    _selectedAssignee = assignee;
 }
 
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
@@ -217,7 +205,7 @@ static NSString *CellIdentifier = @"Cell";
             _siteField.delegate = self;
             cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:_siteField];
             _siteField.placeholder = @"Required";
-            cell.label.text = @"Site";
+            cell.label.text = @"Mini Site";
             _siteField.tag = 2;
             _siteField.textColor = [UIColor wp_paragraph];
             _siteField.font = [UIFont systemFontOfSize:16];

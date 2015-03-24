@@ -99,7 +99,7 @@ static NSString *CellIdentifier = @"Cell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if([self.selectAssigneeDelegate respondsToSelector:@selector(selectAssigneeViewControllerDismissed:)]) {
-        [self.selectAssigneeDelegate selectAssigneeViewControllerDismissed:[self.view.selectAssigneeTableView cellForRowAtIndexPath:indexPath].textLabel.text];
+        [self.selectAssigneeDelegate selectAssigneeViewControllerDismissed:self.userArray[indexPath.row]];
     }
     [self.navigationController popViewControllerAnimated:YES];
 }

@@ -44,10 +44,11 @@
                                    action:@selector(saveForm)];
     self.navigationItem.rightBarButtonItem = saveButton;
     self.view.fieldDescription.delegate = self;
-    //    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self
-    //                                                                         action:@selector(dismissKeyboard)];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self
+                                                                         action:@selector(dismissKeyboard)];
+    tap.cancelsTouchesInView = NO;
     [self.imageInputCell.viewImageButton addTarget:self action:@selector(presentImageView) forControlEvents:UIControlEventTouchUpInside];
-    //    [self.view addGestureRecognizer:tap];
+    [self.view addGestureRecognizer:tap];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -62,9 +63,8 @@
 }
 
 - (void)dismissKeyboard {
-    if([self.view.fieldDescription isFirstResponder]) {
-        [self.view.fieldDescription resignFirstResponder];
-    }
+    [self.descriptionView resignFirstResponder];
+    [self.ratingField resignFirstResponder];
 }
 
 - (BOOL)getValidRating {
@@ -111,7 +111,7 @@
         } else if ([previousViewController isKindOfClass:[WPTaskViewController class]]) {
             parent = (WPTaskViewController *)previousViewController;
             //        taskId = parent.taskId;
-            //        miniSiteId = parent.miniSiteId;
+            miniSiteId = [((WPTaskViewController *)parent).task.miniSite.miniSiteId stringValue];
         }
         NSString *photo = [UIImagePNGRepresentation([self compressForUpload:self.imageInputCell.imageInputView.image withScale:0.2]) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
         
@@ -374,11 +374,14 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     self.imageInputCell.imageInputView.image = info[UIImagePickerControllerOriginalImage];
     self.imageInputCell.viewImageButton.alpha = 1;
-    [picker dismissViewControllerAnimated:YES completion:nil];
+    [picker dismissViewControllerAnimated:YES completion:^{
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    }];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [picker dismissViewControllerAnimated:YES completion:nil];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 
 #pragma mark - Text Field delegate methods
