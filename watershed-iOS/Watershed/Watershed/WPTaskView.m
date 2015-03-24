@@ -91,10 +91,22 @@ int WPButtonHeight = 75;
     [_completed setTitleColor:[UIColor wp_darkBlue] forState:UIControlStateNormal];
     [_completed setTitle:@"Completed" forState:UIControlStateSelected];
     [_completed setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    [_completed setBackgroundImage:[WPTaskView imageFromColor:[UIColor wp_lightGreen]] forState:UIControlStateSelected];
     [_completed addTarget:self action:@selector(onClick) forControlEvents:UIControlEventTouchUpInside];
     [_addFieldReportButton setTitle:@"Add Field\nReport" forState:UIControlStateNormal];
     [_addFieldReportButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_siteLinkButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+}
+
++ (UIImage *)imageFromColor:(UIColor *)color {
+    CGRect rect = CGRectMake(0, 0, 1, 1);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
 }
 
 -(void)onClick {
