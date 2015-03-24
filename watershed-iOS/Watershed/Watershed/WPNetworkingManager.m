@@ -337,6 +337,7 @@ static NSString * const TASKS_URL = @"tasks";
         WPFieldReport *fieldReportResponse = [MTLJSONAdapter modelOfClass:WPFieldReport.class fromJSONDictionary:fieldReportJSON error:nil];
         fieldReportResponse.miniSite = fieldReport.miniSite;
         fieldReportResponse.imageURLs = fieldReport.imageURLs;
+        fieldReportResponse.user = [MTLJSONAdapter modelOfClass:WPUser.class fromJSONDictionary:fieldReportJSON[@"user"] error:nil];
         // NSDictionary *photoJSON = fieldReportJSON[@"photo"];
         // if (!([photoJSON isEqual:[NSNull null]]) && photoJSON) {
         //     [fieldReport.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];

@@ -107,7 +107,9 @@
     self.view.userImageView.image = [UIImage imageNamed:@"max"];
     self.view.userImageView.layer.borderColor = [ratingColor CGColor];
     self.view.titleLabel.text = self.fieldReport.miniSite.name;
-    self.view.userLabel.text = @"Reported by Max Wolfe";
+    if (self.fieldReport.user) {
+        self.view.userLabel.text = [@"Reported by " stringByAppendingString:self.fieldReport.user.name];
+    }
     self.view.descriptionLabel.text = self.fieldReport.info;
 }
 
