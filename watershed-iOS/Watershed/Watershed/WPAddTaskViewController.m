@@ -79,18 +79,8 @@ static NSString *CellIdentifier = @"Cell";
 
 -(void)saveForm:(UIButton *)sender {
     if (_taskField.text.length == 0 || _siteField.text.length == 0) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
-                                                                       message:@"Cannot leave required fields blank."
-                                                                preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction* ok = [UIAlertAction
-                             actionWithTitle:@"OK"
-                             style:UIAlertActionStyleDefault
-                             handler:^(UIAlertAction * action)
-                             {
-                                 [alert dismissViewControllerAnimated:YES completion:nil];
-                             }];
-        [alert addAction:ok];
-        [self presentViewController:alert animated:YES completion:nil];
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Cannot leave fields blank." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
     } else {
         //need to add urgent
         NSNumberFormatter *userFormatter = [[NSNumberFormatter alloc] init];

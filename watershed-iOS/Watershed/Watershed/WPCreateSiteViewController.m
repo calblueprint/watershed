@@ -56,22 +56,34 @@
 }
 
 - (void)saveAndDismissSelf {
-    NSDictionary *siteJSON = @{
-                               @"name" : self.nameTextField.text,
-                               @"street" : self.streetTextField.text,
-                               @"city" : self.cityTextField.text,
-                               @"state" : self.stateTextField.text,
-                               @"zip_code" : self.zipCodeTextField.text,
-                               @"description" : self.descriptionTextView.text
-                               };
-    WPSite *site = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:siteJSON error:nil];
     
-    // Don't request the list of sites, because it is already called in the ViewController's viewWillAppear
-    __weak __typeof(self)weakSelf = self;
-    [[WPNetworkingManager sharedManager] createSiteWithSite:site parameters:[[NSMutableDictionary alloc] init] success:^{
-        __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf dismissSelf];
-    }];
+    if (!(self.nameTextField.text.length &&
+          self.streetTextField.text.length &&
+          self.cityTextField.text.length &&
+          self.stateTextField.text.length &&
+          self.descriptionTextView.text.length)) {
+        [self presentErrorAlert];
+    } else {
+        NSDictionary *siteJSON = @{
+                                   @"name" : self.nameTextField.text,
+                                   @"street" : self.streetTextField.text,
+                                   @"city" : self.cityTextField.text,
+                                   @"state" : self.stateTextField.text,
+                                   @"zip_code" : self.zipCodeTextField.text,
+                                   @"description" : self.descriptionTextView.text
+                                   };
+        WPSite *site = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:siteJSON error:nil];
+        __weak __typeof(self)weakSelf = self;
+        [[WPNetworkingManager sharedManager] createSiteWithSite:site parameters:[[NSMutableDictionary alloc] init] success:^{
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
+            [strongSelf dismissSelf];
+        }];
+    }
+}
+
+- (void)presentErrorAlert {
+    UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Cannot leave fields blank." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [incorrect show];
 }
 
 #pragma mark - Table View Delegate / Data Source Methods

@@ -65,28 +65,42 @@
 }
 
 - (void)saveAndDismissSelf {
-    NSDictionary *miniSiteJSON = @{
-                                   @"name" : self.nameTextField.text,
-                                   @"street" : self.streetTextField.text,
-                                   @"city" : self.cityTextField.text,
-                                   @"state" : self.stateTextField.text,
-                                   @"zip_code" : self.zipCodeTextField.text,
-                                   @"description" : self.descriptionTextView.text,
-                                   @"vegetations" : self.selectedVegetations
-                                   };
-    WPMiniSite *miniSite = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:miniSiteJSON error:nil];
-    miniSite.site = self.parent.site;
+    if (!(self.nameTextField.text.length &&
+          self.streetTextField.text.length &&
+          self.cityTextField.text.length &&
+          self.stateTextField.text.length &&
+          self.descriptionTextView.text.length &&
+          self.imageInputCell.imageInputView.image)) {
+        [self presentErrorAlert];
+    } else {
+        NSDictionary *miniSiteJSON = @{
+                                       @"name" : self.nameTextField.text,
+                                       @"street" : self.streetTextField.text,
+                                       @"city" : self.cityTextField.text,
+                                       @"state" : self.stateTextField.text,
+                                       @"zip_code" : self.zipCodeTextField.text,
+                                       @"description" : self.descriptionTextView.text,
+                                       @"vegetations" : self.selectedVegetations
+                                       };
+        WPMiniSite *miniSite = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:miniSiteJSON error:nil];
+        miniSite.site = self.parent.site;
 
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    NSString *photo = [UIImagePNGRepresentation([self compressForUpload:self.imageInputCell.imageInputView.image withScale:0.2]) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-    parameters[@"photos_attributes"] = @[ @{ @"data" : photo } ];
+        NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+        NSString *photo = [UIImagePNGRepresentation([self compressForUpload:self.imageInputCell.imageInputView.image withScale:0.2]) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+        parameters[@"photos_attributes"] = @[ @{ @"data" : photo } ];
 
-    __weak __typeof(self)weakSelf = self;
-    [[WPNetworkingManager sharedManager] createMiniSiteWithMiniSite:miniSite parameters:parameters success:^(WPMiniSite *miniSite) {
-        __strong __typeof(weakSelf)strongSelf = weakSelf;
-        strongSelf.parent = nil;
-        [strongSelf dismissSelf];
-    }];
+        __weak __typeof(self)weakSelf = self;
+        [[WPNetworkingManager sharedManager] createMiniSiteWithMiniSite:miniSite parameters:parameters success:^(WPMiniSite *miniSite) {
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
+            strongSelf.parent = nil;
+            [strongSelf dismissSelf];
+        }];
+    }
+}
+
+- (void)presentErrorAlert {
+    UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Cannot leave fields blank." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [incorrect show];
 }
 
 - (UIImage *)compressForUpload:(UIImage *)original withScale:(CGFloat)scale {
