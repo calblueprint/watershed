@@ -122,6 +122,9 @@ public abstract class TaskAbstractFragment extends Fragment {
         mNetworkManager.getRequestQueue().add(request);
     }
 
+    /**
+     * Gets all the minisites for the task to choose.
+     */
     private void getMiniSites() {
         MiniSiteInfoListRequest request = new MiniSiteInfoListRequest(mParentActivity, new Response.Listener<ArrayList<MiniSite>>() {
             @Override
