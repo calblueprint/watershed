@@ -93,7 +93,7 @@ public class MainActivity extends ActionBarActivity
 
     // Action Bar Elements
     private PagerTabStrip mPagerTabStrip;
-    private ViewPager viewPager;
+    private ViewPager mViewPager;
     private TabsPagerAdapter mAdapter;
     private View mContainer;
     private ProgressBar mProgress;
@@ -190,9 +190,9 @@ public class MainActivity extends ActionBarActivity
         mProgress = (ProgressBar) findViewById(R.id.progressBar);
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
         mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
-        viewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager = (ViewPager) findViewById(R.id.pager);
         mContainer = findViewById(R.id.container);
-        viewPager.setAdapter(mAdapter);
+        mViewPager.setAdapter(mAdapter);
 
         mUserInfo = (RelativeLayout) findViewById(R.id.nav_bar_user_info);
         mUserInfo.setOnClickListener(this);
@@ -245,19 +245,25 @@ public class MainActivity extends ActionBarActivity
 
     public void displayTaskView(boolean toggle) {
         if (toggle){
-            viewPager.setVisibility(View.VISIBLE);
+            mViewPager.setVisibility(View.VISIBLE);
             mContainer.setVisibility(View.INVISIBLE);
         }
         else {
-            viewPager.setVisibility(View.INVISIBLE);
+            mViewPager.setVisibility(View.INVISIBLE);
             mContainer.setVisibility(View.VISIBLE);
         }
     }
-
+    @SuppressWarnings("deprecation")
+    @TargetApi(21)
     public void replaceFragment(Fragment newFragment) {
         android.support.v4.app.FragmentTransaction ft = mFragmentManager.beginTransaction();
         if(!newFragment.isAdded()){
             updateTitle(newFragment);
+
+            if (newFragment instanceof TaskFragment) mToolBar.setElevation(0);
+            else mToolBar.setElevation(Utility.convertDptoPix(this, 4));
+
+            mToolBar.invalidate();
             ft.replace(R.id.container, newFragment).addToBackStack(null).commit();
         }
     }
@@ -270,7 +276,7 @@ public class MainActivity extends ActionBarActivity
                     @Override
                     public void onBackStackChanged() {
                         Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
-                        if (f != null){
+                        if (f != null) {
                             updateTitle(f);
                         }
                     }
@@ -286,7 +292,7 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onTabSelected(Tab tab, FragmentTransaction ft) {
-        viewPager.setCurrentItem(tab.getPosition());
+        mViewPager.setCurrentItem(tab.getPosition());
     }
 
     @Override

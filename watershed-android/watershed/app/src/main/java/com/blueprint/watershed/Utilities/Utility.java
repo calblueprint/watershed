@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.app.FragmentActivity;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -72,4 +73,17 @@ public class Utility {
         NetworkInfo info = manager.getActiveNetworkInfo();
         return info != null && info.isConnected();
     }
+
+    /**
+     * Converts your DP pixels into regular pixels!
+     * @param context Context of application
+     * @param dp The number you want to convert to pixels
+     * @return
+     */
+    public static int convertDptoPix(Context context, int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                dp,
+                context.getResources().getDisplayMetrics());
+    }
+
 }
