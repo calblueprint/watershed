@@ -135,7 +135,7 @@ static NSString *cellIdentifier = @"SiteCell";
 - (void)setUpRightBarButtonItems {
     NSMutableArray *barButtonItems = [[NSMutableArray alloc] initWithObjects:[self newSearchBarButtonItem], nil];
     NSString *userRole = [WPNetworkingManager sharedManager].keyChainStore[@"role"];
-    if ([userRole isEqual:@"2"]) {
+    if (YES) {
         [barButtonItems insertObject:[self newAddSiteButtonItem] atIndex:0];
     }
     [self.navigationItem setRightBarButtonItems:barButtonItems animated:YES];

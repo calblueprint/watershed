@@ -91,8 +91,7 @@ static NSString *CellIdentifier = @"Cell";
                                    @"title" : self.taskField.text,
                                    @"mini_site_id" : [self.selectedSite.siteId stringValue],
                                    @"due_date" : self.dateField.text,
-                                   @"description" : self.descriptionView.text,
-                                   @"urgent" : isUrgentString
+                                   @"description" : self.descriptionView.text
                                    };
         WPTask *task = [MTLJSONAdapter modelOfClass:WPTask.class fromJSONDictionary:taskJSON error:nil];
         _currUser = [[WPUser alloc] init];
