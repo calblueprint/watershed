@@ -24,20 +24,20 @@ PODS:
   - BSKeyboardControls (2.2)
   - Facebook-iOS-SDK (3.21.1):
     - Bolts (~> 1.0)
-  - FontAwesomeKit (2.1.8):
+  - FontAwesomeKit (2.1.9):
     - FontAwesomeKit/Core
     - FontAwesomeKit/FontAwesome
     - FontAwesomeKit/FoundationIcons
     - FontAwesomeKit/IonIcons
     - FontAwesomeKit/Zocial
-  - FontAwesomeKit/Core (2.1.8)
-  - FontAwesomeKit/FontAwesome (2.1.8):
+  - FontAwesomeKit/Core (2.1.9)
+  - FontAwesomeKit/FontAwesome (2.1.9):
     - FontAwesomeKit/Core
-  - FontAwesomeKit/FoundationIcons (2.1.8):
+  - FontAwesomeKit/FoundationIcons (2.1.9):
     - FontAwesomeKit/Core
-  - FontAwesomeKit/IonIcons (2.1.8):
+  - FontAwesomeKit/IonIcons (2.1.9):
     - FontAwesomeKit/Core
-  - FontAwesomeKit/Zocial (2.1.8):
+  - FontAwesomeKit/Zocial (2.1.9):
     - FontAwesomeKit/Core
   - Mantle (1.5.1):
     - Mantle/extobjc
@@ -50,18 +50,22 @@ DEPENDENCIES:
   - AFNetworking (~> 2.0)
   - BSKeyboardControls (~> 2.2)
   - Facebook-iOS-SDK
-  - FontAwesomeKit (~> 2.1.0)
+  - FontAwesomeKit (from `https://github.com/PrideChung/FontAwesomeKit.git`)
   - Mantle
   - Masonry
   - UICKeyChainStore
   - UIImage+BlurredFrame
+
+EXTERNAL SOURCES:
+  FontAwesomeKit:
+    :git: https://github.com/PrideChung/FontAwesomeKit.git
 
 SPEC CHECKSUMS:
   AFNetworking: 0f54cb5d16ce38c1b76948faffb8d5fb705021c7
   Bolts: dd9fb8433d67f5acc3b6b4d1379bbc5513d716c1
   BSKeyboardControls: c9aa1bdbb5ecd454aa3d0b2279f79c5dc4b6c6ad
   Facebook-iOS-SDK: 18c26e86ab25c17854a2ee2a8f60562099c6600f
-  FontAwesomeKit: a2edea3111dab107b4cc43b85881b404eb063385
+  FontAwesomeKit: f8fb420a8ce4f234fc17d9a022c26de77a399924
   Mantle: d7c5ac734579ec751c58fecbf56189853056c58c
   Masonry: 35368c2ca9577ca87722c12fc52c4bad9b1c1516
   UICKeyChainStore: 257d869d42527b9853ebb11d6dc3ac377b270e72
