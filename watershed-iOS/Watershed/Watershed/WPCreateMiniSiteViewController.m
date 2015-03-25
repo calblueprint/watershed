@@ -89,6 +89,8 @@
         NSString *photo = [UIImagePNGRepresentation([self compressForUpload:self.imageInputCell.imageInputView.image withScale:0.2]) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
         parameters[@"photos_attributes"] = @[ @{ @"data" : photo } ];
 
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+
         __weak __typeof(self)weakSelf = self;
         [[WPNetworkingManager sharedManager] createMiniSiteWithMiniSite:miniSite parameters:parameters success:^(WPMiniSite *miniSite) {
             __strong __typeof(weakSelf)strongSelf = weakSelf;
