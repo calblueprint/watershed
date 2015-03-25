@@ -127,6 +127,8 @@
                                                    }};
         NSMutableDictionary *parameters = [staticParameters mutableCopy];
         
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+
         [[WPNetworkingManager sharedManager] postFieldReportWithParameters:parameters success:^(WPFieldReport *fieldReport) {
             [self.navigationController popViewControllerAnimated:YES];
         }];

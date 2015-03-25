@@ -72,6 +72,9 @@
                                    @"zip_code" : self.zipCodeTextField.text,
                                    @"description" : self.descriptionTextView.text
                                    };
+
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+
         WPSite *site = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:siteJSON error:nil];
         __weak __typeof(self)weakSelf = self;
         [[WPNetworkingManager sharedManager] createSiteWithSite:site parameters:[[NSMutableDictionary alloc] init] success:^{

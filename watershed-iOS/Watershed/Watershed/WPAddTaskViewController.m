@@ -101,6 +101,9 @@ static NSString *CellIdentifier = @"Cell";
         task.assigner = _currUser;
         task.assignee = _selectedAssignee;
         task.miniSite = self.selectedMiniSite;
+
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+
         [[WPNetworkingManager sharedManager] createTaskWithTask:task parameters:[[NSMutableDictionary alloc] init] success:^{
             [self.parent requestAndLoadTasks];
             [self.navigationController popViewControllerAnimated:YES];
