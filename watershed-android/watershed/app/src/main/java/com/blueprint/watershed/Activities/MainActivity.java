@@ -253,17 +253,14 @@ public class MainActivity extends ActionBarActivity
             mContainer.setVisibility(View.VISIBLE);
         }
     }
-    @SuppressWarnings("deprecation")
-    @TargetApi(21)
+
+
     public void replaceFragment(Fragment newFragment) {
         android.support.v4.app.FragmentTransaction ft = mFragmentManager.beginTransaction();
         if(!newFragment.isAdded()){
             updateTitle(newFragment);
 
-            if (newFragment instanceof TaskFragment) mToolBar.setElevation(0);
-            else mToolBar.setElevation(Utility.convertDptoPix(this, 4));
-
-            mToolBar.invalidate();
+            setToolbarElevation(Utility.convertDptoPix(this, 4));
             ft.replace(R.id.container, newFragment).addToBackStack(null).commit();
         }
     }
@@ -452,5 +449,12 @@ public class MainActivity extends ActionBarActivity
     public void setMenu() {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
+    }
+
+    @SuppressWarnings("deprecation")
+    @TargetApi(21)
+    public void setToolbarElevation(float elevation) {
+        mToolBar.setElevation(elevation);
+        mToolBar.invalidate();
     }
 }

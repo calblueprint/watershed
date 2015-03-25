@@ -85,6 +85,12 @@ public class TaskFragment extends ListFragment {
         return finalView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mParentActivity.setToolbarElevation(0);
+    }
+
     /**
      * Initializes all the views in the fragment.
      * This includes the adapters, buttons, listview, etc.

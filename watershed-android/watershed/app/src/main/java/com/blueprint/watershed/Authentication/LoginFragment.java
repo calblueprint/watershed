@@ -33,9 +33,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         return new LoginFragment();
     }
 
-    public LoginFragment() {
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

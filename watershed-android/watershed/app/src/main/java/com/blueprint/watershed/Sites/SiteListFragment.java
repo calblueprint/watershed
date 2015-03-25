@@ -81,7 +81,6 @@ public class SiteListFragment extends Fragment {
         });
 
         if (mSites == null) {
-            hideList();
             mNoSiteLayout.setRefreshing(true);
             getSitesRequest();
         }
