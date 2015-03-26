@@ -19,6 +19,7 @@ import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Sites.SiteListRequest;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Views.Material.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -34,6 +35,7 @@ public class SiteListFragment extends Fragment {
     private RecyclerView mSiteListView;
     private SwipeRefreshLayout mSwipeLayout;
     private SwipeRefreshLayout mNoSiteLayout;
+    private FloatingActionButton mCreateSiteButton;
     
     private SiteListAdapter mAdapter;
     private SiteMapper mSites;
@@ -87,13 +89,20 @@ public class SiteListFragment extends Fragment {
 
         mAdapter = new SiteListAdapter(mParentActivity, R.layout.site_list_row, getSites());
         mSiteListView.setAdapter(mAdapter);
+
+        mCreateSiteButton = (FloatingActionButton) view.findViewById(R.id.create_site_button);
+        mCreateSiteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mParentActivity.replaceFragment(CreateSiteFragment.newInstance());
+            }
+        });
     }
 
     @Override
     public void onResume() {
         super.onResume();
         mParentActivity.setMenuAction(true);
-//        getSitesRequest();
     }
 
     @Override
@@ -109,7 +118,7 @@ public class SiteListFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.site_list_menu, menu);
+        inflater.inflate(R.menu.empty, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 

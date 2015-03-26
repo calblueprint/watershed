@@ -8,6 +8,7 @@ import com.blueprint.watershed.Views.Material.FloatingActionButton;
 
 /**
  * Created by charlesx on 3/25/15.
+ * Animates the create button.
  */
 public class TaskListTransformer implements ViewPager.PageTransformer {
     private static final float MIN_SCALE = 0.75f;
