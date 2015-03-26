@@ -7,7 +7,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -18,6 +17,7 @@ import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Tasks.TaskListRequest;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Views.Material.FloatingActionButton;
 
 import org.json.JSONObject;
 
@@ -43,9 +43,10 @@ public class TaskFragment extends ListFragment {
     private List<String> mTaskListHeaders;
     private TaskAdapter mAllTaskAdapter;
     private TaskAdapter mUserTaskAdapter;
-    
+
     private Bundle mArgs;
 
+    private FloatingActionButton mCreateTask;
     private ExpandableListView mListView;
     private SwipeRefreshLayout mNoTasks;
     private SwipeRefreshLayout mSwipeLayout;
@@ -78,8 +79,6 @@ public class TaskFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View finalView = inflater.inflate(R.layout.fragment_task_list, container, false);
         initializeViews(finalView);
-        hideList();
-        mNoTasks.setRefreshing(true);
         mParentActivity.setMenuAction(true);
         getTasksRequest();
         return finalView;
@@ -152,26 +151,22 @@ public class TaskFragment extends ListFragment {
             mAllTaskAdapter = new TaskAdapter(mParentActivity, mTaskListHeaders, mAllTaskList);
             mListView.setAdapter(mAllTaskAdapter);
         }
+
+        mCreateTask = (FloatingActionButton) view.findViewById(R.id.create_task_button);
+        mCreateTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CreateTaskFragment newTask = CreateTaskFragment.newInstance();
+                mParentActivity.replaceFragment(newTask);
+            }
+        });
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.create_task_menu, menu);
+        inflater.inflate(R.menu.empty, menu);
         super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.add_task:
-                CreateTaskFragment newTask = CreateTaskFragment.newInstance();
-                mParentActivity.replaceFragment(newTask);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-
     }
 
     /**

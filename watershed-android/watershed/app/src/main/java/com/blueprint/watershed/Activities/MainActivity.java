@@ -44,6 +44,7 @@ import com.blueprint.watershed.Tasks.CreateTaskFragment;
 import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Tasks.TaskDetailFragment;
 import com.blueprint.watershed.Tasks.TaskFragment;
+import com.blueprint.watershed.Tasks.TaskListTransformer;
 import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Users.UserFieldReportFragment;
 import com.blueprint.watershed.Users.UserFragment;
@@ -193,6 +194,7 @@ public class MainActivity extends ActionBarActivity
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mContainer = findViewById(R.id.container);
         mViewPager.setAdapter(mAdapter);
+        mViewPager.setPageTransformer(true, new TaskListTransformer());
 
         mUserInfo = (RelativeLayout) findViewById(R.id.nav_bar_user_info);
         mUserInfo.setOnClickListener(this);
