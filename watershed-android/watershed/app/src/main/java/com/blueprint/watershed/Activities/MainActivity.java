@@ -140,7 +140,12 @@ public class MainActivity extends ActionBarActivity
 
         initializeFragments();
         mTitle = "Tasks";
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateToolbarElevation();
     }
 
     private void setUserObject() {
@@ -451,6 +456,11 @@ public class MainActivity extends ActionBarActivity
     public void setMenu() {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
+    }
+
+
+    private void updateToolbarElevation() {
+        setToolbarElevation(Utility.convertDptoPix(this, 4));
     }
 
     @SuppressWarnings("deprecation")
