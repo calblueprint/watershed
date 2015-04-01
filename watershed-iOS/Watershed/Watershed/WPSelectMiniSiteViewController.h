@@ -7,9 +7,10 @@
 //
 
 #import "WPViewController.h"
+#import "WPSite.h"
 
 @protocol SelectSiteDelegate <NSObject>
--(void) selectSiteViewControllerDismissed:(NSString *)stringForFirst;
+-(void) selectSiteViewControllerDismissed:(WPSite *)selectedSite;
 @end
 
 @interface WPSelectMiniSiteViewController : WPViewController<UITableViewDataSource, UITableViewDelegate>

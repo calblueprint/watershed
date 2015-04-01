@@ -1,10 +1,14 @@
 package com.blueprint.watershed.Tasks;
 
 import com.blueprint.watershed.APIObject;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.blueprint.watershed.FieldReports.FieldReport;
+import com.blueprint.watershed.MiniSites.MiniSite;
+import com.blueprint.watershed.Networking.Tasks.TaskSerializer;
+import com.blueprint.watershed.Users.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.Date;
 
@@ -24,10 +28,14 @@ public class Task implements APIObject {
     private Integer mAssigneeId;
     private Integer mAssignerId;
     private Boolean mComplete;
-    private Date mDueDate;
-    private Date mUpdatedAt;
-    private Date mCreatedAt;
 
+    private Boolean mUrgent;
+    private Date mDueDate;
+
+    private User mAssignee;
+    private User mAssigner;
+    private FieldReport mFieldReport;
+    private MiniSite mMiniSite;
 
     public Task() {}
 
@@ -44,10 +52,6 @@ public class Task implements APIObject {
     public Integer getAssignerId() { return mAssignerId; }
     public Boolean getComplete() { return mComplete; }
     public Date getDueDate() { return mDueDate; }
-    @JsonIgnore
-    public Date getUpdatedAt() { return mUpdatedAt; }
-    @JsonIgnore
-    public Date getCreatedAt() {return mCreatedAt;}
 
     public void setId(Integer Id){ mId = Id;}
     public void setTitle (String title){
@@ -67,6 +71,21 @@ public class Task implements APIObject {
     public void setDueDate(Date dueDate){
         mDueDate = dueDate;
     }
-    public void setUpdatedAt(Date updatedAt) { mUpdatedAt = updatedAt;}
-    public void setCreatedAt(Date createdAt) { mCreatedAt = createdAt;}
+
+    public void setAssigner(User assigner) { mAssigner = assigner; }
+    public User getAssigner() { return mAssigner; }
+    public void setFieldReport(FieldReport assigner) { mFieldReport = assigner; }
+    public FieldReport getFieldReport() { return mFieldReport; }
+    public void setMiniSite(MiniSite assigner) { mMiniSite = assigner; }
+    public MiniSite getMiniSite() { return mMiniSite; }
+    public User getAssignee() { return mAssignee; }
+    public void setAssignee(User mAssignee) { this.mAssignee = mAssignee; }
+    public Boolean getUrgent() {
+        return mUrgent;
+    }
+
+    public void setUrgent(Boolean mUrgent) {
+        this.mUrgent = mUrgent;
+    }
+
 }

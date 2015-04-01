@@ -53,7 +53,7 @@
             <RelativeLayout
                 android:id="@+id/mini_site_title_container"
                 android:layout_width="fill_parent"
-                android:layout_height="@dimen/button_standard_height"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/mini_site_photo_container"
                 android:layout_margin="20dp"
                 >
@@ -61,9 +61,9 @@
                     android:id="@+id/create_mini_site_title"
                     android:hint="@string/title"
                     android:layout_width="fill_parent"
-                    android:layout_height="@dimen/button_standard_height"
+                    android:layout_height="wrap_content"
                     android:background="@color/transparent"
-                    android:textSize="25sp"
+                    android:textSize="20sp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/form_gray"
                     />
@@ -86,8 +86,8 @@
 
                 <ImageView
                     android:id="@+id/description_image"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@drawable/ic_description"
                     android:scaleType="centerCrop"
                     />
@@ -103,9 +103,10 @@
                     android:layout_toRightOf="@id/description_image"
                     android:textColor="@color/black"
                     android:textColorHint="@color/form_gray"
+                    android:textSize="15sp"
                     android:background="@color/transparent"
                     android:gravity="top"
-                    android:lines="6"
+                    android:lines="5"
                     />
             </RelativeLayout>
 
@@ -128,8 +129,8 @@
 
                 <ImageView
                     android:id="@+id/location_image"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:src="@drawable/ic_location"
                     android:scaleType="centerCrop"
                     />
@@ -137,13 +138,14 @@
                 <EditText
                     android:id="@+id/create_mini_site_address"
                     android:hint="@string/create_site_address"
-                    android:layout_height="@dimen/button_standard_height"
+                    android:layout_height="wrap_content"
                     android:layout_width="fill_parent"
                     android:layout_toRightOf="@id/location_image"
                     android:layout_marginLeft="20dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/form_gray"
                     android:background="@color/transparent"
+                    android:textSize="15sp"
                     />
 
                 <LinearLayout
@@ -151,22 +153,24 @@
                     android:layout_height="@dimen/button_standard_height"
                     android:layout_below="@id/create_mini_site_address"
                     android:layout_toRightOf="@id/location_image"
+                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="20dp">
                     <EditText
                         android:id="@+id/create_mini_site_city"
                         android:hint="@string/create_site_city"
-                        android:layout_height="@dimen/button_standard_height"
+                        android:layout_height="wrap_content"
                         android:layout_width="fill_parent"
                         android:layout_weight="0.9"
                         android:background="@color/transparent"
                         android:maxLines="1"
                         android:textColor="@color/black"
                         android:textColorHint="@color/form_gray"
+                        android:textSize="15sp"
                         />
                     <EditText
                         android:id="@+id/create_mini_site_state"
                         android:hint="@string/create_site_state"
-                        android:layout_height="@dimen/button_standard_height"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="2dp"
                         android:layout_marginLeft="2dp"
                         android:layout_width="fill_parent"
@@ -175,11 +179,12 @@
                         android:maxLines="1"
                         android:textColor="@color/black"
                         android:textColorHint="@color/form_gray"
+                        android:textSize="15sp"
                         />
                     <EditText
                         android:id="@+id/create_mini_site_zip"
                         android:hint="@string/create_site_zip"
-                        android:layout_height="@dimen/button_standard_height"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="2dp"
                         android:layout_marginLeft="2dp"
                         android:layout_width="fill_parent"
@@ -189,6 +194,7 @@
                         android:inputType="number"
                         android:textColor="@color/black"
                         android:textColorHint="@color/form_gray"
+                        android:textSize="15sp"
                         />
                 </LinearLayout>
             </RelativeLayout>

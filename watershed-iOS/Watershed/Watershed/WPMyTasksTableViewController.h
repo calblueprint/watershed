@@ -11,5 +11,6 @@
 @interface WPMyTasksTableViewController : UITableViewController<UITableViewDelegate, UITableViewDataSource>
 
 @property (copy, nonatomic) NSArray *tasks;
+- (void)requestAndLoadMyTasks;
 
 @end

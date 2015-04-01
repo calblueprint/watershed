@@ -47,6 +47,8 @@ public class Site implements APIObject {
 
     public MiniSite getMiniSite(int position) { return mMiniSites.get(position); }
 
+    public boolean isMiniSiteEmpty() { return mMiniSites == null; }
+
     public ArrayList<Photo> getPhotos() {
         if (mPhotos == null) {
             mPhotos = new ArrayList<Photo>();
@@ -71,7 +73,7 @@ public class Site implements APIObject {
 
     @JsonIgnore
     public String getLocation() {
-        return String.format("%s, %s, %s %s", getStreet(), getCity(), getState(), getZipCode());
+        return String.format("%s\n%s, %s %d", getStreet(), getCity(), getState(), getZipCode());
     }
 
     // Setters

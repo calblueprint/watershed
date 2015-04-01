@@ -1,23 +1,23 @@
 package com.blueprint.watershed.Tasks;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ExpandableListView;
-import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Tasks.TaskListRequest;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Views.Material.FloatingActionButton;
 
 import org.json.JSONObject;
 
@@ -43,11 +43,12 @@ public class TaskFragment extends ListFragment {
     private List<String> mTaskListHeaders;
     private TaskAdapter mAllTaskAdapter;
     private TaskAdapter mUserTaskAdapter;
-    
+
     private Bundle mArgs;
 
+    private FloatingActionButton mCreateTask;
     private ExpandableListView mListView;
-    private TextView mNoTasks;
+    private SwipeRefreshLayout mNoTasks;
     private SwipeRefreshLayout mSwipeLayout;
 
 
@@ -78,15 +79,15 @@ public class TaskFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View finalView = inflater.inflate(R.layout.fragment_task_list, container, false);
         initializeViews(finalView);
+        mParentActivity.setMenuAction(true);
+        getTasksRequest();
         return finalView;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mSwipeLayout.setRefreshing(true);
-        mParentActivity.setMenuAction(true);
-        getTasksRequest();
+        mParentActivity.setToolbarElevation(0);
     }
 
     /**
@@ -119,6 +120,7 @@ public class TaskFragment extends ListFragment {
                 return true;
             }
         });
+
         mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {}
@@ -130,7 +132,16 @@ public class TaskFragment extends ListFragment {
                 mSwipeLayout.setEnabled((topRowVerticalPosition >= 0));
             }
         });
-        mNoTasks = (TextView) view.findViewById(R.id.no_tasks_layout);
+
+        mNoTasks = (SwipeRefreshLayout) view.findViewById(R.id.no_tasks_layout);
+        mNoTasks.setColorSchemeResources(R.color.ws_blue, R.color.facebook_blue, R.color.facebook_dark_blue, R.color.dark_gray);
+        mNoTasks.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mNoTasks.setRefreshing(true);
+                getTasksRequest();
+            }
+        });
 
         if (mArgs.getInt(OPTION) == USER) {
             mUserTaskAdapter = new TaskAdapter(mParentActivity, mTaskListHeaders, mUserTaskList);
@@ -140,26 +151,22 @@ public class TaskFragment extends ListFragment {
             mAllTaskAdapter = new TaskAdapter(mParentActivity, mTaskListHeaders, mAllTaskList);
             mListView.setAdapter(mAllTaskAdapter);
         }
+
+        mCreateTask = (FloatingActionButton) view.findViewById(R.id.create_task_button);
+        mCreateTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CreateTaskFragment newTask = CreateTaskFragment.newInstance();
+                mParentActivity.replaceFragment(newTask);
+            }
+        });
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.create_task_menu, menu);
+        inflater.inflate(R.menu.empty, menu);
         super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.add_task:
-                CreateTaskFragment newTask = CreateTaskFragment.newInstance();
-                mParentActivity.replaceFragment(newTask);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-
     }
 
     /**
@@ -193,11 +200,20 @@ public class TaskFragment extends ListFragment {
                         hideList();
                     }
                 }
-
-                if (mSwipeLayout != null) mSwipeLayout.setRefreshing(false);
+                setSwipeFalse();
             }
-        }, mSwipeLayout);
+        }, this);
         mNetworkManager.getRequestQueue().add(taskListRequest);
+    }
+
+    public void setSwipeFalse() {
+        new CountDownTimer(1000, 1000) {
+            public void onTick(long millisUntilFinished) {}
+            public void onFinish() {
+                if (mSwipeLayout != null) mSwipeLayout.setRefreshing(false);
+                if (mNoTasks != null) mNoTasks.setRefreshing(false);
+            }
+        }.start();
     }
 
     /**
@@ -254,11 +270,11 @@ public class TaskFragment extends ListFragment {
 
     public void showList() {
         mNoTasks.setVisibility(View.GONE);
-        mListView.setVisibility(View.VISIBLE);
+        mSwipeLayout.setVisibility(View.VISIBLE);
     }
 
     public void hideList() {
         mNoTasks.setVisibility(View.VISIBLE);
-        mListView.setVisibility(View.GONE);
+        mSwipeLayout.setVisibility(View.GONE);
     }
 }

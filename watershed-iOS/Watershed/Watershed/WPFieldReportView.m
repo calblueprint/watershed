@@ -220,7 +220,7 @@ const static float BORDER_WIDTH = 6.0f;
             
         } completion:^(BOOL finished) {
             [UIView animateWithDuration:0.5 animations:^{
-                self.userImageView.alpha = 1;
+                self.userImageView.alpha = 0;
             }];
         }];
     }];

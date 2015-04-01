@@ -23,6 +23,13 @@
 
     <!-- Form Colors -->
     <color name="form_gray">#FFAAAAAA</color>
+
+    <!-- Button Colors -->
+    <color name="ws_green">#66CD00</color>
+
     <color name="transparent_black">#AA000000</color>
     <color name="black">#000000</color>
+
+    <color name="pink">#e91e63</color>
+    <color name="pink_pressed">#ec407a</color>
 </resources>

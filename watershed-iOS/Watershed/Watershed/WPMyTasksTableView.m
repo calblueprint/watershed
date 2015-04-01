@@ -24,11 +24,13 @@
 
 - (void)createSubviews {
 
+    self.tableHeaderView = [[UIView alloc] init];
+
     _indicatorView = [({
         UIActivityIndicatorView *view = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         [view startAnimating];
         view;
-    }) wp_addToSuperview:self];
+    }) wp_addToSuperview:self.tableHeaderView];
 }
 
 - (void)updateConstraints {

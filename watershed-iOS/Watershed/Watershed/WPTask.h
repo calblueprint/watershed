@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "WPSite.h"
+#import "WPMiniSite.h"
 #import "WPUser.h"
 #import "Mantle.h"
 
@@ -21,7 +21,7 @@
 @property (nonatomic) NSNumber *siteId;
 @property (nonatomic) WPUser *assignee;
 @property (nonatomic) WPUser *assigner;
-@property (nonatomic) WPSite *site;
+@property (nonatomic) WPMiniSite *miniSite;
 @property (nonatomic) BOOL completed;
 
 @end

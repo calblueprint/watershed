@@ -35,7 +35,6 @@
                                   target:self
                                   action:@selector(newTaskForm:)];
     self.navigationItem.rightBarButtonItem = addButton;
-         
 }
 
 - (void)loadView {
@@ -48,7 +47,13 @@
 
 - (void)newTaskForm:(UIButton *)sender {
     WPAddTaskViewController *addTaskViewController = [[WPAddTaskViewController alloc] init];
+    addTaskViewController.parent = self;
     [[self navigationController] pushViewController: addTaskViewController animated:YES];
+}
+
+- (void)requestAndLoadTasks {
+    [self.myTasksTableController requestAndLoadMyTasks];
+    [self.allTasksTableController requestAndLoadAllTasks];
 }
 
 

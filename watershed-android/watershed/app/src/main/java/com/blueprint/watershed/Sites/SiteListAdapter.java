@@ -1,6 +1,8 @@
 package com.blueprint.watershed.Sites;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +33,7 @@ public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHo
         CircularTextView numberOfTasksView;
         TextView topLabel;
         TextView bottomLabel;
+        CardView cardView;
         public ViewHolder(View view) {
             super(view);
             parentView = (RelativeLayout) view.findViewById(R.id.site_list_row);
@@ -38,6 +41,7 @@ public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHo
             numberOfTasksView = (CircularTextView) view.findViewById(R.id.number_of_tasks_view);
             topLabel = (TextView) view.findViewById(R.id.top_label);
             bottomLabel = (TextView) view.findViewById(R.id.bottom_label);
+            cardView = (CardView) view.findViewById(R.id.site_card_view);
         }
     }
 
@@ -58,8 +62,10 @@ public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHo
         return new ViewHolder(v);
     }
 
+    @SuppressWarnings("deprecation")
+    @TargetApi(21)
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         if (sites.size() > 0 && position < sites.size()) {
@@ -68,7 +74,7 @@ public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHo
             holder.numberOfTasksView.configureLabels(Integer.toString(site.getTasksCount()), "TASKS");
             holder.topLabel.setText(site.getName());
             holder.bottomLabel.setText(String.format("%s Sites", site.getMiniSitesCount()));
-            holder.parentView.setOnClickListener(new View.OnClickListener() {
+            View.OnClickListener listener = new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     SiteFragment siteFragment = new SiteFragment();
@@ -76,7 +82,9 @@ public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHo
 
                     mParentActivity.replaceFragment(siteFragment);
                 }
-            });
+            };
+            holder.parentView.setOnClickListener(listener);
+            holder.numberOfTasksView.setOnClickListener(listener);
         }
     }
 
