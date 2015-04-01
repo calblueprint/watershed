@@ -15,7 +15,7 @@
 
 @implementation WPNetworkingManager
 
-static NSString * const BASE_URL = @"https://intense-reaches-1457.herokuapp.com/api/v1/";
+static NSString * const BASE_URL = @"https://floating-bayou-8262.herokuapp.com/api/v1/";
 static NSString * const SIGNIN_URL = @"users/sign_in";
 static NSString * const SIGNUP_URL = @"users";
 static NSString * const USERS_URL = @"users";
