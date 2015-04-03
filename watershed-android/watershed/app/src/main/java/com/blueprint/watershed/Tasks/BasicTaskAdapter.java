@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.blueprint.watershed.R;
 
+import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -58,9 +59,9 @@ public class BasicTaskAdapter extends ArrayAdapter<Task> {
         if (task.getDueDate() != null) {
             Calendar cal = Calendar.getInstance();
             cal.setTime(task.getDueDate());
-            holder.mDay.setText(cal.get(Calendar.DAY_OF_MONTH));
-            holder.mMonth.setText(cal.get(Calendar.MONTH));
-            holder.mYear.setText(cal.get(Calendar.YEAR));
+            holder.mDay.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
+            holder.mMonth.setText(new DateFormatSymbols().getMonths()[cal.get(Calendar.MONTH)-1]);
+            holder.mYear.setText(String.valueOf(cal.get(Calendar.YEAR)));
         }
         holder.mSite.setText(task.getMiniSite().getName());
         holder.mTitle.setText(task.getTitle());

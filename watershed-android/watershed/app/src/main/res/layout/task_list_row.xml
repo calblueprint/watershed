@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="75dp"
+    android:layout_height="90dp"
     android:background="@color/medium_gray"
-    android:padding="2dp"
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        card_view:cardUseCompatPadding="true"
+        card_view:cardElevation="4dp"
+        >
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/white">
             <View
                 android:id="@+id/task_list_row_color"
                 android:layout_width="5dp"
@@ -50,10 +57,11 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                >
                 <TextView
                     android:id="@+id/task_list_row_due_month"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
@@ -61,14 +69,16 @@
                     />
                 <TextView
                     android:id="@+id/task_list_row_due_day"
-                    android:textSize="25sp"
+                    android:textSize="30sp"
+                    android:layout_marginTop="-3dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="-3dp"
                     android:text="Day"
                     />
                 <TextView
                     android:id="@+id/task_list_row_due_year"
-                    android:textSize="8sp"
+                    android:textSize="10sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-thin"

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.blueprint.watershed.R;
 
+import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -79,9 +80,9 @@ public class TaskAdapter extends BaseExpandableListAdapter {
         if (task.getDueDate() != null) {
             Calendar cal = Calendar.getInstance();
             cal.setTime(task.getDueDate());
-            holder.mDay.setText(cal.get(Calendar.DAY_OF_MONTH));
-            holder.mMonth.setText(cal.get(Calendar.MONTH));
-            holder.mYear.setText(cal.get(Calendar.YEAR));
+            holder.mDay.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
+            holder.mMonth.setText(new DateFormatSymbols().getMonths()[cal.get(Calendar.MONTH) - 1].substring(0, 3));
+            holder.mYear.setText(String.valueOf(cal.get(Calendar.YEAR)));
         }
         holder.mSite.setText(task.getMiniSite().getName());
         holder.mTitle.setText(task.getTitle());
