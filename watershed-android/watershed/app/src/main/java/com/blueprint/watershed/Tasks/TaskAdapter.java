@@ -10,9 +10,7 @@ import android.widget.TextView;
 
 import com.blueprint.watershed.R;
 
-import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -63,10 +61,13 @@ public class TaskAdapter extends BaseExpandableListAdapter {
             row = inflater.inflate(R.layout.task_list_row, parent, false);
 
             holder = new TaskHolder();
-            holder.title = (TextView) row.findViewById(R.id.title);
-            holder.description = (TextView) row.findViewById(R.id.description);
-            holder.site = (TextView) row.findViewById(R.id.site);
-            holder.due_date = (TextView) row.findViewById(R.id.due_date);
+
+            holder.mColor = row.findViewById(R.id.task_list_row_color);
+            holder.mTitle = (TextView) row.findViewById(R.id.task_list_row_title);
+            holder.mSite = (TextView) row.findViewById(R.id.task_list_row_site);
+            holder.mDay = (TextView) row.findViewById(R.id.task_list_row_due_day);
+            holder.mMonth = (TextView) row.findViewById(R.id.task_list_row_due_month);
+            holder.mYear = (TextView) row.findViewById(R.id.task_list_row_due_year);
 
             row.setTag(holder);
         } else {
@@ -74,13 +75,16 @@ public class TaskAdapter extends BaseExpandableListAdapter {
         }
 
         Task task = getChild(groupPosition, childPosition);
-        holder.description.setText(task.getDescription());
-        if (task.getDueDate() != null) {
-            holder.due_date.setText(parseDate(task.getDueDate()));
-        }
-        holder.site.setText("Minisite " + Integer.toString(task.getMiniSiteId()));
 
-        holder.title.setText(task.getTitle());
+        if (task.getDueDate() != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(task.getDueDate());
+            holder.mDay.setText(cal.get(Calendar.DAY_OF_MONTH));
+            holder.mMonth.setText(cal.get(Calendar.MONTH));
+            holder.mYear.setText(cal.get(Calendar.YEAR));
+        }
+        holder.mSite.setText(task.getMiniSite().getName());
+        holder.mTitle.setText(task.getTitle());
         return row;
     }
 
@@ -96,22 +100,22 @@ public class TaskAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         View row = convertView;
-        TaskHolder holder;
+        TaskHeaderHolder holder;
 
         if (row == null) {
             LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
-            holder = new TaskHolder();
+            holder = new TaskHeaderHolder();
 
             row = inflater.inflate(R.layout.task_list_header, parent, false);
-            holder.title = (TextView) row.findViewById(R.id.task_list_header_title);
+            holder.mTitle = (TextView) row.findViewById(R.id.task_list_header_title);
 
             row.setTag(holder);
         } else {
-            holder = (TaskHolder) row.getTag();
+            holder = (TaskHeaderHolder) row.getTag();
         }
 
         String taskHeader = getGroup(groupPosition);
-        holder.title.setText(taskHeader);
+        holder.mTitle.setText(taskHeader);
 
         return row;
     }
@@ -119,14 +123,17 @@ public class TaskAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean hasStableIds() { return false; }
 
-    private String parseDate(Date date) {
-        return DateFormat.getDateInstance().format(date);
-    }
 
     static class TaskHolder {
-        TextView title;
-        TextView description;
-        TextView due_date;
-        TextView site;
+        View mColor;
+        TextView mTitle;
+        TextView mSite;
+        TextView mDay;
+        TextView mMonth;
+        TextView mYear;
+    }
+
+    static class TaskHeaderHolder {
+        TextView mTitle;
     }
 }

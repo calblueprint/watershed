@@ -22,6 +22,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/task_list_row_color"
+                android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp">
                 <TextView
                     android:id="@+id/task_list_row_title"
