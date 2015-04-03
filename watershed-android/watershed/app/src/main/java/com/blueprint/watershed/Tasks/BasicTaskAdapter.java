@@ -10,10 +10,8 @@ import android.widget.TextView;
 
 import com.blueprint.watershed.R;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * A Custom Adapter for the Task Object
@@ -21,58 +19,63 @@ import java.util.Date;
  *
  */
 public class BasicTaskAdapter extends ArrayAdapter<Task> {
-    Context context;
-    int layoutResourceId;
-    ArrayList<Task> data = null;
+    Context mContext;
+    int mLayoutResourceId;
+    ArrayList<Task> mData = null;
 
     public BasicTaskAdapter(Context context, int layoutResourceId, ArrayList<Task> data){
         super(context, layoutResourceId, data);
-        this.layoutResourceId = layoutResourceId;
-        this.context = context;
-        this.data = data;
+        mLayoutResourceId = layoutResourceId;
+        mContext = context;
+        mData = data;
     }
 
     @Override
-    public View getView(int position,  View convertview, ViewGroup parent){
-        View row = convertview;
-        TaskHolder holder = null;
+    public View getView(int position,  View convertView, ViewGroup parent){
+        View row = convertView;
+        TaskHolder holder;
 
         if (row == null) {
-            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-            row = inflater.inflate(layoutResourceId, parent, false);
+            LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
+            row = inflater.inflate(R.layout.task_list_row, parent, false);
 
             holder = new TaskHolder();
-            holder.title = (TextView)row.findViewById(R.id.title);
-            holder.description = (TextView)row.findViewById(R.id.description);
-            holder.site = (TextView) row.findViewById(R.id.site);
-            holder.due_date = (TextView)row.findViewById(R.id.due_date);
+
+            holder.mColor = row.findViewById(R.id.task_list_row_color);
+            holder.mTitle = (TextView) row.findViewById(R.id.task_list_row_title);
+            holder.mSite = (TextView) row.findViewById(R.id.task_list_row_site);
+            holder.mDay = (TextView) row.findViewById(R.id.task_list_row_due_day);
+            holder.mMonth = (TextView) row.findViewById(R.id.task_list_row_due_month);
+            holder.mYear = (TextView) row.findViewById(R.id.task_list_row_due_year);
 
             row.setTag(holder);
+        } else {
+            holder = (TaskHolder) row.getTag();
         }
-        else
-        {
-            holder = (TaskHolder)row.getTag();
-        }
-        Task task = data.get(position);
-        holder.title.setText(task.getTitle());
-        holder.description.setText(task.getDescription());
-        if (task.getDueDate() != null) {
-            holder.due_date.setText(parseDate(task.getDueDate()));
-        }
-        holder.site.setText("Site " + Integer.toString(task.getMiniSiteId()));
 
+        Task task = getItem(position);
+
+        if (task.getDueDate() != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(task.getDueDate());
+            holder.mDay.setText(cal.get(Calendar.DAY_OF_MONTH));
+            holder.mMonth.setText(cal.get(Calendar.MONTH));
+            holder.mYear.setText(cal.get(Calendar.YEAR));
+        }
+        holder.mSite.setText(task.getMiniSite().getName());
+        holder.mTitle.setText(task.getTitle());
         return row;
     }
 
-    private String parseDate(Date date) {
-        return DateFormat.getDateInstance().format(date);
-    }
+    @Override
+    public Task getItem(int position) { return mData.get(position); }
 
-    static class TaskHolder
-    {
-        TextView title;
-        TextView description;
-        TextView due_date;
-        TextView site;
+    static class TaskHolder {
+        View mColor;
+        TextView mTitle;
+        TextView mSite;
+        TextView mDay;
+        TextView mMonth;
+        TextView mYear;
     }
 }
