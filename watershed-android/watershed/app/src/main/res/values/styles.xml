@@ -11,6 +11,7 @@
     </style>
 
     <style name="WsAppTheme" parent="Theme.AppCompat.Light">
+        <item name="android:windowActionBar">false</item>
         <item name="windowActionBar">false</item>
         <item name="android:actionBarStyle">@style/WsActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/WsActionBarTabText</item>

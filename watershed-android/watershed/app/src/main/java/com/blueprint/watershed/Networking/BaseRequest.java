@@ -30,9 +30,9 @@ public abstract class BaseRequest extends JsonObjectRequest {
     private Response.Listener listener;
     private Response.Listener errorListener;
 
-//    private static final String baseURL = "http://155.41.97.153:3000/api/v1/";
+    private static final String baseURL = "http://192.168.0.11:3000/api/v1/";
 //    private static final String baseURL = "https://intense-reaches-1457.herokuapp.com/api/v1/";
-    private static final String baseURL = "https://floating-bayou-8262.herokuapp.com/api/v1/";
+//    private static final String baseURL = "https://floating-bayou-8262.herokuapp.com/api/v1/";
 
     public BaseRequest(int method, String url, JSONObject jsonRequest,
                        final Response.Listener listener, final Response.Listener<APIError> errorListener,
@@ -47,7 +47,7 @@ public abstract class BaseRequest extends JsonObjectRequest {
                     if (!Utility.isConnectedToInternet(activity)) {
                         Toast.makeText(activity, "You're not connected to the internet!", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(activity, "Server error - please try again!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity, "Something went wrong - please try again!", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     if (networkResponse.statusCode == HttpStatus.SC_FORBIDDEN) {
