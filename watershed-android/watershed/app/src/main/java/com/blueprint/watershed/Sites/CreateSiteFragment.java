@@ -2,14 +2,6 @@ package com.blueprint.watershed.Sites;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
-
-import com.android.volley.Response;
-import com.blueprint.watershed.Networking.Sites.CreateSiteRequest;
-
-import org.json.JSONObject;
-
-import java.util.HashMap;
 
 
 /**
@@ -34,4 +26,5 @@ public class CreateSiteFragment extends SiteAbstractFragment {
         return fragment;
     }
 
+    public void startSiteRequest() { validateSiteRequest(null, "CREATE"); }
 }

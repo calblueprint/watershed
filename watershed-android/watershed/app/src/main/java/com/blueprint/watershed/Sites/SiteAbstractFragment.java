@@ -85,7 +85,7 @@ public abstract class SiteAbstractFragment extends Fragment implements View.OnCl
         submitButton.setOnClickListener(this);
     }
 
-    private void validateSiteRequest(Site site, String string) {
+    public void validateSiteRequest(Site site, String string) {
         boolean has_errors = false;
         if (site == null) site = new Site();
 
