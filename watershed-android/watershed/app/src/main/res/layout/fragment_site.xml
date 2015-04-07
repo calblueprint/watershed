@@ -37,7 +37,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         fab:fab_menu_colorNormal="@color/pink"
-        fab:fab_menu_colorPressed="@color/pink"
+        fab:fab_menu_colorPressed="@color/pink_pressed"
         fab:fab_menu_icon="@drawable/ic_settings"
         fab:fab_labelStyle="@style/menu_labels_style"
         android:layout_marginBottom="16dp"
