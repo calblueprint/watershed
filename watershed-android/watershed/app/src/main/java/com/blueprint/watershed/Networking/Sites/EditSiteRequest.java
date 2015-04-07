@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Networking.BaseRequest;
 import com.blueprint.watershed.Sites.Site;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -16,9 +15,12 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 /**
- * Created by maxwolffe on 2/16/15.
+ * Created by maxwolffe on 4/7/15.
  */
-public class CreateSiteRequest extends BaseRequest {
+public class EditSiteRequest extends BaseRequest {
+
+    Site mSite;
+    Activity mActivity;
 
     /**
      * Sends a request to the server to create a new site.
@@ -28,8 +30,8 @@ public class CreateSiteRequest extends BaseRequest {
      * @param params - params for a new site. JSON Object
      * @param listener - A response listener to be called once the response is returned.
      */
-    public CreateSiteRequest(final Activity activity, final Site site, HashMap<String, JSONObject> params, final Response.Listener<Site> listener) {
-        super(Request.Method.POST, makeURL("sites/"), siteParams(activity, site),
+    public EditSiteRequest(final Activity activity, final Site site, HashMap<String, JSONObject> params, final Response.Listener<Site> listener) {
+        super(Request.Method.PUT, makeURL("sites" + site.getId()), siteParams(activity, site),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {
@@ -40,10 +42,13 @@ public class CreateSiteRequest extends BaseRequest {
                             });
                             listener.onResponse(site);
                         } catch (Exception e) {
-                            Log.e("Create Site Json exception", e.toString());
+                            Log.e("Edit Site Json exception", e.toString());
                         }
                     }
                 }, activity);
+
+        mSite = site;
+        mActivity = activity;
     }
 
     /**
@@ -66,4 +71,3 @@ public class CreateSiteRequest extends BaseRequest {
         return new JSONObject(params);
     }
 }
-
