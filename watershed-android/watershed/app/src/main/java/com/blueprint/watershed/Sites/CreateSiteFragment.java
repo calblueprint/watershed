@@ -35,7 +35,7 @@ import java.util.HashMap;
  * Use the {@link CreateSiteFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CreateSiteFragment extends SiteAbstractFragment implements View.OnClickListener{
+public class CreateSiteFragment extends SiteAbstractFragment{
 
     /**
      * Use this factory method to create a new instance of
@@ -54,6 +54,10 @@ public class CreateSiteFragment extends SiteAbstractFragment implements View.OnC
         View view = inflater.inflate(R.layout.fragment_create_site, container, false);
         setButtonListeners(view);
         return view;
+    }
+
+    public void submitListener(){
+        createSite(CREATE, null);
     }
 
 
