@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/site_list_row"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:background="@color/medium_gray">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/site_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        card_view:cardUseCompatPadding="true"
+        card_view:cardElevation="4dp"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <com.blueprint.watershed.Views.CoverPhotoPagerView
+                android:id="@+id/cover_photo_pager_view"
+                android:background="@color/ws_blue"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:clickable="true"
+                />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_below="@+id/cover_photo_pager_view"
+                android:layout_marginLeft="@dimen/standard_margin"
+                android:layout_marginRight="@dimen/standard_margin"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/top_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Top Label"
+                    android:maxLines="1"
+                    />
+
+                <TextView
+                    android:id="@+id/bottom_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Bottom Label"
+                    android:maxLines="1"
+                    />
+
+            </LinearLayout>
+
+            <com.blueprint.watershed.Views.CircularTextView
+                android:id="@+id/number_of_tasks_view"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@color/transparent"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignBottom="@+id/cover_photo_pager_view"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="-30dp"
+                android:clickable="true"
+                />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

@@ -1,0 +1,32 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.blueprint.watershed.Sites.SiteFragment">
+
+    <com.blueprint.watershed.Views.HeaderGridView
+        android:id="@+id/mini_sites_grid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/no_margin"
+        android:layout_marginLeft="@dimen/no_margin"
+        android:layout_marginRight="@dimen/no_margin"
+        android:background="@color/medium_gray"
+        android:numColumns="2"
+        android:verticalSpacing="@dimen/tight_margin"
+        android:horizontalSpacing="@dimen/tight_margin">
+    </com.blueprint.watershed.Views.HeaderGridView>
+
+    <com.blueprint.watershed.Views.Material.FloatingActionButton
+        style="@style/AddFABCenterBottom"
+        android:id="@+id/create_mini_site_button"
+        fab:fab_plusIconColor="@color/white"
+        fab:fab_colorNormal="@color/pink"
+        fab:fab_colorPressed="@color/pink_pressed"
+        fab:fab_size="normal"
+        fab:fab_icon="@drawable/ic_add"
+        />
+
+</RelativeLayout>

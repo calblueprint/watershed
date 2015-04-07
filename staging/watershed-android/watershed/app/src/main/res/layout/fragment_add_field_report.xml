@@ -1,0 +1,210 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.blueprint.watershed.FieldReports.AddFieldReportFragment">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/report_photo_container"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@color/ws_blue">
+
+                <ImageView
+                    android:id="@+id/report_photo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/transparent_black"
+                    android:padding="10dp">
+                    <ImageButton
+                        android:id="@+id/report_add_photo"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/ic_camera"
+                        />
+                </RelativeLayout>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/report_title_container"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/report_photo_container"
+                android:layout_margin="20dp"
+                >
+                <TextView
+                    android:id="@+id/report_title"
+                    android:text="@string/title"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/form_gray"
+                    />
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/layer_1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/report_title_container"
+                android:background="@color/form_gray"/>
+
+            <RelativeLayout
+                android:id="@+id/report_description_container"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layer_1"
+                android:layout_margin="20dp"
+                >
+
+                <ImageView
+                    android:id="@+id/description_image"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_description"
+                    android:scaleType="centerCrop"
+                    />
+
+                <EditText
+                    android:id="@+id/report_description"
+                    android:hint="@string/description"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toEndOf="@id/description_image"
+                    android:layout_toRightOf="@id/description_image"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/form_gray"
+                    android:background="@color/transparent"
+                    android:gravity="top"
+                    android:lines="4"
+                    />
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/layer_2"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/report_description_container"
+                android:layout_marginLeft="70dp"
+                android:background="@color/form_gray"/>
+
+            <RelativeLayout
+                android:id="@+id/report_rating_container"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layer_2"
+                android:layout_margin="20dp"
+                >
+
+                <ImageView
+                    android:id="@+id/rating_image"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_thumb_up"
+                    android:scaleType="centerCrop"
+                    />
+
+                <RadioGroup
+                    android:id="@+id/health_group"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toEndOf="@id/rating_image"
+                    android:layout_toRightOf="@id/rating_image"
+                    android:orientation="horizontal"
+                    >
+
+                    <RadioButton android:id="@+id/health_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        />
+                    <RadioButton android:id="@+id/health_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:text="2"
+                        />
+                    <RadioButton android:id="@+id/health_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:text="3"
+                        />
+                    <RadioButton android:id="@+id/health_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:text="4"
+                        />
+                    <RadioButton android:id="@+id/health_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:text="5"
+                        />
+                </RadioGroup>
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/layer_3"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/report_rating_container"
+                android:layout_marginLeft="70dp"
+                android:background="@color/form_gray"/>
+
+            <RelativeLayout
+                android:id="@+id/report_urgent_container"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layer_3"
+                android:layout_margin="20dp"
+                >
+
+                <ImageView
+                    android:id="@+id/urgent_image"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_error"
+                    android:scaleType="centerCrop"
+                    />
+
+                <Switch
+                    android:id="@+id/field_report_urgent"
+                    android:textOn="@string/urgent"
+                    android:textOff="@string/not_urgent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

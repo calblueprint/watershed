@@ -1,0 +1,138 @@
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <!-- We use a Toolbar so that our drawer can be displayed
+        in front of the action bar -->
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            app:theme="@style/ToolBarStyle"
+            android:background="@color/ws_blue"
+            android:textColor="@color/white"
+            />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/toolbar"
+            >
+
+            <android.support.v4.view.PagerTabStrip
+                android:id="@+id/pager_title_strip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textColor="@color/white"
+                android:background="@color/ws_blue"
+                android:elevation="4dp"/>
+
+        </android.support.v4.view.ViewPager>
+
+        <FrameLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/toolbar"
+            android:orientation="vertical"
+            />
+
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:visibility="gone"
+            android:indeterminateDrawable="@drawable/progress" >
+        </ProgressBar>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/left_drawer"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/ws_nav_background"
+        android:elevation="5dp"
+        android:clickable="true"
+        >
+        <RelativeLayout
+            android:id="@+id/nav_bar_user_info"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@drawable/nav_info_background"
+            android:paddingTop="@dimen/tight_margin"
+            android:paddingBottom="@dimen/tight_margin"
+            android:paddingRight="@dimen/standard_margin"
+            android:paddingLeft="@dimen/standard_margin">
+
+            <TextView
+                android:id="@+id/nav_bar_user_role"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:textColor="@color/white"
+            />
+
+            <TextView
+                android:id="@+id/nav_bar_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/nav_bar_user_role"
+                android:layout_marginBottom="3dp"
+                android:textColor="@color/white"
+                />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_above="@id/nav_bar_user_name"
+                android:layout_marginBottom="@dimen/tight_margin"
+                android:src="@drawable/watershed_logo"
+                android:scaleType="centerCrop"
+                />
+            
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/arrow"
+                android:rotation="180"
+            />
+
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/left_drawer_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/nav_bar_user_info"
+            android:choiceMode="singleChoice"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp"
+            />
+    </RelativeLayout>
+
+
+
+</android.support.v4.widget.DrawerLayout>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Main Colors -->
+    <color name="white">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
+    <color name="light_gray">#F9F9F9</color>
+    <color name="medium_gray">#EEEEEE</color>
+    <color name="dark_gray">#656d78</color>
+
+    <color name="dark_transparent_gray">#CC656D78</color>
+
+    <!-- Watershed Colors -->
+    <color name="ws_title_bar">#1976D2</color>
+    <color name="ws_nav_info">#FF0D47A1</color>
+    <color name="ws_nav_info_pressed">#EE0D47A1</color>
+    <color name="ws_blue">#2196F3</color>
+    <color name="ws_nav_background">#ECEFF1</color>
+    <!--<color name="ws_blue">#81B4DE</color>-->
+
+    <!-- Other Colors -->
+    <color name="facebook_blue">#3B5998</color>
+    <color name="facebook_dark_blue">#1D4088</color>
+
+    <!-- Form Colors -->
+    <color name="form_gray">#FFAAAAAA</color>
+
+    <!-- Button Colors -->
+    <color name="ws_green">#66CD00</color>
+
+    <color name="transparent_black">#AA000000</color>
+    <color name="black">#000000</color>
+
+    <color name="pink">#e91e63</color>
+    <color name="pink_pressed">#ec407a</color>
+</resources>

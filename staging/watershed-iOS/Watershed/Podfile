@@ -1,0 +1,11 @@
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '7.0'
+
+pod 'Masonry'
+pod 'AFNetworking', '~> 2.0'
+pod 'FontAwesomeKit', :git => 'https://github.com/PrideChung/FontAwesomeKit.git'
+pod 'UIImage+BlurredFrame'
+pod 'Facebook-iOS-SDK'
+pod 'UICKeyChainStore'
+pod 'Mantle'
+pod 'BSKeyboardControls', '~> 2.2'

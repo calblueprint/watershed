@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Margins -->
+    <dimen name="standard_margin">16dp</dimen>
+    <dimen name="tight_margin">12dp</dimen>
+    <dimen name="no_margin">0dp</dimen>
+    <dimen name="landing_page_margin">60dp</dimen>
+
+    <!-- Text Fields -->
+    <dimen name="text_field_standard_height">40dp</dimen>
+
+    <!-- Buttons -->
+    <dimen name="button_standard_height">40dp</dimen>
+    <dimen name="button_large_height">48dp</dimen>
+    <dimen name="button_border_standard_height">39dp</dimen>
+
+    <!-- Other -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="player_image_border_width">1.5dp</dimen>
+
+    <dimen name="fab_size_normal">56dp</dimen>
+    <dimen name="fab_size_mini">40dp</dimen>
+
+    <dimen name="fab_icon_size">24dp</dimen>
+
+    <dimen name="fab_plus_icon_size">14dp</dimen>
+    <dimen name="fab_plus_icon_stroke">2dp</dimen>
+
+    <dimen name="fab_shadow_offset">3dp</dimen>
+    <dimen name="fab_shadow_radius">9dp</dimen>
+
+    <dimen name="fab_stroke_width">1dp</dimen>
+
+    <dimen name="fab_actions_spacing">16dp</dimen>
+    <dimen name="fab_labels_margin">8dp</dimen>
+</resources>

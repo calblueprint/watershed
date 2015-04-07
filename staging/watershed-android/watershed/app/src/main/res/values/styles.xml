@@ -1,0 +1,94 @@
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="AppThemeTranslucent" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="WsAppTheme" parent="Theme.AppCompat.Light">
+        <item name="windowActionBar">false</item>
+        <item name="android:actionBarStyle">@style/WsActionBar</item>
+        <item name="android:actionBarTabTextStyle">@style/WsActionBarTabText</item>
+        <item name="android:actionBarTabBarStyle">@style/WsActionBarTabView</item>
+        <item name="colorPrimary">@color/ws_blue</item>
+        <item name="colorPrimaryDark">@color/ws_title_bar</item>
+    </style>
+
+    <style name="WsActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/ws_blue</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="WsActionBarTabText" parent="@android:style/Widget.Holo.ActionBar.TabText">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="WsActionBarTabView" parent="@android:style/Widget.Holo.ActionBar.TabBar">
+        <item name="android:background">@color/ws_blue</item>
+    </style>
+
+    <style name="BackGroundImageView">
+        <item name="android:alpha">0.5</item>
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:src">@drawable/landing_page_photo</item>
+    </style>
+
+    <style name="WsLabel">
+        <item name="android:gravity">bottom|left</item>
+        <item name="android:layout_width">0px</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/facebook_blue</item>
+    </style>
+
+    <!-- Edit Text Form -->
+    <style name="FormEditText">
+        <item name="android:layout_width">350dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:background">@drawable/edit_text_form_transition</item>
+        <item name="android:padding">20dp</item>
+        <item name="android:textColorHint">@color/form_gray</item>
+        <item name="android:textColor">@color/form_gray</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <!-- Arrows -->
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@android:color/white</item>
+    </style>
+
+    <!-- ToolBar -->
+    <style name="ToolBarStyle" parent="Theme.AppCompat">
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+    </style>
+
+    <style name="AddFAB">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="AddFABRightCorner" parent="AddFAB">
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+
+    <style name="AddFABCenterBottom" parent="AddFAB">
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_alignParentBottom">true</item>
+    </style>
+</resources>
