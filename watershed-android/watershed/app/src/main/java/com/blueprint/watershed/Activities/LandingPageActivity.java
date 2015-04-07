@@ -27,6 +27,7 @@ import com.blueprint.watershed.Utilities.Utility;
 import com.crashlytics.android.Crashlytics;
 import com.facebook.AppEventsLogger;
 import com.facebook.SessionState;
+import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -51,14 +52,14 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     private com.facebook.widget.LoginButton mFacebookButton;
     private Button mSignUpButton;
     private NetworkManager mLoginNetworkManager;
-    private SharedPreferences preferences;
+    private SharedPreferences mPreferences;
     private ObjectMapper mMapper;
-    private View viewBlocker;
+    private View mViewBlocker;
     private LinearLayout mLayout;
 
-    //User
-    private Integer mUserId;
+    private UiLifecycleHelper mUiHelper;
 
+    // Called when session changes
     private com.facebook.Session.StatusCallback callback = new com.facebook.Session.StatusCallback() {
         @Override
         public void call(com.facebook.Session session, SessionState state, Exception exception) {
@@ -72,26 +73,29 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_landing_page);
         mLoginNetworkManager = NetworkManager.getInstance(this.getApplicationContext());
-        viewBlocker = findViewById(R.id.viewBlocker);
-        viewBlocker.setVisibility(View.GONE);
+        mViewBlocker = findViewById(R.id.viewBlocker);
+        mViewBlocker.setVisibility(View.GONE);
+        mUiHelper = new UiLifecycleHelper(this, callback);
+        mUiHelper.onCreate(savedInstanceState);
         initializeViews();
 
-        preferences = getSharedPreferences(PREFERENCES, 0);
+        mPreferences = getSharedPreferences(PREFERENCES, 0);
 
         // NOTE(mark): Change to !hasAuthCredentials if you want the main activity to show.
-        if (hasAuthCredentials(preferences)) {
+        if (hasAuthCredentials(mPreferences)) {
             // Ideally we could request the user object from the server again here and then pass them to the main activity.
             final Intent intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             Bundle b = new Bundle();
             b.putInt("userId", 1); //Replace with an actual user Id soon
             intent.putExtras(b);
-            // intent.putExtra("auth_token", preferences.getString("auth_token", null));
+            // intent.putExtra("auth_token", mPreferences.getString("auth_token", null));
             this.finish();
             startActivity(intent);
             overridePendingTransition(0, 0);
         }
     }
+
 
     @Override
     protected void onResume() {
@@ -100,17 +104,17 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         AppEventsLogger.activateApp(this);
 
         com.facebook.Session session = com.facebook.Session.getActiveSession();
-        if (session != null &&
-                (session.isOpened() || session.isClosed()) ) {
+        if (session != null && (session.isOpened() || session.isClosed()) ) {
             onSessionStateChange(session, session.getState(), null);
-
         }
+
+        mUiHelper.onResume();
     }
 
     protected void onPause() {
         super.onPause();
-
         AppEventsLogger.deactivateApp(this);
+        mUiHelper.onPause();
     }
 
     public void initializeViews() {
@@ -139,10 +143,10 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         }
     }
 
-    public boolean hasAuthCredentials(SharedPreferences preferences) {
-        return !preferences.getString("authentication_token", "none").equals("none") &&
-               !preferences.getString("email", "none").equals("none") &&
-               !preferences.getString("user", "none").equals("none");
+    public boolean hasAuthCredentials(SharedPreferences mPreferences) {
+        return !mPreferences.getString("authentication_token", "none").equals("none") &&
+               !mPreferences.getString("email", "none").equals("none") &&
+               !mPreferences.getString("user", "none").equals("none");
     }
 
     // UI Actions
@@ -158,14 +162,13 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
 
     public void didTapFacebookButton(View view) {
         // Facebook authentication
-
     }
 
     // Facebook Stuff
 
     private void onSessionStateChange(final com.facebook.Session session, SessionState state, Exception exception) {
         if (state.isOpened()) {
-            com.facebook.Request.executeMeRequestAsync(session, new com.facebook.Request.GraphUserCallback() {
+            com.facebook.Request.newMeRequest(session, new com.facebook.Request.GraphUserCallback() {
 
                 @Override
                 public void onCompleted(GraphUser user, com.facebook.Response response) {
@@ -190,7 +193,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
                         facebookRequest(params);
                     }
                 }
-            });
+            }).executeAsync();
         } else if (state.isClosed()) {
             Log.e("Facebook", "Logged out...");
         }
@@ -217,7 +220,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         }, new Response.Listener<APIError>() {
             @Override
             public void onResponse(APIError apiError) {
-                viewBlocker.setVisibility(View.GONE);
+                mViewBlocker.setVisibility(View.GONE);
             }
         });
 
@@ -235,7 +238,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         }, new Response.Listener<APIError>() {
             @Override
             public void onResponse(APIError apiError) {
-                viewBlocker.setVisibility(View.GONE);
+                mViewBlocker.setVisibility(View.GONE);
             }
         });
 
@@ -254,7 +257,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         }, new Response.Listener<APIError>() {
             @Override
             public void onResponse(APIError apiError) {
-                viewBlocker.setVisibility(View.GONE);
+                mViewBlocker.setVisibility(View.GONE);
             }
         });
 
@@ -264,8 +267,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        com.facebook.Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
+        mUiHelper.onActivityResult(requestCode, resultCode, data);
     }
 
     public void storeSessionAndStartMainActivity(Intent intent, Session session) {
@@ -274,7 +276,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         try {  userJson = new JSONObject(mapper.writeValueAsString(session.getUser())); }
         catch (Exception e) { Log.i("Exception", e.toString()); }
 
-        SharedPreferences.Editor editor = preferences.edit();
+        SharedPreferences.Editor editor = mPreferences.edit();
         editor.putString("authentication_token", session.getAuthenticationToken());
         editor.putString("email", session.getEmail());
         if (userJson != null) editor.putString("user", userJson.toString());
@@ -291,7 +293,18 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
 
         startActivity(intent);
         finish();
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mUiHelper.onDestroy();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        mUiHelper.onSaveInstanceState(savedInstanceState);
     }
 
     // Getters

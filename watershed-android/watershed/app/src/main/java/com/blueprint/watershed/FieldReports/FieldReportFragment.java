@@ -7,8 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Response;
@@ -16,37 +15,30 @@ import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Networking.FieldReports.FieldReportRequest;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.R;
-import com.blueprint.watershed.Views.CoverPhotoPagerView;
 
 import org.json.JSONObject;
 
 import java.util.HashMap;
 
 
-public class FieldReportFragment extends Fragment implements AbsListView.OnItemClickListener {
-
+public class FieldReportFragment extends Fragment {
 
     private NetworkManager mNetworkManager;
     private FieldReport mFieldReport;
     private MainActivity mParentActivity;
 
+    private ImageView mImage;
+    private TextView mRating;
+    private TextView mDescription;
+
     public static FieldReportFragment newInstance(FieldReport fieldReport) {
         FieldReportFragment fieldReportFragment = new FieldReportFragment();
-        fieldReportFragment.configureWithFieldReport(fieldReport);
+        fieldReportFragment.setFieldReport(fieldReport);
         return fieldReportFragment;
     }
 
-    public FieldReportFragment() {
-    }
-
-    public void configureWithFieldReport(FieldReport fieldReport) {
+    public void setFieldReport(FieldReport fieldReport) {
         mFieldReport = fieldReport;
-    }
-
-    public void configureViewWithFieldReport(View view, FieldReport fieldReport) {
-        ((CoverPhotoPagerView)view.findViewById(R.id.cover_photo_pager_view)).configureWithPhotos(fieldReport.getPhotos());
-        ((TextView)view.findViewById(R.id.field_report_health_rating)).setText(String.format("Rating: %s", fieldReport.getHealthRating()));
-        ((TextView)view.findViewById(R.id.field_report_description)).setText(fieldReport.getDescription());
     }
 
     @Override
@@ -61,8 +53,23 @@ public class FieldReportFragment extends Fragment implements AbsListView.OnItemC
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_field_report, container, false);
-        configureViewWithFieldReport(view, mFieldReport);
+        initializeViews(view);
+        setViews();
+        getFieldReportRequest(mFieldReport);
         return view;
+    }
+
+    private void initializeViews(View view) {
+        mImage = (ImageView)view.findViewById(R.id.cover_photo_pager_view);
+        mRating = (TextView)view.findViewById(R.id.field_report_description);
+        mDescription = (TextView)view.findViewById(R.id.field_report_health_rating);
+    }
+
+    private void setViews() {
+        mRating.setText(String.format("Rating: %s", mFieldReport.getHealthRating()));
+        mDescription.setText(mFieldReport.getDescription());
+        if (mFieldReport.getPhoto() != null) mFieldReport.getPhoto().getImageAndSetImageView(mParentActivity, mImage);
+        mImage.invalidate();
     }
 
     @Override
@@ -76,29 +83,20 @@ public class FieldReportFragment extends Fragment implements AbsListView.OnItemC
     public void onResume() {
         super.onResume();
         mParentActivity.setMenuAction(false);
-        getFieldReportRequest(mFieldReport);
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     }
 
     // Networking
     public void getFieldReportRequest(FieldReport fieldReport) {
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
 
-        FieldReportRequest fieldReportRequest = new FieldReportRequest(getActivity(), fieldReport, params, new Response.Listener<FieldReport>() {
+        FieldReportRequest fieldReportRequest = new FieldReportRequest(mParentActivity, fieldReport, params, new Response.Listener<FieldReport>() {
             @Override
             public void onResponse(FieldReport fieldReport) {
                 setFieldReport(fieldReport);
+                setViews();
             }
         });
 
         mNetworkManager.getRequestQueue().add(fieldReportRequest);
-    }
-
-    // Objects
-    public void setFieldReport(FieldReport fieldReport) {
-        mFieldReport = fieldReport;
     }
 }

@@ -89,23 +89,28 @@ int WPButtonHeight = 75;
 - (void)setUpActions {
     [_completed setTitle:@"Mark as\nComplete" forState:UIControlStateNormal];
     [_completed setTitleColor:[UIColor wp_darkBlue] forState:UIControlStateNormal];
+    [_completed setTitle:@"Completed" forState:UIControlStateSelected];
+    [_completed setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    [_completed setBackgroundImage:[WPTaskView imageFromColor:[UIColor wp_lightGreen]] forState:UIControlStateSelected];
     [_completed addTarget:self action:@selector(onClick) forControlEvents:UIControlEventTouchUpInside];
     [_addFieldReportButton setTitle:@"Add Field\nReport" forState:UIControlStateNormal];
     [_addFieldReportButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_siteLinkButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
 }
 
++ (UIImage *)imageFromColor:(UIColor *)color {
+    CGRect rect = CGRectMake(0, 0, 1, 1);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
+
 -(void)onClick {
-    if ([_completed.titleLabel.text isEqualToString:@"Completed"]) {
-        [_completed setTitle:@"Mark as\nComplete" forState:UIControlStateNormal];
-        [_completed setTitleColor:[UIColor wp_darkBlue] forState:UIControlStateNormal];
-        _completed.backgroundColor = [UIColor wp_lightBlue];
-    } else {
-        [_completed setTitle:@"Completed" forState:UIControlStateNormal];
-        _completed.backgroundColor = [UIColor wp_green];
-        [_completed setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        _completed.layer.borderWidth = 0;
-    }
+    self.completed.selected = !self.completed.selected;
 }
 
 - (void)configureWithTask:(WPTask *)task {
@@ -122,10 +127,13 @@ int WPButtonHeight = 75;
     self.taskDescription.text = task.taskDescription;
     self.assigneeLabel.text = [NSString stringWithFormat:@"Assigned to %@ by %@", task.assignee.name, task.assigner.name];
     self.title.text = task.title;
-    if (!task.site.name) {
-        [self.siteLinkButton setTitle:@"Not assigned to a site" forState:UIControlStateNormal];
+    if (!task.miniSite.name) {
+        [self.siteLinkButton setTitle:@"Not assigned to a mini site" forState:UIControlStateNormal];
     } else {
-        [self.siteLinkButton setTitle:task.site.name forState:UIControlStateNormal];
+        [self.siteLinkButton setTitle:task.miniSite.name forState:UIControlStateNormal];
+    }
+    if (task.completed) {
+        [self.completed setSelected:YES];
     }
 }
 

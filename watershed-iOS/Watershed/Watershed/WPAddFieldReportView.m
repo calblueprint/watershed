@@ -49,42 +49,49 @@ int highestRating = 5;
         [self updateConstraints];
         [self setUpActions];
     }
+    [self setBackgroundColor:[UIColor whiteColor]];
     return self;
 }
 - (void)createSubviews {
-    _selectedImageView = [({
-//        _originalImage = [UIImage imageNamed:@"SampleCoverPhoto"];
-//        UIImageView *imageView = [[UIImageView alloc] initWithImage:_originalImage];
-        UIImageView *imageView = [[UIImageView alloc] init];
-        imageView;
+    _fieldReportTableView = [({
+        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero];
+        tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+        tableView;
     }) wp_addToSuperview:self];
     
-    _blackOverlay = [({
-        UIView *blackOverlay = [[UIView alloc] init];
-        blackOverlay.backgroundColor = [UIColor blackColor];
-        blackOverlay.alpha = 0.3;
-        blackOverlay;
-    }) wp_addToSuperview:self];
+//    _selectedImageView = [({
+////        _originalImage = [UIImage imageNamed:@"SampleCoverPhoto"];
+////        UIImageView *imageView = [[UIImageView alloc] initWithImage:_originalImage];
+//        UIImageView *imageView = [[UIImageView alloc] init];
+//        imageView;
+//    }) wp_addToSuperview:self];
+    
+//    _blackOverlay = [({
+//        UIView *blackOverlay = [[UIView alloc] init];
+//        blackOverlay.backgroundColor = [UIColor blackColor];
+//        blackOverlay.alpha = 0.3;
+//        blackOverlay;
+//    }) wp_addToSuperview:self];
 
-    _urgentLabel = [({
-        UILabel *urgentLabel = [[UILabel alloc] init];
-        urgentLabel.text = @"Urgent?";
-        urgentLabel.textColor = [UIColor whiteColor];
-        urgentLabel;
-    }) wp_addToSuperview:self];
-    
-    _urgentSwitch = [({
-        UISwitch *urgent = [[UISwitch alloc] init];
-        urgent;
-    }) wp_addToSuperview:self];
-    
-    _ratingLabel = [({
-        UILabel *ratingLabel = [[UILabel alloc] init];
-        ratingLabel.text = @"Rating";
-        ratingLabel.textColor = [UIColor whiteColor];
-        ratingLabel;
-    }) wp_addToSuperview:self];
-    
+//    _urgentLabel = [({
+//        UILabel *urgentLabel = [[UILabel alloc] init];
+//        urgentLabel.text = @"Urgent?";
+//        urgentLabel.textColor = [UIColor whiteColor];
+//        urgentLabel;
+//    }) wp_addToSuperview:self];
+//
+//    _urgentSwitch = [({
+//        UISwitch *urgent = [[UISwitch alloc] init];
+//        urgent;
+//    }) wp_addToSuperview:self];
+
+//    _ratingLabel = [({
+//        UILabel *ratingLabel = [[UILabel alloc] init];
+//        ratingLabel.text = @"Rating";
+//        ratingLabel.textColor = [UIColor whiteColor];
+//        ratingLabel;
+//    }) wp_addToSuperview:self];
+
     _rating1 = [[UIButton alloc] init];
     _rating2 = [[UIButton alloc] init];
     _rating3 = [[UIButton alloc] init];
@@ -185,96 +192,78 @@ int highestRating = 5;
 }
 
 - (void)updateConstraints {
-    [self.urgentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(topMargin + standardMargin * 2));
-        make.leading.equalTo(@(standardMargin));
-    }];
     
-    [self.urgentSwitch mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(topMargin + standardMargin));
-        make.trailing.equalTo(@(-standardMargin));
-    }];
-    [self.ratingLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin * 1.5);
-        make.leading.equalTo(@(standardMargin));
-    }];
-
-    [self.rating1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
-        make.leading.equalTo(self.ratingLabel.mas_right).with.offset(10);
-        make.height.equalTo(@(WPRatingButtonHeight));
-        make.width.equalTo(@(WPRatingButtonHeight));
-    }];
-    
-    [self.rating2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
-        make.leading.equalTo(self.rating1.mas_right).with.offset(10);
-        make.height.equalTo(@(WPRatingButtonHeight));
-        make.width.equalTo(@(WPRatingButtonHeight));
-    }];
-
-    [self.rating3 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
-        make.leading.equalTo(self.rating2.mas_right).with.offset(10);
-        make.height.equalTo(@(WPRatingButtonHeight));
-        make.width.equalTo(@(WPRatingButtonHeight));
-    }];
-    
-    [self.rating4 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
-        make.leading.equalTo(self.rating3.mas_right).with.offset(10);
-        make.height.equalTo(@(WPRatingButtonHeight));
-        make.width.equalTo(@(WPRatingButtonHeight));
-    }];
-    
-    [self.rating5 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
-        make.leading.equalTo(self.rating4.mas_right).with.offset(10);
-        make.height.equalTo(@(WPRatingButtonHeight));
-        make.width.equalTo(@(WPRatingButtonHeight));
-    }];
-    
-    [self.descriptionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.rating5.mas_bottom).with.offset(standardMargin);
-        make.leading.equalTo(@(standardMargin));
-    }];
-    
-    [self.fieldDescription mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.descriptionLabel.mas_bottom).with.offset(standardMargin);
-        make.centerX.equalTo(self.mas_centerX);
-        make.leading.equalTo(@(standardMargin));
-        make.trailing.equalTo(@(-standardMargin));
-        make.bottom.equalTo(self.addPhotoButton.mas_top).with.offset(-standardMargin);
-    }];
-    
-    [self.selectedImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.fieldReportTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(topMargin));
         make.bottom.equalTo(@0);
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
     }];
 
-    [self.addPhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(@0);
-        make.height.equalTo(@(WPPhotoButtonHeight));
-        make.leading.equalTo(@0);
-        make.trailing.equalTo(self.mas_centerX);
-    }];
+//    [self.rating1 mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
+//        make.leading.equalTo(self.ratingLabel.mas_right).with.offset(10);
+//        make.height.equalTo(@(WPRatingButtonHeight));
+//        make.width.equalTo(@(WPRatingButtonHeight));
+//    }];
+//    
+//    [self.rating2 mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
+//        make.leading.equalTo(self.rating1.mas_right).with.offset(10);
+//        make.height.equalTo(@(WPRatingButtonHeight));
+//        make.width.equalTo(@(WPRatingButtonHeight));
+//    }];
+//
+//    [self.rating3 mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
+//        make.leading.equalTo(self.rating2.mas_right).with.offset(10);
+//        make.height.equalTo(@(WPRatingButtonHeight));
+//        make.width.equalTo(@(WPRatingButtonHeight));
+//    }];
+//    
+//    [self.rating4 mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
+//        make.leading.equalTo(self.rating3.mas_right).with.offset(10);
+//        make.height.equalTo(@(WPRatingButtonHeight));
+//        make.width.equalTo(@(WPRatingButtonHeight));
+//    }];
+//    
+//    [self.rating5 mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.urgentSwitch.mas_bottom).with.offset(standardMargin);
+//        make.leading.equalTo(self.rating4.mas_right).with.offset(10);
+//        make.height.equalTo(@(WPRatingButtonHeight));
+//        make.width.equalTo(@(WPRatingButtonHeight));
+//    }];
     
-    [self.viewImageButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(@0);
-        make.leading.equalTo(self.addPhotoButton.mas_right);
-        make.height.equalTo(@(WPPhotoButtonHeight));
-        make.trailing.equalTo(@0);
-        
-    }];
+//    
+//    [self.selectedImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(@(topMargin));
+//        make.bottom.equalTo(@0);
+//        make.leading.equalTo(@0);
+//        make.trailing.equalTo(@0);
+//    }];
+//
+//    [self.addPhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.bottom.equalTo(@0);
+//        make.height.equalTo(@(WPPhotoButtonHeight));
+//        make.leading.equalTo(@0);
+//        make.trailing.equalTo(self.mas_centerX);
+//    }];
+//    
+//    [self.viewImageButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.bottom.equalTo(@0);
+//        make.leading.equalTo(self.addPhotoButton.mas_right);
+//        make.height.equalTo(@(WPPhotoButtonHeight));
+//        make.trailing.equalTo(@0);
+//        
+//    }];
     
-    [self.blackOverlay mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(topMargin));
-        make.leading.equalTo(@0);
-        make.trailing.equalTo(@0);
-        make.bottom.equalTo(@0);
-    }];
+//    [self.blackOverlay mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(@(topMargin));
+//        make.leading.equalTo(@0);
+//        make.trailing.equalTo(@0);
+//        make.bottom.equalTo(@0);
+//    }];
     
     [super updateConstraints];
 }

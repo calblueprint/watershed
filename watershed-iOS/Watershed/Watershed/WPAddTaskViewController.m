@@ -13,6 +13,9 @@
 #import "WPSelectTaskViewController.h"
 #import "WPSelectMiniSiteViewController.h"
 #import "WPSelectAssigneeViewController.h"
+#import "WPTask.h"
+#import "WPNetworkingManager.h"
+#import "WPTasksListViewController.h"
 
 
 @interface WPAddTaskViewController()
@@ -23,6 +26,12 @@
 @property (nonatomic) UITextField *siteField;
 @property (nonatomic) UITextField *assigneeField;
 @property (nonatomic) UITextView *descriptionView;
+@property (nonatomic) WPMiniSite *selectedMiniSite;
+@property (nonatomic) WPUser *selectedAssignee;
+@property (nonatomic) WPUser *currUser;
+@property (nonatomic) WPSite *currSite;
+@property (nonatomic) UISwitch *urgentSwitch;
+
 
 @end
 
@@ -61,39 +70,59 @@ static NSString *CellIdentifier = @"Cell";
     [super didReceiveMemoryWarning];
 }
 
--(void)saveForm:(UIButton *)sender {
-    if (_taskField.text.length == 0 || _siteField.text.length == 0 || _assigneeField.text.length == 0) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
-                                                                       message:@"Cannot leave required fields blank."
-                                                                preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction* ok = [UIAlertAction
-                             actionWithTitle:@"OK"
-                             style:UIAlertActionStyleDefault
-                             handler:^(UIAlertAction * action)
-                             {
-                                 [alert dismissViewControllerAnimated:YES completion:nil];
-                             }];
-
-        [alert addAction:ok];
-        [self presentViewController:alert animated:YES completion:nil];
-    } else {
-        [self.navigationController popViewControllerAnimated:YES];
+-(int)isUrgent {
+    if (_urgentSwitch.on) {
+        return 1;
     }
-
+    return 0;
 }
 
+-(void)saveForm:(UIButton *)sender {
+    if (_taskField.text.length == 0 || _siteField.text.length == 0) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Cannot leave fields blank." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+    } else {
+        //need to add urgent
+        NSNumberFormatter *userFormatter = [[NSNumberFormatter alloc] init];
+        [userFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+        int isUrgentInt = [self isUrgent];
+        NSString *isUrgentString = [NSString stringWithFormat:@"%i", isUrgentInt];
+        NSDictionary *taskJSON = @{
+                                   @"title" : self.taskField.text,
+                                   @"mini_site_id" : [self.selectedMiniSite.miniSiteId stringValue],
+                                   @"due_date" : self.dateField.text,
+                                   @"description" : self.descriptionView.text
+                                   };
+        WPTask *task = [MTLJSONAdapter modelOfClass:WPTask.class fromJSONDictionary:taskJSON error:nil];
+        _currUser = [[WPUser alloc] init];
+        NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+        [f setNumberStyle:NSNumberFormatterDecimalStyle];
+        _currUser.userId = [f numberFromString:[[WPNetworkingManager sharedManager] keyChainStore][@"user_id"]];
+        task.assigner = _currUser;
+        task.assignee = _selectedAssignee;
+        task.miniSite = self.selectedMiniSite;
+
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+
+        [[WPNetworkingManager sharedManager] createTaskWithTask:task parameters:[[NSMutableDictionary alloc] init] success:^{
+            [self.parent requestAndLoadTasks];
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+    }
+}
 
 -(void)selectTaskViewControllerDismissed:(NSString *)stringForFirst {
     _taskField.text = stringForFirst;
-    
 }
 
--(void)selectSiteViewControllerDismissed:(NSString *)stringForFirst {
-    _siteField.text = stringForFirst;
+-(void)selectSiteViewControllerDismissed:(WPMiniSite *)selectedMiniSite {
+    _siteField.text = selectedMiniSite.name;
+    _selectedMiniSite = selectedMiniSite;
 }
 
--(void)selectAssigneeViewControllerDismissed:(NSString *)stringForFirst {
-    _assigneeField.text = stringForFirst;
+-(void)selectAssigneeViewControllerDismissed:(WPUser *)assignee {
+    _assigneeField.text = assignee.name;
+    _selectedAssignee = assignee;
 }
 
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
@@ -168,9 +197,9 @@ static NSString *CellIdentifier = @"Cell";
             break;
         }
         case 2: {
-            UISwitch *urgentSwitch = [[UISwitch alloc] init];
-            urgentSwitch.onTintColor = [UIColor wp_red];
-            cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:urgentSwitch];
+            _urgentSwitch = [[UISwitch alloc] init];
+            _urgentSwitch.onTintColor = [UIColor wp_red];
+            cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:_urgentSwitch];
             cell.label.text = @"Urgent";
             break;
         }
@@ -179,7 +208,7 @@ static NSString *CellIdentifier = @"Cell";
             _siteField.delegate = self;
             cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:_siteField];
             _siteField.placeholder = @"Required";
-            cell.label.text = @"Site";
+            cell.label.text = @"Mini Site";
             _siteField.tag = 2;
             _siteField.textColor = [UIColor wp_paragraph];
             _siteField.font = [UIFont systemFontOfSize:16];

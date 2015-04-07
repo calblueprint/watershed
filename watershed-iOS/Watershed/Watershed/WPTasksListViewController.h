@@ -15,5 +15,6 @@
 @property (nonatomic) WPMyTasksTableViewController *myTasksTableController;
 @property (nonatomic) WPAllTasksTableViewController * allTasksTableController;
 
+- (void)requestAndLoadTasks;
 
 @end
