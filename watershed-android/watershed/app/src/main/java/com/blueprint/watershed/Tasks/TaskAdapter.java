@@ -2,10 +2,12 @@ package com.blueprint.watershed.Tasks;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blueprint.watershed.R;
@@ -69,6 +71,7 @@ public class TaskAdapter extends BaseExpandableListAdapter {
             holder.mDay = (TextView) row.findViewById(R.id.task_list_row_due_day);
             holder.mMonth = (TextView) row.findViewById(R.id.task_list_row_due_month);
             holder.mYear = (TextView) row.findViewById(R.id.task_list_row_due_year);
+            holder.mDateHolder = (LinearLayout) row.findViewById(R.id.task_list_row_due_holder);
 
             row.setTag(holder);
         } else {
@@ -84,8 +87,11 @@ public class TaskAdapter extends BaseExpandableListAdapter {
             holder.mMonth.setText(new DateFormatSymbols().getMonths()[cal.get(Calendar.MONTH) - 1].substring(0, 3));
             holder.mYear.setText(String.valueOf(cal.get(Calendar.YEAR)));
         }
+
         holder.mSite.setText(task.getMiniSite().getName());
         holder.mTitle.setText(task.getTitle());
+        holder.mColor.setBackgroundColor(Color.parseColor(task.getColor()));
+        holder.mDateHolder.setBackgroundColor(Color.parseColor(task.getColor()));
         return row;
     }
 
@@ -132,6 +138,7 @@ public class TaskAdapter extends BaseExpandableListAdapter {
         TextView mDay;
         TextView mMonth;
         TextView mYear;
+        LinearLayout mDateHolder;
     }
 
     static class TaskHeaderHolder {
