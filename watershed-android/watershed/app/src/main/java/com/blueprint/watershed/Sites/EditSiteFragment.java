@@ -30,7 +30,7 @@ public class EditSiteFragment extends SiteAbstractFragment {
     }
 
     /**
-     * Presets the task with task information
+     * Presets the site with site information
      */
     private void setTextViews() {
         if (mSite.getName() != null) mTitleField.setText(mSite.getName());

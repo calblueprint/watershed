@@ -46,10 +46,8 @@ public abstract class SiteAbstractFragment extends Fragment{
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment CreateSiteFragment.
+     * @return A new instance of either Create or Edit SiteFragment.
      */
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +86,10 @@ public abstract class SiteAbstractFragment extends Fragment{
         super.onDetach();
     }
 
+    /**
+     *  Validates Site data, and calls the submit listener implemented by subclasses.
+     * @return  an OnClickListener to validate Site data.
+     */
     protected View.OnClickListener validateAndSubmit(){
         return new View.OnClickListener() {
             @Override
@@ -138,6 +140,12 @@ public abstract class SiteAbstractFragment extends Fragment{
         };
     }
 
+    /**
+     * Creates and sends a request for either editing or creating a new site.
+     * sets default values for Lat, Long, TaskCount, and MiniSiteCount.
+     * @param type CREATE or EDIT.
+     * @param new_site The site to be editted, or null.
+     */
     protected void createSite(String type, Site new_site) {
         if (type.equals(CREATE)){
             new_site = new Site();
@@ -157,6 +165,11 @@ public abstract class SiteAbstractFragment extends Fragment{
         createSiteRequest(type, new_site);
     }
 
+    /**
+     * Sets Empty Error messages.
+     * @param field The field name (eg. City, Street...)
+     * @param editText some EditText
+     */
     private void setEmpty(String field, EditText editText) { editText.setError(field + " can't be blank!"); }
 
     public void createSiteRequest(String type, Site site){

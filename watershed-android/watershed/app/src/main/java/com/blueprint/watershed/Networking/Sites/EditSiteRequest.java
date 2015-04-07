@@ -33,7 +33,6 @@ public class EditSiteRequest extends BaseRequest {
                     @Override
                     public void onResponse(JSONObject jsonObject) {
                         try {
-                            Log.e("Successful site editing", "woot");
                             String siteJson = jsonObject.get("site").toString();
                             ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
                             Site site = mapper.readValue(siteJson, new TypeReference<Site>() {
@@ -57,7 +56,6 @@ public class EditSiteRequest extends BaseRequest {
         ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
 
         try {
-            Log.e("attempting to edit site", "woot?");
             JSONObject siteJson = new JSONObject(mapper.writeValueAsString(site));
             params.put("site", siteJson);
         } catch (Exception e) {
