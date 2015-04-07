@@ -47,15 +47,6 @@ public class CreateSiteFragment extends SiteAbstractFragment{
 
     public CreateSiteFragment() { }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_create_site, container, false);
-        setButtonListeners(view);
-        return view;
-    }
-
     public void submitListener(){
         createSite(CREATE, null);
     }

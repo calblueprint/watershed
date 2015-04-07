@@ -22,15 +22,24 @@ public class EditSiteFragment extends SiteAbstractFragment {
     }
 
     private void setSite(Site site){ mSite = site; }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setTextViews();
+    }
+
     /**
      * Presets the task with task information
      */
     private void setTextViews() {
         if (mSite.getName() != null) mTitleField.setText(mSite.getName());
         if (mSite.getDescription() != null) mDescriptionField.setText(mSite.getDescription());
-        if (mSite.getStreet() != null) mAddressField.setText((mSite.getStreet()));
-        if (mSite.getCity() != null) mCityField.setText(String.valueOf(mSite.getCity()));
+        if (mSite.getStreet() != null) mAddressField.setText(mSite.getStreet());
+        if (mSite.getCity() != null) mCityField.setText(mSite.getCity());
+        if (mSite.getState() != null) mStateField.setText(mSite.getState());
         if (mSite.getZipCode() != null) mZipField.setText(String.valueOf(mSite.getZipCode()));
+        mSubmitButton.setText("Edit Task");
     }
 
     public void submitListener(){

@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -38,6 +40,7 @@ public abstract class SiteAbstractFragment extends Fragment{
     protected EditText mAddressField;
     protected EditText mZipField;
     protected EditText mStateField;
+    protected Button mSubmitButton;
 
     /**
      * Use this factory method to create a new instance of
@@ -55,15 +58,24 @@ public abstract class SiteAbstractFragment extends Fragment{
         mMainActivity = (MainActivity) getActivity();
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_create_site, container, false);
+        setButtonListeners(view);
+        return view;
+    }
+
     protected void setButtonListeners(View view){
-        Button submitButton = (Button)view.findViewById(R.id.create_site_submit);
+        mSubmitButton = (Button)view.findViewById(R.id.create_site_submit);
         mTitleField = (EditText)view.findViewById(R.id.create_site_title);
         mDescriptionField = (EditText)view.findViewById(R.id.create_site_description);
         mAddressField = (EditText)view.findViewById(R.id.create_site_address);
         mCityField = (EditText)view.findViewById(R.id.create_site_city);
         mZipField = (EditText)view.findViewById(R.id.create_site_zip);
         mStateField = (EditText)view.findViewById(R.id.create_site_state);
-        submitButton.setOnClickListener(validateAndSubmit());
+        mSubmitButton.setOnClickListener(validateAndSubmit());
     }
 
     @Override
@@ -143,8 +155,6 @@ public abstract class SiteAbstractFragment extends Fragment{
         new_site.setZipCode(Integer.valueOf(mZipField.getText().toString()));
 
         createSiteRequest(type, new_site);
-
-
     }
 
     private void setEmpty(String field, EditText editText) { editText.setError(field + " can't be blank!"); }
@@ -170,6 +180,7 @@ public abstract class SiteAbstractFragment extends Fragment{
                     Log.e("successful site", "edit");
                 }
             });
+            mNetworkManager.getRequestQueue().add(editSiteRequest);
             mMainActivity.getSupportFragmentManager().popBackStack();
         }
     }

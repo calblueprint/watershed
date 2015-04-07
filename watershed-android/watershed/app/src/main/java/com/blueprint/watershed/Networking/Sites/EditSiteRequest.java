@@ -19,9 +19,6 @@ import java.util.HashMap;
  */
 public class EditSiteRequest extends BaseRequest {
 
-    Site mSite;
-    Activity mActivity;
-
     /**
      * Sends a request to the server to create a new site.
      *
@@ -31,11 +28,12 @@ public class EditSiteRequest extends BaseRequest {
      * @param listener - A response listener to be called once the response is returned.
      */
     public EditSiteRequest(final Activity activity, final Site site, HashMap<String, JSONObject> params, final Response.Listener<Site> listener) {
-        super(Request.Method.PUT, makeURL("sites" + site.getId()), siteParams(activity, site),
+        super(Request.Method.PUT, makeURL("sites/" + site.getId()), siteParams(activity, site),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {
                         try {
+                            Log.e("Successful site editing", "woot");
                             String siteJson = jsonObject.get("site").toString();
                             ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
                             Site site = mapper.readValue(siteJson, new TypeReference<Site>() {
@@ -46,9 +44,6 @@ public class EditSiteRequest extends BaseRequest {
                         }
                     }
                 }, activity);
-
-        mSite = site;
-        mActivity = activity;
     }
 
     /**
@@ -62,6 +57,7 @@ public class EditSiteRequest extends BaseRequest {
         ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
 
         try {
+            Log.e("attempting to edit site", "woot?");
             JSONObject siteJson = new JSONObject(mapper.writeValueAsString(site));
             params.put("site", siteJson);
         } catch (Exception e) {
