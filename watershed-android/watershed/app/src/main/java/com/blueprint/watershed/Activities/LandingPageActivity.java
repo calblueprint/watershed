@@ -210,12 +210,11 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     }
 
     public void facebookRequest(HashMap<String, String> params) {
-        final Intent intent = new Intent(this, MainActivity.class);
 
         FacebookLoginRequest facebookLoginRequest = new FacebookLoginRequest(this, params, new Response.Listener<Session>() {
             @Override
             public void onResponse(Session session) {
-                storeSessionAndStartMainActivity(intent, session);
+                storeSessionAndStartMainActivity(session);
             }
         }, new Response.Listener<APIError>() {
             @Override
@@ -228,12 +227,10 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     }
 
     public void loginRequest(HashMap<String, String> params) {
-        final Intent intent = new Intent(this, MainActivity.class);
-
         LoginRequest loginRequest = new LoginRequest(this, params, new Response.Listener<Session>() {
             @Override
             public void onResponse(Session session) {
-                storeSessionAndStartMainActivity(intent, session);
+                storeSessionAndStartMainActivity(session);
             }
         }, new Response.Listener<APIError>() {
             @Override
@@ -247,12 +244,11 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
 
 
     public void signUpRequest(HashMap<String, String> params) {
-        final Intent intent = new Intent(this, MainActivity.class);
 
         SignUpRequest signUpRequest = new SignUpRequest(this, params, new Response.Listener<Session>() {
             @Override
             public void onResponse(Session session) {
-                storeSessionAndStartMainActivity(intent, session);
+                storeSessionAndStartMainActivity(session);
             }
         }, new Response.Listener<APIError>() {
             @Override
@@ -270,9 +266,11 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         mUiHelper.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void storeSessionAndStartMainActivity(Intent intent, Session session) {
+    public void storeSessionAndStartMainActivity(Session session) {
+        final Intent intent = new Intent(this, MainActivity.class);
         ObjectMapper mapper = mLoginNetworkManager.getObjectMapper();
         JSONObject userJson = null;
+
         try {  userJson = new JSONObject(mapper.writeValueAsString(session.getUser())); }
         catch (Exception e) { Log.i("Exception", e.toString()); }
 
