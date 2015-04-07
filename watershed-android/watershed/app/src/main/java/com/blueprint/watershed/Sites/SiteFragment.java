@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
-import com.blueprint.watershed.MiniSites.CreateMiniSiteFragment;
 import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteListAdapter;
@@ -106,13 +105,13 @@ public class SiteFragment extends Fragment
         mMiniSiteGridView.setAdapter(mMiniSiteAdapter);
         mMiniSiteGridView.setOnItemClickListener(this);
 
-        mCreateSiteButton = (FloatingActionButton) view.findViewById(R.id.create_mini_site_button);
-        mCreateSiteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mParentActivity.replaceFragment(CreateMiniSiteFragment.newInstance(mSite.getId()));
-            }
-        });
+//        mCreateSiteButton = (FloatingActionButton) view.findViewById(R.id.create_mini_site_button);
+//        mCreateSiteButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mParentActivity.replaceFragment(CreateMiniSiteFragment.newInstance(mSite.getId()));
+//            }
+//        });
     }
 
     @Override
