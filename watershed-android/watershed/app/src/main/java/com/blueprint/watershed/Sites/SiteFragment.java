@@ -23,6 +23,7 @@ import com.blueprint.watershed.Networking.Sites.SiteRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
 import com.blueprint.watershed.Views.HeaderGridView;
+import com.blueprint.watershed.Views.Material.FloatingActionButton;
 
 import org.json.JSONObject;
 
@@ -36,6 +37,7 @@ public class SiteFragment extends Fragment
     private NetworkManager mNetworkManager;
     private MainActivity mParentActivity;
 
+    private FloatingActionButton mCreateSiteButton;
     private HeaderGridView mMiniSiteGridView;
     private MiniSiteListAdapter mMiniSiteAdapter;
     private ViewGroup mHeader;
@@ -80,8 +82,7 @@ public class SiteFragment extends Fragment
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.add_minisite:
-                mParentActivity.replaceFragment(CreateMiniSiteFragment.newInstance(mSite.getId()));
+            case R.id.edit:
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -104,6 +105,14 @@ public class SiteFragment extends Fragment
         mMiniSiteAdapter = new MiniSiteListAdapter(mParentActivity, getMiniSites());
         mMiniSiteGridView.setAdapter(mMiniSiteAdapter);
         mMiniSiteGridView.setOnItemClickListener(this);
+
+        mCreateSiteButton = (FloatingActionButton) view.findViewById(R.id.create_mini_site_button);
+        mCreateSiteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mParentActivity.replaceFragment(CreateMiniSiteFragment.newInstance(mSite.getId()));
+            }
+        });
     }
 
     @Override
