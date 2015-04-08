@@ -1,7 +1,7 @@
 class FieldReportSerializer < BaseFieldReportSerializer
-  has_one :user,      serializer: UserListSerializer
-  has_one :mini_site, serializer: MiniSitePhotoListSerializer
-  has_one :task,      serializer: TaskListSerializer
+  has_one :user,      serializer: BaseUserSerializer
+  has_one :mini_site, serializer: BaseMiniSiteSerializer
+  has_one :task,      serializer: BaseTaskSerializer
 
   has_one :photo,     serializer: PhotoSerializer
 end
