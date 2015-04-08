@@ -125,11 +125,10 @@ public class MainActivity extends ActionBarActivity
         mUserId = getIntent().getExtras().getInt("userId");
 
         setNetworkManager(NetworkManager.getInstance(this));
-        setUserObject();
         mPreferences = getSharedPreferences(PREFERENCES, 0);
         authToken = mPreferences.getString("auth_token", "none");
         authEmail = mPreferences.getString("auth_email", "none");
-
+        setUserObject();
 
         initializeCache();
         initializeViews();

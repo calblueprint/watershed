@@ -87,7 +87,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
             final Intent intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             Bundle b = new Bundle();
-            b.putInt("userId", 1); //Replace with an actual user Id soon
+            b.putInt("userId", mPreferences.getInt("userId", 0)); //Replace with an actual user Id soon
             intent.putExtras(b);
             // intent.putExtra("auth_token", mPreferences.getString("auth_token", null));
             this.finish();
@@ -132,21 +132,16 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     }
 
     public void onClick(View view){
-        if (view == mFacebookButton){
-            didTapFacebookButton(view);
-        }
-        else if (view == mLoginButton){
-            didTapLoginLoadFragmentButton(view);
-        }
-        else{
-            didTapSignUpLoadFragmentButton(view);
-        }
+        if (view == mFacebookButton) didTapFacebookButton(view);
+        else if (view == mLoginButton) didTapLoginLoadFragmentButton(view);
+        else didTapSignUpLoadFragmentButton(view);
     }
 
     public boolean hasAuthCredentials(SharedPreferences mPreferences) {
         return !mPreferences.getString("authentication_token", "none").equals("none") &&
                !mPreferences.getString("email", "none").equals("none") &&
-               !mPreferences.getString("user", "none").equals("none");
+               !mPreferences.getString("user", "none").equals("none") &&
+                mPreferences.getInt("id", 0) != 0;
     }
 
     // UI Actions
