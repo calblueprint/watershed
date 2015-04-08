@@ -125,10 +125,11 @@ public class MainActivity extends ActionBarActivity
         mUserId = getIntent().getExtras().getInt("userId");
 
         setNetworkManager(NetworkManager.getInstance(this));
+        setUserObject();
         mPreferences = getSharedPreferences(PREFERENCES, 0);
         authToken = mPreferences.getString("auth_token", "none");
         authEmail = mPreferences.getString("auth_email", "none");
-        setUserObject();
+
 
         initializeCache();
         initializeViews();
@@ -194,6 +195,7 @@ public class MainActivity extends ActionBarActivity
         mPagerTabStrip = (PagerTabStrip) findViewById(R.id.pager_title_strip);
 
         mProgress = (ProgressBar) findViewById(R.id.progressBar);
+//        mProgress.setVisibility(View.VISIBLE);
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
         mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.pager);

@@ -263,7 +263,7 @@ public class TaskFragment extends ListFragment {
         ArrayList<Task> userTasks = new ArrayList<Task>();
         for (Task task : tasks) {
             Integer id = task.getAssigneeId();
-            if (id != null && id ==  mParentActivity.getUserId()) userTasks.add(task);
+            if (id != null && id == mParentActivity.getUserId()) userTasks.add(task);
         }
         return userTasks;
     }
