@@ -147,23 +147,6 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
     }
 
     /*
-     * Networking
-     */
-    public void createFieldReportRequest(FieldReport fieldReport) {
-        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
-
-        CreateFieldReportRequest createFieldReportRequest = new CreateFieldReportRequest(getActivity(), fieldReport, params, new Response.Listener<FieldReport>() {
-            @Override
-            public void onResponse(FieldReport fieldReport) {
-                Log.e("successful field report", "creation");
-                mParentActivity.getSupportFragmentManager().popBackStack();
-            }
-        });
-
-        mNetworkManager.getRequestQueue().add(createFieldReportRequest);
-    }
-
-    /*
      * View.OnClickListener methods
      */
     public void onClick(View view) {
@@ -318,26 +301,54 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
             bmOptions.inPurgeable = true;
 
             photo = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+
         }
-        else if (requestCode == SELECT_PHOTO_REQUEST && resultCode == MainActivity.RESULT_OK){
+        else if (requestCode == SELECT_PHOTO_REQUEST && resultCode == MainActivity.RESULT_OK) {
             Uri targetUri = data.getData();
 
             try { photo = BitmapFactory.decodeStream(mParentActivity.getContentResolver().openInputStream(targetUri)); }
             catch (FileNotFoundException e) { e.printStackTrace(); }
         }
 
-        if (photo != null) {
-            mPhoto = new Photo(photo);
-            mImage.setImageBitmap(photo);
+        Bitmap scaledBitmap = null;
+
+        if (photo != null)  {
+            Log.i("PHOTOCOUNT",  String.valueOf(photo.getByteCount()));
+            int height = photo.getHeight() / 8;
+            int width = photo.getWidth() / 8;
+            scaledBitmap = Bitmap.createScaledBitmap(photo, width, height, false);
+            Log.i("PHOTOCOUNT",  String.valueOf(scaledBitmap.getByteCount()));
+        }
+
+        if (scaledBitmap != null) {
+            mPhoto = new Photo(scaledBitmap);
             mImage.invalidate();
             if (Utility.currentVersion() >= 16) {
                 mPickPhotoButton.setBackground(mParentActivity.getResources().getDrawable(R.drawable.ic_delete));
             } else {
                 mPickPhotoButton.setBackgroundDrawable(mParentActivity.getResources().getDrawable(R.drawable.ic_delete));
             }
-
             mPickPhotoButton.invalidate();
+            mImage.setImageBitmap(scaledBitmap);
         }
+    }
+
+    /*
+     * Networking
+     */
+    public void createFieldReportRequest(FieldReport fieldReport) {
+        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
+
+        CreateFieldReportRequest createFieldReportRequest = new CreateFieldReportRequest(getActivity(), fieldReport, params, new Response.Listener<FieldReport>() {
+            @Override
+            public void onResponse(FieldReport fieldReport) {
+                Log.e("successful field report", "creation");
+                mTask.setFieldReport(fieldReport);
+                mParentActivity.getSupportFragmentManager().popBackStack();
+            }
+        });
+
+        mNetworkManager.getRequestQueue().add(createFieldReportRequest);
     }
 
 
