@@ -43,7 +43,6 @@ class Task < ActiveRecord::Base
   private
 
   def add_color
-
     self.color = Constants.get_color self
   end
 end
