@@ -8,8 +8,6 @@ import android.os.Bundle;
  */
 public class EditTaskFragment extends TaskAbstractFragment {
 
-    private Task mTask;
-
     /**
      * Creates a fragment and sets the task for the fragment.
      * @param task - Task you want to edit.
@@ -43,4 +41,6 @@ public class EditTaskFragment extends TaskAbstractFragment {
 
     @Override
     public void submitListener() { createTask(EDIT, mTask); }
+
+    public void refreshCompletion() {}
 }

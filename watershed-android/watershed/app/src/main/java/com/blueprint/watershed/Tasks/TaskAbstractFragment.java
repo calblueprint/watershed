@@ -64,6 +64,7 @@ public abstract class TaskAbstractFragment extends Fragment {
     protected MainActivity mParentActivity;
     protected NetworkManager mNetworkManager;
 
+    protected Task mTask;
     private Date mDate;
     private User mUser;
     private MiniSite mMiniSite;
@@ -246,7 +247,9 @@ public abstract class TaskAbstractFragment extends Fragment {
             request = new EditTaskRequest(mParentActivity, task, params, new Response.Listener<Task>() {
                 @Override
                 public void onResponse(Task task) {
-                    mParentActivity.getSupportFragmentManager().popBackStack();
+                    mTask = task;
+                    if (type.equals(EDIT)) mParentActivity.getSupportFragmentManager().popBackStack();
+                    else refreshCompletion();
                     Log.i("successful task", "editing");
                 }
             });
@@ -303,6 +306,8 @@ public abstract class TaskAbstractFragment extends Fragment {
         mMiniSite = site;
         mMiniSiteId.setText(site.getName());
     }
+
+    public abstract void refreshCompletion();
 
 
     /**
@@ -437,5 +442,6 @@ public abstract class TaskAbstractFragment extends Fragment {
         }
 
         private void setUsers(List<MiniSite> miniSites) { mMiniSites = miniSites; }
+
     }
 }
