@@ -26,6 +26,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,6 +55,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
     private MainActivity mParentActivity;
     private NetworkManager mNetworkManager;
 
+    private RelativeLayout mLayout;
     private ImageButton mPickPhotoButton;
     private TextView mTitle;
     private RadioGroup mRating;
@@ -106,6 +108,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
     }
 
     public void initializeViews(View view) {
+        mLayout = (RelativeLayout) view.findViewById(R.id.report_layout);
         mPickPhotoButton = (ImageButton) view.findViewById(R.id.report_add_photo);
         mPickPhotoButton.setOnClickListener(this);
 
@@ -260,6 +263,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
         final FieldReport fieldReport = new FieldReport(mDescription.getText().toString(), health, mUrgent.isChecked(),
                                                         mPhoto, mParentActivity.getUser(), mMiniSite, mTask);
 
+        Utility.hideKeyboard(mParentActivity, mLayout);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -314,8 +318,8 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
 
         if (photo != null)  {
             Log.i("PHOTOCOUNT",  String.valueOf(photo.getByteCount()));
-            int height = photo.getHeight() / 8;
-            int width = photo.getWidth() / 8;
+            int height = photo.getHeight() / 6;
+            int width = photo.getWidth() / 6;
             scaledBitmap = Bitmap.createScaledBitmap(photo, width, height, false);
             Log.i("PHOTOCOUNT",  String.valueOf(scaledBitmap.getByteCount()));
         }
