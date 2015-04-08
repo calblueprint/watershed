@@ -10,8 +10,6 @@ public class CreateTaskFragment extends TaskAbstractFragment {
      */
     public static CreateTaskFragment newInstance() { return new CreateTaskFragment(); }
 
-    public CreateTaskFragment() {}
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
