@@ -72,7 +72,6 @@ public class TaskAdapter extends BaseExpandableListAdapter {
             holder.mMonth = (TextView) row.findViewById(R.id.task_list_row_due_month);
             holder.mYear = (TextView) row.findViewById(R.id.task_list_row_due_year);
             holder.mDateHolder = (LinearLayout) row.findViewById(R.id.task_list_row_due_holder);
-
             row.setTag(holder);
         } else {
             holder = (TaskHolder) row.getTag();
@@ -90,9 +89,14 @@ public class TaskAdapter extends BaseExpandableListAdapter {
 
         holder.mSite.setText(task.getMiniSite().getName());
         holder.mTitle.setText(task.getTitle());
+        
         if (task.getColor() != null) {
             holder.mColor.setBackgroundColor(Color.parseColor(task.getColor()));
             holder.mDateHolder.setBackgroundColor(Color.parseColor(task.getColor()));
+        } else {
+            holder.mDay.setTextColor(mContext.getResources().getColor(R.color.black));
+            holder.mMonth.setTextColor(mContext.getResources().getColor(R.color.black));
+            holder.mYear.setTextColor(mContext.getResources().getColor(R.color.black));
         }
         return row;
     }
