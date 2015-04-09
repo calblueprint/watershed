@@ -42,7 +42,7 @@ public class CreateTaskRequest extends BaseRequest {
                             Task task = mapper.readValue(taskJson, new TypeReference<Task>() {});
                             listener.onResponse(task);
                         } catch (Exception e) {
-                            Log.e("Create Task Json exception", e.toString());
+                            Log.e("Create Task", e.toString());
                         }
                     }
                 }, activity);
@@ -58,7 +58,7 @@ public class CreateTaskRequest extends BaseRequest {
      */
     protected static JSONObject taskParams(final Activity activity, final Task task) {
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
-        ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
+        ObjectMapper mapper = getNetworkManager(activity).getObjectMapper();
 
         try {
             JSONObject taskJson = new JSONObject(mapper.writeValueAsString(task));

@@ -54,19 +54,20 @@ public abstract class BaseRequest extends JsonObjectRequest {
                         Toast.makeText(activity, "You must sign in!", Toast.LENGTH_SHORT).show();
                         MainActivity.logoutCurrentUser(activity);
                     } else {
-                        try {
-                            String errorJson = new String(networkResponse.data);
-                            JSONObject errorJsonObject = new JSONObject(errorJson);
-                            errorJson = errorJsonObject.getString("error");
-                            ObjectMapper mapper = getNetworkManager(activity).getObjectMapper();
-                            apiError = mapper.readValue(errorJson, new TypeReference<APIError>() {
-                            });
-                        } catch (Exception e) {
-                            Log.e("Json exception base", e.toString());
+                        if (networkResponse.data != null) {
+                            try {
+                                String errorJson = new String(networkResponse.data);
+                                JSONObject errorJsonObject = new JSONObject(errorJson);
+                                errorJson = errorJsonObject.getString("error");
+                                ObjectMapper mapper = getNetworkManager(activity).getObjectMapper();
+                                apiError = mapper.readValue(errorJson, new TypeReference<APIError>() {
+                                });
+                            } catch (Exception e) {
+                                Log.e("Json exception base", e.toString());
+                            }
                         }
                         Toast.makeText(activity, apiError.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-
                 }
                 errorListener.onResponse(apiError);
             }});

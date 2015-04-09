@@ -23,7 +23,6 @@ public class TaskDetailFragment extends TaskAbstractFragment
                                 implements View.OnClickListener{
 
     private MainActivity mParentActivity;
-    private Task mTask;
     private NetworkManager mNetworkManager;
 
     private Button mFieldReportButton;
@@ -78,12 +77,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
 
         String submit = mTask.getFieldReport() == null ? "ADD FIELD REPORT" : "VIEW FIELD REPORT";
         mFieldReportButton.setText(submit);
-
-        String complete = mTask.getComplete() ? "UNDO COMPLETION" : "COMPLETE";
-        mCompleteButton.setText(complete);
-        if (mTask.getComplete()) completeButton.setBackgroundColor(getResources().getColor(R.color.ws_green));
-        else completeButton.setBackgroundColor(getResources().getColor(R.color.ws_blue));
-
+        refreshCompletion();
 
         mDetailTitle = (TextView) view.findViewById(R.id.task_title);
         mDescription = (TextView) view.findViewById(R.id.task_description);
@@ -129,12 +123,8 @@ public class TaskDetailFragment extends TaskAbstractFragment
                 fieldReportButtonPressed();
                 break;
             case (R.id.complete_button):
-                if (!mTask.getComplete()) {
-                    completeTask(view);
-                }
-                else {
-                    unCompleteTask(view);
-                }
+                if (!mTask.getComplete()) completeTask();
+                else unCompleteTask();
                 break;
             default:
                 break;
@@ -144,16 +134,15 @@ public class TaskDetailFragment extends TaskAbstractFragment
     @Override
     public void submitListener() {}
 
-    public void completeTask(View view) {
+    public void completeTask() {
         Utility.hideKeyboard(mParentActivity, mLayout);
         createTask(COMPLETE, mTask);
-        view.setBackgroundColor(getResources().getColor(R.color.ws_green));
     }
 
-    public void unCompleteTask(View view) {
+    public void unCompleteTask() {
         Utility.hideKeyboard(mParentActivity, mLayout);
         createTask(UNCOMPLETE, mTask);
-        view.setBackgroundColor(getResources().getColor(R.color.ws_blue));
+
     }
 
 
@@ -166,4 +155,10 @@ public class TaskDetailFragment extends TaskAbstractFragment
         }
     }
 
+    public void refreshCompletion() {
+        String complete = mTask.getComplete() ? "UNDO COMPLETION" : "COMPLETE";
+        mCompleteButton.setText(complete);
+        if (mTask.getComplete()) mCompleteButton.setBackgroundColor(getResources().getColor(R.color.ws_green));
+        else mCompleteButton.setBackgroundColor(getResources().getColor(R.color.ws_blue));
+    }
 }
