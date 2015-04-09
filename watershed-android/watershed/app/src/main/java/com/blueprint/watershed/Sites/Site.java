@@ -2,16 +2,20 @@ package com.blueprint.watershed.Sites;
 
 import com.blueprint.watershed.APIObject;
 import com.blueprint.watershed.MiniSites.MiniSite;
+import com.blueprint.watershed.Networking.Sites.SiteSerializer;
 import com.blueprint.watershed.Photos.Photo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.ArrayList;
 
 /**
  * Created by Mark Miyashita on 10/14/14.
+ * Object that represents a site.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonSerialize(using = SiteSerializer.class)
 public class Site implements APIObject {
 
     // Attributes
