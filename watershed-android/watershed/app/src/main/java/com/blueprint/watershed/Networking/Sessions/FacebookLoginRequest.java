@@ -17,6 +17,7 @@ import java.util.HashMap;
 
 /**
  * Created by Mark Miyashita on 12/3/14.
+ * Makes facebook request.
  */
 public class FacebookLoginRequest extends BaseRequest {
 
@@ -32,7 +33,7 @@ public class FacebookLoginRequest extends BaseRequest {
                             });
                             listener.onResponse(session);
                         } catch (Exception e) {
-                            Log.e("Json exception in Facebook request", e.toString());
+                            Log.e("Json exception", e.toString());
                         }
                     }
                 }, errorListener,  activity);

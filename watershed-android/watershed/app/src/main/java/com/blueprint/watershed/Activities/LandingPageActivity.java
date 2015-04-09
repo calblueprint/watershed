@@ -86,12 +86,8 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
             // Ideally we could request the user object from the server again here and then pass them to the main activity.
             final Intent intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            Bundle b = new Bundle();
-            b.putInt("userId", 1); //Replace with an actual user Id soon
-            intent.putExtras(b);
-            // intent.putExtra("auth_token", mPreferences.getString("auth_token", null));
-            this.finish();
             startActivity(intent);
+            finish();
             overridePendingTransition(0, 0);
         }
     }
@@ -132,21 +128,16 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     }
 
     public void onClick(View view){
-        if (view == mFacebookButton){
-            didTapFacebookButton(view);
-        }
-        else if (view == mLoginButton){
-            didTapLoginLoadFragmentButton(view);
-        }
-        else{
-            didTapSignUpLoadFragmentButton(view);
-        }
+        if (view == mFacebookButton) didTapFacebookButton(view);
+        else if (view == mLoginButton) didTapLoginLoadFragmentButton(view);
+        else didTapSignUpLoadFragmentButton(view);
     }
 
     public boolean hasAuthCredentials(SharedPreferences mPreferences) {
         return !mPreferences.getString("authentication_token", "none").equals("none") &&
                !mPreferences.getString("email", "none").equals("none") &&
-               !mPreferences.getString("user", "none").equals("none");
+               !mPreferences.getString("user", "none").equals("none") &&
+                mPreferences.getInt("userId", 0) != 0;
     }
 
     // UI Actions
@@ -210,12 +201,11 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     }
 
     public void facebookRequest(HashMap<String, String> params) {
-        final Intent intent = new Intent(this, MainActivity.class);
 
         FacebookLoginRequest facebookLoginRequest = new FacebookLoginRequest(this, params, new Response.Listener<Session>() {
             @Override
             public void onResponse(Session session) {
-                storeSessionAndStartMainActivity(intent, session);
+                storeSessionAndStartMainActivity(session);
             }
         }, new Response.Listener<APIError>() {
             @Override
@@ -228,12 +218,10 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     }
 
     public void loginRequest(HashMap<String, String> params) {
-        final Intent intent = new Intent(this, MainActivity.class);
-
         LoginRequest loginRequest = new LoginRequest(this, params, new Response.Listener<Session>() {
             @Override
             public void onResponse(Session session) {
-                storeSessionAndStartMainActivity(intent, session);
+                storeSessionAndStartMainActivity(session);
             }
         }, new Response.Listener<APIError>() {
             @Override
@@ -247,12 +235,11 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
 
 
     public void signUpRequest(HashMap<String, String> params) {
-        final Intent intent = new Intent(this, MainActivity.class);
 
         SignUpRequest signUpRequest = new SignUpRequest(this, params, new Response.Listener<Session>() {
             @Override
             public void onResponse(Session session) {
-                storeSessionAndStartMainActivity(intent, session);
+                storeSessionAndStartMainActivity(session);
             }
         }, new Response.Listener<APIError>() {
             @Override
@@ -270,9 +257,11 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         mUiHelper.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void storeSessionAndStartMainActivity(Intent intent, Session session) {
+    public void storeSessionAndStartMainActivity(Session session) {
+        final Intent intent = new Intent(this, MainActivity.class);
         ObjectMapper mapper = mLoginNetworkManager.getObjectMapper();
         JSONObject userJson = null;
+
         try {  userJson = new JSONObject(mapper.writeValueAsString(session.getUser())); }
         catch (Exception e) { Log.i("Exception", e.toString()); }
 
@@ -286,11 +275,6 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         }
         editor.putInt("userId", session.getUser().getId());
         editor.apply();
-
-        Bundle bundle = new Bundle();
-        bundle.putInt("userId", session.getUser().getId());
-        intent.putExtras(bundle);
-
         startActivity(intent);
         finish();
     }
