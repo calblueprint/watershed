@@ -39,7 +39,7 @@ public class EditSiteRequest extends BaseRequest {
                             });
                             listener.onResponse(site);
                         } catch (Exception e) {
-                            Log.e("Edit Site Json exception", e.toString());
+                            Log.e("Edit Site", e.toString());
                         }
                     }
                 }, activity);
