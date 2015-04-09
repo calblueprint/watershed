@@ -26,7 +26,7 @@ import java.util.HashMap;
 /**
  * Created by maxwolffe on 4/5/15.
  */
-public abstract class SiteAbstractFragment extends Fragment{
+public abstract class  SiteAbstractFragment extends Fragment{
 
     protected static final String EDIT = "edit";
     protected static final String CREATE = "create";

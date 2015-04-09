@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
+import com.blueprint.watershed.MiniSites.CreateMiniSiteFragment;
 import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteListAdapter;
@@ -94,11 +95,18 @@ public class SiteFragment extends Fragment
     }
 
     private void setButtonListeners(View view){
-        View editButton = view.findViewById(R.id.edit_site_button);
+        View editButton = view.findViewById(R.id.site_edit_site);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 editSite();
+            }
+        });
+        View miniSiteCreate = view.findViewById(R.id.site_add_minisite);
+        miniSiteCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mParentActivity.replaceFragment(CreateMiniSiteFragment.newInstance(mSite.getId()));
             }
         });
     }
@@ -108,7 +116,6 @@ public class SiteFragment extends Fragment
         mMiniSiteGridView = (HeaderGridView) view.findViewById(R.id.mini_sites_grid);
         mHeader = (ViewGroup) mParentActivity.getLayoutInflater().inflate(R.layout.site_header_view, mMiniSiteGridView, false);
         mMiniSiteGridView.addHeaderView(mHeader, null, false);
-        setButtonListeners(mHeader);
         configureViewWithSite(mHeader, mSite);
 
         // Set the adapter to fill the list of mini sites
@@ -116,13 +123,7 @@ public class SiteFragment extends Fragment
         mMiniSiteGridView.setAdapter(mMiniSiteAdapter);
         mMiniSiteGridView.setOnItemClickListener(this);
 
-//        mCreateSiteButton = (FloatingActionButton) view.findViewById(R.id.create_mini_site_button);
-//        mCreateSiteButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mParentActivity.replaceFragment(CreateMiniSiteFragment.newInstance(mSite.getId()));
-//            }
-//        });
+        setButtonListeners(view);
     }
 
     @Override

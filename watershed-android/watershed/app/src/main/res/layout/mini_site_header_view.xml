@@ -14,20 +14,6 @@
         android:layout_height="200dp"
         />
 
-    <com.blueprint.watershed.Views.Material.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/edit_site_button"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="175dp"
-        fab:fab_plusIconColor="@color/white"
-        fab:fab_colorNormal="@color/pink"
-        fab:fab_colorPressed="@color/pink_pressed"
-        fab:fab_size="mini"
-        fab:fab_icon="@drawable/ic_edit"
-        />
-
     <LinearLayout
         android:layout_below="@id/cover_photo_pager_view"
         android:layout_width="match_parent"

@@ -39,7 +39,7 @@ public class EditSiteFragment extends SiteAbstractFragment {
         if (mSite.getCity() != null) mCityField.setText(mSite.getCity());
         if (mSite.getState() != null) mStateField.setText(mSite.getState());
         if (mSite.getZipCode() != null) mZipField.setText(String.valueOf(mSite.getZipCode()));
-        mSubmitButton.setText("Edit Task");
+        mSubmitButton.setText("Edit Site");
     }
 
     public void submitListener(){
