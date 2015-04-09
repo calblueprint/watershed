@@ -86,12 +86,8 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
             // Ideally we could request the user object from the server again here and then pass them to the main activity.
             final Intent intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            Bundle b = new Bundle();
-            b.putInt("userId", mPreferences.getInt("userId", 0)); //Replace with an actual user Id soon
-            intent.putExtras(b);
-            // intent.putExtra("auth_token", mPreferences.getString("auth_token", null));
-            this.finish();
             startActivity(intent);
+            finish();
             overridePendingTransition(0, 0);
         }
     }
@@ -279,11 +275,6 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         }
         editor.putInt("userId", session.getUser().getId());
         editor.apply();
-
-        Bundle bundle = new Bundle();
-        bundle.putInt("userId", session.getUser().getId());
-        intent.putExtras(bundle);
-
         startActivity(intent);
         finish();
     }

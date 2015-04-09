@@ -122,12 +122,12 @@ public class MainActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mUserId = getIntent().getExtras().getInt("userId");
 
         setNetworkManager(NetworkManager.getInstance(this));
         mPreferences = getSharedPreferences(PREFERENCES, 0);
         authToken = mPreferences.getString("auth_token", "none");
         authEmail = mPreferences.getString("auth_email", "none");
+        mUserId = mPreferences.getInt("userId", 0);
         setUserObject();
 
         initializeCache();
