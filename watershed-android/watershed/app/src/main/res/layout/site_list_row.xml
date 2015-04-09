@@ -38,7 +38,6 @@
                 android:layout_marginLeft="@dimen/standard_margin"
                 android:layout_marginRight="@dimen/standard_margin"
                 android:background="@color/white">
-
                 <TextView
                     android:id="@+id/top_label"
                     android:layout_width="match_parent"

@@ -47,10 +47,9 @@ public abstract class BaseRequest extends JsonObjectRequest {
                     if (!Utility.isConnectedToInternet(activity)) {
                         Toast.makeText(activity, "You're not connected to the internet!", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(activity, "Server error - please try again!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity, "Something went wrong - please try again!", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Log.i("asdf", String.valueOf(networkResponse.statusCode));
                     if (networkResponse.statusCode == HttpStatus.SC_FORBIDDEN) {
                         Toast.makeText(activity, "You must sign in!", Toast.LENGTH_SHORT).show();
                         MainActivity.logoutCurrentUser(activity);
