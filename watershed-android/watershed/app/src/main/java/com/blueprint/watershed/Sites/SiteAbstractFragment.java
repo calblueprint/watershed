@@ -183,8 +183,6 @@ public abstract class SiteAbstractFragment extends Fragment{
                 }
             });
             mNetworkManager.getRequestQueue().add(createSiteRequest);
-            SiteListFragment returnFragment = SiteListFragment.newInstance();
-            mMainActivity.replaceFragment(returnFragment);
         }
         else {
             EditSiteRequest editSiteRequest = new EditSiteRequest(mMainActivity, site, params, new Response.Listener<Site>() {
@@ -194,8 +192,9 @@ public abstract class SiteAbstractFragment extends Fragment{
                 }
             });
             mNetworkManager.getRequestQueue().add(editSiteRequest);
-            mMainActivity.getSupportFragmentManager().popBackStack();
         }
+        mMainActivity.getSupportFragmentManager().popBackStack();
+
     }
 
     /**
