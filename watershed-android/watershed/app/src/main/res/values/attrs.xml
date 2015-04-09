@@ -44,6 +44,10 @@
     </declare-styleable>
 
     <declare-styleable name="FABMenu">
+        <attr name="fab_menu_icon" format="reference"/>
+        <attr name="fab_menu_colorPressed" format="color"/>
+        <attr name="fab_menu_colorDisabled" format="color"/>
+        <attr name="fab_menu_colorNormal" format="color"/>
         <attr name="fab_addButtonColorPressed" format="color"/>
         <attr name="fab_addButtonColorNormal" format="color"/>
         <attr name="fab_addButtonSize" format="enum">

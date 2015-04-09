@@ -13,6 +13,7 @@
 #  created_at   :datetime
 #  updated_at   :datetime
 #  urgent       :boolean          default(FALSE)
+#  color        :string(255)
 #
 
 # Read about factories at https://github.com/thoughtbot/factory_girl

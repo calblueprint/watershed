@@ -13,6 +13,7 @@
 #  created_at   :datetime
 #  updated_at   :datetime
 #  urgent       :boolean          default(FALSE)
+#  color        :string(255)
 #
 
 class Task < ActiveRecord::Base
@@ -36,4 +37,12 @@ class Task < ActiveRecord::Base
   belongs_to :mini_site
 
   has_one :field_report
+
+  before_create :add_color
+
+  private
+
+  def add_color
+    self.color = Constants.get_color self
+  end
 end
