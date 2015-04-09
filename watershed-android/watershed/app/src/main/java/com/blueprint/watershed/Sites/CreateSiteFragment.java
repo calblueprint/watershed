@@ -124,9 +124,7 @@ public class CreateSiteFragment extends Fragment implements View.OnClickListener
     }
 
     public void createSiteRequest(Site site){
-        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
-
-        CreateSiteRequest createSiteRequest = new CreateSiteRequest(getActivity(), site, params, new Response.Listener<Site>() {
+        CreateSiteRequest createSiteRequest = new CreateSiteRequest(getActivity(), site, new HashMap<String, JSONObject>(), new Response.Listener<Site>() {
             @Override
             public void onResponse(Site site) {
                 Log.e("successful site", "creation");

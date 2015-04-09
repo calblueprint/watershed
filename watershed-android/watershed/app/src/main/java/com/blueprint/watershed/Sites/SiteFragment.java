@@ -2,6 +2,7 @@ package com.blueprint.watershed.Sites;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +21,7 @@ import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteListAdapter;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Sites.SiteRequest;
+import com.blueprint.watershed.Networking.Sites.SiteSubscribeRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
 import com.blueprint.watershed.Views.HeaderGridView;
@@ -104,6 +106,26 @@ public class SiteFragment extends Fragment
         mMiniSiteAdapter = new MiniSiteListAdapter(mParentActivity, getMiniSites());
         mMiniSiteGridView.setAdapter(mMiniSiteAdapter);
         mMiniSiteGridView.setOnItemClickListener(this);
+    }
+
+    private void setButtonListeners(View view){
+        View subButton = view.findViewById(R.id.site_subscribe);
+        subButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                subscribeToSite();
+            }
+        });
+    }
+
+    private void subscribeToSite(){
+        SiteSubscribeRequest subRequest = new SiteSubscribeRequest(mParentActivity, mSite, new HashMap<String, JSONObject>(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String message) {
+                Log.e("Oh yeah", message);
+            }
+        });
+        mNetworkManager.getRequestQueue().add(subRequest);
     }
 
     @Override

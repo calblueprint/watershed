@@ -29,4 +29,16 @@
         fab:fab_icon="@drawable/ic_add"
         />
 
+    <com.blueprint.watershed.Views.Material.FloatingActionButton
+        style="@style/AddFABCenterBottom"
+        android:layout_toRightOf="@id/create_mini_site_button"
+        android:id="@+id/site_subscribe"
+        fab:fab_plusIconColor="@color/white"
+        fab:fab_colorNormal="@color/facebook_blue"
+        fab:fab_colorPressed="@color/pink_pressed"
+        fab:fab_size="normal"
+        fab:fab_icon="@drawable/ic_add"
+        />
+    <!-- TODO REMOVE FROM LAYOUT ONCE NEW STYLE MERGED -->
+
 </RelativeLayout>
