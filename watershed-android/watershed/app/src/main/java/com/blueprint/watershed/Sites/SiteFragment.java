@@ -93,11 +93,22 @@ public class SiteFragment extends Fragment
         mParentActivity.setMenuAction(false);
     }
 
+    private void setButtonListeners(View view){
+        View editButton = view.findViewById(R.id.edit_site_button);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editSite();
+            }
+        });
+    }
+
     private void initializeViews(View view) {
         // Create MiniSite grid
         mMiniSiteGridView = (HeaderGridView) view.findViewById(R.id.mini_sites_grid);
         mHeader = (ViewGroup) mParentActivity.getLayoutInflater().inflate(R.layout.site_header_view, mMiniSiteGridView, false);
         mMiniSiteGridView.addHeaderView(mHeader, null, false);
+        setButtonListeners(mHeader);
         configureViewWithSite(mHeader, mSite);
 
         // Set the adapter to fill the list of mini sites
@@ -156,10 +167,15 @@ public class SiteFragment extends Fragment
         }
     }
 
+    private void editSite(){
+        EditSiteFragment editSiteFragment = EditSiteFragment.newInstance(mSite);
+        mParentActivity.replaceFragment(editSiteFragment);
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.edit_site_menu, menu);
+        inflater.inflate(R.menu.empty, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 }
