@@ -1,2 +1,0 @@
-class SiteInfoListSerializer < BaseSiteSerializer
-end

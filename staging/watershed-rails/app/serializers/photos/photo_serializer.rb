@@ -1,2 +1,0 @@
-class PhotoSerializer < BasePhotoSerializer
-end
