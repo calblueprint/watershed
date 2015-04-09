@@ -89,4 +89,8 @@
     <string name="no_user_sites">Looks like this user has no sites!</string>
     <string name="no_user_reports">Looks like this user hasn\'t submitted any field reports yet!</string>
 
+    <!-- Heroku/IP Urls -->
+    <string name="heroku_production">https://intense-reaches-1457.herokuapp.com/api/v1/</string>
+    <string name="heroku_staging">https://floating-bayou-8262.herokuapp.com/api/v1/</string>
+    <string name="local_staging">http://10.142.182.151:3000/api/v1/</string>
 </resources>

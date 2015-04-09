@@ -89,7 +89,7 @@ public class TaskAdapter extends BaseExpandableListAdapter {
 
         holder.mSite.setText(task.getMiniSite().getName());
         holder.mTitle.setText(task.getTitle());
-        
+
         if (task.getColor() != null) {
             holder.mColor.setBackgroundColor(Color.parseColor(task.getColor()));
             holder.mDateHolder.setBackgroundColor(Color.parseColor(task.getColor()));
