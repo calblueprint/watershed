@@ -141,7 +141,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         return !mPreferences.getString("authentication_token", "none").equals("none") &&
                !mPreferences.getString("email", "none").equals("none") &&
                !mPreferences.getString("user", "none").equals("none") &&
-                mPreferences.getInt("id", 0) != 0;
+                mPreferences.getInt("userId", 0) != 0;
     }
 
     // UI Actions

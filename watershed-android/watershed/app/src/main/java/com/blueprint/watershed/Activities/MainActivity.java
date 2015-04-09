@@ -415,7 +415,6 @@ public class MainActivity extends ActionBarActivity
                 mDrawerLayout.closeDrawer(mDrawer);
                 break;
         }
-
     }
 
     // Networking
@@ -458,7 +457,6 @@ public class MainActivity extends ActionBarActivity
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
     }
-
 
     private void updateToolbarElevation() {
         setToolbarElevation(Utility.convertDptoPix(this, 4));
