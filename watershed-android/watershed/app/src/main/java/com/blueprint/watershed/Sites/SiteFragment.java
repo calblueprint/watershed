@@ -106,6 +106,8 @@ public class SiteFragment extends Fragment
         mMiniSiteAdapter = new MiniSiteListAdapter(mParentActivity, getMiniSites());
         mMiniSiteGridView.setAdapter(mMiniSiteAdapter);
         mMiniSiteGridView.setOnItemClickListener(this);
+
+        setButtonListeners(view);
     }
 
     private void setButtonListeners(View view){
