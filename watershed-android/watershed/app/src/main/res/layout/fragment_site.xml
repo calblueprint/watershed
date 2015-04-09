@@ -19,14 +19,46 @@
         android:horizontalSpacing="@dimen/tight_margin">
     </com.blueprint.watershed.Views.HeaderGridView>
 
-    <com.blueprint.watershed.Views.Material.FloatingActionButton
-        style="@style/AddFABCenterBottom"
-        android:id="@+id/create_mini_site_button"
-        fab:fab_plusIconColor="@color/white"
-        fab:fab_colorNormal="@color/pink"
-        fab:fab_colorPressed="@color/pink_pressed"
-        fab:fab_size="normal"
-        fab:fab_icon="@drawable/ic_add"
-        />
+    <!--<com.blueprint.watershed.Views.Material.FloatingActionButton-->
+        <!--style="@style/AddFABRightCorner"-->
+        <!--android:id="@+id/create_mini_site_button"-->
+        <!--fab:fab_plusIconColor="@color/white"-->
+        <!--fab:fab_colorNormal="@color/pink"-->
+        <!--fab:fab_colorPressed="@color/pink_pressed"-->
+        <!--fab:fab_size="normal"-->
+        <!--fab:fab_icon="@drawable/ic_add"-->
+        <!--/>-->
 
+    <com.blueprint.watershed.Views.Material.FloatingActionsMenu
+        android:id="@+id/site_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        fab:fab_menu_colorNormal="@color/pink"
+        fab:fab_menu_colorPressed="@color/pink_pressed"
+        fab:fab_menu_icon="@drawable/ic_settings"
+        fab:fab_labelStyle="@style/menu_labels_style"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp">
+
+        <com.blueprint.watershed.Views.Material.FloatingActionButton
+            android:id="@+id/site_edit_site"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/white"
+            fab:fab_title="@string/edit_site"
+            fab:fab_colorPressed="@color/white_pressed"/>
+
+        <com.blueprint.watershed.Views.Material.FloatingActionButton
+            android:id="@+id/site_add_minisite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/white"
+            fab:fab_title="@string/add_minisite"
+            fab:fab_colorPressed="@color/white_pressed"/>
+
+    </com.blueprint.watershed.Views.Material.FloatingActionsMenu>
 </RelativeLayout>
