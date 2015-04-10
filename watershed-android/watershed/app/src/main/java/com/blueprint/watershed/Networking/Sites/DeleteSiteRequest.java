@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 /**
  * Created by charlesx on 4/10/15.
+ * Creates a request to delete a task
  */
 public class DeleteSiteRequest extends BaseRequest {
     public DeleteSiteRequest(MainActivity activity, Site site, final Response.Listener<JSONObject> listener) {
