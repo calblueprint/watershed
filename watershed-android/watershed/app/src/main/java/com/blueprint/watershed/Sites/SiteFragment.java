@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
+import com.blueprint.watershed.MiniSites.CreateMiniSiteFragment;
 import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteListAdapter;
@@ -81,7 +82,8 @@ public class SiteFragment extends Fragment
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.edit:
+            case R.id.add_minisite:
+                mParentActivity.replaceFragment(CreateMiniSiteFragment.newInstance(mSite.getId()));
             default:
                 return super.onOptionsItemSelected(item);
         }

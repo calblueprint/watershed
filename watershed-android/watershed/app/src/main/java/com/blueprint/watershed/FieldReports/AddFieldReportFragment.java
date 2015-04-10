@@ -341,7 +341,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
     public void createFieldReportRequest(FieldReport fieldReport) {
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
 
-        CreateFieldReportRequest createFieldReportRequest = new CreateFieldReportRequest(getActivity(), fieldReport, params, new Response.Listener<FieldReport>() {
+        CreateFieldReportRequest createFieldReportRequest = new CreateFieldReportRequest(mParentActivity, fieldReport, params, new Response.Listener<FieldReport>() {
             @Override
             public void onResponse(FieldReport fieldReport) {
                 Log.e("successful field report", "creation");

@@ -24,13 +24,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 
+import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
+import com.blueprint.watershed.Networking.MiniSites.DeleteMiniSiteRequest;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Photos.Photo;
 import com.blueprint.watershed.Photos.PhotoPagerAdapter;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -50,6 +55,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     protected MainActivity mParentActivity;
     protected NetworkManager mNetworkManager;
 
+    protected ScrollView mScrollView;
     protected EditText mTitleField;
     protected EditText mAddressField;
     protected EditText mCityField;
@@ -65,7 +71,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     // Buttons
     protected ImageButton mDeletePhotoButton;
     protected ImageButton mAddPhotoButton;
-    protected Button mSubmit;
+    protected Button mDelete;
 
     protected RelativeLayout mLayout;
 
@@ -120,7 +126,8 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
      * Sets all the views in the fragment
      */
     protected void setButtonListeners() {
-        mSubmit = (Button) mParentActivity.findViewById(R.id.create_mini_site_submit);
+        mScrollView = (ScrollView) mParentActivity.findViewById(R.id.mini_site_scroll_view);
+        mDelete = (Button) mParentActivity.findViewById(R.id.create_mini_site_delete);
         mDeletePhotoButton = (ImageButton) mParentActivity.findViewById(R.id.mini_site_delete_photo);
         mAddPhotoButton = (ImageButton) mParentActivity.findViewById(R.id.mini_site_add_photo);
 
@@ -139,7 +146,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
 
         mDeletePhotoButton.setOnClickListener(this);
         mAddPhotoButton.setOnClickListener(this);
-        mSubmit.setOnClickListener(this);
+        mDelete.setOnClickListener(this);
     }
 
     public List<Photo> getPhotos() {
@@ -164,7 +171,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
             case R.id.mini_site_add_photo:
                 openAddPhotoDialog();
                 break;
-            case R.id.create_mini_site_submit:
+            case R.id.create_mini_site_delete:
                 deleteMiniSite();
                 break;
         }
@@ -239,7 +246,13 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     }
 
     private void deleteMiniSite() {
-        
+        DeleteMiniSiteRequest request = new DeleteMiniSiteRequest(mParentActivity, mMiniSite, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                mParentActivity.getSupportFragmentManager().popBackStack();
+            }
+        });
+        mNetworkManager.getRequestQueue().add(request);
     }
 
     /**

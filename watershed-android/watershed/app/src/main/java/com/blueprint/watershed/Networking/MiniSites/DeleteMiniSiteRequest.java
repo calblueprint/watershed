@@ -23,7 +23,7 @@ public class DeleteMiniSiteRequest extends BaseRequest{
                         try {
                             listener.onResponse(jsonObject);
                         } catch (Exception e) {
-                            Log.e("Mini Site Request Json exception", e.toString());
+                            Log.e("Mini Site Request", e.toString());
                         }
                     }
 
