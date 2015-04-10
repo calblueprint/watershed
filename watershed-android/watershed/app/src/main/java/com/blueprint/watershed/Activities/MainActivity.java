@@ -38,6 +38,7 @@ import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Users.HomeRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Sites.CreateSiteFragment;
+import com.blueprint.watershed.Sites.Site;
 import com.blueprint.watershed.Sites.SiteFragment;
 import com.blueprint.watershed.Sites.SiteListFragment;
 import com.blueprint.watershed.Tasks.CreateTaskFragment;
@@ -108,12 +109,12 @@ public class MainActivity extends ActionBarActivity
     private User mUser;
     private Integer mUserId;
 
+    // Temp Vars
+    private Site mSite;
+
     //Task for FieldReport
     private Task mFieldReportTask;
 
-    // Caching images
-    private LruCache<Integer, Drawable> mSiteImages;
-    private LruCache<Integer, Drawable> mMiniSiteImages;
 
     // Params (so we don't have to set them later)
     private List<User> mUsers;
@@ -172,21 +173,6 @@ public class MainActivity extends ActionBarActivity
             public void onResponse(User home) { setUser(home); }
         });
         mNetworkManager.getRequestQueue().add(homeRequest);
-    }
-
-
-    private void initializeCache() {
-        mSiteImages = new LruCache<Integer, Drawable>(CACHE_SIZE) {
-            protected int sizeOf(String key, Bitmap value) {
-                return value.getByteCount();
-            }
-        };
-
-        mMiniSiteImages = new LruCache<Integer, Drawable>(CACHE_SIZE) {
-            protected int sizeOf(String key, Bitmap value) {
-                return value.getByteCount();
-            }
-        };
     }
 
     private void initializeViews() {
@@ -468,4 +454,7 @@ public class MainActivity extends ActionBarActivity
         mToolBar.setElevation(elevation);
         mToolBar.invalidate();
     }
+
+    public void setSite(Site site) { mSite = site; }
+    public Site getSite() { return mSite; }
 }

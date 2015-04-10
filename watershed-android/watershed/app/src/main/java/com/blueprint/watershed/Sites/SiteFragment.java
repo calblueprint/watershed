@@ -75,7 +75,7 @@ public class SiteFragment extends Fragment
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_site, container, false);
         initializeViews(view);
-        if (mSite.isMiniSiteEmpty()) getSiteRequest(mSite);
+        getSiteRequest(mSite);
         return view;
     }
 
@@ -129,6 +129,7 @@ public class SiteFragment extends Fragment
         SiteRequest siteRequest = new SiteRequest(getActivity(), site, params, new Response.Listener<Site>() {
             @Override
             public void onResponse(Site site) {
+                if (site.getMiniSitesCount().equals(mSite.getMiniSitesCount())) return;
                 setSite(site);
                 mParentActivity.getSpinner().setVisibility(View.GONE);
                 mMiniSiteAdapter.notifyDataSetChanged();
