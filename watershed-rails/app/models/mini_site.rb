@@ -22,12 +22,12 @@ class MiniSite < ActiveRecord::Base
 
   has_many :field_reports, dependent: :destroy
 
-  has_many :user_mini_sites
+  has_many :user_mini_sites, dependent: :destroy
   has_many :users, through: :user_mini_sites
 
-  has_many :tasks
+  has_many :tasks, dependent: :destroy
 
-  has_many :photos, as: :parent
+  has_many :photos, as: :parent, dependent: :destroy
 
   scope :with_photos, -> { select { |mini_site| mini_site.photos.size > 0 } }
 
@@ -45,5 +45,4 @@ class MiniSite < ActiveRecord::Base
   def health_rating
     field_reports.try(:first).try(:health_rating) || 0
   end
-
 end
