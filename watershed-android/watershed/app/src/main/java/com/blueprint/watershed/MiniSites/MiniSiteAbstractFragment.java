@@ -33,9 +33,10 @@ import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Photos.Photo;
 import com.blueprint.watershed.Photos.PhotoPagerAdapter;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Sites.Site;
+import com.blueprint.watershed.Sites.SiteFragment;
+import com.blueprint.watershed.Utilities.Utility;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
-
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -246,10 +247,26 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     }
 
     private void deleteMiniSite() {
-        DeleteMiniSiteRequest request = new DeleteMiniSiteRequest(mParentActivity, mMiniSite, new Response.Listener<JSONObject>() {
+        Utility.showAndBuildDialog(mParentActivity, R.string.mini_site_delete_title,
+                R.string.mini_site_delete_msg, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        makeDeleteRequest();
+                    }
+                }, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }
+        );
+    }
+
+    private void makeDeleteRequest() {
+        DeleteMiniSiteRequest request = new DeleteMiniSiteRequest(mParentActivity, mMiniSite, new Response.Listener<Site>() {
             @Override
-            public void onResponse(JSONObject jsonObject) {
-                mParentActivity.getSupportFragmentManager().popBackStack();
+            public void onResponse(Site site) {
+                mParentActivity.replaceFragment(SiteFragment.newInstance(site));
             }
         });
         mNetworkManager.getRequestQueue().add(request);

@@ -1,7 +1,9 @@
 package com.blueprint.watershed.Utilities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
@@ -86,4 +88,22 @@ public class Utility {
                 context.getResources().getDisplayMetrics());
     }
 
+
+    /**
+     * Shows and builds a dialog that warns a user of an action
+     * @param activity Activity
+     * @param title Title
+     * @param message Message you want to put in body
+     * @param yesListen Listener if the User clicks ok
+     * @param noListen Listener if the User clicks no
+     */
+    public static void showAndBuildDialog(Activity activity, int title, int message,
+                                          DialogInterface.OnClickListener yesListen, DialogInterface.OnClickListener noListen) {
+        new AlertDialog.Builder(activity)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(android.R.string.yes, yesListen)
+                .setNegativeButton(android.R.string.no, noListen)
+                .show();
+    }
 }
