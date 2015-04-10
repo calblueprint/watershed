@@ -23,13 +23,13 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Photos.Photo;
 import com.blueprint.watershed.Photos.PhotoPagerAdapter;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Sites.Site;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
 
 import java.io.File;
@@ -49,7 +49,6 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     protected MainActivity mParentActivity;
     protected NetworkManager mNetworkManager;
 
-    protected ScrollView mScrollView;
     protected EditText mTitleField;
     protected EditText mAddressField;
     protected EditText mCityField;
@@ -68,7 +67,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
 
     protected RelativeLayout mLayout;
 
-    protected Integer mSiteID;
+    protected Site mSite;
     protected MiniSite mMiniSite;
 
     // Camera Stuff
@@ -80,7 +79,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     protected static final String DIALOG_TAG = "PickPhotoTypeDialog";
     protected static final int DIALOG_REQUEST_CODE = 200;
 
-    public void setSite(Integer site) { mSiteID = site; }
+    public void setSite(Site site) { mSite = site; }
     public void setMiniSite(MiniSite miniSite) { mMiniSite = miniSite; }
 
     @Override
@@ -119,7 +118,6 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
      * Sets all the views in the fragment
      */
     protected void setButtonListeners() {
-        mScrollView = (ScrollView) mParentActivity.findViewById(R.id.mini_site_scroll_view);
         mDeletePhotoButton = (ImageButton) mParentActivity.findViewById(R.id.mini_site_delete_photo);
         mAddPhotoButton = (ImageButton) mParentActivity.findViewById(R.id.mini_site_add_photo);
 
@@ -222,7 +220,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         miniSite.setLongitude(0f); // Get this later
         miniSite.setFieldReportsCount(miniSite.getFieldReportsCount());
         miniSite.setState(mStateField.getText().toString());
-        miniSite.setSiteId(mSiteID);
+        miniSite.setSiteId(mSite.getId());
         miniSite.setPhotos(mPhotoList);
 
         new Thread(new Runnable() {

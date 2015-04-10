@@ -39,21 +39,21 @@ public class MiniSiteFragment extends Fragment
     private HeaderGridView mFieldReportGridView;
     private FieldReportListAdapter mFieldReportAdapter;
     private MiniSite mMiniSite;
-    private Integer mSiteID;
+    private Site mSite;
     private List<FieldReport> mFieldReports;
 
 
-    public static MiniSiteFragment newInstance(Integer site, MiniSite miniSite) {
+    public static MiniSiteFragment newInstance(Site site, MiniSite miniSite) {
         MiniSiteFragment miniSiteFragment = new MiniSiteFragment();
         miniSiteFragment.setMiniSite(miniSite);
-        miniSiteFragment.setSiteID(site);
+        miniSiteFragment.setSite(site);
         return miniSiteFragment;
     }
 
     public MiniSiteFragment() {}
 
-    public void setSiteID(Integer siteID) {
-        mSiteID = siteID;
+    public void setSite(Site site) {
+        mSite = site;
     }
 
     // Objects
@@ -126,7 +126,7 @@ public class MiniSiteFragment extends Fragment
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.edit:
-                EditMiniSiteFragment fragment = EditMiniSiteFragment.newInstance(mSiteID, mMiniSite);
+                EditMiniSiteFragment fragment = EditMiniSiteFragment.newInstance(mSite, mMiniSite);
                 mParentActivity.replaceFragment(fragment);
             case R.id.delete:
                 deleteMiniSite();
@@ -185,6 +185,7 @@ public class MiniSiteFragment extends Fragment
         DeleteMiniSiteRequest request = new DeleteMiniSiteRequest(mParentActivity, mMiniSite, new Response.Listener<Site>() {
             @Override
             public void onResponse(Site site) {
+                mSite = site;
                 mParentActivity.getSupportFragmentManager().popBackStack();
             }
         });

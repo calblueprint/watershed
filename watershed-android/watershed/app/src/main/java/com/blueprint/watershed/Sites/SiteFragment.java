@@ -83,7 +83,7 @@ public class SiteFragment extends Fragment
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_minisite:
-                mParentActivity.replaceFragment(CreateMiniSiteFragment.newInstance(mSite.getId()));
+                mParentActivity.replaceFragment(CreateMiniSiteFragment.newInstance(mSite));
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -103,7 +103,7 @@ public class SiteFragment extends Fragment
         configureViewWithSite(mHeader, mSite);
 
         // Set the adapter to fill the list of mini sites
-        mMiniSiteAdapter = new MiniSiteListAdapter(mParentActivity, getMiniSites());
+        mMiniSiteAdapter = new MiniSiteListAdapter(mParentActivity, getMiniSites(), mSite);
         mMiniSiteGridView.setAdapter(mMiniSiteAdapter);
         mMiniSiteGridView.setOnItemClickListener(this);
 
@@ -119,7 +119,7 @@ public class SiteFragment extends Fragment
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         MiniSite miniSite = getMiniSite(position);
-        MiniSiteFragment miniSiteFragment = MiniSiteFragment.newInstance(mSite.getId(), miniSite);
+        MiniSiteFragment miniSiteFragment = MiniSiteFragment.newInstance(mSite, miniSite);
         mParentActivity.replaceFragment(miniSiteFragment);
     }
 

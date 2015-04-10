@@ -33,7 +33,7 @@ class Api::V1::MiniSitesController < Api::V1::BaseController
 
   def destroy
     if @mini_site.destroy
-      render json: @mini_site.site, serializer: SiteSerializer
+      render json: { message: "Deleted minisite!" }, status: :ok
     else
       error_response(@mini_site)
     end

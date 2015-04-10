@@ -85,7 +85,7 @@ public class UserMiniSiteFragment extends Fragment{
         configureViewWithUser(header, mUser);
 
         // Set the adapter to fill the list of miniSites
-        mMiniSiteAdapter = new MiniSiteListAdapter(mParentActivity, getMiniSites());
+        mMiniSiteAdapter = new MiniSiteListAdapter(mParentActivity, getMiniSites(), null);
         mMiniSiteGridView.setAdapter(mMiniSiteAdapter);
 
         return view;
