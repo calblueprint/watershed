@@ -265,9 +265,30 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Bitmap photo = null;
         if (requestCode == CAMERA_REQUEST && resultCode == MainActivity.RESULT_OK) {
-            photo = (Bitmap) data.getExtras().get("data");
+            // Get the dimensions of the View
+            int targetW = mImagePager.getWidth();
+            int targetH = mImagePager.getHeight();
+
+            // Get the dimensions of the bitmap
+            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+            bmOptions.inJustDecodeBounds = true;
+            BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+            int photoW = bmOptions.outWidth;
+            int photoH = bmOptions.outHeight;
+
+            // Determine how much to scale down the image
+            int scaleFactor = 0;
+            if (targetW > 0 && targetH > 0) scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+
+            // Decode the image file into a Bitmap sized to fill the View
+            bmOptions.inJustDecodeBounds = false;
+            bmOptions.inSampleSize = scaleFactor;
+            bmOptions.inPurgeable = true;
+
+            photo = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
 
         }
+
         else if (requestCode == SELECT_PHOTO_REQUEST && resultCode == MainActivity.RESULT_OK){
             Uri targetUri = data.getData();
 
@@ -275,8 +296,16 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
             catch (FileNotFoundException e) { e.printStackTrace(); }
         }
 
+        Bitmap scaledBitmap = null;
+
         if (photo != null) {
-            mPhotoList.add(new Photo(photo));
+            int width = photo.getWidth() / 6;
+            int height = photo.getHeight() / 6;
+            scaledBitmap = Bitmap.createScaledBitmap(photo, width, height, false);
+        }
+
+        if (scaledBitmap != null) {
+            mPhotoList.add(new Photo(scaledBitmap));
             mImageAdapter.notifyDataSetChanged();
             mImagePager.setCurrentItem(mPhotoList.size() - 1);
         }

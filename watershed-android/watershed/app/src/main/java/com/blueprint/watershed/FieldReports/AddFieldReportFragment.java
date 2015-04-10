@@ -317,11 +317,9 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
         Bitmap scaledBitmap = null;
 
         if (photo != null)  {
-            Log.i("PHOTOCOUNT",  String.valueOf(photo.getByteCount()));
             int height = photo.getHeight() / 6;
             int width = photo.getWidth() / 6;
             scaledBitmap = Bitmap.createScaledBitmap(photo, width, height, false);
-            Log.i("PHOTOCOUNT",  String.valueOf(scaledBitmap.getByteCount()));
         }
 
         if (scaledBitmap != null) {
