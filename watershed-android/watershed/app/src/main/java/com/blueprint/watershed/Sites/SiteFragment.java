@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
-import com.blueprint.watershed.MiniSites.CreateMiniSiteFragment;
 import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteListAdapter;
@@ -75,7 +74,13 @@ public class SiteFragment extends Fragment
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_site, container, false);
         initializeViews(view);
-        getSiteRequest(mSite);
+        Site site = mParentActivity.getSite();
+        if (site != null) {
+            mSite = site;
+            mParentActivity.setSite(null);
+        }
+
+        if (mSite.isMiniSiteEmpty()) getSiteRequest(mSite);
         return view;
     }
 
@@ -83,7 +88,6 @@ public class SiteFragment extends Fragment
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_minisite:
-                mParentActivity.replaceFragment(CreateMiniSiteFragment.newInstance(mSite));
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -129,7 +133,6 @@ public class SiteFragment extends Fragment
         SiteRequest siteRequest = new SiteRequest(getActivity(), site, params, new Response.Listener<Site>() {
             @Override
             public void onResponse(Site site) {
-                if (site.getMiniSitesCount().equals(mSite.getMiniSitesCount())) return;
                 setSite(site);
                 mParentActivity.getSpinner().setVisibility(View.GONE);
                 mMiniSiteAdapter.notifyDataSetChanged();

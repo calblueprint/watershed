@@ -185,6 +185,7 @@ public class MiniSiteFragment extends Fragment
         DeleteMiniSiteRequest request = new DeleteMiniSiteRequest(mParentActivity, mMiniSite, new Response.Listener<Site>() {
             @Override
             public void onResponse(Site site) {
+                mParentActivity.setSite(site);
                 mSite = site;
                 mParentActivity.getSupportFragmentManager().popBackStack();
             }
