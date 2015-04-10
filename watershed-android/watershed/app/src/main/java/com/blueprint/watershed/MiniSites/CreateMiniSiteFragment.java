@@ -2,7 +2,6 @@ package com.blueprint.watershed.MiniSites;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Networking.MiniSites.CreateMiniSiteRequest;
@@ -33,12 +32,6 @@ public class CreateMiniSiteFragment extends MiniSiteAbstractFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setButtonListeners();
-        hideDeleteButton();
-    }
-
-    private void hideDeleteButton() {
-        mScrollView.setPadding(0, 0, 0, 0);
-        mDelete.setVisibility(View.GONE);
     }
 
     @Override

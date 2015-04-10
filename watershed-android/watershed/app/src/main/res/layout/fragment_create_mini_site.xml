@@ -6,10 +6,9 @@
     android:layout_height="match_parent"
     tools:context="com.blueprint.watershed.MiniSites.CreateMiniSiteFragment">
     <ScrollView
-        android:id="@+id/mini_site_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="50dp">
+        >
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -201,13 +200,4 @@
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
-    <Button
-        android:id="@+id/create_mini_site_delete"
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/ws_blue"
-        android:textColor="@color/white"
-        android:text="@string/mini_site_destroy"
-        />
 </RelativeLayout>
