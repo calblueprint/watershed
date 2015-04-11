@@ -7,6 +7,7 @@
 //
 
 #import "WPLoginView.h"
+#import "FontAwesomeKit/FontAwesomeKit.h"
 #import "UIExtensions.h"
 #import "WPLoginViewController.h"
 #import <QuartzCore/QuartzCore.h>
@@ -82,7 +83,7 @@
             _signInEmailIconView = [[UIImageView alloc] initWithImage:[emailIcon imageWithSize:CGSizeMake(20, 20)]];
             [self addSubview:_signInEmailIconView];
             
-            FAKIonIcons *lockIcon = [FAKIonIcons androidLockIconWithSize:20];
+            FAKIonIcons *lockIcon = [FAKIonIcons lockedIconWithSize:20];
             [lockIcon addAttribute:NSForegroundColorAttributeName
                              value:[UIColor whiteColor]];
             _signInPasswordIconView = [[UIImageView alloc] initWithImage:[lockIcon imageWithSize:CGSizeMake(20, 20)]];

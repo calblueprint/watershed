@@ -37,7 +37,7 @@
     self.navigationItem.leftBarButtonItem = cancelButton;
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor wp_blue];
     
-    FAKIonIcons *checkIcon = [FAKIonIcons androidDoneIconWithSize:24];
+    FAKIonIcons *checkIcon = [FAKIonIcons chevronUpIconWithSize:24];
     UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake(24, 24)];
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithImage:checkImage style:UIBarButtonItemStylePlain target:self action:@selector(saveAndDismissSelf)];
     self.navigationItem.rightBarButtonItem = doneButton;

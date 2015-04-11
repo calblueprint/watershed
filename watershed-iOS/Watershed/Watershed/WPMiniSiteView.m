@@ -95,7 +95,7 @@ static int COVER_PHOTO_TRANS = 0;
     }) wp_addToSuperview:self.tableHeaderView];
     
     _addressLabel = [({
-        FAKIonIcons *mapMarkerIcon = [FAKIonIcons androidPinIconWithSize:[WPLabeledIcon viewHeight]];
+        FAKIonIcons *mapMarkerIcon = [FAKIonIcons pinIconWithSize:[WPLabeledIcon viewHeight]];
         UIImage *mapMarkerImage = [mapMarkerIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
         WPLabeledIcon *addressLabel = [[WPLabeledIcon alloc] initWithText:@"Street Addresss Label" icon:mapMarkerImage];
         addressLabel;
@@ -109,14 +109,14 @@ static int COVER_PHOTO_TRANS = 0;
     }) wp_addToSuperview:self.tableHeaderView];
     
     _currentTaskLabel = [({
-        FAKIonIcons *checkIcon = [FAKIonIcons androidDoneAllIconWithSize:[WPLabeledIcon viewHeight]];
+        FAKIonIcons *checkIcon = [FAKIonIcons checkmarkCircledIconWithSize:[WPLabeledIcon viewHeight]];
         UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
         WPLabeledIcon *currentTaskLabel = [[WPLabeledIcon alloc] initWithText:@"Current Task" icon:checkImage];
         currentTaskLabel;
     }) wp_addToSuperview:self.tableHeaderView];
     
     _fieldReportCountLabel = [({
-        FAKIonIcons *clipboardIcon = [FAKIonIcons androidClipboardIconWithSize:[WPLabeledIcon viewHeight]];
+        FAKIonIcons *clipboardIcon = [FAKIonIcons clipboardIconWithSize:[WPLabeledIcon viewHeight]];
         UIImage *clipboardImage = [clipboardIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
         WPLabeledIcon *fieldReportCountLabel = [[WPLabeledIcon alloc] initWithText:@"Field Report Count" icon:clipboardImage];
         fieldReportCountLabel;
