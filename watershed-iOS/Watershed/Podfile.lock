@@ -61,14 +61,14 @@ EXTERNAL SOURCES:
     :git: https://github.com/PrideChung/FontAwesomeKit.git
 
 SPEC CHECKSUMS:
-  AFNetworking: 0f54cb5d16ce38c1b76948faffb8d5fb705021c7
-  Bolts: dd9fb8433d67f5acc3b6b4d1379bbc5513d716c1
-  BSKeyboardControls: c9aa1bdbb5ecd454aa3d0b2279f79c5dc4b6c6ad
-  Facebook-iOS-SDK: 18c26e86ab25c17854a2ee2a8f60562099c6600f
+  AFNetworking: 96ac9bf3eda33582701cb1fcc5b896aa1e20311e
+  Bolts: f8e2f94edbf9fec7bb8de5ecaaa3aa6b7de6f64e
+  BSKeyboardControls: b701935e789961102e3f20063bba7185800a2d3f
+  Facebook-iOS-SDK: 20e413a6e34f9155d7a34484e0c08247fae3e47f
   FontAwesomeKit: f8fb420a8ce4f234fc17d9a022c26de77a399924
-  Mantle: d7c5ac734579ec751c58fecbf56189853056c58c
-  Masonry: 35368c2ca9577ca87722c12fc52c4bad9b1c1516
-  UICKeyChainStore: 257d869d42527b9853ebb11d6dc3ac377b270e72
-  UIImage+BlurredFrame: 0c38f5760d72125c47d16001a88faaac573bd35d
+  Mantle: 1ec9076f091f3a2f95cb2c94939e92dba35c97e1
+  Masonry: 9f515466afe48632562342a40a1c224071a1a022
+  UICKeyChainStore: 4a061e4e26bd5a69b3ec7e08e0fe471e6f7c0068
+  UIImage+BlurredFrame: ad2f7195c6947ea3117c7d202f75a51958d5061a
 
 COCOAPODS: 0.34.4

@@ -10,6 +10,7 @@
 #import "WPCreateMiniSiteView.h"
 #import "WPCreateMiniSiteTableViewCell.h"
 #import "WPView.h"
+#import "UIExtensions.h"
 #import "WPNetworkingManager.h"
 
 @interface WPCreateMiniSiteViewController ()

@@ -7,6 +7,7 @@
 //
 
 #import "WPMiniSiteView.h"
+#import "UIExtensions.h"
 #import "WPFieldReportTableViewCell.h"
 
 @interface WPMiniSiteView () <UIScrollViewDelegate>

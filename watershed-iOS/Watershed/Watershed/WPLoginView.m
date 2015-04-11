@@ -7,7 +7,7 @@
 //
 
 #import "WPLoginView.h"
-#import "FontAwesomeKit/FontAwesomeKit.h"
+#import "UIExtensions.h"
 #import "WPLoginViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
