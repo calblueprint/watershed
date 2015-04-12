@@ -101,7 +101,6 @@ static NSString *CellIdentifier = @"Cell";
     _managerArray = [[NSMutableArray alloc] init];
     _employeeArray = [[NSMutableArray alloc] init];
     for (WPUser *u in _userArray) {
-        NSLog(@"%@", u.role);
         if ([u.role isEqualToNumber:[NSNumber numberWithInt:2]]) {
             [_managerArray addObject:u];
             [toBeRemoved addObject:u];
