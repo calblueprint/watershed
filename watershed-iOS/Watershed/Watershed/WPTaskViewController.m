@@ -76,8 +76,12 @@
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
         NSLog(@"Hello?");
-        //DELETE TASK HERE
+        NSMutableDictionary *task2JSON = [[NSMutableDictionary alloc] init];
+//        [[WPNetworkingManager sharedManager] deleteTaskWithTask:_task parameters:task2JSON success:^(WPTask *task) {
+                //what do I do in this block
+//        }];
     }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Setter Methods
