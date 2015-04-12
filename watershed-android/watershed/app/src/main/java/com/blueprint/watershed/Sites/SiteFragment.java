@@ -112,7 +112,7 @@ public class SiteFragment extends Fragment
         miniSiteCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mParentActivity.replaceFragment(CreateMiniSiteFragment.newInstance(mSite.getId()));
+                mParentActivity.replaceFragment(CreateMiniSiteFragment.newInstance(mSite));
             }
         });
     }

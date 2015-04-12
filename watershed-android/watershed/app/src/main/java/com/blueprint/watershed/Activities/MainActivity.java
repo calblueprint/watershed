@@ -29,6 +29,7 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.AboutFragment;
+import com.blueprint.watershed.FieldReports.FieldReportFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteAbstractFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
@@ -225,7 +226,8 @@ public class MainActivity extends ActionBarActivity
                  f instanceof SiteFragment ||
                  f instanceof UserMiniSiteFragment)       setTitle("Sites");
         else if (f instanceof AboutFragment)              setTitle("About");
-        else if (f instanceof UserFieldReportFragment)    setTitle("Field Reports");
+        else if (f instanceof UserFieldReportFragment ||
+                 f instanceof FieldReportFragment)        setTitle("Field Reports");
         else if (f instanceof UserFragment)               setTitle("Profile");
         else if (f instanceof MiniSiteAbstractFragment ||
                  f instanceof MiniSiteFragment)           setTitle("MiniSite");
