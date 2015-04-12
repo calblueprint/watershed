@@ -340,10 +340,6 @@ static NSString * const TASKS_URL = @"tasks";
         fieldReportResponse.miniSite = fieldReport.miniSite;
         fieldReportResponse.imageURLs = fieldReport.imageURLs;
         fieldReportResponse.user = [MTLJSONAdapter modelOfClass:WPUser.class fromJSONDictionary:fieldReportJSON[@"user"] error:nil];
-        // NSDictionary *photoJSON = fieldReportJSON[@"photo"];
-        // if (!([photoJSON isEqual:[NSNull null]]) && photoJSON) {
-        //     [fieldReport.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];
-        // }
         success(fieldReportResponse);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load field report." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
