@@ -10,6 +10,7 @@
 #import "WPTaskView.h"
 #import "WPAddFieldReportViewController.h"
 #import "WPNetworkingManager.h"
+#import "WPEditTaskViewController.h"
 
 @interface WPTaskViewController ()
 
@@ -38,6 +39,8 @@
     [super didReceiveMemoryWarning];
 }
 
+#pragma mark - Button Action Setups
+
 - (void)addFieldReportAction {
     WPAddFieldReportViewController *addFieldReportViewController = [[WPAddFieldReportViewController alloc] init];
     [[self navigationController] pushViewController:addFieldReportViewController animated:YES];
@@ -53,7 +56,13 @@
 }
 
 - (void)editTask {
-    
+    WPEditTaskViewController *editTaskViewController = [[WPEditTaskViewController alloc] init];
+    [editTaskViewController setTask:self.task];
+    UINavigationController *editTaskNavController = [[UINavigationController alloc] initWithRootViewController:editTaskViewController];
+    [editTaskNavController.navigationBar setBackgroundColor:[UIColor whiteColor]];
+    [editTaskNavController.navigationBar setBarTintColor:[UIColor whiteColor]];
+    [editTaskNavController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
+    [self.navigationController presentViewController:editTaskNavController animated:YES completion:nil];
 }
 
 - (void)changeCompletion {
@@ -84,7 +93,6 @@
                                    style:UIBarButtonItemStylePlain
                                    target:self
                                    action:@selector(editTask)];
-//    self.navigationItem.rightBarButtonItem = deleteButton;
     NSMutableArray *barButtonItems = [[NSMutableArray alloc] initWithObjects:deleteButton, editButton, nil];
     [self.navigationItem setRightBarButtonItems:barButtonItems animated:YES];
 }
