@@ -67,7 +67,7 @@
     __weak __typeof(self)weakSelf = self;
     [[WPNetworkingManager sharedManager] editTaskWithTask:_task parameters:task2JSON success:^(WPTask *task) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        //do i need anything in this block...?
+        [self.navigationController popViewControllerAnimated:YES];
     }];
 }
 
@@ -75,13 +75,11 @@
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
-        NSLog(@"Hello?");
-        NSMutableDictionary *task2JSON = [[NSMutableDictionary alloc] init];
-//        [[WPNetworkingManager sharedManager] deleteTaskWithTask:_task parameters:task2JSON success:^(WPTask *task) {
-                //what do I do in this block
-//        }];
+        NSMutableDictionary *taskJSON = [[NSMutableDictionary alloc] init];
+        [[WPNetworkingManager sharedManager] deleteTaskWithTask:_task parameters:taskJSON success:^(WPTask *task) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
     }
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Setter Methods

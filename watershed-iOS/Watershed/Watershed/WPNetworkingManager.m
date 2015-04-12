@@ -197,7 +197,6 @@ static NSString * const TASKS_URL = @"tasks";
     [parameters setObject:taskJSON forKey:@"task"];
 
     [self DELETE:taskString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        //what to do after deleting??
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not delete task." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [incorrect show];
