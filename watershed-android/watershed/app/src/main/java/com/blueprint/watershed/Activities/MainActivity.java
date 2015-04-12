@@ -322,6 +322,10 @@ public class MainActivity extends ActionBarActivity
         mDrawerList.setAdapter(new ArrayAdapter<>(this,
                 R.layout.menu_list_item, R.id.menu_title, titles));
 
+        setDrawerListener();
+    }
+
+    private void setDrawerListener() {
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
                 mToolBar, R.string.draw_open_close , R.string.draw_open_close) {
 
@@ -431,26 +435,14 @@ public class MainActivity extends ActionBarActivity
         mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("sigh","halp)");
                 checkMenuClosed();
-//                getSupportFragmentManager().popBackStack();
                 mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
             }
         });
-//        mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.i("sigh","halp)");
-
-//                getSupportFragmentManager().popBackStack();
-//                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-//            }
-//        });
-
     }
 
     public void setMenu() {
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        setDrawerListener();
         mDrawerToggle.syncState();
     }
 

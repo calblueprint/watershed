@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Networking.NetworkManager;
@@ -205,6 +206,11 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
                 editText.setError("Cannot be blank!");
                 hasErrors = true;
             }
+        }
+
+        if (mPhotoList.size() < 1) {
+            Toast.makeText(mParentActivity, "Please upload at least one photo!", Toast.LENGTH_SHORT).show();
+            hasErrors = true;
         }
 
         if (hasErrors) return;
