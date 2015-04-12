@@ -2,6 +2,7 @@ package com.blueprint.watershed.Users;
 
 import com.blueprint.watershed.APIObject;
 import com.blueprint.watershed.FieldReports.FieldReport;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.ArrayList;
@@ -29,6 +30,12 @@ public class User implements APIObject {
     private Integer mFieldReportsCount;
     private Integer mSitesCount;
 
+    private String mHeaderType;
+
+    public static String MANAGER = "Manager";
+    public static String COMMUNITY_MEMBER = "Community Member";
+    public static String EMPLOYEE = "Employee";
+
 
     private ArrayList<FieldReport> mFieldReports;
 
@@ -44,15 +51,20 @@ public class User implements APIObject {
         mRole = 2;
     }
 
+    public User(String string) {
+        super();
+        mHeaderType = string;
+    }
+
     // Roles
     public Boolean isManager() { return mRole == Role.MANAGER.getValue(); }
     public Boolean isEmployee() { return mRole == Role.EMPLOYEE.getValue(); }
     public Boolean isCommunityMember() { return mRole == Role.COMMUNITY_MEMBER.getValue(); }
 
     public String getRoleString() {
-        if (isManager()) return "Manager";
-        else if (isCommunityMember()) return "Community Member";
-        else return "Employee";
+        if (isManager()) return MANAGER;
+        else if (isCommunityMember()) return COMMUNITY_MEMBER;
+        else return EMPLOYEE;
     }
 
     // Getters
@@ -79,4 +91,11 @@ public class User implements APIObject {
     public void setTaskscount(Integer count) { mTasksCount = count; }
     public void setSitesCount(Integer count) { mSitesCount = count; }
     public void setFieldReportsCount(Integer count) { mFieldReportsCount = count; }
+
+    @JsonIgnore
+    public String getLayoutType() { return mHeaderType; }
+
+    @JsonIgnore
+    public void setLayoutType(String type) { mHeaderType = type; }
+
 }
