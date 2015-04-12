@@ -103,8 +103,6 @@ static NSString * const TASKS_URL = @"tasks";
     }];
 }
 
-//- (void)
-
 - (void)requestTasksListWithParameters:(NSMutableDictionary *)parameters success:(void (^)(NSMutableArray *tasksList))success {
 
     NSString *tasksString = [WPNetworkingManager createURLWithEndpoint:TASKS_URL];
