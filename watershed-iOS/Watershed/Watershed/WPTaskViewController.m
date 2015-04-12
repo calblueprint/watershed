@@ -58,11 +58,10 @@
 - (void)editTask {
     WPEditTaskViewController *editTaskViewController = [[WPEditTaskViewController alloc] init];
     [editTaskViewController setTask:self.task];
-    UINavigationController *editTaskNavController = [[UINavigationController alloc] initWithRootViewController:editTaskViewController];
-    [editTaskNavController.navigationBar setBackgroundColor:[UIColor whiteColor]];
-    [editTaskNavController.navigationBar setBarTintColor:[UIColor whiteColor]];
-    [editTaskNavController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
-    [self.navigationController presentViewController:editTaskNavController animated:YES completion:nil];
+//    [editTaskNavController.navigationBar setBackgroundColor:[UIColor whiteColor]];
+//    [editTaskNavController.navigationBar setBarTintColor:[UIColor whiteColor]];
+//    [editTaskNavController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
+    [[self navigationController] pushViewController: editTaskViewController animated:YES];
 }
 
 - (void)changeCompletion {

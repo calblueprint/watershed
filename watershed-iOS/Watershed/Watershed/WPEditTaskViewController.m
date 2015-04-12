@@ -13,6 +13,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self preloadFields];
     self.navigationItem.title = @"Edit Site";
 }
 
@@ -34,6 +35,7 @@
 
 - (void)preloadFields {
     self.taskField.text = self.task.title;
+    self.taskField.text = @"TESTING";
     self.dateField.text = self.task.dueDate;
     self.selectedAssignee = self.task.assignee;
     self.assigneeField.text = self.selectedAssignee.name;
@@ -47,7 +49,7 @@
 
 - (void)setTask:(WPTask *)task{
     _task = task;
-    [self preloadFields];
+//    [self preloadFields];
 }
 
 @end
