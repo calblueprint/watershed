@@ -214,7 +214,7 @@ public class MainActivity extends ActionBarActivity
         mUserName.setText(getUser().getName());
     }
 
-    public void updateTitle(Fragment f) {
+    public void updateFragment(Fragment f) {
         if (f instanceof TaskFragment) {
             setTitle("Tasks");
             displayTaskView(true);
@@ -223,8 +223,12 @@ public class MainActivity extends ActionBarActivity
         else if (f instanceof TaskDetailFragment)         setTitle("");
         else if (f instanceof UserTaskFragment)           setTitle("Tasks");
         else if (f instanceof SiteListFragment ||
-                 f instanceof SiteFragment ||
                  f instanceof UserMiniSiteFragment)       setTitle("Sites");
+        else if (f instanceof SiteFragment)
+        {
+            setTitle("Sites");
+            ((SiteFragment) f).closeMenu();
+        }
         else if (f instanceof AboutFragment)              setTitle("About");
         else if (f instanceof UserFieldReportFragment ||
                  f instanceof FieldReportFragment)        setTitle("Field Reports");
@@ -250,7 +254,7 @@ public class MainActivity extends ActionBarActivity
     public void replaceFragment(Fragment newFragment) {
         android.support.v4.app.FragmentTransaction ft = mFragmentManager.beginTransaction();
         if(!newFragment.isAdded()){
-            updateTitle(newFragment);
+            updateFragment(newFragment);
 
             setToolbarElevation(Utility.convertDptoPix(this, 4));
             ft.replace(R.id.container, newFragment).addToBackStack(null).commit();
@@ -265,12 +269,11 @@ public class MainActivity extends ActionBarActivity
                     @Override
                     public void onBackStackChanged() {
                         Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
-                        if (f != null) {
-                            updateTitle(f);
-                        }
+                        if (f != null) updateFragment(f);
+                        Log.i("AISHG", "HELP");
                     }
                 });
-        updateTitle(taskFragment);
+        updateFragment(taskFragment);
         android.support.v4.app.FragmentTransaction ft = mFragmentManager.beginTransaction();
         ft.replace(R.id.container, taskFragment);
         ft.commit();
@@ -395,7 +398,7 @@ public class MainActivity extends ActionBarActivity
             case R.id.nav_bar_user_info:
                 Fragment fragment = UserFragment.newInstance(getUser());
                 replaceFragment(fragment);
-                updateTitle(fragment);
+                updateFragment(fragment);
                 mDrawerLayout.closeDrawer(mDrawer);
                 break;
         }
@@ -455,4 +458,10 @@ public class MainActivity extends ActionBarActivity
 
     public void setSite(Site site) { mSite = site; }
     public Site getSite() { return mSite; }
+
+    @Override
+    public void onBackPressed() {
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
+        if (!(f instanceof SiteFragment && ((SiteFragment) f).closeMenu())) super.onBackPressed();
+    }
 }

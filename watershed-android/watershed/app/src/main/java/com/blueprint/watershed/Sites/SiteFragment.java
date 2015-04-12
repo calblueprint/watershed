@@ -24,6 +24,7 @@ import com.blueprint.watershed.R;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
 import com.blueprint.watershed.Views.HeaderGridView;
 import com.blueprint.watershed.Views.Material.FloatingActionButton;
+import com.blueprint.watershed.Views.Material.FloatingActionsMenu;
 
 import org.json.JSONObject;
 
@@ -37,7 +38,7 @@ public class SiteFragment extends Fragment
     private NetworkManager mNetworkManager;
     private MainActivity mParentActivity;
 
-    private FloatingActionButton mCreateSiteButton;
+    private FloatingActionsMenu mMenu;
     private HeaderGridView mMiniSiteGridView;
     private MiniSiteListAdapter mMiniSiteAdapter;
     private ViewGroup mHeader;
@@ -100,15 +101,17 @@ public class SiteFragment extends Fragment
         mParentActivity.setMenuAction(false);
     }
 
-    private void setButtonListeners(View view){
-        View editButton = view.findViewById(R.id.site_edit_site);
+    private void setButtonListeners(View view) {
+        mMenu = (FloatingActionsMenu) view.findViewById(R.id.site_settings);
+
+        FloatingActionButton editButton = (FloatingActionButton) view.findViewById(R.id.site_edit_site);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 editSite();
             }
         });
-        View miniSiteCreate = view.findViewById(R.id.site_add_minisite);
+        FloatingActionButton miniSiteCreate = (FloatingActionButton) view.findViewById(R.id.site_add_minisite);
         miniSiteCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -184,5 +187,11 @@ public class SiteFragment extends Fragment
         menu.clear();
         inflater.inflate(R.menu.empty, menu);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    public boolean closeMenu() {
+        boolean isOpened = mMenu.isExpanded();
+        if (isOpened) mMenu.collapse();
+        return isOpened;
     }
 }

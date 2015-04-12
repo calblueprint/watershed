@@ -49,8 +49,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_title="@string/edit_site"
-            fab:fab_menu_colorNormal="@color/pink"
-            fab:fab_menu_colorPressed="@color/pink_pressed"
+            fab:fab_colorNormal="@color/pink"
+            fab:fab_colorPressed="@color/pink_pressed"
             fab:fab_icon="@drawable/ic_edit"/>
 
         <com.blueprint.watershed.Views.Material.FloatingActionButton
@@ -58,8 +58,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_title="@string/add_minisite"
-            fab:fab_menu_colorNormal="@color/pink"
-            fab:fab_menu_colorPressed="@color/pink_pressed"
+            fab:fab_colorNormal="@color/pink"
+            fab:fab_colorPressed="@color/pink_pressed"
             fab:fab_icon="@drawable/ic_add"/>
 
     </com.blueprint.watershed.Views.Material.FloatingActionsMenu>
