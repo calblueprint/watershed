@@ -103,11 +103,11 @@ public class SiteFragment extends Fragment
 
     private void setButtonListeners(View view) {
         mMenu = (FloatingActionsMenu) view.findViewById(R.id.site_settings);
-
         FloatingActionButton editButton = (FloatingActionButton) view.findViewById(R.id.site_edit_site);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mMenu.collapse();
                 editSite();
             }
         });
@@ -115,6 +115,7 @@ public class SiteFragment extends Fragment
         miniSiteCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mMenu.collapse();
                 mParentActivity.replaceFragment(CreateMiniSiteFragment.newInstance(mSite));
             }
         });

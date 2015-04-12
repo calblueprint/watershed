@@ -227,7 +227,6 @@ public class MainActivity extends ActionBarActivity
         else if (f instanceof SiteFragment)
         {
             setTitle("Sites");
-            ((SiteFragment) f).closeMenu();
         }
         else if (f instanceof AboutFragment)              setTitle("About");
         else if (f instanceof UserFieldReportFragment ||
@@ -270,7 +269,6 @@ public class MainActivity extends ActionBarActivity
                     public void onBackStackChanged() {
                         Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
                         if (f != null) updateFragment(f);
-                        Log.i("AISHG", "HELP");
                     }
                 });
         updateFragment(taskFragment);
@@ -430,13 +428,24 @@ public class MainActivity extends ActionBarActivity
 
     public void setBackArrow() {
         mToolBar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
-        mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+        mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().popBackStack();
+                Log.i("sigh","halp)");
+                checkMenuClosed();
+//                getSupportFragmentManager().popBackStack();
                 mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
             }
         });
+//        mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.i("sigh","halp)");
+
+//                getSupportFragmentManager().popBackStack();
+//                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+//            }
+//        });
 
     }
 
@@ -460,7 +469,9 @@ public class MainActivity extends ActionBarActivity
     public Site getSite() { return mSite; }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed() { checkMenuClosed(); }
+
+    public void checkMenuClosed() {
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
         if (!(f instanceof SiteFragment && ((SiteFragment) f).closeMenu())) super.onBackPressed();
     }
