@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
+import com.blueprint.watershed.MiniSites.CreateMiniSiteFragment;
 import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteListAdapter;
@@ -93,6 +94,23 @@ public class SiteFragment extends Fragment
         mParentActivity.setMenuAction(false);
     }
 
+    private void setButtonListeners(View view){
+        View editButton = view.findViewById(R.id.site_edit_site);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editSite();
+            }
+        });
+        View miniSiteCreate = view.findViewById(R.id.site_add_minisite);
+        miniSiteCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mParentActivity.replaceFragment(CreateMiniSiteFragment.newInstance(mSite.getId()));
+            }
+        });
+    }
+
     private void initializeViews(View view) {
         // Create MiniSite grid
         mMiniSiteGridView = (HeaderGridView) view.findViewById(R.id.mini_sites_grid);
@@ -105,13 +123,7 @@ public class SiteFragment extends Fragment
         mMiniSiteGridView.setAdapter(mMiniSiteAdapter);
         mMiniSiteGridView.setOnItemClickListener(this);
 
-//        mCreateSiteButton = (FloatingActionButton) view.findViewById(R.id.create_mini_site_button);
-//        mCreateSiteButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mParentActivity.replaceFragment(CreateMiniSiteFragment.newInstance(mSite.getId()));
-//            }
-//        });
+        setButtonListeners(view);
     }
 
     @Override
@@ -156,10 +168,15 @@ public class SiteFragment extends Fragment
         }
     }
 
+    private void editSite(){
+        EditSiteFragment editSiteFragment = EditSiteFragment.newInstance(mSite);
+        mParentActivity.replaceFragment(editSiteFragment);
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.edit_site_menu, menu);
+        inflater.inflate(R.menu.empty, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 }
