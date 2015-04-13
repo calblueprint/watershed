@@ -21,6 +21,7 @@
 #  facebook_auth_token    :text
 #  facebook_id            :string(255)
 #  registration_id        :string(255)
+#  device_type            :integer
 #
 
 class User < ActiveRecord::Base
@@ -30,6 +31,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   enum role: [ :community_member, :employee, :manager ]
+  enum device_type: [ :android, :ios ]
 
   has_many :field_reports
   has_many :assigned_tasks, class_name: "Task", foreign_key: "assigner_id"

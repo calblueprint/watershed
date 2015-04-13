@@ -21,6 +21,7 @@
 #  facebook_auth_token    :text
 #  facebook_id            :string(255)
 #  registration_id        :string(255)
+#  device_type            :integer
 #
 
 require 'spec_helper'
