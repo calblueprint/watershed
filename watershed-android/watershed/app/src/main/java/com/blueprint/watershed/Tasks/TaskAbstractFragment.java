@@ -73,6 +73,9 @@ public abstract class TaskAbstractFragment extends Fragment {
     private List<User> mUsers;
     private List<MiniSite> mMiniSites;
 
+    // Dialogs
+    private PickUserDialog mUserDialog;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -209,9 +212,9 @@ public abstract class TaskAbstractFragment extends Fragment {
     private void setEmpty(String field, EditText editText) { editText.setError(field + " can't be blank!"); }
 
     private void openUserDialog() {
-        PickUserDialog newFragment = PickUserDialog.newInstance(mUsers, this);
-        newFragment.setTargetFragment(this, REQUEST_CODE);
-        newFragment.show(mParentActivity.getSupportFragmentManager(), "userPicker");
+        mUserDialog = PickUserDialog.newInstance(mUsers, this);
+        mUserDialog.setTargetFragment(this, REQUEST_CODE);
+        mUserDialog.show(mParentActivity.getSupportFragmentManager(), "userPicker");
     }
 
     private void openDateDialog() {
@@ -300,8 +303,11 @@ public abstract class TaskAbstractFragment extends Fragment {
     }
 
     public void setUser(User user) {
-        mUser = user;
-        mAssigneeField.setText(mUser.getName());
+        if (mUserDialog != null) {
+            mUser = user;
+            mAssigneeField.setText(mUser.getName());
+            mUserDialog.dismiss();
+        }
     }
 
     public void setMiniSite(MiniSite site) {
@@ -310,7 +316,6 @@ public abstract class TaskAbstractFragment extends Fragment {
     }
 
     public abstract void refreshCompletion();
-
 
     /**
      * Creates a dialog allowing you to pick a date

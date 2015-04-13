@@ -1,7 +1,9 @@
 package com.blueprint.watershed.Users;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +24,11 @@ public class UserHeaderAdapter extends ArrayAdapter<User> {
     List<User> mUsers;
     Fragment mFragment;
 
+    String HEADER = "header";
+    String ROW = "row";
+
     public UserHeaderAdapter(Activity mainActivity, List<User> users, Fragment fragment) {
-        super(mainActivity, R.layout.user_item_row, users);
+        super(mainActivity, R.layout.user_list_row, users);
         mMainActivity = mainActivity;
         mUsers = users;
         mFragment = fragment;
@@ -35,24 +40,26 @@ public class UserHeaderAdapter extends ArrayAdapter<User> {
         UserHolder holder;
         final User user = getItem(position);
 
-        int id;
-        if (user.getLayoutType() == null) id = R.layout.user_header_row;
-        else                              id = R.layout.user_item_row;
-
         if (row == null) {
             LayoutInflater inflater = mMainActivity.getLayoutInflater();
-            row = inflater.inflate(id, parent, false);
+            row = inflater.inflate(R.layout.user_list_row, parent, false);
 
             holder = new UserHolder();
             holder.mTextView = (TextView) row.findViewById(R.id.user_row_text);
+            holder.mLine = row.findViewById(R.id.user_row_color);
+
             row.setTag(holder);
         } else {
             holder = (UserHolder) row.getTag();
         }
 
         String text;
+        int fontSize;
+        int fontWeight;
         if (user.getLayoutType() == null) {
             text = user.getName();
+            fontWeight = Typeface.NORMAL;
+            fontSize = 18;
             row.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -61,14 +68,22 @@ public class UserHeaderAdapter extends ArrayAdapter<User> {
                     }
                 }
             });
+            holder.mLine.setVisibility(View.INVISIBLE);
         } else {
+            fontSize = 22;
+            fontWeight = Typeface.BOLD;
             text = user.getLayoutType();
+            holder.mLine.setVisibility(View.VISIBLE);
         }
+        holder.mTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize);
         holder.mTextView.setText(text);
+        holder.mTextView.setTypeface(null, fontWeight);
         return row;
     }
 
     static class UserHolder {
         TextView mTextView;
+        View mLine;
+        String mType;
     }
 }
