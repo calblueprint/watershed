@@ -200,13 +200,13 @@
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
-    <Button
-        android:id="@+id/create_mini_site_submit"
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/ws_blue"
-        android:textColor="@color/white"
-        android:text="@string/mini_site_destroy"
-        />
+    <!--<Button-->
+        <!--android:id="@+id/create_mini_site_submit"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:background="@color/ws_blue"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:text="@string/mini_site_destroy"-->
+        <!--/>-->
 </RelativeLayout>

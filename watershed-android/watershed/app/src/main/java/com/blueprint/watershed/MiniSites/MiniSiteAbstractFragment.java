@@ -112,6 +112,8 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         switch (item.getItemId()) {
             case R.id.save:
                 validateAndSubmitMiniSite();
+            case R.id.delete:
+                deleteMiniSite();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -120,7 +122,6 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
      * Sets all the views in the fragment
      */
     protected void setButtonListeners() {
-        mSubmit = (Button) mParentActivity.findViewById(R.id.create_mini_site_submit);
         mDeletePhotoButton = (ImageButton) mParentActivity.findViewById(R.id.mini_site_delete_photo);
         mAddPhotoButton = (ImageButton) mParentActivity.findViewById(R.id.mini_site_add_photo);
 
@@ -139,7 +140,6 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
 
         mDeletePhotoButton.setOnClickListener(this);
         mAddPhotoButton.setOnClickListener(this);
-        mSubmit.setOnClickListener(this);
     }
 
     public List<Photo> getPhotos() {
@@ -163,9 +163,6 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
                 break;
             case R.id.mini_site_add_photo:
                 openAddPhotoDialog();
-                break;
-            case R.id.create_mini_site_submit:
-                deleteMiniSite();
                 break;
         }
     }

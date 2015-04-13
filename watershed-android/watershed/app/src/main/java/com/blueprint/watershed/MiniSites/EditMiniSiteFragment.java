@@ -60,4 +60,6 @@ public class EditMiniSiteFragment extends MiniSiteAbstractFragment {
 
         mNetworkManager.getRequestQueue().add(createMiniSiteRequest);
     }
+
+
 }
