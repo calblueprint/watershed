@@ -20,6 +20,7 @@
 #  authentication_token   :string(255)
 #  facebook_auth_token    :text
 #  facebook_id            :string(255)
+#  registration_id        :string(255)
 #
 
 # Read about factories at https://github.com/thoughtbot/factory_girl
