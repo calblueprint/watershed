@@ -107,17 +107,6 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.save:
-                validateAndSubmitMiniSite();
-            case R.id.delete:
-                deleteMiniSite();
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
     /**
      * Sets all the views in the fragment
      */
