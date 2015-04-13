@@ -148,7 +148,7 @@ public class EditUserFragment extends Fragment {
                   .put("current_password", mConfirm.getText().toString());
             params.put("user", object);
         } catch (JSONException e) {
-            Log.i("JSONException EditUserFragment: ", e.toString());
+            Log.i("JSONException EditUser ", e.toString());
         }
 
         EditUserRequest request = new EditUserRequest(mParentActivity, mUser, params, new Response.Listener<User>() {

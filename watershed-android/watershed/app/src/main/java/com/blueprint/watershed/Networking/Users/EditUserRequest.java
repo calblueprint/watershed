@@ -24,7 +24,7 @@ public class EditUserRequest extends BaseRequest {
                     public void onResponse(JSONObject jsonObject) {
                         try {
                             String userJson = jsonObject.get("user").toString();
-                            ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
+                            ObjectMapper mapper = getNetworkManager(activity).getObjectMapper();
                             User user = mapper.readValue(userJson, new TypeReference<User>() {});
                             listener.onResponse(user);
                         } catch (Exception e) {

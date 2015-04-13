@@ -94,11 +94,8 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
 
         mPreferences = getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
 
-        if (checkPlayServices()) {
-            mGcm = GoogleCloudMessaging.getInstance(this);
-        } else {
-            Log.i("Exception in services", "Please get a valid Play services APK");
-        }
+        if (checkPlayServices()) mGcm = GoogleCloudMessaging.getInstance(this);
+        else Log.i("Exception in services", "Please get a valid Play services APK");
 
         // NOTE(mark): Change to !hasAuthCredentials if you want the main activity to show.
         if (hasAuthCredentials(mPreferences)) {
@@ -176,8 +173,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         return !mPreferences.getString("authentication_token", "none").equals("none") &&
                !mPreferences.getString("email", "none").equals("none") &&
                !mPreferences.getString("user", "none").equals("none") &&
-                mPreferences.getInt("userId", 0) != 0 &&
-               !mPreferences.getString("registration_id", "none").equals("none");
+                mPreferences.getInt("userId", 0) != 0;
     }
 
     // UI Actions
@@ -207,16 +203,9 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
                         String name = user.getName();
                         String id = user.getId(); //This may not be the profile picture Id that you are expecting, but we can pass this in to the graph api to get the actual profile picture
                         String email = "";
-                        try {
-                            email = user.getInnerJSONObject().getString("email");
-                        }
-                        catch (JSONException e){
-                            Log.e("JSONException", "Facebook Login");
-                        }
 
-                        String regid = "";
-                        try { regid = mGcm.register(SENDER_ID); }
-                        catch (Exception e) { Log.i("Exception", e.toString()); }
+                        try { email = user.getInnerJSONObject().getString("email"); }
+                        catch (JSONException e) { Log.e("JSONException", "Facebook Login"); }
 
                         HashMap<String, Object> params = new HashMap<String, Object>();
                         params.put("email", email);
@@ -345,6 +334,8 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         }
         editor.putString("registration_id", session.getUser().getRegistrationId());
         editor.putInt("userId", session.getUser().getId());
+        if (mPreferences.getInt("app_version", 0) == 0)
+            editor.putInt("app_version", Utility.getAppVersion(this));
         editor.apply();
         startActivity(intent);
         finish();

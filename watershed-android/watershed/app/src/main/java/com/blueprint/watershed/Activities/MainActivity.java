@@ -8,6 +8,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -33,6 +34,7 @@ import com.blueprint.watershed.FieldReports.FieldReportFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteAbstractFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
+import com.blueprint.watershed.Networking.Users.EditUserRequest;
 import com.blueprint.watershed.Networking.Users.HomeRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Sites.CreateSiteFragment;
@@ -54,6 +56,7 @@ import com.blueprint.watershed.Utilities.Utility;
 import com.facebook.Session;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import org.json.JSONObject;
 
@@ -69,10 +72,13 @@ public class MainActivity extends ActionBarActivity
     // Constants
     private static final String PREFERENCES = "LOGIN_PREFERENCES";
     private static final String TAG         = "MainActivity";
+    private final String SENDER_ID          = "158271976435";
 
     // Authenticating against our own server
     public String authToken;
     public String authEmail;
+    private String mRegistrationId;
+    private int mAppVersion;
 
     // Fragments
     private FragmentManager mFragmentManager;
@@ -112,6 +118,9 @@ public class MainActivity extends ActionBarActivity
     // Task for FieldReport
     private Task mFieldReportTask;
 
+    // Google cloud messaging
+    private GoogleCloudMessaging mGcm;
+
     // Params (so we don't have to set them later)
     private List<User> mUsers;
 
@@ -121,11 +130,16 @@ public class MainActivity extends ActionBarActivity
         setContentView(R.layout.activity_main);
 
         setNetworkManager(NetworkManager.getInstance(this));
-        mPreferences = getSharedPreferences(PREFERENCES, 0);
+        mPreferences = getSharedPreferences(PREFERENCES, MODE_PRIVATE);
         authToken = mPreferences.getString("auth_token", "none");
         authEmail = mPreferences.getString("auth_email", "none");
         mUserId = mPreferences.getInt("userId", 0);
+
+        mRegistrationId = mPreferences.getString("registration_id", "none");
+
         setUserObject();
+        if (getRegistrationId().isEmpty())
+            registerInBackground();
 
         initializeViews();
         initializeNavigationDrawer();
@@ -170,6 +184,41 @@ public class MainActivity extends ActionBarActivity
             return "";
         }
         return registrationId;
+    }
+
+    /**
+     * Registers the application with GCM servers asynchronously.
+     * <p>
+     * Stores the registration ID and app versionCode in the application's
+     * shared preferences.
+     */
+    private void registerInBackground() {
+        new AsyncTask<String, String, String>() {
+            @Override
+            protected String doInBackground(String... params) {
+                String msg = "";
+                JSONObject user = new JSONObject();
+                JSONObject objParams = new JSONObject();
+                try {
+                    if (mGcm == null) mGcm = GoogleCloudMessaging.getInstance(MainActivity.this);
+                    objParams.put("registration_id", mGcm.register(SENDER_ID));
+                    user.put("user", objParams);
+                } catch (Exception ex) {
+                    msg = "Error :" + ex.getMessage();
+                }
+
+                EditUserRequest request = new EditUserRequest(MainActivity.this, getUser(), user, new Response.Listener<User>() {
+                    @Override
+                    public void onResponse(User user) {
+                        mPreferences.edit().putInt()
+                    }
+                });
+                return msg;
+            }
+
+            @Override
+            protected void onPostExecute(String msg) { Log.i("ERROR", msg + "\n"); }
+        }.execute(null, null, null);
     }
 
     private void setUserObject() {
@@ -440,8 +489,22 @@ public class MainActivity extends ActionBarActivity
         Getter and setter zones;
      */
     public void setUser(User user) {
+        JSONObject userJson = null;
+        ObjectMapper mapper = mNetworkManager.getObjectMapper();
+        SharedPreferences.Editor editor = mPreferences.edit();
+
+        try { userJson = new JSONObject(mapper.writeValueAsString(user)); }
+        catch (Exception e) { Log.i("Exception", e.toString()); }
+
+        editor.putString("email", user.getEmail());
+        if (userJson != null) editor.putString("user", userJson.toString());
+        editor.putString("registration_id", user.getRegistrationId());
+        editor.putInt("app_version", Utility.getAppVersion(this));
+        editor.apply();
+
         mUser = user;
     }
+    
     public User getUser() { return mUser; }
     public void setUsers(List<User> users) { mUsers = users; }
     public List<User> getUsers() { return mUsers; }
