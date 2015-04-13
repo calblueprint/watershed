@@ -29,8 +29,9 @@ public class User implements APIObject {
     private Integer mTasksCount;
     private Integer mFieldReportsCount;
     private Integer mSitesCount;
-
     private String mHeaderType;
+    private String mDeviceType;
+    private String mRegistrationId;
 
     public static String MANAGER = "Manager";
     public static String COMMUNITY_MEMBER = "Community Member";
@@ -74,6 +75,8 @@ public class User implements APIObject {
     public Integer getTasksCount() { return mTasksCount; }
     public Integer getSitesCount() { return mSitesCount; }
     public Integer getFieldReportsCount() { return mFieldReportsCount; }
+    public String getDeviceType() { return mDeviceType; }
+    public String getRegistrationId() { return mRegistrationId; }
 
     public String getEmail() { return mEmail; }
     public ArrayList<FieldReport> getFieldReports() {
@@ -91,6 +94,8 @@ public class User implements APIObject {
     public void setTaskscount(Integer count) { mTasksCount = count; }
     public void setSitesCount(Integer count) { mSitesCount = count; }
     public void setFieldReportsCount(Integer count) { mFieldReportsCount = count; }
+    public void setDeviceType(String deviceType) { this.mDeviceType = deviceType; }
+    public void setRegistrationId(String registrationId) { this.mRegistrationId = registrationId; }
 
     @JsonIgnore
     public String getLayoutType() { return mHeaderType; }
