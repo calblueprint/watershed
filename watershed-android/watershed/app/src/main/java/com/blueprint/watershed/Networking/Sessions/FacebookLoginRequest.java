@@ -21,7 +21,7 @@ import java.util.HashMap;
  */
 public class FacebookLoginRequest extends BaseRequest {
 
-    public FacebookLoginRequest(final Activity activity, HashMap<String, String> params, final Response.Listener<Session> listener, final Response.Listener<APIError> errorListener) {
+    public FacebookLoginRequest(final Activity activity, HashMap<String, Object> params, final Response.Listener<Session> listener, final Response.Listener<APIError> errorListener) {
         super(Request.Method.POST, makeURL("users/sign_up/facebook"), facebookLoginRequestParams(activity, params),
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -39,7 +39,7 @@ public class FacebookLoginRequest extends BaseRequest {
                 }, errorListener,  activity);
     }
 
-    protected static JSONObject facebookLoginRequestParams(final Activity activity, final HashMap<String, String> userParams) {
+    protected static JSONObject facebookLoginRequestParams(final Activity activity, final HashMap<String, Object> userParams) {
         JSONObject userJson = new JSONObject(userParams);
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
         params.put("user", userJson);

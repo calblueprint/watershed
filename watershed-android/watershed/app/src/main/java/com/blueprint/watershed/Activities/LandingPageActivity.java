@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -38,6 +39,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -51,6 +53,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     private static final String TAG                           = "LandingPageActivity";
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private final String SENDER_ID                            = "158271976435";
+    private final String FACEBOOK_LOGIN                       = "facebook";
 
     // UI Elements
     private ImageView mLandingPageImage;
@@ -215,20 +218,46 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
                         try { regid = mGcm.register(SENDER_ID); }
                         catch (Exception e) { Log.i("Exception", e.toString()); }
 
-                        HashMap<String, String> params = new HashMap<String, String>();
+                        HashMap<String, Object> params = new HashMap<String, Object>();
                         params.put("email", email);
                         params.put("facebook_auth_token", accessToken);
                         params.put("facebook_id", id);
                         params.put("name", name);
-                        params.put("device_type", "0");
-                        params.put("registration_id", regid);
-                        facebookRequest(params);
+                        params.put("device_type", 0);
+                        if (mGcm != null) registerInBackground(params, FACEBOOK_LOGIN);
+                        else facebookRequest(params);
                     }
                 }
             }).executeAsync();
         } else if (state.isClosed()) {
             Log.e("Facebook", "Logged out...");
         }
+    }
+
+    /**
+     * Registers the application with GCM servers asynchronously.
+     * <p>
+     * Stores the registration ID and app versionCode in the application's
+     * shared preferences.
+     */
+    public void registerInBackground(final HashMap<String, Object> objectParams, final String type) {
+        new AsyncTask<String, String, String>() {
+            @Override
+            protected String doInBackground(String... params) {
+                String msg = "";
+                try { objectParams.put("registration_id", mGcm.register(SENDER_ID)); }
+                catch (IOException ex) { msg = "Error :" + ex.getMessage(); }
+
+                if (type.equals(FACEBOOK_LOGIN)) facebookRequest(objectParams);
+                else signUpRequest(objectParams);
+                return msg;
+            }
+
+            @Override
+            protected void onPostExecute(String msg) {
+                Log.i("Error", msg + "\n");
+            }
+        }.execute(null, null, null);
     }
 
     public void didTapSignUpLoadFragmentButton(View view) {
@@ -241,7 +270,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         fragmentTransaction.commit();
     }
 
-    public void facebookRequest(HashMap<String, String> params) {
+    public void facebookRequest(HashMap<String, Object> params) {
 
         FacebookLoginRequest facebookLoginRequest = new FacebookLoginRequest(this, params, new Response.Listener<Session>() {
             @Override
@@ -275,7 +304,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     }
 
 
-    public void signUpRequest(HashMap<String, String> params) {
+    public void signUpRequest(HashMap<String, Object> params) {
 
         SignUpRequest signUpRequest = new SignUpRequest(this, params, new Response.Listener<Session>() {
             @Override

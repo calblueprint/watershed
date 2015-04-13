@@ -5,7 +5,6 @@ import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,7 @@ import java.util.HashMap;
 
 public class SignUpFragment extends Fragment implements View.OnClickListener {
 
-    private final String SENDER_ID = "158271976435";
+    private final String REGULAR_LOGIN = "regular";
     private LandingPageActivity mParentActivity;
     private View rootView;
 
@@ -88,22 +87,14 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         final String passwordString = getPasswordField().getText().toString();
         final String passwordConfirmationString = getPasswordConfirmationField().getText().toString();
 
-        HashMap<String, String> user_params = new HashMap<String, String>();
+        HashMap<String, Object> user_params = new HashMap<String, Object>();
         user_params.put("name", nameString);
         user_params.put("email", emailString);
         user_params.put("password", passwordString);
         user_params.put("password_confirmation", passwordConfirmationString);
-        user_params.put("device_type", "0");
+        user_params.put("device_type", 0);
 
-        try {
-            if (mParentActivity.getGcm() != null) {
-                user_params.put("registration_id", mParentActivity.getGcm().register(SENDER_ID));
-            }
-        } catch (Exception e) {
-            Log.i("Exception", e.toString());
-        }
-
-        mParentActivity.signUpRequest(user_params);
+        mParentActivity.registerInBackground(user_params, REGULAR_LOGIN);
     }
 
     // Getters
