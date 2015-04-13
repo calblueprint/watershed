@@ -102,6 +102,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         } catch (Exception e) {
             Log.i("Exception", e.toString());
         }
+
         mParentActivity.signUpRequest(user_params);
     }
 

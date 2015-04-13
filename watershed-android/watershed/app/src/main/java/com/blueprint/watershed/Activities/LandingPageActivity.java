@@ -50,6 +50,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     public  static final String PREFERENCES                   = "LOGIN_PREFERENCES";
     private static final String TAG                           = "LandingPageActivity";
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private final String SENDER_ID                            = "158271976435";
 
     // UI Elements
     private ImageView mLandingPageImage;
@@ -148,34 +149,6 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         return true;
     }
 
-    /**
-     * Gets the current registration ID for application on GCM service.
-     * <p>
-     * If result is empty, the app needs to register.
-     *
-     * @return registration ID, or empty string if there is no existing
-     *         registration ID.
-     */
-    private String getRegistrationId() {
-        String registrationId = mPreferences.getString("registration_id", "");
-        if (registrationId.isEmpty()) {
-            Log.i(TAG, "Registration not found.");
-            return "";
-        }
-
-        // Check if app was updated; if so, it must clear the registration ID
-        // since the existing registration ID is not guaranteed to work with
-        // the new app version.
-        int registeredVersion = mPreferences.getInt("app_version", Integer.MIN_VALUE);
-        int currentVersion = Utility.getAppVersion(this);
-        if (registeredVersion != currentVersion) {
-            Log.i(TAG, "App version changed.");
-            mPreferences.edit().putInt("app_version", currentVersion).commit();
-            return "";
-        }
-        return registrationId;
-    }
-
     public void initializeViews() {
         setLoginButton((Button)findViewById(R.id.login_load_fragment_button));
         setFacebookButton((com.facebook.widget.LoginButton)findViewById(R.id.authButton));
@@ -200,7 +173,8 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         return !mPreferences.getString("authentication_token", "none").equals("none") &&
                !mPreferences.getString("email", "none").equals("none") &&
                !mPreferences.getString("user", "none").equals("none") &&
-                mPreferences.getInt("userId", 0) != 0;
+                mPreferences.getInt("userId", 0) != 0 &&
+               !mPreferences.getString("registration_id", "none").equals("none");
     }
 
     // UI Actions
@@ -238,11 +212,9 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
                         }
 
                         String regid = "";
-                        try {
-                            regid = mGcm.register(SENDER_ID);
-                        } catch (Exception e) {
-                            Log.i("Exception", e.toString());
-                        }
+                        try { regid = mGcm.register(SENDER_ID); }
+                        catch (Exception e) { Log.i("Exception", e.toString()); }
+
                         HashMap<String, String> params = new HashMap<String, String>();
                         params.put("email", email);
                         params.put("facebook_auth_token", accessToken);
@@ -342,6 +314,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
             Toast.makeText(this, "Something went wrong - try again!", Toast.LENGTH_SHORT).show();
             return;
         }
+        editor.putString("registration_id", session.getUser().getRegistrationId());
         editor.putInt("userId", session.getUser().getId());
         editor.apply();
         startActivity(intent);

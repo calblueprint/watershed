@@ -144,6 +144,34 @@ public class MainActivity extends ActionBarActivity
         updateToolbarElevation();
     }
 
+    /**
+     * Gets the current registration ID for application on GCM service.
+     * <p>
+     * If result is empty, the app needs to register.
+     *
+     * @return registration ID, or empty string if there is no existing
+     *         registration ID.
+     */
+    private String getRegistrationId() {
+        String registrationId = mPreferences.getString("registration_id", "");
+        if (registrationId.isEmpty()) {
+            Log.i(TAG, "Registration not found.");
+            return "";
+        }
+
+        // Check if app was updated; if so, it must clear the registration ID
+        // since the existing registration ID is not guaranteed to work with
+        // the new app version.
+        int registeredVersion = mPreferences.getInt("app_version", Integer.MIN_VALUE);
+        int currentVersion = Utility.getAppVersion(this);
+        if (registeredVersion != currentVersion) {
+            Log.i(TAG, "App version changed.");
+            mPreferences.edit().putInt("app_version", currentVersion).commit();
+            return "";
+        }
+        return registrationId;
+    }
+
     private void setUserObject() {
         String userObject = mPreferences.getString("user", "none");
         if (!userObject.equals("none")) getUserFromPreferences(userObject);
