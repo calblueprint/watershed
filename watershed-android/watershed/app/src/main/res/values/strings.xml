@@ -41,7 +41,7 @@
     <string name="about_us">\tThe Watershed Project\'s mission is to inspire Bay Area communities to understand, appreciate and protect our local watersheds. Located at the University of California\'s Richmond Field Station, since 1997 we have pursued this vision through various initiatives. The Healthy Watersheds Initiative focuses on litter and other source of pollutants. The Living Shoreline Initiative aims to help people appreciate the rich potential for healthy underwater habitats in the Bay and along it\'s shoreline, with an emphasis on native Oyster restoration. The Greening Urban Watersheds Initiative seeks to redefine the way we inhabit our urban centers, envisioning a green cityscape that maintains or mimics the natural flows and rhythms of local ecosystems. </string>
     <string name="watershed_title">The Watershed Project</string>
     <!--Facebook Auth-->
-    <string name="facebook_app_id">544628745672116</string>
+    <string name="facebook_app_id">1569630693287263</string>
 
     <!-- Task Creation -->
     <string name="title">Title</string>
@@ -65,6 +65,7 @@
 
     <string name="add_minisite">Add Minisite</string>
     <string name="edit_site">Edit Site</string>
+    <string name="subscribe_site">Subscribe to Site</string>
 
     <!-- Mini Site Creation -->
     <string name="create_mini_site_submit">Create Mini Site</string>
@@ -88,5 +89,11 @@
     <string name="no_user_tasks">Looks like this user has no tasks!</string>
     <string name="no_user_sites">Looks like this user has no sites!</string>
     <string name="no_user_reports">Looks like this user hasn\'t submitted any field reports yet!</string>
+
+    <!-- Heroku/IP Urls -->
+    <string name="heroku_production">https://intense-reaches-1457.herokuapp.com/api/v1/</string>
+    <string name="heroku_staging">https://floating-bayou-8262.herokuapp.com/api/v1/</string>
+    <string name="local_staging">http://10.142.182.151:3000/api/v1/</string>
+
 
 </resources>

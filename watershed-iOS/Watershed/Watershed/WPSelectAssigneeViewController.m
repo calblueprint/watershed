@@ -54,22 +54,8 @@ static NSString *CellIdentifier = @"Cell";
     [[WPNetworkingManager sharedManager] requestUsersListWithParameters:[[NSMutableDictionary alloc] init] success:^(NSMutableArray *usersList) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         strongSelf.userArray = usersList;
+        [self splitUsers];
         [strongSelf.view.selectAssigneeTableView reloadData];
-        NSMutableArray *toBeRemoved = [[NSMutableArray alloc] init];
-        _managerArray = [[NSMutableArray alloc] init];
-        _employeeArray = [[NSMutableArray alloc] init];
-//        for (WPUser *u in _userArray) {
-//            NSLog(@"%@", u.role);
-//            if ([u.role isEqualToNumber:[NSNumber numberWithInt:2]]) {
-//                [_managerArray addObject:u];
-//                [toBeRemoved addObject:u];
-//            }
-//            else if ([u.role isEqualToNumber:[NSNumber numberWithInt:1]]) {
-//                [_employeeArray addObject:u];
-//                [toBeRemoved addObject:u];
-//            }
-//        }
-//        [_userArray removeObjectsInArray:toBeRemoved];
     }];
 }
 
@@ -99,9 +85,32 @@ static NSString *CellIdentifier = @"Cell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if([self.selectAssigneeDelegate respondsToSelector:@selector(selectAssigneeViewControllerDismissed:)]) {
+        if (indexPath.section == 0) {
+            [self.selectAssigneeDelegate selectAssigneeViewControllerDismissed:self.managerArray[indexPath.row]];
+        } else if (indexPath.section == 1) {
+            [self.selectAssigneeDelegate selectAssigneeViewControllerDismissed:self.employeeArray[indexPath.row]];
+        } else {
         [self.selectAssigneeDelegate selectAssigneeViewControllerDismissed:self.userArray[indexPath.row]];
+        }
     }
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)splitUsers {
+    NSMutableArray *toBeRemoved = [[NSMutableArray alloc] init];
+    _managerArray = [[NSMutableArray alloc] init];
+    _employeeArray = [[NSMutableArray alloc] init];
+    for (WPUser *u in _userArray) {
+        if ([u.role isEqualToNumber:[NSNumber numberWithInt:2]]) {
+            [_managerArray addObject:u];
+            [toBeRemoved addObject:u];
+        }
+        else if ([u.role isEqualToNumber:[NSNumber numberWithInt:1]]) {
+            [_employeeArray addObject:u];
+            [toBeRemoved addObject:u];
+        }
+    }
+    [_userArray removeObjectsInArray:toBeRemoved];
 }
 
 #pragma mark - Table View Protocols

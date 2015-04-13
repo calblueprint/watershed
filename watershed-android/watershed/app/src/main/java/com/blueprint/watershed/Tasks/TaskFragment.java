@@ -133,6 +133,9 @@ public class TaskFragment extends ListFragment {
             }
         });
 
+        mListView.setChildDivider(mParentActivity.getResources().getDrawable(R.color.transparent));
+        mListView.setDivider(mParentActivity.getResources().getDrawable(R.color.transparent));
+
         mNoTasks = (SwipeRefreshLayout) view.findViewById(R.id.no_tasks_layout);
         mNoTasks.setColorSchemeResources(R.color.ws_blue, R.color.facebook_blue, R.color.facebook_dark_blue, R.color.dark_gray);
         mNoTasks.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -263,7 +266,7 @@ public class TaskFragment extends ListFragment {
         ArrayList<Task> userTasks = new ArrayList<Task>();
         for (Task task : tasks) {
             Integer id = task.getAssigneeId();
-            if (id != null && id ==  mParentActivity.getUserId()) userTasks.add(task);
+            if (id != null && id == mParentActivity.getUserId()) userTasks.add(task);
         }
         return userTasks;
     }

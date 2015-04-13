@@ -17,6 +17,7 @@ import java.util.Date;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonSerialize(using = TaskSerializer.class)
 public class Task implements APIObject {
 
     private ObjectMapper mMapper = new ObjectMapper();
@@ -28,6 +29,7 @@ public class Task implements APIObject {
     private Integer mAssigneeId;
     private Integer mAssignerId;
     private Boolean mComplete;
+    private String mColor;
 
     private Boolean mUrgent;
     private Date mDueDate;
@@ -52,6 +54,11 @@ public class Task implements APIObject {
     public Integer getAssignerId() { return mAssignerId; }
     public Boolean getComplete() { return mComplete; }
     public Date getDueDate() { return mDueDate; }
+    public Boolean getUrgent() {
+        return mUrgent;
+    }
+    public String getColor() { return mColor; }
+
 
     public void setId(Integer Id){ mId = Id;}
     public void setTitle (String title){
@@ -71,6 +78,10 @@ public class Task implements APIObject {
     public void setDueDate(Date dueDate){
         mDueDate = dueDate;
     }
+    public void setUrgent(Boolean mUrgent) {
+        this.mUrgent = mUrgent;
+    }
+    public void setColor(String color) { mColor = color; }
 
     public void setAssigner(User assigner) { mAssigner = assigner; }
     public User getAssigner() { return mAssigner; }
@@ -80,12 +91,4 @@ public class Task implements APIObject {
     public MiniSite getMiniSite() { return mMiniSite; }
     public User getAssignee() { return mAssignee; }
     public void setAssignee(User mAssignee) { this.mAssignee = mAssignee; }
-    public Boolean getUrgent() {
-        return mUrgent;
-    }
-
-    public void setUrgent(Boolean mUrgent) {
-        this.mUrgent = mUrgent;
-    }
-
 }

@@ -31,7 +31,7 @@ public class EditTaskRequest extends BaseRequest {
                             Task task = mapper.readValue(taskJson, new TypeReference<Task>() {});
                             listener.onResponse(task);
                         } catch (Exception e) {
-                            Log.e("Edit Task Request Json exception", e.toString());
+                            Log.e("Edit Task", e.toString());
                         }
                     }
                 }, activity);
@@ -43,7 +43,6 @@ public class EditTaskRequest extends BaseRequest {
 
         try {
             JSONObject taskJson = new JSONObject(mapper.writeValueAsString(task));
-            taskJson.put("due_date", new SimpleDateFormat("yyyy/MM/dd").format(task.getDueDate()));
             params.put("task", taskJson);
         } catch (Exception e) {
             e.printStackTrace();

@@ -22,9 +22,12 @@ import com.blueprint.watershed.MiniSites.MiniSiteListAdapter;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Sites.SiteRequest;
 import com.blueprint.watershed.Networking.Sites.SiteSubscribeRequest;
+import com.blueprint.watershed.Networking.Users.UserSitesRequest;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
 import com.blueprint.watershed.Views.HeaderGridView;
+import com.blueprint.watershed.Views.Material.FloatingActionButton;
 
 import org.json.JSONObject;
 
@@ -38,12 +41,17 @@ public class SiteFragment extends Fragment
     private NetworkManager mNetworkManager;
     private MainActivity mParentActivity;
 
+    private FloatingActionButton mCreateSiteButton;
     private HeaderGridView mMiniSiteGridView;
     private MiniSiteListAdapter mMiniSiteAdapter;
     private ViewGroup mHeader;
 
+    private User mUser;
     private Site mSite;
     private ArrayList<MiniSite> mMiniSites;
+    private View mView;
+
+    private Boolean mSubscribed;
 
 
     public static SiteFragment newInstance(Site site) {
@@ -65,7 +73,9 @@ public class SiteFragment extends Fragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        mSubscribed = false;
         mParentActivity = (MainActivity) getActivity();
+        mUser = mParentActivity.getUser();
         mNetworkManager = NetworkManager.getInstance(mParentActivity);
     }
 
@@ -74,6 +84,7 @@ public class SiteFragment extends Fragment
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_site, container, false);
+        mView = view;
         initializeViews(view);
         if (mSite.isMiniSiteEmpty()) getSiteRequest(mSite);
         return view;
@@ -82,8 +93,7 @@ public class SiteFragment extends Fragment
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.add_minisite:
-                mParentActivity.replaceFragment(CreateMiniSiteFragment.newInstance(mSite.getId()));
+            case R.id.edit:
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -95,12 +105,37 @@ public class SiteFragment extends Fragment
         mParentActivity.setMenuAction(false);
     }
 
+    private void setButtonListeners(View view){
+        View editButton = view.findViewById(R.id.site_edit_site);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editSite();
+            }
+        });
+        View miniSiteCreate = view.findViewById(R.id.site_add_minisite);
+        miniSiteCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mParentActivity.replaceFragment(CreateMiniSiteFragment.newInstance(mSite.getId()));
+            }
+        });
+        View subscribeButton = view.findViewById(R.id.site_subscribe_site);
+        subscribeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!mSubscribed) subscribeToSite();
+            }
+        });
+    }
+
     private void initializeViews(View view) {
         // Create MiniSite grid
         mMiniSiteGridView = (HeaderGridView) view.findViewById(R.id.mini_sites_grid);
         mHeader = (ViewGroup) mParentActivity.getLayoutInflater().inflate(R.layout.site_header_view, mMiniSiteGridView, false);
         mMiniSiteGridView.addHeaderView(mHeader, null, false);
         configureViewWithSite(mHeader, mSite);
+        getUserSiteRequest();
 
         // Set the adapter to fill the list of mini sites
         mMiniSiteAdapter = new MiniSiteListAdapter(mParentActivity, getMiniSites());
@@ -110,23 +145,14 @@ public class SiteFragment extends Fragment
         setButtonListeners(view);
     }
 
-    private void setButtonListeners(View view){
-        View subButton = view.findViewById(R.id.site_subscribe);
-        subButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                subscribeToSite();
-            }
-        });
-    }
-
     private void subscribeToSite(){
         SiteSubscribeRequest subRequest = new SiteSubscribeRequest(mParentActivity, mSite, new HashMap<String, JSONObject>(), new Response.Listener<String>() {
             @Override
             public void onResponse(String message) {
                 Log.e("Oh yeah", message);
+                mSubscribed = true;
             }
-        });
+        }, mSubscribed);
         mNetworkManager.getRequestQueue().add(subRequest);
     }
 
@@ -172,10 +198,39 @@ public class SiteFragment extends Fragment
         }
     }
 
+    private void editSite(){
+        EditSiteFragment editSiteFragment = EditSiteFragment.newInstance(mSite);
+        mParentActivity.replaceFragment(editSiteFragment);
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.edit_site_menu, menu);
+        inflater.inflate(R.menu.empty, menu);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    private void markSubscribed(ArrayList<Site> sites){
+        for (Site site : sites){
+            if (site.getId().equals(mSite.getId())){
+                FloatingActionButton subscribeButton = (FloatingActionButton) mView.findViewById(R.id.site_subscribe_site);
+                subscribeButton.setTitle("Unsubscribe from Site");
+                subscribeButton.setIcon(R.drawable.ic_bookmark_white_36dp);
+                mSubscribed = true;
+            }
+        }
+    }
+
+    protected void getUserSiteRequest() {
+        UserSitesRequest SitesRequest = new UserSitesRequest(mParentActivity,
+                new HashMap<String, JSONObject>(),
+                new Response.Listener<ArrayList<Site>>() {
+                    @Override
+                    public void onResponse(ArrayList<Site> sites) {
+                        Log.e("Good ", "Site Request");
+                        markSubscribed(sites);
+                    }
+                }, mUser.getId());
+        mNetworkManager.getRequestQueue().add(SitesRequest);
     }
 }

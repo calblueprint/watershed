@@ -1,56 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="96dp"
-    android:background="@color/white"
+    android:layout_height="90dp"
+    android:background="@color/medium_gray"
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/title"
-        android:textSize="20sp"
-        android:textColor="#000000"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Title"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="@dimen/standard_margin"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-    <TextView
-        android:id="@+id/due_date"
-        android:textSize="20sp"
-        android:textColor="#000000"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Due"
-        android:layout_alignBottom="@+id/site"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="32dp" />
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        card_view:cardUseCompatPadding="true"
+        card_view:cardElevation="4dp"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+            <View
+                android:id="@+id/task_list_row_color"
+                android:layout_width="5dp"
+                android:layout_height="match_parent"/>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/task_list_row_color"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp">
+                <TextView
+                    android:id="@+id/task_list_row_title"
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Title"
+                    />
 
-    <TextView
-        android:id="@+id/site"
-        android:textColor="#000000"
-        android:textSize="14sp"
-        android:layout_marginTop="4dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Site"
-        android:layout_below="@+id/title"
-        android:layout_alignLeft="@+id/title"
-        android:layout_alignStart="@+id/title" />
+                <TextView
+                    android:id="@+id/task_list_row_site"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Site"
+                    android:fontFamily="sans-serif-thin"
+                    android:layout_below="@+id/task_list_row_title"
+                     />
+            </RelativeLayout>
 
-    <TextView
-            android:id="@+id/description"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:layout_marginTop="4dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Description"
-            android:layout_below="@+id/site"
-            android:layout_alignLeft="@+id/title"
-            android:layout_alignStart="@+id/title" />
-
+            <LinearLayout
+                android:id="@+id/task_list_row_due_holder"
+                android:layout_width="73dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:orientation="vertical"
+                >
+                <TextView
+                    android:id="@+id/task_list_row_due_month"
+                    android:textSize="12sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="Month"
+                    android:textColor="@color/white"
+                    />
+                <TextView
+                    android:id="@+id/task_list_row_due_day"
+                    android:textSize="30sp"
+                    android:layout_marginTop="-3dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="-3dp"
+                    android:text="Day"
+                    android:textColor="@color/white"
+                    />
+                <TextView
+                    android:id="@+id/task_list_row_due_year"
+                    android:textSize="10sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-thin"
+                    android:text="year"
+                    android:textColor="@color/white"
+                    />
+            </LinearLayout>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
 </RelativeLayout>

@@ -14,10 +14,12 @@ import java.util.HashMap;
 
 /**
  * Created by maxwolffe on 4/8/15.
+ * 
+ * If subscribed == True, then SiteSubscription requests to unsubscribe, otherwise it subscribes the currently signed in user to the site.
  */
 public class SiteSubscribeRequest extends BaseRequest {
-    public SiteSubscribeRequest(final Activity activity, Site site, HashMap<String, JSONObject> params, final Response.Listener<String> listener) {
-        super(Request.Method.POST, makeURL("sites/" + site.getId() + "/subscribe"), new JSONObject(params),
+    public SiteSubscribeRequest(final Activity activity, Site site, HashMap<String, JSONObject> params, final Response.Listener<String> listener, Boolean subscribed) {
+        super(Request.Method.POST, makeURL("sites/" + site.getId() + (subscribed? "/unsubscribe" : "/subscribe")), new JSONObject(params),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {

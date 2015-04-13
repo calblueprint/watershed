@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- I'm not sure we ever use this view -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -13,6 +15,7 @@
         />
 
     <LinearLayout
+        android:layout_below="@id/cover_photo_pager_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/standard_margin"
@@ -48,4 +51,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>
