@@ -3,6 +3,7 @@ package com.blueprint.watershed.Activities;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -30,6 +31,9 @@ import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,8 +47,9 @@ import io.fabric.sdk.android.Fabric;
 public class LandingPageActivity extends Activity implements View.OnClickListener{
 
     // Constants
-    public  static final String PREFERENCES = "LOGIN_PREFERENCES";
-    private static final String TAG         = "LandingPageActivity";
+    public  static final String PREFERENCES                   = "LOGIN_PREFERENCES";
+    private static final String TAG                           = "LandingPageActivity";
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     // UI Elements
     private ImageView mLandingPageImage;
@@ -57,7 +62,11 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     private View mViewBlocker;
     private LinearLayout mLayout;
 
+    // Facebook Login
     private UiLifecycleHelper mUiHelper;
+
+    // Notification Params
+    private GoogleCloudMessaging mGcm;
 
     // Called when session changes
     private com.facebook.Session.StatusCallback callback = new com.facebook.Session.StatusCallback() {
@@ -79,7 +88,13 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         mUiHelper.onCreate(savedInstanceState);
         initializeViews();
 
-        mPreferences = getSharedPreferences(PREFERENCES, 0);
+        mPreferences = getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
+
+        if (checkPlayServices()) {
+            mGcm = GoogleCloudMessaging.getInstance(this);
+        } else {
+            Log.i("Exception in services", "Please get a valid Play services APK");
+        }
 
         // NOTE(mark): Change to !hasAuthCredentials if you want the main activity to show.
         if (hasAuthCredentials(mPreferences)) {
@@ -92,25 +107,73 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         }
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
 
         AppEventsLogger.activateApp(this);
-
         com.facebook.Session session = com.facebook.Session.getActiveSession();
         if (session != null && (session.isOpened() || session.isClosed()) ) {
             onSessionStateChange(session, session.getState(), null);
         }
-
         mUiHelper.onResume();
+
+        checkPlayServices();
     }
 
+    @Override
     protected void onPause() {
         super.onPause();
         AppEventsLogger.deactivateApp(this);
         mUiHelper.onPause();
+    }
+
+    /**
+     * Check the device to make sure it has the Google Play Services APK. If
+     * it doesn't, display a dialog that allows users to download the APK from
+     * the Google Play Store or enable it in the device's system settings.
+     */
+    private boolean checkPlayServices() {
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                GooglePlayServicesUtil.getErrorDialog(resultCode, this,
+                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else {
+                Log.i(TAG, "This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Gets the current registration ID for application on GCM service.
+     * <p>
+     * If result is empty, the app needs to register.
+     *
+     * @return registration ID, or empty string if there is no existing
+     *         registration ID.
+     */
+    private String getRegistrationId() {
+        String registrationId = mPreferences.getString("registration_id", "");
+        if (registrationId.isEmpty()) {
+            Log.i(TAG, "Registration not found.");
+            return "";
+        }
+
+        // Check if app was updated; if so, it must clear the registration ID
+        // since the existing registration ID is not guaranteed to work with
+        // the new app version.
+        int registeredVersion = mPreferences.getInt("app_version", Integer.MIN_VALUE);
+        int currentVersion = Utility.getAppVersion(this);
+        if (registeredVersion != currentVersion) {
+            Log.i(TAG, "App version changed.");
+            mPreferences.edit().putInt("app_version", currentVersion).commit();
+            return "";
+        }
+        return registrationId;
     }
 
     public void initializeViews() {
@@ -156,7 +219,6 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     }
 
     // Facebook Stuff
-
     private void onSessionStateChange(final com.facebook.Session session, SessionState state, Exception exception) {
         if (state.isOpened()) {
             com.facebook.Request.newMeRequest(session, new com.facebook.Request.GraphUserCallback() {
@@ -175,12 +237,19 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
                             Log.e("JSONException", "Facebook Login");
                         }
 
+                        String regid = "";
+                        try {
+                            regid = mGcm.register(SENDER_ID);
+                        } catch (Exception e) {
+                            Log.i("Exception", e.toString());
+                        }
                         HashMap<String, String> params = new HashMap<String, String>();
                         params.put("email", email);
                         params.put("facebook_auth_token", accessToken);
                         params.put("facebook_id", id);
                         params.put("name", name);
-
+                        params.put("device_type", "0");
+                        params.put("registration_id", regid);
                         facebookRequest(params);
                     }
                 }
@@ -297,10 +366,11 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     public Button getFacebookButton() { return mFacebookButton; }
     public Button getSignUpButton() { return mSignUpButton; }
     public NetworkManager getRequestHandler(){return mLoginNetworkManager;}
-
+    public GoogleCloudMessaging getGcm() { return mGcm; }
     // Setters
     public void setLandingPageImage(ImageView imageView) { mLandingPageImage = imageView; }
     public void setLoginButton(Button loginButton) { mLoginButton = loginButton; }
     public void setFacebookButton(com.facebook.widget.LoginButton facebookButton) { mFacebookButton = facebookButton; }
     public void setSignUpButton(Button signUpButton) { mSignUpButton = signUpButton; }
+    public void setGcm(GoogleCloudMessaging gcm) { mGcm = gcm; }
 }

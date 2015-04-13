@@ -1,15 +1,16 @@
 package com.blueprint.watershed.Authentication;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.blueprint.watershed.Activities.LandingPageActivity;
 import com.blueprint.watershed.R;
@@ -19,7 +20,8 @@ import java.util.HashMap;
 
 public class SignUpFragment extends Fragment implements View.OnClickListener {
 
-    private LandingPageActivity parentActivity;
+    private final String SENDER_ID = "158271976435";
+    private LandingPageActivity mParentActivity;
     private View rootView;
 
     // UI Elements
@@ -34,13 +36,10 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         return new SignUpFragment();
     }
 
-    public SignUpFragment() {
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        parentActivity = (LandingPageActivity) getActivity();
+        mParentActivity = (LandingPageActivity) getActivity();
     }
 
     @Override
@@ -94,8 +93,16 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         user_params.put("email", emailString);
         user_params.put("password", passwordString);
         user_params.put("password_confirmation", passwordConfirmationString);
+        user_params.put("device_type", "0");
 
-        parentActivity.signUpRequest(user_params);
+        try {
+            if (mParentActivity.getGcm() != null) {
+                user_params.put("registration_id", mParentActivity.getGcm().register(SENDER_ID));
+            }
+        } catch (Exception e) {
+            Log.i("Exception", e.toString());
+        }
+        mParentActivity.signUpRequest(user_params);
     }
 
     // Getters

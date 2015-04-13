@@ -69,7 +69,6 @@ public class MainActivity extends ActionBarActivity
     // Constants
     private static final String PREFERENCES = "LOGIN_PREFERENCES";
     private static final String TAG         = "MainActivity";
-    private static int CACHE_SIZE = 512;
 
     // Authenticating against our own server
     public String authToken;
@@ -110,9 +109,8 @@ public class MainActivity extends ActionBarActivity
     // Temp Vars
     private Site mSite;
 
-    //Task for FieldReport
+    // Task for FieldReport
     private Task mFieldReportTask;
-
 
     // Params (so we don't have to set them later)
     private List<User> mUsers;

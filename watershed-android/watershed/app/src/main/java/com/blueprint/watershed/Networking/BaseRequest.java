@@ -108,6 +108,7 @@ public abstract class BaseRequest extends JsonObjectRequest {
         HashMap<String, String> headers = new HashMap<String, String>();
         headers.put("X-AUTH-TOKEN", preferences.getString("authentication_token", "none"));
         headers.put("X-AUTH-EMAIL", preferences.getString("email", "none"));
+        headers.put("X-AUTH-ID", preferences.getString("registration_id", "none"));
         return headers;
     }
 }

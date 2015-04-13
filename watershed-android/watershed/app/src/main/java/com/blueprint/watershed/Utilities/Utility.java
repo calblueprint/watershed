@@ -48,7 +48,7 @@ public class Utility {
      * @param context Context to get information from
      * @return Version of the application
      */
-    private static int getAppVersion(Context context) {
+    public static int getAppVersion(Context context) {
         try {
             PackageInfo packageInfo = context.getPackageManager()
                     .getPackageInfo(context.getPackageName(), 0);

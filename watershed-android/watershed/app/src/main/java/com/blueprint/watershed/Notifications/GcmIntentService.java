@@ -60,6 +60,6 @@ public class GcmIntentService extends Service {
             public boolean unlinkToDeath(DeathRecipient recipient, int flags) {
                 return false;
             }
-        }
+        };
     }
 }
