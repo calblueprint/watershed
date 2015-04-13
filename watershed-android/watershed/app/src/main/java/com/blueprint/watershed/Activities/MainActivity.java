@@ -210,9 +210,11 @@ public class MainActivity extends ActionBarActivity
                 EditUserRequest request = new EditUserRequest(MainActivity.this, getUser(), user, new Response.Listener<User>() {
                     @Override
                     public void onResponse(User user) {
-                        mPreferences.edit().putInt()
+                        setUser(user);
                     }
                 });
+                mNetworkManager.getRequestQueue().add(request);
+
                 return msg;
             }
 
@@ -504,7 +506,7 @@ public class MainActivity extends ActionBarActivity
 
         mUser = user;
     }
-    
+
     public User getUser() { return mUser; }
     public void setUsers(List<User> users) { mUsers = users; }
     public List<User> getUsers() { return mUsers; }
