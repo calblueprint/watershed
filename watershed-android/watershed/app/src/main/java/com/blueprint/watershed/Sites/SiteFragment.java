@@ -80,6 +80,7 @@ public class SiteFragment extends Fragment
         if (site != null) {
             mSite = site;
             mParentActivity.setSite(null);
+            mMiniSiteAdapter.notifyDataSetChanged();
         }
 
         if (mSite.isMiniSiteEmpty()) getSiteRequest(mSite);

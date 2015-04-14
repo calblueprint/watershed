@@ -75,8 +75,8 @@ public class MainActivity extends ActionBarActivity
     private final String SENDER_ID          = "158271976435";
 
     // Authenticating against our own server
-    public String authToken;
-    public String authEmail;
+    public String mAuthToken;
+    public String mAuthEmail;
     private String mRegistrationId;
     private int mAppVersion;
 
@@ -131,8 +131,10 @@ public class MainActivity extends ActionBarActivity
 
         setNetworkManager(NetworkManager.getInstance(this));
         mPreferences = getSharedPreferences(PREFERENCES, MODE_PRIVATE);
-        authToken = mPreferences.getString("auth_token", "none");
-        authEmail = mPreferences.getString("auth_email", "none");
+        mAuthToken = mPreferences.getString("auth_token", "none");
+        mAuthEmail = mPreferences.getString("auth_email", "none");
+        mRegistrationId = mPreferences.getString("registration_id", "none");
+        mAppVersion = mPreferences.getInt("app_version", Integer.MIN_VALUE);
         mUserId = mPreferences.getInt("userId", 0);
 
         setUserObject();
@@ -158,15 +160,13 @@ public class MainActivity extends ActionBarActivity
 
     /**
      * Gets the current registration ID for application on GCM service.
-     * <p>
      * If result is empty, the app needs to register.
      *
      * @return registration ID, or empty string if there is no existing
      *         registration ID.
      */
     private String getRegistrationId() {
-        String registrationId = mPreferences.getString("registration_id", "");
-        if (registrationId.isEmpty()) {
+        if (mRegistrationId.equals("none")) {
             Log.i(TAG, "Registration not found.");
             return "";
         }
@@ -174,14 +174,13 @@ public class MainActivity extends ActionBarActivity
         // Check if app was updated; if so, it must clear the registration ID
         // since the existing registration ID is not guaranteed to work with
         // the new app version.
-        int registeredVersion = mPreferences.getInt("app_version", Integer.MIN_VALUE);
         int currentVersion = Utility.getAppVersion(this);
-        if (registeredVersion != currentVersion) {
+        if (mAppVersion != currentVersion) {
             Log.i(TAG, "App version changed.");
             mPreferences.edit().putInt("app_version", currentVersion).commit();
             return "";
         }
-        return registrationId;
+        return mRegistrationId;
     }
 
     /**
@@ -200,6 +199,7 @@ public class MainActivity extends ActionBarActivity
                 try {
                     if (mGcm == null) mGcm = GoogleCloudMessaging.getInstance(MainActivity.this);
                     objParams.put("registration_id", mGcm.register(SENDER_ID));
+                    objParams.put("device_type", 0);
                     user.put("user", objParams);
                 } catch (Exception ex) {
                     msg = "Error :" + ex.getMessage();

@@ -60,7 +60,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def registration_params
-    params.require(:user).permit(:registration_params)
+    params.require(:user).permit(:registration_id, :device_type)
   end
 
   def invalid_facebook_login_attempt
