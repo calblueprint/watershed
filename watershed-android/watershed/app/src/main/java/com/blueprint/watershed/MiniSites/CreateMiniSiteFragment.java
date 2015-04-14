@@ -2,9 +2,11 @@ package com.blueprint.watershed.MiniSites;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Networking.MiniSites.CreateMiniSiteRequest;
+import com.blueprint.watershed.R;
 import com.blueprint.watershed.Sites.SiteListFragment;
 import com.blueprint.watershed.Utilities.Utility;
 
@@ -32,6 +34,16 @@ public class CreateMiniSiteFragment extends MiniSiteAbstractFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setButtonListeners();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.save:
+                validateAndSubmitMiniSite();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

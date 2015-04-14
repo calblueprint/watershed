@@ -67,13 +67,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
     }
 
     private void initializeViews(View view) {
-
-        View completeButton = view.findViewById(R.id.complete_button);
-
-        mFieldReportButton = (Button) view.findViewById(R.id.field_report_button);
-        mFieldReportButton.setOnClickListener(this);
-        mCompleteButton = (Button) completeButton;
-        mCompleteButton.setOnClickListener(this);
+        setButtonListeners(view);
 
         String submit = mTask.getFieldReport() == null ? "ADD FIELD REPORT" : "VIEW FIELD REPORT";
         mFieldReportButton.setText(submit);
@@ -100,6 +94,20 @@ public class TaskDetailFragment extends TaskAbstractFragment
         else location = mTask.getMiniSite().getLocation();
         mLocation.setText(location);
 
+    }
+
+    private void setButtonListeners(View view){
+        View editTaskButton = view.findViewById(R.id.edit_task_button);
+        editTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mParentActivity.replaceFragment(EditTaskFragment.newInstance(mTask));
+            }
+        });
+        mFieldReportButton = (Button) view.findViewById(R.id.field_report_button);
+        mFieldReportButton.setOnClickListener(this);
+        mCompleteButton = (Button) view.findViewById(R.id.complete_button);
+        mCompleteButton.setOnClickListener(this);
     }
 
     @Override
@@ -144,7 +152,6 @@ public class TaskDetailFragment extends TaskAbstractFragment
         createTask(UNCOMPLETE, mTask);
 
     }
-
 
     public void fieldReportButtonPressed() {
         if (mTask.getFieldReport() == null) {
