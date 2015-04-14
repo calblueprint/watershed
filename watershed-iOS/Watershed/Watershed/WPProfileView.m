@@ -106,7 +106,7 @@ static int PROFILE_PIC_HEIGHT = 65;
         }
         case 2: {
             if (_user.location) {
-                FAKIonIcons *locationIcon = [FAKIonIcons androidPinIconWithSize:26];
+                FAKIonIcons *locationIcon = [FAKIonIcons pinIconWithSize:26];
                 [locationIcon addAttribute:NSForegroundColorAttributeName
                                  value:[UIColor darkGrayColor]];
                 [cell setIconImageView:[[UIImageView alloc]
