@@ -34,8 +34,8 @@ import com.blueprint.watershed.FieldReports.FieldReportFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteAbstractFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
-import com.blueprint.watershed.Networking.Users.EditUserRequest;
 import com.blueprint.watershed.Networking.Users.HomeRequest;
+import com.blueprint.watershed.Networking.Users.RegisterUserRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Sites.CreateSiteFragment;
 import com.blueprint.watershed.Sites.Site;
@@ -135,8 +135,6 @@ public class MainActivity extends ActionBarActivity
         authEmail = mPreferences.getString("auth_email", "none");
         mUserId = mPreferences.getInt("userId", 0);
 
-        mRegistrationId = mPreferences.getString("registration_id", "none");
-
         setUserObject();
         if (getRegistrationId().isEmpty())
             registerInBackground();
@@ -207,7 +205,7 @@ public class MainActivity extends ActionBarActivity
                     msg = "Error :" + ex.getMessage();
                 }
 
-                EditUserRequest request = new EditUserRequest(MainActivity.this, getUser(), user, new Response.Listener<User>() {
+                RegisterUserRequest request = new RegisterUserRequest(MainActivity.this, getUser(), user, new Response.Listener<User>() {
                     @Override
                     public void onResponse(User user) {
                         setUser(user);
@@ -463,9 +461,8 @@ public class MainActivity extends ActionBarActivity
         editor.apply();
         Intent intent = new Intent(activity, LandingPageActivity.class);
 
-        if (Session.getActiveSession() != null) {
+        if (Session.getActiveSession() != null)
             Session.getActiveSession().closeAndClearTokenInformation();
-        }
 
         activity.finish();
         activity.startActivity(intent);
