@@ -46,13 +46,15 @@
                             NSLocalizedString(@"Profile", HNNoLocalizationComment)
                             ];
         
-        FAKIonIcons *checkIcon = [FAKIonIcons androidDoneAllIconWithSize:28];
+//        FAKIonIcons *checkIcon = [FAKIonIcons androidDoneAllIconWithSize:28];
+        FAKIonIcons *checkIcon = [FAKIonIcons ios7AlarmIconWithSize:28];
         UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake(28, 28)];
         
         FAKIonIcons *treeIcon = [FAKIonIcons androidImageIconWithSize:28];
         UIImage *treeImage = [treeIcon imageWithSize:CGSizeMake(28, 28)];
         
-        FAKIonIcons *profileIcon = [FAKIonIcons androidPersonIconWithSize:28];
+//        FAKIonIcons *profileIcon = [FAKIonIcons androidPersonIconWithSize:28];
+        FAKIonIcons *profileIcon = [FAKIonIcons ios7AmericanfootballOutlineIconWithSize:28];
         UIImage *profileImage = [profileIcon imageWithSize:CGSizeMake(28, 28)];
         
         NSArray *images = @[

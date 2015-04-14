@@ -50,11 +50,8 @@ public class MiniSiteFragment extends Fragment
         return miniSiteFragment;
     }
 
-    public MiniSiteFragment() {}
 
-    public void setSite(Site site) {
-        mSite = site;
-    }
+    public void setSite(Site site) { mSite = site; }
 
     // Objects
     public void setMiniSite(MiniSite miniSite) {
@@ -98,6 +95,23 @@ public class MiniSiteFragment extends Fragment
         mNetworkManager.getRequestQueue().add(request);
     }
 
+    private void setButtonListeners(View view){
+        View editButton = view.findViewById(R.id.minisite_edit_minisite);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mParentActivity.replaceFragment(EditMiniSiteFragment.newInstance(mSite, mMiniSite));
+            }
+        });
+        View miniSiteCreate = view.findViewById(R.id.minisite_add_fieldreport);
+        miniSiteCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Add Field Report. Unless we are requiring a user to be completing a task to submit a report. 
+            }
+        });
+    }
+
     private void initializeViews(View view, LayoutInflater inflater) {
         // Create FieldReportGridView
         mFieldReportGridView = (HeaderGridView) view.findViewById(R.id.field_reports_grid);
@@ -108,6 +122,9 @@ public class MiniSiteFragment extends Fragment
 
         // Configure the header
         configureViewWithMiniSite(header, mMiniSite);
+
+        // Set FAB listeners
+        setButtonListeners(view);
 
         // Set the adapter to fill the list of field reports
         mFieldReportAdapter = new FieldReportListAdapter(mParentActivity, mParentActivity, R.layout.field_report_list_row, getFieldReports());

@@ -17,7 +17,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -106,15 +105,6 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.save:
-                validateAndSubmitMiniSite();
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
     /**
      * Sets all the views in the fragment
      */
