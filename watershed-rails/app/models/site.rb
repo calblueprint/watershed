@@ -20,6 +20,9 @@ class Site < ActiveRecord::Base
 
   has_many :mini_sites
 
+  has_many :user_sites
+  has_many :users, through: :user_sites
+
   #
   # Search
   #
