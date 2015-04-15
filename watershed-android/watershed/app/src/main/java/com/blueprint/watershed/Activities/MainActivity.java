@@ -523,7 +523,6 @@ public class MainActivity extends ActionBarActivity
         mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkMenuClosed();
                 mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
             }
         });
@@ -547,12 +546,4 @@ public class MainActivity extends ActionBarActivity
 
     public void setSite(Site site) { mSite = site; }
     public Site getSite() { return mSite; }
-
-    @Override
-    public void onBackPressed() { checkMenuClosed(); }
-
-    public void checkMenuClosed() {
-        Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
-        if (!(f instanceof SiteFragment && ((SiteFragment) f).closeMenu())) super.onBackPressed();
-    }
 }

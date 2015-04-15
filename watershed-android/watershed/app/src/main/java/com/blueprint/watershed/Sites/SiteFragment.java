@@ -192,9 +192,10 @@ public class SiteFragment extends Fragment
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    public boolean closeMenu() {
-        boolean isOpened = mMenu.isExpanded();
-        if (isOpened) mMenu.collapse();
-        return isOpened;
+    @Override
+    public void onPause() {
+        super.onDestroy();
+        if (mMenu != null) mMenu.collapse();
     }
+
 }

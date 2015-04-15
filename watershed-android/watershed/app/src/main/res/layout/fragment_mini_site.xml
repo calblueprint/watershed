@@ -20,7 +20,7 @@
     </com.blueprint.watershed.Views.HeaderGridView>
 
     <com.blueprint.watershed.Views.Material.FloatingActionsMenu
-        android:id="@+id/site_settings"
+        android:id="@+id/mini_site_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -35,7 +35,7 @@
         android:layout_marginEnd="16dp">
 
         <com.blueprint.watershed.Views.Material.FloatingActionButton
-            android:id="@+id/minisite_edit_minisite"
+            android:id="@+id/mini_site_edit_minisite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_title="@string/edit_minisite"
@@ -44,7 +44,7 @@
             fab:fab_icon="@drawable/ic_edit"/>
 
         <com.blueprint.watershed.Views.Material.FloatingActionButton
-            android:id="@+id/minisite_add_fieldreport"
+            android:id="@+id/mini_site_add_fieldreport"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_title="@string/add_fieldreport"
