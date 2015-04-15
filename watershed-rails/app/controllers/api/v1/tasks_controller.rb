@@ -2,6 +2,7 @@ class Api::V1::TasksController < Api::V1::BaseController
   load_and_authorize_resource param_method: :task_params
 
   def index
+    # binding.pry
     render json: @tasks, each_serializer: TaskListSerializer
   end
 

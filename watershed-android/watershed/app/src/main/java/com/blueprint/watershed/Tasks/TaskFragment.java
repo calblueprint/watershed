@@ -75,6 +75,10 @@ public class TaskFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View finalView = inflater.inflate(R.layout.fragment_task_list, container, false);
+        if (mParentActivity.getShowAllTasks()) {
+            mParentActivity.setShowAllTasks(false);
+            mArgs.putInt(OPTION, ALL);
+        }
         initializeViews(finalView);
         mParentActivity.setMenuAction(true);
         getTasksRequest();
@@ -104,19 +108,19 @@ public class TaskFragment extends ListFragment {
         });
 
         mListView = (ExpandableListView) view.findViewById(android.R.id.list);
-        mListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
-                Task taskClicked;
-                if (mArgs.getInt(OPTION) == USER) taskClicked = mUserTaskList.get(mTaskListHeaders.get(groupPosition)).get(childPosition);
-                else taskClicked = mAllTaskList.get(mTaskListHeaders.get(groupPosition)).get(childPosition);
-
-                if (taskClicked == null) return false;
-                TaskDetailFragment detailFragment = TaskDetailFragment.newInstance(taskClicked);
-                mParentActivity.replaceFragment(detailFragment);
-                return true;
-            }
-        });
+//        mListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+//            @Override
+//            public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
+//                Task taskClicked;
+//                if (mArgs.getInt(OPTION) == USER) taskClicked = mUserTaskList.get(mTaskListHeaders.get(groupPosition)).get(childPosition);
+//                else taskClicked = mAllTaskList.get(mTaskListHeaders.get(groupPosition)).get(childPosition);
+//
+//                if (taskClicked == null) return false;
+//                TaskDetailFragment detailFragment = TaskDetailFragment.newInstance(taskClicked);
+//                mParentActivity.replaceFragment(detailFragment);
+//                return true;
+//            }
+//        });
 
         mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override

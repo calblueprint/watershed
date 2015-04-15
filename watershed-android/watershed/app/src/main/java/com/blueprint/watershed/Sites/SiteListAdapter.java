@@ -77,10 +77,7 @@ public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHo
             View.OnClickListener listener = new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    SiteFragment siteFragment = new SiteFragment();
-                    siteFragment.configureWithSite(site);
-
-                    mParentActivity.replaceFragment(siteFragment);
+                    mParentActivity.replaceFragment(SiteFragment.newInstance(site));
                 }
             };
             holder.parentView.setOnClickListener(listener);

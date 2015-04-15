@@ -27,7 +27,10 @@ import java.util.Locale;
 
 
 public class TaskDetailFragment extends TaskAbstractFragment
-                                implements View.OnClickListener{
+                                implements View.OnClickListener {
+
+    private static final String OPTION = "option";
+    private static final int ALL = 1;
 
     private MainActivity mParentActivity;
     private NetworkManager mNetworkManager;
@@ -102,8 +105,8 @@ public class TaskDetailFragment extends TaskAbstractFragment
 
         String description;
         if (mTask.getDescription() == null) description = "No Description";
-        else location = mTask.getDescription();
-        mDescription.setText(location);
+        else description = mTask.getDescription();
+        mDescription.setText(description);
     }
 
     private void setButtonListeners(View view){
@@ -124,7 +127,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.delete_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
+//        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -202,6 +205,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
         DeleteTaskRequest request = new DeleteTaskRequest(mParentActivity, mTask, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject task) {
+                mParentActivity.setShowAllTasks(true);
                 mParentActivity.getSupportFragmentManager().popBackStack();
             }
         });

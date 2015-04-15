@@ -140,7 +140,6 @@ public class MiniSiteFragment extends Fragment
         });
     }
 
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
@@ -151,9 +150,6 @@ public class MiniSiteFragment extends Fragment
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.edit:
-                EditMiniSiteFragment fragment = EditMiniSiteFragment.newInstance(mSite, mMiniSite);
-                mParentActivity.replaceFragment(fragment);
             case R.id.delete:
                 deleteMiniSite();
             default:

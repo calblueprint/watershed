@@ -118,6 +118,9 @@ public class MainActivity extends ActionBarActivity
     // Task for FieldReport
     private Task mFieldReportTask;
 
+    // Temp for Tasks
+    private boolean mShowAllTasks;
+
     // Google cloud messaging
     private GoogleCloudMessaging mGcm;
 
@@ -314,11 +317,10 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void displayTaskView(boolean toggle) {
-        if (toggle){
+        if (toggle) {
             mViewPager.setVisibility(View.VISIBLE);
             mContainer.setVisibility(View.INVISIBLE);
-        }
-        else {
+        } else {
             mViewPager.setVisibility(View.INVISIBLE);
             mContainer.setVisibility(View.VISIBLE);
         }
@@ -545,15 +547,30 @@ public class MainActivity extends ActionBarActivity
         mToolBar.invalidate();
     }
 
+    @Override
+    public void onBackPressed() { checkMenuClosed(); }
+
+    /**
+     * HELPERS FOR SITE FRAGMENT
+     */
+
     public void setSite(Site site) { mSite = site; }
     public Site getSite() { return mSite; }
 
-    @Override
-    public void onBackPressed() { checkMenuClosed(); }
+    /**
+     * MINI SITE MENU AND SITE MENU
+     */
 
     public void checkMenuClosed() {
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
         if (!(f instanceof SiteFragment && ((SiteFragment) f).closeMenu()) &&
             !(f instanceof MiniSiteFragment && ((MiniSiteFragment) f).closeMenu())) super.onBackPressed();
     }
+
+    /**
+     * HELPERS FOR TASK FRAGMENT
+     */
+
+    public boolean getShowAllTasks() { return mShowAllTasks; }
+    public void setShowAllTasks(boolean show) { mShowAllTasks = show; }
 }

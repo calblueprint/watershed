@@ -19,7 +19,6 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int index) {
-
         switch (index) {
             case 0:
                 return TaskFragment.newInstance(0);
