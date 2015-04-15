@@ -224,4 +224,10 @@ public class MiniSiteFragment extends Fragment
         super.onDestroy();
         if (mMenu != null) mMenu.collapse();
     }
+
+    public boolean closeMenu() {
+        boolean isOpened = mMenu.isExpanded();
+        if (isOpened) mMenu.collapse();
+        return isOpened;
+    }
 }

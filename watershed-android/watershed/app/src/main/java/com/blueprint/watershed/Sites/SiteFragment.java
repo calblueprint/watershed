@@ -195,7 +195,12 @@ public class SiteFragment extends Fragment
     @Override
     public void onPause() {
         super.onDestroy();
-        if (mMenu != null) mMenu.collapse();
+        if (mMenu != null) closeMenu();
     }
 
+    public boolean closeMenu() {
+        boolean isOpened = mMenu.isExpanded();
+        if (isOpened) mMenu.collapse();
+        return isOpened;
+    }
 }
