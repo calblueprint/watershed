@@ -1,19 +1,26 @@
 package com.blueprint.watershed.Tasks;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.FieldReports.AddFieldReportFragment;
 import com.blueprint.watershed.FieldReports.FieldReportFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
+import com.blueprint.watershed.Networking.Tasks.DeleteTaskRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Utilities.Utility;
+
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -114,18 +121,21 @@ public class TaskDetailFragment extends TaskAbstractFragment
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.delete_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
         switch (item.getItemId()) {
-            case R.id.edit:
-                EditTaskFragment newTask = EditTaskFragment.newInstance(mTask);
-                mParentActivity.replaceFragment(newTask);
+            case R.id.delete:
+                deleteTask();
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-
-    // Button Events
 
     @Override
     public void onClick(View view) {
@@ -170,5 +180,31 @@ public class TaskDetailFragment extends TaskAbstractFragment
         mCompleteButton.setText(complete);
         if (mTask.getComplete()) mCompleteButton.setBackgroundColor(getResources().getColor(R.color.ws_green));
         else mCompleteButton.setBackgroundColor(getResources().getColor(R.color.ws_blue));
+    }
+
+    private void deleteTask() {
+        Utility.showAndBuildDialog(mParentActivity, R.string.task_delete_title,
+                R.string.task_delete_msg, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        makeDeleteRequest();
+                    }
+                }, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }
+        );
+    }
+
+    private void makeDeleteRequest() {
+        DeleteTaskRequest request = new DeleteTaskRequest(mParentActivity, mTask, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject task) {
+                mParentActivity.getSupportFragmentManager().popBackStack();
+            }
+        });
+        mNetworkManager.getRequestQueue().add(request);
     }
 }

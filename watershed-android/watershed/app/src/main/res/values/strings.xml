@@ -101,4 +101,6 @@
     <!-- Dialog Strings -->
     <string name="mini_site_delete_title">Delete Mini Site?</string>
     <string name="mini_site_delete_msg">Are you sure you want to delete this mini site?</string>
+    <string name="task_delete_title">Delete Task?</string>
+    <string name="task_delete_msg">Are you sure you want to delete this task?</string>
 </resources>

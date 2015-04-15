@@ -60,8 +60,6 @@ public class TaskFragment extends ListFragment {
         return fragment;
     }
 
-    public TaskFragment(){}
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +69,6 @@ public class TaskFragment extends ListFragment {
         mAllTaskList = new HashMap<String, List<Task>>();
         mUserTaskList = new HashMap<String, List<Task>>();
         mTaskListHeaders = new ArrayList<String>();
-
         mArgs = getArguments();
     }
 
@@ -176,8 +173,7 @@ public class TaskFragment extends ListFragment {
      * Gets all the tasks in the server and updates the ListView accordingly,
      * depending on what tab is being clicked on.
      */
-
-    protected void getTasksRequest(){
+    protected void getTasksRequest() {
         mSwipeLayout.setRefreshing(true);
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
         TaskListRequest taskListRequest = new TaskListRequest(getActivity(), params, new Response.Listener<ArrayList<Task>>() {
