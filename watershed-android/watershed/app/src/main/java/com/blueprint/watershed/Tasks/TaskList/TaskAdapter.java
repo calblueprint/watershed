@@ -1,4 +1,4 @@
-package com.blueprint.watershed.Tasks;
+package com.blueprint.watershed.Tasks.TaskList;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Tasks.Task;
+import com.blueprint.watershed.Tasks.TaskDetailFragment;
 
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
@@ -33,6 +35,16 @@ public class TaskAdapter extends BaseExpandableListAdapter {
         mParentActivity = activity;
         mHeaders = headers;
         mData = data;
+    }
+
+    public void updateData(HashMap<String, List<Task>> data) {
+        mData = data;
+        notifyDataSetChanged();
+    }
+
+    public void updateHeaders(List<String> headers) {
+        mHeaders = headers;
+        notifyDataSetChanged();
     }
 
     @Override

@@ -205,6 +205,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
             @Override
             public void onResponse(ArrayList<Task> tasks) {
                 mParentActivity.setShowAllTasks(true);
+                mParentActivity.setTasks(tasks);
                 mParentActivity.getSupportFragmentManager().popBackStack();
             }
         });

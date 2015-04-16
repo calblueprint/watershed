@@ -31,6 +31,7 @@ import com.blueprint.watershed.Networking.Tasks.CreateTaskRequest;
 import com.blueprint.watershed.Networking.Tasks.EditTaskRequest;
 import com.blueprint.watershed.Networking.Users.UsersRequest;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Tasks.TaskList.UserTaskListFragment;
 import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Users.UserHeaderAdapter;
 import com.blueprint.watershed.Utilities.Utility;
@@ -243,7 +244,7 @@ public abstract class TaskAbstractFragment extends Fragment {
             request = new CreateTaskRequest(mParentActivity, task, params, new Response.Listener<Task>() {
                 @Override
                 public void onResponse(Task task) {
-                    TaskFragment taskFragment = TaskFragment.newInstance(0);
+                    UserTaskListFragment taskFragment = UserTaskListFragment.newInstance();
                     mParentActivity.replaceFragment(taskFragment);
                     Log.e("successful task", "creation");
                 }

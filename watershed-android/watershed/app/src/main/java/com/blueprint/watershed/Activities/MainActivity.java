@@ -44,8 +44,9 @@ import com.blueprint.watershed.Sites.SiteListFragment;
 import com.blueprint.watershed.Tasks.CreateTaskFragment;
 import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Tasks.TaskDetailFragment;
-import com.blueprint.watershed.Tasks.TaskFragment;
-import com.blueprint.watershed.Tasks.TaskListTransformer;
+import com.blueprint.watershed.Tasks.TaskList.TaskListAbstractFragment;
+import com.blueprint.watershed.Tasks.TaskList.UserTaskListFragment;
+import com.blueprint.watershed.Tasks.TaskList.TaskListTransformer;
 import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Users.UserFieldReportFragment;
 import com.blueprint.watershed.Users.UserFragment;
@@ -294,7 +295,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void updateFragment(Fragment f) {
-        if (f instanceof TaskFragment) {
+        if (f instanceof TaskListAbstractFragment) {
             setTitle("Tasks");
             displayTaskView(true);
             return;
@@ -339,7 +340,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     private void initializeFragments() {
-        TaskFragment taskFragment = TaskFragment.newInstance(0);
+        UserTaskListFragment taskFragment = UserTaskListFragment.newInstance();
         mFragmentManager = getSupportFragmentManager();
         mFragmentManager.addOnBackStackChangedListener(
                 new FragmentManager.OnBackStackChangedListener() {
@@ -372,7 +373,7 @@ public class MainActivity extends ActionBarActivity
             case android.R.id.home:
                 Utility.hideKeyboard(this, mContainer);
                 Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
-                if (!(f instanceof TaskFragment) && !(f instanceof SiteListFragment) &&!(f instanceof UserFragment) &&!(f instanceof AboutFragment)) {
+                if (!(f instanceof UserTaskListFragment) && !(f instanceof SiteListFragment) &&!(f instanceof UserFragment) &&!(f instanceof AboutFragment)) {
                     getSupportFragmentManager().popBackStack();
                     return false;
                 }
@@ -440,7 +441,7 @@ public class MainActivity extends ActionBarActivity
     public void onItemClick(AdapterView parent, View view, int position, long id) {
         switch (position) {
             case 0:
-                replaceFragment(TaskFragment.newInstance(0));
+                replaceFragment(UserTaskListFragment.newInstance());
                 break;
             case 1:
                 replaceFragment(SiteListFragment.newInstance());
