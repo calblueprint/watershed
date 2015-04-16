@@ -197,7 +197,7 @@ public class SiteFragment extends Fragment
     }
 
     private void deleteSiteRequest() {
-        Utility.showAndBuildDialog(mParentActivity, R.string.task_delete_title, R.string.task_delete_msg,
+        Utility.showAndBuildDialog(mParentActivity, R.string.site_delete_title, R.string.site_delete_msg,
             new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -218,6 +218,7 @@ public class SiteFragment extends Fragment
                 mParentActivity.getSupportFragmentManager().popBackStack();
             }
         });
+        mNetworkManager.getRequestQueue().add(request);
     }
 
     @Override
