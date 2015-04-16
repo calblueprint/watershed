@@ -28,9 +28,10 @@ import com.blueprint.watershed.AboutFragment;
 import com.blueprint.watershed.FieldReports.FieldReportFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteAbstractFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
+import com.blueprint.watershed.Networking.BaseRequest;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Users.HomeRequest;
-import com.blueprint.watershed.Networking.Users.RegisterUserRequest;
+import com.blueprint.watershed.Networking.Users.UpdateUserRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Sites.CreateSiteFragment;
 import com.blueprint.watershed.Sites.Site;
@@ -195,12 +196,12 @@ public class MainActivity extends ActionBarActivity
                     msg = "Error :" + ex.getMessage();
                 }
 
-                RegisterUserRequest request = new RegisterUserRequest(MainActivity.this, getUser(), user, new Response.Listener<User>() {
+                UpdateUserRequest request = new UpdateUserRequest(MainActivity.this, getUser(), user, new Response.Listener<User>() {
                     @Override
                     public void onResponse(User user) {
                         setUser(user);
                     }
-                });
+                }, BaseRequest.makeUserResourceURL(getUserId(), "register"));
                 mNetworkManager.getRequestQueue().add(request);
 
                 return msg;
