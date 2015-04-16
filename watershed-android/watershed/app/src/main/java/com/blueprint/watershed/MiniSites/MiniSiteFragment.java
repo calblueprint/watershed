@@ -208,7 +208,6 @@ public class MiniSiteFragment extends Fragment
             @Override
             public void onResponse(Site site) {
                 mParentActivity.setSite(site);
-                mSite = site;
                 mParentActivity.getSupportFragmentManager().popBackStack();
             }
         });

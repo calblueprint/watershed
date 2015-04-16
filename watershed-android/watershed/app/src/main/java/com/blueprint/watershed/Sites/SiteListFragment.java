@@ -67,6 +67,7 @@ public class SiteListFragment extends Fragment {
                 getSitesRequest();
             }
         });
+
         mLayoutManager = new LinearLayoutManager(mParentActivity);
         mSiteListView = (RecyclerView) view.findViewById(R.id.list);
         mSiteListView.setLayoutManager(mLayoutManager);
@@ -96,6 +97,11 @@ public class SiteListFragment extends Fragment {
                 mParentActivity.replaceFragment(CreateSiteFragment.newInstance());
             }
         });
+
+        if (mParentActivity.getSite() != null) {
+            mAdapter.notifyItemRemoved(mSites.getPositionWithSite(mParentActivity.getSite()));
+            mParentActivity.setSite(null);
+        }
     }
 
     @Override

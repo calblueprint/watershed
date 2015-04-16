@@ -21,6 +21,8 @@ public class SiteMapper {
 
     public Site getSiteWithPosition(int position) { return mPositionToSite.get(position); }
 
+    public int getPositionWithSite(Site site) { return mIdToPosition.get(site.getId()); }
+
     public void addSite(Site site, int position) {
        mIdToPosition.put(site.getId(), position);
        mPositionToSite.put(position, site);

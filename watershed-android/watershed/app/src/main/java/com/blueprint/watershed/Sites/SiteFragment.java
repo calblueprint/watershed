@@ -215,6 +215,7 @@ public class SiteFragment extends Fragment
         DeleteSiteRequest request = new DeleteSiteRequest(mParentActivity, mSite, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+                mParentActivity.setSite(mSite);
                 mParentActivity.getSupportFragmentManager().popBackStack();
             }
         });
