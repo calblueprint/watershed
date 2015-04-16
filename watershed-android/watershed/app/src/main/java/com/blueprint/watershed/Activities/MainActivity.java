@@ -108,10 +108,6 @@ public class MainActivity extends ActionBarActivity
     // Task for FieldReport
     private Task mFieldReportTask;
 
-    // Temp for Tasks
-    private boolean mShowAllTasks;
-    private List<Task> mTasks;
-
     // Google cloud messaging
     private GoogleCloudMessaging mGoogleCloudMessaging;
 
@@ -522,13 +518,4 @@ public class MainActivity extends ActionBarActivity
         if (!(f instanceof SiteFragment && ((SiteFragment) f).closeMenu()) &&
             !(f instanceof MiniSiteFragment && ((MiniSiteFragment) f).closeMenu())) super.onBackPressed();
     }
-
-    /**
-     * HELPERS FOR TASK FRAGMENT
-     */
-
-    public boolean getShowAllTasks() { return mShowAllTasks; }
-    public void setShowAllTasks(boolean show) { mShowAllTasks = show; }
-    public List<Task> getTasks() { return mTasks; }
-    public void setTasks(List<Task> task) { mTasks = task; }
 }

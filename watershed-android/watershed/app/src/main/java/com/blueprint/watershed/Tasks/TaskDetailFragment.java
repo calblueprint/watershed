@@ -204,8 +204,6 @@ public class TaskDetailFragment extends TaskAbstractFragment
         DeleteTaskRequest request = new DeleteTaskRequest(mParentActivity, mTask, new Response.Listener<ArrayList<Task>>() {
             @Override
             public void onResponse(ArrayList<Task> tasks) {
-                mParentActivity.setShowAllTasks(true);
-                mParentActivity.setTasks(tasks);
                 mParentActivity.getSupportFragmentManager().popBackStack();
             }
         });
