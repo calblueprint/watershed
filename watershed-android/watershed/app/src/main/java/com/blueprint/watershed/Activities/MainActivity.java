@@ -120,6 +120,7 @@ public class MainActivity extends ActionBarActivity
 
     // Temp for Tasks
     private boolean mShowAllTasks;
+    private List<Task> mTasks;
 
     // Google cloud messaging
     private GoogleCloudMessaging mGcm;
@@ -573,4 +574,6 @@ public class MainActivity extends ActionBarActivity
 
     public boolean getShowAllTasks() { return mShowAllTasks; }
     public void setShowAllTasks(boolean show) { mShowAllTasks = show; }
+    public List<Task> getTasks() { return mTasks; }
+    public void setTasks(List<Task> task) { mTasks = task; }
 }

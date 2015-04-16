@@ -81,7 +81,11 @@ public class TaskFragment extends ListFragment {
         }
         initializeViews(finalView);
         mParentActivity.setMenuAction(true);
-        getTasksRequest();
+        if (mParentActivity.getTasks() == null) getTasksRequest();
+        else {
+            refreshTaskList(mParentActivity.getTasks());
+            mParentActivity.setTasks(null);
+        }
         return finalView;
     }
 
@@ -183,30 +187,34 @@ public class TaskFragment extends ListFragment {
         TaskListRequest taskListRequest = new TaskListRequest(getActivity(), params, new Response.Listener<ArrayList<Task>>() {
             @Override
             public void onResponse(ArrayList<Task> tasks) {
-                if (mArgs.getInt(OPTION) == USER) {
-                    tasks = getUserTasks(tasks);
-                    if (tasks.size() > 0) {
-                        showList();
-                        setUserTasks(tasks);
-                        mUserTaskAdapter.notifyDataSetChanged();
-                        for(int i=0; i < mUserTaskAdapter.getGroupCount(); i++) mListView.expandGroup(i);
-                    } else {
-                        hideList();
-                    }
-                } else {
-                    if (tasks.size() > 0) {
-                        showList();
-                        setAllTasks(tasks);
-                        mAllTaskAdapter.notifyDataSetChanged();
-                        for(int i=0; i < mAllTaskAdapter.getGroupCount(); i++) mListView.expandGroup(i);
-                    } else {
-                        hideList();
-                    }
-                }
+                refreshTaskList(tasks);
                 setSwipeFalse();
             }
         }, this);
         mNetworkManager.getRequestQueue().add(taskListRequest);
+    }
+
+    private void refreshTaskList(List<Task> tasks) {
+        if (mArgs.getInt(OPTION) == USER) {
+            tasks = getUserTasks(tasks);
+            if (tasks.size() > 0) {
+                showList();
+                setUserTasks(tasks);
+                mUserTaskAdapter.notifyDataSetChanged();
+                for(int i=0; i < mUserTaskAdapter.getGroupCount(); i++) mListView.expandGroup(i);
+            } else {
+                hideList();
+            }
+        } else {
+            if (tasks.size() > 0) {
+                showList();
+                setAllTasks(tasks);
+                mAllTaskAdapter.notifyDataSetChanged();
+                for(int i=0; i < mAllTaskAdapter.getGroupCount(); i++) mListView.expandGroup(i);
+            } else {
+                hideList();
+            }
+        }
     }
 
     public void setSwipeFalse() {
@@ -223,7 +231,7 @@ public class TaskFragment extends ListFragment {
      * Sets the tasks for all tasks list and user tasks lists
      * @param tasks - ArrayList of all tasks from server
      */
-    private void setAllTasks(ArrayList<Task> tasks){
+    private void setAllTasks(List<Task> tasks){
         mAllTaskList.clear();
         mTaskListHeaders.clear();
         List<Task> allFinishedTasks = new ArrayList<Task>();
@@ -242,7 +250,7 @@ public class TaskFragment extends ListFragment {
         }
     }
 
-    private void setUserTasks(ArrayList<Task> tasks) {
+    private void setUserTasks(List<Task> tasks) {
         mUserTaskList.clear();
         mTaskListHeaders.clear();
         tasks = getUserTasks(tasks);
@@ -262,7 +270,7 @@ public class TaskFragment extends ListFragment {
         }
     }
 
-    private ArrayList<Task> getUserTasks(ArrayList<Task> tasks) {
+    private ArrayList<Task> getUserTasks(List<Task> tasks) {
         ArrayList<Task> userTasks = new ArrayList<Task>();
         for (Task task : tasks) {
             Integer id = task.getAssigneeId();

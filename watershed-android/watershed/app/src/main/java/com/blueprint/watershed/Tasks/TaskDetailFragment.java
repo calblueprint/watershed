@@ -20,9 +20,8 @@ import com.blueprint.watershed.Networking.Tasks.DeleteTaskRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Utilities.Utility;
 
-import org.json.JSONObject;
-
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Locale;
 
 
@@ -202,9 +201,9 @@ public class TaskDetailFragment extends TaskAbstractFragment
     }
 
     private void makeDeleteRequest() {
-        DeleteTaskRequest request = new DeleteTaskRequest(mParentActivity, mTask, new Response.Listener<JSONObject>() {
+        DeleteTaskRequest request = new DeleteTaskRequest(mParentActivity, mTask, new Response.Listener<ArrayList<Task>>() {
             @Override
-            public void onResponse(JSONObject task) {
+            public void onResponse(ArrayList<Task> tasks) {
                 mParentActivity.setShowAllTasks(true);
                 mParentActivity.getSupportFragmentManager().popBackStack();
             }
