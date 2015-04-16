@@ -123,7 +123,7 @@ public class MainActivity extends ActionBarActivity
     private List<Task> mTasks;
 
     // Google cloud messaging
-    private GoogleCloudMessaging mGcm;
+    private GoogleCloudMessaging mGoogleCloudMessaging;
 
     // Params (so we don't have to set them later)
     private List<User> mUsers;
@@ -201,8 +201,8 @@ public class MainActivity extends ActionBarActivity
                 JSONObject user = new JSONObject();
                 JSONObject objParams = new JSONObject();
                 try {
-                    if (mGcm == null) mGcm = GoogleCloudMessaging.getInstance(MainActivity.this);
-                    objParams.put("registration_id", mGcm.register(SENDER_ID));
+                    if (mGoogleCloudMessaging == null) mGoogleCloudMessaging = GoogleCloudMessaging.getInstance(MainActivity.this);
+                    objParams.put("registration_id", mGoogleCloudMessaging.register(SENDER_ID));
                     objParams.put("device_type", 0);
                     user.put("user", objParams);
                 } catch (Exception ex) {

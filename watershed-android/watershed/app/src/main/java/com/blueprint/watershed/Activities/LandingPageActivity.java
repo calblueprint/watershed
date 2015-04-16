@@ -70,7 +70,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     private UiLifecycleHelper mUiHelper;
 
     // Notification Params
-    private GoogleCloudMessaging mGcm;
+    private GoogleCloudMessaging mGoogleCloudMessaging;
 
     // Called when session changes
     private com.facebook.Session.StatusCallback callback = new com.facebook.Session.StatusCallback() {
@@ -94,7 +94,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
 
         mPreferences = getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
 
-        if (checkPlayServices()) mGcm = GoogleCloudMessaging.getInstance(this);
+        if (checkPlayServices()) mGoogleCloudMessaging = GoogleCloudMessaging.getInstance(this);
         else Log.i("Exception in services", "Please get a valid Play services APK");
 
         // NOTE(mark): Change to !hasAuthCredentials if you want the main activity to show.
@@ -213,7 +213,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
                         params.put("facebook_id", id);
                         params.put("name", name);
                         params.put("device_type", 0);
-                        if (mGcm != null) registerInBackground(params, FACEBOOK_LOGIN);
+                        if (mGoogleCloudMessaging != null) registerInBackground(params, FACEBOOK_LOGIN);
                         else facebookRequest(params);
                     }
                 }
@@ -234,7 +234,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
             @Override
             protected String doInBackground(String... params) {
                 String msg = "";
-                try { objectParams.put("registration_id", mGcm.register(SENDER_ID)); }
+                try { objectParams.put("registration_id", mGoogleCloudMessaging.register(SENDER_ID)); }
                 catch (IOException ex) { msg = "Error :" + ex.getMessage(); }
 
                 if (type.equals(FACEBOOK_LOGIN)) facebookRequest(objectParams);
@@ -359,11 +359,11 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     public Button getFacebookButton() { return mFacebookButton; }
     public Button getSignUpButton() { return mSignUpButton; }
     public NetworkManager getRequestHandler(){return mLoginNetworkManager;}
-    public GoogleCloudMessaging getGcm() { return mGcm; }
+    public GoogleCloudMessaging getGcm() { return mGoogleCloudMessaging; }
     // Setters
     public void setLandingPageImage(ImageView imageView) { mLandingPageImage = imageView; }
     public void setLoginButton(Button loginButton) { mLoginButton = loginButton; }
     public void setFacebookButton(com.facebook.widget.LoginButton facebookButton) { mFacebookButton = facebookButton; }
     public void setSignUpButton(Button signUpButton) { mSignUpButton = signUpButton; }
-    public void setGcm(GoogleCloudMessaging gcm) { mGcm = gcm; }
+    public void setGcm(GoogleCloudMessaging gcm) { mGoogleCloudMessaging = gcm; }
 }
