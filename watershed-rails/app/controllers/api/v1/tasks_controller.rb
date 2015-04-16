@@ -28,7 +28,7 @@ class Api::V1::TasksController < Api::V1::BaseController
 
   def destroy
     if @task.destroy
-      render json: { message: "Deleted task!" }, status: :ok
+      render json: Task.all, each_serializer: TaskListSerializer
     else
       error_response(@task)
     end
