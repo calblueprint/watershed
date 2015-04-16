@@ -32,6 +32,9 @@ class Task < ActiveRecord::Base
     "Outreach",
   ]
 
+  NEW_TASK = "new_task"
+  NEW_UNASSIGNED_TASK = "new_unassigned_task"
+
   belongs_to :assigner, class_name: "User", foreign_key: "assigner_id"
   belongs_to :assignee, class_name: "User", foreign_key: "assignee_id"
   belongs_to :mini_site
