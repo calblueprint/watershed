@@ -1,5 +1,6 @@
 package com.blueprint.watershed.MiniSites;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -17,9 +18,12 @@ import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.FieldReports.AddFieldReportFragment;
 import com.blueprint.watershed.FieldReports.FieldReport;
 import com.blueprint.watershed.FieldReports.FieldReportListAdapter;
+import com.blueprint.watershed.Networking.MiniSites.DeleteMiniSiteRequest;
 import com.blueprint.watershed.Networking.MiniSites.MiniSiteRequest;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Sites.Site;
+import com.blueprint.watershed.Utilities.Utility;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
 import com.blueprint.watershed.Views.HeaderGridView;
 
@@ -35,22 +39,19 @@ public class MiniSiteFragment extends Fragment
     private HeaderGridView mFieldReportGridView;
     private FieldReportListAdapter mFieldReportAdapter;
     private MiniSite mMiniSite;
-    private Integer mSiteID;
+    private Site mSite;
     private List<FieldReport> mFieldReports;
 
 
-    public static MiniSiteFragment newInstance(Integer site, MiniSite miniSite) {
+    public static MiniSiteFragment newInstance(Site site, MiniSite miniSite) {
         MiniSiteFragment miniSiteFragment = new MiniSiteFragment();
         miniSiteFragment.setMiniSite(miniSite);
-        miniSiteFragment.setSiteID(site);
+        miniSiteFragment.setSite(site);
         return miniSiteFragment;
     }
 
-    public MiniSiteFragment() {}
 
-    public void setSiteID(Integer siteID) {
-        mSiteID = siteID;
-    }
+    public void setSite(Site site) { mSite = site; }
 
     // Objects
     public void setMiniSite(MiniSite miniSite) {
@@ -99,7 +100,7 @@ public class MiniSiteFragment extends Fragment
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mParentActivity.replaceFragment(EditMiniSiteFragment.newInstance(mSiteID, mMiniSite));
+                mParentActivity.replaceFragment(EditMiniSiteFragment.newInstance(mSite, mMiniSite));
             }
         });
         View miniSiteCreate = view.findViewById(R.id.minisite_add_fieldreport);
@@ -134,7 +135,7 @@ public class MiniSiteFragment extends Fragment
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.empty, menu);
+        inflater.inflate(R.menu.delete_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -142,8 +143,10 @@ public class MiniSiteFragment extends Fragment
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.edit:
-                EditMiniSiteFragment fragment = EditMiniSiteFragment.newInstance(mSiteID, mMiniSite);
+                EditMiniSiteFragment fragment = EditMiniSiteFragment.newInstance(mSite, mMiniSite);
                 mParentActivity.replaceFragment(fragment);
+            case R.id.delete:
+                deleteMiniSite();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -177,5 +180,33 @@ public class MiniSiteFragment extends Fragment
         for (FieldReport fieldReport : fieldReports) {
             mFieldReports.add(fieldReport);
         }
+    }
+
+    private void deleteMiniSite() {
+        Utility.showAndBuildDialog(mParentActivity, R.string.mini_site_delete_title,
+                R.string.mini_site_delete_msg, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        makeDeleteRequest();
+                    }
+                }, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }
+        );
+    }
+
+    private void makeDeleteRequest() {
+        DeleteMiniSiteRequest request = new DeleteMiniSiteRequest(mParentActivity, mMiniSite, new Response.Listener<Site>() {
+            @Override
+            public void onResponse(Site site) {
+                mParentActivity.setSite(site);
+                mSite = site;
+                mParentActivity.getSupportFragmentManager().popBackStack();
+            }
+        });
+        mNetworkManager.getRequestQueue().add(request);
     }
 }

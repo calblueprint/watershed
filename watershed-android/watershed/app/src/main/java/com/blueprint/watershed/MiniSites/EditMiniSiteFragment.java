@@ -5,12 +5,10 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.android.volley.Response;
-import com.blueprint.watershed.Networking.MiniSites.DeleteMiniSiteRequest;
 import com.blueprint.watershed.Networking.MiniSites.EditMiniSiteRequest;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Sites.Site;
 import com.blueprint.watershed.Sites.SiteListFragment;
-
-import org.json.JSONObject;
 
 /**
  * Created by charlesx on 3/17/15.
@@ -23,9 +21,9 @@ public class EditMiniSiteFragment extends MiniSiteAbstractFragment {
      *
      * @return A new instance of fragment CreateMiniSiteFragment.
      */
-    public static EditMiniSiteFragment newInstance(Integer siteID, MiniSite miniSite) {
+    public static EditMiniSiteFragment newInstance(Site site, MiniSite miniSite) {
         EditMiniSiteFragment fragment = new EditMiniSiteFragment();
-        fragment.setSite(siteID);
+        fragment.setSite(site);
         fragment.setMiniSite(miniSite);
         return fragment;
     }
@@ -42,9 +40,6 @@ public class EditMiniSiteFragment extends MiniSiteAbstractFragment {
         switch (item.getItemId()) {
             case R.id.save:
                 validateAndSubmitMiniSite();
-                return true;
-            case R.id.delete:
-                deleteMiniSite(mMiniSite);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -63,19 +58,6 @@ public class EditMiniSiteFragment extends MiniSiteAbstractFragment {
             mImageAdapter.setPhotos(getPhotos());
             mImageAdapter.notifyDataSetChanged();
         }
-    }
-
-    private void deleteMiniSite(MiniSite miniSite){
-        DeleteMiniSiteRequest deleteMiniSiteRequest = new DeleteMiniSiteRequest(
-                mParentActivity, miniSite, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject json) {
-                SiteListFragment siteList = SiteListFragment.newInstance();
-                mParentActivity.replaceFragment(siteList);
-                Log.e("successful mini site", "deletion");
-            }
-        });
-        mNetworkManager.getRequestQueue().add(deleteMiniSiteRequest);
     }
 
     @Override

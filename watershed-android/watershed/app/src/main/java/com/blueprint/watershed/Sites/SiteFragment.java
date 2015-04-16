@@ -24,6 +24,7 @@ import com.blueprint.watershed.R;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
 import com.blueprint.watershed.Views.HeaderGridView;
 import com.blueprint.watershed.Views.Material.FloatingActionButton;
+import com.blueprint.watershed.Views.Material.FloatingActionsMenu;
 
 import org.json.JSONObject;
 
@@ -37,7 +38,7 @@ public class SiteFragment extends Fragment
     private NetworkManager mNetworkManager;
     private MainActivity mParentActivity;
 
-    private FloatingActionButton mCreateSiteButton;
+    private FloatingActionsMenu mMenu;
     private HeaderGridView mMiniSiteGridView;
     private MiniSiteListAdapter mMiniSiteAdapter;
     private ViewGroup mHeader;
@@ -75,6 +76,14 @@ public class SiteFragment extends Fragment
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_site, container, false);
         initializeViews(view);
+        Site site = mParentActivity.getSite();
+        if (site != null) {
+            mSite = site;
+            mParentActivity.setSite(null);
+            setMiniSites(mSite.getMiniSites());
+            mMiniSiteAdapter.notifyDataSetChanged();
+        }
+
         if (mSite.isMiniSiteEmpty()) getSiteRequest(mSite);
         return view;
     }
@@ -82,7 +91,7 @@ public class SiteFragment extends Fragment
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.edit:
+            case R.id.add_minisite:
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -94,19 +103,22 @@ public class SiteFragment extends Fragment
         mParentActivity.setMenuAction(false);
     }
 
-    private void setButtonListeners(View view){
-        View editButton = view.findViewById(R.id.site_edit_site);
+    private void setButtonListeners(View view) {
+        mMenu = (FloatingActionsMenu) view.findViewById(R.id.site_settings);
+        FloatingActionButton editButton = (FloatingActionButton) view.findViewById(R.id.site_edit_site);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mMenu.collapse();
                 editSite();
             }
         });
-        View miniSiteCreate = view.findViewById(R.id.site_add_minisite);
+        FloatingActionButton miniSiteCreate = (FloatingActionButton) view.findViewById(R.id.site_add_minisite);
         miniSiteCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mParentActivity.replaceFragment(CreateMiniSiteFragment.newInstance(mSite.getId()));
+                mMenu.collapse();
+                mParentActivity.replaceFragment(CreateMiniSiteFragment.newInstance(mSite));
             }
         });
     }
@@ -119,7 +131,7 @@ public class SiteFragment extends Fragment
         configureViewWithSite(mHeader, mSite);
 
         // Set the adapter to fill the list of mini sites
-        mMiniSiteAdapter = new MiniSiteListAdapter(mParentActivity, getMiniSites());
+        mMiniSiteAdapter = new MiniSiteListAdapter(mParentActivity, getMiniSites(), mSite);
         mMiniSiteGridView.setAdapter(mMiniSiteAdapter);
         mMiniSiteGridView.setOnItemClickListener(this);
 
@@ -129,7 +141,7 @@ public class SiteFragment extends Fragment
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         MiniSite miniSite = getMiniSite(position);
-        MiniSiteFragment miniSiteFragment = MiniSiteFragment.newInstance(mSite.getId(), miniSite);
+        MiniSiteFragment miniSiteFragment = MiniSiteFragment.newInstance(mSite, miniSite);
         mParentActivity.replaceFragment(miniSiteFragment);
     }
 
@@ -178,5 +190,11 @@ public class SiteFragment extends Fragment
         menu.clear();
         inflater.inflate(R.menu.empty, menu);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    public boolean closeMenu() {
+        boolean isOpened = mMenu.isExpanded();
+        if (isOpened) mMenu.collapse();
+        return isOpened;
     }
 }

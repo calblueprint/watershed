@@ -90,14 +90,21 @@ public class TaskAdapter extends BaseExpandableListAdapter {
         holder.mSite.setText(task.getMiniSite().getName());
         holder.mTitle.setText(task.getTitle());
 
+        int textColor;
+        int backgroundColor;
         if (task.getColor() != null) {
-            holder.mColor.setBackgroundColor(Color.parseColor(task.getColor()));
-            holder.mDateHolder.setBackgroundColor(Color.parseColor(task.getColor()));
+            textColor = mContext.getResources().getColor(R.color.white);
+            backgroundColor = Color.parseColor(task.getColor());
         } else {
-            holder.mDay.setTextColor(mContext.getResources().getColor(R.color.black));
-            holder.mMonth.setTextColor(mContext.getResources().getColor(R.color.black));
-            holder.mYear.setTextColor(mContext.getResources().getColor(R.color.black));
+            textColor = mContext.getResources().getColor(R.color.black);
+            backgroundColor = mContext.getResources().getColor(R.color.white);
         }
+        
+        holder.mColor.setBackgroundColor(backgroundColor);
+        holder.mDateHolder.setBackgroundColor(backgroundColor);
+        holder.mDay.setTextColor(textColor);
+        holder.mMonth.setTextColor(textColor);
+        holder.mYear.setTextColor(textColor);
         return row;
     }
 

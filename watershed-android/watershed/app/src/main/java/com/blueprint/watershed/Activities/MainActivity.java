@@ -8,8 +8,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -20,7 +19,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.LruCache;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,12 +30,15 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.AboutFragment;
+import com.blueprint.watershed.FieldReports.FieldReportFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteAbstractFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Users.HomeRequest;
+import com.blueprint.watershed.Networking.Users.RegisterUserRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Sites.CreateSiteFragment;
+import com.blueprint.watershed.Sites.Site;
 import com.blueprint.watershed.Sites.SiteFragment;
 import com.blueprint.watershed.Sites.SiteListFragment;
 import com.blueprint.watershed.Tasks.CreateTaskFragment;
@@ -55,6 +56,7 @@ import com.blueprint.watershed.Utilities.Utility;
 import com.facebook.Session;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import org.json.JSONObject;
 
@@ -70,11 +72,13 @@ public class MainActivity extends ActionBarActivity
     // Constants
     private static final String PREFERENCES = "LOGIN_PREFERENCES";
     private static final String TAG         = "MainActivity";
-    private static int CACHE_SIZE = 512;
+    private final String SENDER_ID          = "158271976435";
 
     // Authenticating against our own server
-    public String authToken;
-    public String authEmail;
+    public String mAuthToken;
+    public String mAuthEmail;
+    private String mRegistrationId;
+    private int mAppVersion;
 
     // Fragments
     private FragmentManager mFragmentManager;
@@ -108,12 +112,14 @@ public class MainActivity extends ActionBarActivity
     private User mUser;
     private Integer mUserId;
 
-    //Task for FieldReport
+    // Temp Vars
+    private Site mSite;
+
+    // Task for FieldReport
     private Task mFieldReportTask;
 
-    // Caching images
-    private LruCache<Integer, Drawable> mSiteImages;
-    private LruCache<Integer, Drawable> mMiniSiteImages;
+    // Google cloud messaging
+    private GoogleCloudMessaging mGcm;
 
     // Params (so we don't have to set them later)
     private List<User> mUsers;
@@ -124,13 +130,17 @@ public class MainActivity extends ActionBarActivity
         setContentView(R.layout.activity_main);
 
         setNetworkManager(NetworkManager.getInstance(this));
-        mPreferences = getSharedPreferences(PREFERENCES, 0);
-        authToken = mPreferences.getString("auth_token", "none");
-        authEmail = mPreferences.getString("auth_email", "none");
+        mPreferences = getSharedPreferences(PREFERENCES, MODE_PRIVATE);
+        mAuthToken = mPreferences.getString("auth_token", "none");
+        mAuthEmail = mPreferences.getString("auth_email", "none");
+        mRegistrationId = mPreferences.getString("registration_id", "none");
+        mAppVersion = mPreferences.getInt("app_version", Integer.MIN_VALUE);
         mUserId = mPreferences.getInt("userId", 0);
-        setUserObject();
 
-        initializeCache();
+        setUserObject();
+        if (getRegistrationId().isEmpty())
+            registerInBackground();
+
         initializeViews();
         initializeNavigationDrawer();
 
@@ -146,6 +156,69 @@ public class MainActivity extends ActionBarActivity
     public void onResume() {
         super.onResume();
         updateToolbarElevation();
+    }
+
+    /**
+     * Gets the current registration ID for application on GCM service.
+     * If result is empty, the app needs to register.
+     *
+     * @return registration ID, or empty string if there is no existing
+     *         registration ID.
+     */
+    private String getRegistrationId() {
+        if (mRegistrationId.equals("none")) {
+            Log.i(TAG, "Registration not found.");
+            return "";
+        }
+
+        // Check if app was updated; if so, it must clear the registration ID
+        // since the existing registration ID is not guaranteed to work with
+        // the new app version.
+        int currentVersion = Utility.getAppVersion(this);
+        if (mAppVersion != currentVersion) {
+            Log.i(TAG, "App version changed.");
+            mPreferences.edit().putInt("app_version", currentVersion).commit();
+            return "";
+        }
+        return mRegistrationId;
+    }
+
+    /**
+     * Registers the application with GCM servers asynchronously.
+     * <p>
+     * Stores the registration ID and app versionCode in the application's
+     * shared preferences.
+     */
+    private void registerInBackground() {
+        new AsyncTask<String, String, String>() {
+            @Override
+            protected String doInBackground(String... params) {
+                String msg = "";
+                JSONObject user = new JSONObject();
+                JSONObject objParams = new JSONObject();
+                try {
+                    if (mGcm == null) mGcm = GoogleCloudMessaging.getInstance(MainActivity.this);
+                    objParams.put("registration_id", mGcm.register(SENDER_ID));
+                    objParams.put("device_type", 0);
+                    user.put("user", objParams);
+                } catch (Exception ex) {
+                    msg = "Error :" + ex.getMessage();
+                }
+
+                RegisterUserRequest request = new RegisterUserRequest(MainActivity.this, getUser(), user, new Response.Listener<User>() {
+                    @Override
+                    public void onResponse(User user) {
+                        setUser(user);
+                    }
+                });
+                mNetworkManager.getRequestQueue().add(request);
+
+                return msg;
+            }
+
+            @Override
+            protected void onPostExecute(String msg) { Log.i("ERROR", msg + "\n"); }
+        }.execute(null, null, null);
     }
 
     private void setUserObject() {
@@ -172,21 +245,6 @@ public class MainActivity extends ActionBarActivity
             public void onResponse(User home) { setUser(home); }
         });
         mNetworkManager.getRequestQueue().add(homeRequest);
-    }
-
-
-    private void initializeCache() {
-        mSiteImages = new LruCache<Integer, Drawable>(CACHE_SIZE) {
-            protected int sizeOf(String key, Bitmap value) {
-                return value.getByteCount();
-            }
-        };
-
-        mMiniSiteImages = new LruCache<Integer, Drawable>(CACHE_SIZE) {
-            protected int sizeOf(String key, Bitmap value) {
-                return value.getByteCount();
-            }
-        };
     }
 
     private void initializeViews() {
@@ -231,7 +289,7 @@ public class MainActivity extends ActionBarActivity
         mUserName.setText(getUser().getName());
     }
 
-    public void updateTitle(Fragment f) {
+    public void updateFragment(Fragment f) {
         if (f instanceof TaskFragment) {
             setTitle("Tasks");
             displayTaskView(true);
@@ -240,10 +298,14 @@ public class MainActivity extends ActionBarActivity
         else if (f instanceof TaskDetailFragment)         setTitle("");
         else if (f instanceof UserTaskFragment)           setTitle("Tasks");
         else if (f instanceof SiteListFragment ||
-                 f instanceof SiteFragment ||
                  f instanceof UserMiniSiteFragment)       setTitle("Sites");
+        else if (f instanceof SiteFragment)
+        {
+            setTitle("Sites");
+        }
         else if (f instanceof AboutFragment)              setTitle("About");
-        else if (f instanceof UserFieldReportFragment)    setTitle("Field Reports");
+        else if (f instanceof UserFieldReportFragment ||
+                 f instanceof FieldReportFragment)        setTitle("Field Reports");
         else if (f instanceof UserFragment)               setTitle("Profile");
         else if (f instanceof MiniSiteAbstractFragment ||
                  f instanceof MiniSiteFragment)           setTitle("MiniSite");
@@ -266,7 +328,7 @@ public class MainActivity extends ActionBarActivity
     public void replaceFragment(Fragment newFragment) {
         android.support.v4.app.FragmentTransaction ft = mFragmentManager.beginTransaction();
         if(!newFragment.isAdded()){
-            updateTitle(newFragment);
+            updateFragment(newFragment);
 
             setToolbarElevation(Utility.convertDptoPix(this, 4));
             ft.replace(R.id.container, newFragment).addToBackStack(null).commit();
@@ -281,12 +343,10 @@ public class MainActivity extends ActionBarActivity
                     @Override
                     public void onBackStackChanged() {
                         Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
-                        if (f != null) {
-                            updateTitle(f);
-                        }
+                        if (f != null) updateFragment(f);
                     }
                 });
-        updateTitle(taskFragment);
+        updateFragment(taskFragment);
         android.support.v4.app.FragmentTransaction ft = mFragmentManager.beginTransaction();
         ft.replace(R.id.container, taskFragment);
         ft.commit();
@@ -337,6 +397,10 @@ public class MainActivity extends ActionBarActivity
         mDrawerList.setAdapter(new ArrayAdapter<>(this,
                 R.layout.menu_list_item, R.id.menu_title, titles));
 
+        setDrawerListener();
+    }
+
+    private void setDrawerListener() {
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
                 mToolBar, R.string.draw_open_close , R.string.draw_open_close) {
 
@@ -397,9 +461,8 @@ public class MainActivity extends ActionBarActivity
         editor.apply();
         Intent intent = new Intent(activity, LandingPageActivity.class);
 
-        if (Session.getActiveSession() != null) {
+        if (Session.getActiveSession() != null)
             Session.getActiveSession().closeAndClearTokenInformation();
-        }
 
         activity.finish();
         activity.startActivity(intent);
@@ -411,7 +474,7 @@ public class MainActivity extends ActionBarActivity
             case R.id.nav_bar_user_info:
                 Fragment fragment = UserFragment.newInstance(getUser());
                 replaceFragment(fragment);
-                updateTitle(fragment);
+                updateFragment(fragment);
                 mDrawerLayout.closeDrawer(mDrawer);
                 break;
         }
@@ -425,8 +488,22 @@ public class MainActivity extends ActionBarActivity
         Getter and setter zones;
      */
     public void setUser(User user) {
+        JSONObject userJson = null;
+        ObjectMapper mapper = mNetworkManager.getObjectMapper();
+        SharedPreferences.Editor editor = mPreferences.edit();
+
+        try { userJson = new JSONObject(mapper.writeValueAsString(user)); }
+        catch (Exception e) { Log.i("Exception", e.toString()); }
+
+        editor.putString("email", user.getEmail());
+        if (userJson != null) editor.putString("user", userJson.toString());
+        editor.putString("registration_id", user.getRegistrationId());
+        editor.putInt("app_version", Utility.getAppVersion(this));
+        editor.apply();
+
         mUser = user;
     }
+
     public User getUser() { return mUser; }
     public void setUsers(List<User> users) { mUsers = users; }
     public List<User> getUsers() { return mUsers; }
@@ -443,18 +520,17 @@ public class MainActivity extends ActionBarActivity
 
     public void setBackArrow() {
         mToolBar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
-        mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+        mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().popBackStack();
+                checkMenuClosed();
                 mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
             }
         });
-
     }
 
     public void setMenu() {
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        setDrawerListener();
         mDrawerToggle.syncState();
     }
 
@@ -467,5 +543,16 @@ public class MainActivity extends ActionBarActivity
     public void setToolbarElevation(float elevation) {
         mToolBar.setElevation(elevation);
         mToolBar.invalidate();
+    }
+
+    public void setSite(Site site) { mSite = site; }
+    public Site getSite() { return mSite; }
+
+    @Override
+    public void onBackPressed() { checkMenuClosed(); }
+
+    public void checkMenuClosed() {
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
+        if (!(f instanceof SiteFragment && ((SiteFragment) f).closeMenu())) super.onBackPressed();
     }
 }

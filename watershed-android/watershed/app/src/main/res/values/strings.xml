@@ -97,4 +97,8 @@
     <string name="heroku_production">https://intense-reaches-1457.herokuapp.com/api/v1/</string>
     <string name="heroku_staging">https://floating-bayou-8262.herokuapp.com/api/v1/</string>
     <string name="local_staging">http://10.142.182.151:3000/api/v1/</string>
+
+    <!-- Dialog Strings -->
+    <string name="mini_site_delete_title">Delete Mini Site?</string>
+    <string name="mini_site_delete_msg">Are you sure you want to delete this mini site?</string>
 </resources>

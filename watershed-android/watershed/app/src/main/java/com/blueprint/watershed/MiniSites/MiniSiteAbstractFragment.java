@@ -17,19 +17,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Photos.Photo;
 import com.blueprint.watershed.Photos.PhotoPagerAdapter;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Sites.Site;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
 
 import java.io.File;
@@ -46,7 +46,6 @@ import java.util.List;
  */
 public abstract class MiniSiteAbstractFragment extends Fragment implements View.OnClickListener {
     
-    protected Button mTakePhotoButton;
     protected MainActivity mParentActivity;
     protected NetworkManager mNetworkManager;
 
@@ -65,11 +64,10 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     // Buttons
     protected ImageButton mDeletePhotoButton;
     protected ImageButton mAddPhotoButton;
-    protected Button mSubmit;
 
     protected RelativeLayout mLayout;
 
-    protected Integer mSiteID;
+    protected Site mSite;
     protected MiniSite mMiniSite;
 
     // Camera Stuff
@@ -81,7 +79,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     protected static final String DIALOG_TAG = "PickPhotoTypeDialog";
     protected static final int DIALOG_REQUEST_CODE = 200;
 
-    public void setSite(Integer site) { mSiteID = site; }
+    public void setSite(Site site) { mSite = site; }
     public void setMiniSite(MiniSite miniSite) { mMiniSite = miniSite; }
 
     @Override
@@ -200,6 +198,11 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
             }
         }
 
+        if (mPhotoList.size() < 1) {
+            Toast.makeText(mParentActivity, "Please upload at least one photo!", Toast.LENGTH_SHORT).show();
+            hasErrors = true;
+        }
+
         if (hasErrors) return;
 
         for (Photo photo : mPhotoList) photo.getImage(mParentActivity);
@@ -213,7 +216,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         miniSite.setLongitude(0f); // Get this later
         miniSite.setFieldReportsCount(miniSite.getFieldReportsCount());
         miniSite.setState(mStateField.getText().toString());
-        miniSite.setSiteId(mSiteID);
+        miniSite.setSiteId(mSite.getId());
         miniSite.setPhotos(mPhotoList);
 
         new Thread(new Runnable() {
@@ -222,10 +225,6 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
                 submitMiniSite(miniSite);
             }
         }).start();
-    }
-
-    private void deleteMiniSite() {
-        
     }
 
     /**
@@ -251,9 +250,30 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Bitmap photo = null;
         if (requestCode == CAMERA_REQUEST && resultCode == MainActivity.RESULT_OK) {
-            photo = (Bitmap) data.getExtras().get("data");
+            // Get the dimensions of the View
+            int targetW = mImagePager.getWidth();
+            int targetH = mImagePager.getHeight();
+
+            // Get the dimensions of the bitmap
+            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+            bmOptions.inJustDecodeBounds = true;
+            BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+            int photoW = bmOptions.outWidth;
+            int photoH = bmOptions.outHeight;
+
+            // Determine how much to scale down the image
+            int scaleFactor = 0;
+            if (targetW > 0 && targetH > 0) scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+
+            // Decode the image file into a Bitmap sized to fill the View
+            bmOptions.inJustDecodeBounds = false;
+            bmOptions.inSampleSize = scaleFactor;
+            bmOptions.inPurgeable = true;
+
+            photo = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
 
         }
+
         else if (requestCode == SELECT_PHOTO_REQUEST && resultCode == MainActivity.RESULT_OK){
             Uri targetUri = data.getData();
 
@@ -261,8 +281,16 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
             catch (FileNotFoundException e) { e.printStackTrace(); }
         }
 
+        Bitmap scaledBitmap = null;
+
         if (photo != null) {
-            mPhotoList.add(new Photo(photo));
+            int width = photo.getWidth() / 6;
+            int height = photo.getHeight() / 6;
+            scaledBitmap = Bitmap.createScaledBitmap(photo, width, height, false);
+        }
+
+        if (scaledBitmap != null) {
+            mPhotoList.add(new Photo(scaledBitmap));
             mImageAdapter.notifyDataSetChanged();
             mImagePager.setCurrentItem(mPhotoList.size() - 1);
         }

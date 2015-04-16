@@ -2,6 +2,7 @@
 <resources>
 
     <!-- Margins -->
+    <dimen name="wide_margin">20dp</dimen>
     <dimen name="standard_margin">16dp</dimen>
     <dimen name="tight_margin">12dp</dimen>
     <dimen name="no_margin">0dp</dimen>

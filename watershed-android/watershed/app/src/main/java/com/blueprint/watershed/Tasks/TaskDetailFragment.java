@@ -83,7 +83,6 @@ public class TaskDetailFragment extends TaskAbstractFragment
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
         if (mTask.getDueDate() != null) mDueDate.setText(sdf.format(mTask.getDueDate()));
 
-
         String assigner;
         if (mTask.getAssigner() == null) assigner = "None";
         else assigner = mTask.getAssigner().getName();
@@ -94,6 +93,10 @@ public class TaskDetailFragment extends TaskAbstractFragment
         else location = mTask.getMiniSite().getLocation();
         mLocation.setText(location);
 
+        String description;
+        if (mTask.getDescription() == null) description = "No Description";
+        else location = mTask.getDescription();
+        mDescription.setText(location);
     }
 
     private void setButtonListeners(View view){
