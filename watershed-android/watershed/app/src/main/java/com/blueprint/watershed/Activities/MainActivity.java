@@ -1,10 +1,7 @@
 package com.blueprint.watershed.Activities;
 
 import android.annotation.TargetApi;
-import android.app.ActionBar;
-import android.app.ActionBar.Tab;
 import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -12,8 +9,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.PagerTabStrip;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -44,15 +39,13 @@ import com.blueprint.watershed.Sites.SiteListFragment;
 import com.blueprint.watershed.Tasks.CreateTaskFragment;
 import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Tasks.TaskDetailFragment;
-import com.blueprint.watershed.Tasks.TaskList.TaskListAbstractFragment;
 import com.blueprint.watershed.Tasks.TaskList.UserTaskListFragment;
-import com.blueprint.watershed.Tasks.TaskList.TaskListTransformer;
+import com.blueprint.watershed.Tasks.TaskViewPagerFragment;
 import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Users.UserFieldReportFragment;
 import com.blueprint.watershed.Users.UserFragment;
 import com.blueprint.watershed.Users.UserMiniSiteFragment;
 import com.blueprint.watershed.Users.UserTaskFragment;
-import com.blueprint.watershed.Utilities.TabsPagerAdapter;
 import com.blueprint.watershed.Utilities.Utility;
 import com.facebook.Session;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -65,10 +58,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends ActionBarActivity
-                          implements ActionBar.TabListener,
-                                     View.OnClickListener,
+                          implements View.OnClickListener,
                                      ListView.OnItemClickListener {
-
 
     // Constants
     private static final String PREFERENCES = "LOGIN_PREFERENCES";
@@ -98,9 +89,7 @@ public class MainActivity extends ActionBarActivity
     public CharSequence mTitle;
 
     // Action Bar Elements
-    private PagerTabStrip mPagerTabStrip;
-    private ViewPager mViewPager;
-    private TabsPagerAdapter mAdapter;
+
     private View mContainer;
     private ProgressBar mProgress;
     private Toolbar mToolBar;
@@ -253,17 +242,10 @@ public class MainActivity extends ActionBarActivity
     }
 
     private void initializeViews() {
-        setTitle("Tasks");
-        mPagerTabStrip = (PagerTabStrip) findViewById(R.id.pager_title_strip);
-
         mProgress = (ProgressBar) findViewById(R.id.progressBar);
 //        mProgress.setVisibility(View.VISIBLE);
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
-        mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
-        mViewPager = (ViewPager) findViewById(R.id.pager);
         mContainer = findViewById(R.id.container);
-        mViewPager.setAdapter(mAdapter);
-        mViewPager.setPageTransformer(true, new TaskListTransformer());
 
         mUserInfo = (RelativeLayout) findViewById(R.id.nav_bar_user_info);
         mUserInfo.setOnClickListener(this);
@@ -295,11 +277,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void updateFragment(Fragment f) {
-        if (f instanceof TaskListAbstractFragment) {
-            setTitle("Tasks");
-            displayTaskView(true);
-            return;
-        }
+        if (f instanceof TaskViewPagerFragment)           setTitle("Tasks");
         else if (f instanceof TaskDetailFragment)         setTitle("");
         else if (f instanceof UserTaskFragment)           setTitle("Tasks");
         else if (f instanceof SiteListFragment ||
@@ -314,20 +292,7 @@ public class MainActivity extends ActionBarActivity
         else if (f instanceof UserFragment)               setTitle("Profile");
         else if (f instanceof MiniSiteAbstractFragment ||
                  f instanceof MiniSiteFragment)           setTitle("MiniSite");
-        displayTaskView(false);
-
     }
-
-    public void displayTaskView(boolean toggle) {
-        if (toggle) {
-            mViewPager.setVisibility(View.VISIBLE);
-            mContainer.setVisibility(View.INVISIBLE);
-        } else {
-            mViewPager.setVisibility(View.INVISIBLE);
-            mContainer.setVisibility(View.VISIBLE);
-        }
-    }
-
 
     public void replaceFragment(Fragment newFragment) {
         android.support.v4.app.FragmentTransaction ft = mFragmentManager.beginTransaction();
@@ -340,7 +305,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     private void initializeFragments() {
-        UserTaskListFragment taskFragment = UserTaskListFragment.newInstance();
+        TaskViewPagerFragment taskFragment = TaskViewPagerFragment.newInstance();
         mFragmentManager = getSupportFragmentManager();
         mFragmentManager.addOnBackStackChangedListener(
                 new FragmentManager.OnBackStackChangedListener() {
@@ -355,17 +320,6 @@ public class MainActivity extends ActionBarActivity
         ft.replace(R.id.container, taskFragment);
         ft.commit();
     }
-
-    @Override
-    public void onTabReselected(Tab tab, FragmentTransaction ft) {}
-
-    @Override
-    public void onTabSelected(Tab tab, FragmentTransaction ft) {
-        mViewPager.setCurrentItem(tab.getPosition());
-    }
-
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {}
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -441,7 +395,7 @@ public class MainActivity extends ActionBarActivity
     public void onItemClick(AdapterView parent, View view, int position, long id) {
         switch (position) {
             case 0:
-                replaceFragment(UserTaskListFragment.newInstance());
+                replaceFragment(TaskViewPagerFragment.newInstance());
                 break;
             case 1:
                 replaceFragment(SiteListFragment.newInstance());
