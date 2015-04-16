@@ -11,6 +11,7 @@ class Api::V1::TasksController < Api::V1::BaseController
 
   def create
     if @task.save
+      @task.send_notifications
       render json: @task, serializer: TaskSerializer
     else
       error_response(@task)

@@ -23,14 +23,14 @@ class Task < ActiveRecord::Base
   scope :for_mini_sites, -> (mini_sites) { where(mini_site: mini_sites) }
 
   DEFAULT_TASK_NAMES = [
-    "Water",
-    "Prune",
-    "Weed",
-    "Clear Inlet/Outlet",
-    "Re-Plant",
-    "Hardware Fix",
-    "Outreach",
-  ]
+                         "Water",
+                         "Prune",
+                         "Weed",
+                         "Clear Inlet/Outlet",
+                         "Re-Plant",
+                         "Hardware Fix",
+                         "Outreach",
+                       ]
 
   NEW_TASK = "new_task"
   NEW_UNASSIGNED_TASK = "new_unassigned_task"
@@ -42,6 +42,14 @@ class Task < ActiveRecord::Base
   has_one :field_report
 
   before_create :add_color
+
+  def send_notifications(user)
+    if assignee.blank?
+      SendNotificationJob.new.async.perform(mini_site.site.users, NEW_UNASSIGNED_TASK, self)
+    else
+      SendNotificationJob.new.async.perform([assignee], NEW_TASK, self)
+    end
+  end
 
   private
 
