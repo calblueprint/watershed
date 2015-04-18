@@ -5,10 +5,8 @@
     android:layout_height="match_parent">
 
     <com.blueprint.watershed.Views.CoverPhotoPagerView
+        style="@style/CoverPhotoPagerView"
         android:id="@+id/cover_photo_pager_view"
-        android:background="@color/ws_blue"
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
         />
 
     <LinearLayout
