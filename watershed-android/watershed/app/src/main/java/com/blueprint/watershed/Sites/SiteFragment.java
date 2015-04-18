@@ -2,7 +2,6 @@ package com.blueprint.watershed.Sites;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.android.volley.Response;
+import com.blueprint.watershed.AbstractFragments.FloatingActionMenuAbstractFragment;
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.MiniSites.CreateMiniSiteFragment;
 import com.blueprint.watershed.MiniSites.MiniSite;
@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class SiteFragment extends Fragment
+public class SiteFragment extends FloatingActionMenuAbstractFragment
                           implements AbsListView.OnItemClickListener {
 
     private NetworkManager mNetworkManager;
@@ -226,11 +226,5 @@ public class SiteFragment extends Fragment
     public void onPause() {
         super.onDestroy();
         if (mMenu != null) closeMenu();
-    }
-
-    public boolean closeMenu() {
-        boolean isOpened = mMenu.isExpanded();
-        if (isOpened) mMenu.collapse();
-        return isOpened;
     }
 }
