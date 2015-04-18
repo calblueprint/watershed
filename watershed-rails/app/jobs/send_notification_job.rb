@@ -23,7 +23,7 @@ class SendNotificationJob
     return {
              message: message,
              type: type,
-             object: object
+             object: object.as_json
            }
   end
 
@@ -56,7 +56,6 @@ class SendNotificationJob
   end
 
   def get_registration_ids(users)
-    puts users.map(&:registration_id).delete_if(&:blank?)
-    []
+    users.map(&:registration_id).delete_if(&:blank?)
   end
 end
