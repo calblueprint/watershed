@@ -28,25 +28,6 @@ public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHo
     protected int layoutResourceId;
     protected List<Site> sites;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
-        RelativeLayout parentView;
-        CoverPhotoPagerView photosView;
-        CircularTextView numberOfTasksView;
-        TextView topLabel;
-        TextView bottomLabel;
-        CardView cardView;
-        public ViewHolder(View view) {
-            super(view);
-            parentView = (RelativeLayout) view.findViewById(R.id.site_list_row);
-            photosView = (CoverPhotoPagerView) view.findViewById(R.id.cover_photo_pager_view);
-            numberOfTasksView = (CircularTextView) view.findViewById(R.id.number_of_tasks_view);
-            topLabel = (TextView) view.findViewById(R.id.top_label);
-            bottomLabel = (TextView) view.findViewById(R.id.bottom_label);
-            cardView = (CardView) view.findViewById(R.id.site_card_view);
-        }
-    }
-
     public SiteListAdapter(MainActivity mainActivity, int layoutResourceId, List<Site> sites) {
         this.mParentActivity = mainActivity;
         this.layoutResourceId = layoutResourceId;
@@ -75,7 +56,13 @@ public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHo
             holder.photosView.configureWithPhotos(site.getPhotos());
             holder.numberOfTasksView.configureLabels(Integer.toString(site.getTasksCount()), "TASKS");
             holder.topLabel.setText(site.getName());
-            holder.bottomLabel.setText(String.format("%s Sites", site.getMiniSitesCount()));
+            holder.bottomLabel.setText(String.format("%s, %s", site.getCity(), site.getState()));
+
+            int numSites = site.getMiniSitesCount();
+            String numSitesString = String.format("%s Site", numSites);
+            if (numSites > 1 || numSites == 0) numSitesString += "s";
+            holder.sitesLabel.setText(numSitesString);
+
             View.OnClickListener listener = new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -90,5 +77,27 @@ public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHo
     @Override
     public int getItemCount() {
         return sites.size();
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        // each data item is just a string in this case
+        RelativeLayout parentView;
+        CoverPhotoPagerView photosView;
+        CircularTextView numberOfTasksView;
+        TextView topLabel;
+        TextView bottomLabel;
+        TextView sitesLabel;
+        CardView cardView;
+
+        public ViewHolder(View view) {
+            super(view);
+            parentView = (RelativeLayout) view.findViewById(R.id.site_list_row);
+            photosView = (CoverPhotoPagerView) view.findViewById(R.id.cover_photo_pager_view);
+            numberOfTasksView = (CircularTextView) view.findViewById(R.id.number_of_tasks_view);
+            topLabel = (TextView) view.findViewById(R.id.top_label);
+            bottomLabel = (TextView) view.findViewById(R.id.bottom_label);
+            sitesLabel = (TextView) view.findViewById(R.id.number_mini_sites_label);
+            cardView = (CardView) view.findViewById(R.id.site_card_view);
+        }
     }
 }
