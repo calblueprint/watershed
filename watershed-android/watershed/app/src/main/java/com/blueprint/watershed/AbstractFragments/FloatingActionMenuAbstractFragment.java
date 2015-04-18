@@ -12,9 +12,11 @@ public abstract class FloatingActionMenuAbstractFragment extends Fragment {
 
     public FloatingActionsMenu mMenu;
 
+    public boolean isMenuOpen() {
+        return mMenu.isExpanded();
+    }
+
     public boolean closeMenu() {
-        boolean isOpened = mMenu.isExpanded();
-        if (isOpened) mMenu.collapse();
-        return isOpened;
+        mMenu.collapse();
     }
 }

@@ -41,7 +41,6 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
     private NetworkManager mNetworkManager;
     private MainActivity mParentActivity;
 
-    private FloatingActionsMenu mMenu;
     private HeaderGridView mMiniSiteGridView;
     private MiniSiteListAdapter mMiniSiteAdapter;
     private ViewGroup mHeader;
