@@ -10,6 +10,7 @@
 #import "WPCreateMiniSiteView.h"
 #import "WPCreateMiniSiteTableViewCell.h"
 #import "WPView.h"
+#import "UIExtensions.h"
 #import "WPNetworkingManager.h"
 
 @interface WPCreateMiniSiteViewController ()
@@ -45,7 +46,7 @@
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithImage:closeImage style:UIBarButtonItemStylePlain target:self action:@selector(dismissSelf)];
     self.navigationItem.leftBarButtonItem = cancelButton;
 
-    FAKIonIcons *checkIcon = [FAKIonIcons androidDoneIconWithSize:24];
+    FAKIonIcons *checkIcon = [FAKIonIcons checkmarkCircledIconWithSize:24];
     UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake(24, 24)];
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithImage:checkImage style:UIBarButtonItemStylePlain target:self action:@selector(saveAndDismissSelf)];
     self.navigationItem.rightBarButtonItem = doneButton;

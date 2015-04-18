@@ -15,16 +15,17 @@ import org.json.JSONObject;
 /**
  * Created by charlesx on 2/21/15.
  */
-public class EditUserRequest extends BaseRequest {
+public class UpdateUserRequest extends BaseRequest {
 
-    public EditUserRequest(final Activity activity, User user, JSONObject params, final Response.Listener<User> listener) {
-        super(Request.Method.PUT, makeObjectURL("users", user), params,
+    public UpdateUserRequest(final Activity activity, User user, JSONObject params,
+                             final Response.Listener<User> listener, String url) {
+        super(Request.Method.PUT, url, params,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {
                         try {
                             String userJson = jsonObject.get("user").toString();
-                            ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
+                            ObjectMapper mapper = getNetworkManager(activity).getObjectMapper();
                             User user = mapper.readValue(userJson, new TypeReference<User>() {});
                             listener.onResponse(user);
                         } catch (Exception e) {

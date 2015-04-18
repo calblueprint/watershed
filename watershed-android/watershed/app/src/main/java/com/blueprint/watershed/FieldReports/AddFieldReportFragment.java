@@ -26,6 +26,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,6 +55,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
     private MainActivity mParentActivity;
     private NetworkManager mNetworkManager;
 
+    private RelativeLayout mLayout;
     private ImageButton mPickPhotoButton;
     private TextView mTitle;
     private RadioGroup mRating;
@@ -106,6 +108,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
     }
 
     public void initializeViews(View view) {
+        mLayout = (RelativeLayout) view.findViewById(R.id.report_layout);
         mPickPhotoButton = (ImageButton) view.findViewById(R.id.report_add_photo);
         mPickPhotoButton.setOnClickListener(this);
 
@@ -144,23 +147,6 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    /*
-     * Networking
-     */
-    public void createFieldReportRequest(FieldReport fieldReport) {
-        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
-
-        CreateFieldReportRequest createFieldReportRequest = new CreateFieldReportRequest(getActivity(), fieldReport, params, new Response.Listener<FieldReport>() {
-            @Override
-            public void onResponse(FieldReport fieldReport) {
-                Log.e("successful field report", "creation");
-                mParentActivity.getSupportFragmentManager().popBackStack();
-            }
-        });
-
-        mNetworkManager.getRequestQueue().add(createFieldReportRequest);
     }
 
     /*
@@ -277,6 +263,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
         final FieldReport fieldReport = new FieldReport(mDescription.getText().toString(), health, mUrgent.isChecked(),
                                                         mPhoto, mParentActivity.getUser(), mMiniSite, mTask);
 
+        Utility.hideKeyboard(mParentActivity, mLayout);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -318,26 +305,52 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
             bmOptions.inPurgeable = true;
 
             photo = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+
         }
-        else if (requestCode == SELECT_PHOTO_REQUEST && resultCode == MainActivity.RESULT_OK){
+        else if (requestCode == SELECT_PHOTO_REQUEST && resultCode == MainActivity.RESULT_OK) {
             Uri targetUri = data.getData();
 
             try { photo = BitmapFactory.decodeStream(mParentActivity.getContentResolver().openInputStream(targetUri)); }
             catch (FileNotFoundException e) { e.printStackTrace(); }
         }
 
-        if (photo != null) {
-            mPhoto = new Photo(photo);
-            mImage.setImageBitmap(photo);
+        Bitmap scaledBitmap = null;
+
+        if (photo != null)  {
+            int height = photo.getHeight() / 6;
+            int width = photo.getWidth() / 6;
+            scaledBitmap = Bitmap.createScaledBitmap(photo, width, height, false);
+        }
+
+        if (scaledBitmap != null) {
+            mPhoto = new Photo(scaledBitmap);
             mImage.invalidate();
             if (Utility.currentVersion() >= 16) {
                 mPickPhotoButton.setBackground(mParentActivity.getResources().getDrawable(R.drawable.ic_delete));
             } else {
                 mPickPhotoButton.setBackgroundDrawable(mParentActivity.getResources().getDrawable(R.drawable.ic_delete));
             }
-
             mPickPhotoButton.invalidate();
+            mImage.setImageBitmap(scaledBitmap);
         }
+    }
+
+    /*
+     * Networking
+     */
+    public void createFieldReportRequest(FieldReport fieldReport) {
+        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
+
+        CreateFieldReportRequest createFieldReportRequest = new CreateFieldReportRequest(mParentActivity, fieldReport, params, new Response.Listener<FieldReport>() {
+            @Override
+            public void onResponse(FieldReport fieldReport) {
+                Log.e("successful field report", "creation");
+                mTask.setFieldReport(fieldReport);
+                mParentActivity.getSupportFragmentManager().popBackStack();
+            }
+        });
+
+        mNetworkManager.getRequestQueue().add(createFieldReportRequest);
     }
 
 

@@ -16,6 +16,7 @@
             android:id="@+id/create_task_title"
             android:hint="@string/title"
             android:layout_marginTop="20dp"
+            android:maxLines="1"
         />
 
         <TextView
@@ -45,6 +46,7 @@
             android:id="@+id/create_task_description"
             android:layout_below="@id/create_task_assignee"
             android:hint="@string/description"
+            android:gravity="top"
             android:lines="4"
         />
 

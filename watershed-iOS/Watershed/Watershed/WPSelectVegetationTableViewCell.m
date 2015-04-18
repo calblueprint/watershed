@@ -46,7 +46,7 @@ const static float CHECK_SIZE = RADIO_BUTTON_SIZE * 3 / 4;
     }) wp_addToSuperview:self];
 
     _checkImageView = [({
-        FAKIonIcons *checkIcon = [FAKIonIcons androidDoneIconWithSize:CHECK_SIZE];
+        FAKIonIcons *checkIcon = [FAKIonIcons ios7CheckmarkIconWithSize:CHECK_SIZE];
         UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake(CHECK_SIZE, CHECK_SIZE)];
         UIImageView *imageView = [[UIImageView alloc] initWithImage:checkImage];
         [imageView setFrame:CGRectMake((RADIO_BUTTON_SIZE - CHECK_SIZE) / 2, (RADIO_BUTTON_SIZE - CHECK_SIZE) / 2, CHECK_SIZE, CHECK_SIZE)];

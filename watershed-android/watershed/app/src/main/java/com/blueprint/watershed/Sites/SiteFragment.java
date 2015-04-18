@@ -1,5 +1,6 @@
 package com.blueprint.watershed.Sites;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,15 +15,19 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
+import com.blueprint.watershed.MiniSites.CreateMiniSiteFragment;
 import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteListAdapter;
 import com.blueprint.watershed.Networking.NetworkManager;
+import com.blueprint.watershed.Networking.Sites.DeleteSiteRequest;
 import com.blueprint.watershed.Networking.Sites.SiteRequest;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Utilities.Utility;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
 import com.blueprint.watershed.Views.HeaderGridView;
 import com.blueprint.watershed.Views.Material.FloatingActionButton;
+import com.blueprint.watershed.Views.Material.FloatingActionsMenu;
 
 import org.json.JSONObject;
 
@@ -36,7 +41,7 @@ public class SiteFragment extends Fragment
     private NetworkManager mNetworkManager;
     private MainActivity mParentActivity;
 
-    private FloatingActionButton mCreateSiteButton;
+    private FloatingActionsMenu mMenu;
     private HeaderGridView mMiniSiteGridView;
     private MiniSiteListAdapter mMiniSiteAdapter;
     private ViewGroup mHeader;
@@ -74,14 +79,30 @@ public class SiteFragment extends Fragment
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_site, container, false);
         initializeViews(view);
+        Site site = mParentActivity.getSite();
+        if (site != null) {
+            mSite = site;
+            mParentActivity.setSite(null);
+            setMiniSites(mSite.getMiniSites());
+            mMiniSiteAdapter.notifyDataSetChanged();
+        }
+
         if (mSite.isMiniSiteEmpty()) getSiteRequest(mSite);
         return view;
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.delete_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.edit:
+            case R.id.delete:
+                deleteSiteRequest();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -93,6 +114,26 @@ public class SiteFragment extends Fragment
         mParentActivity.setMenuAction(false);
     }
 
+    private void setButtonListeners(View view) {
+        mMenu = (FloatingActionsMenu) view.findViewById(R.id.site_settings);
+        FloatingActionButton editButton = (FloatingActionButton) view.findViewById(R.id.site_edit_site);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMenu.collapse();
+                editSite();
+            }
+        });
+        FloatingActionButton miniSiteCreate = (FloatingActionButton) view.findViewById(R.id.site_add_minisite);
+        miniSiteCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMenu.collapse();
+                mParentActivity.replaceFragment(CreateMiniSiteFragment.newInstance(mSite));
+            }
+        });
+    }
+
     private void initializeViews(View view) {
         // Create MiniSite grid
         mMiniSiteGridView = (HeaderGridView) view.findViewById(R.id.mini_sites_grid);
@@ -101,23 +142,17 @@ public class SiteFragment extends Fragment
         configureViewWithSite(mHeader, mSite);
 
         // Set the adapter to fill the list of mini sites
-        mMiniSiteAdapter = new MiniSiteListAdapter(mParentActivity, getMiniSites());
+        mMiniSiteAdapter = new MiniSiteListAdapter(mParentActivity, getMiniSites(), mSite);
         mMiniSiteGridView.setAdapter(mMiniSiteAdapter);
         mMiniSiteGridView.setOnItemClickListener(this);
 
-//        mCreateSiteButton = (FloatingActionButton) view.findViewById(R.id.create_mini_site_button);
-//        mCreateSiteButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mParentActivity.replaceFragment(CreateMiniSiteFragment.newInstance(mSite.getId()));
-//            }
-//        });
+        setButtonListeners(view);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         MiniSite miniSite = getMiniSite(position);
-        MiniSiteFragment miniSiteFragment = MiniSiteFragment.newInstance(mSite.getId(), miniSite);
+        MiniSiteFragment miniSiteFragment = MiniSiteFragment.newInstance(mSite, miniSite);
         mParentActivity.replaceFragment(miniSiteFragment);
     }
 
@@ -156,10 +191,46 @@ public class SiteFragment extends Fragment
         }
     }
 
+    private void editSite() {
+        EditSiteFragment editSiteFragment = EditSiteFragment.newInstance(mSite);
+        mParentActivity.replaceFragment(editSiteFragment);
+    }
+
+    private void deleteSiteRequest() {
+        Utility.showAndBuildDialog(mParentActivity, R.string.site_delete_title, R.string.site_delete_msg,
+            new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    makeDeleteSiteRequest();
+                }
+            }, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+    }
+
+    private void makeDeleteSiteRequest() {
+        DeleteSiteRequest request = new DeleteSiteRequest(mParentActivity, mSite, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                mParentActivity.setSite(mSite);
+                mParentActivity.getSupportFragmentManager().popBackStack();
+            }
+        });
+        mNetworkManager.getRequestQueue().add(request);
+    }
+
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-        inflater.inflate(R.menu.edit_site_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
+    public void onPause() {
+        super.onDestroy();
+        if (mMenu != null) closeMenu();
+    }
+
+    public boolean closeMenu() {
+        boolean isOpened = mMenu.isExpanded();
+        if (isOpened) mMenu.collapse();
+        return isOpened;
     }
 }

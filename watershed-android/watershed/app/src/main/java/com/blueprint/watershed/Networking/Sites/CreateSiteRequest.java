@@ -19,8 +19,6 @@ import java.util.HashMap;
  * Created by maxwolffe on 2/16/15.
  */
 public class CreateSiteRequest extends BaseRequest {
-    Site mSite;
-    Activity mActivity;
 
     /**
      * Sends a request to the server to create a new site.
@@ -31,7 +29,7 @@ public class CreateSiteRequest extends BaseRequest {
      * @param listener - A response listener to be called once the response is returned.
      */
     public CreateSiteRequest(final Activity activity, final Site site, HashMap<String, JSONObject> params, final Response.Listener<Site> listener) {
-        super(Request.Method.POST, makeURL("sites"), siteParams(activity, site),
+        super(Request.Method.POST, makeURL("sites/"), siteParams(activity, site),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {
@@ -46,9 +44,6 @@ public class CreateSiteRequest extends BaseRequest {
                         }
                     }
                 }, activity);
-
-        mSite = site;
-        mActivity = activity;
     }
 
     /**
@@ -63,7 +58,6 @@ public class CreateSiteRequest extends BaseRequest {
 
         try {
             JSONObject siteJson = new JSONObject(mapper.writeValueAsString(site));
-            Log.e("Site Request ;)", siteJson.toString());
             params.put("site", siteJson);
         } catch (Exception e) {
             e.printStackTrace();

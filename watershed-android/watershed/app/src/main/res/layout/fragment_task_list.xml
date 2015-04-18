@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/medium_gray"
-    tools:context="com.blueprint.watershed.Tasks.TaskFragment">
+    tools:context="com.blueprint.watershed.Tasks.TaskList.UserTaskListFragment">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/no_tasks_layout"

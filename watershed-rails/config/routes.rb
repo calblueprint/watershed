@@ -1,18 +1,23 @@
 Rails.application.routes.draw do
-
+  root to: "static_pages#index"
   namespace :api, defaults: { format: "json" } do
     namespace :v1 do
-      match "/", to: "base#ping", via: :get
-      match "mobile", to: "base#mobile", via: :get
+      get "/", to: "base#ping"
+      get "mobile", to: "base#mobile"
 
       devise_for :users, skip: [:registrations, :passwords]
       resources :users, only: [:index, :show, :create, :update] do
+        member do
+          put :register
+        end
+
         collection do
           get :search
-          match "sign_up/facebook", to: "users#facebook_login", via: :post
+          post "sign_up/facebook", to: "users#facebook_login"
         end
 
         scope module: :users do
+          # resources :sites,         only: [:index]
           resources :mini_sites,    only: [:index]
           resources :tasks,         only: [:index]
           resources :field_reports, only: [:index]

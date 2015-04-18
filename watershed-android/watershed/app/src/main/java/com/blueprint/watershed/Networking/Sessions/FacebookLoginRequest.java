@@ -17,10 +17,11 @@ import java.util.HashMap;
 
 /**
  * Created by Mark Miyashita on 12/3/14.
+ * Makes facebook request.
  */
 public class FacebookLoginRequest extends BaseRequest {
 
-    public FacebookLoginRequest(final Activity activity, HashMap<String, String> params, final Response.Listener<Session> listener, final Response.Listener<APIError> errorListener) {
+    public FacebookLoginRequest(final Activity activity, HashMap<String, Object> params, final Response.Listener<Session> listener, final Response.Listener<APIError> errorListener) {
         super(Request.Method.POST, makeURL("users/sign_up/facebook"), facebookLoginRequestParams(activity, params),
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -32,13 +33,13 @@ public class FacebookLoginRequest extends BaseRequest {
                             });
                             listener.onResponse(session);
                         } catch (Exception e) {
-                            Log.e("Json exception in Facebook request", e.toString());
+                            Log.e("Json exception", e.toString());
                         }
                     }
                 }, errorListener,  activity);
     }
 
-    protected static JSONObject facebookLoginRequestParams(final Activity activity, final HashMap<String, String> userParams) {
+    protected static JSONObject facebookLoginRequestParams(final Activity activity, final HashMap<String, Object> userParams) {
         JSONObject userJson = new JSONObject(userParams);
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
         params.put("user", userJson);

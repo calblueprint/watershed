@@ -4,5 +4,4 @@ class SessionSerializer < BaseSessionSerializer
   def user
     object
   end
-
 end

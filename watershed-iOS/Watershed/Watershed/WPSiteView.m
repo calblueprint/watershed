@@ -94,7 +94,7 @@ static int COVER_PHOTO_TRANS = 0;
     }) wp_addToSuperview:self.tableHeaderView];
     
     _addressLabel = [({
-        FAKIonIcons *mapMarkerIcon = [FAKIonIcons androidPinIconWithSize:[WPLabeledIcon viewHeight]];
+        FAKIonIcons *mapMarkerIcon = [FAKIonIcons pinIconWithSize:[WPLabeledIcon viewHeight]];
         UIImage *mapMarkerImage = [mapMarkerIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
         WPLabeledIcon *addressLabel = [[WPLabeledIcon alloc] initWithText:@"Street Address" icon:mapMarkerImage];
         addressLabel;

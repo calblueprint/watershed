@@ -3,8 +3,10 @@ package com.blueprint.watershed.Activities;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,10 +32,14 @@ import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -43,8 +49,11 @@ import io.fabric.sdk.android.Fabric;
 public class LandingPageActivity extends Activity implements View.OnClickListener{
 
     // Constants
-    public  static final String PREFERENCES = "LOGIN_PREFERENCES";
-    private static final String TAG         = "LandingPageActivity";
+    public  static final String PREFERENCES                   = "LOGIN_PREFERENCES";
+    private static final String TAG                           = "LandingPageActivity";
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private final String SENDER_ID                            = "158271976435";
+    private final String FACEBOOK_LOGIN                       = "facebook";
 
     // UI Elements
     private ImageView mLandingPageImage;
@@ -57,7 +66,11 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     private View mViewBlocker;
     private LinearLayout mLayout;
 
+    // Facebook Login
     private UiLifecycleHelper mUiHelper;
+
+    // Notification Params
+    private GoogleCloudMessaging mGoogleCloudMessaging;
 
     // Called when session changes
     private com.facebook.Session.StatusCallback callback = new com.facebook.Session.StatusCallback() {
@@ -79,42 +92,61 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         mUiHelper.onCreate(savedInstanceState);
         initializeViews();
 
-        mPreferences = getSharedPreferences(PREFERENCES, 0);
+        mPreferences = getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
+
+        if (checkPlayServices()) mGoogleCloudMessaging = GoogleCloudMessaging.getInstance(this);
+        else Log.i("Exception in services", "Please get a valid Play services APK");
 
         // NOTE(mark): Change to !hasAuthCredentials if you want the main activity to show.
         if (hasAuthCredentials(mPreferences)) {
             // Ideally we could request the user object from the server again here and then pass them to the main activity.
             final Intent intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            Bundle b = new Bundle();
-            b.putInt("userId", 1); //Replace with an actual user Id soon
-            intent.putExtras(b);
-            // intent.putExtra("auth_token", mPreferences.getString("auth_token", null));
-            this.finish();
             startActivity(intent);
+            finish();
             overridePendingTransition(0, 0);
         }
     }
-
 
     @Override
     protected void onResume() {
         super.onResume();
 
         AppEventsLogger.activateApp(this);
-
         com.facebook.Session session = com.facebook.Session.getActiveSession();
         if (session != null && (session.isOpened() || session.isClosed()) ) {
             onSessionStateChange(session, session.getState(), null);
         }
-
         mUiHelper.onResume();
+
+        checkPlayServices();
     }
 
+    @Override
     protected void onPause() {
         super.onPause();
         AppEventsLogger.deactivateApp(this);
         mUiHelper.onPause();
+    }
+
+    /**
+     * Check the device to make sure it has the Google Play Services APK. If
+     * it doesn't, display a dialog that allows users to download the APK from
+     * the Google Play Store or enable it in the device's system settings.
+     */
+    private boolean checkPlayServices() {
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                GooglePlayServicesUtil.getErrorDialog(resultCode, this,
+                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else {
+                Log.i(TAG, "This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
     }
 
     public void initializeViews() {
@@ -132,21 +164,16 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     }
 
     public void onClick(View view){
-        if (view == mFacebookButton){
-            didTapFacebookButton(view);
-        }
-        else if (view == mLoginButton){
-            didTapLoginLoadFragmentButton(view);
-        }
-        else{
-            didTapSignUpLoadFragmentButton(view);
-        }
+        if (view == mFacebookButton) didTapFacebookButton(view);
+        else if (view == mLoginButton) didTapLoginLoadFragmentButton(view);
+        else didTapSignUpLoadFragmentButton(view);
     }
 
     public boolean hasAuthCredentials(SharedPreferences mPreferences) {
         return !mPreferences.getString("authentication_token", "none").equals("none") &&
                !mPreferences.getString("email", "none").equals("none") &&
-               !mPreferences.getString("user", "none").equals("none");
+               !mPreferences.getString("user", "none").equals("none") &&
+                mPreferences.getInt("userId", 0) != 0;
     }
 
     // UI Actions
@@ -165,7 +192,6 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     }
 
     // Facebook Stuff
-
     private void onSessionStateChange(final com.facebook.Session session, SessionState state, Exception exception) {
         if (state.isOpened()) {
             com.facebook.Request.newMeRequest(session, new com.facebook.Request.GraphUserCallback() {
@@ -177,26 +203,50 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
                         String name = user.getName();
                         String id = user.getId(); //This may not be the profile picture Id that you are expecting, but we can pass this in to the graph api to get the actual profile picture
                         String email = "";
-                        try {
-                            email = user.getInnerJSONObject().getString("email");
-                        }
-                        catch (JSONException e){
-                            Log.e("JSONException", "Facebook Login");
-                        }
 
-                        HashMap<String, String> params = new HashMap<String, String>();
+                        try { email = user.getInnerJSONObject().getString("email"); }
+                        catch (JSONException e) { Log.e("JSONException", "Facebook Login"); }
+
+                        HashMap<String, Object> params = new HashMap<String, Object>();
                         params.put("email", email);
                         params.put("facebook_auth_token", accessToken);
                         params.put("facebook_id", id);
                         params.put("name", name);
-
-                        facebookRequest(params);
+                        params.put("device_type", 0);
+                        if (mGoogleCloudMessaging != null) registerInBackground(params, FACEBOOK_LOGIN);
+                        else facebookRequest(params);
                     }
                 }
             }).executeAsync();
         } else if (state.isClosed()) {
             Log.e("Facebook", "Logged out...");
         }
+    }
+
+    /**
+     * Registers the application with GCM servers asynchronously.
+     * <p>
+     * Stores the registration ID and app versionCode in the application's
+     * shared preferences.
+     */
+    public void registerInBackground(final HashMap<String, Object> objectParams, final String type) {
+        new AsyncTask<String, String, String>() {
+            @Override
+            protected String doInBackground(String... params) {
+                String msg = "";
+                try { objectParams.put("registration_id", mGoogleCloudMessaging.register(SENDER_ID)); }
+                catch (IOException ex) { msg = "Error :" + ex.getMessage(); }
+
+                if (type.equals(FACEBOOK_LOGIN)) facebookRequest(objectParams);
+                else signUpRequest(objectParams);
+                return msg;
+            }
+
+            @Override
+            protected void onPostExecute(String msg) {
+                Log.i("Error", msg + "\n");
+            }
+        }.execute(null, null, null);
     }
 
     public void didTapSignUpLoadFragmentButton(View view) {
@@ -209,13 +259,12 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         fragmentTransaction.commit();
     }
 
-    public void facebookRequest(HashMap<String, String> params) {
-        final Intent intent = new Intent(this, MainActivity.class);
+    public void facebookRequest(HashMap<String, Object> params) {
 
         FacebookLoginRequest facebookLoginRequest = new FacebookLoginRequest(this, params, new Response.Listener<Session>() {
             @Override
             public void onResponse(Session session) {
-                storeSessionAndStartMainActivity(intent, session);
+                storeSessionAndStartMainActivity(session);
             }
         }, new Response.Listener<APIError>() {
             @Override
@@ -228,12 +277,10 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     }
 
     public void loginRequest(HashMap<String, String> params) {
-        final Intent intent = new Intent(this, MainActivity.class);
-
         LoginRequest loginRequest = new LoginRequest(this, params, new Response.Listener<Session>() {
             @Override
             public void onResponse(Session session) {
-                storeSessionAndStartMainActivity(intent, session);
+                storeSessionAndStartMainActivity(session);
             }
         }, new Response.Listener<APIError>() {
             @Override
@@ -246,13 +293,12 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     }
 
 
-    public void signUpRequest(HashMap<String, String> params) {
-        final Intent intent = new Intent(this, MainActivity.class);
+    public void signUpRequest(HashMap<String, Object> params) {
 
         SignUpRequest signUpRequest = new SignUpRequest(this, params, new Response.Listener<Session>() {
             @Override
             public void onResponse(Session session) {
-                storeSessionAndStartMainActivity(intent, session);
+                storeSessionAndStartMainActivity(session);
             }
         }, new Response.Listener<APIError>() {
             @Override
@@ -270,9 +316,11 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         mUiHelper.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void storeSessionAndStartMainActivity(Intent intent, Session session) {
+    public void storeSessionAndStartMainActivity(Session session) {
+        final Intent intent = new Intent(this, MainActivity.class);
         ObjectMapper mapper = mLoginNetworkManager.getObjectMapper();
         JSONObject userJson = null;
+
         try {  userJson = new JSONObject(mapper.writeValueAsString(session.getUser())); }
         catch (Exception e) { Log.i("Exception", e.toString()); }
 
@@ -284,13 +332,11 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
             Toast.makeText(this, "Something went wrong - try again!", Toast.LENGTH_SHORT).show();
             return;
         }
+        editor.putString("registration_id", session.getUser().getRegistrationId());
         editor.putInt("userId", session.getUser().getId());
+        if (mPreferences.getInt("app_version", 0) == 0)
+            editor.putInt("app_version", Utility.getAppVersion(this));
         editor.apply();
-
-        Bundle bundle = new Bundle();
-        bundle.putInt("userId", session.getUser().getId());
-        intent.putExtras(bundle);
-
         startActivity(intent);
         finish();
     }
@@ -313,10 +359,11 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     public Button getFacebookButton() { return mFacebookButton; }
     public Button getSignUpButton() { return mSignUpButton; }
     public NetworkManager getRequestHandler(){return mLoginNetworkManager;}
-
+    public GoogleCloudMessaging getGcm() { return mGoogleCloudMessaging; }
     // Setters
     public void setLandingPageImage(ImageView imageView) { mLandingPageImage = imageView; }
     public void setLoginButton(Button loginButton) { mLoginButton = loginButton; }
     public void setFacebookButton(com.facebook.widget.LoginButton facebookButton) { mFacebookButton = facebookButton; }
     public void setSignUpButton(Button signUpButton) { mSignUpButton = signUpButton; }
+    public void setGcm(GoogleCloudMessaging gcm) { mGoogleCloudMessaging = gcm; }
 }
