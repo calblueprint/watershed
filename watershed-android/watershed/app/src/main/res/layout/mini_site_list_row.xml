@@ -6,6 +6,7 @@
 
     <com.blueprint.watershed.Views.CoverPhotoPagerView
         style="@style/CoverPhotoPagerView"
+        android:layout_width="wrap_content"
         android:id="@+id/cover_photo_pager_view"
         />
 
@@ -63,7 +64,5 @@
                 />
 
         </LinearLayout>
-
     </LinearLayout>
-
 </RelativeLayout>
