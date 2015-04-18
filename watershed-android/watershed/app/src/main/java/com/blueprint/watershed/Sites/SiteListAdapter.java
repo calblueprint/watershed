@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.R;
-import com.blueprint.watershed.Views.CircularTextView;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
 
 import java.util.List;
@@ -54,7 +53,6 @@ public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHo
         if (sites.size() > 0 && position < sites.size()) {
             final Site site = sites.get(position);
             holder.photosView.configureWithPhotos(site.getPhotos());
-            holder.numberOfTasksView.configureLabels(Integer.toString(site.getTasksCount()), "TASKS");
             holder.topLabel.setText(site.getName());
             holder.bottomLabel.setText(String.format("%s, %s", site.getCity(), site.getState()));
 
@@ -70,7 +68,6 @@ public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHo
                 }
             };
             holder.parentView.setOnClickListener(listener);
-            holder.numberOfTasksView.setOnClickListener(listener);
         }
     }
 
@@ -83,7 +80,6 @@ public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHo
         // each data item is just a string in this case
         RelativeLayout parentView;
         CoverPhotoPagerView photosView;
-        CircularTextView numberOfTasksView;
         TextView topLabel;
         TextView bottomLabel;
         TextView sitesLabel;
@@ -93,7 +89,6 @@ public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHo
             super(view);
             parentView = (RelativeLayout) view.findViewById(R.id.site_list_row);
             photosView = (CoverPhotoPagerView) view.findViewById(R.id.cover_photo_pager_view);
-            numberOfTasksView = (CircularTextView) view.findViewById(R.id.number_of_tasks_view);
             topLabel = (TextView) view.findViewById(R.id.top_label);
             bottomLabel = (TextView) view.findViewById(R.id.bottom_label);
             sitesLabel = (TextView) view.findViewById(R.id.number_mini_sites_label);

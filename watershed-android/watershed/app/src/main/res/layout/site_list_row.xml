@@ -4,7 +4,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/site_list_row"
     android:layout_width="match_parent"
-    android:layout_height="280dp"
+    android:layout_height="290dp"
     android:clickable="true"
     android:paddingTop="2dp"
     android:paddingBottom="2dp"
@@ -26,16 +26,16 @@
             <RelativeLayout
                 android:id="@+id/site_list_row_info_container"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="70dp"
                 >
 
                 <TextView
                     android:id="@+id/top_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
+                    android:layout_marginTop="10dp"
                     android:textSize="20sp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="15dp"
                     android:text="Top Label"
                     android:fontFamily="sans-serif-medium"
                     android:maxLines="1"
@@ -46,10 +46,10 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="7dp"
+                    android:layout_marginBottom="10dp"
                     android:src="@drawable/ic_location_gray"
                     android:scaleType="centerCrop"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="13dp"
                     />
 
                 <TextView
@@ -57,7 +57,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="11dp"
                     android:layout_toRightOf="@id/location_icon"
                     android:layout_marginLeft="5dp"
                     android:text="Bottom Label"
@@ -69,9 +69,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="11dp"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="15dp"
                     android:text="Bottom Label"
                     android:textColor="@color/lighter_text_color"
                     android:maxLines="1"
