@@ -37,3 +37,9 @@ if Rails.env.production?
   load_from_folder("production")
 end
 
+app = Rpush::Gcm::App.new
+app.name = "watershed_android"
+app.auth_key = "AIzaSyDRLRWDDMNCZfdRloDbzOHNWuJxoADaSIs"
+app.connections = 1
+app.save!
+
