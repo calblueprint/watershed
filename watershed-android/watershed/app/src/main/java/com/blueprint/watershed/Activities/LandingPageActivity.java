@@ -149,6 +149,9 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         return true;
     }
 
+    /**
+     * Initializes all the views inthe fragment and hooks them up to listeners
+     */
     public void initializeViews() {
         setLoginButton((Button)findViewById(R.id.login_load_fragment_button));
         setFacebookButton((com.facebook.widget.LoginButton)findViewById(R.id.authButton));
@@ -163,12 +166,29 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         Utility.setKeyboardListener(this, mLayout);
     }
 
-    public void onClick(View view){
-        if (view == mFacebookButton) didTapFacebookButton(view);
-        else if (view == mLoginButton) didTapLoginLoadFragmentButton(view);
-        else didTapSignUpLoadFragmentButton(view);
+    /**
+     * Sets click listeners
+     * @param view View that was clicked
+     */
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.authButton:
+                didTapFacebookButton(view);
+                break;
+            case R.id.login_load_fragment_button:
+                didTapLoginLoadFragmentButton(view);
+                break;
+            case R.id.sign_up_load_fragment_button:
+                didTapSignUpLoadFragmentButton(view);
+                break;
+        }
     }
 
+    /**
+     * Checks if the user has the credentials to log in
+     * @param mPreferences SharedPreferences for the application
+     * @return boolean indicating whether or not we have the credentials to sign in
+     */
     public boolean hasAuthCredentials(SharedPreferences mPreferences) {
         return !mPreferences.getString("authentication_token", "none").equals("none") &&
                !mPreferences.getString("email", "none").equals("none") &&
@@ -176,7 +196,10 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
                 mPreferences.getInt("userId", 0) != 0;
     }
 
-    // UI Actions
+    /**
+     * Handles regular login
+     * @param view view that was clicked
+     */
     public void didTapLoginLoadFragmentButton(View view) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -249,6 +272,10 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         }.execute(null, null, null);
     }
 
+    /**
+     * Handles regular sign up
+     * @param view View that was clicked
+     */
     public void didTapSignUpLoadFragmentButton(View view) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -259,8 +286,11 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         fragmentTransaction.commit();
     }
 
+    /**
+     * Makes a request to facebook to sign in a user
+     * @param params HashMap of parameters to send in the request
+     */
     public void facebookRequest(HashMap<String, Object> params) {
-
         FacebookLoginRequest facebookLoginRequest = new FacebookLoginRequest(this, params, new Response.Listener<Session>() {
             @Override
             public void onResponse(Session session) {
