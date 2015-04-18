@@ -40,6 +40,9 @@ gem "faker", "~> 1.4.3"
 # Push notifications
 gem 'rpush'
 
+# Background Jobs
+gem 'sucker_punch'
+
 group :development, :test do
   gem "annotate", "~> 2.6.1"
   gem "awesome_print", "~> 1.2.0"

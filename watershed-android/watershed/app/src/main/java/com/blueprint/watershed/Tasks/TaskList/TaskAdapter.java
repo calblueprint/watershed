@@ -1,7 +1,6 @@
-package com.blueprint.watershed.Tasks;
+package com.blueprint.watershed.Tasks.TaskList;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +9,10 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Tasks.Task;
+import com.blueprint.watershed.Tasks.TaskDetailFragment;
 
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
@@ -24,15 +26,25 @@ import java.util.List;
  */
 public class TaskAdapter extends BaseExpandableListAdapter {
 
-    private Context mContext;
+    private MainActivity mParentActivity;
     private List<String> mHeaders;
     private HashMap<String, List<Task>> mData;
 
-    public TaskAdapter(Context context, List<String> headers, HashMap<String, List<Task>> data){
+    public TaskAdapter(MainActivity activity, List<String> headers, HashMap<String, List<Task>> data){
         super();
-        mContext = context;
+        mParentActivity = activity;
         mHeaders = headers;
         mData = data;
+    }
+
+    public void updateData(HashMap<String, List<Task>> data) {
+        mData = data;
+        notifyDataSetChanged();
+    }
+
+    public void updateHeaders(List<String> headers) {
+        mHeaders = headers;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -60,7 +72,7 @@ public class TaskAdapter extends BaseExpandableListAdapter {
         TaskHolder holder;
 
         if (row == null) {
-            LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
+            LayoutInflater inflater = mParentActivity.getLayoutInflater();
             row = inflater.inflate(R.layout.task_list_row, parent, false);
 
             holder = new TaskHolder();
@@ -77,7 +89,7 @@ public class TaskAdapter extends BaseExpandableListAdapter {
             holder = (TaskHolder) row.getTag();
         }
 
-        Task task = getChild(groupPosition, childPosition);
+        final Task task = getChild(groupPosition, childPosition);
 
         if (task.getDueDate() != null) {
             Calendar cal = Calendar.getInstance();
@@ -93,11 +105,11 @@ public class TaskAdapter extends BaseExpandableListAdapter {
         int textColor;
         int backgroundColor;
         if (task.getColor() != null) {
-            textColor = mContext.getResources().getColor(R.color.white);
+            textColor = mParentActivity.getResources().getColor(R.color.white);
             backgroundColor = Color.parseColor(task.getColor());
         } else {
-            textColor = mContext.getResources().getColor(R.color.black);
-            backgroundColor = mContext.getResources().getColor(R.color.white);
+            textColor = mParentActivity.getResources().getColor(R.color.black);
+            backgroundColor = mParentActivity.getResources().getColor(R.color.white);
         }
         
         holder.mColor.setBackgroundColor(backgroundColor);
@@ -105,6 +117,14 @@ public class TaskAdapter extends BaseExpandableListAdapter {
         holder.mDay.setTextColor(textColor);
         holder.mMonth.setTextColor(textColor);
         holder.mYear.setTextColor(textColor);
+        
+        row.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mParentActivity.replaceFragment(TaskDetailFragment.newInstance(task));
+            }
+        });
+        
         return row;
     }
 
@@ -123,7 +143,7 @@ public class TaskAdapter extends BaseExpandableListAdapter {
         TaskHeaderHolder holder;
 
         if (row == null) {
-            LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
+            LayoutInflater inflater = ((Activity) mParentActivity).getLayoutInflater();
             holder = new TaskHeaderHolder();
 
             row = inflater.inflate(R.layout.task_list_header, parent, false);

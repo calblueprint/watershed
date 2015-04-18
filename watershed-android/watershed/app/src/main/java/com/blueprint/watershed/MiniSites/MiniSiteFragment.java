@@ -26,6 +26,8 @@ import com.blueprint.watershed.Sites.Site;
 import com.blueprint.watershed.Utilities.Utility;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
 import com.blueprint.watershed.Views.HeaderGridView;
+import com.blueprint.watershed.Views.Material.FloatingActionButton;
+import com.blueprint.watershed.Views.Material.FloatingActionsMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +44,10 @@ public class MiniSiteFragment extends Fragment
     private Site mSite;
     private List<FieldReport> mFieldReports;
 
+    // Buttons
+    private FloatingActionButton mEditButton;
+    private FloatingActionButton mFieldReportButton;
+    private FloatingActionsMenu mMenu;
 
     public static MiniSiteFragment newInstance(Site site, MiniSite miniSite) {
         MiniSiteFragment miniSiteFragment = new MiniSiteFragment();
@@ -95,23 +101,6 @@ public class MiniSiteFragment extends Fragment
         mNetworkManager.getRequestQueue().add(request);
     }
 
-    private void setButtonListeners(View view){
-        View editButton = view.findViewById(R.id.minisite_edit_minisite);
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mParentActivity.replaceFragment(EditMiniSiteFragment.newInstance(mSite, mMiniSite));
-            }
-        });
-        View miniSiteCreate = view.findViewById(R.id.minisite_add_fieldreport);
-        miniSiteCreate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Add Field Report. Unless we are requiring a user to be completing a task to submit a report. 
-            }
-        });
-    }
-
     private void initializeViews(View view, LayoutInflater inflater) {
         // Create FieldReportGridView
         mFieldReportGridView = (HeaderGridView) view.findViewById(R.id.field_reports_grid);
@@ -132,6 +121,25 @@ public class MiniSiteFragment extends Fragment
         mFieldReportGridView.setOnItemClickListener(this);
     }
 
+    private void setButtonListeners(View view) {
+        mMenu = (FloatingActionsMenu) view.findViewById(R.id.mini_site_menu);
+        mEditButton = (FloatingActionButton) view.findViewById(R.id.mini_site_edit_minisite);
+        mEditButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mParentActivity.replaceFragment(EditMiniSiteFragment.newInstance(mSite, mMiniSite));
+            }
+        });
+
+        mFieldReportButton = (FloatingActionButton) view.findViewById(R.id.mini_site_add_fieldreport);
+        mFieldReportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Add Field Report. Unless we are requiring a user to be completing a task to submit a report.
+            }
+        });
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
@@ -142,9 +150,6 @@ public class MiniSiteFragment extends Fragment
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.edit:
-                EditMiniSiteFragment fragment = EditMiniSiteFragment.newInstance(mSite, mMiniSite);
-                mParentActivity.replaceFragment(fragment);
             case R.id.delete:
                 deleteMiniSite();
             default:
@@ -203,10 +208,21 @@ public class MiniSiteFragment extends Fragment
             @Override
             public void onResponse(Site site) {
                 mParentActivity.setSite(site);
-                mSite = site;
                 mParentActivity.getSupportFragmentManager().popBackStack();
             }
         });
         mNetworkManager.getRequestQueue().add(request);
+    }
+
+    @Override
+    public void onPause() {
+        super.onDestroy();
+        if (mMenu != null) mMenu.collapse();
+    }
+
+    public boolean closeMenu() {
+        boolean isOpened = mMenu.isExpanded();
+        if (isOpened) mMenu.collapse();
+        return isOpened;
     }
 }

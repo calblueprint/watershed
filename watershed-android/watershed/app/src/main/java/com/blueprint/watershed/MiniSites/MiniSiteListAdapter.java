@@ -59,8 +59,7 @@ public class MiniSiteListAdapter extends ArrayAdapter<MiniSite> {
             row.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    MiniSiteFragment miniSiteFragment = MiniSiteFragment.newInstance(mSite, miniSite);
-                    mActivity.replaceFragment(miniSiteFragment);
+                    mActivity.replaceFragment(MiniSiteFragment.newInstance(mSite, miniSite));
                 }
             });
         }

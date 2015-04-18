@@ -20,6 +20,9 @@ class Site < ActiveRecord::Base
 
   has_many :mini_sites
 
+  has_many :user_sites
+  has_many :users, through: :user_sites
+
   #
   # Search
   #
@@ -49,13 +52,10 @@ class Site < ActiveRecord::Base
   end
 
   def subscribe(user)
-    mini_sites.each { |mini_site| mini_site.users << user }
+    users << user
   end
 
   def unsubscribe(user)
-    mini_sites.each do |mini_site|
-      user_mini_site = mini_site.user_mini_sites.find_by(user_id: user.id)
-      user_mini_site.destroy unless user_mini_site.blank?
-    end
+    user_sites.find_by(user_id: user.id).try(:destroy)
   end
 end

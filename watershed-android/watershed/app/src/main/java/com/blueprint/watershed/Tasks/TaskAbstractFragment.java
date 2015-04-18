@@ -158,7 +158,6 @@ public abstract class TaskAbstractFragment extends Fragment {
             public void onClick(View view) { openUserDialog(); }
         });
 
-
         mDueDateField = (TextView) mParentActivity.findViewById(R.id.create_task_due_date);
         mDueDateField.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -243,7 +242,7 @@ public abstract class TaskAbstractFragment extends Fragment {
             request = new CreateTaskRequest(mParentActivity, task, params, new Response.Listener<Task>() {
                 @Override
                 public void onResponse(Task task) {
-                    TaskFragment taskFragment = TaskFragment.newInstance(0);
+                    TaskViewPagerFragment taskFragment = TaskViewPagerFragment.newInstance();
                     mParentActivity.replaceFragment(taskFragment);
                     Log.e("successful task", "creation");
                 }

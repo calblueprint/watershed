@@ -22,6 +22,7 @@ import com.blueprint.watershed.R;
 import com.blueprint.watershed.Views.Material.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SiteListFragment extends Fragment {
 
@@ -38,7 +39,9 @@ public class SiteListFragment extends Fragment {
     private FloatingActionButton mCreateSiteButton;
     
     private SiteListAdapter mAdapter;
-    private SiteMapper mSites;
+    private List<Site> mSites;
+
+    private boolean mInitializeSites = false;
 
     public static SiteListFragment newInstance() { return new SiteListFragment(); }
 
@@ -48,6 +51,7 @@ public class SiteListFragment extends Fragment {
         setHasOptionsMenu(true);
         mParentActivity = (MainActivity) getActivity();
         mNetworkManager = NetworkManager.getInstance(mParentActivity);
+        mSites = new ArrayList<Site>();
     }
 
     @Override
@@ -67,6 +71,7 @@ public class SiteListFragment extends Fragment {
                 getSitesRequest();
             }
         });
+
         mLayoutManager = new LinearLayoutManager(mParentActivity);
         mSiteListView = (RecyclerView) view.findViewById(R.id.list);
         mSiteListView.setLayoutManager(mLayoutManager);
@@ -81,13 +86,13 @@ public class SiteListFragment extends Fragment {
             }
         });
 
-        if (mSites == null) {
+        mAdapter = new SiteListAdapter(mParentActivity, R.layout.site_list_row, mSites);
+        mSiteListView.setAdapter(mAdapter);
+
+        if (!mInitializeSites) {
             mNoSiteLayout.setRefreshing(true);
             getSitesRequest();
         }
-
-        mAdapter = new SiteListAdapter(mParentActivity, R.layout.site_list_row, getSites());
-        mSiteListView.setAdapter(mAdapter);
 
         mCreateSiteButton = (FloatingActionButton) view.findViewById(R.id.create_site_button);
         mCreateSiteButton.setOnClickListener(new View.OnClickListener() {
@@ -96,6 +101,23 @@ public class SiteListFragment extends Fragment {
                 mParentActivity.replaceFragment(CreateSiteFragment.newInstance());
             }
         });
+
+        // Make sure we update the list if we delete a site
+        Site deletedSite = mParentActivity.getSite();
+        if (deletedSite != null) {
+            int position = getDeletedSite(deletedSite);
+            mSites.remove(position);
+            mAdapter.notifyItemRemoved(position);
+//            mAdapter.notifyDataSetChanged();
+            mParentActivity.setSite(null);
+        }
+    }
+
+    private int getDeletedSite(Site site) {
+        for (int i = 0; i < mSites.size(); i++) {
+            if (mSites.get(i).getId() == site.getId()) return i;
+        }
+        return -1;
     }
 
     @Override
@@ -111,7 +133,6 @@ public class SiteListFragment extends Fragment {
         if (requestQueue != null) {
             requestQueue.cancelAll(SITE_LIST_REQUEST);
         }
-
     }
 
     @Override
@@ -127,14 +148,14 @@ public class SiteListFragment extends Fragment {
             public void onResponse(ArrayList<Site> sites) {
                 setSites(sites);
                 Log.e("Site Response", "Returned");
-                if (getSites().size() == 0) hideList();
+                if (mSites.size() == 0) hideList();
                 else {
                     showList();
                     mAdapter.notifyDataSetChanged();
                 }
                 setSwipeFalse();
+                mInitializeSites = true;
             }
-
         }, this);
         siteListRequest.setTag(SITE_LIST_REQUEST);
         mNetworkManager.getRequestQueue().add(siteListRequest);
@@ -150,15 +171,9 @@ public class SiteListFragment extends Fragment {
         }.start();
     }
 
-    // Getters
-    public SiteMapper getSites() {
-        if (mSites == null) mSites = new SiteMapper();
-        return mSites;
-    }
-
     public void setSites(ArrayList<Site> sites) {
-        if (mSites == null) mSites = new SiteMapper();
-        mSites.setSites(sites);
+        mSites.clear();
+        mSites.addAll(sites);
     }
 
     private void showList() {
