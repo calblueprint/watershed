@@ -479,9 +479,8 @@ public class MainActivity extends ActionBarActivity
         mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
-                if (checkClosedMenu(f)) ((FloatingActionMenuAbstractFragment) f).closeMenu();
                 mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                onBackPressed();
             }
         });
     }

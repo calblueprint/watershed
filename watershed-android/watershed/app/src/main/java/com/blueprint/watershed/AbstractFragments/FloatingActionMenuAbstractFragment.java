@@ -16,7 +16,7 @@ public abstract class FloatingActionMenuAbstractFragment extends Fragment {
         return mMenu.isExpanded();
     }
 
-    public boolean closeMenu() {
+    public void closeMenu() {
         mMenu.collapse();
     }
 }
