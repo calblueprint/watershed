@@ -158,7 +158,6 @@ public abstract class TaskAbstractFragment extends Fragment {
             public void onClick(View view) { openUserDialog(); }
         });
 
-
         mDueDateField = (TextView) mParentActivity.findViewById(R.id.create_task_due_date);
         mDueDateField.setOnClickListener(new View.OnClickListener() {
             @Override

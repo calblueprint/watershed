@@ -116,7 +116,6 @@ public abstract class TaskListAbstractFragment extends ListFragment {
             }
         });
 
-
         mCreateTask = (FloatingActionButton) view.findViewById(R.id.create_task_button);
         mCreateTask.setOnClickListener(new View.OnClickListener() {
             @Override
