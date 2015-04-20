@@ -102,6 +102,6 @@
     <style name="CoverPhotoPagerView">
         <item name="android:background">@drawable/empty_site_image</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">200dp</item>
+        <item name="android:layout_height">220dp</item>
     </style>
 </resources>

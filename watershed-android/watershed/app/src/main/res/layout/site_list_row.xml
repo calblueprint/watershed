@@ -78,10 +78,8 @@
 
             </RelativeLayout>
             <com.blueprint.watershed.Views.CoverPhotoPagerView
+                style="@style/CoverPhotoPagerView"
                 android:id="@+id/cover_photo_pager_view"
-                android:background="@color/ws_blue"
-                android:layout_width="wrap_content"
-                android:layout_height="220dp"
                 android:clickable="true"
                 android:layout_below="@id/site_list_row_info_container"
                 />
