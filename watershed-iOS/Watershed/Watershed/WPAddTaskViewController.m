@@ -35,6 +35,7 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 -(void)viewDidLoad {
+    [super viewDidLoad];
 
     self.navigationItem.title = @"New Task";
     self.view.taskFormTableView.delegate = self;
@@ -48,8 +49,6 @@ static NSString *CellIdentifier = @"Cell";
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                           action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
-        [super viewDidLoad];
-    
 }
 
 -(void)dismissKeyboard {

@@ -13,8 +13,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self preloadFields];
     self.navigationItem.title = @"Edit Site";
+    [self preloadFields];
 }
 
 // Override
@@ -49,7 +49,6 @@
 
 - (void)setTask:(WPTask *)task{
     _task = task;
-//    [self preloadFields];
 }
 
 @end
