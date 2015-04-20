@@ -18,6 +18,8 @@ import java.util.ArrayList;
 @JsonSerialize(using = SiteSerializer.class)
 public class Site implements APIObject {
 
+    public int TRIM_LENGTH = 100;
+
     // Attributes
     private Integer mId;
     private String mName;
@@ -80,8 +82,14 @@ public class Site implements APIObject {
         return String.format("%s\n%s, %s %d", getStreet(), getCity(), getState(), getZipCode());
     }
 
+    @JsonIgnore
     public String getLocationOneLine() {
         return String.format("%s, %s, %s, %d", getStreet(), getCity(), getState(), getZipCode());
+    }
+
+    @JsonIgnore
+    public String getTrimmedText() {
+        return String.format("%s...read more", getDescription().substring(0, TRIM_LENGTH) + "...");
     }
 
     // Setters

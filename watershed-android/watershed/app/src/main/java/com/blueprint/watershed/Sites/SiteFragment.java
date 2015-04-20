@@ -47,6 +47,9 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
     private Site mSite;
     private ArrayList<MiniSite> mMiniSites;
 
+    private TextView mSiteTitle;
+    private TextView mSiteDescription;
+    private TextView mSiteAddress;
 
     public static SiteFragment newInstance(Site site) {
         SiteFragment siteFragment = new SiteFragment();
@@ -56,10 +59,26 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
 
     public void configureWithSite(Site site) { mSite = site; }
 
-    public void configureViewWithSite(View view, Site site) {
-        ((TextView) view.findViewById(R.id.site_name)).setText(site.getName());
-        ((TextView) view.findViewById(R.id.site_description)).setText(site.getDescription());
-        ((TextView) view.findViewById(R.id.site_location)).setText(site.getLocationOneLine());
+    public void configureViewWithSite(View view, final Site site) {
+        mSiteTitle = (TextView) view.findViewById(R.id.site_name);
+        mSiteTitle.setText(site.getName());
+
+        mSiteDescription = (TextView) view.findViewById(R.id.site_description);
+        mSiteDescription.setText(site.getTrimmedText());
+        mSiteDescription.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utility.showAndBuildDialog(mParentActivity, null, site.getDescription(), "Back", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                       dialog.dismiss();
+                    }
+                }, null);
+            }
+        });
+
+        mSiteAddress = (TextView) view.findViewById(R.id.site_location);
+        mSiteAddress.setText(site.getLocationOneLine());
     }
 
     @Override
