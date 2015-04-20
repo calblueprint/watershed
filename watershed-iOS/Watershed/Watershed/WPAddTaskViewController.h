@@ -23,7 +23,7 @@
     SelectSiteDelegate,
     SelectAssigneeDelegate
 >
-- (void)setTask:(WPTask *)task;
+//- (void)setTask:(WPTask *)task;
 
 @property (nonatomic) WPTasksListViewController *parent;
 @property (nonatomic) UITextField *dateField;

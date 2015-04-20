@@ -161,8 +161,6 @@ static NSString *CellIdentifier = @"Cell";
     WPAddTaskTableViewCell *cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     switch (indexPath.row) {
         case 0: {
-            _taskField = [[UITextField alloc] init];
-            _taskField.delegate = self;
             _taskField.placeholder = @"Required";
             _taskField.tag = 1;
             _taskField.textColor = [UIColor wp_paragraph];
@@ -172,8 +170,6 @@ static NSString *CellIdentifier = @"Cell";
             break;
         }
         case 1: {
-            _dateField = [[UITextField alloc] init];
-            _dateField.delegate = self;
             cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:_dateField];
             UIDatePicker *datePicker = [[UIDatePicker alloc] init];
             datePicker.datePickerMode = UIDatePickerModeDate;
@@ -187,15 +183,12 @@ static NSString *CellIdentifier = @"Cell";
             break;
         }
         case 2: {
-            _urgentSwitch = [[UISwitch alloc] init];
             _urgentSwitch.onTintColor = [UIColor wp_red];
             cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:_urgentSwitch];
             cell.label.text = @"Urgent";
             break;
         }
         case 3: {
-            _siteField = [[UITextField alloc] init];
-            _siteField.delegate = self;
             cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:_siteField];
             _siteField.placeholder = @"Required";
             cell.label.text = @"Mini Site";
@@ -205,8 +198,6 @@ static NSString *CellIdentifier = @"Cell";
             break;
         }
         case 4: {
-            _assigneeField = [[UITextField alloc] init];
-            _assigneeField.delegate = self;
             cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:_assigneeField];
             _assigneeField.placeholder = @"Required";
             cell.label.text = @"Assignee";
@@ -216,7 +207,6 @@ static NSString *CellIdentifier = @"Cell";
             break;
         }
         case 5: {
-            _descriptionView = [[UITextView alloc] init];
             cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:_descriptionView];
             cell.label.text = @"Description";
             _descriptionView.textColor = [UIColor wp_paragraph];
@@ -250,6 +240,55 @@ static NSString *CellIdentifier = @"Cell";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 6;
 }
+
+#pragma mark - Lazy Instantiation 
+
+- (UITextField *)dateField {
+    if (!_dateField) {
+        _dateField = [[UITextField alloc] init];
+        _dateField.delegate = self;
+    }
+    return _dateField;
+}
+
+- (UITextField *)taskField {
+    if (!_taskField) {
+        _taskField = [[UITextField alloc] init];
+        _taskField.delegate = self;
+    }
+    return _taskField;
+}
+
+- (UITextField *)siteField {
+    if (!_siteField) {
+        _siteField = [[UITextField alloc] init];
+        _siteField.delegate = self;
+    }
+    return _siteField;
+}
+
+- (UITextField *)assigneeField {
+    if (!_assigneeField) {
+        _assigneeField = [[UITextField alloc] init];
+        _assigneeField.delegate = self;
+    }
+    return _assigneeField;
+}
+
+- (UITextView *)descriptionView {
+    if (!_descriptionView) {
+        _descriptionView = [[UITextView alloc] init];
+    }
+    return _descriptionView;
+}
+
+- (UISwitch *)urgentSwitch {
+    if (!_urgentSwitch) {
+        _urgentSwitch = [[UISwitch alloc] init];
+    }
+    return _urgentSwitch;
+}
+
 
 
 
