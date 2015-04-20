@@ -14,8 +14,8 @@
         android:layout_marginRight="@dimen/no_margin"
         android:background="@color/medium_gray"
         android:numColumns="2"
-        android:verticalSpacing="@dimen/tight_margin"
-        android:horizontalSpacing="@dimen/tight_margin">
+        android:verticalSpacing="@dimen/hella_tight_margin"
+        android:horizontalSpacing="@dimen/hella_tight_margin">
     </com.blueprint.watershed.Views.HeaderGridView>
 
     <com.blueprint.watershed.Views.Material.FloatingActionsMenu
