@@ -24,7 +24,6 @@ import com.blueprint.watershed.Networking.Sites.DeleteSiteRequest;
 import com.blueprint.watershed.Networking.Sites.SiteRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Utilities.Utility;
-import com.blueprint.watershed.Views.CoverPhotoPagerView;
 import com.blueprint.watershed.Views.HeaderGridView;
 import com.blueprint.watershed.Views.Material.FloatingActionButton;
 import com.blueprint.watershed.Views.Material.FloatingActionsMenu;
@@ -58,10 +57,9 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
     public void configureWithSite(Site site) { mSite = site; }
 
     public void configureViewWithSite(View view, Site site) {
-        ((CoverPhotoPagerView) view.findViewById(R.id.cover_photo_pager_view)).configureWithPhotos(site.getPhotos());
         ((TextView) view.findViewById(R.id.site_name)).setText(site.getName());
         ((TextView) view.findViewById(R.id.site_description)).setText(site.getDescription());
-        ((TextView) view.findViewById(R.id.site_location)).setText(site.getLocation());
+        ((TextView) view.findViewById(R.id.site_location)).setText(site.getLocationOneLine());
     }
 
     @Override
