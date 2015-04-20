@@ -62,7 +62,6 @@ public abstract class TaskListAbstractFragment extends ListFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View finalView = inflater.inflate(R.layout.fragment_task_list, container, false);
         initializeViews(finalView);
-        mParentActivity.setMenuAction(true);
         getTasksRequest();
         return finalView;
     }
@@ -70,6 +69,7 @@ public abstract class TaskListAbstractFragment extends ListFragment {
     @Override
     public void onResume() {
         super.onResume();
+        mParentActivity.setMenuAction(true);
         mParentActivity.setToolbarElevation(0);
     }
 

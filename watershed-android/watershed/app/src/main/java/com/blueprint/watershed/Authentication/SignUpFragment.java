@@ -1,6 +1,5 @@
 package com.blueprint.watershed.Authentication;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -59,16 +58,6 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         getSignUpButton().setOnClickListener(this);
 
         return rootView;
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 
     // View.OnClickListener

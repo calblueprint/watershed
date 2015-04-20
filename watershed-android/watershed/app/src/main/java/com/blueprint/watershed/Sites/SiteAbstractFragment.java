@@ -1,6 +1,5 @@
 package com.blueprint.watershed.Sites;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -33,7 +32,7 @@ public abstract class  SiteAbstractFragment extends Fragment{
     protected static final String COMPLETE = "complete";
 
     protected NetworkManager mNetworkManager;
-    protected MainActivity mMainActivity;
+    protected MainActivity mParentActivity;
     protected EditText mTitleField;
     protected EditText mDescriptionField;
     protected EditText mCityField;
@@ -53,7 +52,7 @@ public abstract class  SiteAbstractFragment extends Fragment{
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
-        mMainActivity = (MainActivity) getActivity();
+        mParentActivity = (MainActivity) getActivity();
     }
 
     @Override
@@ -63,6 +62,12 @@ public abstract class  SiteAbstractFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_create_site, container, false);
         setButtonListeners(view);
         return view;
+    }
+    
+    @Override
+    public void onResume() {
+        super.onResume();
+        mParentActivity.setMenuAction(false);
     }
 
     protected void setButtonListeners(View view){
@@ -74,16 +79,6 @@ public abstract class  SiteAbstractFragment extends Fragment{
         mZipField = (EditText)view.findViewById(R.id.create_site_zip);
         mStateField = (EditText)view.findViewById(R.id.create_site_state);
         mSubmitButton.setOnClickListener(validateAndSubmit());
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 
     /**
@@ -128,14 +123,12 @@ public abstract class  SiteAbstractFragment extends Fragment{
                     mZipField.setError("Please enter a valid ZIP code");
                 }
 
-                if (has_errors) {
-                    return;
-                }
+                if (has_errors) return; 
 
                 submitListener();
 
                 SiteListFragment returnFragment = SiteListFragment.newInstance();
-                mMainActivity.replaceFragment(returnFragment);
+                mParentActivity.replaceFragment(returnFragment);
             }
         };
     }
@@ -176,7 +169,7 @@ public abstract class  SiteAbstractFragment extends Fragment{
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
 
         if (type.equals(CREATE)) {
-            CreateSiteRequest createSiteRequest = new CreateSiteRequest(mMainActivity, site, params, new Response.Listener<Site>() {
+            CreateSiteRequest createSiteRequest = new CreateSiteRequest(mParentActivity, site, params, new Response.Listener<Site>() {
                 @Override
                 public void onResponse(Site site) {
                     Log.e("successful site", "creation");
@@ -185,7 +178,7 @@ public abstract class  SiteAbstractFragment extends Fragment{
             mNetworkManager.getRequestQueue().add(createSiteRequest);
         }
         else {
-            EditSiteRequest editSiteRequest = new EditSiteRequest(mMainActivity, site, params, new Response.Listener<Site>() {
+            EditSiteRequest editSiteRequest = new EditSiteRequest(mParentActivity, site, params, new Response.Listener<Site>() {
                 @Override
                 public void onResponse(Site site) {
                     Log.e("successful site", "edit");
@@ -193,7 +186,7 @@ public abstract class  SiteAbstractFragment extends Fragment{
             });
             mNetworkManager.getRequestQueue().add(editSiteRequest);
         }
-        mMainActivity.getSupportFragmentManager().popBackStack();
+        mParentActivity.getSupportFragmentManager().popBackStack();
 
     }
 
@@ -212,5 +205,4 @@ public abstract class  SiteAbstractFragment extends Fragment{
     }
 
     public abstract void submitListener();
-
 }

@@ -18,9 +18,6 @@ public class FacebookAuthFragment extends Fragment {
     public static FacebookAuthFragment newInstance() {
         return new FacebookAuthFragment();
     }
-    public FacebookAuthFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
