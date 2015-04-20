@@ -149,10 +149,13 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         return true;
     }
 
+    /**
+     * Initializes all the views inthe fragment and hooks them up to listeners
+     */
     public void initializeViews() {
-        setLoginButton((Button)findViewById(R.id.login_load_fragment_button));
-        setFacebookButton((com.facebook.widget.LoginButton)findViewById(R.id.authButton));
-        setSignUpButton((Button)findViewById(R.id.sign_up_load_fragment_button));
+        mLoginButton = (Button) findViewById(R.id.login_load_fragment_button);
+        mFacebookButton = (com.facebook.widget.LoginButton) findViewById(R.id.authButton);
+        mSignUpButton = (Button) findViewById(R.id.sign_up_load_fragment_button);
 
         mLoginButton.setOnClickListener(this);
         mSignUpButton.setOnClickListener(this);
@@ -163,12 +166,29 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         Utility.setKeyboardListener(this, mLayout);
     }
 
-    public void onClick(View view){
-        if (view == mFacebookButton) didTapFacebookButton(view);
-        else if (view == mLoginButton) didTapLoginLoadFragmentButton(view);
-        else didTapSignUpLoadFragmentButton(view);
+    /**
+     * Sets click listeners
+     * @param view View that was clicked
+     */
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.authButton:
+                didTapFacebookButton(view);
+                break;
+            case R.id.login_load_fragment_button:
+                didTapLoginLoadFragmentButton(view);
+                break;
+            case R.id.sign_up_load_fragment_button:
+                didTapSignUpLoadFragmentButton(view);
+                break;
+        }
     }
 
+    /**
+     * Checks if the user has the credentials to log in
+     * @param mPreferences SharedPreferences for the application
+     * @return boolean indicating whether or not we have the credentials to sign in
+     */
     public boolean hasAuthCredentials(SharedPreferences mPreferences) {
         return !mPreferences.getString("authentication_token", "none").equals("none") &&
                !mPreferences.getString("email", "none").equals("none") &&
@@ -176,7 +196,10 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
                 mPreferences.getInt("userId", 0) != 0;
     }
 
-    // UI Actions
+    /**
+     * Handles regular login
+     * @param view view that was clicked
+     */
     public void didTapLoginLoadFragmentButton(View view) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -249,6 +272,10 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         }.execute(null, null, null);
     }
 
+    /**
+     * Handles regular sign up
+     * @param view View that was clicked
+     */
     public void didTapSignUpLoadFragmentButton(View view) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -259,8 +286,11 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         fragmentTransaction.commit();
     }
 
+    /**
+     * Makes a request to facebook to sign in a user
+     * @param params HashMap of parameters to send in the request
+     */
     public void facebookRequest(HashMap<String, Object> params) {
-
         FacebookLoginRequest facebookLoginRequest = new FacebookLoginRequest(this, params, new Response.Listener<Session>() {
             @Override
             public void onResponse(Session session) {
@@ -276,6 +306,10 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         mLoginNetworkManager.getRequestQueue().add(facebookLoginRequest);
     }
 
+    /**
+     * Handles a regular login
+     * @param params Email and password credentials
+     */
     public void loginRequest(HashMap<String, String> params) {
         LoginRequest loginRequest = new LoginRequest(this, params, new Response.Listener<Session>() {
             @Override
@@ -292,7 +326,10 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         mLoginNetworkManager.getRequestQueue().add(loginRequest);
     }
 
-
+    /**
+     * Handles a regular signup
+     * @param params Name, email, password credentials
+     */
     public void signUpRequest(HashMap<String, Object> params) {
 
         SignUpRequest signUpRequest = new SignUpRequest(this, params, new Response.Listener<Session>() {
@@ -316,6 +353,10 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         mUiHelper.onActivityResult(requestCode, resultCode, data);
     }
 
+    /**
+     * Stores credentials in mPreferences and logs in the user
+     * @param session Session Object containing user information returned from the request
+     */
     public void storeSessionAndStartMainActivity(Session session) {
         final Intent intent = new Intent(this, MainActivity.class);
         ObjectMapper mapper = mLoginNetworkManager.getObjectMapper();
@@ -353,17 +394,8 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         mUiHelper.onSaveInstanceState(savedInstanceState);
     }
 
-    // Getters
-    public ImageView getLandingPageImage() { return mLandingPageImage; }
-    public Button getLoginButton() { return mLoginButton; }
-    public Button getFacebookButton() { return mFacebookButton; }
-    public Button getSignUpButton() { return mSignUpButton; }
-    public NetworkManager getRequestHandler(){return mLoginNetworkManager;}
-    public GoogleCloudMessaging getGcm() { return mGoogleCloudMessaging; }
     // Setters
-    public void setLandingPageImage(ImageView imageView) { mLandingPageImage = imageView; }
     public void setLoginButton(Button loginButton) { mLoginButton = loginButton; }
     public void setFacebookButton(com.facebook.widget.LoginButton facebookButton) { mFacebookButton = facebookButton; }
     public void setSignUpButton(Button signUpButton) { mSignUpButton = signUpButton; }
-    public void setGcm(GoogleCloudMessaging gcm) { mGoogleCloudMessaging = gcm; }
 }

@@ -14,11 +14,11 @@ class ApplicationController < ActionController::Base
   end
 
   def error_response(object, message = nil, status = nil)
-    render json: Error.new(object, message), serializer: ErrorSerializer, status: status || 433
+    render json: Error.new(object, message), serializer: ErrorSerializer, status: status || 403
   end
 
   def unauthorized_response
-    error_response(nil, "Unauthorized", 403)
+    error_response(nil, "Unauthorized", 403 )
   end
 
 end

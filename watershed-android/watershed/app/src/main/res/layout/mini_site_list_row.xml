@@ -5,10 +5,9 @@
     android:layout_height="match_parent">
 
     <com.blueprint.watershed.Views.CoverPhotoPagerView
-        android:id="@+id/cover_photo_pager_view"
-        android:background="@color/ws_blue"
+        style="@style/CoverPhotoPagerView"
         android:layout_width="wrap_content"
-        android:layout_height="200dp"
+        android:id="@+id/cover_photo_pager_view"
         />
 
     <LinearLayout
@@ -65,7 +64,5 @@
                 />
 
         </LinearLayout>
-
     </LinearLayout>
-
 </RelativeLayout>
