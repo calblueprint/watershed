@@ -58,9 +58,8 @@
 - (void)editTask {
     WPEditTaskViewController *editTaskViewController = [[WPEditTaskViewController alloc] init];
     [editTaskViewController setTask:self.task];
-//    [editTaskNavController.navigationBar setBackgroundColor:[UIColor whiteColor]];
-//    [editTaskNavController.navigationBar setBarTintColor:[UIColor whiteColor]];
-//    [editTaskNavController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
+    editTaskViewController.taskParent = self;
+    [self addChildViewController:editTaskViewController];
     [[self navigationController] pushViewController: editTaskViewController animated:YES];
 }
 
