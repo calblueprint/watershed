@@ -171,13 +171,10 @@ static NSString * const TASKS_URL = @"tasks";
     NSString *taskString = [WPNetworkingManager createURLWithEndpoint:TASK_URL];
     [self addAuthenticationParameters:parameters];
     NSMutableDictionary *taskJSON = [MTLJSONAdapter JSONDictionaryFromModel:task].mutableCopy;
-    [taskJSON setObject:task.taskId forKey:@"task_id"];
     [parameters setObject:taskJSON forKey:@"task"];
 
     [self PUT:taskString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSMutableDictionary *taskJSON = (NSMutableDictionary *)responseObject[@"task"];
-        WPTask *taskResponse = [MTLJSONAdapter modelOfClass:WPTask.class fromJSONDictionary:taskJSON error:nil];
-        success(taskResponse);
+        success(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not edit task." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [incorrect show];

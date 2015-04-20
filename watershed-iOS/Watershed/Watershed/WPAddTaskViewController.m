@@ -94,11 +94,22 @@ static NSString *CellIdentifier = @"Cell";
 
         self.navigationItem.rightBarButtonItem.enabled = NO;
 
-        [[WPNetworkingManager sharedManager] createTaskWithTask:task parameters:[[NSMutableDictionary alloc] init] success:^{
-            [self.parent requestAndLoadTasks];
-            [self.navigationController popViewControllerAnimated:YES];
-        }];
+        [self updateServerWithTask:task];
     }
+}
+
+- (void)dismissSelf {
+    [self.parent requestAndLoadTasks];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+- (void)updateServerWithTask:(WPTask *)task {
+    __weak __typeof(self)weakSelf = self;
+    [[WPNetworkingManager sharedManager] createTaskWithTask:task parameters:[[NSMutableDictionary alloc] init] success:^{
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf dismissSelf];
+    }];
 }
 
 -(void)selectTaskViewControllerDismissed:(NSString *)stringForFirst {

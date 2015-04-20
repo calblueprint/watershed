@@ -17,25 +17,27 @@
     [self preloadFields];
 }
 
+- (void)dismissSelf {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 // Override
-//- (void)updateServerWithSite:(WPSite *)site {
-////    site.siteId = self.site.siteId;
-//    
-//    // Don't request the list of sites, because it is already called in the ViewController's viewWillAppear
-//    __weak __typeof(self)weakSelf = self;
-//    [[WPNetworkingManager sharedManager] editTaskWithTask:
-//                                               parameters:[[NSMutableDictionary alloc] init]
-//                                                  success:^(WPTask *task) {
-//        __strong __typeof(weakSelf)strongSelf = weakSelf;
-//        [strongSelf dismissSelf];
-//    }];
-//}
+- (void)updateServerWithSite:(WPTask *)task {
+    
+    __weak __typeof(self)weakSelf = self;
+    [[WPNetworkingManager sharedManager] editTaskWithTask: self.task
+                                               parameters:[[NSMutableDictionary alloc] init]
+                                                  success:^(WPTask *task) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf dismissSelf];
+    }];
+}
 
 #pragma mark - Private Methods
 
 - (void)preloadFields {
     self.taskField.text = self.task.title;
-    self.taskField.text = @"TESTING";
     self.dateField.text = self.task.dueDate;
     self.selectedAssignee = self.task.assignee;
     self.assigneeField.text = self.selectedAssignee.name;
