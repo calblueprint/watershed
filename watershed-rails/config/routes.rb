@@ -17,7 +17,7 @@ Rails.application.routes.draw do
         end
 
         scope module: :users do
-          # resources :sites,         only: [:index]
+          resources :sites,         only: [:index]
           resources :mini_sites,    only: [:index]
           resources :tasks,         only: [:index]
           resources :field_reports, only: [:index]
