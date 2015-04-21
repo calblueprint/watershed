@@ -18,9 +18,6 @@ import java.util.HashMap;
  */
 public class CreateEditMiniSiteRequest extends BaseRequest {
 
-    Activity mActivity;
-    MiniSite mMiniSite;
-
     public CreateEditMiniSiteRequest(final Activity activity, final MiniSite miniSite, final Response.Listener<MiniSite> listener,
                                      int requestType, String url) {
         super(requestType, url, miniSiteParams(activity, miniSite),
@@ -39,9 +36,6 @@ public class CreateEditMiniSiteRequest extends BaseRequest {
                         }
                     }
                 }, activity);
-
-        mMiniSite = miniSite;
-        mActivity = activity;
     }
 
     /**

@@ -15,16 +15,18 @@ import com.blueprint.watershed.R;
 import com.blueprint.watershed.Views.CircularTextView;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
 
+import java.util.List;
+
 /**
  * Created by Mark Miyashita on 10/14/14.
  * Adapter that holds all the sites.
  */
 public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHolder> {
 
-    MainActivity mParentActivity;
-    Context context;
-    int layoutResourceId;
-    SiteMapper sites;
+    protected MainActivity mParentActivity;
+    protected Context context;
+    protected int layoutResourceId;
+    protected List<Site> sites;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
@@ -45,7 +47,7 @@ public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHo
         }
     }
 
-    public SiteListAdapter(MainActivity mainActivity, int layoutResourceId, SiteMapper sites) {
+    public SiteListAdapter(MainActivity mainActivity, int layoutResourceId, List<Site> sites) {
         this.mParentActivity = mainActivity;
         this.layoutResourceId = layoutResourceId;
         this.context = mainActivity;
@@ -69,7 +71,7 @@ public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHo
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         if (sites.size() > 0 && position < sites.size()) {
-            final Site site = sites.getSiteWithPosition(position);
+            final Site site = sites.get(position);
             holder.photosView.configureWithPhotos(site.getPhotos());
             holder.numberOfTasksView.configureLabels(Integer.toString(site.getTasksCount()), "TASKS");
             holder.topLabel.setText(site.getName());
@@ -77,10 +79,7 @@ public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHo
             View.OnClickListener listener = new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    SiteFragment siteFragment = new SiteFragment();
-                    siteFragment.configureWithSite(site);
-
-                    mParentActivity.replaceFragment(siteFragment);
+                    mParentActivity.replaceFragment(SiteFragment.newInstance(site));
                 }
             };
             holder.parentView.setOnClickListener(listener);

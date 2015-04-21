@@ -187,6 +187,23 @@ static NSString * const TASKS_URL = @"tasks";
     }];
 }
 
+- (void)deleteTaskWithTask:(WPTask *)task parameters:(NSMutableDictionary *)parameters success:(void (^)(WPTask *task))success {
+    NSString *taskEndpoint = [@"/" stringByAppendingString:[task.taskId stringValue]];
+    NSString *TASK_URL = [TASKS_URL stringByAppendingString:taskEndpoint];
+    NSString *taskString = [WPNetworkingManager createURLWithEndpoint:TASK_URL];
+    [self addAuthenticationParameters:parameters];
+    NSMutableDictionary *taskJSON = [MTLJSONAdapter JSONDictionaryFromModel:task].mutableCopy;
+    [taskJSON setObject:task.taskId forKey:@"task_id"];
+    [parameters setObject:taskJSON forKey:@"task"];
+
+    [self DELETE:taskString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not delete task." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
+
+}
 
 - (void)requestSitesListWithParameters:(NSMutableDictionary *)parameters success:(void (^)(NSMutableArray *sitesList))success {
     NSString *sitesString = [WPNetworkingManager createURLWithEndpoint:SITES_URL];
@@ -274,11 +291,6 @@ static NSString * const TASKS_URL = @"tasks";
         WPMiniSite *miniSiteResponse = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:miniSiteJSON error:nil];
         miniSiteResponse.site = miniSite.site;
         miniSiteResponse.imageURLs = miniSite.imageURLs;
-        // NSArray *photosListJSON = miniSiteJSON[@"photos"];
-        // for (NSDictionary *photoJSON in photosListJSON) {
-        //     [miniSiteResponse.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];
-        // }
-
         NSArray *fieldReportListJSON = miniSiteJSON[@"field_reports"];
         NSMutableArray *fieldReportList = [[NSMutableArray alloc] init];
         for (NSDictionary *fieldReportJSON in fieldReportListJSON) {
@@ -340,10 +352,6 @@ static NSString * const TASKS_URL = @"tasks";
         fieldReportResponse.miniSite = fieldReport.miniSite;
         fieldReportResponse.imageURLs = fieldReport.imageURLs;
         fieldReportResponse.user = [MTLJSONAdapter modelOfClass:WPUser.class fromJSONDictionary:fieldReportJSON[@"user"] error:nil];
-        // NSDictionary *photoJSON = fieldReportJSON[@"photo"];
-        // if (!([photoJSON isEqual:[NSNull null]]) && photoJSON) {
-        //     [fieldReport.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];
-        // }
         success(fieldReportResponse);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load field report." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];

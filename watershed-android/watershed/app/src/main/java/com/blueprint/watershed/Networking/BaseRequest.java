@@ -30,6 +30,7 @@ public abstract class BaseRequest extends JsonObjectRequest {
     private Response.Listener listener;
     private Response.Listener errorListener;
 
+//    private static final String baseURL = "http://10.142.39.129:3000/api/v1/";
 //    private static final String baseURL = "https://intense-reaches-1457.herokuapp.com/api/v1/";
     private static final String baseURL = "https://floating-bayou-8262.herokuapp.com/api/v1/";
 
@@ -105,6 +106,8 @@ public abstract class BaseRequest extends JsonObjectRequest {
     @Override
     public HashMap<String, String> getHeaders() {
         HashMap<String, String> headers = new HashMap<String, String>();
+        Log.e("X-AUTH-TOKEN", preferences.getString("authentication_token", "none"));
+        Log.e("X-AUTH-EMAIL", preferences.getString("email", "none"));
         headers.put("X-AUTH-TOKEN", preferences.getString("authentication_token", "none"));
         headers.put("X-AUTH-EMAIL", preferences.getString("email", "none"));
         return headers;

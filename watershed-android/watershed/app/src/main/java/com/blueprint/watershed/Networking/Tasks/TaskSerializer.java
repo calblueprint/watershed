@@ -19,7 +19,6 @@ public class TaskSerializer extends JsonSerializer<Task> {
         jgen.writeStartObject();
         jgen.writeStringField("title", value.getTitle());
         jgen.writeStringField("description", value.getDescription());
-//        MiniSite mini = value.getMiniSite();
         jgen.writeNumberField("mini_site_id", value.getMiniSiteId());
         jgen.writeNumberField("assigner_id", value.getAssignerId());
         jgen.writeNumberField("assignee_id", value.getAssigneeId());

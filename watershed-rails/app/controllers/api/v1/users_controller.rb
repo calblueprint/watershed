@@ -43,11 +43,24 @@ class Api::V1::UsersController < Api::V1::BaseController
     end
   end
 
+  def register
+    if @user.update(registration_params)
+      render json: @user, serializer: UserSerializer
+    else
+      error_response(@user)
+    end
+  end
+
   private
 
   def user_params
     params.require(:user).permit(:email, :name, :role, :password, :current_password,
-                                 :password_confirmation, :facebook_auth_token)
+                                 :password_confirmation, :facebook_auth_token, :registration_id,
+                                 :device_type)
+  end
+
+  def registration_params
+    params.require(:user).permit(:registration_id, :device_type)
   end
 
   def invalid_facebook_login_attempt

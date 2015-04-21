@@ -317,11 +317,9 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
         Bitmap scaledBitmap = null;
 
         if (photo != null)  {
-            Log.i("PHOTOCOUNT",  String.valueOf(photo.getByteCount()));
             int height = photo.getHeight() / 6;
             int width = photo.getWidth() / 6;
             scaledBitmap = Bitmap.createScaledBitmap(photo, width, height, false);
-            Log.i("PHOTOCOUNT",  String.valueOf(scaledBitmap.getByteCount()));
         }
 
         if (scaledBitmap != null) {
@@ -343,7 +341,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
     public void createFieldReportRequest(FieldReport fieldReport) {
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
 
-        CreateFieldReportRequest createFieldReportRequest = new CreateFieldReportRequest(getActivity(), fieldReport, params, new Response.Listener<FieldReport>() {
+        CreateFieldReportRequest createFieldReportRequest = new CreateFieldReportRequest(mParentActivity, fieldReport, params, new Response.Listener<FieldReport>() {
             @Override
             public void onResponse(FieldReport fieldReport) {
                 Log.e("successful field report", "creation");

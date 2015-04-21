@@ -4,7 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.blueprint.watershed.Tasks.TaskFragment;
+import com.blueprint.watershed.Tasks.TaskList.AllTaskListFragment;
+import com.blueprint.watershed.Tasks.TaskList.UserTaskListFragment;
 
 /**
  * Created by Max on 10/19/2014.
@@ -19,12 +20,11 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int index) {
-
         switch (index) {
             case 0:
-                return TaskFragment.newInstance(0);
+                return UserTaskListFragment.newInstance();
             case 1:
-                return TaskFragment.newInstance(1);
+                return AllTaskListFragment.newInstance();
         }
 
         return null;

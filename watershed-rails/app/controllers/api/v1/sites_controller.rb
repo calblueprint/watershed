@@ -35,7 +35,7 @@ class Api::V1::SitesController < Api::V1::BaseController
   end
 
   def destroy
-    if @site.update(site_params)
+    if @site.destroy
       render json: { message: "Deleted site!" }, status: :ok
     else
       error_response(@site)

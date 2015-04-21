@@ -37,6 +37,8 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
+    <string name="add_fieldreport">Add Field Report</string>
+
     <!--About-->
     <string name="about_us">\tThe Watershed Project\'s mission is to inspire Bay Area communities to understand, appreciate and protect our local watersheds. Located at the University of California\'s Richmond Field Station, since 1997 we have pursued this vision through various initiatives. The Healthy Watersheds Initiative focuses on litter and other source of pollutants. The Living Shoreline Initiative aims to help people appreciate the rich potential for healthy underwater habitats in the Bay and along it\'s shoreline, with an emphasis on native Oyster restoration. The Greening Urban Watersheds Initiative seeks to redefine the way we inhabit our urban centers, envisioning a green cityscape that maintains or mimics the natural flows and rhythms of local ecosystems. </string>
     <string name="watershed_title">The Watershed Project</string>
@@ -71,6 +73,8 @@
     <string name="create_mini_site_submit">Create Mini Site</string>
     <string name="mini_site_destroy">Delete Mini Site</string>
 
+    <string name="edit_minisite">Edit Mini site</string>
+
     <!-- Editing User -->
     <string name="edit_profile_name">Name</string>
     <string name="edit_profile_email">Email</string>
@@ -95,5 +99,11 @@
     <string name="heroku_staging">https://floating-bayou-8262.herokuapp.com/api/v1/</string>
     <string name="local_staging">http://10.142.182.151:3000/api/v1/</string>
 
-
+    <!-- Dialog Strings -->
+    <string name="mini_site_delete_title">Delete Mini Site?</string>
+    <string name="mini_site_delete_msg">Are you sure you want to delete this mini site? All associated field reports will be deleted.</string>
+    <string name="task_delete_title">Delete Task?</string>
+    <string name="task_delete_msg">Are you sure you want to delete this task? All associated field reports will be deleted.</string>
+    <string name="site_delete_title">Delete Site?</string>
+    <string name="site_delete_msg">Are you sure you want to delete this site? All associated tasks and mini sites will be deleted.</string>
 </resources>

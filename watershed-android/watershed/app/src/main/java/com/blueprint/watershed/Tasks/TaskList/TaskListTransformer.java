@@ -1,4 +1,4 @@
-package com.blueprint.watershed.Tasks;
+package com.blueprint.watershed.Tasks.TaskList;
 
 import android.support.v4.view.ViewPager;
 import android.view.View;

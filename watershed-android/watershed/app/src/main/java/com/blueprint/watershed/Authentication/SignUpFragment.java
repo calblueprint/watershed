@@ -1,15 +1,14 @@
 package com.blueprint.watershed.Authentication;
 
-import android.app.Activity;
+import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.blueprint.watershed.Activities.LandingPageActivity;
 import com.blueprint.watershed.R;
@@ -19,7 +18,8 @@ import java.util.HashMap;
 
 public class SignUpFragment extends Fragment implements View.OnClickListener {
 
-    private LandingPageActivity parentActivity;
+    private final String REGULAR_LOGIN = "regular";
+    private LandingPageActivity mParentActivity;
     private View rootView;
 
     // UI Elements
@@ -34,13 +34,10 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         return new SignUpFragment();
     }
 
-    public SignUpFragment() {
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        parentActivity = (LandingPageActivity) getActivity();
+        mParentActivity = (LandingPageActivity) getActivity();
     }
 
     @Override
@@ -63,16 +60,6 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         return rootView;
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
     // View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()) {
@@ -89,13 +76,14 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         final String passwordString = getPasswordField().getText().toString();
         final String passwordConfirmationString = getPasswordConfirmationField().getText().toString();
 
-        HashMap<String, String> user_params = new HashMap<String, String>();
+        HashMap<String, Object> user_params = new HashMap<String, Object>();
         user_params.put("name", nameString);
         user_params.put("email", emailString);
         user_params.put("password", passwordString);
         user_params.put("password_confirmation", passwordConfirmationString);
+        user_params.put("device_type", 0);
 
-        parentActivity.signUpRequest(user_params);
+        mParentActivity.registerInBackground(user_params, REGULAR_LOGIN);
     }
 
     // Getters

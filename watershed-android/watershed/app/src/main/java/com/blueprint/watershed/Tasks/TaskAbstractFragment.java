@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -31,6 +32,7 @@ import com.blueprint.watershed.Networking.Tasks.EditTaskRequest;
 import com.blueprint.watershed.Networking.Users.UsersRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Users.User;
+import com.blueprint.watershed.Users.UserHeaderAdapter;
 import com.blueprint.watershed.Utilities.Utility;
 
 import org.json.JSONObject;
@@ -70,6 +72,9 @@ public abstract class TaskAbstractFragment extends Fragment {
     private MiniSite mMiniSite;
     private List<User> mUsers;
     private List<MiniSite> mMiniSites;
+
+    // Dialogs
+    private PickUserDialog mUserDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -153,7 +158,6 @@ public abstract class TaskAbstractFragment extends Fragment {
             public void onClick(View view) { openUserDialog(); }
         });
 
-
         mDueDateField = (TextView) mParentActivity.findViewById(R.id.create_task_due_date);
         mDueDateField.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -207,9 +211,9 @@ public abstract class TaskAbstractFragment extends Fragment {
     private void setEmpty(String field, EditText editText) { editText.setError(field + " can't be blank!"); }
 
     private void openUserDialog() {
-        PickUserDialog newFragment = PickUserDialog.newInstance(mUsers);
-        newFragment.setTargetFragment(this, REQUEST_CODE);
-        newFragment.show(mParentActivity.getSupportFragmentManager(), "userPicker");
+        mUserDialog = PickUserDialog.newInstance(mUsers, this);
+        mUserDialog.setTargetFragment(this, REQUEST_CODE);
+        mUserDialog.show(mParentActivity.getSupportFragmentManager(), "userPicker");
     }
 
     private void openDateDialog() {
@@ -238,7 +242,7 @@ public abstract class TaskAbstractFragment extends Fragment {
             request = new CreateTaskRequest(mParentActivity, task, params, new Response.Listener<Task>() {
                 @Override
                 public void onResponse(Task task) {
-                    TaskFragment taskFragment = TaskFragment.newInstance(0);
+                    TaskViewPagerFragment taskFragment = TaskViewPagerFragment.newInstance();
                     mParentActivity.replaceFragment(taskFragment);
                     Log.e("successful task", "creation");
                 }
@@ -298,8 +302,11 @@ public abstract class TaskAbstractFragment extends Fragment {
     }
 
     public void setUser(User user) {
-        mUser = user;
-        mAssigneeField.setText(mUser.getName());
+        if (mUserDialog != null) {
+            mUser = user;
+            mAssigneeField.setText(mUser.getName());
+            mUserDialog.dismiss();
+        }
     }
 
     public void setMiniSite(MiniSite site) {
@@ -308,7 +315,6 @@ public abstract class TaskAbstractFragment extends Fragment {
     }
 
     public abstract void refreshCompletion();
-
 
     /**
      * Creates a dialog allowing you to pick a date
@@ -346,10 +352,16 @@ public abstract class TaskAbstractFragment extends Fragment {
     public static class PickUserDialog extends DialogFragment {
 
         protected List<User> mUsers;
+        protected TaskAbstractFragment mFragment;
 
-        public static PickUserDialog newInstance(List<User> users) {
+        protected List<User> mEmployee = new ArrayList<>();
+        protected List<User> mAdmin = new ArrayList<>();
+        protected List<User> mMember = new ArrayList<>();
+
+        public static PickUserDialog newInstance(List<User> users, TaskAbstractFragment fragment) {
             PickUserDialog dialog = new PickUserDialog();
             dialog.setUsers(users);
+            dialog.setFragment(fragment);
             return dialog;
         }
 
@@ -357,6 +369,7 @@ public abstract class TaskAbstractFragment extends Fragment {
         @NonNull
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
             builder.setTitle(R.string.pick_user)
                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                        @Override
@@ -366,15 +379,11 @@ public abstract class TaskAbstractFragment extends Fragment {
                    });
 
             if (mUsers != null && mUsers.size() > 0) {
-                builder.setItems(getUserNames(), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Log.i("user", mUsers.get(i).getName());
-                        if (!(getTargetFragment() instanceof TaskAbstractFragment)) Log.e("can't", "even fragment");
-                        TaskAbstractFragment fragment = (TaskAbstractFragment) getTargetFragment();
-                        fragment.setUser(mUsers.get(i));
-                    }
-                });
+                View layout = getActivity().getLayoutInflater().inflate(R.layout.user_list_view, null);
+                ListView listView = (ListView) layout.findViewById(R.id.user_list);
+                UserHeaderAdapter adapter = new UserHeaderAdapter(getActivity(), getUsers(), getFragment());
+                listView.setAdapter(adapter);
+                builder.setView(layout);
             } else {
                 builder.setMessage(R.string.loading_users);
             }
@@ -383,13 +392,29 @@ public abstract class TaskAbstractFragment extends Fragment {
 
         }
 
-        public String[] getUserNames() {
-            String[] names = new String[mUsers.size()];
-            for (int i = 0; i < mUsers.size(); i++) names[i] = mUsers.get(i).getName();
-            return names;
+        public List<User> getUsers() {
+            List<User> userList = new ArrayList<>();
+            for (User user : mUsers) {
+                if (user.getRoleString().equals(User.MANAGER)) mAdmin.add(user);
+                else if (user.getRoleString().equals(User.EMPLOYEE)) mEmployee.add(user);
+                else if (user.getRoleString().equals(User.COMMUNITY_MEMBER)) mMember.add(user);
+            }
+            User mAdminHeader = new User(User.MANAGER);
+            User mEmployeeHeader = new User(User.EMPLOYEE);
+            User mMemberHeader = new User(User.COMMUNITY_MEMBER);
+
+            userList.add(mMemberHeader);
+            userList.addAll(mMember);
+            userList.add(mEmployeeHeader);
+            userList.addAll(mEmployee);
+            userList.add(mAdminHeader);
+            userList.addAll(mAdmin);
+            return userList;
         }
 
         private void setUsers(List<User> users) { mUsers = users; }
+        private TaskAbstractFragment getFragment() { return mFragment; }
+        private void setFragment(TaskAbstractFragment fragment) { mFragment = fragment; }
     }
 
     /**
