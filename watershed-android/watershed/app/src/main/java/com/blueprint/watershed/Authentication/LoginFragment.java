@@ -1,15 +1,14 @@
 package com.blueprint.watershed.Authentication;
 
-import android.app.Activity;
+import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.blueprint.watershed.Activities.LandingPageActivity;
 import com.blueprint.watershed.R;
@@ -54,16 +53,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         getLoginButton().setOnClickListener(this);
 
         return rootView;
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 
     // View.OnClickListener

@@ -97,4 +97,10 @@
         <item name="android:background">@drawable/fab_label_background</item>
         <item name="android:textColor">@color/white</item>
     </style>
+
+    <style name="CoverPhotoPagerView">
+        <item name="android:background">@drawable/empty_site_image</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">200dp</item>
+    </style>
 </resources>

@@ -62,6 +62,10 @@ public class SiteListFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Initializes all the views in the layout
+     * @param view Root view of the fragment
+     */
     private void initializeViews(View view) {
         mNoSiteLayout = (SwipeRefreshLayout) view.findViewById(R.id.no_site_layout);
         mNoSiteLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -113,6 +117,11 @@ public class SiteListFragment extends Fragment {
         }
     }
 
+    /**
+     * Updates the list when we delete a site
+     * @param site Site that was deleted
+     * @return Position of that site
+     */
     private int getDeletedSite(Site site) {
         for (int i = 0; i < mSites.size(); i++) {
             if (mSites.get(i).getId() == site.getId()) return i;
@@ -142,6 +151,10 @@ public class SiteListFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    /**
+     * Request to get all the sites, updates and shows them according,
+     * or displays a text view telling the user that there are no sites.
+     */
     public void getSitesRequest() {
         SiteListRequest siteListRequest = new SiteListRequest(mParentActivity, new Response.Listener<ArrayList<Site>>() {
             @Override
@@ -161,6 +174,9 @@ public class SiteListFragment extends Fragment {
         mNetworkManager.getRequestQueue().add(siteListRequest);
     }
 
+    /**
+     * Fake a minimum animation time for the spinner to "load"
+     */
     public void setSwipeFalse() {
         new CountDownTimer(1000, 1000) {
             public void onTick(long millisUntilFinished) {}
@@ -171,16 +187,26 @@ public class SiteListFragment extends Fragment {
         }.start();
     }
 
+    /**
+     * Set the sites given.
+     * @param sites ArrayList of sites
+     */
     public void setSites(ArrayList<Site> sites) {
         mSites.clear();
         mSites.addAll(sites);
     }
 
+    /**
+     * Shows the list of sites, hides the empty textview
+     */
     private void showList() {
         mNoSiteLayout.setVisibility(View.GONE);
         mSiteListView.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Hides the list of sites, shows the empty textview
+     */
     private void hideList() {
         mNoSiteLayout.setVisibility(View.VISIBLE);
         mSiteListView.setVisibility(View.GONE);

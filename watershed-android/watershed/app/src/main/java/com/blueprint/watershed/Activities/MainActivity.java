@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.AboutFragment;
+import com.blueprint.watershed.AbstractFragments.FloatingActionMenuAbstractFragment;
 import com.blueprint.watershed.FieldReports.FieldReportFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteAbstractFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
@@ -478,8 +479,8 @@ public class MainActivity extends ActionBarActivity
         mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkMenuClosed();
                 mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                onBackPressed();
             }
         });
     }
@@ -501,7 +502,12 @@ public class MainActivity extends ActionBarActivity
     }
 
     @Override
-    public void onBackPressed() { checkMenuClosed(); }
+    public void onBackPressed() {
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
+        if (mDrawerLayout.isDrawerOpen(mDrawer)) mDrawerLayout.closeDrawer(mDrawer);
+        else if (checkClosedMenu(f)) ((FloatingActionMenuAbstractFragment) f).closeMenu();
+        else super.onBackPressed();
+    }
 
     /**
      * HELPERS FOR SITE FRAGMENT
@@ -514,9 +520,12 @@ public class MainActivity extends ActionBarActivity
      * MINI SITE MENU AND SITE MENU
      */
 
-    public void checkMenuClosed() {
-        Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
-        if (!(f instanceof SiteFragment && ((SiteFragment) f).closeMenu()) &&
-            !(f instanceof MiniSiteFragment && ((MiniSiteFragment) f).closeMenu())) super.onBackPressed();
+    /**
+     * Checks whether or not we have to close a menu
+     * @return boolean of whether or not a menu was closed
+     */
+    private boolean checkClosedMenu(Fragment f) {
+        return f instanceof FloatingActionMenuAbstractFragment &&
+               ((FloatingActionMenuAbstractFragment) f).isMenuOpen();
     }
 }
