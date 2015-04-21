@@ -13,14 +13,11 @@ import java.util.List;
 
 public class UnclaimedTaskListFragment extends TaskListAbstractFragment {
 
-    private ArrayList<MiniSite> mUserMiniSiteList;
-
     public static UnclaimedTaskListFragment newInstance() {
         return new UnclaimedTaskListFragment();
     }
 
     public void refreshTaskList(List<Task> tasks) {
-        getMiniSiteRequest();
         tasks = getUnclaimedTasks(tasks);
         if (tasks.size() > 0) {
             showList();
@@ -28,13 +25,6 @@ public class UnclaimedTaskListFragment extends TaskListAbstractFragment {
             for (int i = 0; i < mTaskAdapter.getGroupCount(); i++) mListView.expandGroup(i);
         } else {
             hideList();
-        }
-    }
-
-    private void setMiniSites(ArrayList<MiniSite> miniSites){
-        mUserMiniSiteList.clear();
-        for (MiniSite miniSite : miniSites){
-            mUserMiniSiteList.add(miniSite);
         }
     }
 
@@ -67,17 +57,5 @@ public class UnclaimedTaskListFragment extends TaskListAbstractFragment {
             if (id != null && mUserMiniSiteList.contains(id)) unclaimedTasks.add(task);
         }
         return unclaimedTasks;
-    }
-
-    protected void getMiniSiteRequest() {
-        UserMiniSitesRequest miniSitesRequest = new UserMiniSitesRequest(mParentActivity,
-                new HashMap<String, JSONObject>(),
-                new Response.Listener<ArrayList<MiniSite>>() {
-                    @Override
-                    public void onResponse(ArrayList<MiniSite> miniSites) {
-                        setMiniSites(miniSites);
-                    }
-                }, mParentActivity.getUserId());
-        mNetworkManager.getRequestQueue().add(miniSitesRequest);
     }
 }

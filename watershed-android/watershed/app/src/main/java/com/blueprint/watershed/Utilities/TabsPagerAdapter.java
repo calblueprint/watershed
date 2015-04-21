@@ -27,7 +27,7 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
             case 1:
                 return AllTaskListFragment.newInstance();
             case 2:
-                return AllTaskListFragment.newInstance(); //return UnclaimedTaskListFragment.newInstance();
+                return UnclaimedTaskListFragment.newInstance();
         }
 
         return null;
