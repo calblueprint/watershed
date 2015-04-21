@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.blueprint.watershed.Tasks.TaskList.AllTaskListFragment;
+import com.blueprint.watershed.Tasks.TaskList.UnclaimedTaskListFragment;
 import com.blueprint.watershed.Tasks.TaskList.UserTaskListFragment;
 
 /**
@@ -26,7 +27,7 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
             case 1:
                 return AllTaskListFragment.newInstance();
             case 2:
-                return AllTaskListFragment.newInstance(); // Change this to be unclaimed tasks
+                return AllTaskListFragment.newInstance(); //return UnclaimedTaskListFragment.newInstance();
         }
 
         return null;

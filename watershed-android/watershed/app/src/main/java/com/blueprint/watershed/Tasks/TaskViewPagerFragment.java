@@ -66,7 +66,6 @@ public class TaskViewPagerFragment extends Fragment implements ActionBar.TabList
 
     public void setUpTabs(SlidingTabLayout tabs){
         tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
-
             @Override
             public int getIndicatorColor(int position) {
 
