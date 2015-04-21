@@ -13,7 +13,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"Edit Site";
+    self.navigationItem.title = @"Edit Task";
     [self preloadFields];
 }
 
@@ -58,10 +58,6 @@
     self.urgentSwitch.selected = self.task.urgent;
 }
 
-#pragma mark - Setter Methods
 
-- (void)setTask:(WPTask *)task{
-    _task = task;
-}
 
 @end
