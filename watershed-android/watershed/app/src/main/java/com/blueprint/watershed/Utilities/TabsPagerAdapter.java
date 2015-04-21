@@ -25,6 +25,8 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
                 return UserTaskListFragment.newInstance();
             case 1:
                 return AllTaskListFragment.newInstance();
+            case 2:
+                return AllTaskListFragment.newInstance(); // Change this to be unclaimed tasks
         }
 
         return null;
@@ -33,16 +35,18 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         // get item count - equal to number of tabs
-        return 2;
+        return 3;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return "User Tasks";
+                return "Your";
             case 1:
-                return "All Tasks";
+                return "All";
+            case 2:
+                return "Unclaimed";
         }
         return null;
     }

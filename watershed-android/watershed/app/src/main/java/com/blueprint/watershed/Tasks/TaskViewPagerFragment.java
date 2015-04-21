@@ -10,10 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Tasks.TaskList.TaskListTransformer;
 import com.blueprint.watershed.Utilities.TabsPagerAdapter;
+import com.blueprint.watershed.Views.Material.SlidingTabLayout;
 
 /**
  * Created by charlesx on 4/16/15.
@@ -22,7 +24,7 @@ public class TaskViewPagerFragment extends Fragment implements ActionBar.TabList
 
     private MainActivity mParentActivity;
 
-    private PagerTabStrip mPagerTabStrip;
+    private SlidingTabLayout mTabs;
     private ViewPager mViewPager;
     private TabsPagerAdapter mAdapter;
 
@@ -52,11 +54,25 @@ public class TaskViewPagerFragment extends Fragment implements ActionBar.TabList
     }
 
     private void initializeViews(View view) {
-        mPagerTabStrip = (PagerTabStrip) view.findViewById(R.id.pager_title_strip);
+        mTabs = (SlidingTabLayout) view.findViewById(R.id.pager_title_strip);
+        mTabs.setDistributeEvenly(true);
+        setUpTabs(mTabs);
         mAdapter = new TabsPagerAdapter(getChildFragmentManager());
         mViewPager = (ViewPager) view.findViewById(R.id.pager);
         mViewPager.setAdapter(mAdapter);
         mViewPager.setPageTransformer(true, new TaskListTransformer());
+        mTabs.setViewPager(mViewPager);
+    }
+
+    public void setUpTabs(SlidingTabLayout tabs){
+        tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+
+            @Override
+            public int getIndicatorColor(int position) {
+
+                return getResources().getColor(R.color.white);
+            }
+        });
     }
 
     @Override
