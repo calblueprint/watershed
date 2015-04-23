@@ -1,10 +1,10 @@
 <resources>
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
     </style>
 
-    <style name="AppThemeTranslucent" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppThemeTranslucent" parent="Theme.AppCompat.Light">
         <item name="windowActionBar">false</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
@@ -58,7 +58,7 @@
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:background">@drawable/edit_text_form_transition</item>
-        <item name="android:padding">20dp</item>
+        <item name="android:padding">10dp</item>
         <item name="android:textColorHint">@color/form_gray</item>
         <item name="android:textColor">@color/form_gray</item>
         <item name="android:textSize">18sp</item>

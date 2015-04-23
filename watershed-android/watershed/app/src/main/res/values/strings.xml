@@ -55,6 +55,7 @@
     <string name="assignee">Assign to user</string>
     <string name="pick_user">Pick User</string>
     <string name="loading_users">Loading Users..</string>
+    <string name="pick_site">Pick Site</string>
     <string name="cancel">Cancel</string>
 
     <!-- Site Creation -->

@@ -117,7 +117,7 @@ public abstract class TaskAbstractFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.delete:
+            case R.id.save:
                 validateAndSubmit();
             default:
                 return super.onOptionsItemSelected(item);
@@ -441,7 +441,7 @@ public abstract class TaskAbstractFragment extends Fragment {
         @NonNull
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle(R.string.pick_user)
+            builder.setTitle(R.string.pick_site)
                     .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {

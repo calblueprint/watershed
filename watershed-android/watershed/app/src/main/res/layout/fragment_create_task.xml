@@ -7,17 +7,23 @@
     <RelativeLayout
         android:id="@+id/create_task_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="20dp"
         >
 
-        <EditText
-            style="@style/FormEditText"
-            android:id="@+id/create_task_title"
-            android:hint="@string/title"
-            android:layout_marginTop="20dp"
-            android:maxLines="1"
-        />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                style="@style/FormEditText"
+                android:id="@+id/create_task_title"
+                android:hint="@string/title"
+                android:maxLines="1"
+                />
+        </RelativeLayout>
 
         <TextView
             style="@style/FormEditText"
@@ -39,7 +45,6 @@
             android:layout_below="@id/create_task_site"
             android:hint="@string/assignee"
         />
-
 
         <EditText
             style="@style/FormEditText"
