@@ -4,13 +4,17 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blueprint.watershed.Activities.MainActivity;
+import com.blueprint.watershed.MiniSites.MiniSite;
+import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
 
@@ -61,13 +65,23 @@ public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHo
             if (numSites > 1 || numSites == 0) numSitesString += "s";
             holder.sitesLabel.setText(numSitesString);
 
-            View.OnClickListener listener = new View.OnClickListener() {
+            View.OnClickListener clickListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     mParentActivity.replaceFragment(SiteFragment.newInstance(site));
                 }
             };
-            holder.parentView.setOnClickListener(listener);
+
+            TapGestureListener listener = new TapGestureListener(mParentActivity, site);
+            final GestureDetector detector = new GestureDetector(mParentActivity, listener);
+            holder.photosView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    detector.onTouchEvent(event);
+                    return false;
+                }
+            });
+            holder.parentView.setOnClickListener(clickListener);
         }
     }
 
@@ -93,6 +107,23 @@ public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHo
             bottomLabel = (TextView) view.findViewById(R.id.bottom_label);
             sitesLabel = (TextView) view.findViewById(R.id.number_mini_sites_label);
             cardView = (CardView) view.findViewById(R.id.site_card_view);
+        }
+    }
+
+    class TapGestureListener extends GestureDetector.SimpleOnGestureListener {
+
+        public MainActivity activity;
+        public Site site;
+
+        public TapGestureListener(MainActivity activity, Site site) {
+            this.activity = activity;
+            this.site = site;
+        }
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            activity.replaceFragment(MiniSiteFragment.newInstance(site, minisite));
+            return super.onSingleTapConfirmed(e);
         }
     }
 }

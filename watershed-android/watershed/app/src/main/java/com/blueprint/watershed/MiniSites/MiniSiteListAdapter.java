@@ -57,10 +57,12 @@ public class MiniSiteListAdapter extends ArrayAdapter<MiniSite> {
         holder.topLabel.setText(miniSite.getName());
         if (mSite != null) {
             final TapGestureListener listener = new TapGestureListener(mActivity, mSite, miniSite);
+            final GestureDetector gesture = new GestureDetector(mActivity, listener);
+
             holder.photosView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                    listener.onSingleTapConfirmed(event);
+                    gesture.onTouchEvent(event);
                     return false;
                 }
             });
@@ -88,7 +90,7 @@ public class MiniSiteListAdapter extends ArrayAdapter<MiniSite> {
         }
 
         @Override
-        public boolean onSingleTapConfirmed(MotionEvent e) {
+        public boolean onSingleTapUp(MotionEvent e) {
             activity.replaceFragment(MiniSiteFragment.newInstance(site, minisite));
             return super.onSingleTapConfirmed(e);
         }
