@@ -83,21 +83,5 @@
                 android:textOff="@string/no"
                  />
         </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_below="@id/create_task_urgent_container"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="20dp">
-
-            <Button
-                android:id="@+id/create_task_submit"
-                android:layout_width="fill_parent"
-                android:background="@color/ws_blue"
-                android:textColor="@color/white"
-                android:text="Submit Task"
-                android:layout_height="96dp" />
-        </RelativeLayout>
     </RelativeLayout>
 </ScrollView>

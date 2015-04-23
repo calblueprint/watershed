@@ -20,6 +20,7 @@
             android:fontFamily="sans-serif-medium"
             android:text="Site Name"
             />
+
         <RelativeLayout
             android:id="@+id/site_location_container"
             android:layout_width="wrap_content"
@@ -47,7 +48,6 @@
                 />
         </RelativeLayout>
 
-
         <TextView
             android:id="@+id/site_description"
             android:layout_width="match_parent"
@@ -57,6 +57,5 @@
             android:textSize="14sp"
             android:text="Site Description"
             />
-
     </RelativeLayout>
 </RelativeLayout>

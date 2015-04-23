@@ -39,6 +39,7 @@ import com.blueprint.watershed.Sites.Site;
 import com.blueprint.watershed.Sites.SiteFragment;
 import com.blueprint.watershed.Sites.SiteListFragment;
 import com.blueprint.watershed.Tasks.CreateTaskFragment;
+import com.blueprint.watershed.Tasks.EditTaskFragment;
 import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Tasks.TaskDetailFragment;
 import com.blueprint.watershed.Tasks.TaskList.UserTaskListFragment;
@@ -275,9 +276,11 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void updateFragment(Fragment f) {
-        if (f instanceof TaskViewPagerFragment)           setTitle("Tasks");
+        if (f instanceof TaskViewPagerFragment ||
+            f instanceof UserTaskFragment)                setTitle("Tasks");
+        else if (f instanceof CreateTaskFragment)         setTitle("Add Task");
+        else if (f instanceof EditTaskFragment)           setTitle("Edit Task");
         else if (f instanceof TaskDetailFragment)         setTitle("");
-        else if (f instanceof UserTaskFragment)           setTitle("Tasks");
         else if (f instanceof SiteListFragment ||
                  f instanceof UserMiniSiteFragment)       setTitle("Sites");
         else if (f instanceof SiteFragment)

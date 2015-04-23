@@ -12,9 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -110,8 +110,18 @@ public abstract class TaskAbstractFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.empty, menu);
+        inflater.inflate(R.menu.save_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.delete:
+                validateAndSubmit();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     /**
@@ -145,9 +155,6 @@ public abstract class TaskAbstractFragment extends Fragment {
     public void setButtonListeners() {
         mLayout = (RelativeLayout) mParentActivity.findViewById(R.id.create_task_layout);
         Utility.setKeyboardListener(mParentActivity, mLayout);
-
-        Button submitButton = (Button) mParentActivity.findViewById(R.id.create_task_submit);
-        submitButton.setOnClickListener(validateAndSubmit());
 
         mTitleField = (EditText) mParentActivity.findViewById(R.id.create_task_title);
         mDescriptionField = (EditText) mParentActivity.findViewById(R.id.create_task_description);
