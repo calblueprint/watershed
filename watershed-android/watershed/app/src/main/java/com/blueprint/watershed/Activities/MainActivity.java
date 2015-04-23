@@ -283,10 +283,7 @@ public class MainActivity extends ActionBarActivity
         else if (f instanceof TaskDetailFragment)         setTitle("");
         else if (f instanceof SiteListFragment ||
                  f instanceof UserMiniSiteFragment)       setTitle("Sites");
-        else if (f instanceof SiteFragment)
-        {
-            setTitle("Sites");
-        }
+        else if (f instanceof SiteFragment)               setTitle("Sites");
         else if (f instanceof AboutFragment)              setTitle("About");
         else if (f instanceof UserFieldReportFragment ||
                  f instanceof FieldReportFragment)        setTitle("Field Reports");

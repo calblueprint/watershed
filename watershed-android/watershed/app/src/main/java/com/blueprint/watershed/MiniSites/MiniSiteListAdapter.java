@@ -1,6 +1,8 @@
 package com.blueprint.watershed.MiniSites;
 
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -54,10 +56,12 @@ public class MiniSiteListAdapter extends ArrayAdapter<MiniSite> {
         holder.coverPhotoLabel.setText(String.format("%s Field Reports", miniSite.getFieldReportsCount()));
         holder.topLabel.setText(miniSite.getName());
         if (mSite != null) {
-            row.setOnClickListener(new View.OnClickListener() {
+            final TapGestureListener listener = new TapGestureListener(mActivity, mSite, miniSite);
+            holder.photosView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
-                public void onClick(View view) {
-                    mActivity.replaceFragment(MiniSiteFragment.newInstance(mSite, miniSite));
+                public boolean onTouch(View v, MotionEvent event) {
+                    listener.onSingleTapConfirmed(event);
+                    return false;
                 }
             });
         }
@@ -69,5 +73,24 @@ public class MiniSiteListAdapter extends ArrayAdapter<MiniSite> {
         CoverPhotoPagerView photosView;
         TextView coverPhotoLabel;
         TextView topLabel;
+    }
+
+    class TapGestureListener extends GestureDetector.SimpleOnGestureListener {
+
+        public MainActivity activity;
+        public Site site;
+        public MiniSite minisite;
+
+        public TapGestureListener(MainActivity activity, Site site, MiniSite miniSite) {
+            this.activity = activity;
+            this.site = site;
+            this.minisite = miniSite;
+        }
+
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent e) {
+            activity.replaceFragment(MiniSiteFragment.newInstance(site, minisite));
+            return super.onSingleTapConfirmed(e);
+        }
     }
 }

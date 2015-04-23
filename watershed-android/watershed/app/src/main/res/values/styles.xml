@@ -11,13 +11,15 @@
     </style>
 
     <style name="WsAppTheme" parent="Theme.AppCompat.Light">
-        <item name="android:windowActionBar">false</item>
         <item name="windowActionBar">false</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="android:windowActionBar">false</item>
         <item name="android:actionBarStyle">@style/WsActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/WsActionBarTabText</item>
         <item name="android:actionBarTabBarStyle">@style/WsActionBarTabView</item>
         <item name="colorPrimary">@color/ws_blue</item>
         <item name="colorPrimaryDark">@color/ws_title_bar</item>
+        <item name="colorAccent">@color/facebook_blue</item>
         <item name="android:textColor">@color/text_color</item>
     </style>
 
