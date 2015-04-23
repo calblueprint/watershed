@@ -504,6 +504,7 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onBackPressed() {
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
+        Utility.hideKeyboard(this, f.getView());
         if (mDrawerLayout.isDrawerOpen(mDrawer)) mDrawerLayout.closeDrawer(mDrawer);
         else if (checkClosedMenu(f)) ((FloatingActionMenuAbstractFragment) f).closeMenu();
         else super.onBackPressed();

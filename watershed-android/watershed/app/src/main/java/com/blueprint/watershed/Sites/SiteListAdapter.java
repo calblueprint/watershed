@@ -13,8 +13,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blueprint.watershed.Activities.MainActivity;
-import com.blueprint.watershed.MiniSites.MiniSite;
-import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
 
@@ -122,7 +120,7 @@ public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHo
 
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
-            activity.replaceFragment(MiniSiteFragment.newInstance(site, minisite));
+            activity.replaceFragment(SiteFragment.newInstance(site));
             return super.onSingleTapConfirmed(e);
         }
     }
