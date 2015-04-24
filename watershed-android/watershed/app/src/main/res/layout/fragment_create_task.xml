@@ -19,15 +19,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
+
             <ImageView
+                style="@style/Icon"
                 android:id="@+id/create_task_title_icon"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
                 android:src="@drawable/name_gray"
-                android:scaleType="centerCrop"
-                android:layout_centerVertical="true"/>
+                />
+
             <EditText
-                style="@style/FormEditText"
+                style="@style/TaskTextView"
                 android:id="@+id/create_task_title"
                 android:layout_toRightOf="@id/create_task_title_icon"
                 android:hint="@string/title"
@@ -41,15 +41,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_below="@id/create_task_title_container">
+
             <ImageView
+                style="@style/Icon"
                 android:id="@+id/create_task_due_date_icon"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
                 android:src="@drawable/set_due_date_gray"
-                android:scaleType="centerCrop"
-                android:layout_centerVertical="true"/>
+                />
+
             <TextView
-                style="@style/FormEditText"
+                style="@style/TaskTextView"
                 android:id="@+id/create_task_due_date"
                 android:layout_toRightOf="@id/create_task_due_date_icon"
                 android:layout_centerVertical="true"
@@ -63,16 +63,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_below="@id/create_task_due_date_container">
+
             <ImageView
+                style="@style/Icon"
                 android:id="@+id/create_task_site_icon"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
                 android:src="@drawable/ic_location_gray"
-                android:scaleType="centerCrop"
-                android:layout_centerVertical="true"/>
+                />
 
             <TextView
-                style="@style/FormEditText"
+                style="@style/TaskTextView"
                 android:id="@+id/create_task_site"
                 android:hint="@string/site"
                 android:layout_toRightOf="@id/create_task_site_icon"
@@ -85,16 +84,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_below="@id/create_task_site_container">
+
             <ImageView
+                style="@style/Icon"
                 android:id="@+id/create_task_assignee_icon"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
                 android:src="@drawable/assign_to_volunteer_gray"
-                android:scaleType="centerCrop"
-                android:layout_centerVertical="true"/>
+                />
 
             <TextView
-                style="@style/FormEditText"
+                style="@style/TaskTextView"
                 android:id="@+id/create_task_assignee"
                 android:hint="@string/site"
                 android:layout_toRightOf="@id/create_task_assignee_icon"
@@ -107,22 +105,20 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_below="@id/create_task_assignee_container">
+
             <ImageView
+                style="@style/Icon"
                 android:id="@+id/create_task_description_icon"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
                 android:src="@drawable/description_gray"
-                android:scaleType="centerCrop"
                 />
 
             <EditText
-                style="@style/FormEditText"
+                style="@style/TaskTextView"
                 android:id="@+id/create_task_description"
                 android:layout_toRightOf="@id/create_task_description_icon"
                 android:hint="@string/description"
                 android:gravity="top"
                 android:inputType="textMultiLine"
-                android:lines="4"
                 />
         </RelativeLayout>
 
@@ -134,17 +130,17 @@
             android:layout_marginTop="10dp"
             android:layout_below="@id/create_task_description_container">
 
-            <View
-                android:id="@+id/create_task_divider"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_centerInParent="true"/>
+            <ImageView
+                style="@style/Icon"
+                android:id="@+id/create_task_urgent_icon"
+                android:src="@drawable/urgent_gray"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/create_task_divider"
-                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@id/create_task_urgent_icon"
+                android:layout_marginLeft="20dp"
                 android:layout_centerVertical="true"
                 android:text="@string/urgent"
                 android:textColor="@color/form_gray"
@@ -154,7 +150,7 @@
                 android:id="@+id/field_report_urgent"
                 android:layout_width="wrap_content"
                 android:layout_height="16dp"
-                android:layout_toRightOf="@id/create_task_divider"
+                android:layout_alignParentRight="true"
                 android:layout_marginLeft="10dp"
                 android:textOn="@string/yes"
                 android:textOff="@string/no"

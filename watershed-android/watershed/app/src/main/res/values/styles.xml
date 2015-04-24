@@ -63,6 +63,10 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+    <style name="TaskTextView" parent="FormEditText">
+        <item name="android:layout_marginLeft">10dp</item>
+    </style>
+
     <!-- Arrows -->
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">true</item>
@@ -104,5 +108,12 @@
         <item name="android:background">@drawable/empty_site_image</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">220dp</item>
+    </style>
+
+    <style name="Icon">
+        <item name="android:layout_width">25dp</item>
+        <item name="android:layout_height">25dp</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:layout_centerVertical">true</item>
     </style>
 </resources>
