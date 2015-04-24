@@ -53,6 +53,7 @@ import com.blueprint.watershed.Utilities.Utility;
 import com.facebook.Session;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import org.json.JSONObject;
@@ -109,8 +110,9 @@ public class MainActivity extends ActionBarActivity
     // Task for FieldReport
     private Task mFieldReportTask;
 
-    // Google cloud messaging
+    // Google APIS
     private GoogleCloudMessaging mGoogleCloudMessaging;
+    private GoogleApiClient mGoogleApiClient;
 
     // Params (so we don't have to set them later)
     private List<User> mUsers;
@@ -119,16 +121,16 @@ public class MainActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         setNetworkManager(NetworkManager.getInstance(this));
+
         mPreferences = getSharedPreferences(PREFERENCES, MODE_PRIVATE);
         mAuthToken = mPreferences.getString("auth_token", "none");
         mAuthEmail = mPreferences.getString("auth_email", "none");
         mRegistrationId = mPreferences.getString("registration_id", "none");
         mAppVersion = mPreferences.getInt("app_version", Integer.MIN_VALUE);
         mUserId = mPreferences.getInt("userId", 0);
-
         setUserObject();
+
         if (getRegistrationId().isEmpty())
             registerInBackground();
 

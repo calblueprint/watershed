@@ -50,8 +50,9 @@ public abstract class  SiteAbstractFragment extends Fragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
         mParentActivity = (MainActivity) getActivity();
+        mNetworkManager = NetworkManager.getInstance(mParentActivity);
+
     }
 
     @Override
