@@ -1,14 +1,6 @@
 package com.blueprint.watershed.Sites;
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.blueprint.watershed.R;
 
 
 public class EditSiteFragment extends SiteAbstractFragment {
@@ -39,7 +31,6 @@ public class EditSiteFragment extends SiteAbstractFragment {
         if (mSite.getCity() != null) mCityField.setText(mSite.getCity());
         if (mSite.getState() != null) mStateField.setText(mSite.getState());
         if (mSite.getZipCode() != null) mZipField.setText(String.valueOf(mSite.getZipCode()));
-        mSubmitButton.setText("Edit Site");
     }
 
     public void submitListener(){

@@ -1,101 +1,108 @@
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="30dp">
+    android:layout_height="match_parent">
 
     <RelativeLayout
-        android:id="@+id/create_site_title_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="match_parent"
+        android:padding="30dp">
 
-        <ImageView
-            style="@style/Icon"
-            android:id="@+id/create_site_title_icon"
-            android:src="@drawable/name_gray"/>
-
-        <EditText
-            style="@style/TaskTextView"
-            android:id="@+id/create_site_title"
-            android:hint="@string/title"
-            android:layout_toRightOf="@id/create_site_title_icon"
-            />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/create_site_address_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/create_site_title_container"
-        android:layout_marginTop="10dp"
-        >
-
-        <ImageView
-            style="@style/Icon"
-            android:id="@+id/create_site_address_icon"
-            android:src="@drawable/ic_location_gray"
-            android:layout_centerVertical="false"
-            android:layout_marginTop="10dp"/>
-
-        <EditText
-            style="@style/TaskTextView"
-            android:id="@+id/create_site_address"
-            android:hint="@string/create_site_address"
-            android:layout_toRightOf="@id/create_site_address_icon"
-            />
-
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/create_site_title_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/create_site_address"
-            android:layout_toRightOf="@id/create_site_address_icon"
             >
 
-            <EditText
-                style="@style/TaskTextView"
-                android:id="@+id/create_site_city"
-                android:hint="@string/create_site_city"
-                android:layout_weight="3"
-                />
+            <ImageView
+                style="@style/Icon"
+                android:id="@+id/create_site_title_icon"
+                android:src="@drawable/name_gray"/>
 
             <EditText
                 style="@style/TaskTextView"
-                android:id="@+id/create_site_state"
-                android:hint="@string/create_site_state"
-                android:layout_weight="3"
+                android:id="@+id/create_site_title"
+                android:hint="@string/title"
+                android:layout_toRightOf="@id/create_site_title_icon"
                 />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/create_site_address_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/create_site_title_container"
+            android:layout_marginTop="10dp"
+            >
+
+            <ImageView
+                style="@style/Icon"
+                android:id="@+id/create_site_address_icon"
+                android:src="@drawable/ic_location_gray"
+                android:layout_centerVertical="false"
+                android:layout_marginTop="10dp"/>
 
             <EditText
                 style="@style/TaskTextView"
-                android:id="@+id/create_site_zip"
-                android:hint="@string/create_site_zip"
-                android:layout_weight="3"
+                android:id="@+id/create_site_address"
+                android:hint="@string/create_site_address"
+                android:layout_toRightOf="@id/create_site_address_icon"
                 />
 
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/create_site_address"
+                android:layout_toRightOf="@id/create_site_address_icon"
+                android:layout_marginTop="10dp"
+                >
+
+                <EditText
+                    style="@style/TaskTextView"
+                    android:id="@+id/create_site_city"
+                    android:hint="@string/create_site_city"
+                    android:layout_weight="3"
+                    />
+
+                <EditText
+                    style="@style/TaskTextView"
+                    android:id="@+id/create_site_state"
+                    android:hint="@string/create_site_state"
+                    android:layout_weight="3"
+                    />
+
+                <EditText
+                    style="@style/TaskTextView"
+                    android:id="@+id/create_site_zip"
+                    android:hint="@string/create_site_zip"
+                    android:layout_weight="3"
+                    />
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/create_site_description_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/create_site_address_container"
+            android:layout_marginTop="10dp"
+            >
+
+            <ImageView
+                style="@style/Icon"
+                android:id="@+id/create_site_description_icon"
+                android:src="@drawable/description_gray"/>
+
+            <EditText
+                style="@style/TaskTextView"
+                android:id="@+id/create_site_description"
+                android:hint="@string/description"
+                android:layout_toRightOf="@id/create_site_description_icon"
+                android:inputType="textMultiLine"
+                />
+        </RelativeLayout>
     </RelativeLayout>
+</ScrollView>
 
-    <RelativeLayout
-        android:id="@+id/create_site_description_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/create_site_address_container"
-        android:layout_marginTop="10dp"
-        >
-
-        <ImageView
-            style="@style/Icon"
-            android:id="@+id/create_site_description_icon"
-            android:src="@drawable/description_gray"/>
-
-        <EditText
-            style="@style/TaskTextView"
-            android:id="@+id/create_site_description"
-            android:hint="@string/description"
-            android:layout_toRightOf="@id/create_site_description_icon"
-            android:inputType="textMultiLine"
-            />
-    </RelativeLayout>
-</RelativeLayout>
