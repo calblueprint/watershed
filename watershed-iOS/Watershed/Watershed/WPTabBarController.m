@@ -46,22 +46,12 @@
                             NSLocalizedString(@"Profile", HNNoLocalizationComment)
                             ];
         
-//        FAKIonIcons *checkIcon = [FAKIonIcons androidDoneAllIconWithSize:28];
-        FAKIonIcons *checkIcon = [FAKIonIcons ios7AlarmIconWithSize:28];
-//        _paw = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"paw.png"]];
 
-        UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake(28, 28)];
-        checkImage = [self imageResize:[UIImage imageNamed:@"tasks_gray.png"] andResizeTo:CGSizeMake(28, 28)];
-//        checkImage = [UIImage imageNamed:@"tasks_gray.png"];
+        UIImage *checkImage = [self imageResize:[UIImage imageNamed:@"tasks_gray.png"] andResizeTo:CGSizeMake(28, 28)];
         
-        FAKIonIcons *treeIcon = [FAKIonIcons androidImageIconWithSize:28];
-        UIImage *treeImage = [treeIcon imageWithSize:CGSizeMake(28, 28)];
-        treeImage = [self imageResize:[UIImage imageNamed:@"sites_gray.png"] andResizeTo:CGSizeMake(28, 28)];
+        UIImage *treeImage = [self imageResize:[UIImage imageNamed:@"sites_gray.png"] andResizeTo:CGSizeMake(28, 28)];
 
-//        FAKIonIcons *profileIcon = [FAKIonIcons androidPersonIconWithSize:28];
-        FAKIonIcons *profileIcon = [FAKIonIcons ios7AmericanfootballOutlineIconWithSize:28];
-        UIImage *profileImage = [profileIcon imageWithSize:CGSizeMake(28, 28)];
-        profileImage = [self imageResize:[UIImage imageNamed:@"profile_gray.png"] andResizeTo:CGSizeMake(28, 28)];
+        UIImage *profileImage = [self imageResize:[UIImage imageNamed:@"profile_gray.png"] andResizeTo:CGSizeMake(28, 28)];
 
         NSArray *images = @[
                             checkImage,
