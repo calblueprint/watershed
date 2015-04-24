@@ -65,17 +65,20 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
 
         mSiteDescription = (TextView) view.findViewById(R.id.site_description);
         mSiteDescription.setText(site.getTrimmedText());
-        mSiteDescription.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utility.showAndBuildDialog(mParentActivity, null, site.getDescription(), "Back", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                       dialog.dismiss();
-                    }
-                }, null);
-            }
-        });
+
+        if (site.shouldShowDescriptionDialog()) {
+            mSiteDescription.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Utility.showAndBuildDialog(mParentActivity, null, site.getDescription(), "Back", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }, null);
+                }
+            });
+        }
 
         mSiteAddress = (TextView) view.findViewById(R.id.site_location);
         mSiteAddress.setText(site.getLocationOneLine());
