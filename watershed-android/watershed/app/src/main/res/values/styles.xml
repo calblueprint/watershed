@@ -17,6 +17,7 @@
         <item name="android:actionBarStyle">@style/WsActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/WsActionBarTabText</item>
         <item name="android:actionBarTabBarStyle">@style/WsActionBarTabView</item>
+        <item name="android:popupBackground">@color/white</item>
         <item name="colorPrimary">@color/ws_blue</item>
         <item name="colorPrimaryDark">@color/ws_title_bar</item>
         <item name="colorAccent">@color/facebook_blue</item>

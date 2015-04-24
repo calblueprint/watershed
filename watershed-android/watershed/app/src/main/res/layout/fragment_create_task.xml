@@ -127,7 +127,7 @@
             android:id="@+id/create_task_urgent_container"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_below="@id/create_task_description_container">
 
             <ImageView

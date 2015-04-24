@@ -18,7 +18,7 @@ import java.util.ArrayList;
 @JsonSerialize(using = SiteSerializer.class)
 public class Site implements APIObject {
 
-    public int TRIM_LENGTH = 100;
+    public int TRIM_LENGTH = 140;
 
     // Attributes
     private Integer mId;
@@ -89,7 +89,11 @@ public class Site implements APIObject {
 
     @JsonIgnore
     public String getTrimmedText() {
-        return String.format("%s...read more", getDescription().substring(0, TRIM_LENGTH) + "...");
+        if (getDescription().length() > TRIM_LENGTH) {
+            return String.format("%s...read more", getDescription().substring(0, TRIM_LENGTH) + "...");
+        } else {
+            return getDescription();
+        }
     }
 
     // Setters
