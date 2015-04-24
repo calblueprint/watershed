@@ -9,6 +9,10 @@
 #import "WPEditTaskViewController.h"
 #import "WPNetworkingManager.h"
 
+@interface WPEditTaskViewController ()
+@property (nonatomic) WPMiniSite *miniSite;
+@end
+
 @implementation WPEditTaskViewController
 
 - (void)viewDidLoad {
@@ -19,6 +23,8 @@
 
 - (void)dismissSelf {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+//    self.task.miniSite = self.miniSite;
+    self.task.miniSite = self.miniSite;
     [self.taskParent setTask:self.task];
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -26,13 +32,31 @@
 // Override
 - (void)updateServerWithTask:(WPTask *)task {
     task.taskId = self.task.taskId;
+//    NSInteger miniSiteId = self.task.miniSite.miniSiteId;
+//    WPMiniSite *test = self.task.miniSite;
     __weak __typeof(self)weakSelf = self;
+    [[WPNetworkingManager sharedManager] requestSimpleMiniSiteWithMiniSite:task.miniSite
+                                                                parameters:[[NSMutableDictionary alloc] init]
+                                                                   success:^(WPMiniSite *miniSite) {
+        self.miniSite = miniSite;
+    }];
+
     [[WPNetworkingManager sharedManager] editTaskWithTask: task
                                                parameters:[[NSMutableDictionary alloc] init]
                                                   success:^(WPTask *taskResponse){
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-                                                      strongSelf.task = taskResponse;
+        strongSelf.task = taskResponse;
+//                                                      [strongSelf getMiniSite];
         [strongSelf dismissSelf];
+    }];
+
+}
+
+-(void)getMiniSite {
+    [[WPNetworkingManager sharedManager] requestMiniSiteWithMiniSite: self.task.miniSite
+                                                           parameters:[[NSMutableDictionary alloc] init]
+     success:^(WPMiniSite *miniSite, NSMutableArray *fieldReportList) {
+        self.miniSite = miniSite;
     }];
 }
 

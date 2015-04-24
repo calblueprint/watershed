@@ -173,15 +173,34 @@ static NSString * const TASKS_URL = @"tasks";
     NSMutableDictionary *taskJSON = [MTLJSONAdapter JSONDictionaryFromModel:task].mutableCopy;
     [taskJSON setObject:task.assignee.userId forKey:@"assignee_id"];
     [taskJSON setObject:task.assigner.userId forKey:@"assigner_id"];
-    [taskJSON setObject:task.miniSite.miniSiteId forKey:@"mini_site_id"];
     [parameters setObject:taskJSON forKey:@"task"];
+    [taskJSON setObject:task.miniSite.miniSiteId forKey:@"mini_site_id"];
+
 
     [self PUT:taskString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *taskJSON = (NSDictionary *)responseObject[@"task"];
         WPTask *taskResponse = [MTLJSONAdapter modelOfClass:WPTask.class fromJSONDictionary:taskJSON error:nil];
+//        taskResponse.miniSite = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:taskJSON[@"mini_site"] error:nil];
         success(taskResponse);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not edit task." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+- (void)requestSimpleMiniSiteWithMiniSite:(WPMiniSite *)miniSite parameters:(NSMutableDictionary *)parameters success:(void (^)(WPMiniSite *miniSite))success {
+    NSString *miniSiteEndpoint = [@"/" stringByAppendingString:[miniSite.miniSiteId stringValue]];
+    NSString *MINI_SITE_URL = [MINI_SITES_URL stringByAppendingString:miniSiteEndpoint];
+    NSString *miniSiteString = [WPNetworkingManager createURLWithEndpoint:MINI_SITE_URL];
+    [self addAuthenticationParameters:parameters];
+    
+    [self GET:miniSiteString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *miniSiteJSON = (NSDictionary *)responseObject[@"mini_site"];
+        WPMiniSite *miniSiteResponse = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:miniSiteJSON error:nil];
+        success(miniSiteResponse);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load mini site." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [incorrect show];
         NSLog(@"Error: %@", error);
     }];
