@@ -51,11 +51,11 @@ class Task < ActiveRecord::Base
     end
   end
 
-  def complete
+  def complete!
     update_attribute(:complete, true)
   end
 
-  def undo_complete
+  def undo_complete!
     update_attribute(:complete, false)
   end
 

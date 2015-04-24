@@ -29,6 +29,6 @@ class FieldReport < ActiveRecord::Base
   accepts_nested_attributes_for :photo
 
   def complete_task
-    task.complete
+    task.complete!
   end
 end
