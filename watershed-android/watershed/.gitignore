@@ -31,6 +31,3 @@ proguard/
 
 # Log Files
 *.log
-
-# Secret
-*/woohoo.xml
