@@ -68,7 +68,6 @@
     [userFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
     NSMutableDictionary *task2JSON = [[NSMutableDictionary alloc] init];
     _task.completed = !_task.completed;
-    __weak __typeof(self)weakSelf = self;
     [[WPNetworkingManager sharedManager] editTaskWithTask:_task parameters:task2JSON success:^(WPTask *task) {
         [self.navigationController popViewControllerAnimated:YES];
     }];

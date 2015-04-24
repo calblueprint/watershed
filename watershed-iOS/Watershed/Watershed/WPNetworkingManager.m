@@ -176,11 +176,9 @@ static NSString * const TASKS_URL = @"tasks";
     [parameters setObject:taskJSON forKey:@"task"];
     [taskJSON setObject:task.miniSite.miniSiteId forKey:@"mini_site_id"];
 
-
     [self PUT:taskString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *taskJSON = (NSDictionary *)responseObject[@"task"];
         WPTask *taskResponse = [MTLJSONAdapter modelOfClass:WPTask.class fromJSONDictionary:taskJSON error:nil];
-//        taskResponse.miniSite = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:taskJSON[@"mini_site"] error:nil];
         success(taskResponse);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not edit task." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
