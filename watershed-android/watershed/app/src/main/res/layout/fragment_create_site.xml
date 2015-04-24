@@ -35,7 +35,9 @@
         <ImageView
             style="@style/Icon"
             android:id="@+id/create_site_address_icon"
-            android:src="@drawable/ic_location_gray"/>
+            android:src="@drawable/ic_location_gray"
+            android:layout_centerVertical="false"
+            android:layout_marginTop="10dp"/>
 
         <EditText
             style="@style/TaskTextView"
@@ -50,7 +52,7 @@
             android:layout_below="@id/create_site_address"
             android:layout_toRightOf="@id/create_site_address_icon"
             >
-            
+
             <EditText
                 style="@style/TaskTextView"
                 android:id="@+id/create_site_city"

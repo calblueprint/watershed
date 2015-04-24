@@ -6,9 +6,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.android.volley.Response;
@@ -39,7 +39,6 @@ public abstract class  SiteAbstractFragment extends Fragment{
     protected EditText mAddressField;
     protected EditText mZipField;
     protected EditText mStateField;
-    protected Button mSubmitButton;
 
     /**
      * Use this factory method to create a new instance of
@@ -56,12 +55,34 @@ public abstract class  SiteAbstractFragment extends Fragment{
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_create_site, container, false);
         setButtonListeners(view);
         return view;
+    }
+
+    /**
+     * Inflates a menu into the action bar.
+     * Called by Activity if setHasOptionsMenu(true) set in OnCreate
+     * @param menu - options menu
+     * @param inflater - view inflater.
+     */
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.save_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.save:
+                validateAndSubmit();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
     
     @Override
@@ -71,14 +92,12 @@ public abstract class  SiteAbstractFragment extends Fragment{
     }
 
     protected void setButtonListeners(View view){
-        mSubmitButton = (Button)view.findViewById(R.id.create_site_submit);
         mTitleField = (EditText)view.findViewById(R.id.create_site_title);
         mDescriptionField = (EditText)view.findViewById(R.id.create_site_description);
         mAddressField = (EditText)view.findViewById(R.id.create_site_address);
         mCityField = (EditText)view.findViewById(R.id.create_site_city);
         mZipField = (EditText)view.findViewById(R.id.create_site_zip);
         mStateField = (EditText)view.findViewById(R.id.create_site_state);
-        mSubmitButton.setOnClickListener(validateAndSubmit());
     }
 
     /**
@@ -187,20 +206,6 @@ public abstract class  SiteAbstractFragment extends Fragment{
             mNetworkManager.getRequestQueue().add(editSiteRequest);
         }
         mParentActivity.getSupportFragmentManager().popBackStack();
-
-    }
-
-    /**
-     * Inflates a menu into the action bar.
-     * Called by Activity if setHasOptionsMenu(true) set in OnCreate
-     * @param menu - options menu
-     * @param inflater - view inflater.
-     */
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-        inflater.inflate(R.menu.empty, menu);
-        super.onCreateOptionsMenu(menu, inflater);
 
     }
 
