@@ -77,8 +77,6 @@ public class TaskDetailFragment extends TaskAbstractFragment
     private void initializeViews(View view) {
         setButtonListeners(view);
 
-        String submit = mTask.getFieldReport() == null ? "COMPLETE" : "VIEW FIELD REPORT";
-        mCompleteButton.setText(submit);
         refreshCompletion();
 
         mDetailTitle = (TextView) view.findViewById(R.id.task_title);
@@ -151,11 +149,6 @@ public class TaskDetailFragment extends TaskAbstractFragment
     @Override
     public void submitListener() {}
 
-    public void completeTask() {
-        Utility.hideKeyboard(mParentActivity, mLayout);
-        createTask(COMPLETE, mTask);
-    }
-
     public void unCompleteTask() {
         Utility.hideKeyboard(mParentActivity, mLayout);
         createTask(UNCOMPLETE, mTask);
@@ -172,10 +165,10 @@ public class TaskDetailFragment extends TaskAbstractFragment
     }
 
     public void refreshCompletion() {
-        String complete = mTask.getComplete() ? "UNDO COMPLETION" : "COMPLETE";
-        mCompleteButton.setText(complete);
-        if (mTask.getComplete()) mCompleteButton.setBackgroundColor(getResources().getColor(R.color.ws_green));
-        else mCompleteButton.setBackgroundColor(getResources().getColor(R.color.ws_blue));
+        String submit = mTask.getFieldReport() == null ? "COMPLETE" : "VIEW FIELD REPORT";
+        int color = mTask.getFieldReport() == null ? R.color.ws_blue : R.color.facebook_blue;
+        mCompleteButton.setText(submit);
+        mCompleteButton.setBackgroundColor(mParentActivity.getResources().getColor(color));
     }
 
     private void deleteTask() {
