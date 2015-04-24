@@ -50,7 +50,6 @@ import java.util.List;
  */
 public abstract class TaskAbstractFragment extends Fragment {
 
-
     protected static final String EDIT = "edit";
     protected static final String COMPLETE = "complete";
     protected static final String UNCOMPLETE = "uncomplete";
@@ -276,11 +275,12 @@ public abstract class TaskAbstractFragment extends Fragment {
     public void createTask(String type, Task task) {
         if (type.equals(CREATE)) task = new Task();
 
-        if (type.equals(COMPLETE)){
+        if (type.equals(COMPLETE)) {
             task.setComplete(true);
             createTaskRequest(task, type);
             return;
         }
+
         if (type.equals(UNCOMPLETE)){
             task.setComplete(false);
             createTaskRequest(task, type);
