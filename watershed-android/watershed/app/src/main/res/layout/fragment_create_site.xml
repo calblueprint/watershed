@@ -1,142 +1,99 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.blueprint.watershed.Sites.CreateSiteFragment">
+    android:padding="30dp">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_margin="@dimen/standard_margin"
-        android:orientation="vertical"
+    <RelativeLayout
+        android:id="@+id/create_site_title_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         >
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/button_standard_height"
-            android:gravity="bottom" >
 
-            <TextView
-                style="@style/WsLabel"
-                android:text="@string/title"
-                />
-            <EditText
-                android:id="@+id/create_site_title"
-                android:hint="@string/required"
+        <ImageView
+            style="@style/Icon"
+            android:id="@+id/create_site_title_icon"
+            android:src="@drawable/name_gray"/>
 
-                android:layout_width="0px"
-                android:layout_height="@dimen/button_standard_height"
-                android:layout_weight="3"
-                android:text=""/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/button_standard_height"
-            android:gravity="bottom" >
+        <EditText
+            style="@style/TaskTextView"
+            android:id="@+id/create_site_title"
+            android:hint="@string/title"
+            android:layout_toRightOf="@id/create_site_title_icon"
+            />
 
-            <TextView
-                style="@style/WsLabel"
-                android:text="@string/create_site_address"
-                />
-            <EditText
-                android:id="@+id/create_site_address"
-                android:hint="@string/required"
-                android:layout_width="0px"
-                android:layout_height="@dimen/button_standard_height"
-                android:layout_weight="3"
-                android:text=""/>
-        </LinearLayout>
+    </RelativeLayout>
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/button_standard_height"
-            android:gravity="bottom" >
+    <RelativeLayout
+        android:id="@+id/create_site_address_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/create_site_title_container"
+        android:layout_marginTop="10dp"
+        >
 
-            <TextView
-                style="@style/WsLabel"
-                android:text="@string/create_site_city"
-                />
-            <EditText
-                android:id="@+id/create_site_city"
-                android:hint="@string/required"
-                android:layout_width="0px"
-                android:layout_height="@dimen/button_standard_height"
-                android:layout_weight="3"
-                android:text=""/>
-        </LinearLayout>
+        <ImageView
+            style="@style/Icon"
+            android:id="@+id/create_site_address_icon"
+            android:src="@drawable/ic_location_gray"/>
+
+        <EditText
+            style="@style/TaskTextView"
+            android:id="@+id/create_site_address"
+            android:hint="@string/create_site_address"
+            android:layout_toRightOf="@id/create_site_address_icon"
+            />
 
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/button_standard_height"
-            android:gravity="bottom" >
-
-            <TextView
-                style="@style/WsLabel"
-                android:text="@string/create_site_zip"
-                />
-            <EditText
-                android:id="@+id/create_site_zip"
-                android:layout_width="0px"
-                android:hint="@string/required"
-
-                android:layout_height="@dimen/button_standard_height"
-                android:layout_weight="3"
-                android:text=""/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/button_standard_height"
-            android:gravity="bottom" >
-
-            <TextView
-                style="@style/WsLabel"
-                android:text="@string/create_site_state"
-                />
-            <EditText
-                android:id="@+id/create_site_state"
-                android:layout_width="0px"
-                android:hint="@string/required"
-
-                android:layout_height="@dimen/button_standard_height"
-                android:layout_weight="3"
-                android:text=""/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/create_site_address"
+            android:layout_toRightOf="@id/create_site_address_icon"
             >
-
-            <TextView
-                style="@style/WsLabel"
-                android:gravity="bottom"
-                android:layout_height="@dimen/button_standard_height"
-                android:text="@string/description"
-                />
+            
             <EditText
-                android:id="@+id/create_site_description"
-                android:hint="@string/required"
-                android:gravity="bottom"
-                android:layout_width="0px"
-                android:layout_height="wrap_content"
+                style="@style/TaskTextView"
+                android:id="@+id/create_site_city"
+                android:hint="@string/create_site_city"
                 android:layout_weight="3"
-                android:lines="4"
-                android:text=""
                 />
+
+            <EditText
+                style="@style/TaskTextView"
+                android:id="@+id/create_site_state"
+                android:hint="@string/create_site_state"
+                android:layout_weight="3"
+                />
+
+            <EditText
+                style="@style/TaskTextView"
+                android:id="@+id/create_site_zip"
+                android:hint="@string/create_site_zip"
+                android:layout_weight="3"
+                />
+
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:gravity="bottom">
+    </RelativeLayout>
 
-            <Button
-                android:id="@+id/create_site_submit"
-                android:layout_width="fill_parent"
-                android:background="@color/ws_blue"
-                android:textColor="@color/white"
-                android:text="@string/create_site_submit"
-                android:layout_height="96dp" />
-        </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/create_site_description_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/create_site_address_container"
+        android:layout_marginTop="10dp"
+        >
 
-    </LinearLayout>
+        <ImageView
+            style="@style/Icon"
+            android:id="@+id/create_site_description_icon"
+            android:src="@drawable/description_gray"/>
 
-</FrameLayout>
+        <EditText
+            style="@style/TaskTextView"
+            android:id="@+id/create_site_description"
+            android:hint="@string/description"
+            android:layout_toRightOf="@id/create_site_description_icon"
+            android:inputType="textMultiLine"
+            />
+    </RelativeLayout>
+</RelativeLayout>

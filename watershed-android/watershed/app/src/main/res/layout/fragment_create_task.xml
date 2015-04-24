@@ -31,7 +31,6 @@
                 android:id="@+id/create_task_title"
                 android:layout_toRightOf="@id/create_task_title_icon"
                 android:hint="@string/title"
-                android:maxLines="1"
                 />
         </RelativeLayout>
 
@@ -76,6 +75,7 @@
                 android:hint="@string/site"
                 android:layout_toRightOf="@id/create_task_site_icon"
                 />
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -117,7 +117,6 @@
                 android:id="@+id/create_task_description"
                 android:layout_toRightOf="@id/create_task_description_icon"
                 android:hint="@string/description"
-                android:gravity="top"
                 android:inputType="textMultiLine"
                 />
         </RelativeLayout>
