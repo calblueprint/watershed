@@ -75,8 +75,6 @@ public class MainActivity extends ActionBarActivity
     private String mRegistrationId;
     private int mAppVersion;
 
-    // Fragments
-    private FragmentManager mFragmentManager;
 
     // Navigation Drawer
     private DrawerLayout mDrawerLayout;
@@ -293,19 +291,21 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void replaceFragment(Fragment newFragment) {
-        android.support.v4.app.FragmentTransaction ft = mFragmentManager.beginTransaction();
+        android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         if(!newFragment.isAdded()){
             updateFragment(newFragment);
 
             setToolbarElevation(Utility.convertDptoPix(this, 4));
-            ft.replace(R.id.container, newFragment).addToBackStack(null).commit();
+            ft.setCustomAnimations(R.anim.in, R.anim.out, R.anim.in, R.anim.out);
+            ft.replace(R.id.container, newFragment)
+              .addToBackStack(null)
+              .commit();
         }
     }
 
     private void initializeFragments() {
         TaskViewPagerFragment taskFragment = TaskViewPagerFragment.newInstance();
-        mFragmentManager = getSupportFragmentManager();
-        mFragmentManager.addOnBackStackChangedListener(
+        getSupportFragmentManager().addOnBackStackChangedListener(
                 new FragmentManager.OnBackStackChangedListener() {
                     @Override
                     public void onBackStackChanged() {
@@ -314,7 +314,7 @@ public class MainActivity extends ActionBarActivity
                     }
                 });
         updateFragment(taskFragment);
-        android.support.v4.app.FragmentTransaction ft = mFragmentManager.beginTransaction();
+        android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, taskFragment);
         ft.commit();
     }

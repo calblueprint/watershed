@@ -34,7 +34,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
     private MainActivity mParentActivity;
     private NetworkManager mNetworkManager;
 
-    private Button mFieldReportButton;
+//    private Button mFieldReportButton;
     private Button mCompleteButton;
     private TextView mDetailTitle;
     private TextView mDescription;
@@ -79,7 +79,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
         setButtonListeners(view);
 
         String submit = mTask.getFieldReport() == null ? "ADD FIELD REPORT" : "VIEW FIELD REPORT";
-        mFieldReportButton.setText(submit);
+//        mFieldReportButton.setText(submit);
         refreshCompletion();
 
         mDetailTitle = (TextView) view.findViewById(R.id.task_title);
@@ -116,8 +116,8 @@ public class TaskDetailFragment extends TaskAbstractFragment
                 mParentActivity.replaceFragment(EditTaskFragment.newInstance(mTask));
             }
         });
-        mFieldReportButton = (Button) view.findViewById(R.id.field_report_button);
-        mFieldReportButton.setOnClickListener(this);
+//        mFieldReportButton = (Button) view.findViewById(R.id.field_report_button);
+//        mFieldReportButton.setOnClickListener(this);
         mCompleteButton = (Button) view.findViewById(R.id.complete_button);
         mCompleteButton.setOnClickListener(this);
     }
@@ -141,9 +141,9 @@ public class TaskDetailFragment extends TaskAbstractFragment
     @Override
     public void onClick(View view) {
         switch(view.getId()){
-            case (R.id.field_report_button):
-                fieldReportButtonPressed();
-                break;
+//            case (R.id.field_report_button):
+//                fieldReportButtonPressed();
+//                break;
             case (R.id.complete_button):
                 if (!mTask.getComplete()) completeTask();
                 else unCompleteTask();
