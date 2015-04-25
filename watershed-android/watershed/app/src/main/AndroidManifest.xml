@@ -8,6 +8,7 @@
     <uses-feature android:name="android.hardware.camera" android:required="true" />
 
     <!-- GCM Permissions -->
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
     <uses-permission android:name="com.blueprint.watershed.permission.C2D_MESSAGE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -46,6 +47,9 @@
         <meta-data
             android:name="com.crashlytics.ApiKey"
             android:value="54afb894a34a5e0e989e1cedb236dc72cd0acd8d" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/lololol"/>
 
         <!-- RECIEVERS -->
         <receiver

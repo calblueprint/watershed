@@ -55,6 +55,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.location.places.Places;
 
 import org.json.JSONObject;
 
@@ -131,7 +132,11 @@ public class MainActivity extends ActionBarActivity
         mUserId = mPreferences.getInt("userId", 0);
         setUserObject();
 
-        mGoogleApiClient = new GoogleApiClient.Builder(this).build();
+        mGoogleApiClient = new GoogleApiClient
+                .Builder(this)
+                .addApi(Places.GEO_DATA_API)
+                .addApi(Places.PLACE_DETECTION_API)
+                .build();
 
         if (getRegistrationId().isEmpty())
             registerInBackground();
