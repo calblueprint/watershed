@@ -53,9 +53,11 @@ class Site < ActiveRecord::Base
 
   def subscribe(user)
     users << user
+    mini_sites.each { |m| m.users << user }
   end
 
   def unsubscribe(user)
     user_sites.find_by(user_id: user.id).try(:destroy)
+    mini_sites.each { |m| m.user_mini_sites.find_by(user_id: user.id).try(:destroy) }
   end
 end
