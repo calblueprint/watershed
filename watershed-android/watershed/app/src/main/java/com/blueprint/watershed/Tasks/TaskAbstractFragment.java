@@ -196,6 +196,11 @@ public abstract class TaskAbstractFragment extends Fragment {
                     hasErrors = true;
                 }
 
+                if (mUser == null) { //TODO remove this validation once we can create unclaimed tasks on backend.
+                    setEmpty("User", mDescriptionField);
+                    hasErrors = true;
+                }
+
                 if (hasErrors) return;
 
                 submitListener();
@@ -279,7 +284,12 @@ public abstract class TaskAbstractFragment extends Fragment {
         task.setDescription(mDescriptionField.getText().toString());
         task.setAssignerId(mParentActivity.getUserId());
         task.setDueDate(mDate);
-        task.setAssigneeId(mUser.getId());
+        if (mUser != null) {
+            task.setAssigneeId(mUser.getId());
+        }
+        else{
+            task.setAssigneeId(null);
+        }
         task.setMiniSiteId(mMiniSite.getId());
         task.setComplete(false);
 
@@ -299,7 +309,12 @@ public abstract class TaskAbstractFragment extends Fragment {
     public void setUser(User user) {
         if (mUserDialog != null) {
             mUser = user;
-            mAssigneeField.setText(mUser.getName());
+            if (mUser != null) {
+                mAssigneeField.setText(mUser.getName());
+            }
+            else {
+                mAssigneeField.setText("Unclaimed");
+            }
             mUserDialog.dismiss();
         }
     }
