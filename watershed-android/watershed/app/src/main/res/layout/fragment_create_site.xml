@@ -43,7 +43,7 @@
                 android:layout_centerVertical="false"
                 android:layout_marginTop="10dp"/>
 
-            <EditText
+            <AutoCompleteTextView
                 style="@style/TaskTextView"
                 android:id="@+id/create_site_address"
                 android:hint="@string/create_site_address"

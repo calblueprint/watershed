@@ -131,6 +131,8 @@ public class MainActivity extends ActionBarActivity
         mUserId = mPreferences.getInt("userId", 0);
         setUserObject();
 
+        mGoogleApiClient = new GoogleApiClient.Builder(this).build();
+
         if (getRegistrationId().isEmpty())
             registerInBackground();
 
@@ -146,9 +148,21 @@ public class MainActivity extends ActionBarActivity
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         updateToolbarElevation();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mGoogleApiClient.disconnect();
     }
 
     /**
@@ -462,15 +476,6 @@ public class MainActivity extends ActionBarActivity
         mUser = user;
     }
 
-    public User getUser() { return mUser; }
-    public void setUsers(List<User> users) { mUsers = users; }
-    public List<User> getUsers() { return mUsers; }
-    public int getUserId() { return mUserId; }
-    public void setFieldReportTask(Task task) { mFieldReportTask = task; }
-    public Task getFieldReportTask() { return mFieldReportTask; }
-
-    public ProgressBar getSpinner() { return mProgress; }
-
     public void setMenuAction(boolean setMenu) {
         if (setMenu) setMenu();
         else setBackArrow();
@@ -511,6 +516,16 @@ public class MainActivity extends ActionBarActivity
         else if (checkClosedMenu(f)) ((FloatingActionMenuAbstractFragment) f).closeMenu();
         else super.onBackPressed();
     }
+
+    public User getUser() { return mUser; }
+    public void setUsers(List<User> users) { mUsers = users; }
+    public List<User> getUsers() { return mUsers; }
+    public int getUserId() { return mUserId; }
+    public void setFieldReportTask(Task task) { mFieldReportTask = task; }
+    public Task getFieldReportTask() { return mFieldReportTask; }
+    public ProgressBar getSpinner() { return mProgress; }
+    public GoogleApiClient getGoogleApiClient() { return mGoogleApiClient; }
+    public void setmGoogleApiClient(GoogleApiClient client) { mGoogleApiClient = client; }
 
     /**
      * HELPERS FOR SITE FRAGMENT

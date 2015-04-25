@@ -2,6 +2,8 @@ package com.blueprint.watershed.Sites;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -9,6 +11,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 
 import com.android.volley.Response;
@@ -17,9 +21,15 @@ import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Sites.CreateSiteRequest;
 import com.blueprint.watershed.Networking.Sites.EditSiteRequest;
 import com.blueprint.watershed.R;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.location.places.AutocompletePrediction;
+import com.google.android.gms.location.places.AutocompletePredictionBuffer;
+import com.google.android.gms.location.places.Places;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -36,9 +46,13 @@ public abstract class  SiteAbstractFragment extends Fragment{
     protected EditText mTitleField;
     protected EditText mDescriptionField;
     protected EditText mCityField;
-    protected EditText mAddressField;
+    protected AutoCompleteTextView mAddressField;
     protected EditText mZipField;
     protected EditText mStateField;
+
+    // Params for maps
+    private ArrayAdapter<AutocompletePrediction> mPlacesAdapter;
+    private ArrayList<AutocompletePrediction> mPredictions;
 
     /**
      * Use this factory method to create a new instance of
@@ -52,7 +66,7 @@ public abstract class  SiteAbstractFragment extends Fragment{
         setHasOptionsMenu(true);
         mParentActivity = (MainActivity) getActivity();
         mNetworkManager = NetworkManager.getInstance(mParentActivity);
-
+        mPredictions = new ArrayList<>();
     }
 
     @Override
@@ -95,10 +109,40 @@ public abstract class  SiteAbstractFragment extends Fragment{
     protected void setButtonListeners(View view){
         mTitleField = (EditText)view.findViewById(R.id.create_site_title);
         mDescriptionField = (EditText)view.findViewById(R.id.create_site_description);
-        mAddressField = (EditText)view.findViewById(R.id.create_site_address);
+
+        mPlacesAdapter = new ArrayAdapter(mParentActivity, R.layout.places_prediction_row, mPredictions);
+        mAddressField = (AutoCompleteTextView)view.findViewById(R.id.create_site_address);
+        mAddressField.setAdapter(mPlacesAdapter);
+        mAddressField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.i("asdf", s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
         mCityField = (EditText)view.findViewById(R.id.create_site_city);
         mZipField = (EditText)view.findViewById(R.id.create_site_zip);
         mStateField = (EditText)view.findViewById(R.id.create_site_state);
+    }
+
+    private void getPredictions(String string) {
+        PendingResult result =
+                Places.GeoDataApi.getAutocompletePredictions(mParentActivity.getGoogleApiClient(), string,
+                        null, null);
+        result.setResultCallback(new ResultCallback<AutocompletePredictionBuffer>() {
+            @Override
+            public void onResult(AutocompletePredictionBuffer buffer) {
+                mPredictions.clear();
+                for (AutocompletePrediction prediction : buffer) mPredictions.add(prediction);
+                mPlacesAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     /**
