@@ -196,11 +196,6 @@ public abstract class TaskAbstractFragment extends Fragment {
                     hasErrors = true;
                 }
 
-                if (mUser == null) {
-                    setEmpty("User", mDescriptionField);
-                    hasErrors = true;
-                }
-
                 if (hasErrors) return;
 
                 submitListener();

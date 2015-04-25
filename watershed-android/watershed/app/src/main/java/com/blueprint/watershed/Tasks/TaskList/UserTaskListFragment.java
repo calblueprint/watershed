@@ -1,5 +1,7 @@
 package com.blueprint.watershed.Tasks.TaskList;
 
+import android.util.Log;
+
 import com.blueprint.watershed.Tasks.Task;
 
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ import java.util.List;
 public class UserTaskListFragment extends TaskListAbstractFragment {
 
     public static UserTaskListFragment newInstance() {
+        Log.e("New Instance Created", "User");
         return new UserTaskListFragment();
     }
 

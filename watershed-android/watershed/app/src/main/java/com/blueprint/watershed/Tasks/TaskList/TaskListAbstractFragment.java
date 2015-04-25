@@ -44,7 +44,7 @@ public abstract class TaskListAbstractFragment extends ListFragment {
     protected List<String> mTaskListHeaders;
     protected TaskAdapter mTaskAdapter;
 
-    protected ArrayList<MiniSite> mUserMiniSiteList;
+    protected ArrayList<Integer> mUserMiniSiteIdList;
 
     protected FloatingActionButton mCreateTask;
     protected ExpandableListView mListView;
@@ -59,7 +59,7 @@ public abstract class TaskListAbstractFragment extends ListFragment {
         mNetworkManager = NetworkManager.getInstance(mParentActivity);
         mTaskList = new HashMap<String, List<Task>>();
         mTaskListHeaders = new ArrayList<String>();
-        mUserMiniSiteList = new ArrayList<MiniSite>();
+        mUserMiniSiteIdList = new ArrayList<Integer>();
     }
 
     @Override
@@ -206,9 +206,9 @@ public abstract class TaskListAbstractFragment extends ListFragment {
     }
 
     private void setMiniSites(ArrayList<MiniSite> miniSites){
-        mUserMiniSiteList.clear();
+        mUserMiniSiteIdList.clear();
         for (MiniSite miniSite : miniSites){
-            mUserMiniSiteList.add(miniSite);
+            mUserMiniSiteIdList.add(miniSite.getId());
         }
     }
 }
