@@ -1,31 +1,39 @@
 package com.blueprint.watershed.Tasks;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.FieldReports.AddFieldReportFragment;
 import com.blueprint.watershed.FieldReports.FieldReportFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
+import com.blueprint.watershed.Networking.Tasks.DeleteTaskRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Utilities.Utility;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Locale;
 
 
 public class TaskDetailFragment extends TaskAbstractFragment
-                                implements View.OnClickListener{
+                                implements View.OnClickListener {
+
+    private static final String OPTION = "option";
+    private static final int ALL = 1;
 
     private MainActivity mParentActivity;
     private NetworkManager mNetworkManager;
 
-    private Button mFieldReportButton;
     private Button mCompleteButton;
     private TextView mDetailTitle;
     private TextView mDescription;
@@ -67,16 +75,8 @@ public class TaskDetailFragment extends TaskAbstractFragment
     }
 
     private void initializeViews(View view) {
+        setButtonListeners(view);
 
-        View completeButton = view.findViewById(R.id.complete_button);
-
-        mFieldReportButton = (Button) view.findViewById(R.id.field_report_button);
-        mFieldReportButton.setOnClickListener(this);
-        mCompleteButton = (Button) completeButton;
-        mCompleteButton.setOnClickListener(this);
-
-        String submit = mTask.getFieldReport() == null ? "ADD FIELD REPORT" : "VIEW FIELD REPORT";
-        mFieldReportButton.setText(submit);
         refreshCompletion();
 
         mDetailTitle = (TextView) view.findViewById(R.id.task_title);
@@ -89,7 +89,6 @@ public class TaskDetailFragment extends TaskAbstractFragment
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
         if (mTask.getDueDate() != null) mDueDate.setText(sdf.format(mTask.getDueDate()));
 
-
         String assigner;
         if (mTask.getAssigner() == null) assigner = "None";
         else assigner = mTask.getAssigner().getName();
@@ -100,31 +99,45 @@ public class TaskDetailFragment extends TaskAbstractFragment
         else location = mTask.getMiniSite().getLocation();
         mLocation.setText(location);
 
+        String description;
+        if (mTask.getDescription() == null) description = "No Description";
+        else description = mTask.getDescription();
+        mDescription.setText(description);
+    }
+
+    private void setButtonListeners(View view){
+        View editTaskButton = view.findViewById(R.id.edit_task_button);
+        editTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mParentActivity.replaceFragment(EditTaskFragment.newInstance(mTask));
+            }
+        });
+        mCompleteButton = (Button) view.findViewById(R.id.complete_button);
+        mCompleteButton.setOnClickListener(this);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.delete_menu, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
         switch (item.getItemId()) {
-            case R.id.edit:
-                EditTaskFragment newTask = EditTaskFragment.newInstance(mTask);
-                mParentActivity.replaceFragment(newTask);
+            case R.id.delete:
+                deleteTask();
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    // Button Events
-
     @Override
     public void onClick(View view) {
         switch(view.getId()){
-            case (R.id.field_report_button):
-                fieldReportButtonPressed();
-                break;
             case (R.id.complete_button):
-                if (!mTask.getComplete()) completeTask();
-                else unCompleteTask();
+                fieldReportButtonPressed();
                 break;
             default:
                 break;
@@ -134,17 +147,11 @@ public class TaskDetailFragment extends TaskAbstractFragment
     @Override
     public void submitListener() {}
 
-    public void completeTask() {
-        Utility.hideKeyboard(mParentActivity, mLayout);
-        createTask(COMPLETE, mTask);
-    }
-
     public void unCompleteTask() {
         Utility.hideKeyboard(mParentActivity, mLayout);
         createTask(UNCOMPLETE, mTask);
 
     }
-
 
     public void fieldReportButtonPressed() {
         if (mTask.getFieldReport() == null) {
@@ -156,9 +163,35 @@ public class TaskDetailFragment extends TaskAbstractFragment
     }
 
     public void refreshCompletion() {
-        String complete = mTask.getComplete() ? "UNDO COMPLETION" : "COMPLETE";
-        mCompleteButton.setText(complete);
-        if (mTask.getComplete()) mCompleteButton.setBackgroundColor(getResources().getColor(R.color.ws_green));
-        else mCompleteButton.setBackgroundColor(getResources().getColor(R.color.ws_blue));
+        String submit = mTask.getFieldReport() == null ? "COMPLETE" : "VIEW FIELD REPORT";
+        int color = mTask.getFieldReport() == null ? R.color.ws_blue : R.color.facebook_blue;
+        mCompleteButton.setText(submit);
+        mCompleteButton.setBackgroundColor(mParentActivity.getResources().getColor(color));
+    }
+
+    private void deleteTask() {
+        Utility.showAndBuildDialog(mParentActivity, R.string.task_delete_title,
+                R.string.task_delete_msg, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        makeDeleteRequest();
+                    }
+                }, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }
+        );
+    }
+
+    private void makeDeleteRequest() {
+        DeleteTaskRequest request = new DeleteTaskRequest(mParentActivity, mTask, new Response.Listener<ArrayList<Task>>() {
+            @Override
+            public void onResponse(ArrayList<Task> tasks) {
+                mParentActivity.getSupportFragmentManager().popBackStack();
+            }
+        });
+        mNetworkManager.getRequestQueue().add(request);
     }
 }

@@ -1,23 +1,34 @@
 <resources>
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
     </style>
 
-    <style name="AppThemeTranslucent" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppThemeTranslucent" parent="Theme.AppCompat.Light">
         <item name="windowActionBar">false</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
     </style>
 
     <style name="WsAppTheme" parent="Theme.AppCompat.Light">
-        <item name="android:windowActionBar">false</item>
         <item name="windowActionBar">false</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="android:windowActionBar">false</item>
         <item name="android:actionBarStyle">@style/WsActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/WsActionBarTabText</item>
         <item name="android:actionBarTabBarStyle">@style/WsActionBarTabView</item>
+        <item name="android:actionModeStyle">@style/ActionMode</item>
+        <item name="actionModeStyle">@style/ActionMode</item>
+        <item name="colorAccent">@color/ws_blue</item>
         <item name="colorPrimary">@color/ws_blue</item>
         <item name="colorPrimaryDark">@color/ws_title_bar</item>
+        <item name="android:popupMenuStyle">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="android:textColor">@color/text_color</item>
+    </style>
+
+    <style name="ActionMode" parent="@style/Widget.AppCompat.ActionMode">
+        <item name="android:background">@color/ws_blue</item>
+        <item name="background">@color/ws_blue</item>
     </style>
 
     <style name="WsActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
@@ -50,15 +61,18 @@
 
     <!-- Edit Text Form -->
     <style name="FormEditText">
-        <item name="android:layout_width">350dp</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_centerHorizontal">true</item>
-        <item name="android:layout_marginTop">10dp</item>
         <item name="android:background">@drawable/edit_text_form_transition</item>
-        <item name="android:padding">20dp</item>
+        <item name="android:padding">10dp</item>
         <item name="android:textColorHint">@color/form_gray</item>
-        <item name="android:textColor">@color/form_gray</item>
         <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TaskTextView" parent="FormEditText">
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:maxLines">1</item>
     </style>
 
     <!-- Arrows -->
@@ -96,5 +110,18 @@
     <style name="menu_labels_style">
         <item name="android:background">@drawable/fab_label_background</item>
         <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="CoverPhotoPagerView">
+        <item name="android:background">@drawable/empty_site_image</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">220dp</item>
+    </style>
+
+    <style name="Icon">
+        <item name="android:layout_width">25dp</item>
+        <item name="android:layout_height">25dp</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:layout_centerVertical">true</item>
     </style>
 </resources>

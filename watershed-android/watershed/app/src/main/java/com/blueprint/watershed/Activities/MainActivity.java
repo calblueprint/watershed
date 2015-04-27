@@ -1,26 +1,19 @@
 package com.blueprint.watershed.Activities;
 
 import android.annotation.TargetApi;
-import android.app.ActionBar;
-import android.app.ActionBar.Tab;
 import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.PagerTabStrip;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.LruCache;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,29 +25,37 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.AboutFragment;
+import com.blueprint.watershed.AbstractFragments.FloatingActionMenuAbstractFragment;
+import com.blueprint.watershed.FieldReports.FieldReportFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteAbstractFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
+import com.blueprint.watershed.Networking.BaseRequest;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Users.HomeRequest;
+import com.blueprint.watershed.Networking.Users.UpdateUserRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Sites.CreateSiteFragment;
+import com.blueprint.watershed.Sites.Site;
 import com.blueprint.watershed.Sites.SiteFragment;
 import com.blueprint.watershed.Sites.SiteListFragment;
 import com.blueprint.watershed.Tasks.CreateTaskFragment;
+import com.blueprint.watershed.Tasks.EditTaskFragment;
 import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Tasks.TaskDetailFragment;
-import com.blueprint.watershed.Tasks.TaskFragment;
-import com.blueprint.watershed.Tasks.TaskListTransformer;
+import com.blueprint.watershed.Tasks.TaskList.UserTaskListFragment;
+import com.blueprint.watershed.Tasks.TaskViewPagerFragment;
 import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Users.UserFieldReportFragment;
 import com.blueprint.watershed.Users.UserFragment;
 import com.blueprint.watershed.Users.UserMiniSiteFragment;
 import com.blueprint.watershed.Users.UserTaskFragment;
-import com.blueprint.watershed.Utilities.TabsPagerAdapter;
 import com.blueprint.watershed.Utilities.Utility;
 import com.facebook.Session;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.location.places.Places;
 
 import org.json.JSONObject;
 
@@ -62,22 +63,20 @@ import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends ActionBarActivity
-                          implements ActionBar.TabListener,
-                                     View.OnClickListener,
+                          implements View.OnClickListener,
                                      ListView.OnItemClickListener {
-
 
     // Constants
     private static final String PREFERENCES = "LOGIN_PREFERENCES";
     private static final String TAG         = "MainActivity";
-    private static int CACHE_SIZE = 512;
+    private final String SENDER_ID          = "158271976435";
 
     // Authenticating against our own server
-    public String authToken;
-    public String authEmail;
+    public String mAuthToken;
+    public String mAuthEmail;
+    private String mRegistrationId;
+    private int mAppVersion;
 
-    // Fragments
-    private FragmentManager mFragmentManager;
 
     // Navigation Drawer
     private DrawerLayout mDrawerLayout;
@@ -93,9 +92,7 @@ public class MainActivity extends ActionBarActivity
     public CharSequence mTitle;
 
     // Action Bar Elements
-    private PagerTabStrip mPagerTabStrip;
-    private ViewPager mViewPager;
-    private TabsPagerAdapter mAdapter;
+
     private View mContainer;
     private ProgressBar mProgress;
     private Toolbar mToolBar;
@@ -108,12 +105,15 @@ public class MainActivity extends ActionBarActivity
     private User mUser;
     private Integer mUserId;
 
-    //Task for FieldReport
+    // Temp Vars
+    private Site mSite;
+
+    // Task for FieldReport
     private Task mFieldReportTask;
 
-    // Caching images
-    private LruCache<Integer, Drawable> mSiteImages;
-    private LruCache<Integer, Drawable> mMiniSiteImages;
+    // Google APIS
+    private GoogleCloudMessaging mGoogleCloudMessaging;
+    private GoogleApiClient mGoogleApiClient;
 
     // Params (so we don't have to set them later)
     private List<User> mUsers;
@@ -122,15 +122,25 @@ public class MainActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         setNetworkManager(NetworkManager.getInstance(this));
-        mPreferences = getSharedPreferences(PREFERENCES, 0);
-        authToken = mPreferences.getString("auth_token", "none");
-        authEmail = mPreferences.getString("auth_email", "none");
+
+        mPreferences = getSharedPreferences(PREFERENCES, MODE_PRIVATE);
+        mAuthToken = mPreferences.getString("auth_token", "none");
+        mAuthEmail = mPreferences.getString("auth_email", "none");
+        mRegistrationId = mPreferences.getString("registration_id", "none");
+        mAppVersion = mPreferences.getInt("app_version", Integer.MIN_VALUE);
         mUserId = mPreferences.getInt("userId", 0);
         setUserObject();
 
-        initializeCache();
+        mGoogleApiClient = new GoogleApiClient
+                .Builder(this)
+                .addApi(Places.GEO_DATA_API)
+                .addApi(Places.PLACE_DETECTION_API)
+                .build();
+
+        if (getRegistrationId().isEmpty())
+            registerInBackground();
+
         initializeViews();
         initializeNavigationDrawer();
 
@@ -143,9 +153,84 @@ public class MainActivity extends ActionBarActivity
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         updateToolbarElevation();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mGoogleApiClient.disconnect();
+    }
+
+    /**
+     * Gets the current registration ID for application on GCM service.
+     * If result is empty, the app needs to register.
+     *
+     * @return registration ID, or empty string if there is no existing
+     *         registration ID.
+     */
+    private String getRegistrationId() {
+        if (mRegistrationId.equals("none")) {
+            Log.i(TAG, "Registration not found.");
+            return "";
+        }
+
+        // Check if app was updated; if so, it must clear the registration ID
+        // since the existing registration ID is not guaranteed to work with
+        // the new app version.
+        int currentVersion = Utility.getAppVersion(this);
+        if (mAppVersion != currentVersion) {
+            Log.i(TAG, "App version changed.");
+            mPreferences.edit().putInt("app_version", currentVersion).commit();
+            return "";
+        }
+        return mRegistrationId;
+    }
+
+    /**
+     * Registers the application with GCM servers asynchronously.
+     * <p>
+     * Stores the registration ID and app versionCode in the application's
+     * shared preferences.
+     */
+    private void registerInBackground() {
+        new AsyncTask<String, String, String>() {
+            @Override
+            protected String doInBackground(String... params) {
+                String msg = "";
+                JSONObject user = new JSONObject();
+                JSONObject objParams = new JSONObject();
+                try {
+                    if (mGoogleCloudMessaging == null) mGoogleCloudMessaging = GoogleCloudMessaging.getInstance(MainActivity.this);
+                    objParams.put("registration_id", mGoogleCloudMessaging.register(SENDER_ID));
+                    objParams.put("device_type", 0);
+                    user.put("user", objParams);
+                } catch (Exception ex) {
+                    msg = "Error :" + ex.getMessage();
+                }
+
+                UpdateUserRequest request = new UpdateUserRequest(MainActivity.this, getUser(), user, new Response.Listener<User>() {
+                    @Override
+                    public void onResponse(User user) {
+                        setUser(user);
+                    }
+                }, BaseRequest.makeUserResourceURL(getUserId(), "register"));
+                mNetworkManager.getRequestQueue().add(request);
+
+                return msg;
+            }
+
+            @Override
+            protected void onPostExecute(String msg) { Log.i("ERROR", msg + "\n"); }
+        }.execute(null, null, null);
     }
 
     private void setUserObject() {
@@ -174,33 +259,11 @@ public class MainActivity extends ActionBarActivity
         mNetworkManager.getRequestQueue().add(homeRequest);
     }
 
-
-    private void initializeCache() {
-        mSiteImages = new LruCache<Integer, Drawable>(CACHE_SIZE) {
-            protected int sizeOf(String key, Bitmap value) {
-                return value.getByteCount();
-            }
-        };
-
-        mMiniSiteImages = new LruCache<Integer, Drawable>(CACHE_SIZE) {
-            protected int sizeOf(String key, Bitmap value) {
-                return value.getByteCount();
-            }
-        };
-    }
-
     private void initializeViews() {
-        setTitle("Tasks");
-        mPagerTabStrip = (PagerTabStrip) findViewById(R.id.pager_title_strip);
-
         mProgress = (ProgressBar) findViewById(R.id.progressBar);
 //        mProgress.setVisibility(View.VISIBLE);
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
-        mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
-        mViewPager = (ViewPager) findViewById(R.id.pager);
         mContainer = findViewById(R.id.container);
-        mViewPager.setAdapter(mAdapter);
-        mViewPager.setPageTransformer(true, new TaskListTransformer());
 
         mUserInfo = (RelativeLayout) findViewById(R.id.nav_bar_user_info);
         mUserInfo.setOnClickListener(this);
@@ -231,77 +294,51 @@ public class MainActivity extends ActionBarActivity
         mUserName.setText(getUser().getName());
     }
 
-    public void updateTitle(Fragment f) {
-        if (f instanceof TaskFragment) {
-            setTitle("Tasks");
-            displayTaskView(true);
-            return;
-        }
+    public void updateFragment(Fragment f) {
+        if (f instanceof TaskViewPagerFragment ||
+            f instanceof UserTaskFragment)                setTitle("Tasks");
+        else if (f instanceof CreateTaskFragment)         setTitle("Add Task");
+        else if (f instanceof EditTaskFragment)           setTitle("Edit Task");
         else if (f instanceof TaskDetailFragment)         setTitle("");
-        else if (f instanceof UserTaskFragment)           setTitle("Tasks");
         else if (f instanceof SiteListFragment ||
-                 f instanceof SiteFragment ||
                  f instanceof UserMiniSiteFragment)       setTitle("Sites");
+        else if (f instanceof SiteFragment)               setTitle("Sites");
         else if (f instanceof AboutFragment)              setTitle("About");
-        else if (f instanceof UserFieldReportFragment)    setTitle("Field Reports");
+        else if (f instanceof UserFieldReportFragment ||
+                 f instanceof FieldReportFragment)        setTitle("Field Reports");
         else if (f instanceof UserFragment)               setTitle("Profile");
         else if (f instanceof MiniSiteAbstractFragment ||
                  f instanceof MiniSiteFragment)           setTitle("MiniSite");
-        displayTaskView(false);
-
     }
-
-    public void displayTaskView(boolean toggle) {
-        if (toggle){
-            mViewPager.setVisibility(View.VISIBLE);
-            mContainer.setVisibility(View.INVISIBLE);
-        }
-        else {
-            mViewPager.setVisibility(View.INVISIBLE);
-            mContainer.setVisibility(View.VISIBLE);
-        }
-    }
-
 
     public void replaceFragment(Fragment newFragment) {
-        android.support.v4.app.FragmentTransaction ft = mFragmentManager.beginTransaction();
+        android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         if(!newFragment.isAdded()){
-            updateTitle(newFragment);
+            updateFragment(newFragment);
 
             setToolbarElevation(Utility.convertDptoPix(this, 4));
-            ft.replace(R.id.container, newFragment).addToBackStack(null).commit();
+            ft.setCustomAnimations(R.anim.in, R.anim.out, R.anim.in, R.anim.out);
+            ft.replace(R.id.container, newFragment)
+              .addToBackStack(null)
+              .commit();
         }
     }
 
     private void initializeFragments() {
-        TaskFragment taskFragment = TaskFragment.newInstance(0);
-        mFragmentManager = getSupportFragmentManager();
-        mFragmentManager.addOnBackStackChangedListener(
+        TaskViewPagerFragment taskFragment = TaskViewPagerFragment.newInstance();
+        getSupportFragmentManager().addOnBackStackChangedListener(
                 new FragmentManager.OnBackStackChangedListener() {
                     @Override
                     public void onBackStackChanged() {
                         Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
-                        if (f != null) {
-                            updateTitle(f);
-                        }
+                        if (f != null) updateFragment(f);
                     }
                 });
-        updateTitle(taskFragment);
-        android.support.v4.app.FragmentTransaction ft = mFragmentManager.beginTransaction();
+        updateFragment(taskFragment);
+        android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, taskFragment);
         ft.commit();
     }
-
-    @Override
-    public void onTabReselected(Tab tab, FragmentTransaction ft) {}
-
-    @Override
-    public void onTabSelected(Tab tab, FragmentTransaction ft) {
-        mViewPager.setCurrentItem(tab.getPosition());
-    }
-
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {}
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -309,7 +346,7 @@ public class MainActivity extends ActionBarActivity
             case android.R.id.home:
                 Utility.hideKeyboard(this, mContainer);
                 Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
-                if (!(f instanceof TaskFragment) && !(f instanceof SiteListFragment) &&!(f instanceof UserFragment) &&!(f instanceof AboutFragment)) {
+                if (!(f instanceof UserTaskListFragment) && !(f instanceof SiteListFragment) &&!(f instanceof UserFragment) &&!(f instanceof AboutFragment)) {
                     getSupportFragmentManager().popBackStack();
                     return false;
                 }
@@ -337,6 +374,10 @@ public class MainActivity extends ActionBarActivity
         mDrawerList.setAdapter(new ArrayAdapter<>(this,
                 R.layout.menu_list_item, R.id.menu_title, titles));
 
+        setDrawerListener();
+    }
+
+    private void setDrawerListener() {
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
                 mToolBar, R.string.draw_open_close , R.string.draw_open_close) {
 
@@ -373,7 +414,7 @@ public class MainActivity extends ActionBarActivity
     public void onItemClick(AdapterView parent, View view, int position, long id) {
         switch (position) {
             case 0:
-                replaceFragment(TaskFragment.newInstance(0));
+                replaceFragment(TaskViewPagerFragment.newInstance());
                 break;
             case 1:
                 replaceFragment(SiteListFragment.newInstance());
@@ -397,9 +438,8 @@ public class MainActivity extends ActionBarActivity
         editor.apply();
         Intent intent = new Intent(activity, LandingPageActivity.class);
 
-        if (Session.getActiveSession() != null) {
+        if (Session.getActiveSession() != null)
             Session.getActiveSession().closeAndClearTokenInformation();
-        }
 
         activity.finish();
         activity.startActivity(intent);
@@ -411,7 +451,7 @@ public class MainActivity extends ActionBarActivity
             case R.id.nav_bar_user_info:
                 Fragment fragment = UserFragment.newInstance(getUser());
                 replaceFragment(fragment);
-                updateTitle(fragment);
+                updateFragment(fragment);
                 mDrawerLayout.closeDrawer(mDrawer);
                 break;
         }
@@ -425,16 +465,21 @@ public class MainActivity extends ActionBarActivity
         Getter and setter zones;
      */
     public void setUser(User user) {
+        JSONObject userJson = null;
+        ObjectMapper mapper = mNetworkManager.getObjectMapper();
+        SharedPreferences.Editor editor = mPreferences.edit();
+
+        try { userJson = new JSONObject(mapper.writeValueAsString(user)); }
+        catch (Exception e) { Log.i("Exception", e.toString()); }
+
+        editor.putString("email", user.getEmail());
+        if (userJson != null) editor.putString("user", userJson.toString());
+        editor.putString("registration_id", user.getRegistrationId());
+        editor.putInt("app_version", Utility.getAppVersion(this));
+        editor.apply();
+
         mUser = user;
     }
-    public User getUser() { return mUser; }
-    public void setUsers(List<User> users) { mUsers = users; }
-    public List<User> getUsers() { return mUsers; }
-    public int getUserId() { return mUserId; }
-    public void setFieldReportTask(Task task) { mFieldReportTask = task; }
-    public Task getFieldReportTask() { return mFieldReportTask; }
-
-    public ProgressBar getSpinner() { return mProgress; }
 
     public void setMenuAction(boolean setMenu) {
         if (setMenu) setMenu();
@@ -443,18 +488,17 @@ public class MainActivity extends ActionBarActivity
 
     public void setBackArrow() {
         mToolBar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
-        mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+        mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().popBackStack();
                 mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                onBackPressed();
             }
         });
-
     }
 
     public void setMenu() {
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        setDrawerListener();
         mDrawerToggle.syncState();
     }
 
@@ -467,5 +511,44 @@ public class MainActivity extends ActionBarActivity
     public void setToolbarElevation(float elevation) {
         mToolBar.setElevation(elevation);
         mToolBar.invalidate();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
+        Utility.hideKeyboard(this, f.getView());
+        if (mDrawerLayout.isDrawerOpen(mDrawer)) mDrawerLayout.closeDrawer(mDrawer);
+        else if (checkClosedMenu(f)) ((FloatingActionMenuAbstractFragment) f).closeMenu();
+        else super.onBackPressed();
+    }
+
+    public User getUser() { return mUser; }
+    public void setUsers(List<User> users) { mUsers = users; }
+    public List<User> getUsers() { return mUsers; }
+    public int getUserId() { return mUserId; }
+    public void setFieldReportTask(Task task) { mFieldReportTask = task; }
+    public Task getFieldReportTask() { return mFieldReportTask; }
+    public ProgressBar getSpinner() { return mProgress; }
+    public GoogleApiClient getGoogleApiClient() { return mGoogleApiClient; }
+    public void setmGoogleApiClient(GoogleApiClient client) { mGoogleApiClient = client; }
+
+    /**
+     * HELPERS FOR SITE FRAGMENT
+     */
+
+    public void setSite(Site site) { mSite = site; }
+    public Site getSite() { return mSite; }
+
+    /**
+     * MINI SITE MENU AND SITE MENU
+     */
+
+    /**
+     * Checks whether or not we have to close a menu
+     * @return boolean of whether or not a menu was closed
+     */
+    private boolean checkClosedMenu(Fragment f) {
+        return f instanceof FloatingActionMenuAbstractFragment &&
+               ((FloatingActionMenuAbstractFragment) f).isMenuOpen();
     }
 }

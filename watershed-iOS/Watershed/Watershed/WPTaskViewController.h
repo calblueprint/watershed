@@ -11,7 +11,7 @@
 #import "UIExtensions.h"
 #import "WPTask.h"
 
-@interface WPTaskViewController : WPViewController
+@interface WPTaskViewController : WPViewController<UIAlertViewDelegate>
 
 @property (nonatomic) WPTask *task;
 

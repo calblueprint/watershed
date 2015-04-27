@@ -4,5 +4,4 @@ class Api::V1::Users::MiniSitesController < Api::V1::Users::BaseController
   def index
     render json: @mini_sites, each_serializer: MiniSitePhotoListSerializer
   end
-
 end

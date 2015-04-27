@@ -2,9 +2,12 @@ package com.blueprint.watershed.MiniSites;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Networking.MiniSites.EditMiniSiteRequest;
+import com.blueprint.watershed.R;
+import com.blueprint.watershed.Sites.Site;
 import com.blueprint.watershed.Sites.SiteListFragment;
 
 /**
@@ -18,9 +21,9 @@ public class EditMiniSiteFragment extends MiniSiteAbstractFragment {
      *
      * @return A new instance of fragment CreateMiniSiteFragment.
      */
-    public static EditMiniSiteFragment newInstance(Integer siteID, MiniSite miniSite) {
+    public static EditMiniSiteFragment newInstance(Site site, MiniSite miniSite) {
         EditMiniSiteFragment fragment = new EditMiniSiteFragment();
-        fragment.setSite(siteID);
+        fragment.setSite(site);
         fragment.setMiniSite(miniSite);
         return fragment;
     }
@@ -30,6 +33,17 @@ public class EditMiniSiteFragment extends MiniSiteAbstractFragment {
         super.onActivityCreated(savedInstanceState);
         setButtonListeners();
         setMiniSiteInfo();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.save:
+                validateAndSubmitMiniSite();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void setMiniSiteInfo() {
@@ -48,16 +62,18 @@ public class EditMiniSiteFragment extends MiniSiteAbstractFragment {
 
     @Override
     public void submitMiniSite(MiniSite miniSite) {
-        EditMiniSiteRequest createMiniSiteRequest =
+        EditMiniSiteRequest editMiniSiteRequest =
                 new EditMiniSiteRequest(mParentActivity, miniSite, new Response.Listener<MiniSite>() {
                     @Override
                     public void onResponse(MiniSite miniSite) {
                         SiteListFragment siteList = SiteListFragment.newInstance();
                         mParentActivity.replaceFragment(siteList);
-                        Log.e("successful mini site", "creation");
+                        Log.e("successful mini site", "edit");
                     }
                 });
 
-        mNetworkManager.getRequestQueue().add(createMiniSiteRequest);
+        mNetworkManager.getRequestQueue().add(editMiniSiteRequest);
     }
+
+
 }

@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.blueprint.watershed" >
+    package="com.blueprint.watershed">
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <uses-feature android:name="android.hardware.camera" android:required="true" />
-    <uses-sdk android:minSdkVersion="11"
-        android:targetSdkVersion="19"
-    />
+
+    <!-- GCM Permissions -->
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+    <uses-permission android:name="com.blueprint.watershed.permission.C2D_MESSAGE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -15,7 +19,7 @@
         android:label="@string/app_name"
         android:theme="@style/WsAppTheme"
         >
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+        <!-- ACTIVITES -->
         <activity
             android:name=".Activities.LandingPageActivity"
             android:label="@string/title_activity_landing_page"
@@ -28,16 +32,35 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".Activities.MainActivity"
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
         </activity>
+
         <activity android:name="com.facebook.LoginActivity"/>
+
+        <!-- META-DATA -->
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
         <meta-data
             android:name="com.crashlytics.ApiKey"
             android:value="54afb894a34a5e0e989e1cedb236dc72cd0acd8d" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/lololol"/>
+
+        <!-- RECIEVERS -->
+        <receiver
+            android:name=".Notifications.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.example.gcm" />
+            </intent-filter>
+        </receiver>
+        <service android:name=".Notifications.GcmIntentService" />
     </application>
 
 </manifest>

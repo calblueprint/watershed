@@ -3,7 +3,6 @@ package com.blueprint.watershed.Networking.Sites;
 import android.app.Activity;
 import android.util.Log;
 
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.blueprint.watershed.Networking.BaseRequest;
 import com.blueprint.watershed.Sites.Site;
@@ -18,8 +17,10 @@ import java.util.HashMap;
  * If subscribed == True, then SiteSubscription requests to unsubscribe, otherwise it subscribes the currently signed in user to the site.
  */
 public class SiteSubscribeRequest extends BaseRequest {
-    public SiteSubscribeRequest(final Activity activity, Site site, HashMap<String, JSONObject> params, final Response.Listener<String> listener, Boolean subscribed) {
-        super(Request.Method.POST, makeURL("sites/" + site.getId() + (subscribed? "/unsubscribe" : "/subscribe")), new JSONObject(params),
+    public SiteSubscribeRequest(final Activity activity, Site site, HashMap<String, JSONObject> params,
+                                final Response.Listener<String> listener, boolean subscribed) {
+        super(subscribed ? Method.DELETE : Method.POST, makeURL("sites/" + site.getId() + (subscribed? "/unsubscribe" : "/subscribe")),
+            new JSONObject(params),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {

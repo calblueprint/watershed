@@ -12,6 +12,7 @@ class Api::V1::FieldReportsController < Api::V1::BaseController
 
   def create
     if @field_report.save
+      @field_report.complete_task
       render json: @field_report, serializer: FieldReportSerializer
     else
       error_response(@field_report)

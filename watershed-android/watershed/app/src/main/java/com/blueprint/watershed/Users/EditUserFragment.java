@@ -16,8 +16,9 @@ import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
+import com.blueprint.watershed.Networking.BaseRequest;
 import com.blueprint.watershed.Networking.NetworkManager;
-import com.blueprint.watershed.Networking.Users.EditUserRequest;
+import com.blueprint.watershed.Networking.Users.UpdateUserRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Utilities.Utility;
 
@@ -148,10 +149,10 @@ public class EditUserFragment extends Fragment {
                   .put("current_password", mConfirm.getText().toString());
             params.put("user", object);
         } catch (JSONException e) {
-            Log.i("JSONException EditUserFragment: ", e.toString());
+            Log.i("JSONException EditUser ", e.toString());
         }
 
-        EditUserRequest request = new EditUserRequest(mParentActivity, mUser, params, new Response.Listener<User>() {
+        UpdateUserRequest request = new UpdateUserRequest(mParentActivity, mUser, params, new Response.Listener<User>() {
             @Override
             public void onResponse(User user) {
                 Utility.hideKeyboard(mParentActivity, mLayout);
@@ -161,7 +162,7 @@ public class EditUserFragment extends Fragment {
                 mParentActivity.getSupportFragmentManager().popBackStack();
                 Toast.makeText(mParentActivity, "You've updated your profile!", Toast.LENGTH_SHORT).show();
             }
-        });
+        }, BaseRequest.makeObjectURL("users", mUser));
         mNetworkManager.getRequestQueue().add(request);
     }
 

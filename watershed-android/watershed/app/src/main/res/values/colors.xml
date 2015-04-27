@@ -8,6 +8,8 @@
     <color name="dark_gray">#656d78</color>
 
     <color name="dark_transparent_gray">#CC656D78</color>
+    <color name="text_color">#404040</color>
+    <color name="lighter_text_color">#757575</color>
 
     <!-- Watershed Colors -->
     <color name="ws_title_bar">#1976D2</color>

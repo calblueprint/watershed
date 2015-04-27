@@ -20,7 +20,7 @@ import java.util.HashMap;
  */
 public class SignUpRequest extends BaseRequest {
 
-    public SignUpRequest(final Activity activity, HashMap<String, String> params, final Response.Listener<Session> listener, final Response.Listener<APIError> errorListener) {
+    public SignUpRequest(final Activity activity, HashMap<String, Object> params, final Response.Listener<Session> listener, final Response.Listener<APIError> errorListener) {
         super(Request.Method.POST, makeURL("users"), signUpRequestParams(activity, params),
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -38,7 +38,7 @@ public class SignUpRequest extends BaseRequest {
                 }, errorListener, activity);
     }
 
-    protected static JSONObject signUpRequestParams(final Activity activity, final HashMap<String, String> userParams) {
+    protected static JSONObject signUpRequestParams(final Activity activity, final HashMap<String, Object> userParams) {
         JSONObject userJson = new JSONObject(userParams);
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
         params.put("user", userJson);

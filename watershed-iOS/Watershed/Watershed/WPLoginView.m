@@ -8,6 +8,7 @@
 
 #import "WPLoginView.h"
 #import "FontAwesomeKit/FontAwesomeKit.h"
+#import "UIExtensions.h"
 #import "WPLoginViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
@@ -44,7 +45,7 @@
         [self createSubviews];
         [self setupActions];
         [self setNeedsUpdateConstraints];
-        self.backgroundColor = [UIColor wp_blue];
+        self.backgroundColor = [UIColor wp_darkBlue];
     }
     return self;
 }
@@ -82,7 +83,7 @@
             _signInEmailIconView = [[UIImageView alloc] initWithImage:[emailIcon imageWithSize:CGSizeMake(20, 20)]];
             [self addSubview:_signInEmailIconView];
             
-            FAKIonIcons *lockIcon = [FAKIonIcons androidLockIconWithSize:20];
+            FAKIonIcons *lockIcon = [FAKIonIcons lockedIconWithSize:20];
             [lockIcon addAttribute:NSForegroundColorAttributeName
                              value:[UIColor whiteColor]];
             _signInPasswordIconView = [[UIImageView alloc] initWithImage:[lockIcon imageWithSize:CGSizeMake(20, 20)]];
@@ -129,16 +130,25 @@
     [_parentViewController didTapEmailSignInButton];
 }
 
+- (UIImage *)imageResize:(UIImage*)img andResizeTo:(CGSize)newSize
+{
+    CGFloat scale = [[UIScreen mainScreen]scale];
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, scale);
+    [img drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
 
 
 - (void)createSubviews {
-    
-    _appIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Logo"]];
+    UIImage *appIcon = [self imageResize:[UIImage imageNamed:@"login_logo.png"] andResizeTo:CGSizeMake(200, 200)];
+    _appIconView = [[UIImageView alloc] initWithImage:appIcon];
     _appIconView.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:_appIconView];
     
     _appTitleLabel = [[UILabel alloc] init];
-    _appTitleLabel.text = @"Watershed";
+    _appTitleLabel.text = @"";
     _appTitleLabel.textColor = [UIColor whiteColor];
     _appTitleLabel.font = [UIFont systemFontOfSize:27.0];
     _appTitleLabel.textAlignment = NSTextAlignmentCenter;
@@ -179,7 +189,7 @@
 - (void)updateConstraints {
     if (_isFirstTime) {
         [self.appIconView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.mas_centerY).with.offset(-200);
+            make.top.equalTo(self.mas_centerY).with.offset(-225);
             make.centerX.equalTo(self.mas_centerX);
         }];
         

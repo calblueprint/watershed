@@ -1,7 +1,7 @@
 package com.blueprint.watershed.Sites;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,20 +14,23 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.android.volley.Response;
+import com.blueprint.watershed.AbstractFragments.FloatingActionMenuAbstractFragment;
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.MiniSites.CreateMiniSiteFragment;
 import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteListAdapter;
 import com.blueprint.watershed.Networking.NetworkManager;
+import com.blueprint.watershed.Networking.Sites.DeleteSiteRequest;
 import com.blueprint.watershed.Networking.Sites.SiteRequest;
 import com.blueprint.watershed.Networking.Sites.SiteSubscribeRequest;
 import com.blueprint.watershed.Networking.Users.UserSitesRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Users.User;
-import com.blueprint.watershed.Views.CoverPhotoPagerView;
+import com.blueprint.watershed.Utilities.Utility;
 import com.blueprint.watershed.Views.HeaderGridView;
 import com.blueprint.watershed.Views.Material.FloatingActionButton;
+import com.blueprint.watershed.Views.Material.FloatingActionsMenu;
 
 import org.json.JSONObject;
 
@@ -35,13 +38,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class SiteFragment extends Fragment
+public class SiteFragment extends FloatingActionMenuAbstractFragment
                           implements AbsListView.OnItemClickListener {
 
     private NetworkManager mNetworkManager;
     private MainActivity mParentActivity;
 
-    private FloatingActionButton mCreateSiteButton;
     private HeaderGridView mMiniSiteGridView;
     private MiniSiteListAdapter mMiniSiteAdapter;
     private ViewGroup mHeader;
@@ -53,6 +55,9 @@ public class SiteFragment extends Fragment
 
     private Boolean mSubscribed;
 
+    private TextView mSiteTitle;
+    private TextView mSiteDescription;
+    private TextView mSiteAddress;
 
     public static SiteFragment newInstance(Site site) {
         SiteFragment siteFragment = new SiteFragment();
@@ -62,11 +67,29 @@ public class SiteFragment extends Fragment
 
     public void configureWithSite(Site site) { mSite = site; }
 
-    public void configureViewWithSite(View view, Site site) {
-        ((CoverPhotoPagerView) view.findViewById(R.id.cover_photo_pager_view)).configureWithPhotos(site.getPhotos());
-        ((TextView) view.findViewById(R.id.site_name)).setText(site.getName());
-        ((TextView) view.findViewById(R.id.site_description)).setText(site.getDescription());
-        ((TextView) view.findViewById(R.id.site_location)).setText(site.getLocation());
+    public void configureViewWithSite(View view, final Site site) {
+        mSiteTitle = (TextView) view.findViewById(R.id.site_name);
+        mSiteTitle.setText(site.getName());
+
+        mSiteDescription = (TextView) view.findViewById(R.id.site_description);
+        mSiteDescription.setText(site.getTrimmedText());
+
+        if (site.shouldShowDescriptionDialog()) {
+            mSiteDescription.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Utility.showAndBuildDialog(mParentActivity, null, site.getDescription(), "Back", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }, null);
+                }
+            });
+        }
+
+        mSiteAddress = (TextView) view.findViewById(R.id.site_location);
+        mSiteAddress.setText(site.getLocationOneLine());
     }
 
     @Override
@@ -86,14 +109,30 @@ public class SiteFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_site, container, false);
         mView = view;
         initializeViews(view);
+        Site site = mParentActivity.getSite();
+        if (site != null) {
+            mSite = site;
+            mParentActivity.setSite(null);
+            setMiniSites(mSite.getMiniSites());
+            mMiniSiteAdapter.notifyDataSetChanged();
+        }
+
         if (mSite.isMiniSiteEmpty()) getSiteRequest(mSite);
         return view;
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.delete_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.edit:
+            case R.id.delete:
+                deleteSiteRequest();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -105,26 +144,30 @@ public class SiteFragment extends Fragment
         mParentActivity.setMenuAction(false);
     }
 
-    private void setButtonListeners(View view){
-        View editButton = view.findViewById(R.id.site_edit_site);
+    private void setButtonListeners(View view) {
+        mMenu = (FloatingActionsMenu) view.findViewById(R.id.site_settings);
+        FloatingActionButton editButton = (FloatingActionButton) view.findViewById(R.id.site_edit_site);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mMenu.collapse();
                 editSite();
             }
         });
-        View miniSiteCreate = view.findViewById(R.id.site_add_minisite);
+        FloatingActionButton miniSiteCreate = (FloatingActionButton) view.findViewById(R.id.site_add_minisite);
         miniSiteCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mParentActivity.replaceFragment(CreateMiniSiteFragment.newInstance(mSite.getId()));
+                mMenu.collapse();
+                mParentActivity.replaceFragment(CreateMiniSiteFragment.newInstance(mSite));
             }
         });
+
         View subscribeButton = view.findViewById(R.id.site_subscribe_site);
         subscribeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!mSubscribed) subscribeToSite();
+                subscribeToSite();
             }
         });
     }
@@ -138,14 +181,14 @@ public class SiteFragment extends Fragment
         getUserSiteRequest();
 
         // Set the adapter to fill the list of mini sites
-        mMiniSiteAdapter = new MiniSiteListAdapter(mParentActivity, getMiniSites());
+        mMiniSiteAdapter = new MiniSiteListAdapter(mParentActivity, getMiniSites(), mSite);
         mMiniSiteGridView.setAdapter(mMiniSiteAdapter);
         mMiniSiteGridView.setOnItemClickListener(this);
 
         setButtonListeners(view);
     }
 
-    private void subscribeToSite(){
+    private void subscribeToSite() {
         SiteSubscribeRequest subRequest = new SiteSubscribeRequest(mParentActivity, mSite, new HashMap<String, JSONObject>(), new Response.Listener<String>() {
             @Override
             public void onResponse(String message) {
@@ -159,7 +202,7 @@ public class SiteFragment extends Fragment
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         MiniSite miniSite = getMiniSite(position);
-        MiniSiteFragment miniSiteFragment = MiniSiteFragment.newInstance(mSite.getId(), miniSite);
+        MiniSiteFragment miniSiteFragment = MiniSiteFragment.newInstance(mSite, miniSite);
         mParentActivity.replaceFragment(miniSiteFragment);
     }
 
@@ -198,21 +241,46 @@ public class SiteFragment extends Fragment
         }
     }
 
-    private void editSite(){
+    private void editSite() {
         EditSiteFragment editSiteFragment = EditSiteFragment.newInstance(mSite);
         mParentActivity.replaceFragment(editSiteFragment);
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-        inflater.inflate(R.menu.empty, menu);
-        super.onCreateOptionsMenu(menu, inflater);
+    private void deleteSiteRequest() {
+        Utility.showAndBuildDialog(mParentActivity, R.string.site_delete_title, R.string.site_delete_msg,
+            new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    makeDeleteSiteRequest();
+                }
+            }, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
     }
 
-    private void markSubscribed(ArrayList<Site> sites){
-        for (Site site : sites){
-            if (site.getId().equals(mSite.getId())){
+    private void makeDeleteSiteRequest() {
+        DeleteSiteRequest request = new DeleteSiteRequest(mParentActivity, mSite, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                mParentActivity.setSite(mSite);
+                mParentActivity.getSupportFragmentManager().popBackStack();
+            }
+        });
+        mNetworkManager.getRequestQueue().add(request);
+    }
+
+    @Override
+    public void onPause() {
+        super.onDestroy();
+        if (mMenu != null) closeMenu();
+    }
+
+    private void markSubscribed(ArrayList<Site> sites) {
+        for (Site site : sites) {
+            if (site.getId().equals(mSite.getId())) {
                 FloatingActionButton subscribeButton = (FloatingActionButton) mView.findViewById(R.id.site_subscribe_site);
                 subscribeButton.setTitle("Unsubscribe from Site");
                 subscribeButton.setIcon(R.drawable.ic_bookmark_white_36dp);
