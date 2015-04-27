@@ -234,7 +234,9 @@ static NSString * const TASKS_URL = @"tasks";
             WPSite *site = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:siteJSON error:nil];
             NSArray *photosListJSON = siteJSON[@"photos"];
             for (NSDictionary *photoJSON in photosListJSON) {
-                [site.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];
+                if ([photoJSON objectForKey:@"url"] != [NSNull null]) {
+                    [site.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];                    
+                }
             }
             [sitesList addObject:site];
         }
