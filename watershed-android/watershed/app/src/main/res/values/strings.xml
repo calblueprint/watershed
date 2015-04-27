@@ -55,7 +55,8 @@
     <string name="assignee">Assign to user</string>
     <string name="pick_user">Pick User</string>
     <string name="loading_users">Loading Users..</string>
-    <string name="pick_site">Pick Site</string>
+    <string name="pick_site">Pick MiniSite</string>
+    <string name="loading_sites">Loading MiniSites..</string>
     <string name="cancel">Cancel</string>
 
     <!-- Site Creation -->
@@ -73,7 +74,7 @@
     <string name="create_mini_site_submit">Create Mini Site</string>
     <string name="mini_site_destroy">Delete Mini Site</string>
 
-    <string name="edit_minisite">Edit Mini site</string>
+    <string name="edit_minisite">Edit Mini Site</string>
 
     <!-- Editing User -->
     <string name="edit_profile_name">Name</string>

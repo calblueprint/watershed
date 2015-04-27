@@ -201,10 +201,10 @@ public abstract class TaskAbstractFragment extends Fragment {
                     hasErrors = true;
                 }
 
-                if (mUser == null) { //TODO remove this validation once we can create unclaimed tasks on backend.
-                    setEmpty("User", mDescriptionField);
-                    hasErrors = true;
-                }
+//                if (mUser == null) { //TODO remove this validation once we can create unclaimed tasks on backend.
+//                    setEmpty("User", mDescriptionField);
+//                    hasErrors = true;
+//                }
 
                 if (hasErrors) return;
 
@@ -463,7 +463,7 @@ public abstract class TaskAbstractFragment extends Fragment {
                     }
                 });
             } else {
-                builder.setMessage(R.string.loading_users);
+                builder.setMessage(R.string.loading_sites);
             }
 
             return builder.create();

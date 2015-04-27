@@ -1,15 +1,11 @@
 package com.blueprint.watershed.Tasks;
 
-import android.app.ActionBar;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.R;
@@ -20,7 +16,7 @@ import com.blueprint.watershed.Views.Material.SlidingTabLayout;
 /**
  * Created by charlesx on 4/16/15.
  */
-public class TaskViewPagerFragment extends Fragment implements ActionBar.TabListener {
+public class TaskViewPagerFragment extends Fragment {
 
     private MainActivity mParentActivity;
 
@@ -54,13 +50,14 @@ public class TaskViewPagerFragment extends Fragment implements ActionBar.TabList
     }
 
     private void initializeViews(View view) {
-        mTabs = (SlidingTabLayout) view.findViewById(R.id.pager_title_strip);
-        mTabs.setDistributeEvenly(true);
-        setUpTabs(mTabs);
-        mAdapter = new TabsPagerAdapter(getChildFragmentManager());
+        mAdapter = new TabsPagerAdapter(getChildFragmentManager(), mParentActivity);
+        //        mAdapter = new TabsPagerAdapter(mParentActivity);
         mViewPager = (ViewPager) view.findViewById(R.id.pager);
         mViewPager.setAdapter(mAdapter);
         mViewPager.setPageTransformer(true, new TaskListTransformer());
+        mTabs = (SlidingTabLayout) view.findViewById(R.id.pager_title_strip);
+        mTabs.setDistributeEvenly(true);
+        setUpTabs(mTabs);
         mTabs.setViewPager(mViewPager);
     }
 
@@ -68,20 +65,8 @@ public class TaskViewPagerFragment extends Fragment implements ActionBar.TabList
         tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
             public int getIndicatorColor(int position) {
-
                 return getResources().getColor(R.color.white);
             }
         });
     }
-
-    @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {}
-
-    @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-        mViewPager.setCurrentItem(tab.getPosition());
-    }
-
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {}
 }
