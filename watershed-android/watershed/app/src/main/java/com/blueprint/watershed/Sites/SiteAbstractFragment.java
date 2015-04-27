@@ -17,6 +17,7 @@ import android.widget.EditText;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
+import com.blueprint.watershed.GoogleApis.Places.PlacePredictionAdapter;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Sites.CreateSiteRequest;
 import com.blueprint.watershed.Networking.Sites.EditSiteRequest;
@@ -26,11 +27,14 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.places.AutocompletePrediction;
 import com.google.android.gms.location.places.AutocompletePredictionBuffer;
 import com.google.android.gms.location.places.Places;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by maxwolffe on 4/5/15.
@@ -47,7 +51,6 @@ public abstract class  SiteAbstractFragment extends Fragment{
     protected EditText mDescriptionField;
     protected EditText mCityField;
     protected AutoCompleteTextView mAddressField;
-    protected EditText mZipField;
     protected EditText mStateField;
 
     // Params for maps
@@ -110,9 +113,10 @@ public abstract class  SiteAbstractFragment extends Fragment{
         mTitleField = (EditText)view.findViewById(R.id.create_site_title);
         mDescriptionField = (EditText)view.findViewById(R.id.create_site_description);
 
-        mPlacesAdapter = new ArrayAdapter(mParentActivity, R.layout.places_prediction_row, mPredictions);
+        mPlacesAdapter = new PlacePredictionAdapter(mParentActivity, mPredictions);
         mAddressField = (AutoCompleteTextView)view.findViewById(R.id.create_site_address);
         mAddressField.setAdapter(mPlacesAdapter);
+        mAddressField.setThreshold(3);
         mAddressField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -120,6 +124,7 @@ public abstract class  SiteAbstractFragment extends Fragment{
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i("asdf", s.toString());
+                if (s.length() > 2) getPredictions(s.toString());
             }
 
             @Override
@@ -127,22 +132,31 @@ public abstract class  SiteAbstractFragment extends Fragment{
         });
 
         mCityField = (EditText)view.findViewById(R.id.create_site_city);
-        mZipField = (EditText)view.findViewById(R.id.create_site_zip);
         mStateField = (EditText)view.findViewById(R.id.create_site_state);
     }
 
     private void getPredictions(String string) {
         PendingResult result =
                 Places.GeoDataApi.getAutocompletePredictions(mParentActivity.getGoogleApiClient(), string,
-                        null, null);
+                        new LatLngBounds(new LatLng(10, -175), new LatLng(70, -50)), null);
         result.setResultCallback(new ResultCallback<AutocompletePredictionBuffer>() {
             @Override
             public void onResult(AutocompletePredictionBuffer buffer) {
-                mPredictions.clear();
-                for (AutocompletePrediction prediction : buffer) mPredictions.add(prediction);
-                mPlacesAdapter.notifyDataSetChanged();
+                List<AutocompletePrediction> places = new ArrayList<AutocompletePrediction>();
+                for (AutocompletePrediction prediction : buffer) {
+                    AutocompletePrediction frozenPrediction = prediction.freeze();
+                    places.add(frozenPrediction);
+                }
+                buffer.release();
+                setPlaces(places);
             }
         });
+    }
+
+    private void setPlaces(List<AutocompletePrediction> places) {
+        mPredictions.clear();
+        mPredictions.addAll(places);
+        mPlacesAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -180,14 +194,7 @@ public abstract class  SiteAbstractFragment extends Fragment{
                     setEmpty("State", mStateField);
                 }
 
-                try {
-                    Integer.valueOf(mZipField.getText().toString());
-                } catch (Exception e) {
-                    has_errors = true;
-                    mZipField.setError("Please enter a valid ZIP code");
-                }
-
-                if (has_errors) return; 
+                if (has_errors) return;
 
                 submitListener();
 
@@ -217,7 +224,6 @@ public abstract class  SiteAbstractFragment extends Fragment{
         new_site.setStreet(mAddressField.getText().toString());
         new_site.setCity(mCityField.getText().toString());
         new_site.setState(mStateField.getText().toString());
-        new_site.setZipCode(Integer.valueOf(mZipField.getText().toString()));
 
         createSiteRequest(type, new_site);
     }

@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        style="@style/Icon"
+        android:id="@+id/location_icon"
+        android:src="@drawable/ic_location_gray" />
 
+    <TextView
+        android:id="@+id/top_address_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/location_icon"
+        />
+
+    <TextView
+        android:id="@+id/bottom_address_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/location_icon"
+        android:layout_below="@id/top_address_label"
+        />
 </RelativeLayout>

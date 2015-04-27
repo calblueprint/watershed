@@ -84,7 +84,7 @@ public class Site implements APIObject {
 
     @JsonIgnore
     public String getLocationOneLine() {
-        return String.format("%s, %s, %s, %d", getStreet(), getCity(), getState(), getZipCode());
+        return String.format("%s, %s, %s", getStreet(), getCity(), getState());
     }
 
     @JsonIgnore
