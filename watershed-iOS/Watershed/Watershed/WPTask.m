@@ -37,8 +37,8 @@
     return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[WPUser class]];
 }
 
-+ (NSValueTransformer *)siteJSONTransformer {
-    return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[WPSite class]];
++ (NSValueTransformer *)miniSiteJSONTransformer {
+    return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[WPMiniSite class]];
 }
 //           what to do with these objects?
 //             @"assignee_id",

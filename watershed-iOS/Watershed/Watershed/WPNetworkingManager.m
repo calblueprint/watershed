@@ -103,8 +103,6 @@ static NSString * const TASKS_URL = @"tasks";
     }];
 }
 
-//- (void)
-
 - (void)requestTasksListWithParameters:(NSMutableDictionary *)parameters success:(void (^)(NSMutableArray *tasksList))success {
 
     NSString *tasksString = [WPNetworkingManager createURLWithEndpoint:TASKS_URL];
@@ -173,15 +171,34 @@ static NSString * const TASKS_URL = @"tasks";
     NSString *taskString = [WPNetworkingManager createURLWithEndpoint:TASK_URL];
     [self addAuthenticationParameters:parameters];
     NSMutableDictionary *taskJSON = [MTLJSONAdapter JSONDictionaryFromModel:task].mutableCopy;
-    [taskJSON setObject:task.taskId forKey:@"task_id"];
+    [taskJSON setObject:task.assignee.userId forKey:@"assignee_id"];
+    [taskJSON setObject:task.assigner.userId forKey:@"assigner_id"];
     [parameters setObject:taskJSON forKey:@"task"];
+    [taskJSON setObject:task.miniSite.miniSiteId forKey:@"mini_site_id"];
 
     [self PUT:taskString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSMutableDictionary *taskJSON = (NSMutableDictionary *)responseObject[@"task"];
+        NSDictionary *taskJSON = (NSDictionary *)responseObject[@"task"];
         WPTask *taskResponse = [MTLJSONAdapter modelOfClass:WPTask.class fromJSONDictionary:taskJSON error:nil];
         success(taskResponse);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not edit task." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+- (void)requestSimpleMiniSiteWithMiniSite:(WPMiniSite *)miniSite parameters:(NSMutableDictionary *)parameters success:(void (^)(WPMiniSite *miniSite))success {
+    NSString *miniSiteEndpoint = [@"/" stringByAppendingString:[miniSite.miniSiteId stringValue]];
+    NSString *MINI_SITE_URL = [MINI_SITES_URL stringByAppendingString:miniSiteEndpoint];
+    NSString *miniSiteString = [WPNetworkingManager createURLWithEndpoint:MINI_SITE_URL];
+    [self addAuthenticationParameters:parameters];
+    
+    [self GET:miniSiteString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *miniSiteJSON = (NSDictionary *)responseObject[@"mini_site"];
+        WPMiniSite *miniSiteResponse = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:miniSiteJSON error:nil];
+        success(miniSiteResponse);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load mini site." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [incorrect show];
         NSLog(@"Error: %@", error);
     }];
@@ -229,12 +246,32 @@ static NSString * const TASKS_URL = @"tasks";
     }];
 }
 
+
+- (void)requestMiniSitesListWithParameters:(NSMutableDictionary *)parameters success:(void (^)(NSMutableArray *sitesList))success {
+    NSString *sitesString = [WPNetworkingManager createURLWithEndpoint:MINI_SITES_URL];
+    [self addAuthenticationParameters:parameters];
+    
+    [self GET:sitesString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSArray *sitesListJSON = (NSArray *)responseObject[@"mini_sites"];
+        NSMutableArray *sitesList = [[NSMutableArray alloc] init];
+        for (NSDictionary *siteJSON in sitesListJSON) {
+            WPMiniSite *site = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:siteJSON error:nil];
+            [sitesList addObject:site];
+        }
+        success(sitesList);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load minisites." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
+}
+
 - (void)requestSiteWithSite:(WPSite *)site parameters:(NSMutableDictionary *)parameters success:(void (^)(WPSite *site, NSMutableArray *miniSiteList))success {
     NSString *siteEndpoint = [@"/" stringByAppendingString:[site.siteId stringValue]];
     NSString *SITE_URL = [SITES_URL stringByAppendingString:siteEndpoint];
     NSString *siteString = [WPNetworkingManager createURLWithEndpoint:SITE_URL];
     [self addAuthenticationParameters:parameters];
-    
+
     [self GET:siteString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *siteJSON = (NSDictionary *)responseObject[@"site"];
         WPSite *siteResponse = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:siteJSON error:nil];

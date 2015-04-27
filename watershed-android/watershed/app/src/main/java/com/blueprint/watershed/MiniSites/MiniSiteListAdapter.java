@@ -1,6 +1,8 @@
 package com.blueprint.watershed.MiniSites;
 
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -43,7 +45,6 @@ public class MiniSiteListAdapter extends ArrayAdapter<MiniSite> {
             holder.photosView = (CoverPhotoPagerView) row.findViewById(R.id.cover_photo_pager_view);
             holder.coverPhotoLabel = (TextView) row.findViewById(R.id.cover_photo_label);
             holder.topLabel = (TextView) row.findViewById(R.id.top_label);
-            holder.bottomLabel = (TextView) row.findViewById(R.id.bottom_label);
 
             row.setTag(holder);
         } else {
@@ -54,12 +55,15 @@ public class MiniSiteListAdapter extends ArrayAdapter<MiniSite> {
         holder.photosView.configureWithPhotos(miniSite.getPhotos());
         holder.coverPhotoLabel.setText(String.format("%s Field Reports", miniSite.getFieldReportsCount()));
         holder.topLabel.setText(miniSite.getName());
-        holder.bottomLabel.setText(miniSite.getLocation());
         if (mSite != null) {
-            row.setOnClickListener(new View.OnClickListener() {
+            final TapGestureListener listener = new TapGestureListener(mActivity, mSite, miniSite);
+            final GestureDetector gesture = new GestureDetector(mActivity, listener);
+
+            holder.photosView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
-                public void onClick(View view) {
-                    mActivity.replaceFragment(MiniSiteFragment.newInstance(mSite, miniSite));
+                public boolean onTouch(View v, MotionEvent event) {
+                    gesture.onTouchEvent(event);
+                    return false;
                 }
             });
         }
@@ -71,6 +75,24 @@ public class MiniSiteListAdapter extends ArrayAdapter<MiniSite> {
         CoverPhotoPagerView photosView;
         TextView coverPhotoLabel;
         TextView topLabel;
-        TextView bottomLabel;
+    }
+
+    class TapGestureListener extends GestureDetector.SimpleOnGestureListener {
+
+        public MainActivity activity;
+        public Site site;
+        public MiniSite minisite;
+
+        public TapGestureListener(MainActivity activity, Site site, MiniSite miniSite) {
+            this.activity = activity;
+            this.site = site;
+            this.minisite = miniSite;
+        }
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            activity.replaceFragment(MiniSiteFragment.newInstance(site, minisite));
+            return super.onSingleTapConfirmed(e);
+        }
     }
 }

@@ -1,31 +1,6 @@
 package com.blueprint.watershed.Sites;
 
-import android.app.Activity;
-import android.net.Uri;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.android.volley.Network;
-import com.android.volley.Response;
-import com.blueprint.watershed.Activities.MainActivity;
-import com.blueprint.watershed.Networking.NetworkManager;
-import com.blueprint.watershed.Networking.Tasks.CreateTaskRequest;
-import com.blueprint.watershed.R;
 import android.support.v4.app.Fragment;
-import android.widget.Button;
-import android.widget.EditText;
-
-import com.blueprint.watershed.Networking.Sites.CreateSiteRequest;
-import com.blueprint.watershed.Tasks.Task;
-
-import org.json.JSONObject;
-
-import java.util.HashMap;
 
 
 /**
@@ -50,7 +25,4 @@ public class CreateSiteFragment extends SiteAbstractFragment{
     public void submitListener(){
         createSite(CREATE, null);
     }
-
-
-
 }
