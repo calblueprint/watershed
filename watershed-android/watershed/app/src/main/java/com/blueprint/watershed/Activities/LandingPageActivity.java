@@ -367,10 +367,6 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
 
         SharedPreferences.Editor editor = mPreferences.edit();
 
-        Log.e(session.getAuthenticationToken(), "Sketchy");
-        Log.e(session.getEmail(), "Hella Sketchy");
-
-
         editor.putString("authentication_token", session.getAuthenticationToken());
         editor.putString("email", session.getEmail());
         if (userJson != null) editor.putString("user", userJson.toString());

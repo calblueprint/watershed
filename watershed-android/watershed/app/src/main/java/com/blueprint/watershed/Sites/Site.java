@@ -77,10 +77,7 @@ public class Site implements APIObject {
     public String getLongitude() { return mLongitude; }
     public Integer getTasksCount() { return mTasksCount; }
     public Integer getMiniSitesCount() { return mMiniSitesCount; }
-    public Boolean getSubscribed() {
-        return mSubscribed;
-    }
-
+    public Boolean getSubscribed() { return mSubscribed; }
 
     @JsonIgnore
     public String getLocation() {

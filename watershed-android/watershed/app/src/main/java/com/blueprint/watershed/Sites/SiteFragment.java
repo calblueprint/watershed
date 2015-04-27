@@ -188,7 +188,7 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
         mMiniSiteGridView.setOnItemClickListener(this);
 
         mSubscribeButton = (FloatingActionButton) mView.findViewById(R.id.site_subscribe_site);
-        if (mSite.getSubscribed()) {
+        if (false) { // mSite.getSubscribed()
             mSubscribeButton.setTitle("Unsubscribe from Site");
             mSubscribeButton.setIcon(R.drawable.ic_bookmark_white_36dp);
             mSubscribed = true;
