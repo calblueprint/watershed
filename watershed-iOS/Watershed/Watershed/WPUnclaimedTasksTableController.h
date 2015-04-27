@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WPMyTasksTableViewController.h"
 
-@interface WPUnclaimedTasksTableController : UIViewController
+@interface WPUnclaimedTasksTableController : WPMyTasksTableViewController;
 
 @end

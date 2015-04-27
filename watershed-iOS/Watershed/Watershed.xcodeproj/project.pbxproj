@@ -23,7 +23,6 @@
 		064463051A073E3700C6FE8B /* WPTasksTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A039BD19EB973800EB83CC /* WPTasksTableViewCell.m */; };
 		0653A8F71A21267B0022462B /* WPTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 0653A8F61A21267B0022462B /* WPTask.m */; };
 		0666867E1AEDE24200AFE029 /* WPUnclaimedTasksTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0666867D1AEDE24200AFE029 /* WPUnclaimedTasksTableController.m */; };
-		066686811AEDE2AD00AFE029 /* WPUnclaimedTaskTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 066686801AEDE2AD00AFE029 /* WPUnclaimedTaskTableView.m */; };
 		068AB39E1A1B4155009BB746 /* WPAddFieldReportView.m in Sources */ = {isa = PBXBuildFile; fileRef = 068AB39B1A1B4155009BB746 /* WPAddFieldReportView.m */; };
 		068AB39F1A1B4155009BB746 /* WPAddFieldReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 068AB39D1A1B4155009BB746 /* WPAddFieldReportViewController.m */; };
 		06A8139519D911C900E3EB05 /* WPTasksListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A8139419D911C900E3EB05 /* WPTasksListViewController.m */; };
@@ -137,8 +136,6 @@
 		0653A8F61A21267B0022462B /* WPTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPTask.m; sourceTree = "<group>"; };
 		0666867C1AEDE24100AFE029 /* WPUnclaimedTasksTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPUnclaimedTasksTableController.h; sourceTree = "<group>"; };
 		0666867D1AEDE24200AFE029 /* WPUnclaimedTasksTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPUnclaimedTasksTableController.m; sourceTree = "<group>"; };
-		0666867F1AEDE2AD00AFE029 /* WPUnclaimedTaskTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPUnclaimedTaskTableView.h; sourceTree = "<group>"; };
-		066686801AEDE2AD00AFE029 /* WPUnclaimedTaskTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPUnclaimedTaskTableView.m; sourceTree = "<group>"; };
 		068AB39A1A1B4155009BB746 /* WPAddFieldReportView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPAddFieldReportView.h; sourceTree = "<group>"; };
 		068AB39B1A1B4155009BB746 /* WPAddFieldReportView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPAddFieldReportView.m; sourceTree = "<group>"; };
 		068AB39C1A1B4155009BB746 /* WPAddFieldReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPAddFieldReportViewController.h; sourceTree = "<group>"; };
@@ -354,8 +351,6 @@
 		066686841AEDE30D00AFE029 /* UnclaimedTasks */ = {
 			isa = PBXGroup;
 			children = (
-				0666867F1AEDE2AD00AFE029 /* WPUnclaimedTaskTableView.h */,
-				066686801AEDE2AD00AFE029 /* WPUnclaimedTaskTableView.m */,
 				0666867C1AEDE24100AFE029 /* WPUnclaimedTasksTableController.h */,
 				0666867D1AEDE24200AFE029 /* WPUnclaimedTasksTableController.m */,
 			);
@@ -891,7 +886,6 @@
 				068AB39F1A1B4155009BB746 /* WPAddFieldReportViewController.m in Sources */,
 				27BEC6B01A1063B5006CBFF6 /* WPFieldReportView.m in Sources */,
 				27F0B70119E2496400E848C3 /* WPSiteView.m in Sources */,
-				066686811AEDE2AD00AFE029 /* WPUnclaimedTaskTableView.m in Sources */,
 				27EE2DBF1A2EE8F200106803 /* WPCreateSiteViewController.m in Sources */,
 				064462FD1A073A3000C6FE8B /* WPProfileView.m in Sources */,
 				06305F4719D9274400BD2CE4 /* UIView+WPExtensions.m in Sources */,

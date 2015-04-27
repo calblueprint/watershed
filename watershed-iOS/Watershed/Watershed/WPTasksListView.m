@@ -67,7 +67,7 @@
     }) wp_addToSuperview:self.tasksTableView];
 
     _tasksSegmentedControl = [({
-        NSArray *itemArray = [NSArray arrayWithObjects: @"My Tasks", @"All Tasks", nil];
+        NSArray *itemArray = [NSArray arrayWithObjects: @"My Tasks", @"Unclaimed Tasks", @"All Tasks", nil];
         UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:itemArray];
         segmentedControl.selectedSegmentIndex = 0;
         segmentedControl.tintColor = [UIColor wp_darkBlue];
@@ -113,9 +113,10 @@
 
 - (void)taskSegmentControlAction:(UISegmentedControl *)segment
 {
-    if(segment.selectedSegmentIndex == 0)
-    {
+    if(segment.selectedSegmentIndex == 0) {
         [self.tasksTableView addSubview:_parentTasksListViewController.myTasksTableController.tableView];
+    } else if (segment.selectedSegmentIndex == 1) {
+        [self.tasksTableView addSubview:_parentTasksListViewController.unclaimedTasksTableController.tableView];
     } else {
         [self.tasksTableView addSubview:_parentTasksListViewController.allTasksTableController.tableView];
     }
