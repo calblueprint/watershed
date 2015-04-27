@@ -115,7 +115,7 @@ int WPButtonHeight = 75;
 
 - (void)configureWithTask:(WPTask *)task {
     NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
-    [outputFormatter setDateFormat:@"MM/dd/yyyy"];
+    [outputFormatter setDateFormat:@"MMM dd, yyyy"];
     
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];

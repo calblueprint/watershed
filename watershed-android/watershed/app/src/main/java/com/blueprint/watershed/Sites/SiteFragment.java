@@ -29,7 +29,6 @@ import com.blueprint.watershed.Networking.Users.UserSitesRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Utilities.Utility;
-import com.blueprint.watershed.Views.CoverPhotoPagerView;
 import com.blueprint.watershed.Views.HeaderGridView;
 import com.blueprint.watershed.Views.Material.FloatingActionButton;
 import com.blueprint.watershed.Views.Material.FloatingActionsMenu;
@@ -57,6 +56,9 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
 
     private Boolean mSubscribed;
 
+    private TextView mSiteTitle;
+    private TextView mSiteDescription;
+    private TextView mSiteAddress;
 
     public static SiteFragment newInstance(Site site) {
         SiteFragment siteFragment = new SiteFragment();
@@ -66,11 +68,29 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
 
     public void configureWithSite(Site site) { mSite = site; }
 
-    public void configureViewWithSite(View view, Site site) {
-        ((CoverPhotoPagerView) view.findViewById(R.id.cover_photo_pager_view)).configureWithPhotos(site.getPhotos());
-        ((TextView) view.findViewById(R.id.site_name)).setText(site.getName());
-        ((TextView) view.findViewById(R.id.site_description)).setText(site.getDescription());
-        ((TextView) view.findViewById(R.id.site_location)).setText(site.getLocation());
+    public void configureViewWithSite(View view, final Site site) {
+        mSiteTitle = (TextView) view.findViewById(R.id.site_name);
+        mSiteTitle.setText(site.getName());
+
+        mSiteDescription = (TextView) view.findViewById(R.id.site_description);
+        mSiteDescription.setText(site.getTrimmedText());
+
+        if (site.shouldShowDescriptionDialog()) {
+            mSiteDescription.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Utility.showAndBuildDialog(mParentActivity, null, site.getDescription(), "Back", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }, null);
+                }
+            });
+        }
+
+        mSiteAddress = (TextView) view.findViewById(R.id.site_location);
+        mSiteAddress.setText(site.getLocationOneLine());
     }
 
     @Override

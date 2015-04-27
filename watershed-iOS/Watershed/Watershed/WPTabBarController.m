@@ -46,17 +46,13 @@
                             NSLocalizedString(@"Profile", HNNoLocalizationComment)
                             ];
         
-//        FAKIonIcons *checkIcon = [FAKIonIcons androidDoneAllIconWithSize:28];
-        FAKIonIcons *checkIcon = [FAKIonIcons ios7AlarmIconWithSize:28];
-        UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake(28, 28)];
+
+        UIImage *checkImage = [self imageResize:[UIImage imageNamed:@"tasks_gray.png"] andResizeTo:CGSizeMake(28, 28)];
         
-        FAKIonIcons *treeIcon = [FAKIonIcons androidImageIconWithSize:28];
-        UIImage *treeImage = [treeIcon imageWithSize:CGSizeMake(28, 28)];
-        
-//        FAKIonIcons *profileIcon = [FAKIonIcons androidPersonIconWithSize:28];
-        FAKIonIcons *profileIcon = [FAKIonIcons ios7AmericanfootballOutlineIconWithSize:28];
-        UIImage *profileImage = [profileIcon imageWithSize:CGSizeMake(28, 28)];
-        
+        UIImage *treeImage = [self imageResize:[UIImage imageNamed:@"sites_gray.png"] andResizeTo:CGSizeMake(28, 28)];
+
+        UIImage *profileImage = [self imageResize:[UIImage imageNamed:@"profile_gray.png"] andResizeTo:CGSizeMake(28, 28)];
+
         NSArray *images = @[
                             checkImage,
                             treeImage,
@@ -86,6 +82,16 @@
         viewControllers;
     });
     
+}
+
+- (UIImage *)imageResize:(UIImage*)img andResizeTo:(CGSize)newSize
+{
+    CGFloat scale = [[UIScreen mainScreen]scale];
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, scale);
+    [img drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
 }
 
 - (UINavigationController *)activeTabNavigationController {
