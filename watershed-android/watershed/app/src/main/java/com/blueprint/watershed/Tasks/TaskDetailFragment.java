@@ -113,8 +113,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
                 mParentActivity.replaceFragment(EditTaskFragment.newInstance(mTask));
             }
         });
-//        mFieldReportButton = (Button) view.findViewById(R.id.field_report_button);
-//        mFieldReportButton.setOnClickListener(this);
+        
         mCompleteButton = (Button) view.findViewById(R.id.complete_button);
         mCompleteButton.setOnClickListener(this);
     }
