@@ -2,8 +2,6 @@ package com.blueprint.watershed.Sites;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
-
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -165,6 +163,7 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
                 mParentActivity.replaceFragment(CreateMiniSiteFragment.newInstance(mSite));
             }
         });
+
         View subscribeButton = view.findViewById(R.id.site_subscribe_site);
         subscribeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -203,7 +202,7 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
         setButtonListeners(view);
     }
 
-    private void subscribeToSite(){
+    private void subscribeToSite() {
         SiteSubscribeRequest subRequest = new SiteSubscribeRequest(mParentActivity, mSite, new HashMap<String, JSONObject>(), new Response.Listener<String>() {
             @Override
             public void onResponse(String message) {
@@ -304,9 +303,9 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
         if (mMenu != null) closeMenu();
     }
 
-    private void markSubscribed(ArrayList<Site> sites){
-        for (Site site : sites){
-            if (site.getId().equals(mSite.getId())){
+    private void markSubscribed(ArrayList<Site> sites) {
+        for (Site site : sites) {
+            if (site.getId().equals(mSite.getId())) {
                 FloatingActionButton subscribeButton = (FloatingActionButton) mView.findViewById(R.id.site_subscribe_site);
                 subscribeButton.setTitle("Unsubscribe from Site");
                 subscribeButton.setIcon(R.drawable.ic_bookmark_white_36dp);
