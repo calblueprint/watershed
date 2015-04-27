@@ -128,7 +128,7 @@ public abstract class SiteAbstractFragment extends Fragment{
 
                 submitListener();
 
-                SiteListAbstractFragment returnFragment = SiteListAbstractFragment.newInstance();
+                SiteViewPagerFragment returnFragment = SiteViewPagerFragment.newInstance();
                 mParentActivity.replaceFragment(returnFragment);
             }
         };
