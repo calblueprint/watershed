@@ -32,6 +32,7 @@ public class Site implements APIObject {
     private String mLongitude;
     private Integer mTasksCount;
     private Integer mMiniSitesCount;
+    private Boolean mSubscribed;
 
     // Relationships
     private ArrayList<MiniSite> mMiniSites;
@@ -76,6 +77,10 @@ public class Site implements APIObject {
     public String getLongitude() { return mLongitude; }
     public Integer getTasksCount() { return mTasksCount; }
     public Integer getMiniSitesCount() { return mMiniSitesCount; }
+    public Boolean getSubscribed() {
+        return mSubscribed;
+    }
+
 
     @JsonIgnore
     public String getLocation() {
@@ -113,6 +118,9 @@ public class Site implements APIObject {
     public void setLongitude(String longitude) { mLongitude = longitude; }
     public void setTasksCount(Integer tasksCount) { mTasksCount = tasksCount; }
     public void setMiniSitesCount(Integer miniSitesCount) { mMiniSitesCount = miniSitesCount; }
+    public void setSubscribed(Boolean subscribed) {
+        this.mSubscribed = subscribed;
+    }
 
     @Override
     public boolean equals(Object object) {
