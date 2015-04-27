@@ -12,9 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -50,9 +50,7 @@ import java.util.List;
  */
 public abstract class TaskAbstractFragment extends Fragment {
 
-
     protected static final String EDIT = "edit";
-    protected static final String COMPLETE = "complete";
     protected static final String UNCOMPLETE = "uncomplete";
     protected static final String CREATE = "create";
     private static final int REQUEST_CODE = 200;
@@ -85,15 +83,6 @@ public abstract class TaskAbstractFragment extends Fragment {
         getFieldObjects();
     }
 
-    /**
-     * Gets the users and sites so that we can pick from them.
-     */
-    private void getFieldObjects() {
-        mUsers = mParentActivity.getUsers();
-        if (mUsers == null) getUsers();
-        getMiniSites();
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -110,8 +99,27 @@ public abstract class TaskAbstractFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.empty, menu);
+        inflater.inflate(R.menu.save_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.save:
+                validateAndSubmit();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    /**
+     * Gets the users and sites so that we can pick from them.
+     */
+    private void getFieldObjects() {
+        mUsers = mParentActivity.getUsers();
+        if (mUsers == null) getUsers();
+        getMiniSites();
     }
 
     /**
@@ -145,9 +153,6 @@ public abstract class TaskAbstractFragment extends Fragment {
     public void setButtonListeners() {
         mLayout = (RelativeLayout) mParentActivity.findViewById(R.id.create_task_layout);
         Utility.setKeyboardListener(mParentActivity, mLayout);
-
-        Button submitButton = (Button) mParentActivity.findViewById(R.id.create_task_submit);
-        submitButton.setOnClickListener(validateAndSubmit());
 
         mTitleField = (EditText) mParentActivity.findViewById(R.id.create_task_title);
         mDescriptionField = (EditText) mParentActivity.findViewById(R.id.create_task_description);
@@ -269,11 +274,6 @@ public abstract class TaskAbstractFragment extends Fragment {
     public void createTask(String type, Task task) {
         if (type.equals(CREATE)) task = new Task();
 
-        if (type.equals(COMPLETE)){
-            task.setComplete(true);
-            createTaskRequest(task, type);
-            return;
-        }
         if (type.equals(UNCOMPLETE)){
             task.setComplete(false);
             createTaskRequest(task, type);
@@ -434,7 +434,7 @@ public abstract class TaskAbstractFragment extends Fragment {
         @NonNull
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle(R.string.pick_user)
+            builder.setTitle(R.string.pick_site)
                     .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {

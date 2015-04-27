@@ -106,4 +106,16 @@ public class Utility {
                 .setNegativeButton(android.R.string.no, noListen)
                 .show();
     }
+
+    public static void showAndBuildDialog(Activity activity, String title, String message, String back,
+                                          DialogInterface.OnClickListener yesListen, DialogInterface.OnClickListener noListen) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity)
+                                                     .setTitle(title)
+                                                     .setMessage(message);
+
+        if (yesListen != null) builder.setPositiveButton(back, yesListen);
+        if (noListen != null) builder.setNegativeButton(android.R.string.no, noListen);
+        builder.show();
+    }
+
 }

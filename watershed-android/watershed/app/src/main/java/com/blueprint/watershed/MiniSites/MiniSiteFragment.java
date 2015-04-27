@@ -68,7 +68,7 @@ public class MiniSiteFragment extends FloatingActionMenuAbstractFragment
         ((CoverPhotoPagerView)view.findViewById(R.id.cover_photo_pager_view)).configureWithPhotos(miniSite.getPhotos());
         ((TextView) view.findViewById(R.id.mini_site_name)).setText(miniSite.getName());
         ((TextView) view.findViewById(R.id.mini_site_description)).setText(miniSite.getDescription());
-        ((TextView) view.findViewById(R.id.mini_site_location)).setText(miniSite.getLocation());
+        ((TextView) view.findViewById(R.id.mini_site_location)).setText(miniSite.getLocationOneLine());
     }
 
     @Override

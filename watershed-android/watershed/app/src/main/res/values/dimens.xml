@@ -2,9 +2,14 @@
 <resources>
 
     <!-- Margins -->
+    <dimen name="super_hella_wide_margin">28dp</dimen>
+    <dimen name="hella_wide_margin">24dp</dimen>
     <dimen name="wide_margin">20dp</dimen>
     <dimen name="standard_margin">16dp</dimen>
     <dimen name="tight_margin">12dp</dimen>
+    <dimen name="hella_middle_tight_margin">10dp</dimen>
+    <dimen name="hella_tight_margin">8dp</dimen>
+    <dimen name="super_hella_tight_margin">4dp</dimen>
     <dimen name="no_margin">0dp</dimen>
     <dimen name="landing_page_margin">60dp</dimen>
 

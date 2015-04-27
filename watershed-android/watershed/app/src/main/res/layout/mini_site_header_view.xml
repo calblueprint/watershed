@@ -11,41 +11,56 @@
         android:id="@+id/cover_photo_pager_view"
         />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_below="@id/cover_photo_pager_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/standard_margin"
-        android:layout_marginRight="@dimen/standard_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/hella_wide_margin"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/mini_site_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/tight_margin"
             android:textSize="30sp"
+            android:fontFamily="sans-serif-medium"
             android:text="Site Name"
             />
+        <RelativeLayout
+            android:id="@+id/mini_site_location_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mini_site_name"
+            android:layout_marginTop="@dimen/hella_tight_margin"
+            >
+            <ImageView
+                android:id="@+id/location_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_location_gray"
+                android:scaleType="centerCrop"
+                android:layout_centerVertical="true"
+                />
+
+            <TextView
+                android:id="@+id/mini_site_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/location_icon"
+                android:layout_centerVertical="true"
+                android:textSize="14sp"
+                android:text="Location"
+                />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/mini_site_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/tight_margin"
+            android:layout_below="@id/mini_site_location_container"
+            android:layout_marginTop="@dimen/hella_tight_margin"
             android:textSize="14sp"
             android:text="Site Description"
             />
-
-        <TextView
-            android:id="@+id/mini_site_location"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/tight_margin"
-            android:textSize="14sp"
-            android:text="Location"
-            />
-
-    </LinearLayout>
-
+    </RelativeLayout>
 </RelativeLayout>
