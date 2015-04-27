@@ -32,20 +32,12 @@ public class TaskViewPagerFragment extends ViewPagerAbstractFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_task_view_pager, container, false);
-        initializeViews(view);
-        return view;
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         mParentActivity.setToolbarElevation(0);
     }
 
-    private void initializeViews(View view) {
+    protected void initializeViews(View view) {
         mTabs = (SlidingTabLayout) view.findViewById(R.id.pager_title_strip);
         mTabs.setDistributeEvenly(true);
         setUpTabs(mTabs);

@@ -38,6 +38,7 @@ import com.blueprint.watershed.Sites.CreateSiteFragment;
 import com.blueprint.watershed.Sites.Site;
 import com.blueprint.watershed.Sites.SiteFragment;
 import com.blueprint.watershed.Sites.SiteListFragment;
+import com.blueprint.watershed.Sites.SiteViewPagerFragment;
 import com.blueprint.watershed.Tasks.CreateTaskFragment;
 import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Tasks.TaskDetailFragment;
@@ -279,11 +280,9 @@ public class MainActivity extends ActionBarActivity
         else if (f instanceof TaskDetailFragment)         setTitle("");
         else if (f instanceof UserTaskFragment)           setTitle("Tasks");
         else if (f instanceof SiteListFragment ||
-                 f instanceof UserMiniSiteFragment)       setTitle("Sites");
-        else if (f instanceof SiteFragment)
-        {
-            setTitle("Sites");
-        }
+                 f instanceof UserMiniSiteFragment ||
+                 f instanceof SiteViewPagerFragment ||
+                 f instanceof SiteFragment)               setTitle("Sites");
         else if (f instanceof AboutFragment)              setTitle("About");
         else if (f instanceof UserFieldReportFragment ||
                  f instanceof FieldReportFragment)        setTitle("Field Reports");
@@ -396,7 +395,7 @@ public class MainActivity extends ActionBarActivity
                 replaceFragment(TaskViewPagerFragment.newInstance());
                 break;
             case 1:
-                replaceFragment(SiteListFragment.newInstance());
+                replaceFragment(SiteViewPagerFragment.newInstance());
                 break;
             case 2:
                 replaceFragment(AboutFragment.newInstance());
