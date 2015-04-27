@@ -2,12 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x"
+      "scale" : "1x",
+      "filename" : "watershed-icons-11.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "profilePicture.png"
+      "scale" : "2x"
     },
     {
       "idiom" : "universal",
