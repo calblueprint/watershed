@@ -3,6 +3,8 @@ package com.blueprint.watershed.Utilities;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.blueprint.watershed.Tasks.TaskList.AllTaskListFragment;
 import com.blueprint.watershed.Tasks.TaskList.UnclaimedTaskListFragment;
@@ -28,6 +30,7 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
                 return AllTaskListFragment.newInstance();
             case 2:
                 return UnclaimedTaskListFragment.newInstance();
+
         }
 
         return null;
@@ -48,8 +51,10 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
                 return "All";
             case 2:
                 return "Unclaimed";
+
         }
         return null;
     }
+
 
 }
