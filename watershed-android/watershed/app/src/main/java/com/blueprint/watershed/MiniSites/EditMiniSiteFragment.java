@@ -8,7 +8,7 @@ import com.android.volley.Response;
 import com.blueprint.watershed.Networking.MiniSites.EditMiniSiteRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Sites.Site;
-import com.blueprint.watershed.Sites.SiteListFragment;
+import com.blueprint.watershed.Sites.SiteList.SiteListAbstractFragment;
 
 /**
  * Created by charlesx on 3/17/15.
@@ -66,7 +66,7 @@ public class EditMiniSiteFragment extends MiniSiteAbstractFragment {
                 new EditMiniSiteRequest(mParentActivity, miniSite, new Response.Listener<MiniSite>() {
                     @Override
                     public void onResponse(MiniSite miniSite) {
-                        SiteListFragment siteList = SiteListFragment.newInstance();
+                        SiteListAbstractFragment siteList = SiteListAbstractFragment.newInstance();
                         mParentActivity.replaceFragment(siteList);
                         Log.e("successful mini site", "edit");
                     }

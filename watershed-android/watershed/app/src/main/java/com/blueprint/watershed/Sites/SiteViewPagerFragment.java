@@ -5,7 +5,7 @@ import android.view.View;
 
 
 import com.blueprint.watershed.R;
-import com.blueprint.watershed.Sites.SiteListTransformer;
+import com.blueprint.watershed.Sites.SiteList.SiteListTransformer;
 import com.blueprint.watershed.Views.Material.SlidingTabLayout;
 import com.blueprint.watershed.Views.ViewPagerAbstractFragment;
 

@@ -8,6 +8,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.blueprint.watershed.Sites.SiteList.SiteListAbstractFragment;
+
 /**
  * Created by Max on 4/26/2015.
  * Sets up adapter for view pager
@@ -23,9 +25,9 @@ public class SiteTabsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int index) {
         switch (index) {
             case 0:
-                return SiteListFragment.newInstance();
+                return SiteListAbstractFragment.newInstance();
             case 1:
-                return SiteListFragment.newInstance();
+                return SiteListAbstractFragment.newInstance();
         }
 
         return null;

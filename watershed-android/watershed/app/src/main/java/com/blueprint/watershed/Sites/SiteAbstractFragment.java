@@ -17,6 +17,7 @@ import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Sites.CreateSiteRequest;
 import com.blueprint.watershed.Networking.Sites.EditSiteRequest;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Sites.SiteList.SiteListAbstractFragment;
 
 import org.json.JSONObject;
 
@@ -25,7 +26,7 @@ import java.util.HashMap;
 /**
  * Created by maxwolffe on 4/5/15.
  */
-public abstract class  SiteAbstractFragment extends Fragment{
+public abstract class SiteAbstractFragment extends Fragment{
 
     protected static final String EDIT = "edit";
     protected static final String CREATE = "create";
@@ -127,7 +128,7 @@ public abstract class  SiteAbstractFragment extends Fragment{
 
                 submitListener();
 
-                SiteListFragment returnFragment = SiteListFragment.newInstance();
+                SiteListAbstractFragment returnFragment = SiteListAbstractFragment.newInstance();
                 mParentActivity.replaceFragment(returnFragment);
             }
         };
