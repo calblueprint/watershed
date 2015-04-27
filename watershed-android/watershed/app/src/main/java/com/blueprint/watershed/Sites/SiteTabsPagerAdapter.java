@@ -1,21 +1,21 @@
-package com.blueprint.watershed.Utilities;
+package com.blueprint.watershed.Sites;
+
+/**
+ * Created by maxwolffe on 4/26/15.
+ */
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.blueprint.watershed.Tasks.TaskList.AllTaskListFragment;
-import com.blueprint.watershed.Tasks.TaskList.UnclaimedTaskListFragment;
-import com.blueprint.watershed.Tasks.TaskList.UserTaskListFragment;
-
 /**
- * Created by Max on 10/19/2014.
+ * Created by Max on 4/26/2015.
  * Sets up adapter for view pager
  */
 
-public class TabsPagerAdapter extends FragmentPagerAdapter {
+public class SiteTabsPagerAdapter extends FragmentPagerAdapter {
 
-    public TabsPagerAdapter(FragmentManager fm) {
+    public SiteTabsPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
@@ -23,11 +23,9 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int index) {
         switch (index) {
             case 0:
-                return UserTaskListFragment.newInstance();
+                return SiteListFragment.newInstance();
             case 1:
-                return AllTaskListFragment.newInstance();
-            case 2:
-                return UnclaimedTaskListFragment.newInstance();
+                return SiteListFragment.newInstance();
         }
 
         return null;
@@ -36,7 +34,7 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         // get item count - equal to number of tabs
-        return 3;
+        return 2;
     }
 
     @Override
@@ -46,8 +44,6 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
                 return "Your";
             case 1:
                 return "All";
-            case 2:
-                return "Unclaimed";
         }
         return null;
     }
