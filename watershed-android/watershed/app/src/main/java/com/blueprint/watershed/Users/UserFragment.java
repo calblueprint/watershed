@@ -88,8 +88,6 @@ public class UserFragment extends Fragment implements ListView.OnItemClickListen
         ArrayList<String> options = new ArrayList <String>();
 
         options.add("Field-Reports " + mUser.getFieldReportsCount());
-        options.add("Tasks " + mUser.getFieldReportsCount());
-        options.add("Sites " + mUser.getSitesCount());
         if (mUser.isEmployee() || mUser.isManager()){
             // Manager only information goes here.
         }
