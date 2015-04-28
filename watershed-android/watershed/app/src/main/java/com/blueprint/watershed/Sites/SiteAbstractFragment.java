@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -54,9 +55,9 @@ public abstract class  SiteAbstractFragment extends Fragment{
     protected MainActivity mParentActivity;
     protected EditText mTitleField;
     protected EditText mDescriptionField;
-    protected EditText mCityField;
+//    protected EditText mCityField;
     protected AutoCompleteTextView mAddressField;
-    protected EditText mStateField;
+//    protected EditText mStateField;
 
     // Params for maps
     private ArrayAdapter<AutocompletePrediction> mPlacesAdapter;
@@ -136,8 +137,14 @@ public abstract class  SiteAbstractFragment extends Fragment{
             public void afterTextChanged(Editable s) {}
         });
 
-        mCityField = (EditText)view.findViewById(R.id.create_site_city);
-        mStateField = (EditText)view.findViewById(R.id.create_site_state);
+        mAddressField.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                AutocompletePrediction prediction = mPlacesAdapter.getItem(position);
+                mAddressField.setText(prediction.getDescription());
+            }
+        });
+
     }
 
     private void getPredictions(String string) {
@@ -189,15 +196,15 @@ public abstract class  SiteAbstractFragment extends Fragment{
                     setEmpty("Address", mAddressField);
                 }
 
-                if (mCityField.getText().toString().length() == 0) {
-                    has_errors = true;
-                    setEmpty("City", mCityField);
-                }
-
-                if (mStateField.getText().toString().length() == 0) {
-                    has_errors = true;
-                    setEmpty("State", mStateField);
-                }
+//                if (mCityField.getText().toString().length() == 0) {
+//                    has_errors = true;
+//                    setEmpty("City", mCityField);
+//                }
+//
+//                if (mStateField.getText().toString().length() == 0) {
+//                    has_errors = true;
+//                    setEmpty("State", mStateField);
+//                }
 
                 if (has_errors) return;
 
@@ -227,8 +234,8 @@ public abstract class  SiteAbstractFragment extends Fragment{
         new_site.setName(mTitleField.getText().toString());
         new_site.setDescription(mDescriptionField.getText().toString());
         new_site.setStreet(mAddressField.getText().toString());
-        new_site.setCity(mCityField.getText().toString());
-        new_site.setState(mStateField.getText().toString());
+//        new_site.setCity(mCityField.getText().toString());
+//        new_site.setState(mStateField.getText().toString());
 
         createSiteRequest(type, new_site);
     }
