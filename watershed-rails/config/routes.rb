@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       resources :users, only: [:index, :show, :create, :update] do
         member do
           put :register
+          put :promote
         end
 
         collection do
