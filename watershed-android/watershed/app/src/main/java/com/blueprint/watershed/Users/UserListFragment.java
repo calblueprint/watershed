@@ -8,10 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Networking.NetworkManager;
+import com.blueprint.watershed.Networking.Users.UsersRequest;
 import com.blueprint.watershed.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,17 +27,21 @@ public class UserListFragment extends Fragment {
     private NetworkManager mNetworkManager;
 
     // Views
-    protected ListView mListView;
-    protected SwipeRefreshLayout mNoUsers;
-    protected SwipeRefreshLayout mSwipeLayout;
+    private ListView mListView;
+    private UserListAdapter mAdapter;
+    private SwipeRefreshLayout mNoUsers;
+    private SwipeRefreshLayout mSwipeLayout;
 
-    //
+    // Parameters
     private List<User> mUsers;
+    private boolean mShouldRequest = false;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mParentActivity = (MainActivity) getActivity();
         mNetworkManager = NetworkManager.getInstance(mParentActivity);
+        mUsers = new ArrayList<User>();
     }
 
     @Override
@@ -47,11 +54,16 @@ public class UserListFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initializeViews();
+        presetUsers();
     }
 
+    /**
+     * Initializes all the views
+     */
     private void initializeViews() {
         mListView = (ListView) mParentActivity.findViewById(R.id.list);
-
+        mAdapter = new UserListAdapter(mParentActivity, mUsers);
+        mListView.setAdapter(mAdapter);
 
         mSwipeLayout = (SwipeRefreshLayout) mParentActivity.findViewById(R.id.user_swipe_container);
         mNoUsers = (SwipeRefreshLayout) mParentActivity.findViewById(R.id.no_user_layout);
@@ -61,7 +73,7 @@ public class UserListFragment extends Fragment {
             @Override
             public void onRefresh() {
                 mSwipeLayout.setRefreshing(true);
-                makeUsersRequest();
+                makeUsersRequest(mSwipeLayout);
             }
         });
 
@@ -69,13 +81,36 @@ public class UserListFragment extends Fragment {
         mNoUsers.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mSwipeLayout.setRefreshing(true);
-                makeUsersRequest();
+                mNoUsers.setRefreshing(true);
+                makeUsersRequest(mNoUsers);
             }
         });
     }
 
-    private void makeUsersRequest() {
+    /**
+     * Checks to see if we have to make a request to get all the users.
+     */
+    private void presetUsers() {
+        List<User> users = mParentActivity.getUsers();
+        if (users != null && users.size() > 0) setUsers(users);
+        else if (!mShouldRequest)makeUsersRequest(null);
+    }
 
+    private void makeUsersRequest(final SwipeRefreshLayout layout) {
+        UsersRequest request = new UsersRequest(mParentActivity, new Response.Listener<ArrayList<User>>() {
+            @Override
+            public void onResponse(ArrayList<User> users) {
+                if (layout != null) layout.setRefreshing(false);
+                setUsers(users);
+            }
+        });
+        mNetworkManager.getRequestQueue().add(request);
+    }
+
+    private void setUsers(List<User> users) {
+        mUsers.clear();
+        mUsers.addAll(users);
+        mAdapter.notifyDataSetChanged();
+        mShouldRequest = true;
     }
 }
