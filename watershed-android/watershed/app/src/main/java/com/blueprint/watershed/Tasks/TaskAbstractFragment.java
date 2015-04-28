@@ -452,7 +452,7 @@ public abstract class TaskAbstractFragment extends Fragment {
                     }
                 });
             } else {
-                builder.setMessage(R.string.loading_users);
+                builder.setMessage(R.string.loading_sites);
             }
 
             return builder.create();

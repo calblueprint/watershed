@@ -47,6 +47,7 @@ import com.blueprint.watershed.Tasks.TaskViewPagerFragment;
 import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Users.UserFieldReportFragment;
 import com.blueprint.watershed.Users.UserFragment;
+import com.blueprint.watershed.Users.UserListFragment;
 import com.blueprint.watershed.Users.UserMiniSiteFragment;
 import com.blueprint.watershed.Users.UserTaskFragment;
 import com.blueprint.watershed.Utilities.Utility;
@@ -309,6 +310,7 @@ public class MainActivity extends ActionBarActivity
         else if (f instanceof UserFragment)               setTitle("Profile");
         else if (f instanceof MiniSiteAbstractFragment ||
                  f instanceof MiniSiteFragment)           setTitle("MiniSite");
+        else if (f instanceof UserListFragment)           setTitle("Manage");
     }
 
     public void replaceFragment(Fragment newFragment) {
@@ -368,7 +370,7 @@ public class MainActivity extends ActionBarActivity
         mDrawerLayout.setStatusBarBackgroundColor(getResources().getColor(R.color.ws_blue));
         mDrawer = (RelativeLayout) findViewById(R.id.left_drawer);
         mDrawerList = (ListView) findViewById(R.id.left_drawer_list_view);
-        String titles[] = { "Tasks", "Sites", "About", "Logout", "Manage" };
+        String titles[] = { "Tasks", "Sites", "About", "Manage", "Logout"};
 
         mDrawerList.setOnItemClickListener(this);
         mDrawerList.setAdapter(new ArrayAdapter<>(this,
@@ -423,7 +425,7 @@ public class MainActivity extends ActionBarActivity
                 replaceFragment(AboutFragment.newInstance());
                 break;
             case 3:
-                logoutCurrentUser(this);
+                replaceFragment(UserListFragment.newInstance());
                 break;
             case 4:
                 logoutCurrentUser(this);

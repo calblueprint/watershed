@@ -53,9 +53,13 @@
     <string name="create_task_submit">Create Task</string>
     <string name="required">Required</string>
     <string name="assignee">Assign to user</string>
+
     <string name="pick_user">Pick User</string>
     <string name="loading_users">Loading Users..</string>
+
     <string name="pick_site">Pick Site</string>
+    <string name="loading_sites">Loading Mini Sites...</string>
+
     <string name="cancel">Cancel</string>
 
     <!-- Site Creation -->
@@ -81,6 +85,7 @@
     <string name="edit_profile_password">New Password</string>
     <string name="edit_profile_reenter">Confirm Password</string>
     <string name="edit_profile_confirm">Old Password</string>
+    <string name="manage_profile">Manage User</string>
 
     <!-- Task Index -->
     <string name="no_tasks">Looks like you don\'t have any tasks!\nSwipe up to refresh.</string>

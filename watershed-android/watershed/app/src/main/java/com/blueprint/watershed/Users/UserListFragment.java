@@ -1,11 +1,16 @@
 package com.blueprint.watershed.Users;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.android.volley.Response;
@@ -36,6 +41,8 @@ public class UserListFragment extends Fragment {
     private List<User> mUsers;
     private boolean mShouldRequest = false;
 
+    public static UserListFragment newInstance() { return new UserListFragment(); }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,9 +68,16 @@ public class UserListFragment extends Fragment {
      * Initializes all the views
      */
     private void initializeViews() {
-        mListView = (ListView) mParentActivity.findViewById(R.id.list);
         mAdapter = new UserListAdapter(mParentActivity, mUsers);
+        mListView = (ListView) mParentActivity.findViewById(R.id.list);
         mListView.setAdapter(mAdapter);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                User user = mAdapter.getItem(position);
+
+            }
+        });
 
         mSwipeLayout = (SwipeRefreshLayout) mParentActivity.findViewById(R.id.user_swipe_container);
         mNoUsers = (SwipeRefreshLayout) mParentActivity.findViewById(R.id.no_user_layout);
@@ -102,6 +116,8 @@ public class UserListFragment extends Fragment {
             public void onResponse(ArrayList<User> users) {
                 if (layout != null) layout.setRefreshing(false);
                 setUsers(users);
+                if (users.size() > 0) showList();
+                else hideList();
             }
         });
         mNetworkManager.getRequestQueue().add(request);
@@ -112,5 +128,48 @@ public class UserListFragment extends Fragment {
         mUsers.addAll(users);
         mAdapter.notifyDataSetChanged();
         mShouldRequest = true;
+    }
+
+    private void showList() {
+        mNoUsers.setVisibility(View.GONE);
+        mSwipeLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void hideList() {
+        mNoUsers.setVisibility(View.VISIBLE);
+        mSwipeLayout.setVisibility(View.GONE);
+    }
+
+    public static class ChooseActionDialogFragment extends DialogFragment {
+
+        public static ChooseActionDialogFragment newInstance(User user) {
+            ChooseActionDialogFragment dialog = new ChooseActionDialogFragment();
+            dialog.setUser()
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(R.string.manage_profile)
+                   .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                   dialog.dismiss();
+                }
+            });
+            String[] items = { "Set User to Admin", "Set User to Employee", "Set User to Volunteer", "Delete User"};
+            builder.setItems(items, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    sw
+                }
+            });
+        }
+
+        public void setUser(User user) { mUser = user; }
+    }
+
+    private void setRole(int 0) {
+
     }
 }
