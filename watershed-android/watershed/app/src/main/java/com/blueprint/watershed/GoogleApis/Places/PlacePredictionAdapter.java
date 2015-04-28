@@ -49,8 +49,12 @@ public class PlacePredictionAdapter extends ArrayAdapter<AutocompletePrediction>
         }
 
         AutocompletePrediction prediction = getItem(position);
-
-        holder.mTopLabel.setText(prediction.getDescription());
+        String[] description = prediction.getDescription().split(",");
+        String street = description[0];
+        String city = description[1];
+        String state = description[2];
+        holder.mTopLabel.setText(street);
+        holder.mBottomLabel.setText(city + ", " + state);
         return row;
     }
 
