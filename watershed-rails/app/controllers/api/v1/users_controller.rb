@@ -59,6 +59,14 @@ class Api::V1::UsersController < Api::V1::BaseController
     end
   end
 
+  def destroy
+    if @user.destroy
+      render json: User.all, each_serializer: UserSerializer
+    else
+      error_response(@user)
+    end
+  end
+
   private
 
   def user_params
