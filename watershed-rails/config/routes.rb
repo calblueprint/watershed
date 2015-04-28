@@ -6,7 +6,7 @@ Rails.application.routes.draw do
       get "mobile", to: "base#mobile"
 
       devise_for :users, skip: [:registrations, :passwords]
-      resources :users, only: [:index, :show, :create, :update] do
+      resources :users do
         member do
           put :register
           put :promote
