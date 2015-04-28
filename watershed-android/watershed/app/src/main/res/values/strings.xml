@@ -88,6 +88,9 @@
     <!-- Site Index -->
     <string name="no_site">Looks like you don\'t have any sites!\nSwipe up to refresh.</string>
     <string name="no_site_refresh">Refresh</string>
+    <!-- User Index -->
+    <string name="no_user">Looks like there aren\'t any users!\nSwipe up to refresh.</string>
+    <string name="no_user_refresh">Refresh</string>
 
     <!-- User Lists -->
     <string name="no_user_tasks">Looks like this user has no tasks!</string>

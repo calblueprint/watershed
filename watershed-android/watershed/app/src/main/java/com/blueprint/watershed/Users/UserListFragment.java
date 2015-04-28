@@ -38,6 +38,6 @@ public class UserListFragment extends Fragment {
     }
 
     private void initializeViews() {
-        
+
     }
 }
