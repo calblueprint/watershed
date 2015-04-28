@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +16,15 @@ import android.widget.ListView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
+import com.blueprint.watershed.Networking.BaseRequest;
 import com.blueprint.watershed.Networking.NetworkManager;
+import com.blueprint.watershed.Networking.Users.DeleteUserRequest;
+import com.blueprint.watershed.Networking.Users.UpdateUserRequest;
 import com.blueprint.watershed.Networking.Users.UsersRequest;
 import com.blueprint.watershed.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,8 +123,6 @@ public class UserListFragment extends Fragment {
             public void onResponse(ArrayList<User> users) {
                 if (layout != null) layout.setRefreshing(false);
                 setUsers(users);
-                if (users.size() > 0) showList();
-                else hideList();
             }
         });
         mNetworkManager.getRequestQueue().add(request);
@@ -127,6 +132,8 @@ public class UserListFragment extends Fragment {
         mUsers.clear();
         mUsers.addAll(users);
         mAdapter.notifyDataSetChanged();
+        if (users.size() > 0) showList();
+        else hideList();
         mShouldRequest = true;
     }
 
@@ -142,9 +149,12 @@ public class UserListFragment extends Fragment {
 
     public static class ChooseActionDialogFragment extends DialogFragment {
 
+        private User mUser;
+
         public static ChooseActionDialogFragment newInstance(User user) {
             ChooseActionDialogFragment dialog = new ChooseActionDialogFragment();
-            dialog.setUser()
+            dialog.setUser(user);
+            return dialog;
         }
 
         @Override
@@ -161,15 +171,47 @@ public class UserListFragment extends Fragment {
             builder.setItems(items, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    sw
+                    if (!(getTargetFragment() instanceof UserListFragment)) Log.e("can't", "even fragment");
+                    UserListFragment fragment = (UserListFragment) getTargetFragment();
+                    if (which < 3) fragment.setUserRole(mUser, which);
+                    else fragment.deleteUser(mUser);
                 }
             });
+
+            return builder.create();
         }
 
         public void setUser(User user) { mUser = user; }
     }
 
-    private void setRole(int 0) {
+    private void setUserRole(User user, int role) {
+        JSONObject userObj = new JSONObject();
+        JSONObject params = new JSONObject();
+        try {
+            params.put("role", role);
+            userObj.put("user", params);
+        } catch (JSONException e) {
+            Log.i("JSONEXCEPTION", e.toString());
+        }
 
+        UpdateUserRequest request = new UpdateUserRequest(mParentActivity, user, userObj,
+            new Response.Listener<User>() {
+                @Override
+                public void onResponse(User user) {
+                    mAdapter.notifyDataSetChanged();
+                }
+            },BaseRequest.makeUserResourceURL(user.getId(), "register"));
+        mNetworkManager.getRequestQueue().add(request);
+    }
+
+    private void deleteUser(User user) {
+        DeleteUserRequest request = new DeleteUserRequest(mParentActivity, user, new Response.Listener<ArrayList<User>>() {
+            @Override
+            public void onResponse(ArrayList<User> users) {
+                setUsers(users);
+            }
+        });
+
+        mNetworkManager.getRequestQueue().add(request);
     }
 }
