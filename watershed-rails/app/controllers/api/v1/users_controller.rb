@@ -51,6 +51,14 @@ class Api::V1::UsersController < Api::V1::BaseController
     end
   end
 
+  def promote
+    if @user.update(promotion_params)
+      render json: @user, serializer: UserSerializer
+    else
+      error_response(@user)
+    end
+  end
+
   private
 
   def user_params
@@ -61,6 +69,10 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def registration_params
     params.require(:user).permit(:registration_id, :device_type)
+  end
+
+  def promotion_params
+    params.require(:user).permit(:role)
   end
 
   def invalid_facebook_login_attempt
