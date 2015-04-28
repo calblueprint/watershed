@@ -55,15 +55,19 @@ public class TaskViewPagerFragment extends Fragment {
     private void initializeViews(View view) {
         mAdapter = new TabsPagerAdapter(getChildFragmentManager());
 //        mAdapter = new TabsPagerAdapter(mParentActivity);
-        mAdapter.addFragment(UserTaskListFragment.newInstance());
-        mAdapter.addFragment(UnclaimedTaskListFragment.newInstance());
-        mAdapter.addFragment(AllTaskListFragment.newInstance());
-        mAdapter.addTitles("Your", "Unclaimed" , "All");
 
         mViewPager = (ViewPager) view.findViewById(R.id.pager);
-        mViewPager.setAdapter(mAdapter);
         mViewPager.setPageTransformer(true, new TaskListTransformer());
         mViewPager.setOffscreenPageLimit(2);
+        mViewPager.setAdapter(mAdapter);
+
+        mAdapter.addFragment(new UserTaskListFragment());
+        mAdapter.addFragment(new UnclaimedTaskListFragment());
+        mAdapter.addFragment(new AllTaskListFragment());
+        mAdapter.addTitles("Your", "Unclaimed" , "All");
+        mAdapter.notifyDataSetChanged();
+
+
         mTabs = (SlidingTabLayout) view.findViewById(R.id.pager_title_strip);
         mTabs.setDistributeEvenly(true);
         setUpTabs(mTabs);

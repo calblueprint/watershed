@@ -2,7 +2,8 @@ package com.blueprint.watershed.Utilities;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,7 +13,7 @@ import java.util.Arrays;
  * Sets up adapter for view pager
  */
 
-public class TabsPagerAdapter extends FragmentStatePagerAdapter {
+public class TabsPagerAdapter extends FragmentPagerAdapter {
 
     private ArrayList<Fragment> mFragments;
     private ArrayList<String> mTitles;
@@ -30,6 +31,7 @@ public class TabsPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int index) {
+        Log.i("asdfasdf", index + "asdfasdfsa");
         return mFragments.get(index);
     }
 
