@@ -9,7 +9,10 @@ import android.view.ViewGroup;
 
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Tasks.TaskList.AllTaskListFragment;
 import com.blueprint.watershed.Tasks.TaskList.TaskListTransformer;
+import com.blueprint.watershed.Tasks.TaskList.UnclaimedTaskListFragment;
+import com.blueprint.watershed.Tasks.TaskList.UserTaskListFragment;
 import com.blueprint.watershed.Utilities.TabsPagerAdapter;
 import com.blueprint.watershed.Views.Material.SlidingTabLayout;
 
@@ -50,11 +53,17 @@ public class TaskViewPagerFragment extends Fragment {
     }
 
     private void initializeViews(View view) {
-        mAdapter = new TabsPagerAdapter(getChildFragmentManager(), mParentActivity);
-        //        mAdapter = new TabsPagerAdapter(mParentActivity);
+        mAdapter = new TabsPagerAdapter(getChildFragmentManager());
+//        mAdapter = new TabsPagerAdapter(mParentActivity);
+        mAdapter.addFragment(UserTaskListFragment.newInstance());
+        mAdapter.addFragment(UnclaimedTaskListFragment.newInstance());
+        mAdapter.addFragment(AllTaskListFragment.newInstance());
+        mAdapter.addTitles("Your", "Unclaimed" , "All");
+
         mViewPager = (ViewPager) view.findViewById(R.id.pager);
         mViewPager.setAdapter(mAdapter);
         mViewPager.setPageTransformer(true, new TaskListTransformer());
+        mViewPager.setOffscreenPageLimit(2);
         mTabs = (SlidingTabLayout) view.findViewById(R.id.pager_title_strip);
         mTabs.setDistributeEvenly(true);
         setUpTabs(mTabs);

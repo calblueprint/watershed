@@ -68,6 +68,8 @@
         <item name="android:padding">10dp</item>
         <item name="android:textColorHint">@color/form_gray</item>
         <item name="android:textSize">18sp</item>
+        <item name="android:focusable">true</item>
+        <item name="android:focusableInTouchMode">true</item>
     </style>
 
     <style name="TaskTextView" parent="FormEditText">

@@ -1,14 +1,11 @@
 package com.blueprint.watershed.Utilities;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.util.Log;
 
-import com.blueprint.watershed.Tasks.TaskList.AllTaskListFragment;
-import com.blueprint.watershed.Tasks.TaskList.UnclaimedTaskListFragment;
-import com.blueprint.watershed.Tasks.TaskList.UserTaskListFragment;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by Max on 10/19/2014.
@@ -17,13 +14,13 @@ import com.blueprint.watershed.Tasks.TaskList.UserTaskListFragment;
 
 public class TabsPagerAdapter extends FragmentStatePagerAdapter {
 
-    private Context mContext;
-    private FragmentManager mFragmentManager;
+    private ArrayList<Fragment> mFragments;
+    private ArrayList<String> mTitles;
 
-    public TabsPagerAdapter(FragmentManager fm, Context context) {
+    public TabsPagerAdapter(FragmentManager fm) {
         super(fm);
-        mFragmentManager = fm;
-        mContext = context;
+        mFragments = new ArrayList<Fragment>();
+        mTitles = new ArrayList<String>();
     }
 
 //    public TabsPagerAdapter(Activity activity) {
@@ -33,47 +30,26 @@ public class TabsPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int index) {
-        Log.i("adf", index+"asdf");
-        switch (index) {
-            case 0:
-                return UserTaskListFragment.newInstance();
-            case 1:
-                return UnclaimedTaskListFragment.newInstance();
-            default:
-                return AllTaskListFragment.newInstance();
-        }
+        return mFragments.get(index);
     }
 
     @Override
     public int getCount() {
-        // get item count - equal to number of tabs
-        return 3;
+        return mFragments.size();
     }
-
-    @Override
-    public int getItemPosition(Object object) {
-        if(mFragmentManager.getFragments().contains(object)) {
-            Log.i("asfdasdf", "asdf");
-            return POSITION_NONE;
-        }
-        else {
-            Log.i("asfdasdf", "dam");
-            return POSITION_UNCHANGED;
-        }
-    }
-
 
     @Override
     public CharSequence getPageTitle(int position) {
-        switch (position) {
-            case 0:
-                return "Your";
-            case 1:
-                return "Unclaimed";
-            case 2:
-                return "All";
-        }
-        return null;
+        return mTitles.get(position);
+    }
+
+    public void addFragment(Fragment fragment) {
+        mFragments.add(fragment);
+        notifyDataSetChanged();
+    }
+
+    public void addTitles(String... titles) {
+        mTitles.addAll(Arrays.asList(titles));
     }
 
 //    @Override

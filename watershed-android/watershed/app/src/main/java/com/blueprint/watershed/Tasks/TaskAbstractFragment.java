@@ -176,41 +176,36 @@ public abstract class TaskAbstractFragment extends Fragment {
         });
     }
 
-    private View.OnClickListener validateAndSubmit() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                boolean hasErrors = false;
-                if (mTitleField.getText().toString().length() == 0) {
-                    setEmpty("Title", mTitleField);
-                    hasErrors = true;
-                }
+    private void validateAndSubmit() {
+        boolean hasErrors = false;
+        if (mTitleField.getText().toString().length() == 0) {
+            setEmpty("Title", mTitleField);
+            hasErrors = true;
+        }
 
-                if (mDescriptionField.getText().toString().length() == 0) {
-                    setEmpty("Description", mDescriptionField);
-                    hasErrors = true;
-                }
+        if (mDescriptionField.getText().toString().length() == 0) {
+            setEmpty("Description", mDescriptionField);
+            hasErrors = true;
+        }
 
-                if (mMiniSite == null) {
-                    setEmpty("Minisite", mDescriptionField);
-                    hasErrors = true;
-                }
+        if (mMiniSite == null) {
+            setEmpty("Minisite", mDescriptionField);
+            hasErrors = true;
+        }
 
-                if (mDate == null) {
-                    setEmpty("Deadline", mDescriptionField);
-                    hasErrors = true;
-                }
+        if (mDate == null) {
+            setEmpty("Deadline", mDescriptionField);
+            hasErrors = true;
+        }
 
 //                if (mUser == null) { //TODO remove this validation once we can create unclaimed tasks on backend.
 //                    setEmpty("User", mDescriptionField);
 //                    hasErrors = true;
 //                }
 
-                if (hasErrors) return;
+        if (hasErrors) return;
 
-                submitListener();
-            }
-        };
+        submitListener();
     }
 
     private void setEmpty(String field, EditText editText) { editText.setError(field + " can't be blank!"); }
@@ -284,14 +279,10 @@ public abstract class TaskAbstractFragment extends Fragment {
         task.setDescription(mDescriptionField.getText().toString());
         task.setAssignerId(mParentActivity.getUserId());
         task.setDueDate(mDate);
-        if (mUser != null) {
-            task.setAssigneeId(mUser.getId());
-        }
-        else{
-            task.setAssigneeId(null);
-        }
-        task.setMiniSiteId(mMiniSite.getId());
         task.setComplete(false);
+        if (mUser != null) task.setAssigneeId(mUser.getId());
+        if (mMiniSite != null) task.setMiniSiteId(mMiniSite.getId());
+
 
         Utility.hideKeyboard(mParentActivity, mLayout);
         createTaskRequest(task, type);
