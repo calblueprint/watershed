@@ -268,10 +268,9 @@ public class MainActivity extends ActionBarActivity
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
         mContainer = findViewById(R.id.container);
 
+        mUserName = (TextView) findViewById(R.id.nav_bar_user_name);
         mUserInfo = (RelativeLayout) findViewById(R.id.nav_bar_user_info);
         mUserInfo.setOnClickListener(this);
-        mUserRole = (TextView) findViewById(R.id.nav_bar_user_role);
-        mUserName = (TextView) findViewById(R.id.nav_bar_user_name);
 
         setNavInfo();
     }
@@ -293,7 +292,6 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void setNavInfo() {
-        mUserRole.setText(getUser().getRoleString());
         mUserName.setText(getUser().getName());
     }
 

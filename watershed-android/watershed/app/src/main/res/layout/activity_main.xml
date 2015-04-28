@@ -58,45 +58,28 @@
         <RelativeLayout
             android:id="@+id/nav_bar_user_info"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="75dp"
             android:background="@drawable/nav_info_background"
             android:paddingTop="@dimen/tight_margin"
             android:paddingBottom="@dimen/tight_margin"
-            android:paddingRight="@dimen/standard_margin"
-            android:paddingLeft="@dimen/standard_margin">
-
-            <TextView
-                android:id="@+id/nav_bar_user_role"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:textColor="@color/white"
-            />
+            android:paddingRight="@dimen/hella_wide_margin"
+            android:paddingLeft="@dimen/hella_wide_margin">
 
             <TextView
                 android:id="@+id/nav_bar_user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@id/nav_bar_user_role"
-                android:layout_marginBottom="3dp"
+                android:layout_centerVertical="true"
                 android:textColor="@color/white"
+                android:textSize="25sp"
                 />
 
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_above="@id/nav_bar_user_name"
-                android:layout_marginBottom="@dimen/tight_margin"
-                android:src="@drawable/watershed_logo"
-                android:scaleType="centerCrop"
-                />
-            
-            <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
+                android:layout_centerVertical="true"
                 android:scaleType="centerCrop"
                 android:src="@drawable/arrow"
                 android:rotation="180"
@@ -107,7 +90,7 @@
         <ListView
             android:id="@+id/left_drawer_list_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@id/nav_bar_user_info"
             android:choiceMode="singleChoice"
             android:divider="@android:color/transparent"

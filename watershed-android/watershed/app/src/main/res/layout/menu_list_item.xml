@@ -13,10 +13,10 @@
 
     <ImageView
         android:id="@+id/menu_icon"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="22dp"
+        android:layout_marginLeft="@dimen/hella_wide_margin"
         android:scaleType="centerCrop"
         />
 
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/menu_icon"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="@dimen/standard_margin"
         android:textSize="18sp"
         />
 
