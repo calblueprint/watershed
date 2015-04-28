@@ -12,6 +12,8 @@ import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.R;
 
+import java.util.List;
+
 /**
  * Created by charlesx on 4/28/15.
  * Lists all the users for the admin to manage
@@ -26,7 +28,8 @@ public class UserListFragment extends Fragment {
     protected SwipeRefreshLayout mNoUsers;
     protected SwipeRefreshLayout mSwipeLayout;
 
-
+    //
+    private List<User> mUsers;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +51,7 @@ public class UserListFragment extends Fragment {
 
     private void initializeViews() {
         mListView = (ListView) mParentActivity.findViewById(R.id.list);
-        
+
 
         mSwipeLayout = (SwipeRefreshLayout) mParentActivity.findViewById(R.id.user_swipe_container);
         mNoUsers = (SwipeRefreshLayout) mParentActivity.findViewById(R.id.no_user_layout);
