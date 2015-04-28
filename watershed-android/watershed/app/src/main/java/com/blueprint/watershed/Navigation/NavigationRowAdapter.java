@@ -40,8 +40,8 @@ public class NavigationRowAdapter extends ArrayAdapter<MenuRow> {
 
             holder = new MenuViewHolder();
             holder.mIcon = (ImageView) row.findViewById(R.id.menu_icon);
-            holder.mIndicator = (View) row.findViewById(R.id.menu_indicator);
-            holder.mTitle = (TextView) row.findViewById(R.id.menu_icon);
+            holder.mIndicator = row.findViewById(R.id.menu_indicator);
+            holder.mTitle = (TextView) row.findViewById(R.id.menu_title);
 
             row.setTag(holder);
         } else {
@@ -49,7 +49,7 @@ public class NavigationRowAdapter extends ArrayAdapter<MenuRow> {
         }
 
         MenuRow item = getItem(position);
-        holder.mIcon.setImageDrawable(mActivity.getResources().getDrawable(item.getMenuIcon()));
+        holder.mIcon.setImageResource(item.getMenuIcon());
         holder.mTitle.setText(item.getMenuText());
         if (item.isSelected()) holder.mIndicator.setVisibility(View.VISIBLE);
         else holder.mIndicator.setVisibility(View.GONE);
