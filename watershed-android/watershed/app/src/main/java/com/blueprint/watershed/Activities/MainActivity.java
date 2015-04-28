@@ -368,7 +368,7 @@ public class MainActivity extends ActionBarActivity
         mDrawerLayout.setStatusBarBackgroundColor(getResources().getColor(R.color.ws_blue));
         mDrawer = (RelativeLayout) findViewById(R.id.left_drawer);
         mDrawerList = (ListView) findViewById(R.id.left_drawer_list_view);
-        String titles[] = { "Tasks", "Sites", "About", "Logout" };
+        String titles[] = { "Tasks", "Sites", "About", "Logout", "Manage" };
 
         mDrawerList.setOnItemClickListener(this);
         mDrawerList.setAdapter(new ArrayAdapter<>(this,
@@ -425,7 +425,11 @@ public class MainActivity extends ActionBarActivity
             case 3:
                 logoutCurrentUser(this);
                 break;
+            case 4:
+                logoutCurrentUser(this);
+                break;
             default:
+                logoutCurrentUser(this);
                 break;
         }
         mDrawerLayout.closeDrawer(mDrawer);
