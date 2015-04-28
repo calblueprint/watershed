@@ -17,7 +17,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -29,6 +28,8 @@ import com.blueprint.watershed.AbstractFragments.FloatingActionMenuAbstractFragm
 import com.blueprint.watershed.FieldReports.FieldReportFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteAbstractFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
+import com.blueprint.watershed.Navigation.MenuRow;
+import com.blueprint.watershed.Navigation.NavigationRowAdapter;
 import com.blueprint.watershed.Networking.BaseRequest;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Users.HomeRequest;
@@ -59,6 +60,7 @@ import com.google.android.gms.location.places.Places;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -77,19 +79,21 @@ public class MainActivity extends ActionBarActivity
     private String mRegistrationId;
     private int mAppVersion;
 
-
     // Navigation Drawer
     private DrawerLayout mDrawerLayout;
     private RelativeLayout mDrawer;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
+    private NavigationRowAdapter mNavAdapter;
+
+    // MenuItem
+    private String mTitles[] = { "Tasks", "Sites", "About", "Manage", "Logout" };
+    private int mIcons[] = { R.drawable.tasks_dark, R.drawable.sites_dark, R.drawable.about_dark,
+                             R.drawable.profile_dark, R.drawable.logout_dark };
 
     private RelativeLayout mUserInfo;
     private TextView mUserName;
     private TextView mUserRole;
-
-    // View Elements
-    public CharSequence mTitle;
 
     // Action Bar Elements
 
@@ -149,7 +153,6 @@ public class MainActivity extends ActionBarActivity
         getSupportActionBar().setHomeButtonEnabled(true);
 
         initializeFragments();
-        mTitle = "Tasks";
     }
 
     @Override
@@ -368,11 +371,14 @@ public class MainActivity extends ActionBarActivity
         mDrawerLayout.setStatusBarBackgroundColor(getResources().getColor(R.color.ws_blue));
         mDrawer = (RelativeLayout) findViewById(R.id.left_drawer);
         mDrawerList = (ListView) findViewById(R.id.left_drawer_list_view);
-        String titles[] = { "Tasks", "Sites", "About", "Manage", "Logout" };
 
+        List<MenuRow> menuItems = new ArrayList<>();
+        for (int i = 0; i < mTitles.length; i ++)
+            menuItems.add(new MenuRow(mIcons[i], mTitles[i], mTitles[i].equals("Tasks")));
+
+        mNavAdapter = new NavigationRowAdapter(this, R.layout.menu_list_item, menuItems);
         mDrawerList.setOnItemClickListener(this);
-        mDrawerList.setAdapter(new ArrayAdapter<>(this,
-                R.layout.menu_list_item, R.id.menu_title, titles));
+        mDrawerList.setAdapter(mNavAdapter);
 
         setDrawerListener();
     }
@@ -415,19 +421,29 @@ public class MainActivity extends ActionBarActivity
         switch (position) {
             case 0:
                 replaceFragment(TaskViewPagerFragment.newInstance());
+                mNavAdapter.setHighlighted("Tasks");
                 break;
             case 1:
                 replaceFragment(SiteListFragment.newInstance());
+                mNavAdapter.setHighlighted("Sites");
                 break;
             case 2:
                 replaceFragment(AboutFragment.newInstance());
+                mNavAdapter.setHighlighted("About");
                 break;
             case 3:
+                mNavAdapter.setHighlighted("Manage");
+                break;
+            case 4:
+                mNavAdapter.setHighlighted("Logout");
                 logoutCurrentUser(this);
                 break;
             default:
                 break;
         }
+        mDrawerList.setItemChecked(position, true);
+        mDrawerList.setSelection(position);
+        mDrawerLayout.invalidate();
         mDrawerLayout.closeDrawer(mDrawer);
     }
 

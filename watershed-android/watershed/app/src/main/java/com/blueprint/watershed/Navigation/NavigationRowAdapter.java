@@ -49,8 +49,17 @@ public class NavigationRowAdapter extends ArrayAdapter<MenuRow> {
         }
 
         MenuRow item = getItem(position);
-        holder.mIcon.setImageDrawable();
+        holder.mIcon.setImageDrawable(mActivity.getResources().getDrawable(item.getMenuIcon()));
+        holder.mTitle.setText(item.getMenuText());
+        if (item.isSelected()) holder.mIndicator.setVisibility(View.VISIBLE);
+        else holder.mIndicator.setVisibility(View.GONE);
 
+        return row;
+    }
+
+    public void setHighlighted(String name) {
+        for (MenuRow item : mMenuItems) item.setSelected(item.getMenuText().equals(name));
+        notifyDataSetChanged();
     }
 
     static class MenuViewHolder {
