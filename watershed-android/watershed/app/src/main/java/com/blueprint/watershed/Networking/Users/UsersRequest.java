@@ -26,7 +26,7 @@ public class UsersRequest extends BaseRequest {
                     public void onResponse(JSONObject jsonObject) {
                         try {
                             String usersJson = jsonObject.get("users").toString();
-                            ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
+                            ObjectMapper mapper = getNetworkManager(activity).getObjectMapper();
                             ArrayList<User> users = mapper.readValue(usersJson, new TypeReference<ArrayList<User>>() {});
                             listener.onResponse(users);
                         } catch (Exception e) {
