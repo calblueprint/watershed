@@ -75,14 +75,10 @@ static NSString *CellIdentifier = @"Cell";
     self.miniSiteArray = [[NSMutableArray alloc] init];
 
     __weak __typeof(self)weakSelf = self;
-    [[WPNetworkingManager sharedManager] requestSitesListWithParameters:[[NSMutableDictionary alloc] init] success:^(NSMutableArray *sitesList) {
+    [[WPNetworkingManager sharedManager] requestMiniSitesListWithParameters:[[NSMutableDictionary alloc] init] success:^(NSMutableArray *sitesList) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        for (WPSite *site in sitesList) {
-            [[WPNetworkingManager sharedManager] requestSiteWithSite:site parameters:[[NSMutableDictionary alloc] init] success:^(WPSite *site, NSMutableArray *miniSiteList) {
-                [strongSelf.miniSiteArray addObjectsFromArray:miniSiteList];
-                [strongSelf.view.selectMiniSiteTableView reloadData];
-            }];
-        }
+        [strongSelf.miniSiteArray addObjectsFromArray:sitesList];
+        [strongSelf.view.selectMiniSiteTableView reloadData];
     }];
 }
 

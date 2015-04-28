@@ -10,6 +10,7 @@
 #import "WPTaskView.h"
 #import "WPAddFieldReportViewController.h"
 #import "WPNetworkingManager.h"
+#import "WPEditTaskViewController.h"
 
 @interface WPTaskViewController ()
 
@@ -27,14 +28,7 @@
     self.navigationItem.title = self.task.title;
     [self.view.addFieldReportButton addTarget:self action:@selector(addFieldReportAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view.completed addTarget:self action:@selector(changeCompletion) forControlEvents:UIControlEventTouchUpInside];
-    FAKIonIcons *deleteIcon = [FAKIonIcons androidTrashIconWithSize:26];
-    UIImage *deleteIconImage = [deleteIcon imageWithSize:CGSizeMake(24, 24)];
-    UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc]
-                                  initWithImage:deleteIconImage
-                                  style:UIBarButtonItemStylePlain
-                                  target:self
-                                  action:@selector(deleteTask)];
-    self.navigationItem.rightBarButtonItem = deleteButton;
+    [self setUpRightBarButtonItems];
 }
 
 - (void)loadView {
@@ -44,6 +38,8 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
+
+#pragma mark - Button Action Setups
 
 - (void)addFieldReportAction {
     WPAddFieldReportViewController *addFieldReportViewController = [[WPAddFieldReportViewController alloc] init];
@@ -59,17 +55,45 @@
     [confirmDelete show];
 }
 
+- (void)editTask {
+    WPEditTaskViewController *editTaskViewController = [[WPEditTaskViewController alloc] init];
+    [editTaskViewController setTask:self.task];
+    editTaskViewController.taskParent = self;
+    [self addChildViewController:editTaskViewController];
+    [[self navigationController] pushViewController: editTaskViewController animated:YES];
+}
+
 - (void)changeCompletion {
     NSNumberFormatter *userFormatter = [[NSNumberFormatter alloc] init];
     [userFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
     NSMutableDictionary *task2JSON = [[NSMutableDictionary alloc] init];
     _task.completed = !_task.completed;
-    __weak __typeof(self)weakSelf = self;
     [[WPNetworkingManager sharedManager] editTaskWithTask:_task parameters:task2JSON success:^(WPTask *task) {
-        __strong __typeof(weakSelf)strongSelf = weakSelf;
         [self.navigationController popViewControllerAnimated:YES];
     }];
 }
+
+#pragma mark - Navigation Bar Setup
+
+- (void)setUpRightBarButtonItems {
+    FAKIonIcons *deleteIcon = [FAKIonIcons androidTrashIconWithSize:26];
+    UIImage *deleteIconImage = [deleteIcon imageWithSize:CGSizeMake(24, 24)];
+    UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc]
+                                     initWithImage:deleteIconImage
+                                     style:UIBarButtonItemStylePlain
+                                     target:self
+                                     action:@selector(deleteTask)];
+    FAKIonIcons *editIcon = [FAKIonIcons editIconWithSize:26];
+    UIImage *editIconImage = [editIcon imageWithSize:CGSizeMake(24, 24)];
+    UIBarButtonItem *editButton = [[UIBarButtonItem alloc]
+                                   initWithImage:editIconImage
+                                   style:UIBarButtonItemStylePlain
+                                   target:self
+                                   action:@selector(editTask)];
+    NSMutableArray *barButtonItems = [[NSMutableArray alloc] initWithObjects:deleteButton, editButton, nil];
+    [self.navigationItem setRightBarButtonItems:barButtonItems animated:YES];
+}
+
 
 #pragma mark - UIAlertViewDelegate Methods 
 
