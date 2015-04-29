@@ -32,7 +32,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:text="@string/watershed_link"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="@color/ws_blue"/>
 
     <TextView
         android:layout_width="wrap_content"
