@@ -10,7 +10,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/standard_margin"
         android:textStyle="bold"
         android:textSize="20sp"
         android:gravity="center"
@@ -33,7 +32,7 @@
         android:layout_centerHorizontal="true"
         android:text="@string/watershed_link"
         android:textStyle="bold"
-        android:textColor="@color/ws_blue"/>
+        android:textColorLink="@color/ws_blue"/>
 
     <TextView
         android:layout_width="wrap_content"
