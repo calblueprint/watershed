@@ -2,26 +2,40 @@ package com.blueprint.watershed.Sites;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
+import com.blueprint.watershed.GoogleApis.Places.PlacePredictionAdapter;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Sites.CreateSiteRequest;
 import com.blueprint.watershed.Networking.Sites.EditSiteRequest;
 import com.blueprint.watershed.R;
-import com.blueprint.watershed.Sites.SiteList.SiteListAbstractFragment;
+
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.location.places.AutocompletePrediction;
+import com.google.android.gms.location.places.AutocompletePredictionBuffer;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by maxwolffe on 4/5/15.
@@ -37,10 +51,12 @@ public abstract class SiteAbstractFragment extends Fragment{
     protected EditText mTitleField;
     protected EditText mDescriptionField;
     protected EditText mCityField;
-    protected EditText mAddressField;
-    protected EditText mZipField;
+    protected AutoCompleteTextView mAddressField;
     protected EditText mStateField;
-    protected Button mSubmitButton;
+
+    // Params for maps
+    private ArrayAdapter<AutocompletePrediction> mPlacesAdapter;
+    private ArrayList<AutocompletePrediction> mPredictions;
 
     /**
      * Use this factory method to create a new instance of
@@ -52,17 +68,40 @@ public abstract class SiteAbstractFragment extends Fragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        mNetworkManager = NetworkManager.getInstance(getActivity().getApplicationContext());
         mParentActivity = (MainActivity) getActivity();
+        mNetworkManager = NetworkManager.getInstance(mParentActivity);
+        mPredictions = new ArrayList<>();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_create_site, container, false);
         setButtonListeners(view);
         return view;
+    }
+
+    /**
+     * Inflates a menu into the action bar.
+     * Called by Activity if setHasOptionsMenu(true) set in OnCreate
+     * @param menu - options menu
+     * @param inflater - view inflater.
+     */
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.save_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.save:
+                validateAndSubmit();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
     
     @Override
@@ -72,14 +111,53 @@ public abstract class SiteAbstractFragment extends Fragment{
     }
 
     protected void setButtonListeners(View view){
-        mSubmitButton = (Button)view.findViewById(R.id.create_site_submit);
         mTitleField = (EditText)view.findViewById(R.id.create_site_title);
         mDescriptionField = (EditText)view.findViewById(R.id.create_site_description);
-        mAddressField = (EditText)view.findViewById(R.id.create_site_address);
+
+        mPlacesAdapter = new PlacePredictionAdapter(mParentActivity, mPredictions);
+        mAddressField = (AutoCompleteTextView)view.findViewById(R.id.create_site_address);
+        mAddressField.setAdapter(mPlacesAdapter);
+        mAddressField.setThreshold(3);
+        mAddressField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.i("asdf", s.toString());
+                if (s.length() > 2) getPredictions(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
         mCityField = (EditText)view.findViewById(R.id.create_site_city);
-        mZipField = (EditText)view.findViewById(R.id.create_site_zip);
         mStateField = (EditText)view.findViewById(R.id.create_site_state);
-        mSubmitButton.setOnClickListener(validateAndSubmit());
+    }
+
+    private void getPredictions(String string) {
+        PendingResult result =
+                Places.GeoDataApi.getAutocompletePredictions(mParentActivity.getGoogleApiClient(), string,
+                        new LatLngBounds(new LatLng(10, -175), new LatLng(70, -50)), null);
+        result.setResultCallback(new ResultCallback<AutocompletePredictionBuffer>() {
+            @Override
+            public void onResult(AutocompletePredictionBuffer buffer) {
+                List<AutocompletePrediction> places = new ArrayList<AutocompletePrediction>();
+                for (AutocompletePrediction prediction : buffer) {
+                    AutocompletePrediction frozenPrediction = prediction.freeze();
+                    places.add(frozenPrediction);
+                }
+                buffer.release();
+                setPlaces(places);
+            }
+        });
+    }
+
+    private void setPlaces(List<AutocompletePrediction> places) {
+        mPredictions.clear();
+        mPredictions.addAll(places);
+        mPlacesAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -117,14 +195,7 @@ public abstract class SiteAbstractFragment extends Fragment{
                     setEmpty("State", mStateField);
                 }
 
-                try {
-                    Integer.valueOf(mZipField.getText().toString());
-                } catch (Exception e) {
-                    has_errors = true;
-                    mZipField.setError("Please enter a valid ZIP code");
-                }
-
-                if (has_errors) return; 
+                if (has_errors) return;
 
                 submitListener();
 
@@ -154,7 +225,6 @@ public abstract class SiteAbstractFragment extends Fragment{
         new_site.setStreet(mAddressField.getText().toString());
         new_site.setCity(mCityField.getText().toString());
         new_site.setState(mStateField.getText().toString());
-        new_site.setZipCode(Integer.valueOf(mZipField.getText().toString()));
 
         createSiteRequest(type, new_site);
     }
@@ -188,20 +258,6 @@ public abstract class SiteAbstractFragment extends Fragment{
             mNetworkManager.getRequestQueue().add(editSiteRequest);
         }
         mParentActivity.getSupportFragmentManager().popBackStack();
-
-    }
-
-    /**
-     * Inflates a menu into the action bar.
-     * Called by Activity if setHasOptionsMenu(true) set in OnCreate
-     * @param menu - options menu
-     * @param inflater - view inflater.
-     */
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-        inflater.inflate(R.menu.empty, menu);
-        super.onCreateOptionsMenu(menu, inflater);
 
     }
 

@@ -1,73 +1,144 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.blueprint.watershed.Tasks.CreateTaskFragment">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/create_task_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="20dp"
         >
 
-        <EditText
-            style="@style/FormEditText"
-            android:id="@+id/create_task_title"
-            android:hint="@string/title"
-            android:layout_marginTop="20dp"
-            android:maxLines="1"
-        />
+        <RelativeLayout
+            android:id="@+id/create_task_title_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
 
-        <TextView
-            style="@style/FormEditText"
-            android:id="@+id/create_task_due_date"
-            android:layout_below="@id/create_task_title"
-            android:hint="@string/task_due_date"
-        />
+            <ImageView
+                style="@style/Icon"
+                android:id="@+id/create_task_title_icon"
+                android:src="@drawable/name_gray"
+                />
 
-        <TextView
-            style="@style/FormEditText"
-            android:id="@+id/create_task_site"
-            android:hint="@string/site"
-            android:layout_below="@id/create_task_due_date"
-        />
+            <EditText
+                style="@style/TaskTextView"
+                android:id="@+id/create_task_title"
+                android:layout_toRightOf="@id/create_task_title_icon"
+                android:hint="@string/title"
+                />
+        </RelativeLayout>
 
-        <TextView
-            style="@style/FormEditText"
-            android:id="@+id/create_task_assignee"
-            android:layout_below="@id/create_task_site"
-            android:hint="@string/assignee"
-        />
+        <RelativeLayout
+            android:id="@+id/create_task_due_date_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/create_task_title_container">
 
+            <ImageView
+                style="@style/Icon"
+                android:id="@+id/create_task_due_date_icon"
+                android:src="@drawable/set_due_date_gray"
+                />
 
-        <EditText
-            style="@style/FormEditText"
-            android:id="@+id/create_task_description"
-            android:layout_below="@id/create_task_assignee"
-            android:hint="@string/description"
-            android:gravity="top"
-            android:lines="4"
-        />
+            <TextView
+                style="@style/TaskTextView"
+                android:id="@+id/create_task_due_date"
+                android:layout_toRightOf="@id/create_task_due_date_icon"
+                android:layout_centerVertical="true"
+                android:hint="@string/task_due_date"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/create_task_site_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/create_task_due_date_container">
+
+            <ImageView
+                style="@style/Icon"
+                android:id="@+id/create_task_site_icon"
+                android:src="@drawable/ic_location_gray"
+                />
+
+            <TextView
+                style="@style/TaskTextView"
+                android:id="@+id/create_task_site"
+                android:hint="@string/site"
+                android:layout_toRightOf="@id/create_task_site_icon"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/create_task_assignee_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/create_task_site_container">
+
+            <ImageView
+                style="@style/Icon"
+                android:id="@+id/create_task_assignee_icon"
+                android:src="@drawable/assign_to_volunteer_gray"
+                />
+
+            <TextView
+                style="@style/TaskTextView"
+                android:id="@+id/create_task_assignee"
+                android:hint="@string/assignee"
+                android:layout_toRightOf="@id/create_task_assignee_icon"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/create_task_description_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/create_task_assignee_container">
+
+            <ImageView
+                style="@style/Icon"
+                android:id="@+id/create_task_description_icon"
+                android:src="@drawable/description_gray"
+                />
+
+            <EditText
+                style="@style/TaskTextView"
+                android:id="@+id/create_task_description"
+                android:layout_toRightOf="@id/create_task_description_icon"
+                android:hint="@string/description"
+                android:inputType="textMultiLine"
+                />
+        </RelativeLayout>
+
 
         <RelativeLayout
             android:id="@+id/create_task_urgent_container"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/create_task_description">
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/create_task_description_container">
 
-            <View
-                android:id="@+id/create_task_divider"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_centerInParent="true"/>
+            <ImageView
+                style="@style/Icon"
+                android:id="@+id/create_task_urgent_icon"
+                android:src="@drawable/urgent_gray"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/create_task_divider"
-                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@id/create_task_urgent_icon"
+                android:layout_marginLeft="20dp"
                 android:layout_centerVertical="true"
                 android:text="@string/urgent"
                 android:textColor="@color/form_gray"
@@ -77,27 +148,11 @@
                 android:id="@+id/field_report_urgent"
                 android:layout_width="wrap_content"
                 android:layout_height="16dp"
-                android:layout_toRightOf="@id/create_task_divider"
+                android:layout_alignParentRight="true"
                 android:layout_marginLeft="10dp"
                 android:textOn="@string/yes"
                 android:textOff="@string/no"
                  />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_below="@id/create_task_urgent_container"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="20dp">
-
-            <Button
-                android:id="@+id/create_task_submit"
-                android:layout_width="fill_parent"
-                android:background="@color/ws_blue"
-                android:textColor="@color/white"
-                android:text="Submit Task"
-                android:layout_height="96dp" />
         </RelativeLayout>
     </RelativeLayout>
 </ScrollView>

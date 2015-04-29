@@ -40,6 +40,7 @@ import com.blueprint.watershed.Sites.SiteFragment;
 import com.blueprint.watershed.Sites.SiteList.SiteListAbstractFragment;
 import com.blueprint.watershed.Sites.SiteViewPagerFragment;
 import com.blueprint.watershed.Tasks.CreateTaskFragment;
+import com.blueprint.watershed.Tasks.EditTaskFragment;
 import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Tasks.TaskDetailFragment;
 import com.blueprint.watershed.Tasks.TaskList.UserTaskListFragment;
@@ -53,7 +54,9 @@ import com.blueprint.watershed.Utilities.Utility;
 import com.facebook.Session;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.location.places.Places;
 
 import org.json.JSONObject;
 
@@ -74,9 +77,6 @@ public class MainActivity extends ActionBarActivity
     public String mAuthEmail;
     private String mRegistrationId;
     private int mAppVersion;
-
-    // Fragments
-    private FragmentManager mFragmentManager;
 
     // Navigation Drawer
     private DrawerLayout mDrawerLayout;
@@ -111,8 +111,9 @@ public class MainActivity extends ActionBarActivity
     // Task for FieldReport
     private Task mFieldReportTask;
 
-    // Google cloud messaging
+    // Google APIS
     private GoogleCloudMessaging mGoogleCloudMessaging;
+    private GoogleApiClient mGoogleApiClient;
 
     // Params (so we don't have to set them later)
     private List<User> mUsers;
@@ -121,16 +122,22 @@ public class MainActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         setNetworkManager(NetworkManager.getInstance(this));
+
         mPreferences = getSharedPreferences(PREFERENCES, MODE_PRIVATE);
         mAuthToken = mPreferences.getString("auth_token", "none");
         mAuthEmail = mPreferences.getString("auth_email", "none");
         mRegistrationId = mPreferences.getString("registration_id", "none");
         mAppVersion = mPreferences.getInt("app_version", Integer.MIN_VALUE);
         mUserId = mPreferences.getInt("userId", 0);
-
         setUserObject();
+
+        mGoogleApiClient = new GoogleApiClient
+                .Builder(this)
+                .addApi(Places.GEO_DATA_API)
+                .addApi(Places.PLACE_DETECTION_API)
+                .build();
+
         if (getRegistrationId().isEmpty())
             registerInBackground();
 
@@ -146,9 +153,21 @@ public class MainActivity extends ActionBarActivity
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         updateToolbarElevation();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mGoogleApiClient.disconnect();
     }
 
     /**
@@ -276,13 +295,19 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void updateFragment(Fragment f) {
-        if (f instanceof TaskViewPagerFragment)           setTitle("Tasks");
+        if (f instanceof TaskViewPagerFragment ||
+            f instanceof UserTaskFragment)                setTitle("Tasks");
+        else if (f instanceof CreateTaskFragment)         setTitle("Add Task");
+        else if (f instanceof EditTaskFragment)           setTitle("Edit Task");
         else if (f instanceof TaskDetailFragment)         setTitle("");
         else if (f instanceof UserTaskFragment)           setTitle("Tasks");
         else if (f instanceof SiteListAbstractFragment ||
                  f instanceof UserMiniSiteFragment ||
                  f instanceof SiteViewPagerFragment ||
                  f instanceof SiteFragment)               setTitle("Sites");
+        else if (f instanceof SiteListAbstractFragment ||
+                 f instanceof UserMiniSiteFragment)       setTitle("Sites");
+        else if (f instanceof SiteFragment)               setTitle("Sites");
         else if (f instanceof AboutFragment)              setTitle("About");
         else if (f instanceof UserFieldReportFragment ||
                  f instanceof FieldReportFragment)        setTitle("Field Reports");
@@ -292,19 +317,21 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void replaceFragment(Fragment newFragment) {
-        android.support.v4.app.FragmentTransaction ft = mFragmentManager.beginTransaction();
+        android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         if(!newFragment.isAdded()){
             updateFragment(newFragment);
 
             setToolbarElevation(Utility.convertDptoPix(this, 4));
-            ft.replace(R.id.container, newFragment).addToBackStack(null).commit();
+            ft.setCustomAnimations(R.anim.in, R.anim.out, R.anim.in, R.anim.out);
+            ft.replace(R.id.container, newFragment)
+              .addToBackStack(null)
+              .commit();
         }
     }
 
     private void initializeFragments() {
         TaskViewPagerFragment taskFragment = TaskViewPagerFragment.newInstance();
-        mFragmentManager = getSupportFragmentManager();
-        mFragmentManager.addOnBackStackChangedListener(
+        getSupportFragmentManager().addOnBackStackChangedListener(
                 new FragmentManager.OnBackStackChangedListener() {
                     @Override
                     public void onBackStackChanged() {
@@ -313,7 +340,7 @@ public class MainActivity extends ActionBarActivity
                     }
                 });
         updateFragment(taskFragment);
-        android.support.v4.app.FragmentTransaction ft = mFragmentManager.beginTransaction();
+        android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, taskFragment);
         ft.commit();
     }
@@ -457,16 +484,8 @@ public class MainActivity extends ActionBarActivity
         editor.apply();
 
         mUser = user;
+        Log.e("User ID", String.valueOf(mUser.getId())); // TODO: DELETE THIS
     }
-
-    public User getUser() { return mUser; }
-    public void setUsers(List<User> users) { mUsers = users; }
-    public List<User> getUsers() { return mUsers; }
-    public int getUserId() { return mUserId; }
-    public void setFieldReportTask(Task task) { mFieldReportTask = task; }
-    public Task getFieldReportTask() { return mFieldReportTask; }
-
-    public ProgressBar getSpinner() { return mProgress; }
 
     public void setMenuAction(boolean setMenu) {
         if (setMenu) setMenu();
@@ -503,10 +522,21 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onBackPressed() {
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
+        Utility.hideKeyboard(this, f.getView());
         if (mDrawerLayout.isDrawerOpen(mDrawer)) mDrawerLayout.closeDrawer(mDrawer);
         else if (checkClosedMenu(f)) ((FloatingActionMenuAbstractFragment) f).closeMenu();
         else super.onBackPressed();
     }
+
+    public User getUser() { return mUser; }
+    public void setUsers(List<User> users) { mUsers = users; }
+    public List<User> getUsers() { return mUsers; }
+    public int getUserId() { return mUserId; }
+    public void setFieldReportTask(Task task) { mFieldReportTask = task; }
+    public Task getFieldReportTask() { return mFieldReportTask; }
+    public ProgressBar getSpinner() { return mProgress; }
+    public GoogleApiClient getGoogleApiClient() { return mGoogleApiClient; }
+    public void setmGoogleApiClient(GoogleApiClient client) { mGoogleApiClient = client; }
 
     /**
      * HELPERS FOR SITE FRAGMENT

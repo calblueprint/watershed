@@ -15,19 +15,9 @@
         android:layout_marginRight="@dimen/no_margin"
         android:background="@color/medium_gray"
         android:numColumns="2"
-        android:verticalSpacing="@dimen/tight_margin"
-        android:horizontalSpacing="@dimen/tight_margin">
+        android:verticalSpacing="@dimen/hella_tight_margin"
+        android:horizontalSpacing="@dimen/hella_tight_margin">
     </com.blueprint.watershed.Views.HeaderGridView>
-
-    <!--<com.blueprint.watershed.Views.Material.FloatingActionButton-->
-        <!--style="@style/AddFABRightCorner"-->
-        <!--android:id="@+id/create_mini_site_button"-->
-        <!--fab:fab_plusIconColor="@color/white"-->
-        <!--fab:fab_colorNormal="@color/pink"-->
-        <!--fab:fab_colorPressed="@color/pink_pressed"-->
-        <!--fab:fab_size="normal"-->
-        <!--fab:fab_icon="@drawable/ic_add"-->
-        <!--/>-->
 
     <com.blueprint.watershed.Views.Material.FloatingActionsMenu
         android:id="@+id/site_settings"
@@ -43,6 +33,15 @@
         android:layout_marginBottom="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginEnd="16dp">
+
+        <com.blueprint.watershed.Views.Material.FloatingActionButton
+            android:id="@+id/site_subscribe_site"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_title="@string/subscribe_site"
+            fab:fab_colorNormal="@color/pink"
+            fab:fab_colorPressed="@color/pink_pressed"
+            fab:fab_icon="@drawable/ic_bookmark_outline_white_36dp"/>
 
         <com.blueprint.watershed.Views.Material.FloatingActionButton
             android:id="@+id/site_edit_site"
