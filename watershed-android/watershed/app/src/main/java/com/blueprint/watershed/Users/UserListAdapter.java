@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Views.ExpandAnimation;
 
 import java.util.List;
 
@@ -42,6 +44,10 @@ public class UserListAdapter extends ArrayAdapter<User> {
         } else {
             holder = (UserIndexListHolder) row.getTag();
         }
+
+        View toolbar = convertView.findViewById(R.id.user_options);
+        ((LinearLayout.LayoutParams) toolbar.getLayoutParams()).bottomMargin = -50;
+        toolbar.setVisibility(View.GONE);
 
         User user = getItem(position);
         holder.mName.setText(user.getName());

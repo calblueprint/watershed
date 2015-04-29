@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="30dp">
@@ -11,4 +11,17 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"/>
 
-</RelativeLayout>
+    <LinearLayout android:id="@+id/user_options"
+        android:layout_marginBottom="-20dip"
+        android:visibility="gone"
+        android:layout_height="20dp"
+        android:layout_width="fill_parent">
+        <Button android:id="@+id/doSomething1"
+            android:layout_height="20dp"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:layout_width="wrap_content"
+            android:text="Harder"/>
+    </LinearLayout>
+
+</LinearLayout>

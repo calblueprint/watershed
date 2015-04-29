@@ -22,6 +22,7 @@ import com.blueprint.watershed.Networking.Users.DeleteUserRequest;
 import com.blueprint.watershed.Networking.Users.UpdateUserRequest;
 import com.blueprint.watershed.Networking.Users.UsersRequest;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Views.ExpandAnimation;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -83,6 +84,13 @@ public class UserListFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 User user = mAdapter.getItem(position);
 
+                View toolbar = view.findViewById(R.id.user_options);
+
+                // Creating the expand animation for the item
+                ExpandAnimation expandAni = new ExpandAnimation(toolbar, 500);
+
+                // Start the animation on the toolbar
+                toolbar.startAnimation(expandAni);
             }
         });
 
