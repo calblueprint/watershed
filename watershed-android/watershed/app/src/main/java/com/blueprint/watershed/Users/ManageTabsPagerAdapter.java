@@ -38,7 +38,7 @@ public class ManageTabsPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return "Users";
             case 1:
-                return "Tabs";
+                return "Tasks";
         }
         return null;
     }
