@@ -47,11 +47,14 @@
                 android:layout_below="@id/report_photo_container"
                 android:gravity="center">
                 <RatingBar
+                    style="@style/RatingBar"
                     android:id="@+id/field_report_health_rating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:progressDrawable="@drawable/rating_bar_drawable"
                     android:numStars="5"
                     android:isIndicator="false"
+                    android:layout_centerVertical="true"
                     />
                 <View
                     android:id="@+id/field_report_rating_divider"
@@ -77,20 +80,16 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/field_report_rating_container"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:paddingRight="20dp"
-                android:paddingLeft="20dp"
+                android:padding="20dp"
                 >
                 <EditText
                     style="@style/TaskTextView"
                     android:id="@+id/report_title"
-                    android:text="@string/title"
+                    android:hint="@string/title"
                     android:layout_marginLeft="0dp"
                     android:padding="0dp"
                     android:background="@color/transparent"
                     android:inputType="textMultiLine"
-                    android:textSize="30sp"
                     />
             </RelativeLayout>
 

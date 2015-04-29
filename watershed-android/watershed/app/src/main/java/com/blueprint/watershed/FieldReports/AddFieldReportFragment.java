@@ -24,8 +24,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
@@ -110,8 +108,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
         mPickPhotoButton = (ImageButton) view.findViewById(R.id.report_add_photo);
         mPickPhotoButton.setOnClickListener(this);
 
-        mRating = (RadioGroup) view.findViewById(R.id.health_group);
-        mRating.check(R.id.health_3);
+        mRating = (RatingBar) view.findViewById(R.id.field_report_health_rating);
 
         mUrgent = (Switch) view.findViewById(R.id.field_report_urgent);
         mDescription = (EditText) view.findViewById(R.id.report_description);
@@ -235,28 +232,14 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
             hasErrors = true;
         }
 
-        Integer selectId = mRating.getCheckedRadioButtonId();
-
-        if (selectId == -1) {
-            Toast.makeText(mParentActivity, "Please select a health rating", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        RadioButton chosenRating = (RadioButton) mParentActivity.findViewById(selectId);
-        String fieldReportHealth = chosenRating.getText().toString();
-        Integer health = Integer.parseInt(fieldReportHealth);
-
-        if (health < 1 || health > 5) {
-            Toast.makeText(mParentActivity, "Invalid health rating", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         if (mPhoto == null) {
             Toast.makeText(mParentActivity, "Don't forget a photo!", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (hasErrors) return;
+
+        int health = (int) mRating.getRating();
 
         final FieldReport fieldReport = new FieldReport(mDescription.getText().toString(), health, mUrgent.isChecked(),
                                                         mPhoto, mParentActivity.getUser(), mMiniSite, mTask);
