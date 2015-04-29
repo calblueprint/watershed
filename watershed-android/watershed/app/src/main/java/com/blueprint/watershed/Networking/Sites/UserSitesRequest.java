@@ -1,4 +1,4 @@
-package com.blueprint.watershed.Networking.Users;
+package com.blueprint.watershed.Networking.Sites;
 
 import android.app.Activity;
 import android.util.Log;

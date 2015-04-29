@@ -155,24 +155,7 @@ public abstract class SiteListAbstractFragment extends Fragment {
      * Request to get all the sites, updates and shows them according,
      * or displays a text view telling the user that there are no sites.
      */
-    public void getSitesRequest() {
-        SiteListRequest siteListRequest = new SiteListRequest(mParentActivity, new Response.Listener<ArrayList<Site>>() {
-            @Override
-            public void onResponse(ArrayList<Site> sites) {
-                setSites(sites);
-                Log.e("Site Response", "Returned");
-                if (mSites.size() == 0) hideList();
-                else {
-                    showList();
-                    mAdapter.notifyDataSetChanged();
-                }
-                setSwipeFalse();
-                mInitializeSites = true;
-            }
-        }, this);
-        siteListRequest.setTag(SITE_LIST_REQUEST);
-        mNetworkManager.getRequestQueue().add(siteListRequest);
-    }
+    public abstract void getSitesRequest();
 
     /**
      * Fake a minimum animation time for the spinner to "load"

@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Networking.Sites.SiteListRequest;
-import com.blueprint.watershed.Networking.Users.UserSitesRequest;
+import com.blueprint.watershed.Networking.Sites.UserSitesRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Sites.Site;
 
@@ -24,7 +24,7 @@ import java.util.HashMap;
  */
 public class UserSiteListFragment extends SiteListAbstractFragment {
 
-    public static AllSiteListFragment newInstance() { return new AllSiteListFragment(); }
+    public static UserSiteListFragment newInstance() { return new UserSiteListFragment(); }
 
     @Override
     /**
