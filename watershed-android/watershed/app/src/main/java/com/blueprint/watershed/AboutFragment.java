@@ -17,10 +17,6 @@ public class AboutFragment extends Fragment {
 
     public static AboutFragment newInstance() { return new AboutFragment(); }
 
-    public AboutFragment() {
-        // Required empty public constructor
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +40,6 @@ public class AboutFragment extends Fragment {
         menu.clear();
         inflater.inflate(R.menu.empty, menu);
         super.onCreateOptionsMenu(menu, inflater);
-
     }
 
 }
