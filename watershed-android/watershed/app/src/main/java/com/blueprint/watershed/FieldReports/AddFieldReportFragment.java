@@ -120,7 +120,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
 //                mRatingText.setText(String.valueOf(rating));
 //            }
 //        });
-        
+
         mRating.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
