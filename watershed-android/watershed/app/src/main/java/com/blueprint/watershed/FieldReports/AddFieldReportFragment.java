@@ -26,6 +26,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -58,7 +59,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
     private RelativeLayout mLayout;
     private ImageButton mPickPhotoButton;
     private TextView mTitle;
-    private RadioGroup mRating;
+    private RatingBar mRating;
     private EditText mDescription;
     private Switch mUrgent;
     private ImageView mImage;
@@ -87,9 +88,6 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
 
     public void setTask(Task task) { mTask = task; }
     public void setMiniSite(MiniSite site) { mMiniSite = site; }
-
-    public void configureWithFieldReport(FieldReport fieldReport) {
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
