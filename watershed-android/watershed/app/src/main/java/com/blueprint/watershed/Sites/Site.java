@@ -18,6 +18,8 @@ import java.util.ArrayList;
 @JsonSerialize(using = SiteSerializer.class)
 public class Site implements APIObject {
 
+    public int TRIM_LENGTH = 140;
+
     // Attributes
     private Integer mId;
     private String mName;
@@ -78,6 +80,25 @@ public class Site implements APIObject {
     @JsonIgnore
     public String getLocation() {
         return String.format("%s\n%s, %s %d", getStreet(), getCity(), getState(), getZipCode());
+    }
+
+    @JsonIgnore
+    public String getLocationOneLine() {
+        return String.format("%s, %s, %s", getStreet(), getCity(), getState());
+    }
+
+    @JsonIgnore
+    public String getTrimmedText() {
+        if (shouldShowDescriptionDialog()) {
+            return String.format("%s...read more", getDescription().substring(0, TRIM_LENGTH) + "...");
+        } else {
+            return getDescription();
+        }
+    }
+
+    @JsonIgnore
+    public boolean shouldShowDescriptionDialog() {
+        return getDescription().length() > TRIM_LENGTH;
     }
 
     // Setters

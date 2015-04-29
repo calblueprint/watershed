@@ -34,12 +34,12 @@ end
 
 images = [
   "http://www.foodsystemsnyc.org/files/Cross%20River%20Resevoir_courtesy%20of%20@JoshDickPhoto.com.jpg",
-  "http://maxcdn.thedesigninspiration.com/wp-content/uploads/2009/09/cute-animals/02.jpg",
-  "http://animals.loepr.com/wp-content/uploads/2013/06/Cute-animals-pictures-41.jpg",
+  "http://miriadna.com/desctopwalls/images/max/Ideal-landscape.jpg",
+  "http://s.hswstatic.com/gif/landscape-photography-1.jpg",
   "http://image.cdnllnwnl.xosnetwork.com/pics33/800/AN/ANJLCPIXOGYUBNC.20130607192302.jpg",
 ]
 
-mini_sites_with_images = MiniSite.first(4)
+mini_sites_with_images = MiniSite.all
 
 mini_sites_with_images.each do |mini_site|
   images.each do |image_url|

@@ -35,7 +35,7 @@ public class FieldReportListAdapter extends ArrayAdapter<FieldReport> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
-        FieldReportHolder holder = null;
+        FieldReportHolder holder;
 
         if (row == null) {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();

@@ -22,6 +22,7 @@ public class PhotoPagerAdapter extends PagerAdapter {
     private Context mContext;
 
     private List<Photo> mPhotos;
+    private View mItemView;
 
     public PhotoPagerAdapter(Context context, List<Photo> photos) {
         mContext = context;
@@ -47,19 +48,19 @@ public class PhotoPagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         Photo photo = getPhoto(position);
 
-        View itemView = mLayoutInflater.inflate(R.layout.cover_photo_item_view, container, false);
+        mItemView = mLayoutInflater.inflate(R.layout.cover_photo_item_view, container, false);
 
-        ImageView imageView = (ImageView) itemView.findViewById(R.id.cover_photo);
+        ImageView imageView = (ImageView) mItemView.findViewById(R.id.cover_photo);
         photo.getImageAndSetImageView(mContext, imageView);
 
-        TextView primaryLabel = (TextView) itemView.findViewById(R.id.primary_label);
+        TextView primaryLabel = (TextView) mItemView.findViewById(R.id.primary_label);
         primaryLabel.setText("");
 
-        TextView secondaryLabel = (TextView) itemView.findViewById(R.id.secondary_label);
+        TextView secondaryLabel = (TextView) mItemView.findViewById(R.id.secondary_label);
         secondaryLabel.setText("");
 
-        container.addView(itemView);
-        return itemView;
+        container.addView(mItemView);
+        return mItemView;
     }
 
     @Override

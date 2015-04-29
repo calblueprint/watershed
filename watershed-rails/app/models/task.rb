@@ -51,6 +51,14 @@ class Task < ActiveRecord::Base
     end
   end
 
+  def complete!
+    update_attribute(:complete, true)
+  end
+
+  def undo_complete!
+    update_attribute(:complete, false)
+  end
+
   private
 
   def add_color
