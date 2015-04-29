@@ -58,9 +58,11 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
     private ImageButton mPickPhotoButton;
     private TextView mTitle;
     private RatingBar mRating;
+    private TextView mRatingText;
     private EditText mDescription;
     private Switch mUrgent;
     private ImageView mImage;
+
 
     private Photo mPhoto;
 
@@ -108,7 +110,14 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
         mPickPhotoButton = (ImageButton) view.findViewById(R.id.report_add_photo);
         mPickPhotoButton.setOnClickListener(this);
 
+        mRatingText = (TextView) view.findViewById(R.id.field_report_rating_text);
         mRating = (RatingBar) view.findViewById(R.id.field_report_health_rating);
+        mRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                mRatingText.setText(String.valueOf(rating));
+            }
+        });
 
         mUrgent = (Switch) view.findViewById(R.id.field_report_urgent);
         mDescription = (EditText) view.findViewById(R.id.report_description);

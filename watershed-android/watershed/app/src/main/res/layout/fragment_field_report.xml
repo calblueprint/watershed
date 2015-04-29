@@ -42,6 +42,9 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/field_report_rating_divider"
             android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="30sp"
+            android:fontFamily="sans-serif-thin"
             />
     </RelativeLayout>
 

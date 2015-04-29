@@ -11,9 +11,8 @@
             android:layout_height="wrap_content">
 
             <RelativeLayout
+                style="@style/CoverPhotoPagerView"
                 android:id="@+id/report_photo_container"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
                 android:background="@color/text_color">
 
                 <ImageView
@@ -56,22 +55,26 @@
                     android:isIndicator="false"
                     android:layout_centerVertical="true"
                     />
-                <!--<View-->
-                    <!--android:id="@+id/field_report_rating_divider"-->
-                    <!--android:layout_width="3dp"-->
-                    <!--android:layout_height="40dp"-->
-                    <!--android:layout_marginLeft="10dp"-->
-                    <!--android:layout_marginRight="10dp"-->
-                    <!--android:layout_toRightOf="@id/field_report_health_rating"-->
-                    <!--android:layout_centerVertical="true"-->
-                    <!--android:background="@color/white"-->
-                    <!--/>-->
+                <View
+                    android:id="@+id/field_report_rating_divider"
+                    android:layout_width="3dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_toRightOf="@id/field_report_health_rating"
+                    android:layout_centerVertical="true"
+                    android:background="@color/white"
+                    />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-
+                    android:layout_toRightOf="@id/field_report_rating_divider"
                     android:textColor="@color/white"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:text="0.0"
+                    android:fontFamily="sans-serif-thin"
                     />
             </RelativeLayout>
 
