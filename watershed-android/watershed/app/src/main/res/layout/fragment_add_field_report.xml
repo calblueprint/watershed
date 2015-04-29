@@ -1,10 +1,8 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/report_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.blueprint.watershed.FieldReports.AddFieldReportFragment">
+    android:layout_height="match_parent">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,7 +15,7 @@
                 android:id="@+id/report_photo_container"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:background="@color/ws_blue">
+                android:background="@color/text_color">
 
                 <ImageView
                     android:id="@+id/report_photo"
@@ -42,23 +40,57 @@
                 </RelativeLayout>
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/field_report_rating_container"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/ws_blue"
+                android:layout_below="@id/report_photo_container"
+                android:gravity="center">
+                <RatingBar
+                    android:id="@+id/field_report_health_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="5"
+                    android:isIndicator="false"
+                    />
+                <View
+                    android:id="@+id/field_report_rating_divider"
+                    android:layout_width="3dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_toRightOf="@id/field_report_health_rating"
+                    android:layout_centerVertical="true"
+                    android:background="@color/white"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/field_report_rating_divider"
+                    android:textColor="@color/white"
+                    />
+            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/report_title_container"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/report_photo_container"
-                android:layout_margin="20dp"
+                android:layout_below="@id/field_report_rating_container"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp"
                 >
-                <TextView
+                <EditText
                     android:id="@+id/report_title"
                     android:text="@string/title"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/transparent"
-                    android:textSize="20sp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/form_gray"
+                    android:inputType="textMultiLine"
+                    android:textSize="30sp"
                     />
             </RelativeLayout>
 
@@ -95,9 +127,6 @@
                     android:layout_toEndOf="@id/description_image"
                     android:layout_toRightOf="@id/description_image"
                     android:textSize="15sp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/form_gray"
-                    android:background="@color/transparent"
                     android:gravity="top"
                     android:lines="4"
                     />
@@ -113,64 +142,26 @@
                 android:layout_marginLeft="70dp"
                 android:background="@color/form_gray"/>
 
-            <RelativeLayout
-                android:id="@+id/report_rating_container"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/layer_2"
-                android:layout_margin="20dp"
-                >
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/report_rating_container"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_below="@+id/layer_2"-->
+                <!--android:layout_margin="20dp"-->
+                <!-->-->
 
-                <ImageView
-                    android:id="@+id/rating_image"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/ic_thumb_up"
-                    android:scaleType="centerCrop"
-                    />
+                <!--<ImageView-->
+                    <!--android:id="@+id/rating_image"-->
+                    <!--android:layout_width="25dp"-->
+                    <!--android:layout_height="25dp"-->
+                    <!--android:src="@drawable/ic_thumb_up"-->
+                    <!--android:scaleType="centerCrop"-->
+                    <!--/>-->
 
-                <RadioGroup
-                    android:id="@+id/health_group"
-                    android:layout_height="wrap_content"
-                    android:layout_width="fill_parent"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_toEndOf="@id/rating_image"
-                    android:layout_toRightOf="@id/rating_image"
-                    android:orientation="horizontal"
-                    >
-
-                    <RadioButton android:id="@+id/health_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="1"
-                        />
-                    <RadioButton android:id="@+id/health_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:text="2"
-                        />
-                    <RadioButton android:id="@+id/health_3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:text="3"
-                        />
-                    <RadioButton android:id="@+id/health_4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:text="4"
-                        />
-                    <RadioButton android:id="@+id/health_5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:text="5"
-                        />
-                </RadioGroup>
-            </RelativeLayout>
+                <!--<RatingBar-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content" />-->
+            <!--</RelativeLayout>-->
 
             <View
                 android:id="@+id/layer_3"

@@ -10,7 +10,7 @@
         />
 
     <RelativeLayout
-        android:id="@+id/field_report_pager_view_container"
+        android:id="@+id/field_report_rating_container"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/ws_blue"
@@ -45,7 +45,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/field_report_pager_view_container"
+        android:layout_below="@id/field_report_rating_container"
         android:padding="20dp">
 
         <TextView
@@ -65,6 +65,5 @@
             android:textSize="14sp"
             android:text="Field Report Description"
             />
-
     </RelativeLayout>
 </RelativeLayout>
