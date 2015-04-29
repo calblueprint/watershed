@@ -195,7 +195,7 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
         else {
             mSubscribeButton.setTitle("Subscribe to Site");
             mSubscribeButton.setIcon(R.drawable.ic_bookmark_outline_white_36dp);
-            mSubscribed = true;
+            mSubscribed = false;
         }
 
         setButtonListeners(view);
