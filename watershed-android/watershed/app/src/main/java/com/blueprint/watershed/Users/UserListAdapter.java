@@ -45,7 +45,7 @@ public class UserListAdapter extends ArrayAdapter<User> {
             holder = (UserIndexListHolder) row.getTag();
         }
 
-        View toolbar = convertView.findViewById(R.id.user_options);
+        View toolbar = row.findViewById(R.id.user_options);
         ((LinearLayout.LayoutParams) toolbar.getLayoutParams()).bottomMargin = -50;
         toolbar.setVisibility(View.GONE);
 
