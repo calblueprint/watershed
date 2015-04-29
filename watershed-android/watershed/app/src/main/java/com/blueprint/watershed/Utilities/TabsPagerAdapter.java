@@ -4,8 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.blueprint.watershed.Tasks.TaskList.AllTaskListFragment;
-import com.blueprint.watershed.Tasks.TaskList.UserTaskListFragment;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by Max on 10/19/2014.
@@ -14,37 +14,36 @@ import com.blueprint.watershed.Tasks.TaskList.UserTaskListFragment;
 
 public class TabsPagerAdapter extends FragmentPagerAdapter {
 
+    private ArrayList<Fragment> mFragments;
+    private ArrayList<String> mTitles;
+
     public TabsPagerAdapter(FragmentManager fm) {
         super(fm);
+        mFragments = new ArrayList<Fragment>();
+        mTitles = new ArrayList<String>();
     }
 
     @Override
     public Fragment getItem(int index) {
-        switch (index) {
-            case 0:
-                return UserTaskListFragment.newInstance();
-            case 1:
-                return AllTaskListFragment.newInstance();
-        }
-
-        return null;
+        return mFragments.get(index);
     }
 
     @Override
     public int getCount() {
-        // get item count - equal to number of tabs
-        return 2;
+        return mFragments.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        switch (position) {
-            case 0:
-                return "User Tasks";
-            case 1:
-                return "All Tasks";
-        }
-        return null;
+        return mTitles.get(position);
     }
 
+    public void addFragment(Fragment fragment) {
+        mFragments.add(fragment);
+        notifyDataSetChanged();
+    }
+
+    public void addTitles(String... titles) {
+        mTitles.addAll(Arrays.asList(titles));
+    }
 }

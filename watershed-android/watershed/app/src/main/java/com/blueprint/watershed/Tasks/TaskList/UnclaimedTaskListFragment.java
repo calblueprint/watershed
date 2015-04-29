@@ -1,35 +1,37 @@
 package com.blueprint.watershed.Tasks.TaskList;
 
-import android.util.Log;
-
+import com.android.volley.Response;
+import com.blueprint.watershed.MiniSites.MiniSite;
+import com.blueprint.watershed.Networking.Users.UserMiniSitesRequest;
 import com.blueprint.watershed.Tasks.Task;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class UserTaskListFragment extends TaskListAbstractFragment {
+public class UnclaimedTaskListFragment extends TaskListAbstractFragment {
 
-    public static UserTaskListFragment newInstance() {
-        Log.e("New Instance Created", "User");
-        return new UserTaskListFragment();
+    public static UnclaimedTaskListFragment newInstance() {
+        return new UnclaimedTaskListFragment();
     }
 
     public void refreshTaskList(List<Task> tasks) {
-        tasks = getUserTasks(tasks);
+        tasks = getUnclaimedTasks(tasks);
         if (tasks.size() > 0) {
             showList();
-            setUserTasks(tasks);
+            setUnclaimedTasks(tasks);
             for (int i = 0; i < mTaskAdapter.getGroupCount(); i++) mListView.expandGroup(i);
         } else {
             hideList();
         }
     }
 
-    private void setUserTasks(List<Task> tasks) {
+    private void setUnclaimedTasks(List<Task> tasks) {
         HashMap<String, List<Task>> taskList = new HashMap<String, List<Task>>();
         List<String> headers = new ArrayList<String>();
-        tasks = getUserTasks(tasks);
+        tasks = getUnclaimedTasks(tasks);
         List<Task> userFinishedTasks = new ArrayList<Task>();
         List<Task> userUncompleteTasks = new ArrayList<Task>();
         for (Task task : tasks){
@@ -48,12 +50,12 @@ public class UserTaskListFragment extends TaskListAbstractFragment {
         setHeaders(headers);
     }
 
-    private ArrayList<Task> getUserTasks(List<Task> tasks) {
-        ArrayList<Task> userTasks = new ArrayList<Task>();
+    private ArrayList<Task> getUnclaimedTasks(List<Task> tasks) {
+        ArrayList<Task> unclaimedTasks = new ArrayList<Task>();
         for (Task task : tasks) {
-            Integer id = task.getAssigneeId();
-            if (id != null && id == mParentActivity.getUserId()) userTasks.add(task);
+            Integer id = task.getMiniSiteId();
+            if (id != null && mUserMiniSiteIdList.contains(id) && task.getAssigneeId() == null) unclaimedTasks.add(task);
         }
-        return userTasks;
+        return unclaimedTasks;
     }
 }

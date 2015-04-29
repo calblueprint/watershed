@@ -93,7 +93,7 @@
             <TextView
                 style="@style/TaskTextView"
                 android:id="@+id/create_task_assignee"
-                android:hint="@string/site"
+                android:hint="@string/assignee"
                 android:layout_toRightOf="@id/create_task_assignee_icon"
                 />
         </RelativeLayout>
