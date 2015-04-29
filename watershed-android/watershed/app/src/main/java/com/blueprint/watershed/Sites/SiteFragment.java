@@ -302,28 +302,4 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
         super.onDestroy();
         if (mMenu != null) closeMenu();
     }
-
-    private void markSubscribed(ArrayList<Site> sites) {
-        for (Site site : sites) {
-            if (site.getId().equals(mSite.getId())) {
-                FloatingActionButton subscribeButton = (FloatingActionButton) mView.findViewById(R.id.site_subscribe_site);
-                subscribeButton.setTitle("Unsubscribe from Site");
-                subscribeButton.setIcon(R.drawable.ic_bookmark_white_36dp);
-                mSubscribed = true;
-            }
-        }
-    }
-
-//    protected void getUserSiteRequest() {
-//        UserSitesRequest SitesRequest = new UserSitesRequest(mParentActivity,
-//                new HashMap<String, JSONObject>(),
-//                new Response.Listener<ArrayList<Site>>() {
-//                    @Override
-//                    public void onResponse(ArrayList<Site> sites) {
-//                        Log.e("Good ", "Site Request");
-//                        markSubscribed(sites);
-//                    }
-//                }, mUser.getId());
-//        mNetworkManager.getRequestQueue().add(SitesRequest);
-//    }
 }
