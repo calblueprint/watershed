@@ -63,7 +63,7 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
         mSiteTitle = (TextView) view.findViewById(R.id.site_name);
         mSiteTitle.setText(site.getName());
 
-        mSiteDescription = (TextView) view.findViewById(R.id.site_description);
+        mSiteDescription =   (TextView) view.findViewById(R.id.site_description);
         mSiteDescription.setText(site.getTrimmedText());
 
         if (site.shouldShowDescriptionDialog()) {

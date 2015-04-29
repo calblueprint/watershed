@@ -21,7 +21,7 @@ public class TaskSerializer extends JsonSerializer<Task> {
         jgen.writeStringField("description", value.getDescription());
         jgen.writeNumberField("mini_site_id", value.getMiniSiteId());
         jgen.writeNumberField("assigner_id", value.getAssignerId());
-        jgen.writeNumberField("assignee_id", value.getAssigneeId());
+        if (value.getAssigneeId() != null) jgen.writeNumberField("assignee_id", value.getAssigneeId());
         if (value.getComplete() != null) jgen.writeBooleanField("complete", value.getComplete());
         jgen.writeStringField("due_date", new SimpleDateFormat("yyyy/MM/dd").format(value.getDueDate()));
         if (value.getUrgent() != null) jgen.writeBooleanField("urgent", value.getUrgent());
