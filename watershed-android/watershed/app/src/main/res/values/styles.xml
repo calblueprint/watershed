@@ -127,8 +127,8 @@
 
     <style name="RatingBar">
         <item name="android:progressDrawable">@drawable/rating_bar_drawable</item>
-        <item name="android:minHeight">25dip</item>
-        <item name="android:maxHeight">25dip</item>
+        <item name="android:minHeight">32dip</item>
+        <item name="android:maxHeight">32dip</item>
         <item name="android:thumb">@null</item>
     </style>
 </resources>
