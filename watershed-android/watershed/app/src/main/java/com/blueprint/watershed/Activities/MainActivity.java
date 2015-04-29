@@ -23,7 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Response;
-import com.blueprint.watershed.AboutFragment;
+import com.blueprint.watershed.Users.AboutFragment;
 import com.blueprint.watershed.AbstractFragments.FloatingActionMenuAbstractFragment;
 import com.blueprint.watershed.FieldReports.FieldReportFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteAbstractFragment;

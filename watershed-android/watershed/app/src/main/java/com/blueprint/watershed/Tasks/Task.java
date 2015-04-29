@@ -1,6 +1,6 @@
 package com.blueprint.watershed.Tasks;
 
-import com.blueprint.watershed.APIObject;
+import com.blueprint.watershed.Networking.APIObject;
 import com.blueprint.watershed.FieldReports.FieldReport;
 import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.Networking.Tasks.TaskSerializer;

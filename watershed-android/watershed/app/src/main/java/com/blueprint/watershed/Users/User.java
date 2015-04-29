@@ -1,6 +1,6 @@
 package com.blueprint.watershed.Users;
 
-import com.blueprint.watershed.APIObject;
+import com.blueprint.watershed.Networking.APIObject;
 import com.blueprint.watershed.FieldReports.FieldReport;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
