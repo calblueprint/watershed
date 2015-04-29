@@ -44,6 +44,7 @@ import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Tasks.TaskDetailFragment;
 import com.blueprint.watershed.Tasks.TaskList.UserTaskListFragment;
 import com.blueprint.watershed.Tasks.TaskViewPagerFragment;
+import com.blueprint.watershed.Users.ManageViewPagerFragment;
 import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Users.UserFieldReportFragment;
 import com.blueprint.watershed.Users.UserFragment;
@@ -310,7 +311,7 @@ public class MainActivity extends ActionBarActivity
         else if (f instanceof UserFragment)               setTitle("Profile");
         else if (f instanceof MiniSiteAbstractFragment ||
                  f instanceof MiniSiteFragment)           setTitle("MiniSite");
-        else if (f instanceof UserListFragment)           setTitle("Manage");
+        else if (f instanceof ManageViewPagerFragment)    setTitle("Manage");
     }
 
     public void replaceFragment(Fragment newFragment) {
@@ -425,7 +426,7 @@ public class MainActivity extends ActionBarActivity
                 replaceFragment(AboutFragment.newInstance());
                 break;
             case 3:
-                replaceFragment(UserListFragment.newInstance());
+                replaceFragment(ManageViewPagerFragment.newInstance());
                 break;
             case 4:
                 logoutCurrentUser(this);
@@ -485,6 +486,7 @@ public class MainActivity extends ActionBarActivity
         editor.apply();
 
         mUser = user;
+        Log.e("User ID", String.valueOf(mUser.getId())); // TODO: DELETE THIS
     }
 
     public void setMenuAction(boolean setMenu) {

@@ -366,6 +366,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         catch (Exception e) { Log.i("Exception", e.toString()); }
 
         SharedPreferences.Editor editor = mPreferences.edit();
+
         editor.putString("authentication_token", session.getAuthenticationToken());
         editor.putString("email", session.getEmail());
         if (userJson != null) editor.putString("user", userJson.toString());
