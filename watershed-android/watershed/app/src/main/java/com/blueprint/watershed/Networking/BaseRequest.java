@@ -106,8 +106,6 @@ public abstract class BaseRequest extends JsonObjectRequest {
     @Override
     public HashMap<String, String> getHeaders() {
         HashMap<String, String> headers = new HashMap<String, String>();
-        Log.e("Token", preferences.getString("authentication_token", "none"));
-        Log.e("X-AUTH-EMAIL", preferences.getString("email", "none"));
         headers.put("X-AUTH-TOKEN", preferences.getString("authentication_token", "none"));
         headers.put("X-AUTH-EMAIL", preferences.getString("email", "none"));
         return headers;

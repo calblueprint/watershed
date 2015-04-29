@@ -479,6 +479,7 @@ public class MainActivity extends ActionBarActivity
         editor.apply();
 
         mUser = user;
+        Log.e("User ID", String.valueOf(mUser.getId())); // TODO: DELETE THIS
     }
 
     public void setMenuAction(boolean setMenu) {
