@@ -13,12 +13,15 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -58,8 +61,8 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     protected NetworkManager mNetworkManager;
 
     protected EditText mTitleField;
-    protected EditText mAddressField;
     protected EditText mDescriptionField;
+    protected AutoCompleteTextView mAddressField;
 
     // Cover Photo Pager
     protected CoverPhotoPagerView mImagePager;
@@ -131,7 +134,21 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         mLayout = (RelativeLayout) view.findViewById(R.id.mini_site_create_layout);
         mTitleField = (EditText) view.findViewById(R.id.create_mini_site_title);
         mDescriptionField = (EditText) view.findViewById(R.id.create_mini_site_description);
-        mAddressField = (EditText) view.findViewById(R.id.create_mini_site_address);
+        mAddressField = (AutoCompleteTextView) view.findViewById(R.id.create_mini_site_address);
+        mAddressField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().length() > 2) getPredictions(s.toString());
+            }
+        });
 
         mDeletePhotoButton.setOnClickListener(this);
         mAddPhotoButton.setOnClickListener(this);

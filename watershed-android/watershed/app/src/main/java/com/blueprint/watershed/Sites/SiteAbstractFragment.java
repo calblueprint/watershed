@@ -122,7 +122,6 @@ public abstract class SiteAbstractFragment extends Fragment{
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.i("asdf", s.toString());
                 if (s.length() > 2) getPredictions(s.toString());
             }
 
