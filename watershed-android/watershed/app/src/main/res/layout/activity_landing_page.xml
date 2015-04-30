@@ -1,99 +1,75 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
     android:animateLayoutChanges="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.blueprint.watershed.Activities.LandingPageActivity"
-    android:background="@drawable/landing_page_photo"
-    android:orientation="vertical"
-    android:id="@+id/container">
+    android:background="@color/ws_title_bar"
+    >
 
-    <LinearLayout
-        android:id = "@+id/viewBlocker"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/transparent"
-        android:orientation="vertical"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.5"
+    <RelativeLayout
+        android:id="@+id/watershed_logo_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/landing_page_margin"
         android:layout_marginRight="@dimen/landing_page_margin"
-        android:layout_marginTop="100dp">
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp">
 
         <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2"
+            android:id="@+id/watershed_logo"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerHorizontal="true"
             android:src="@drawable/watershed_logo"
+            android:scaleType="centerCrop"
             />
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.8"
-            android:gravity="center"
-            android:text="@string/landing_page_logo_text"
-            android:textSize="40sp"
-            android:textColor="@color/white"
-            android:textAppearance="@android:style/TextAppearance.Holo.Medium"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/buttons"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.5"
-        android:orientation="vertical"
-        android:layout_marginStart="@dimen/standard_margin"
-        android:layout_marginLeft="@dimen/standard_margin"
-        android:layout_marginEnd="@dimen/standard_margin"
-        android:layout_marginRight="@dimen/standard_margin">
-
-        <com.facebook.widget.LoginButton
-            android:id="@+id/authButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
+            android:layout_below="@id/watershed_logo"
+            android:layout_marginTop="@dimen/negative_landing_page"
+            android:gravity="center"
+            android:text="@string/landing_page_logo_text"
+            android:textSize="50sp"
+            android:textColor="@color/white"
             />
+    </RelativeLayout>
 
+    <com.facebook.widget.LoginButton
+        android:id="@+id/authButton"
+        android:layout_width="225dp"
+        android:layout_height="@dimen/button_large_height"
+        android:layout_below="@id/watershed_logo_container"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="20dp">
+    <Button
+        android:id="@+id/sign_up_load_fragment_button"
+        android:layout_width="225dp"
+        android:layout_height="@dimen/button_large_height"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/authButton"
+        android:text="@string/landing_page_sign_up_button"
+        android:textColor="@color/white"
+        android:background="@drawable/border_button"
+        />
+    
+    <TextView
+        android:id="@+id/login_load_fragment_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/white"
+        />
 
-            <Button
-                android:id="@+id/sign_up_load_fragment_button"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/button_standard_height"
-                android:layout_weight="0.5"
-                android:layout_marginEnd="5dp"
-                android:layout_marginRight="5dp"
-                android:textSize="14sp"
-                android:text="@string/landing_page_sign_up_button"
-                android:textColor="@color/white"
-                android:background="@drawable/border_button"
-                />
-
-            <Button
-                android:id="@+id/login_load_fragment_button"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/button_standard_height"
-                android:layout_weight="0.5"
-                android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
-                android:textSize="14sp"
-                android:text="@string/landing_page_login_button"
-                android:textColor="@color/white"
-                android:background="@drawable/border_button"
-                />
-        </LinearLayout>
-    </LinearLayout>
-
-</LinearLayout>
+    <RelativeLayout
+        android:id ="@+id/viewBlocker"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/ws_title_bar"
+        android:orientation="vertical"/>
+</RelativeLayout>

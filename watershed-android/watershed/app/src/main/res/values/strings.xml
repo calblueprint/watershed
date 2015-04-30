@@ -19,7 +19,7 @@
     <string name="landing_page_logo_text">Watershed</string>
     <string name="landing_page_facebook_button">Facebook</string>
     <string name="landing_page_sign_up_button">Sign Up with Email</string>
-    <string name="landing_page_login_button">Log In with Email</string>
+    <string name="landing_page_login_button"><![CDATA[Have an account? <b>Login.</b>]]></string>
 
     <!-- Login View -->
     <string name="name_hint">Name</string>
