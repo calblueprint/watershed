@@ -13,7 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,7 +66,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
     private SharedPreferences mPreferences;
     private ObjectMapper mMapper;
     private View mViewBlocker;
-    private LinearLayout mLayout;
+    private RelativeLayout mLayout;
 
     // Facebook Login
     private UiLifecycleHelper mUiHelper;
@@ -165,7 +165,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
 
         mFacebookButton.setReadPermissions(Arrays.asList("email"));
 
-        mLayout = (LinearLayout) findViewById(R.id.container);
+        mLayout = (RelativeLayout) findViewById(R.id.container);
         Utility.setKeyboardListener(this, mLayout);
     }
 
