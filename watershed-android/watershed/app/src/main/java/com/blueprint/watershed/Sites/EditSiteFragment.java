@@ -28,8 +28,6 @@ public class EditSiteFragment extends SiteAbstractFragment {
         if (mSite.getName() != null) mTitleField.setText(mSite.getName());
         if (mSite.getDescription() != null) mDescriptionField.setText(mSite.getDescription());
         if (mSite.getStreet() != null) mAddressField.setText(mSite.getStreet());
-        if (mSite.getCity() != null) mCityField.setText(mSite.getCity());
-        if (mSite.getState() != null) mStateField.setText(mSite.getState());
     }
 
     public void submitListener(){
