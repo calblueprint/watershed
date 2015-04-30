@@ -14,6 +14,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import java.util.Arrays;
+
 /**
  * Created by charlesx on 2/23/15.
  * Useful functions
@@ -118,4 +120,13 @@ public class Utility {
         builder.show();
     }
 
+    public static String[] COLORS = { "#F44336", "#673AB7", "#03A9F4", "#4CAF50", "#FF5722", "#607D8B",
+                                     "#00BCD4", "#9C27B0", "#E91E63", "#3F51B5", "#009688" };
+    public static String[] SECONDARY_COLORS = { "#D32F2F", "#512DA8", "#0288D1", "#388E3C", "#E64A19", "#455A64",
+                                                "#0097A7", "#7B1FA2", "#C2185B", "#303F9F", "#00796B" };
+
+    public static String getSecondaryColor(String primary) {
+        if (primary == null) return "#1976D2";
+        return SECONDARY_COLORS[Arrays.asList(COLORS).indexOf(primary)];
+    }
 }

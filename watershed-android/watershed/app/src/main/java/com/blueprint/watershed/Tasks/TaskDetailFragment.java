@@ -2,6 +2,7 @@ package com.blueprint.watershed.Tasks;
 
 import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -120,6 +121,10 @@ public class TaskDetailFragment extends TaskAbstractFragment
         if (mTask.getMiniSite() == null) site = "No Minisite";
         else site = mTask.getMiniSite().getName();
         mMiniSiteName.setText(site);
+
+        if (mTask.getColor() != null)
+            mParentActivity.setToolBarColor(Color.parseColor(mTask.getColor()),
+                                            Color.parseColor(Utility.getSecondaryColor(mTask.getColor())));
     }
 
     private void setButtonListeners(View view){
