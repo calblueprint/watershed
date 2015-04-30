@@ -16,6 +16,7 @@ import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -126,6 +127,12 @@ public class Utility {
         builder.show();
     }
 
+    /**
+     * Get latitude/longitude of an address
+     * @param context Context of application
+     * @param address Address of place to get lat/lng
+     * @return returns a LatLng object
+     */
     public static LatLng getLatLng(Context context, String address) {
         Geocoder coder = new Geocoder(context);
         List<Address> addresses;
@@ -143,4 +150,14 @@ public class Utility {
         return null;
     }
 
+    /**
+     * Sets Empty Error messages.
+     * @param errors The field names (eg. City, Street...)
+     */
+    public static void setEmpty(Context context, List<String> errors) {
+        String errorString = "";
+        for (String error : errors) errorString += error + " ";
+        errorString += "cannot be blank!";
+        Toast.makeText(context, errorString, Toast.LENGTH_SHORT).show();
+    }
 }

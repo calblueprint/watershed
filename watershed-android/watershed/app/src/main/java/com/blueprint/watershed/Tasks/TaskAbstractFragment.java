@@ -177,38 +177,14 @@ public abstract class TaskAbstractFragment extends Fragment {
     }
 
     private void validateAndSubmit() {
-        boolean hasErrors = false;
-        if (mTitleField.getText().toString().length() == 0) {
-            setEmpty("Title", mTitleField);
-            hasErrors = true;
-        }
-
-        if (mDescriptionField.getText().toString().length() == 0) {
-            setEmpty("Description", mDescriptionField);
-            hasErrors = true;
-        }
-
-        if (mMiniSite == null) {
-            setEmpty("Minisite", mDescriptionField);
-            hasErrors = true;
-        }
-
-        if (mDate == null) {
-            setEmpty("Deadline", mDescriptionField);
-            hasErrors = true;
-        }
-
-//                if (mUser == null) { //TODO remove this validation once we can create unclaimed tasks on backend.
-//                    setEmpty("User", mDescriptionField);
-//                    hasErrors = true;
-//                }
-
-        if (hasErrors) return;
-
-        submitListener();
+        List<String> errorStrings = new ArrayList<String>();
+        if (mTitleField.getText().toString().length() == 0) errorStrings.add("Title");
+        if (mDescriptionField.getText().toString().length() == 0) errorStrings.add("Description");
+        if (mMiniSite == null) errorStrings.add("Mini Site");
+        if (mDate == null) errorStrings.add("Deadline");
+        if (errorStrings.size() > 0) Utility.setEmpty(mParentActivity, errorStrings);
+        else submitListener();
     }
-
-    private void setEmpty(String field, EditText editText) { editText.setError(field + " can't be blank!"); }
 
     private void openUserDialog() {
         mUserDialog = PickUserDialog.newInstance(mUsers, this);

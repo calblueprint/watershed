@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
@@ -165,14 +164,11 @@ public abstract class  SiteAbstractFragment extends Fragment{
             @Override
             public void onClick(View view) {
                 List<String> errorStrings = new ArrayList<String>();
-
                 if (mTitleField.getText().toString().length() == 0) errorStrings.add("Title");
-
                 if (mDescriptionField.getText().toString().length() == 0) errorStrings.add("Description");
-
                 if (mAddressField.getText().toString().length() == 0) errorStrings.add("Address");
 
-                if (errorStrings.size() > 0) setEmpty(errorStrings);
+                if (errorStrings.size() > 0) Utility.setEmpty(mParentActivity, errorStrings);
                 else {
                     submitListener();
                     SiteListFragment returnFragment = SiteListFragment.newInstance();
@@ -206,17 +202,6 @@ public abstract class  SiteAbstractFragment extends Fragment{
             new_site.setLongitude(String.valueOf(latLng.longitude));
         }
         createSiteRequest(type, new_site);
-    }
-
-    /**
-     * Sets Empty Error messages.
-     * @param errors The field names (eg. City, Street...)
-     */
-    private void setEmpty(List<String> errors) {
-        String errorString = "";
-        for (String error : errors) errorString += error + " ";
-        errorString += "cannot be blank!";
-        Toast.makeText(mParentActivity, errorString, Toast.LENGTH_SHORT).show();
     }
 
     public void createSiteRequest(String type, Site site){
