@@ -34,6 +34,8 @@ public class Task implements APIObject {
     private Boolean mUrgent;
     private Date mDueDate;
 
+    private Boolean mSubscribed;
+
     private User mAssignee;
     private User mAssigner;
     private FieldReport mFieldReport;
@@ -82,6 +84,9 @@ public class Task implements APIObject {
         this.mUrgent = mUrgent;
     }
     public void setColor(String color) { mColor = color; }
+    public void setSubscribed(Boolean subscribed) {
+        this.mSubscribed = subscribed;
+    }
 
     public void setAssigner(User assigner) { mAssigner = assigner; }
     public User getAssigner() { return mAssigner; }
@@ -91,4 +96,7 @@ public class Task implements APIObject {
     public MiniSite getMiniSite() { return mMiniSite; }
     public User getAssignee() { return mAssignee; }
     public void setAssignee(User mAssignee) { this.mAssignee = mAssignee; }
+    public Boolean getSubscribed() {
+        return mSubscribed;
+    }
 }
