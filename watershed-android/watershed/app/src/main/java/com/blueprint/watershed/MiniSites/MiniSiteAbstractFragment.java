@@ -24,6 +24,7 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 import com.blueprint.watershed.Activities.MainActivity;
+import com.blueprint.watershed.GoogleApis.Places.PlacePredictionAdapter;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Photos.Photo;
 import com.blueprint.watershed.Photos.PhotoPagerAdapter;
@@ -70,9 +71,12 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     protected ImageButton mAddPhotoButton;
 
     protected RelativeLayout mLayout;
-
     protected Site mSite;
     protected MiniSite mMiniSite;
+
+    // Places API
+    protected List<AutocompletePrediction> mPredictions;
+    protected PlacePredictionAdapter mPlacesAdapter;
 
     // Camera Stuff
     protected static final int CAMERA_REQUEST = 1337;
@@ -92,14 +96,15 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         setHasOptionsMenu(true);
         mParentActivity = (MainActivity) getActivity();
         mNetworkManager = NetworkManager.getInstance(mParentActivity);
+        mPredictions = new ArrayList<AutocompletePrediction>();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_create_mini_site, container, false);
+        View view = inflater.inflate(R.layout.fragment_create_mini_site, container, false);
+        setViews(view);
+        return view;
     }
 
     @Override
@@ -112,19 +117,21 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     /**
      * Sets all the views in the fragment
      */
-    protected void setButtonListeners() {
-        mDeletePhotoButton = (ImageButton) mParentActivity.findViewById(R.id.mini_site_delete_photo);
-        mAddPhotoButton = (ImageButton) mParentActivity.findViewById(R.id.mini_site_add_photo);
+    protected void setViews(View view) {
+        mDeletePhotoButton = (ImageButton) view.findViewById(R.id.mini_site_delete_photo);
+        mAddPhotoButton = (ImageButton) view.findViewById(R.id.mini_site_add_photo);
 
         // Sets up Image Pager
-        mImagePager = (CoverPhotoPagerView) mParentActivity.findViewById(R.id.mini_site_photo_pager_view);
+        mImagePager = (CoverPhotoPagerView) view.findViewById(R.id.mini_site_photo_pager_view);
         mImageAdapter = new PhotoPagerAdapter(mParentActivity, getPhotos());
         mImagePager.setAdapter(mImageAdapter);
 
-        mLayout = (RelativeLayout) mParentActivity.findViewById(R.id.mini_site_create_layout);
-        mTitleField = (EditText) mParentActivity.findViewById(R.id.create_mini_site_title);
-        mDescriptionField = (EditText) mParentActivity.findViewById(R.id.create_mini_site_description);
-        mAddressField = (EditText) mParentActivity.findViewById(R.id.create_mini_site_address);
+        mPlacesAdapter = new PlacePredictionAdapter(mParentActivity, mPredictions);
+
+        mLayout = (RelativeLayout) view.findViewById(R.id.mini_site_create_layout);
+        mTitleField = (EditText) view.findViewById(R.id.create_mini_site_title);
+        mDescriptionField = (EditText) view.findViewById(R.id.create_mini_site_description);
+        mAddressField = (EditText) view.findViewById(R.id.create_mini_site_address);
 
         mDeletePhotoButton.setOnClickListener(this);
         mAddPhotoButton.setOnClickListener(this);
@@ -357,5 +364,11 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
 
             return builder.create();
         }
+    }
+
+    protected void setPlaces(List<AutocompletePrediction> places) {
+        mPredictions.clear();
+        mPredictions.addAll(places);
+        mPlacesAdapter.notifyDataSetChanged();
     }
 }

@@ -9,17 +9,18 @@ import android.widget.TextView;
 import com.blueprint.watershed.R;
 import com.google.android.gms.location.places.AutocompletePrediction;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by charlesx on 4/24/15.
+ * Displays row for predictions
  */
 public class PlacePredictionAdapter extends ArrayAdapter<AutocompletePrediction> {
 
     private Activity mActivity;
-    private ArrayList<AutocompletePrediction> mPredictions;
+    private List<AutocompletePrediction> mPredictions;
 
-    public PlacePredictionAdapter(Activity activity, ArrayList<AutocompletePrediction> predictions) {
+    public PlacePredictionAdapter(Activity activity, List<AutocompletePrediction> predictions) {
         super(activity, R.layout.places_prediction_row, predictions);
         mActivity = activity;
         mPredictions = predictions;

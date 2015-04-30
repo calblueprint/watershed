@@ -54,7 +54,7 @@ public abstract class SiteAbstractFragment extends Fragment{
 
     // Params for maps
     private ArrayAdapter<AutocompletePrediction> mPlacesAdapter;
-    private ArrayList<AutocompletePrediction> mPredictions;
+    private List<AutocompletePrediction> mPredictions;
 
     /**
      * Use this factory method to create a new instance of
