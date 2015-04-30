@@ -52,8 +52,8 @@
         >
         <ImageView
             android:id="@+id/task_site_name_image"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:background="@drawable/sites_dark"/>
 
@@ -63,9 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_toRightOf="@id/task_site_name_image"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:text="Site Name"
-            android:textSize="16sp"
+            android:layout_marginLeft="10dp"
             />
     </RelativeLayout>
 
@@ -81,8 +79,8 @@
         >
         <ImageView
             android:id="@+id/task_due_date_image"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:background="@drawable/set_due_date_gray"/>
 
@@ -92,9 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_toRightOf="@id/task_due_date_image"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:textSize="16sp"
-            android:text="Date"
+            android:layout_marginLeft="10dp"
         />
     </RelativeLayout>
 
@@ -110,8 +106,8 @@
         >
         <ImageView
             android:id="@+id/task_assigner_image"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:background="@drawable/assign_to_volunteer_gray"/>
 
@@ -120,9 +116,7 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_toRightOf="@id/task_assigner_image"
-            android:layout_marginLeft="20dp"
-            android:text="Assigned to: "
-            android:textSize="16sp"
+            android:layout_marginLeft="10dp"
             />
 
         <TextView
@@ -132,9 +126,7 @@
             android:layout_marginTop="5dp"
             android:layout_toRightOf="@id/task_assigner_image"
             android:layout_below="@id/task_assigner"
-            android:layout_marginLeft="20dp"
-            android:text="Assigned by: "
-            android:textSize="16sp"
+            android:layout_marginLeft="10dp"
             />
     </RelativeLayout>
 
@@ -150,8 +142,8 @@
         >
         <ImageView
             android:id="@+id/task_location_image"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:background="@drawable/ic_location_gray"/>
 
@@ -161,9 +153,7 @@
             android:layout_width="wrap_content"
             android:layout_toRightOf="@id/task_location_image"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:text="Location"
-            android:textSize="16sp"
+            android:layout_marginLeft="10dp"
             />
     </RelativeLayout>
 
@@ -174,7 +164,6 @@
         android:layout_centerVertical="true"
         android:layout_below="@id/task_location_container"
         android:text="Description"
-        android:textSize="16sp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:paddingRight="20dp"

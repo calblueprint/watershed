@@ -93,18 +93,18 @@ public class TaskDetailFragment extends TaskAbstractFragment
 
         mDetailTitle.setText(mTask.getTitle());
 
-        SimpleDateFormat sdf = new SimpleDateFormat("M dd,yyyy", Locale.US);
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy", Locale.US);
         if (mTask.getDueDate() != null) mDueDate.setText(sdf.format(mTask.getDueDate()));
 
         String assigner;
         if (mTask.getAssigner() == null) assigner = "None";
         else assigner = mTask.getAssigner().getName();
-        mAssigner.setText(assigner);
+        mAssigner.setText("Given by: " + assigner);
 
         String assignee;
         if (mTask.getAssignee() == null) assignee = "None";
-        else assigner = mTask.getAssignee().getName();
-        mAssignee.setText(assigner);
+        else assignee = mTask.getAssignee().getName();
+        mAssignee.setText("Given to: " + assignee);
 
         String location;
         if (mTask.getMiniSite() == null) location = "MiniSite " + String.valueOf(mTask.getMiniSiteId());
