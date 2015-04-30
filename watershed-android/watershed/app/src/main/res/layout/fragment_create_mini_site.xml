@@ -72,78 +72,57 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_below="@id/mini_site_title_container"
-                android:background="@color/form_gray"/>
+                android:background="@color/text_color"/>
 
             <RelativeLayout
                 android:id="@+id/mini_site_description_container"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/layer_1"
-                android:layout_margin="20dp"
-                >
+                android:layout_marginTop="10dp"
+                android:paddingRight="30dp"
+                android:paddingLeft="30dp"
+                android:layout_below="@+id/layer_1">
 
                 <ImageView
-                    android:id="@+id/description_image"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_description"
-                    android:scaleType="centerCrop"
+                    style="@style/Icon"
+                    android:id="@+id/report_description_icon"
+                    android:src="@drawable/description_gray"
                     />
 
                 <EditText
+                    style="@style/TaskTextView"
                     android:id="@+id/create_mini_site_description"
+                    android:layout_toRightOf="@id/report_description_icon"
                     android:hint="@string/description"
-                    android:layout_height="wrap_content"
-                    android:layout_width="fill_parent"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_toEndOf="@id/description_image"
-                    android:layout_toRightOf="@id/description_image"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/form_gray"
-                    android:textSize="15sp"
-                    android:background="@color/transparent"
-                    android:gravity="top"
-                    android:lines="5"
+                    android:minLines="1"
+                    android:maxLines="5"
+                    android:inputType="textMultiLine"
                     />
             </RelativeLayout>
 
-            <View
-                android:id="@+id/layer_2"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@id/mini_site_description_container"
-                android:background="@color/form_gray"/>
-
             <RelativeLayout
                 android:id="@+id/mini_site_address_container"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/layer_2"
-                android:layout_margin="20dp"
-                >
+                android:layout_marginTop="10dp"
+                android:paddingRight="30dp"
+                android:paddingLeft="30dp"
+                android:layout_below="@+id/mini_site_description_container">
 
                 <ImageView
+                    style="@style/Icon"
                     android:id="@+id/location_image"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/ic_location"
-                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_location_gray"
                     />
 
-                <EditText
+                <AutoCompleteTextView
+                    style="@style/TaskTextView"
                     android:id="@+id/create_mini_site_address"
-                    android:hint="@string/create_site_address"
-                    android:layout_height="wrap_content"
-                    android:layout_width="fill_parent"
                     android:layout_toRightOf="@id/location_image"
-                    android:layout_marginLeft="20dp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/form_gray"
-                    android:background="@color/transparent"
-                    android:textSize="15sp"
+                    android:hint="@string/create_site_address"
+                    android:minLines="1"
+                    android:maxLines="5"
+                    android:inputType="textMultiLine"
                     />
             </RelativeLayout>
         </RelativeLayout>
