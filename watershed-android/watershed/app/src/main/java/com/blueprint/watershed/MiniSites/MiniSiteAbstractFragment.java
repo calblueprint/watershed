@@ -150,6 +150,8 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
             }
         });
 
+        mAddressField.setAdapter(mPlacesAdapter);
+
         mDeletePhotoButton.setOnClickListener(this);
         mAddPhotoButton.setOnClickListener(this);
     }
@@ -226,7 +228,10 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         if (mPhotoList.size() < 1) errorStrings.add("Photos");
 
         if (errorStrings.size() > 0) Utility.setEmpty(mParentActivity, errorStrings);
+        else submitMiniSiteRequest(miniSite);
+    }
 
+    private void submitMiniSiteRequest(MiniSite miniSite) {
         for (Photo photo : mPhotoList) photo.getImage(mParentActivity);
         miniSite.setName(mTitleField.getText().toString());
         miniSite.setDescription(mDescriptionField.getText().toString());
@@ -317,7 +322,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     /**
      * Handles taking a photo - starts new activity
      */
-    public void onTakePhotoButtonPressed(){
+    public void onTakePhotoButtonPressed() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(mParentActivity.getPackageManager()) != null) {
             File photoFile = null;
