@@ -14,15 +14,13 @@
             android:layout_height="wrap_content">
 
             <RelativeLayout
+                style="@style/CoverPhotoPagerView"
                 android:id="@+id/mini_site_photo_container"
-                android:layout_width="match_parent"
-                android:layout_height="200dp">
+                >
 
                 <com.blueprint.watershed.Views.CoverPhotoPagerView
+                    style="@style/CoverPhotoPagerView"
                     android:id="@+id/mini_site_photo_pager_view"
-                    android:background="@color/ws_blue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     />
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -147,56 +145,6 @@
                     android:background="@color/transparent"
                     android:textSize="15sp"
                     />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/button_standard_height"
-                    android:layout_below="@id/create_mini_site_address"
-                    android:layout_toRightOf="@id/location_image"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="20dp">
-                    <EditText
-                        android:id="@+id/create_mini_site_city"
-                        android:hint="@string/create_site_city"
-                        android:layout_height="wrap_content"
-                        android:layout_width="fill_parent"
-                        android:layout_weight="0.9"
-                        android:background="@color/transparent"
-                        android:maxLines="1"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/form_gray"
-                        android:textSize="15sp"
-                        />
-                    <EditText
-                        android:id="@+id/create_mini_site_state"
-                        android:hint="@string/create_site_state"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="2dp"
-                        android:layout_marginLeft="2dp"
-                        android:layout_width="fill_parent"
-                        android:layout_weight="1"
-                        android:background="@color/transparent"
-                        android:maxLines="1"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/form_gray"
-                        android:textSize="15sp"
-                        />
-                    <EditText
-                        android:id="@+id/create_mini_site_zip"
-                        android:hint="@string/create_site_zip"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="2dp"
-                        android:layout_marginLeft="2dp"
-                        android:layout_width="fill_parent"
-                        android:layout_weight="1.1"
-                        android:background="@color/transparent"
-                        android:maxLines="1"
-                        android:inputType="number"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/form_gray"
-                        android:textSize="15sp"
-                        />
-                </LinearLayout>
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>

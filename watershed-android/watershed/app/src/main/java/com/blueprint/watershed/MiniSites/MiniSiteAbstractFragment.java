@@ -31,6 +31,13 @@ import com.blueprint.watershed.Photos.PhotoPagerAdapter;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Sites.Site;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.location.places.AutocompletePrediction;
+import com.google.android.gms.location.places.AutocompletePredictionBuffer;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -51,9 +58,6 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
 
     protected EditText mTitleField;
     protected EditText mAddressField;
-    protected EditText mCityField;
-    protected EditText mZipField;
-    protected EditText mStateField;
     protected EditText mDescriptionField;
 
     // Cover Photo Pager
@@ -121,9 +125,6 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         mTitleField = (EditText) mParentActivity.findViewById(R.id.create_mini_site_title);
         mDescriptionField = (EditText) mParentActivity.findViewById(R.id.create_mini_site_description);
         mAddressField = (EditText) mParentActivity.findViewById(R.id.create_mini_site_address);
-        mCityField = (EditText) mParentActivity.findViewById(R.id.create_mini_site_city);
-        mZipField = (EditText) mParentActivity.findViewById(R.id.create_mini_site_zip);
-        mStateField = (EditText) mParentActivity.findViewById(R.id.create_mini_site_state);
 
         mDeletePhotoButton.setOnClickListener(this);
         mAddPhotoButton.setOnClickListener(this);
@@ -143,6 +144,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
      * onClickListeners for the buttons on the page.
      * @param view View that was clicked
      */
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.mini_site_delete_photo:
@@ -152,6 +154,24 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
                 openAddPhotoDialog();
                 break;
         }
+    }
+
+    private void getPredictions(String string) {
+        PendingResult result =
+                Places.GeoDataApi.getAutocompletePredictions(mParentActivity.getGoogleApiClient(), string,
+                        new LatLngBounds(new LatLng(10, -175), new LatLng(70, -50)), null);
+        result.setResultCallback(new ResultCallback<AutocompletePredictionBuffer>() {
+            @Override
+            public void onResult(AutocompletePredictionBuffer buffer) {
+                List<AutocompletePrediction> places = new ArrayList<AutocompletePrediction>();
+                for (AutocompletePrediction prediction : buffer) {
+                    AutocompletePrediction frozenPrediction = prediction.freeze();
+                    places.add(frozenPrediction);
+                }
+                buffer.release();
+                setPlaces(places);
+            }
+        });
     }
 
     /**
@@ -174,22 +194,10 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     public void validateAndSubmitMiniSite() {
         final MiniSite miniSite = mMiniSite == null ? new MiniSite() : mMiniSite;
 
+        List<String> errorStrings = new ArrayList<String>();
         boolean hasErrors = false;
 
-        try {
-            int zipCode = Integer.parseInt(mZipField.getText().toString());
-            if (zipCode < 0) {
-                mZipField.setError("Invalid zip code");
-                hasErrors = true;
-            }
-        }
-        catch (Exception e) {
-            mZipField.setError("Invalid zip code");
-            hasErrors = true;
-        }
-
-        EditText[] textFields = { mTitleField, mDescriptionField, mAddressField,
-                                  mCityField, mStateField, mZipField };
+        EditText[] textFields = { mTitleField, mDescriptionField, mAddressField };
 
         for (EditText editText : textFields) {
             if (editText.getText().toString().length() == 0) {
@@ -210,12 +218,9 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         miniSite.setName(mTitleField.getText().toString());
         miniSite.setDescription(mDescriptionField.getText().toString());
         miniSite.setStreet(mAddressField.getText().toString());
-        miniSite.setCity(mCityField.getText().toString());
-        miniSite.setZipCode(Integer.valueOf(mZipField.getText().toString()));
         miniSite.setLatitude(0f); // Get this later
         miniSite.setLongitude(0f); // Get this later
         miniSite.setFieldReportsCount(miniSite.getFieldReportsCount());
-        miniSite.setState(mStateField.getText().toString());
         miniSite.setSiteId(mSite.getId());
         miniSite.setPhotos(mPhotoList);
 
