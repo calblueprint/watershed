@@ -1,75 +1,82 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/container"
     android:animateLayoutChanges="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/ws_title_bar"
+    android:orientation="vertical"
     >
 
-    <RelativeLayout
-        android:id="@+id/watershed_logo_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp">
-
-        <ImageView
-            android:id="@+id/watershed_logo"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/watershed_logo"
-            android:scaleType="centerCrop"
-            />
-
-        <TextView
-            android:id="@+id/watershed_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/watershed_logo"
-            android:layout_marginTop="@dimen/negative_landing_page"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:text="@string/landing_page_logo_text"
-            android:textSize="50sp"
-            android:textColor="@color/white"
-            />
-
-        <com.facebook.widget.LoginButton
-            android:id="@+id/authButton"
-            android:layout_width="225dp"
-            android:layout_height="@dimen/button_large_height"
-            android:layout_below="@id/watershed_title"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="70dp" />
-
-        <Button
-            android:id="@+id/sign_up_load_fragment_button"
-            android:layout_width="225dp"
-            android:layout_height="@dimen/button_large_height"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/authButton"
-            android:text="@string/landing_page_sign_up_button"
-            android:textColor="@color/white"
-            android:background="@drawable/border_button"
-            />
-
-        <TextView
-            android:id="@+id/login_load_fragment_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="20dp"
-            android:textColor="@color/white"
-            />
-    </RelativeLayout>
-
-    <RelativeLayout
+    <LinearLayout
         android:id ="@+id/viewBlocker"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/ws_title_bar"
+        android:orientation="vertical"
         />
-</RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:id="@+id/watershed_logo_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            >
+
+            <ImageView
+                android:id="@+id/watershed_logo"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="50dp"
+                android:src="@drawable/watershed_logo"
+                android:scaleType="centerCrop"
+                />
+
+            <TextView
+                android:id="@+id/watershed_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/watershed_logo"
+                android:layout_marginTop="@dimen/negative_landing_page"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="@string/landing_page_logo_text"
+                android:textSize="50sp"
+                android:textColor="@color/white"
+                />
+
+            <com.facebook.widget.LoginButton
+                android:id="@+id/authButton"
+                android:layout_width="250dp"
+                android:layout_height="@dimen/button_large_height"
+                android:layout_below="@id/watershed_title"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="70dp" />
+
+            <Button
+                android:id="@+id/sign_up_load_fragment_button"
+                android:layout_width="250dp"
+                android:layout_height="@dimen/button_large_height"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/authButton"
+                android:text="@string/landing_page_sign_up_button"
+                android:textColor="@color/white"
+                android:background="@drawable/border_button"
+                />
+
+            <TextView
+                android:id="@+id/login_load_fragment_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="40dp"
+                android:textColor="@color/white"
+                />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>
