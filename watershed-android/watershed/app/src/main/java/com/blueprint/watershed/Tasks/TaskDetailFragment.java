@@ -72,6 +72,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
     public void onResume() {
         super.onResume();
         mParentActivity.setMenuAction(false);
+        mParentActivity.setToolbarElevation(0);
     }
 
     private void initializeViews(View view) {
