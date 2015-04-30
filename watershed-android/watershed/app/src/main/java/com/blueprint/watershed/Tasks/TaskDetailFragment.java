@@ -41,7 +41,6 @@ public class TaskDetailFragment extends TaskAbstractFragment
     private TextView mDueDate;
     private TextView mLocation;
 
-
     public static TaskDetailFragment newInstance(Task task) {
         TaskDetailFragment taskFragment = new TaskDetailFragment();
         taskFragment.configureWithTask(task);

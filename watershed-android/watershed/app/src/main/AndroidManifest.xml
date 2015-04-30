@@ -13,6 +13,9 @@
     <uses-permission android:name="com.blueprint.watershed.permission.C2D_MESSAGE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
+    <!-- Maps -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/watershed_logo"

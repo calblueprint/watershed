@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
@@ -22,6 +23,7 @@ import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Sites.CreateSiteRequest;
 import com.blueprint.watershed.Networking.Sites.EditSiteRequest;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Utilities.Utility;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.places.AutocompletePrediction;
@@ -49,9 +51,7 @@ public abstract class  SiteAbstractFragment extends Fragment{
     protected MainActivity mParentActivity;
     protected EditText mTitleField;
     protected EditText mDescriptionField;
-    protected EditText mCityField;
     protected AutoCompleteTextView mAddressField;
-    protected EditText mStateField;
 
     // Params for maps
     private ArrayAdapter<AutocompletePrediction> mPlacesAdapter;
@@ -130,9 +130,6 @@ public abstract class  SiteAbstractFragment extends Fragment{
             @Override
             public void afterTextChanged(Editable s) {}
         });
-
-        mCityField = (EditText)view.findViewById(R.id.create_site_city);
-        mStateField = (EditText)view.findViewById(R.id.create_site_state);
     }
 
     private void getPredictions(String string) {
@@ -167,39 +164,20 @@ public abstract class  SiteAbstractFragment extends Fragment{
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean has_errors = false;
+                List<String> errorStrings = new ArrayList<String>();
 
-                if (mTitleField.getText().toString().length() == 0) {
-                    has_errors = true;
-                    setEmpty("Title", mTitleField);
+                if (mTitleField.getText().toString().length() == 0) errorStrings.add("Title");
+
+                if (mDescriptionField.getText().toString().length() == 0) errorStrings.add("Description");
+
+                if (mAddressField.getText().toString().length() == 0) errorStrings.add("Address");
+
+                if (errorStrings.size() > 0) setEmpty(errorStrings);
+                else {
+                    submitListener();
+                    SiteListFragment returnFragment = SiteListFragment.newInstance();
+                    mParentActivity.replaceFragment(returnFragment);
                 }
-
-                if (mDescriptionField.getText().toString().length() == 0) {
-                    has_errors = true;
-                    setEmpty("Description", mDescriptionField);
-                }
-
-                if (mAddressField.getText().toString().length() == 0) {
-                    has_errors = true;
-                    setEmpty("Address", mAddressField);
-                }
-
-                if (mCityField.getText().toString().length() == 0) {
-                    has_errors = true;
-                    setEmpty("City", mCityField);
-                }
-
-                if (mStateField.getText().toString().length() == 0) {
-                    has_errors = true;
-                    setEmpty("State", mStateField);
-                }
-
-                if (has_errors) return;
-
-                submitListener();
-
-                SiteListFragment returnFragment = SiteListFragment.newInstance();
-                mParentActivity.replaceFragment(returnFragment);
             }
         };
     }
@@ -211,7 +189,7 @@ public abstract class  SiteAbstractFragment extends Fragment{
      * @param new_site The site to be editted, or null.
      */
     protected void createSite(String type, Site new_site) {
-        if (type.equals(CREATE)){
+        if (type.equals(CREATE)) {
             new_site = new Site();
             new_site.setLatitude("0");
             new_site.setLongitude("0");
@@ -222,18 +200,24 @@ public abstract class  SiteAbstractFragment extends Fragment{
         new_site.setName(mTitleField.getText().toString());
         new_site.setDescription(mDescriptionField.getText().toString());
         new_site.setStreet(mAddressField.getText().toString());
-        new_site.setCity(mCityField.getText().toString());
-        new_site.setState(mStateField.getText().toString());
-
+        LatLng latLng = Utility.getLatLng(mParentActivity, mAddressField.getText().toString());
+        if (latLng != null) {
+            new_site.setLatitude(String.valueOf(latLng.latitude));
+            new_site.setLongitude(String.valueOf(latLng.longitude));
+        }
         createSiteRequest(type, new_site);
     }
 
     /**
      * Sets Empty Error messages.
-     * @param field The field name (eg. City, Street...)
-     * @param editText some EditText
+     * @param errors The field names (eg. City, Street...)
      */
-    private void setEmpty(String field, EditText editText) { editText.setError(field + " can't be blank!"); }
+    private void setEmpty(List<String> errors) {
+        String errorString = "";
+        for (String error : errors) errorString += error + " ";
+        errorString += "cannot be blank!";
+        Toast.makeText(mParentActivity, errorString, Toast.LENGTH_SHORT).show();
+    }
 
     public void createSiteRequest(String type, Site site){
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
