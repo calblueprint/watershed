@@ -231,7 +231,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         else submitMiniSiteRequest(miniSite);
     }
 
-    private void submitMiniSiteRequest(MiniSite miniSite) {
+    private void submitMiniSiteRequest(final MiniSite miniSite) {
         for (Photo photo : mPhotoList) photo.getImage(mParentActivity);
         miniSite.setName(mTitleField.getText().toString());
         miniSite.setDescription(mDescriptionField.getText().toString());

@@ -156,7 +156,8 @@ public class Utility {
      */
     public static void setEmpty(Context context, List<String> errors) {
         String errorString = "";
-        for (String error : errors) errorString += error + " ";
+        for (String error : errors) errorString += error + ", ";
+        errorString = errorString.replaceAll(", $", " ");
         errorString += "cannot be blank!";
         Toast.makeText(context, errorString, Toast.LENGTH_SHORT).show();
     }
