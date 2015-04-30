@@ -22,7 +22,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Networking.NetworkManager;
@@ -30,6 +29,7 @@ import com.blueprint.watershed.Photos.Photo;
 import com.blueprint.watershed.Photos.PhotoPagerAdapter;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Sites.Site;
+import com.blueprint.watershed.Utilities.Utility;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
@@ -195,26 +195,15 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         final MiniSite miniSite = mMiniSite == null ? new MiniSite() : mMiniSite;
 
         List<String> errorStrings = new ArrayList<String>();
-        boolean hasErrors = false;
 
-        EditText[] textFields = { mTitleField, mDescriptionField, mAddressField };
+        if (mTitleField.getText().toString().length() == 0) errorStrings.add("Title");
+        if (mDescriptionField.getText().toString().length() == 0) errorStrings.add("Description");
+        if (mAddressField.getText().toString().length() == 0) errorStrings.add("Address");
+        if (mPhotoList.size() < 1) errorStrings.add("Photos");
 
-        for (EditText editText : textFields) {
-            if (editText.getText().toString().length() == 0) {
-                editText.setError("Cannot be blank!");
-                hasErrors = true;
-            }
-        }
-
-        if (mPhotoList.size() < 1) {
-            Toast.makeText(mParentActivity, "Please upload at least one photo!", Toast.LENGTH_SHORT).show();
-            hasErrors = true;
-        }
-
-        if (hasErrors) return;
+        if (errorStrings.size() > 0) Utility.setEmpty(mParentActivity, errorStrings);
 
         for (Photo photo : mPhotoList) photo.getImage(mParentActivity);
-
         miniSite.setName(mTitleField.getText().toString());
         miniSite.setDescription(mDescriptionField.getText().toString());
         miniSite.setStreet(mAddressField.getText().toString());
