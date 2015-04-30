@@ -1,6 +1,7 @@
 package com.blueprint.watershed.Tasks;
 
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -35,9 +36,11 @@ public class TaskDetailFragment extends TaskAbstractFragment
     private NetworkManager mNetworkManager;
 
     private Button mCompleteButton;
+    private TextView mMiniSiteName;
     private TextView mDetailTitle;
     private TextView mDescription;
     private TextView mAssigner;
+    private TextView mAssignee;
     private TextView mDueDate;
     private TextView mLocation;
 
@@ -84,10 +87,13 @@ public class TaskDetailFragment extends TaskAbstractFragment
         mDescription = (TextView) view.findViewById(R.id.task_description);
         mDueDate = (TextView) view.findViewById(R.id.task_due_date);
         mAssigner = (TextView) view.findViewById(R.id.task_assigner);
+        mAssignee = (TextView) view.findViewById(R.id.task_assignee);
         mLocation = (TextView) view.findViewById(R.id.task_location);
+        mMiniSiteName = (TextView) view.findViewById(R.id.task_site_name);
 
         mDetailTitle.setText(mTask.getTitle());
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("M dd,yyyy", Locale.US);
         if (mTask.getDueDate() != null) mDueDate.setText(sdf.format(mTask.getDueDate()));
 
         String assigner;
@@ -95,15 +101,25 @@ public class TaskDetailFragment extends TaskAbstractFragment
         else assigner = mTask.getAssigner().getName();
         mAssigner.setText(assigner);
 
+        String assignee;
+        if (mTask.getAssignee() == null) assignee = "None";
+        else assigner = mTask.getAssignee().getName();
+        mAssignee.setText(assigner);
+
         String location;
         if (mTask.getMiniSite() == null) location = "MiniSite " + String.valueOf(mTask.getMiniSiteId());
-        else location = mTask.getMiniSite().getLocation();
+        else location = mTask.getMiniSite().getLocationOneLine();
         mLocation.setText(location);
 
         String description;
         if (mTask.getDescription() == null) description = "No Description";
         else description = mTask.getDescription();
         mDescription.setText(description);
+
+        String site;
+        if (mTask.getMiniSite() == null) site = "No Minisite";
+        else site = mTask.getMiniSite().getName();
+        mMiniSiteName.setText(site);
     }
 
     private void setButtonListeners(View view){
@@ -148,11 +164,6 @@ public class TaskDetailFragment extends TaskAbstractFragment
     @Override
     public void submitListener() {}
 
-    public void unCompleteTask() {
-        Utility.hideKeyboard(mParentActivity, mLayout);
-        createTask(UNCOMPLETE, mTask);
-
-    }
 
     public void fieldReportButtonPressed() {
         if (mTask.getFieldReport() == null) {
@@ -194,5 +205,12 @@ public class TaskDetailFragment extends TaskAbstractFragment
             }
         });
         mNetworkManager.getRequestQueue().add(request);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Resources resources = mParentActivity.getResources();
+        mParentActivity.setToolBarColor(resources.getColor(R.color.ws_blue), resources.getColor(R.color.ws_title_bar));
     }
 }
