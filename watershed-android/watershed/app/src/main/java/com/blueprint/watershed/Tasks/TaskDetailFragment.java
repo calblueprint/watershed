@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Response;
@@ -44,7 +45,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
     private TextView mAssignee;
     private TextView mDueDate;
     private TextView mLocation;
-
+    private RelativeLayout mBackgroundColor;
 
     public static TaskDetailFragment newInstance(Task task) {
         TaskDetailFragment taskFragment = new TaskDetailFragment();
@@ -91,6 +92,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
         mAssignee = (TextView) view.findViewById(R.id.task_assignee);
         mLocation = (TextView) view.findViewById(R.id.task_location);
         mMiniSiteName = (TextView) view.findViewById(R.id.task_site_name);
+        mBackgroundColor = (RelativeLayout) view.findViewById(R.id.task_title_container);
 
         mDetailTitle.setText(mTask.getTitle());
 
@@ -122,9 +124,13 @@ public class TaskDetailFragment extends TaskAbstractFragment
         else site = mTask.getMiniSite().getName();
         mMiniSiteName.setText(site);
 
-        if (mTask.getColor() != null)
+        if (mTask.getColor() != null) {
             mParentActivity.setToolBarColor(Color.parseColor(mTask.getColor()),
-                                            Color.parseColor(Utility.getSecondaryColor(mTask.getColor())));
+                    Color.parseColor(Utility.getSecondaryColor(mTask.getColor())));
+
+            mBackgroundColor.setBackgroundColor(Color.parseColor(mTask.getColor()));
+            mCompleteButton.setBackgroundColor(Color.parseColor(mTask.getColor()));
+        }
     }
 
     private void setButtonListeners(View view){
@@ -213,8 +219,8 @@ public class TaskDetailFragment extends TaskAbstractFragment
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
         Resources resources = mParentActivity.getResources();
         mParentActivity.setToolBarColor(resources.getColor(R.color.ws_blue), resources.getColor(R.color.ws_title_bar));
     }
