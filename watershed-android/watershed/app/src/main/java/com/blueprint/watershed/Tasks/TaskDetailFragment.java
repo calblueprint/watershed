@@ -102,12 +102,12 @@ public class TaskDetailFragment extends TaskAbstractFragment
         String assigner;
         if (mTask.getAssigner() == null) assigner = "None";
         else assigner = mTask.getAssigner().getName();
-        mAssigner.setText("Given by: " + assigner);
+        mAssigner.setText("Assigned by: " + assigner);
 
         String assignee;
         if (mTask.getAssignee() == null) assignee = "None";
         else assignee = mTask.getAssignee().getName();
-        mAssignee.setText("Given to: " + assignee);
+        mAssignee.setText("Assigned to: " + assignee);
 
         String location;
         if (mTask.getMiniSite() == null) location = "MiniSite " + String.valueOf(mTask.getMiniSiteId());
@@ -165,7 +165,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
     public void onClick(View view) {
         switch(view.getId()){
             case (R.id.complete_button):
-                fieldReportButtonPressed();
+                bottomButton();
                 break;
             default:
                 break;
@@ -176,7 +176,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
     public void submitListener() {}
 
 
-    public void fieldReportButtonPressed() {
+    public void bottomButton() {
         if (mTask.getFieldReport() == null) {
             mParentActivity.setFieldReportTask(mTask);
             mParentActivity.replaceFragment(AddFieldReportFragment.newInstance(mTask, mTask.getMiniSite()));
@@ -186,8 +186,18 @@ public class TaskDetailFragment extends TaskAbstractFragment
     }
 
     public void refreshCompletion() {
-        String submit = mTask.getFieldReport() == null ? "COMPLETE" : "VIEW FIELD REPORT";
-        int color = mTask.getFieldReport() == null ? R.color.ws_blue : R.color.facebook_blue;
+        String submit;
+        int color;
+        if (mTask.getAssignee() == null) {
+            submit = "CLAIM TASK";
+            color = Color.parseColor(mTask.getColor());
+        } else if (mTask.getFieldReport() != null) {
+            submit = "VIEW FIELD REPORT";
+            color = Color.parseColor(mTask.getColor());
+        } else {
+            submit = "COMPLETE";
+            color = Utility.getSecondaryColor(mParentActivity, mTask.getColor());
+        }
         mCompleteButton.setText(submit);
         mCompleteButton.setBackgroundColor(mParentActivity.getResources().getColor(color));
     }
