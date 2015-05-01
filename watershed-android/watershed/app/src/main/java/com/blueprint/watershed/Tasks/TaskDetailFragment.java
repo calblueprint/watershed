@@ -84,8 +84,6 @@ public class TaskDetailFragment extends TaskAbstractFragment
     private void initializeViews(View view) {
         setButtonListeners(view);
 
-        refreshCompletion();
-
         mDetailTitle = (TextView) view.findViewById(R.id.task_title);
         mDescription = (TextView) view.findViewById(R.id.task_description);
         mDueDate = (TextView) view.findViewById(R.id.task_due_date);
@@ -132,6 +130,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
             mBackgroundColor.setBackgroundColor(Color.parseColor(mTask.getColor()));
             mCompleteButton.setBackgroundColor(Color.parseColor(mTask.getColor()));
         }
+        refreshCompletion();
     }
 
     private void setButtonListeners(View view){
