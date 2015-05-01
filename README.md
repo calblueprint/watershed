@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/github/calblueprint/watershed/badges/gpa.svg)](https://codeclimate.com/github/calblueprint/watershed)
+
 The Watershed Project - Fall 2014
 ================
 
