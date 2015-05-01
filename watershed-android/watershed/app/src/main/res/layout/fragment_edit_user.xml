@@ -47,15 +47,4 @@
         android:inputType="textPassword"
         android:hint="@string/edit_profile_confirm"
     />
-
-    <Button
-        android:id="@+id/profile_edit_submit"
-        android:layout_width="fill_parent"
-        android:layout_height="96dp"
-        android:layout_below="@id/profile_edit_confirm_password"
-        android:background="@color/ws_blue"
-        android:textColor="@color/white"
-        android:text="Edit User"
-         />
-
 </RelativeLayout>

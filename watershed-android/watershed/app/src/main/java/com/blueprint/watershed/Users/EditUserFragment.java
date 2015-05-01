@@ -10,7 +10,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -47,7 +46,6 @@ public class EditUserFragment extends Fragment {
     private EditText mPassword;
     private EditText mReenterPassword;
     private EditText mConfirm;
-    private Button mSubmit;
 
     public static EditUserFragment newInstance(User user) {
         EditUserFragment fragment = new EditUserFragment();
@@ -85,14 +83,14 @@ public class EditUserFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.edit_menu, menu);
+        inflater.inflate(R.menu.save_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.edit:
+            case R.id.save:
                 validateUser();
             default:
                 return super.onOptionsItemSelected(item);
@@ -115,8 +113,6 @@ public class EditUserFragment extends Fragment {
 
         mName.setText(mUser.getName());
         mEmail.setText(mUser.getEmail());
-
-        mSubmit = (Button) mParentActivity.findViewById(R.id.profile_edit_submit);
     }
 
     private void validateUser() {
