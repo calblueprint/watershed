@@ -14,7 +14,7 @@
 #
 
 class FieldReport < ActiveRecord::Base
-  default_scope -> { order("created_at DESC") }
+  default_scope -> { where("created_at < :date", date: 4.weeks.ago).order("created_at DESC") }
 
   belongs_to :user
   belongs_to :mini_site

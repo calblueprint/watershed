@@ -17,7 +17,7 @@
 #
 
 class Task < ActiveRecord::Base
-  default_scope -> { order 'updated_at DESC' }
+  default_scope -> { where("created_at < :date", date: 4.weeks.ago).order("updated_at DESC") }
   scope :unassigned, -> { where("assignee_id IS NULL") }
   scope :completed, -> { where(complete: true) }
   scope :for_mini_sites, -> (mini_sites) { where(mini_site: mini_sites) }

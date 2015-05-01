@@ -56,6 +56,7 @@ class Site < ActiveRecord::Base
   end
 
   def subscribe(user)
+    return false if users.include? user
     users << user
     mini_sites.each { |m| m.users << user }
   end
