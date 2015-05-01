@@ -43,31 +43,55 @@
     <color name="pink_pressed">#ec407a</color>
 
     <!-- Material design colors -->
+    <color name="red_orange_500">#F44336</color>
+    <color name="purple_500">#673AB7</color>
+    <color name="baby_blue_500">#03A9F4</color>
+    <color name="green_500">#4CAF50</color>
+    <color name="orange_500">#FF5722</color>
+    <color name="gray_500">#607D8B</color>
+    <color name="aqua_500">#00BCD4</color>
+    <color name="violet_500">#9C27B0</color>
+    <color name="red_500">#E91E63</color>
+    <color name="dark_blue_500">#3F51B5</color>
+    <color name="teal_500">#009688</color>
+
+    <color name="red_orange_700">#D32F2F</color>
+    <color name="purple_700">#512DA8</color>
+    <color name="baby_blue_700">#0288D1</color>
+    <color name="green_700">#388E3C</color>
+    <color name="orange_700">#E64A19</color>
+    <color name="gray_700">#455A64</color>
+    <color name="aqua_700">#0097A7</color>
+    <color name="violet_700">#7B1FA2</color>
+    <color name="red_700">#C2185B</color>
+    <color name="dark_blue_700">#303F9F</color>
+    <color name="teal_700">#00796B</color>
+
     <array name="colors">
-        <item>#F44336</item>
-        <item>#673AB7</item>
-        <item>#03A9F4</item>
-        <item>#4CAF50</item>
-        <item>#FF5722</item>
-        <item>#607D8B</item>
-        <item>#00BCD4</item>
-        <item>#9C27B0</item>
-        <item>#E91E63</item>
-        <item>#3F51B5</item>
-        <item>#009688</item>
+        <item>@color/red_orange_500</item>
+        <item>@color/purple_500</item>
+        <item>@color/baby_blue_500</item>
+        <item>@color/green_500</item>
+        <item>@color/orange_500</item>
+        <item>@color/gray_500</item>
+        <item>@color/aqua_500</item>
+        <item>@color/violet_500</item>
+        <item>@color/red_500</item>
+        <item>@color/dark_blue_500</item>
+        <item>@color/teal_500</item>
     </array>
 
     <array name="secondary_colors">
-        <item>#D32F2F</item>
-        <item>#512DA8</item>
-        <item>#0288D1</item>
-        <item>#388E3C</item>
-        <item>#E64A19</item>
-        <item>#455A64</item>
-        <item>#0097A7</item>
-        <item>#7B1FA2</item>
-        <item>#C2185B</item>
-        <item>#303F9F</item>
-        <item>#00796B</item>
+        <item>@color/red_orange_700</item>
+        <item>@color/purple_700</item>
+        <item>@color/baby_blue_700</item>
+        <item>@color/green_700</item>
+        <item>@color/orange_700</item>
+        <item>@color/gray_700</item>
+        <item>@color/aqua_700</item>
+        <item>@color/violet_700</item>
+        <item>@color/red_700</item>
+        <item>@color/dark_blue_700</item>
+        <item>@color/teal_700</item>
     </array>
 </resources>
