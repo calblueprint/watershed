@@ -1,4 +1,4 @@
-package com.blueprint.watershed.Sites;
+package com.blueprint.watershed.Sites.SiteList;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Sites.Site;
+import com.blueprint.watershed.Sites.SiteFragment;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
 
 import java.util.List;

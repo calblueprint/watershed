@@ -8,7 +8,9 @@ import com.android.volley.Response;
 import com.blueprint.watershed.Networking.MiniSites.CreateMiniSiteRequest;
 import com.blueprint.watershed.Sites.Site;
 import com.blueprint.watershed.R;
-import com.blueprint.watershed.Sites.SiteListFragment;
+import com.blueprint.watershed.Sites.SiteList.AllSiteListFragment;
+import com.blueprint.watershed.Sites.SiteList.SiteListAbstractFragment;
+import com.blueprint.watershed.Sites.SiteViewPagerFragment;
 import com.blueprint.watershed.Utilities.Utility;
 
 /**
@@ -54,7 +56,7 @@ public class CreateMiniSiteFragment extends MiniSiteAbstractFragment {
                     @Override
                     public void onResponse(MiniSite miniSite) {
                         Utility.hideKeyboard(mParentActivity, mLayout);
-                        SiteListFragment siteList = SiteListFragment.newInstance();
+                        SiteViewPagerFragment siteList = SiteViewPagerFragment.newInstance();
                         mParentActivity.replaceFragment(siteList);
                         Log.e("successful mini site", "creation");
                     }
