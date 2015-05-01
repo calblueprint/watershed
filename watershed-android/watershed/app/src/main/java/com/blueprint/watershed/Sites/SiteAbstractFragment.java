@@ -22,6 +22,7 @@ import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Sites.CreateSiteRequest;
 import com.blueprint.watershed.Networking.Sites.EditSiteRequest;
 import com.blueprint.watershed.R;
+
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.places.AutocompletePrediction;
@@ -39,7 +40,7 @@ import java.util.List;
 /**
  * Created by maxwolffe on 4/5/15.
  */
-public abstract class  SiteAbstractFragment extends Fragment{
+public abstract class SiteAbstractFragment extends Fragment{
 
     protected static final String EDIT = "edit";
     protected static final String CREATE = "create";
@@ -198,7 +199,7 @@ public abstract class  SiteAbstractFragment extends Fragment{
 
                 submitListener();
 
-                SiteListFragment returnFragment = SiteListFragment.newInstance();
+                SiteViewPagerFragment returnFragment = SiteViewPagerFragment.newInstance();
                 mParentActivity.replaceFragment(returnFragment);
             }
         };

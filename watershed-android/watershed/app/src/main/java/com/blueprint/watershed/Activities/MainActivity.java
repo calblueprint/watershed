@@ -37,7 +37,8 @@ import com.blueprint.watershed.R;
 import com.blueprint.watershed.Sites.CreateSiteFragment;
 import com.blueprint.watershed.Sites.Site;
 import com.blueprint.watershed.Sites.SiteFragment;
-import com.blueprint.watershed.Sites.SiteListFragment;
+import com.blueprint.watershed.Sites.SiteList.SiteListAbstractFragment;
+import com.blueprint.watershed.Sites.SiteViewPagerFragment;
 import com.blueprint.watershed.Tasks.CreateTaskFragment;
 import com.blueprint.watershed.Tasks.EditTaskFragment;
 import com.blueprint.watershed.Tasks.Task;
@@ -76,7 +77,6 @@ public class MainActivity extends ActionBarActivity
     public String mAuthEmail;
     private String mRegistrationId;
     private int mAppVersion;
-
 
     // Navigation Drawer
     private DrawerLayout mDrawerLayout;
@@ -300,7 +300,12 @@ public class MainActivity extends ActionBarActivity
         else if (f instanceof CreateTaskFragment)         setTitle("Add Task");
         else if (f instanceof EditTaskFragment)           setTitle("Edit Task");
         else if (f instanceof TaskDetailFragment)         setTitle("");
-        else if (f instanceof SiteListFragment ||
+        else if (f instanceof UserTaskFragment)           setTitle("Tasks");
+        else if (f instanceof SiteListAbstractFragment ||
+                 f instanceof UserMiniSiteFragment ||
+                 f instanceof SiteViewPagerFragment ||
+                 f instanceof SiteFragment)               setTitle("Sites");
+        else if (f instanceof SiteListAbstractFragment ||
                  f instanceof UserMiniSiteFragment)       setTitle("Sites");
         else if (f instanceof SiteFragment)               setTitle("Sites");
         else if (f instanceof AboutFragment)              setTitle("About");
@@ -346,7 +351,7 @@ public class MainActivity extends ActionBarActivity
             case android.R.id.home:
                 Utility.hideKeyboard(this, mContainer);
                 Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
-                if (!(f instanceof UserTaskListFragment) && !(f instanceof SiteListFragment) &&!(f instanceof UserFragment) &&!(f instanceof AboutFragment)) {
+                if (!(f instanceof UserTaskListFragment) && !(f instanceof SiteListAbstractFragment) &&!(f instanceof UserFragment) &&!(f instanceof AboutFragment)) {
                     getSupportFragmentManager().popBackStack();
                     return false;
                 }
@@ -417,7 +422,7 @@ public class MainActivity extends ActionBarActivity
                 replaceFragment(TaskViewPagerFragment.newInstance());
                 break;
             case 1:
-                replaceFragment(SiteListFragment.newInstance());
+                replaceFragment(SiteViewPagerFragment.newInstance());
                 break;
             case 2:
                 replaceFragment(AboutFragment.newInstance());

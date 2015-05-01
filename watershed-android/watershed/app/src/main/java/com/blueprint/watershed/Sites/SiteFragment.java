@@ -23,7 +23,6 @@ import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Sites.DeleteSiteRequest;
 import com.blueprint.watershed.Networking.Sites.SiteRequest;
 import com.blueprint.watershed.Networking.Sites.SiteSubscribeRequest;
-import com.blueprint.watershed.Networking.Users.UserSitesRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Utilities.Utility;
@@ -196,7 +195,7 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
         else {
             mSubscribeButton.setTitle("Subscribe to Site");
             mSubscribeButton.setIcon(R.drawable.ic_bookmark_outline_white_36dp);
-            mSubscribed = true;
+            mSubscribed = false;
         }
 
         setButtonListeners(view);
