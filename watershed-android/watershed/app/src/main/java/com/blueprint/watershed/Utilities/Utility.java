@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.app.FragmentActivity;
@@ -15,8 +16,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.blueprint.watershed.R;
-
-import java.util.Arrays;
 
 /**
  * Created by charlesx on 2/23/15.
@@ -123,10 +122,14 @@ public class Utility {
     }
 
 
-    public static String getSecondaryColor(Context context, String primary) {
-        if (primary == null) return "#1976D2";
-        String[] COLORS = context.getResources().getStringArray(R.array.colors);
-        String[] SECONDARY_COLORS = context.getResources().getStringArray(R.array.secondary_colors);
-        return SECONDARY_COLORS[Arrays.asList(COLORS).indexOf(primary)];
+    public static int getSecondaryColor(Context context, String primary) {
+        if (primary == null) return Color.parseColor("#81B4DE");
+        int[] COLORS = context.getResources().getIntArray(R.array.colors);
+        int[] SECONDARY_COLORS = context.getResources().getIntArray(R.array.secondary_colors);
+        int color = Color.parseColor(primary);
+        int foundColor = -1;
+        for (int i = 0; i < COLORS.length; i++) { if (COLORS[i] == color) foundColor = i; }
+        if (foundColor == -1) return Color.parseColor("#81B4DE");
+        return SECONDARY_COLORS[foundColor];
     }
 }
