@@ -23,6 +23,10 @@ class Site < ActiveRecord::Base
   has_many :user_sites
   has_many :users, through: :user_sites
 
+  validates :name, presence: true
+  validates :description, presence: true
+  validates :street, presence: true
+
   #
   # Search
   #

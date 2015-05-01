@@ -33,11 +33,6 @@ class MiniSite < ActiveRecord::Base
   validates :name, presence: true
   validates :description, presence: true
   validates :street, presence: true
-  validates :city, presence: true
-  validates :state, presence: true
-  validates :zip_code, presence: true
-  validates :latitude, presence: true
-  validates :longitude, presence: true
   validates :site_id, presence: true
 
   # TODO(mark): Make these counts into counter caches

@@ -43,6 +43,13 @@ class Task < ActiveRecord::Base
 
   before_create :add_color
 
+  validates :title, presence: true
+  validates :description, presence: true
+  validates :mini_site_id, presence: true
+  validates :assigner_id, presence: true
+  validates :due_date, presence: true
+  validates :urgent, presence: true
+
   def send_notifications
     if assignee.blank?
       SendNotificationJob.new.async.perform(mini_site.site.users, NEW_UNASSIGNED_TASK, self)
