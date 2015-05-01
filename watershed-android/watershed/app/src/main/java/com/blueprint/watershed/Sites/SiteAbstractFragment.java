@@ -55,9 +55,7 @@ public abstract class  SiteAbstractFragment extends Fragment{
     protected MainActivity mParentActivity;
     protected EditText mTitleField;
     protected EditText mDescriptionField;
-//    protected EditText mCityField;
     protected AutoCompleteTextView mAddressField;
-//    protected EditText mStateField;
 
     // Params for maps
     private ArrayAdapter<AutocompletePrediction> mPlacesAdapter;
@@ -195,16 +193,6 @@ public abstract class  SiteAbstractFragment extends Fragment{
                     has_errors = true;
                     setEmpty("Address", mAddressField);
                 }
-
-//                if (mCityField.getText().toString().length() == 0) {
-//                    has_errors = true;
-//                    setEmpty("City", mCityField);
-//                }
-//
-//                if (mStateField.getText().toString().length() == 0) {
-//                    has_errors = true;
-//                    setEmpty("State", mStateField);
-//                }
 
                 if (has_errors) return;
 

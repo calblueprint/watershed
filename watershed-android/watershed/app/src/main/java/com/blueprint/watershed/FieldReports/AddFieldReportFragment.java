@@ -113,18 +113,9 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
 
         mRatingText = (TextView) view.findViewById(R.id.field_report_rating_text);
         mRating = (RatingBar) view.findViewById(R.id.field_report_health_rating);
-//        mRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-//            @Override
-//            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-//                Log.i("asdf", "changed");
-//                mRatingText.setText(String.valueOf(rating));
-//            }
-//        });
-
         mRating.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                Log.i("dragged", "sigh");
                 mRatingText.setText(String.valueOf(mRating.getRating()));
                 return false;
             }

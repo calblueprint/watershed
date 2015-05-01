@@ -58,7 +58,9 @@ public class NavigationRowAdapter extends ArrayAdapter<MenuRow> {
     }
 
     public void setHighlighted(String name) {
-        for (MenuRow item : mMenuItems) item.setSelected(item.getMenuText().equals(name));
+        for (MenuRow item : mMenuItems) {
+            item.setSelected(item.getMenuText().equals(name));
+        }
         notifyDataSetChanged();
     }
 
