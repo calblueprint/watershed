@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -84,8 +85,18 @@ public class EditUserFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.empty, menu);
+        inflater.inflate(R.menu.edit_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.edit:
+                validateUser();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 
@@ -106,33 +117,31 @@ public class EditUserFragment extends Fragment {
         mEmail.setText(mUser.getEmail());
 
         mSubmit = (Button) mParentActivity.findViewById(R.id.profile_edit_submit);
-        mSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Utility.hideKeyboard(mParentActivity, mLayout);
-                boolean hasErrors = false;
-                if (!mPassword.getText().toString().equals(mReenterPassword.getText().toString())) {
-                    mReenterPassword.setError("Your passwords don't match!");
-                    hasErrors = true;
-                }
+    }
 
-                if (mName.getText().toString().isEmpty()) {
-                   mName.setError("Name can't be blank!");
-                   hasErrors = true;
-                }
+    private void validateUser() {
+        Utility.hideKeyboard(mParentActivity, mLayout);
+        boolean hasErrors = false;
+        if (!mPassword.getText().toString().equals(mReenterPassword.getText().toString())) {
+            mReenterPassword.setError("Your passwords don't match!");
+            hasErrors = true;
+        }
 
-                Pattern regex = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-                Matcher matcher = regex.matcher(mEmail.getText().toString());
-                if (!matcher.find()) {
-                    mName.setError("Email must be valid!");
-                    hasErrors = true;
-                }
+        if (mName.getText().toString().isEmpty()) {
+            mName.setError("Name can't be blank!");
+            hasErrors = true;
+        }
 
-                if (hasErrors) return;
+        Pattern regex = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = regex.matcher(mEmail.getText().toString());
+        if (!matcher.find()) {
+            mName.setError("Email must be valid!");
+            hasErrors = true;
+        }
 
-                sendEditUserRequest();
-            }
-        });
+        if (hasErrors) return;
+
+        sendEditUserRequest();
     }
 
     /**
