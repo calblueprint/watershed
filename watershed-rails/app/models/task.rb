@@ -66,6 +66,9 @@ class Task < ActiveRecord::Base
     update_attribute(:complete, false)
   end
 
+  def claim(user)
+  end
+
   private
 
   def add_color

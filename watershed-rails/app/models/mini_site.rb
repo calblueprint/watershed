@@ -18,13 +18,14 @@
 #
 
 class MiniSite < ActiveRecord::Base
-  accepts_nested_attributes_for :photos
 
   has_many :field_reports, dependent: :destroy
   has_many :user_mini_sites, dependent: :destroy
   has_many :users, through: :user_mini_sites
   has_many :tasks, dependent: :destroy
   has_many :photos, as: :parent, dependent: :destroy
+
+  accepts_nested_attributes_for :photos
 
   belongs_to :site
 
