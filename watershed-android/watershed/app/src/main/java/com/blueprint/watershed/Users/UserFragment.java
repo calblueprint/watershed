@@ -100,7 +100,7 @@ public class UserFragment extends Fragment implements ListView.OnItemClickListen
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.edit_menu, menu);
+        inflater.inflate(R.menu.user_profile_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
