@@ -1,6 +1,5 @@
 package com.blueprint.watershed.Tasks.TaskList;
 
-import android.app.Activity;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -143,7 +142,7 @@ public class TaskAdapter extends BaseExpandableListAdapter {
         TaskHeaderHolder holder;
 
         if (row == null) {
-            LayoutInflater inflater = ((Activity) mParentActivity).getLayoutInflater();
+            LayoutInflater inflater = mParentActivity.getLayoutInflater();
             holder = new TaskHeaderHolder();
 
             row = inflater.inflate(R.layout.task_list_header, parent, false);

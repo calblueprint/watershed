@@ -7,7 +7,7 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.android.volley.Response;
-import com.blueprint.watershed.APIObject;
+import com.blueprint.watershed.Networking.APIObject;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

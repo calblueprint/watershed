@@ -1,6 +1,6 @@
 package com.blueprint.watershed.FieldReports;
 
-import com.blueprint.watershed.APIObject;
+import com.blueprint.watershed.Networking.APIObject;
 import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.Networking.FieldReports.FieldReportSerializer;
 import com.blueprint.watershed.Photos.Photo;

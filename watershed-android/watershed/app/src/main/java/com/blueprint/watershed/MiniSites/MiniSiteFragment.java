@@ -167,7 +167,6 @@ public class MiniSiteFragment extends FloatingActionMenuAbstractFragment
         // Load Field Report
         FieldReport fieldReport = getFieldReport(position);
         AddFieldReportFragment addFieldReportFragment = new AddFieldReportFragment();
-        addFieldReportFragment.configureWithFieldReport(fieldReport);
         mParentActivity.replaceFragment(addFieldReportFragment);
     }
 

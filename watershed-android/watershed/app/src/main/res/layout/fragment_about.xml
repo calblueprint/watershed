@@ -1,42 +1,43 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ws_blue"
-    tools:context="com.blueprint.watershed.AboutFragment">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/standard_margin"
-        android:layout_marginRight="@dimen/standard_margin"
-        android:layout_marginTop="@dimen/standard_margin"
-        android:orientation="vertical"
-        android:gravity="center|top">
+    android:padding="30dp"
+    android:background="@color/medium_gray"
+    >
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/about_title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:textStyle="bold"
-        android:textColor="@color/white"
         android:textSize="20sp"
         android:gravity="center"
-        android:text = "@string/watershed_title"/>
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_marginTop="@dimen/tight_margin"
-        android:layout_height="wrap_content">
+        android:text="@string/watershed_title"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="@dimen/wide_margin"
+        android:layout_below="@id/about_title"
+        android:gravity="center"
         android:textSize="14sp"
         android:text="@string/about_us" />
-    </LinearLayout>
 
-    </LinearLayout>
-</FrameLayout>
+    <TextView
+        android:id="@+id/watershed_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/watershed_link"
+        android:textStyle="bold"
+        android:textColorLink="@color/ws_blue"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/watershed_link"
+        android:layout_centerHorizontal="true"
+        android:text="@string/learn_more" />
+</RelativeLayout>

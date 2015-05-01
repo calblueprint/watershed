@@ -65,9 +65,9 @@ public abstract class TaskAbstractFragment extends Fragment {
     protected NetworkManager mNetworkManager;
 
     protected Task mTask;
-    private Date mDate;
-    private User mUser;
-    private MiniSite mMiniSite;
+    protected Date mDate;
+    protected User mUser;
+    protected MiniSite mMiniSite;
     private List<User> mUsers;
     private List<MiniSite> mMiniSites;
 
