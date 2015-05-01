@@ -14,6 +14,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.blueprint.watershed.R;
+
+import java.util.Arrays;
+
 /**
  * Created by charlesx on 2/23/15.
  * Useful functions
@@ -118,4 +122,11 @@ public class Utility {
         builder.show();
     }
 
+
+    public static String getSecondaryColor(Context context, String primary) {
+        if (primary == null) return "#1976D2";
+        String[] COLORS = context.getResources().getStringArray(R.array.colors);
+        String[] SECONDARY_COLORS = context.getResources().getStringArray(R.array.secondary_colors);
+        return SECONDARY_COLORS[Arrays.asList(COLORS).indexOf(primary)];
+    }
 }

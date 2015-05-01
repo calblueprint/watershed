@@ -1,25 +1,27 @@
-package com.blueprint.watershed;
+package com.blueprint.watershed.Users;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.blueprint.watershed.Activities.MainActivity;
+import com.blueprint.watershed.R;
 
 
 public class AboutFragment extends Fragment {
 
     private MainActivity mParentActivity;
 
-    public static AboutFragment newInstance() { return new AboutFragment(); }
+    // Link
+    private TextView mLink;
 
-    public AboutFragment() {
-        // Required empty public constructor
-    }
+    public static AboutFragment newInstance() { return new AboutFragment(); }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,17 @@ public class AboutFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initializeViews();
+    }
+
+    private void initializeViews() {
+        mLink = (TextView) mParentActivity.findViewById(R.id.watershed_link);
+        mLink.setMovementMethod(LinkMovementMethod.getInstance());
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         mParentActivity.setMenuAction(true);
@@ -44,7 +57,6 @@ public class AboutFragment extends Fragment {
         menu.clear();
         inflater.inflate(R.menu.empty, menu);
         super.onCreateOptionsMenu(menu, inflater);
-
     }
 
 }
