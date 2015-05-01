@@ -50,7 +50,9 @@ static NSString *cellIdentifier = @"FieldReportCell";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self requestAndLoadMiniSite];
+    if (!self.isDismissing) {
+        [self requestAndLoadMiniSite];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -123,6 +125,7 @@ static NSString *cellIdentifier = @"FieldReportCell";
 - (void)showEditMiniSiteView {
     WPEditMiniSiteViewController *editMiniSiteViewController = [[WPEditMiniSiteViewController alloc] init];
     editMiniSiteViewController.miniSite = self.miniSite;
+    editMiniSiteViewController.delegate = self;
     UINavigationController *editMiniSiteNavController = [[UINavigationController alloc] initWithRootViewController:editMiniSiteViewController];
     [editMiniSiteNavController.navigationBar setBackgroundColor:[UIColor whiteColor]];
     [editMiniSiteNavController.navigationBar setBarTintColor:[UIColor whiteColor]];
