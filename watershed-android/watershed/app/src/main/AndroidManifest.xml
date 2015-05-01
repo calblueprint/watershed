@@ -23,7 +23,7 @@
         <activity
             android:name=".Activities.LandingPageActivity"
             android:label="@string/title_activity_landing_page"
-            android:theme="@style/AppThemeTranslucent"
+            android:theme="@style/WsAppLanding"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"
             >

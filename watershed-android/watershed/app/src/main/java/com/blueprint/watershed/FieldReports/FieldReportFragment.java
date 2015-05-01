@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.android.volley.Response;
@@ -28,8 +29,9 @@ public class FieldReportFragment extends Fragment {
     private MainActivity mParentActivity;
 
     private ImageView mImage;
-    private TextView mRating;
+    private RatingBar mRating;
     private TextView mDescription;
+    private TextView mRatingNumber;
 
     public static FieldReportFragment newInstance(FieldReport fieldReport) {
         FieldReportFragment fieldReportFragment = new FieldReportFragment();
@@ -60,13 +62,15 @@ public class FieldReportFragment extends Fragment {
     }
 
     private void initializeViews(View view) {
-        mImage = (ImageView)view.findViewById(R.id.cover_photo_pager_view);
-        mRating = (TextView)view.findViewById(R.id.field_report_description);
-        mDescription = (TextView)view.findViewById(R.id.field_report_health_rating);
+        mImage = (ImageView) view.findViewById(R.id.cover_photo_pager_view);
+        mRating = (RatingBar) view.findViewById(R.id.field_report_health_rating);
+        mRatingNumber = (TextView) view.findViewById(R.id.field_report_rating_text);
+        mDescription = (TextView) view.findViewById(R.id.field_report_description);
     }
 
     private void setViews() {
-        mRating.setText(String.format("Rating: %s", mFieldReport.getHealthRating()));
+        mRating.setRating(mFieldReport.getHealthRating());
+        mRatingNumber.setText(String.valueOf(mFieldReport.getHealthRating()));
         mDescription.setText(mFieldReport.getDescription());
         if (mFieldReport.getPhoto() != null) mFieldReport.getPhoto().getImageAndSetImageView(mParentActivity, mImage);
         mImage.invalidate();

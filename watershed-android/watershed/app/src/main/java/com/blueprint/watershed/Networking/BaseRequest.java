@@ -10,7 +10,6 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.blueprint.watershed.APIObject;
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Utilities.APIError;
 import com.blueprint.watershed.Utilities.Utility;
@@ -30,9 +29,9 @@ public abstract class BaseRequest extends JsonObjectRequest {
     private Response.Listener listener;
     private Response.Listener errorListener;
 
-    private static final String baseURL = "http://10.142.61.15:3000/api/v1/";
+//    private static final String baseURL = "http://192.168.0.109:3000/api/v1/";
 //    private static final String baseURL = "https://intense-reaches-1457.herokuapp.com/api/v1/";
-//    private static final String baseURL = "https://floating-bayou-8262.herokuapp.com/api/v1/";
+    private static final String baseURL = "https://floating-bayou-8262.herokuapp.com/api/v1/";
 
     public BaseRequest(int method, String url, JSONObject jsonRequest,
                        final Response.Listener listener, final Response.Listener<APIError> errorListener,

@@ -14,10 +14,8 @@ import android.widget.ExpandableListView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
-import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Tasks.TaskListRequest;
-import com.blueprint.watershed.Networking.Users.UserMiniSitesRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Tasks.CreateTaskFragment;
 import com.blueprint.watershed.Tasks.Task;
@@ -67,7 +65,6 @@ public abstract class TaskListAbstractFragment extends ListFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View finalView = inflater.inflate(R.layout.fragment_task_list, container, false);
         initializeViews(finalView);
-        getMiniSiteRequest();
         getTasksRequest();
         return finalView;
     }
@@ -156,21 +153,6 @@ public abstract class TaskListAbstractFragment extends ListFragment {
         mNetworkManager.getRequestQueue().add(taskListRequest);
     }
 
-    /**
-     * Gets all minisites that a user has subscribed to.
-     */
-    protected void getMiniSiteRequest() {
-        UserMiniSitesRequest miniSitesRequest = new UserMiniSitesRequest(mParentActivity,
-                new HashMap<String, JSONObject>(),
-                new Response.Listener<ArrayList<MiniSite>>() {
-                    @Override
-                    public void onResponse(ArrayList<MiniSite> miniSites) {
-                        setMiniSites(miniSites);
-                    }
-                }, mParentActivity.getUserId());
-        mNetworkManager.getRequestQueue().add(miniSitesRequest);
-    }
-
     public abstract void refreshTaskList(List<Task> tasks);
 
     public void setSwipeFalse() {
@@ -203,12 +185,5 @@ public abstract class TaskListAbstractFragment extends ListFragment {
         mTaskList.clear();
         mTaskList.putAll(tasks);
         mTaskAdapter.notifyDataSetChanged();
-    }
-
-    private void setMiniSites(ArrayList<MiniSite> miniSites){
-        mUserMiniSiteIdList.clear();
-        for (MiniSite miniSite : miniSites){
-            mUserMiniSiteIdList.add(miniSite.getId());
-        }
     }
 }
