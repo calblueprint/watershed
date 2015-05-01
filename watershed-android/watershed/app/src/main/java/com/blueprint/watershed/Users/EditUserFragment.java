@@ -118,6 +118,12 @@ public class EditUserFragment extends Fragment {
     private void validateUser() {
         Utility.hideKeyboard(mParentActivity, mLayout);
         boolean hasErrors = false;
+
+        if (mConfirm.getText().toString().length() == 0) {
+            mConfirm.setError("You need to enter in your current password before saving!");
+            hasErrors = true;
+        }
+
         if (!mPassword.getText().toString().equals(mReenterPassword.getText().toString())) {
             mReenterPassword.setError("Your passwords don't match!");
             hasErrors = true;
