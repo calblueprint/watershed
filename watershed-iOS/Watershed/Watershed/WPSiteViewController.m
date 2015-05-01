@@ -49,7 +49,9 @@ static NSString *cellIdentifier = @"MiniSiteCell";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self requestAndLoadSite];
+    if (!self.isDismissing) {
+        [self requestAndLoadSite];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -178,6 +180,7 @@ static NSString *cellIdentifier = @"MiniSiteCell";
 - (void)showEditSiteView {
     WPEditSiteViewController *editSiteViewController = [[WPEditSiteViewController alloc] init];
     editSiteViewController.site = self.site;
+    editSiteViewController.delegate = self;
     UINavigationController *editSiteNavController = [[UINavigationController alloc] initWithRootViewController:editSiteViewController];
     [editSiteNavController.navigationBar setBackgroundColor:[UIColor whiteColor]];
     [editSiteNavController.navigationBar setBarTintColor:[UIColor whiteColor]];

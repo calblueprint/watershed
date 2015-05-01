@@ -20,7 +20,7 @@
 
     FAKIonIcons *trashIcon = [FAKIonIcons androidDeleteIconWithSize:24];
     UIImage *trashImage = [trashIcon imageWithSize:CGSizeMake(24, 24)];
-    UIBarButtonItem *trashButton = [[UIBarButtonItem alloc] initWithImage:trashImage style:UIBarButtonItemStylePlain target:self action:nil];
+    UIBarButtonItem *trashButton = [[UIBarButtonItem alloc] initWithImage:trashImage style:UIBarButtonItemStylePlain target:self action:@selector(deleteSite)];
     trashButton.tintColor = [UIColor wp_red];
 
     [self.navigationItem setLeftBarButtonItems:@[cancelButton, trashButton]];
@@ -39,6 +39,16 @@
 }
 
 #pragma mark - Private Methods
+
+- (void)deleteSite {
+    __weak __typeof(self)weakSelf = self;
+    [[WPNetworkingManager sharedManager] deleteSiteWithSite:self.site parameters:[[NSMutableDictionary alloc] init] success:^(void) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        strongSelf.delegate.isDismissing = YES;
+        [strongSelf dismissSelf];
+        [strongSelf.delegate.navigationController popViewControllerAnimated:YES];
+    }];
+}
 
 - (void)preloadFields {
     self.nameTextField.text = self.site.name;

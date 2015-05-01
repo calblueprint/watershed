@@ -34,6 +34,7 @@
 - (void)requestSiteWithSite:(WPSite *)site parameters:(NSMutableDictionary *)parameters success:(void (^)(WPSite *site, NSMutableArray *miniSiteList))success;
 - (void)createSiteWithSite:(WPSite *)site parameters:(NSMutableDictionary *)parameters success:(void (^)())success;
 - (void)editSiteWithSite:(WPSite *)site parameters:(NSMutableDictionary *)parameters success:(void (^)())success;
+- (void)deleteSiteWithSite:(WPSite *)site parameters:(NSMutableDictionary *)parameters success:(void (^)())success;
 - (void)requestMiniSiteWithMiniSite:(WPMiniSite *)miniSite parameters:(NSMutableDictionary *)parameters success:(void (^)(WPMiniSite *miniSite, NSMutableArray *fieldReportList))success;
 - (void)createMiniSiteWithMiniSite:(WPMiniSite *)miniSite parameters:(NSMutableDictionary *)parameters success:(void (^)(WPMiniSite *miniSite))success;
 - (void)editMiniSiteWithMiniSite:(WPMiniSite *)miniSite parameters:(NSMutableDictionary *)parameters success:(void (^)(WPMiniSite *miniSite))success;

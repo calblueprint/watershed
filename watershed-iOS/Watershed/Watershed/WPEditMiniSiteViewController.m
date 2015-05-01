@@ -46,7 +46,6 @@
 #pragma mark - Private Methods
 
 - (void)deleteMiniSite {
-
     __weak __typeof(self)weakSelf = self;
     [[WPNetworkingManager sharedManager] deleteMiniSiteWithMiniSite:self.miniSite parameters:[[NSMutableDictionary alloc] init] success:^(void) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;

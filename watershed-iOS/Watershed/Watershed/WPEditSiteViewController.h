@@ -7,8 +7,10 @@
 //
 
 #import "WPCreateSiteViewController.h"
+#import "WPSiteViewController.h"
 #import "WPSite.h"
 
 @interface WPEditSiteViewController : WPCreateSiteViewController
 @property (nonatomic) WPSite *site;
+@property (nonatomic) WPSiteViewController *delegate;
 @end
