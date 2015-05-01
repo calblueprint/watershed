@@ -1,9 +1,6 @@
 package com.blueprint.watershed.Users;
 
-import android.app.Activity;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,11 +13,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.blueprint.watershed.Activities.LandingPageActivity;
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Utilities.Utility;
-import com.facebook.Session;
 
 import java.util.ArrayList;
 
@@ -120,11 +115,14 @@ public class UserFragment extends Fragment implements ListView.OnItemClickListen
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.edit:   editUser();
-            case R.id.logout: confirmLogout();
-            default:          return super.onOptionsItemSelected(item);
-
+            case R.id.edit:
+                editUser();
+                break;
+            case R.id.logout:
+                confirmLogout();
+                break;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -151,7 +149,7 @@ public class UserFragment extends Fragment implements ListView.OnItemClickListen
             new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    logoutCurrentUser(mParentActivity);
+                    MainActivity.logoutCurrentUser(mParentActivity);
                 }
             },
             new DialogInterface.OnClickListener() {
@@ -160,19 +158,5 @@ public class UserFragment extends Fragment implements ListView.OnItemClickListen
                     dialog.dismiss();
                 }
             });
-    }
-
-    public static void logoutCurrentUser(Activity activity) {
-        SharedPreferences prefs = activity.getSharedPreferences(PREFERENCES, 0);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.clear();
-        editor.apply();
-        Intent intent = new Intent(activity, LandingPageActivity.class);
-
-        if (Session.getActiveSession() != null)
-            Session.getActiveSession().closeAndClearTokenInformation();
-
-        activity.finish();
-        activity.startActivity(intent);
     }
 }
