@@ -48,7 +48,6 @@ class Task < ActiveRecord::Base
   validates :mini_site_id, presence: true
   validates :assigner_id, presence: true
   validates :due_date, presence: true
-  validates :urgent, presence: true
 
   def send_notifications
     if assignee.blank?
@@ -67,6 +66,8 @@ class Task < ActiveRecord::Base
   end
 
   def claim(user)
+    return false if assignee
+    update_attribute(:assignee_id, user.id)
   end
 
   private
