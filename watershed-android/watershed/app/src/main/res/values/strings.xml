@@ -83,6 +83,9 @@
     <string name="edit_profile_password">New Password</string>
     <string name="edit_profile_reenter">Confirm Password</string>
     <string name="edit_profile_confirm">Old Password</string>
+    <string name="edit_info_text">General Information</string>
+    <string name="edit_password_text">Change Password</string>
+    <string name="edit_save_text">Confirm Changes</string>
 
     <!-- Task Index -->
     <string name="no_tasks">Looks like you don\'t have any tasks!\nSwipe up to refresh.</string>

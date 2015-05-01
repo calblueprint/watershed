@@ -3,23 +3,75 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/profile_edit_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <EditText
-        android:id="@+id/profile_edit_name"
-        android:layout_width="240dp"
+    android:layout_height="match_parent"
+    android:padding="30dp">
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/edit_profile_name"
-    />
-
-    <EditText
-        android:id="@+id/profile_edit_email"
-        android:layout_width="240dp"
+        android:textSize="20dp"
+        android:text="@string/"/>
+    <RelativeLayout
+        android:id="@+id/edit_user_name_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/profile_edit_name"
-        android:inputType="textWebEmailAddress"
-        android:hint="@string/edit_profile_email"
-    />
+        >
+
+        <ImageView
+            style="@style/Icon"
+            android:id="@+id/edit_user_name_icon"
+            android:src="@drawable/name_gray"/>
+
+        <EditText
+            style="@style/TaskTextView"
+            android:id="@+id/profile_edit_name"
+            android:hint="@string/edit_profile_name"
+            android:layout_toRightOf="@id/edit_user_name_icon"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/edit_user_email_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edit_user_name_container"
+        android:layout_marginTop="10dp"
+        >
+
+        <ImageView
+            style="@style/Icon"
+            android:id="@+id/edit_user_email_icon"
+            android:src="@drawable/email_gray"/>
+
+        <EditText
+            style="@style/TaskTextView"
+            android:id="@+id/profile_edit_email"
+            android:hint="@string/edit_profile_email"
+            android:inputType="textWebEmailAddress"
+            android:layout_toRightOf="@id/edit_user_email_icon"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/edit_user_password_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edit_user_email_container"
+        android:layout_marginTop="10dp"
+        >
+
+        <ImageView
+            style="@style/Icon"
+            android:id="@+id/edit_user_password_icon"
+            android:src="@drawable/password_gray"/>
+
+        <EditText
+            style="@style/TaskTextView"
+            android:id="@+id/profile_edit_password"
+            android:hint="@string/edit_profile_password"
+            android:inputType="textPassword"
+            android:layout_toRightOf="@id/edit_user_password_icon"
+            />
+    </RelativeLayout>
 
     <EditText
         android:id="@+id/profile_edit_password"
