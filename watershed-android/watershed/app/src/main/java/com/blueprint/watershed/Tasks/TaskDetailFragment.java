@@ -19,6 +19,7 @@ import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.FieldReports.AddFieldReportFragment;
 import com.blueprint.watershed.FieldReports.FieldReportFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
+import com.blueprint.watershed.Networking.Tasks.ClaimTaskRequest;
 import com.blueprint.watershed.Networking.Tasks.DeleteTaskRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Utilities.Utility;
@@ -177,12 +178,26 @@ public class TaskDetailFragment extends TaskAbstractFragment
 
 
     public void bottomButton() {
+        if (mTask.getAssignee() == null) {
+            claimTask();
+        }
         if (mTask.getFieldReport() == null) {
             mParentActivity.setFieldReportTask(mTask);
             mParentActivity.replaceFragment(AddFieldReportFragment.newInstance(mTask, mTask.getMiniSite()));
         } else {
             mParentActivity.replaceFragment(FieldReportFragment.newInstance(mTask.getFieldReport()));
         }
+    }
+
+    private void claimTask() {
+        ClaimTaskRequest request = new ClaimTaskRequest(mParentActivity, mTask, new Response.Listener<Task>() {
+            @Override
+            public void onResponse(Task task) {
+                mTask = task;
+                refreshCompletion();
+            }
+        });
+        mNetworkManager.getRequestQueue().add(request);
     }
 
     public void refreshCompletion() {
@@ -199,7 +214,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
             color = Utility.getSecondaryColor(mParentActivity, mTask.getColor());
         }
         mCompleteButton.setText(submit);
-        mCompleteButton.setBackgroundColor(mParentActivity.getResources().getColor(color));
+        mCompleteButton.setBackgroundColor(color);
     }
 
     private void deleteTask() {
