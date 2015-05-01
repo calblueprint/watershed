@@ -24,7 +24,7 @@
 
     FAKIonIcons *trashIcon = [FAKIonIcons androidDeleteIconWithSize:24];
     UIImage *trashImage = [trashIcon imageWithSize:CGSizeMake(24, 24)];
-    UIBarButtonItem *trashButton = [[UIBarButtonItem alloc] initWithImage:trashImage style:UIBarButtonItemStylePlain target:self action:@selector(deleteMiniSite)];
+    UIBarButtonItem *trashButton = [[UIBarButtonItem alloc] initWithImage:trashImage style:UIBarButtonItemStylePlain target:self action:@selector(confirmDeletion)];
     trashButton.tintColor = [UIColor wp_red];
 
     [self.navigationItem setLeftBarButtonItems:@[cancelButton, trashButton]];
@@ -45,7 +45,19 @@
 
 #pragma mark - Private Methods
 
+- (void)confirmDeletion {
+    UIAlertView *confirmDelete = [[UIAlertView alloc] initWithTitle:@"Confirm Deletion"
+                                                            message:@"Are you sure you want to delete this task?"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"Cancel"
+                                                  otherButtonTitles:@"Yes",nil];
+    [confirmDelete show];
+}
+
 - (void)deleteMiniSite {
+    UIBarButtonItem *deleteItem = self.navigationItem.leftBarButtonItems.lastObject;
+    deleteItem.enabled = NO;
+
     __weak __typeof(self)weakSelf = self;
     [[WPNetworkingManager sharedManager] deleteMiniSiteWithMiniSite:self.miniSite parameters:[[NSMutableDictionary alloc] init] success:^(void) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
@@ -63,6 +75,14 @@
     self.zipCodeTextField.text = self.miniSite.zipCode.stringValue;
     self.descriptionTextView.text = self.miniSite.info;
 
+}
+
+#pragma mark - UIAlertViewDelegate Methods
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        [self deleteMiniSite];
+    }
 }
 
 #pragma mark - Setter Methods

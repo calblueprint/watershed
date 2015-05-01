@@ -10,7 +10,7 @@
 #import "WPSiteViewController.h"
 #import "WPSite.h"
 
-@interface WPEditSiteViewController : WPCreateSiteViewController
+@interface WPEditSiteViewController : WPCreateSiteViewController <UIAlertViewDelegate>
 @property (nonatomic) WPSite *site;
 @property (nonatomic) WPSiteViewController *delegate;
 @end

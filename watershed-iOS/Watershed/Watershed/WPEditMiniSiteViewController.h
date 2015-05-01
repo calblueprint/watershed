@@ -10,7 +10,7 @@
 #import "WPMiniSiteViewController.h"
 #import "WPMiniSite.h"
 
-@interface WPEditMiniSiteViewController : WPCreateMiniSiteViewController
+@interface WPEditMiniSiteViewController : WPCreateMiniSiteViewController <UIAlertViewDelegate>
 @property (nonatomic) WPMiniSite *miniSite;
 @property (nonatomic, weak) WPMiniSiteViewController *delegate;
 @end
