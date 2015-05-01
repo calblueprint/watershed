@@ -3,8 +3,12 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery
 
-  rescue_from CanCan::AccessDenied, ActiveRecord::RecordNotFound do |exception|
+  rescue_from CanCan::AccessDenied do |exception|
     unauthorized_response
+  end
+
+  rescue_from ActiveRecord::RecordNotFound do |exception|
+    not_found_response
   end
 
   def successful_login(user)
@@ -14,11 +18,14 @@ class ApplicationController < ActionController::Base
   end
 
   def error_response(object, message = nil, status = nil)
-    render json: Error.new(object, message), serializer: ErrorSerializer, status: status || 403
+    render json: Error.new(object, message), serializer: ErrorSerializer, status: status || 400
   end
 
   def unauthorized_response
-    error_response(nil, "Unauthorized", 403 )
+    error_response(nil, "Unauthorized", 403)
   end
 
+  def not_found_response
+    error_response(nil, "Not Found", 404)
+  end
 end

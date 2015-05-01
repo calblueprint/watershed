@@ -60,8 +60,7 @@ public abstract class BaseRequest extends JsonObjectRequest {
                                 JSONObject errorJsonObject = new JSONObject(errorJson);
                                 errorJson = errorJsonObject.getString("error");
                                 ObjectMapper mapper = getNetworkManager(activity).getObjectMapper();
-                                apiError = mapper.readValue(errorJson, new TypeReference<APIError>() {
-                                });
+                                apiError = mapper.readValue(errorJson, new TypeReference<APIError>() {});
                             } catch (Exception e) {
                                 Log.e("Json exception base", e.toString());
                             }
