@@ -1,5 +1,9 @@
 package com.blueprint.watershed.Users;
 
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,15 +16,20 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.blueprint.watershed.Activities.LandingPageActivity;
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Utilities.Utility;
+import com.facebook.Session;
 
 import java.util.ArrayList;
 
 /**
  * Displays user information, tasks, field reports, and sites.
  */
-public class UserFragment extends Fragment implements ListView.OnItemClickListener{
+public class UserFragment extends Fragment implements ListView.OnItemClickListener {
+
+    private static final String PREFERENCES = "LOGIN_PREFERENCES";
 
     private User mUser;
     private MainActivity mParentActivity;
@@ -43,8 +52,6 @@ public class UserFragment extends Fragment implements ListView.OnItemClickListen
      * @param user - A User object.
      */
     public void setUser(User user) { mUser = user; }
-
-    public UserFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -110,24 +117,18 @@ public class UserFragment extends Fragment implements ListView.OnItemClickListen
         mParentActivity.setMenuAction(true);
     }
 
-    public void configureProfilewithUser(User user) {
-        mUser = user;
-    }
-
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
         switch (item.getItemId()) {
-            case R.id.edit:
-                mParentActivity.replaceFragment(EditUserFragment.newInstance(mUser));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+            case R.id.edit:   editUser();
+            case R.id.logout: confirmLogout();
+            default:          return super.onOptionsItemSelected(item);
+
         }
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            // Direct to list of User Tasks, Field Reports, or Sites
         switch (position) {
             case 0:
                 UserFieldReportFragment fieldReportFragment = UserFieldReportFragment.newInstance(mUser);
@@ -141,5 +142,37 @@ public class UserFragment extends Fragment implements ListView.OnItemClickListen
                 UserMiniSiteFragment siteFragment = UserMiniSiteFragment.newInstance(mUser);
                 mParentActivity.replaceFragment(siteFragment);
         }
+    }
+
+    private void editUser() { mParentActivity.replaceFragment(EditUserFragment.newInstance(mUser)); }
+
+    private void confirmLogout() {
+        Utility.showAndBuildDialog(mParentActivity, R.string.logout_title, R.string.logout_message,
+            new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    logoutCurrentUser(mParentActivity);
+                }
+            },
+            new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+    }
+
+    public static void logoutCurrentUser(Activity activity) {
+        SharedPreferences prefs = activity.getSharedPreferences(PREFERENCES, 0);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.clear();
+        editor.apply();
+        Intent intent = new Intent(activity, LandingPageActivity.class);
+
+        if (Session.getActiveSession() != null)
+            Session.getActiveSession().closeAndClearTokenInformation();
+
+        activity.finish();
+        activity.startActivity(intent);
     }
 }
