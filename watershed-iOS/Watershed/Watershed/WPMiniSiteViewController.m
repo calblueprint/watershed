@@ -86,17 +86,18 @@ static NSString *cellIdentifier = @"FieldReportCell";
 #pragma mark - Navigation Bar Setup
 
 - (void)setUpRightBarButtonItems {
-    NSMutableArray *barButtonItems = [[NSMutableArray alloc] initWithObjects:[self newAddSiteButtonItem], nil];
+    NSMutableArray *barButtonItems = [[NSMutableArray alloc] init];
     NSString *userRole = [WPNetworkingManager sharedManager].keyChainStore[@"role"];
-    if ([userRole isEqual:@"2"]) {
-        [barButtonItems insertObject:[self newEditSiteButtonItem] atIndex:1];
+    if (YES) {
+        [barButtonItems insertObject:[self newAddFieldReportButtonItem] atIndex:0];
+        [barButtonItems insertObject:[self newEditMiniSiteButtonItem] atIndex:1];
     }
     [self.navigationItem setRightBarButtonItems:barButtonItems animated:YES];
 }
 
 #pragma mark - Add Field Report Button / Methods
 
-- (UIBarButtonItem *)newAddSiteButtonItem {
+- (UIBarButtonItem *)newAddFieldReportButtonItem {
     FAKIonIcons *plusIcon = [FAKIonIcons androidAddIconWithSize:26];
     UIImage *plusImage = [plusIcon imageWithSize:CGSizeMake(24, 24)];
     UIBarButtonItem *addFieldReportButtonItem = [[UIBarButtonItem alloc] initWithImage:plusImage style:UIBarButtonItemStylePlain target:self action:@selector(addNewFieldReport)];
@@ -111,7 +112,7 @@ static NSString *cellIdentifier = @"FieldReportCell";
 
 #pragma mark - Edit Mini Site Button / Methods
 
-- (UIBarButtonItem *)newEditSiteButtonItem {
+- (UIBarButtonItem *)newEditMiniSiteButtonItem {
     FAKIonIcons *editIcon = [FAKIonIcons androidCreateIconWithSize:24];
     UIImage *editImage = [editIcon imageWithSize:CGSizeMake(24, 24)];
     UIBarButtonItem *editMiniSiteButtonItem = [[UIBarButtonItem alloc] initWithImage:editImage style:UIBarButtonItemStylePlain target:self action:@selector(showEditMiniSiteView)];
