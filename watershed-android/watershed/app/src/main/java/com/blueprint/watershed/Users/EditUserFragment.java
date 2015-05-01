@@ -103,7 +103,6 @@ public class EditUserFragment extends Fragment {
      */
     private void initializeViews() {
         mLayout = (RelativeLayout) mParentActivity.findViewById(R.id.profile_edit_layout);
-        Utility.setKeyboardListener(mParentActivity, mLayout);
 
         mName = (EditText) mParentActivity.findViewById(R.id.profile_edit_name);
         mEmail = (EditText) mParentActivity.findViewById(R.id.profile_edit_email);
