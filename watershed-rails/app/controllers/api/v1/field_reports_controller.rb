@@ -15,7 +15,7 @@ class Api::V1::FieldReportsController < Api::V1::BaseController
       @field_report.complete_task
       render json: @field_report, serializer: FieldReportSerializer
     else
-      error_response(@field_report, nil, 400)
+      error_response(@field_report)
     end
   end
 
@@ -23,7 +23,7 @@ class Api::V1::FieldReportsController < Api::V1::BaseController
     if @field_report.update(field_report_params)
       render json: @field_report, serializer: FieldReportSerializer
     else
-      error_response(@field_report, nil, 400)
+      error_response(@field_report)
     end
   end
 
