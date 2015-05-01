@@ -41,4 +41,33 @@
     <color name="white_pressed">#f1f1f1</color>
     <color name="pink">#e91e63</color>
     <color name="pink_pressed">#ec407a</color>
+
+    <!-- Material design colors -->
+    <array name="colors">
+        <item>#F44336</item>
+        <item>#673AB7</item>
+        <item>#03A9F4</item>
+        <item>#4CAF50</item>
+        <item>#FF5722</item>
+        <item>#607D8B</item>
+        <item>#00BCD4</item>
+        <item>#9C27B0</item>
+        <item>#E91E63</item>
+        <item>#3F51B5</item>
+        <item>#009688</item>
+    </array>
+
+    <array name="secondary_colors">
+        <item>#D32F2F</item>
+        <item>#512DA8</item>
+        <item>#0288D1</item>
+        <item>#388E3C</item>
+        <item>#E64A19</item>
+        <item>#455A64</item>
+        <item>#0097A7</item>
+        <item>#7B1FA2</item>
+        <item>#C2185B</item>
+        <item>#303F9F</item>
+        <item>#00796B</item>
+    </array>
 </resources>

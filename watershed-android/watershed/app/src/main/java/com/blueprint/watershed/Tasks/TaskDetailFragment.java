@@ -126,7 +126,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
 
         if (mTask.getColor() != null) {
             mParentActivity.setToolBarColor(Color.parseColor(mTask.getColor()),
-                    Color.parseColor(Utility.getSecondaryColor(mTask.getColor())));
+                    Color.parseColor(Utility.getSecondaryColor(mParentActivity, mTask.getColor())));
 
             mBackgroundColor.setBackgroundColor(Color.parseColor(mTask.getColor()));
             mCompleteButton.setBackgroundColor(Color.parseColor(mTask.getColor()));
