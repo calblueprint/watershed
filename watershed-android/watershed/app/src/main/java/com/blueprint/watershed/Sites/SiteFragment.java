@@ -97,7 +97,6 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        mSubscribed = false;
         mParentActivity = (MainActivity) getActivity();
         mUser = mParentActivity.getUser();
         mNetworkManager = NetworkManager.getInstance(mParentActivity);
@@ -209,7 +208,9 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
                 mSubscribed = true;
             }
         }, mSubscribed);
+        mSubscribed = true;
         mSubscribeButton.setIcon(R.drawable.ic_bookmark_white_36dp);
+        mSubscribeButton.setTitle("Unsubscribe from Site");
         mNetworkManager.getRequestQueue().add(subRequest);
     }
 
@@ -220,6 +221,8 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
                 mSubscribed = false;
             }
         }, mSubscribed);
+        mSubscribed = false;
+        mSubscribeButton.setTitle("Subscribe to Site");
         mSubscribeButton.setIcon(R.drawable.ic_bookmark_outline_white_36dp);
         mNetworkManager.getRequestQueue().add(subRequest);
     }
