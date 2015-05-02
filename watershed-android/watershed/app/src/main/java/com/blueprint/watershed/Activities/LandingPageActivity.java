@@ -8,11 +8,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -57,7 +59,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
 
     // UI Elements
     private ImageView mLandingPageImage;
-    private Button mLoginButton;
+    private TextView mLoginButton;
     private com.facebook.widget.LoginButton mFacebookButton;
     private Button mSignUpButton;
     private NetworkManager mLoginNetworkManager;
@@ -85,7 +87,7 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_landing_page);
-        mLoginNetworkManager = NetworkManager.getInstance(this.getApplicationContext());
+        mLoginNetworkManager = NetworkManager.getInstance(this);
         mViewBlocker = findViewById(R.id.viewBlocker);
         mViewBlocker.setVisibility(View.GONE);
         mUiHelper = new UiLifecycleHelper(this, callback);
@@ -153,10 +155,11 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
      * Initializes all the views inthe fragment and hooks them up to listeners
      */
     public void initializeViews() {
-        mLoginButton = (Button) findViewById(R.id.login_load_fragment_button);
+        mLoginButton = (TextView) findViewById(R.id.login_load_fragment_button);
         mFacebookButton = (com.facebook.widget.LoginButton) findViewById(R.id.authButton);
         mSignUpButton = (Button) findViewById(R.id.sign_up_load_fragment_button);
 
+        mLoginButton.setText(Html.fromHtml(getString(R.string.landing_page_login_button)));
         mLoginButton.setOnClickListener(this);
         mSignUpButton.setOnClickListener(this);
 

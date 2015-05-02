@@ -17,6 +17,7 @@ import java.util.List;
 
 /**
  * Created by Mark Miyashita on 11/19/14.
+ * Shows a list of users you can pick
  */
 public class UserHeaderAdapter extends ArrayAdapter<User> {
 
@@ -46,7 +47,6 @@ public class UserHeaderAdapter extends ArrayAdapter<User> {
 
             holder = new UserHolder();
             holder.mTextView = (TextView) row.findViewById(R.id.user_row_text);
-            holder.mLine = row.findViewById(R.id.user_row_color);
 
             row.setTag(holder);
         } else {
@@ -68,12 +68,11 @@ public class UserHeaderAdapter extends ArrayAdapter<User> {
                     }
                 }
             });
-            holder.mLine.setVisibility(View.INVISIBLE);
         } else {
-            fontSize = 22;
+            fontSize = 15;
             fontWeight = Typeface.BOLD;
-            text = user.getLayoutType();
-            holder.mLine.setVisibility(View.VISIBLE);
+            text = user.getLayoutType().toUpperCase();
+            row.setClickable(false);
         }
         holder.mTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize);
         holder.mTextView.setText(text);
@@ -83,7 +82,5 @@ public class UserHeaderAdapter extends ArrayAdapter<User> {
 
     static class UserHolder {
         TextView mTextView;
-        View mLine;
-        String mType;
     }
 }

@@ -1,4 +1,4 @@
-package com.blueprint.watershed.Sites;
+package com.blueprint.watershed.Sites.SiteList;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -19,31 +19,31 @@ import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Sites.SiteListRequest;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Sites.CreateSiteFragment;
+import com.blueprint.watershed.Sites.Site;
 import com.blueprint.watershed.Views.Material.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SiteListFragment extends Fragment {
+public abstract class SiteListAbstractFragment extends Fragment {
 
     public static final String SITE_LIST_REQUEST = "SiteListTag";
 
-    private MainActivity mParentActivity;
-    private NetworkManager mNetworkManager;
-    private LinearLayoutManager mLayoutManager;
+    protected MainActivity mParentActivity;
+    protected NetworkManager mNetworkManager;
+    protected LinearLayoutManager mLayoutManager;
     
     // Views
-    private RecyclerView mSiteListView;
-    private SwipeRefreshLayout mSwipeLayout;
-    private SwipeRefreshLayout mNoSiteLayout;
-    private FloatingActionButton mCreateSiteButton;
+    protected RecyclerView mSiteListView;
+    protected SwipeRefreshLayout mSwipeLayout;
+    protected SwipeRefreshLayout mNoSiteLayout;
+    protected FloatingActionButton mCreateSiteButton;
     
-    private SiteListAdapter mAdapter;
-    private List<Site> mSites;
+    protected SiteListAdapter mAdapter;
+    protected List<Site> mSites;
 
-    private boolean mInitializeSites = false;
-
-    public static SiteListFragment newInstance() { return new SiteListFragment(); }
+    protected boolean mInitializeSites = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,7 +66,7 @@ public class SiteListFragment extends Fragment {
      * Initializes all the views in the layout
      * @param view Root view of the fragment
      */
-    private void initializeViews(View view) {
+    protected void initializeViews(View view) {
         mNoSiteLayout = (SwipeRefreshLayout) view.findViewById(R.id.no_site_layout);
         mNoSiteLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -122,7 +122,7 @@ public class SiteListFragment extends Fragment {
      * @param site Site that was deleted
      * @return Position of that site
      */
-    private int getDeletedSite(Site site) {
+    protected int getDeletedSite(Site site) {
         for (int i = 0; i < mSites.size(); i++) {
             if (mSites.get(i).getId() == site.getId()) return i;
         }
@@ -155,24 +155,7 @@ public class SiteListFragment extends Fragment {
      * Request to get all the sites, updates and shows them according,
      * or displays a text view telling the user that there are no sites.
      */
-    public void getSitesRequest() {
-        SiteListRequest siteListRequest = new SiteListRequest(mParentActivity, new Response.Listener<ArrayList<Site>>() {
-            @Override
-            public void onResponse(ArrayList<Site> sites) {
-                setSites(sites);
-                Log.e("Site Response", "Returned");
-                if (mSites.size() == 0) hideList();
-                else {
-                    showList();
-                    mAdapter.notifyDataSetChanged();
-                }
-                setSwipeFalse();
-                mInitializeSites = true;
-            }
-        }, this);
-        siteListRequest.setTag(SITE_LIST_REQUEST);
-        mNetworkManager.getRequestQueue().add(siteListRequest);
-    }
+    public abstract void getSitesRequest();
 
     /**
      * Fake a minimum animation time for the spinner to "load"
@@ -199,7 +182,7 @@ public class SiteListFragment extends Fragment {
     /**
      * Shows the list of sites, hides the empty textview
      */
-    private void showList() {
+    protected void showList() {
         mNoSiteLayout.setVisibility(View.GONE);
         mSiteListView.setVisibility(View.VISIBLE);
     }
@@ -207,7 +190,7 @@ public class SiteListFragment extends Fragment {
     /**
      * Hides the list of sites, shows the empty textview
      */
-    private void hideList() {
+    protected void hideList() {
         mNoSiteLayout.setVisibility(View.VISIBLE);
         mSiteListView.setVisibility(View.GONE);
     }

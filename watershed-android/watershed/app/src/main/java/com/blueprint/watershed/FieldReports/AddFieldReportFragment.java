@@ -19,13 +19,13 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -58,10 +58,12 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
     private RelativeLayout mLayout;
     private ImageButton mPickPhotoButton;
     private TextView mTitle;
-    private RadioGroup mRating;
+    private RatingBar mRating;
+    private TextView mRatingText;
     private EditText mDescription;
     private Switch mUrgent;
     private ImageView mImage;
+
 
     private Photo mPhoto;
 
@@ -88,9 +90,6 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
     public void setTask(Task task) { mTask = task; }
     public void setMiniSite(MiniSite site) { mMiniSite = site; }
 
-    public void configureWithFieldReport(FieldReport fieldReport) {
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,8 +111,16 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
         mPickPhotoButton = (ImageButton) view.findViewById(R.id.report_add_photo);
         mPickPhotoButton.setOnClickListener(this);
 
-        mRating = (RadioGroup) view.findViewById(R.id.health_group);
-        mRating.check(R.id.health_3);
+        mRatingText = (TextView) view.findViewById(R.id.field_report_rating_text);
+        mRating = (RatingBar) view.findViewById(R.id.field_report_health_rating);
+        mRating.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                mRatingText.setText(String.valueOf(mRating.getRating()));
+                return false;
+            }
+        });
+
 
         mUrgent = (Switch) view.findViewById(R.id.field_report_urgent);
         mDescription = (EditText) view.findViewById(R.id.report_description);
@@ -237,28 +244,14 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
             hasErrors = true;
         }
 
-        Integer selectId = mRating.getCheckedRadioButtonId();
-
-        if (selectId == -1) {
-            Toast.makeText(mParentActivity, "Please select a health rating", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        RadioButton chosenRating = (RadioButton) mParentActivity.findViewById(selectId);
-        String fieldReportHealth = chosenRating.getText().toString();
-        Integer health = Integer.parseInt(fieldReportHealth);
-
-        if (health < 1 || health > 5) {
-            Toast.makeText(mParentActivity, "Invalid health rating", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         if (mPhoto == null) {
             Toast.makeText(mParentActivity, "Don't forget a photo!", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (hasErrors) return;
+
+        int health = (int) mRating.getRating();
 
         final FieldReport fieldReport = new FieldReport(mDescription.getText().toString(), health, mUrgent.isChecked(),
                                                         mPhoto, mParentActivity.getUser(), mMiniSite, mTask);

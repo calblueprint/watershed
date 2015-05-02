@@ -7,7 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.blueprint.watershed.Networking.BaseRequest;
 import com.blueprint.watershed.Sites.Site;
-import com.blueprint.watershed.Sites.SiteListFragment;
+import com.blueprint.watershed.Sites.SiteList.SiteListAbstractFragment;
 import com.blueprint.watershed.Utilities.APIError;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class SiteListRequest extends BaseRequest {
 
     public SiteListRequest(final Activity activity, final Response.Listener<ArrayList<Site>> listener,
-                           final SiteListFragment fragment) {
+                           final SiteListAbstractFragment fragment) {
         super(Request.Method.GET, makeURL("sites?get_photos=true"), null,
             new Response.Listener<JSONObject>() {
                 @Override

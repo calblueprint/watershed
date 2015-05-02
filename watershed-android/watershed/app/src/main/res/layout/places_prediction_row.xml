@@ -2,7 +2,8 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="10dp">
     <ImageView
         style="@style/Icon"
         android:id="@+id/location_icon"
@@ -13,6 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/location_icon"
+        android:layout_marginLeft="10dp"
         />
 
     <TextView
@@ -21,5 +23,6 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/location_icon"
         android:layout_below="@id/top_address_label"
+        android:layout_marginLeft="10dp"
         />
 </RelativeLayout>

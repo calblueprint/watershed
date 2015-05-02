@@ -23,7 +23,6 @@ import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Sites.DeleteSiteRequest;
 import com.blueprint.watershed.Networking.Sites.SiteRequest;
 import com.blueprint.watershed.Networking.Sites.SiteSubscribeRequest;
-import com.blueprint.watershed.Networking.Users.UserSitesRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Utilities.Utility;
@@ -51,8 +50,6 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
     private Site mSite;
     private ArrayList<MiniSite> mMiniSites;
     private View mView;
-
-    private Boolean mSubscribed;
 
     private TextView mSiteTitle;
     private TextView mSiteDescription;
@@ -116,7 +113,6 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
             setMiniSites(mSite.getMiniSites());
             mMiniSiteAdapter.notifyDataSetChanged();
         }
-
         if (mSite.isMiniSiteEmpty()) getSiteRequest(mSite);
         return view;
     }
@@ -144,6 +140,32 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
         mParentActivity.setMenuAction(false);
     }
 
+    private void initializeViews(View view) {
+        // Create MiniSite grid
+        mMiniSiteGridView = (HeaderGridView) view.findViewById(R.id.mini_sites_grid);
+        mHeader = (ViewGroup) mParentActivity.getLayoutInflater().inflate(R.layout.site_header_view, mMiniSiteGridView, false);
+        mMiniSiteGridView.addHeaderView(mHeader, null, false);
+        configureViewWithSite(mHeader, mSite);
+
+
+        // Set the adapter to fill the list of mini sites
+        mMiniSiteAdapter = new MiniSiteListAdapter(mParentActivity, getMiniSites(), mSite);
+        mMiniSiteGridView.setAdapter(mMiniSiteAdapter);
+        mMiniSiteGridView.setOnItemClickListener(this);
+
+        mSubscribeButton = (FloatingActionButton) mView.findViewById(R.id.site_subscribe_site);
+        if (mSite.getSubscribed()) {
+            mSubscribeButton.setTitle("Unsubscribe from Site");
+            mSubscribeButton.setIcon(R.drawable.ic_bookmark_white_36dp);
+        }
+        else {
+            mSubscribeButton.setTitle("Subscribe to Site");
+            mSubscribeButton.setIcon(R.drawable.ic_bookmark_outline_white_36dp);
+        }
+
+        setButtonListeners(view);
+    }
+
     private void setButtonListeners(View view) {
         mMenu = (FloatingActionsMenu) view.findViewById(R.id.site_settings);
         FloatingActionButton editButton = (FloatingActionButton) view.findViewById(R.id.site_edit_site);
@@ -167,48 +189,21 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
         subscribeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!mSubscribed) subscribeToSite();
-                if (mSubscribed) unsubscribeFromSite();
+                if (!mSite.getSubscribed()) subscribeToSite();
+                else unsubscribeFromSite();
             }
         });
     }
 
-    private void initializeViews(View view) {
-        // Create MiniSite grid
-        mMiniSiteGridView = (HeaderGridView) view.findViewById(R.id.mini_sites_grid);
-        mHeader = (ViewGroup) mParentActivity.getLayoutInflater().inflate(R.layout.site_header_view, mMiniSiteGridView, false);
-        mMiniSiteGridView.addHeaderView(mHeader, null, false);
-        configureViewWithSite(mHeader, mSite);
-
-
-        // Set the adapter to fill the list of mini sites
-        mMiniSiteAdapter = new MiniSiteListAdapter(mParentActivity, getMiniSites(), mSite);
-        mMiniSiteGridView.setAdapter(mMiniSiteAdapter);
-        mMiniSiteGridView.setOnItemClickListener(this);
-
-        mSubscribeButton = (FloatingActionButton) mView.findViewById(R.id.site_subscribe_site);
-        if (mSite.getSubscribed()) {
-            mSubscribeButton.setTitle("Unsubscribe from Site");
-            mSubscribeButton.setIcon(R.drawable.ic_bookmark_white_36dp);
-            mSubscribed = true;
-        }
-        else {
-            mSubscribeButton.setTitle("Subscribe to Site");
-            mSubscribeButton.setIcon(R.drawable.ic_bookmark_outline_white_36dp);
-            mSubscribed = true;
-        }
-
-        setButtonListeners(view);
-    }
 
     private void subscribeToSite() {
         SiteSubscribeRequest subRequest = new SiteSubscribeRequest(mParentActivity, mSite, new HashMap<String, JSONObject>(), new Response.Listener<String>() {
             @Override
             public void onResponse(String message) {
-                mSubscribed = true;
+                mSubscribeButton.setIcon(R.drawable.ic_bookmark_white_36dp);
+                mSite.setSubscribed(true);
             }
-        }, mSubscribed);
-        mSubscribed = true;
+        }, mSite.getSubscribed());
         mSubscribeButton.setIcon(R.drawable.ic_bookmark_white_36dp);
         mSubscribeButton.setTitle("Unsubscribe from Site");
         mNetworkManager.getRequestQueue().add(subRequest);
@@ -218,10 +213,10 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
         SiteSubscribeRequest subRequest = new SiteSubscribeRequest(mParentActivity, mSite, new HashMap<String, JSONObject>(), new Response.Listener<String>() {
             @Override
             public void onResponse(String message) {
-                mSubscribed = false;
+                mSubscribeButton.setIcon(R.drawable.ic_bookmark_outline_white_36dp);
+                mSite.setSubscribed(false);
             }
-        }, mSubscribed);
-        mSubscribed = false;
+        }, mSite.getSubscribed());
         mSubscribeButton.setTitle("Subscribe to Site");
         mSubscribeButton.setIcon(R.drawable.ic_bookmark_outline_white_36dp);
         mNetworkManager.getRequestQueue().add(subRequest);

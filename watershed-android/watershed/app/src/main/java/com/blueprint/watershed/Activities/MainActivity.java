@@ -17,18 +17,19 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Response;
-import com.blueprint.watershed.AboutFragment;
+import com.blueprint.watershed.Users.AboutFragment;
 import com.blueprint.watershed.AbstractFragments.FloatingActionMenuAbstractFragment;
 import com.blueprint.watershed.FieldReports.FieldReportFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteAbstractFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
+import com.blueprint.watershed.Navigation.MenuRow;
+import com.blueprint.watershed.Navigation.NavigationRowAdapter;
 import com.blueprint.watershed.Networking.BaseRequest;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Users.HomeRequest;
@@ -37,7 +38,8 @@ import com.blueprint.watershed.R;
 import com.blueprint.watershed.Sites.CreateSiteFragment;
 import com.blueprint.watershed.Sites.Site;
 import com.blueprint.watershed.Sites.SiteFragment;
-import com.blueprint.watershed.Sites.SiteListFragment;
+import com.blueprint.watershed.Sites.SiteList.SiteListAbstractFragment;
+import com.blueprint.watershed.Sites.SiteViewPagerFragment;
 import com.blueprint.watershed.Tasks.CreateTaskFragment;
 import com.blueprint.watershed.Tasks.EditTaskFragment;
 import com.blueprint.watershed.Tasks.Task;
@@ -59,6 +61,7 @@ import com.google.android.gms.location.places.Places;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -77,19 +80,21 @@ public class MainActivity extends ActionBarActivity
     private String mRegistrationId;
     private int mAppVersion;
 
-
     // Navigation Drawer
     private DrawerLayout mDrawerLayout;
     private RelativeLayout mDrawer;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
+    private NavigationRowAdapter mNavAdapter;
+
+    // MenuItem
+    private String mTitles[] = { "Tasks", "Sites", "About", "Manage", "Logout" };
+    private int mIcons[] = { R.drawable.tasks_dark, R.drawable.sites_dark, R.drawable.about_dark,
+                             R.drawable.profile_dark, R.drawable.logout_dark };
 
     private RelativeLayout mUserInfo;
     private TextView mUserName;
     private TextView mUserRole;
-
-    // View Elements
-    public CharSequence mTitle;
 
     // Action Bar Elements
 
@@ -149,7 +154,6 @@ public class MainActivity extends ActionBarActivity
         getSupportActionBar().setHomeButtonEnabled(true);
 
         initializeFragments();
-        mTitle = "Tasks";
     }
 
     @Override
@@ -265,10 +269,9 @@ public class MainActivity extends ActionBarActivity
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
         mContainer = findViewById(R.id.container);
 
+        mUserName = (TextView) findViewById(R.id.nav_bar_user_name);
         mUserInfo = (RelativeLayout) findViewById(R.id.nav_bar_user_info);
         mUserInfo.setOnClickListener(this);
-        mUserRole = (TextView) findViewById(R.id.nav_bar_user_role);
-        mUserName = (TextView) findViewById(R.id.nav_bar_user_name);
 
         setNavInfo();
     }
@@ -276,8 +279,8 @@ public class MainActivity extends ActionBarActivity
     @SuppressWarnings("deprecation")
     @TargetApi(21)
     public void setToolBarColor(int toolbar, int statusBar) {
-        if (Utility.currentVersion() >= 21) getWindow().setStatusBarColor(getResources().getColor(statusBar));
-        mToolBar.setBackgroundColor(getResources().getColor(toolbar));
+        if (Utility.currentVersion() >= 21) getWindow().setStatusBarColor(statusBar);
+        mToolBar.setBackgroundColor(toolbar);
         mToolBar.invalidate();
     }
 
@@ -290,7 +293,6 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void setNavInfo() {
-        mUserRole.setText(getUser().getRoleString());
         mUserName.setText(getUser().getName());
     }
 
@@ -300,7 +302,12 @@ public class MainActivity extends ActionBarActivity
         else if (f instanceof CreateTaskFragment)         setTitle("Add Task");
         else if (f instanceof EditTaskFragment)           setTitle("Edit Task");
         else if (f instanceof TaskDetailFragment)         setTitle("");
-        else if (f instanceof SiteListFragment ||
+        else if (f instanceof UserTaskFragment)           setTitle("Tasks");
+        else if (f instanceof SiteListAbstractFragment ||
+                 f instanceof UserMiniSiteFragment ||
+                 f instanceof SiteViewPagerFragment ||
+                 f instanceof SiteFragment)               setTitle("Sites");
+        else if (f instanceof SiteListAbstractFragment ||
                  f instanceof UserMiniSiteFragment)       setTitle("Sites");
         else if (f instanceof SiteFragment)               setTitle("Sites");
         else if (f instanceof AboutFragment)              setTitle("About");
@@ -346,7 +353,7 @@ public class MainActivity extends ActionBarActivity
             case android.R.id.home:
                 Utility.hideKeyboard(this, mContainer);
                 Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
-                if (!(f instanceof UserTaskListFragment) && !(f instanceof SiteListFragment) &&!(f instanceof UserFragment) &&!(f instanceof AboutFragment)) {
+                if (!(f instanceof UserTaskListFragment) && !(f instanceof SiteListAbstractFragment) &&!(f instanceof UserFragment) &&!(f instanceof AboutFragment)) {
                     getSupportFragmentManager().popBackStack();
                     return false;
                 }
@@ -368,11 +375,14 @@ public class MainActivity extends ActionBarActivity
         mDrawerLayout.setStatusBarBackgroundColor(getResources().getColor(R.color.ws_blue));
         mDrawer = (RelativeLayout) findViewById(R.id.left_drawer);
         mDrawerList = (ListView) findViewById(R.id.left_drawer_list_view);
-        String titles[] = { "Tasks", "Sites", "About", "Logout" };
 
+        List<MenuRow> menuItems = new ArrayList<>();
+        for (int i = 0; i < mTitles.length; i ++)
+            menuItems.add(new MenuRow(mIcons[i], mTitles[i], mTitles[i].equals("Tasks")));
+
+        mNavAdapter = new NavigationRowAdapter(this, R.layout.menu_list_item, menuItems);
         mDrawerList.setOnItemClickListener(this);
-        mDrawerList.setAdapter(new ArrayAdapter<>(this,
-                R.layout.menu_list_item, R.id.menu_title, titles));
+        mDrawerList.setAdapter(mNavAdapter);
 
         setDrawerListener();
     }
@@ -415,19 +425,29 @@ public class MainActivity extends ActionBarActivity
         switch (position) {
             case 0:
                 replaceFragment(TaskViewPagerFragment.newInstance());
+                mNavAdapter.setHighlighted("Tasks");
                 break;
             case 1:
-                replaceFragment(SiteListFragment.newInstance());
+                replaceFragment(SiteViewPagerFragment.newInstance());
+                mNavAdapter.setHighlighted("Sites");
                 break;
             case 2:
                 replaceFragment(AboutFragment.newInstance());
+                mNavAdapter.setHighlighted("About");
                 break;
             case 3:
+                mNavAdapter.setHighlighted("Manage");
+                break;
+            case 4:
+                mNavAdapter.setHighlighted("Logout");
                 logoutCurrentUser(this);
                 break;
             default:
                 break;
         }
+        mDrawerList.setItemChecked(position, true);
+        mDrawerList.setSelection(position);
+        mDrawerLayout.invalidate();
         mDrawerLayout.closeDrawer(mDrawer);
     }
 
