@@ -133,6 +133,7 @@ public abstract class SiteListAbstractFragment extends Fragment {
     public void onResume() {
         super.onResume();
         mParentActivity.setMenuAction(true);
+        getSitesRequest();
     }
 
     @Override
