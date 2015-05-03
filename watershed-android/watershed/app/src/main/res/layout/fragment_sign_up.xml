@@ -7,98 +7,78 @@
         android:id="@+id/sign_up_with_email_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
+        android:layout_centerInParent="true"
+        android:background="@color/white">
 
         <EditText
             android:id="@+id/name_field"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/tight_margin"
-            android:layout_marginEnd="@dimen/tight_margin"
-            android:layout_marginLeft="@dimen/tight_margin"
-            android:layout_marginRight="@dimen/tight_margin"
+            android:layout_width="@dimen/button_large_width"
+            android:layout_height="@dimen/button_large_height"
             android:inputType="textPersonName"
             android:hint="@string/name_hint"
             android:background="@color/transparent"
             />
 
-        <ImageView
+        <View
+            android:id="@+id/first_divider"
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:layout_marginStart="@dimen/standard_margin"
-            android:layout_marginEnd="@dimen/standard_margin"
-            android:layout_marginLeft="@dimen/standard_margin"
-            android:layout_marginRight="@dimen/standard_margin"
+            android:layout_below="@id/name_field"
             android:background="@color/light_gray"
             />
 
         <EditText
             android:id="@+id/email_field"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginStart="@dimen/tight_margin"
-            android:layout_marginEnd="@dimen/tight_margin"
-            android:layout_marginLeft="@dimen/tight_margin"
-            android:layout_marginRight="@dimen/tight_margin"
+            android:layout_width="@dimen/button_large_width"
+            android:layout_height="@dimen/button_large_height"
+            android:layout_below="@id/first_divider"
             android:inputType="textEmailAddress"
             android:hint="@string/email_hint"
             android:background="@color/transparent"
             />
 
-        <ImageView
+        <View
+            android:id="@+id/second_divider"
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:layout_marginStart="@dimen/standard_margin"
-            android:layout_marginEnd="@dimen/standard_margin"
-            android:layout_marginLeft="@dimen/standard_margin"
-            android:layout_marginRight="@dimen/standard_margin"
-            android:background="@color/light_gray"
-            />
+            android:layout_below="@id/email_field"
+            android:background="@color/light_gray"/>
 
         <EditText
             android:id="@+id/password_field"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginStart="@dimen/tight_margin"
-            android:layout_marginEnd="@dimen/tight_margin"
-            android:layout_marginLeft="@dimen/tight_margin"
-            android:layout_marginRight="@dimen/tight_margin"
+            android:layout_width="@dimen/button_large_width"
+            android:layout_height="@dimen/button_large_height"
+            android:layout_below="@id/second_divider"
             android:inputType="textPassword"
             android:hint="@string/password_hint"
             android:background="@color/transparent"
             />
 
-        <ImageView
+        <View
+            android:id="@+id/third_divider"
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:layout_marginStart="@dimen/standard_margin"
-            android:layout_marginEnd="@dimen/standard_margin"
-            android:layout_marginLeft="@dimen/standard_margin"
-            android:layout_marginRight="@dimen/standard_margin"
-            android:background="@color/light_gray"
-            />
+            android:layout_below="@id/password_field"
+            android:background="@color/light_gray" />
 
         <EditText
             android:id="@+id/password_confirmation_field"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginStart="@dimen/tight_margin"
-            android:layout_marginEnd="@dimen/tight_margin"
-            android:layout_marginLeft="@dimen/tight_margin"
-            android:layout_marginRight="@dimen/tight_margin"
+            android:layout_width="@dimen/button_large_width"
+            android:layout_height="@dimen/button_large_height"
+            android:layout_below="@id/third_divider"
             android:inputType="textPassword"
             android:hint="@string/password_confirmation_hint"
-            android:background="@color/transparent"
-            />
-
-        <Button
-            android:id="@+id/sign_up_button"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/button_standard_height"
-            android:background="@drawable/border_button"
-            android:textSize="14sp"
-            android:text="@string/sign_up_fragment_login_button"
-            android:textColor="@color/white"
-            />
+            android:background="@color/transparent" />
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/sign_up_button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_standard_height"
+        android:layout_below="@id/sign_up_with_email_layout"
+        android:background="@drawable/border_button"
+        android:textSize="14sp"
+        android:text="@string/sign_up_fragment_login_button"
+        android:textColor="@color/white"
+        />
 </RelativeLayout>
