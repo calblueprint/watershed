@@ -177,12 +177,21 @@ public abstract class SiteAbstractFragment extends Fragment{
             @Override
             public void onClick(View view) {
                 List<String> errorStrings = new ArrayList<String>();
-                if (mTitleField.getText().toString().length() == 0) errorStrings.add("Title");
-                if (mDescriptionField.getText().toString().length() == 0) errorStrings.add("Description");
-                if (mAddressField.getText().toString().length() == 0) errorStrings.add("Address");
+                if (mTitleField.getText().toString().length() == 0) {
+                    errorStrings.add("Title");
+                }
 
-                if (errorStrings.size() > 0) Utility.setEmpty(mParentActivity, errorStrings);
-                else {
+                if (mDescriptionField.getText().toString().length() == 0) {
+                    errorStrings.add("Description");
+                }
+
+                if (mAddressField.getText().toString().length() == 0) {
+                    errorStrings.add("Address");
+                }
+
+                if (errorStrings.size() > 0) {
+                    Utility.setEmpty(mParentActivity, errorStrings);
+                } else {
                     submitListener();
                     SiteViewPagerFragment returnFragment = SiteViewPagerFragment.newInstance();
                     mParentActivity.replaceFragment(returnFragment);

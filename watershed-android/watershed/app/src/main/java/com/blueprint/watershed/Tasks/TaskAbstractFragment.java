@@ -178,12 +178,28 @@ public abstract class TaskAbstractFragment extends Fragment {
 
     private void validateAndSubmit() {
         List<String> errorStrings = new ArrayList<String>();
-        if (mTitleField.getText().toString().length() == 0) errorStrings.add("Title");
-        if (mDescriptionField.getText().toString().length() == 0) errorStrings.add("Description");
-        if (mMiniSite == null) errorStrings.add("Mini Site");
-        if (mDate == null) errorStrings.add("Deadline");
-        if (errorStrings.size() > 0) Utility.setEmpty(mParentActivity, errorStrings);
-        else submitListener();
+        
+        if (mTitleField.getText().toString().length() == 0) {
+            errorStrings.add("Title");
+        }
+
+        if (mDescriptionField.getText().toString().length() == 0) {
+            errorStrings.add("Description");
+        }
+
+        if (mMiniSite == null) {
+            errorStrings.add("Mini Site");
+        }
+
+        if (mDate == null) {
+            errorStrings.add("Deadline");
+        }
+
+        if (errorStrings.size() > 0) {
+            Utility.setEmpty(mParentActivity, errorStrings);
+        } else {
+            submitListener();
+        }
     }
 
     private void openUserDialog() {
