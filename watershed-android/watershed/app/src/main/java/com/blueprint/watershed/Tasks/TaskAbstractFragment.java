@@ -389,16 +389,13 @@ public abstract class TaskAbstractFragment extends Fragment {
             List<User> userList = new ArrayList<>();
             for (User user : mUsers) {
                 if (user.getRoleString().equals(User.MANAGER)) mAdmin.add(user);
-                else if (user.getRoleString().equals(User.EMPLOYEE)) mEmployee.add(user);
                 else if (user.getRoleString().equals(User.COMMUNITY_MEMBER)) mMember.add(user);
             }
             User mAdminHeader = new User(User.MANAGER);
-            User mEmployeeHeader = new User(User.EMPLOYEE);
             User mMemberHeader = new User(User.COMMUNITY_MEMBER);
 
             userList.add(mMemberHeader);
             userList.addAll(mMember);
-            userList.add(mEmployeeHeader);
             userList.addAll(mEmployee);
             userList.add(mAdminHeader);
             userList.addAll(mAdmin);
