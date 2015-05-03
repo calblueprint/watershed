@@ -19,6 +19,7 @@ import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.FieldReports.AddFieldReportFragment;
 import com.blueprint.watershed.FieldReports.FieldReportFragment;
 import com.blueprint.watershed.Networking.NetworkManager;
+import com.blueprint.watershed.Networking.Tasks.ClaimTaskRequest;
 import com.blueprint.watershed.Networking.Tasks.DeleteTaskRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Utilities.Utility;
@@ -83,8 +84,6 @@ public class TaskDetailFragment extends TaskAbstractFragment
     private void initializeViews(View view) {
         setButtonListeners(view);
 
-        refreshCompletion();
-
         mDetailTitle = (TextView) view.findViewById(R.id.task_title);
         mDescription = (TextView) view.findViewById(R.id.task_description);
         mDueDate = (TextView) view.findViewById(R.id.task_due_date);
@@ -102,12 +101,12 @@ public class TaskDetailFragment extends TaskAbstractFragment
         String assigner;
         if (mTask.getAssigner() == null) assigner = "None";
         else assigner = mTask.getAssigner().getName();
-        mAssigner.setText("Given by: " + assigner);
+        mAssigner.setText("Assigned by: " + assigner);
 
         String assignee;
         if (mTask.getAssignee() == null) assignee = "None";
         else assignee = mTask.getAssignee().getName();
-        mAssignee.setText("Given to: " + assignee);
+        mAssignee.setText("Assigned to: " + assignee);
 
         String location;
         if (mTask.getMiniSite() == null) location = "MiniSite " + String.valueOf(mTask.getMiniSiteId());
@@ -131,6 +130,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
             mBackgroundColor.setBackgroundColor(Color.parseColor(mTask.getColor()));
             mCompleteButton.setBackgroundColor(Color.parseColor(mTask.getColor()));
         }
+        refreshCompletion();
     }
 
     private void setButtonListeners(View view){
@@ -165,7 +165,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
     public void onClick(View view) {
         switch(view.getId()){
             case (R.id.complete_button):
-                fieldReportButtonPressed();
+                bottomButton();
                 break;
             default:
                 break;
@@ -176,7 +176,10 @@ public class TaskDetailFragment extends TaskAbstractFragment
     public void submitListener() {}
 
 
-    public void fieldReportButtonPressed() {
+    public void bottomButton() {
+        if (mTask.getAssignee() == null) {
+            claimTask();
+        }
         if (mTask.getFieldReport() == null) {
             mParentActivity.setFieldReportTask(mTask);
             mParentActivity.replaceFragment(AddFieldReportFragment.newInstance(mTask, mTask.getMiniSite()));
@@ -185,11 +188,32 @@ public class TaskDetailFragment extends TaskAbstractFragment
         }
     }
 
+    private void claimTask() {
+        ClaimTaskRequest request = new ClaimTaskRequest(mParentActivity, mTask, new Response.Listener<Task>() {
+            @Override
+            public void onResponse(Task task) {
+                mTask = task;
+                refreshCompletion();
+            }
+        });
+        mNetworkManager.getRequestQueue().add(request);
+    }
+
     public void refreshCompletion() {
-        String submit = mTask.getFieldReport() == null ? "COMPLETE" : "VIEW FIELD REPORT";
-        int color = mTask.getFieldReport() == null ? R.color.ws_blue : R.color.facebook_blue;
+        String submit;
+        int color;
+        if (mTask.getAssignee() == null) {
+            submit = "CLAIM TASK";
+            color = Color.parseColor(mTask.getColor());
+        } else if (mTask.getFieldReport() != null) {
+            submit = "VIEW FIELD REPORT";
+            color = Color.parseColor(mTask.getColor());
+        } else {
+            submit = "COMPLETE";
+            color = Utility.getSecondaryColor(mParentActivity, mTask.getColor());
+        }
         mCompleteButton.setText(submit);
-        mCompleteButton.setBackgroundColor(mParentActivity.getResources().getColor(color));
+        mCompleteButton.setBackgroundColor(color);
     }
 
     private void deleteTask() {

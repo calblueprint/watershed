@@ -12,7 +12,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
 /**
@@ -38,7 +37,7 @@ public class CreateTaskRequest extends BaseRequest {
                     public void onResponse(JSONObject jsonObject) {
                         try {
                             String taskJson = jsonObject.get("task").toString();
-                            ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
+                            ObjectMapper mapper = getNetworkManager(activity).getObjectMapper();
                             Task task = mapper.readValue(taskJson, new TypeReference<Task>() {});
                             listener.onResponse(task);
                         } catch (Exception e) {

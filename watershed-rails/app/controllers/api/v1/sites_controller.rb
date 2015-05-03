@@ -43,13 +43,19 @@ class Api::V1::SitesController < Api::V1::BaseController
   end
 
   def subscribe
-    @site.subscribe(current_user)
-    render json: { message: "Subscribed to site!" }, status: :ok
+    if @site.subscribe(current_user)
+      render json: { message: "Subscribed to site!" }, status: :ok
+    else
+      error_response(@site, "You can't subscribe to this site!")
+    end
   end
 
   def unsubscribe
-    @site.unsubscribe(current_user)
-    render json: { message: "Unsubscribed to site!" }, status: :ok
+    if @site.unsubscribe(current_user)
+      render json: { message: "Unsubscribed to site!" }, status: :ok
+    else
+      error_response(@site, "You can't unsubscribe to this site!")
+    end
   end
 
   private

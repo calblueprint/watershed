@@ -1,6 +1,5 @@
 package com.blueprint.watershed.MiniSites;
 
-import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
@@ -27,14 +26,6 @@ public class CreateMiniSiteFragment extends MiniSiteAbstractFragment {
         CreateMiniSiteFragment fragment = new CreateMiniSiteFragment();
         fragment.setSite(site);
         return fragment;
-    }
-
-    public CreateMiniSiteFragment() {}
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        setButtonListeners();
     }
 
     @Override

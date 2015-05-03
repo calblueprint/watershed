@@ -23,6 +23,10 @@ class Site < ActiveRecord::Base
   has_many :user_sites
   has_many :users, through: :user_sites
 
+  validates :name, presence: true
+  validates :description, presence: true
+  validates :street, presence: true
+
   #
   # Search
   #
@@ -52,6 +56,7 @@ class Site < ActiveRecord::Base
   end
 
   def subscribe(user)
+    return false if users.include? user
     users << user
     mini_sites.each { |m| m.users << user }
   end

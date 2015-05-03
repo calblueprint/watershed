@@ -13,24 +13,35 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.blueprint.watershed.Activities.MainActivity;
+import com.blueprint.watershed.GoogleApis.Places.PlacePredictionAdapter;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Photos.Photo;
 import com.blueprint.watershed.Photos.PhotoPagerAdapter;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Sites.Site;
+import com.blueprint.watershed.Utilities.Utility;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.location.places.AutocompletePrediction;
+import com.google.android.gms.location.places.AutocompletePredictionBuffer;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -50,11 +61,8 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     protected NetworkManager mNetworkManager;
 
     protected EditText mTitleField;
-    protected EditText mAddressField;
-    protected EditText mCityField;
-    protected EditText mZipField;
-    protected EditText mStateField;
     protected EditText mDescriptionField;
+    protected AutoCompleteTextView mAddressField;
 
     // Cover Photo Pager
     protected CoverPhotoPagerView mImagePager;
@@ -66,9 +74,12 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     protected ImageButton mAddPhotoButton;
 
     protected RelativeLayout mLayout;
-
     protected Site mSite;
     protected MiniSite mMiniSite;
+
+    // Places API
+    protected List<AutocompletePrediction> mPredictions;
+    protected PlacePredictionAdapter mPlacesAdapter;
 
     // Camera Stuff
     protected static final int CAMERA_REQUEST = 1337;
@@ -88,14 +99,15 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         setHasOptionsMenu(true);
         mParentActivity = (MainActivity) getActivity();
         mNetworkManager = NetworkManager.getInstance(mParentActivity);
+        mPredictions = new ArrayList<AutocompletePrediction>();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_create_mini_site, container, false);
+        View view = inflater.inflate(R.layout.fragment_create_mini_site, container, false);
+        setViews(view);
+        return view;
     }
 
     @Override
@@ -108,22 +120,37 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     /**
      * Sets all the views in the fragment
      */
-    protected void setButtonListeners() {
-        mDeletePhotoButton = (ImageButton) mParentActivity.findViewById(R.id.mini_site_delete_photo);
-        mAddPhotoButton = (ImageButton) mParentActivity.findViewById(R.id.mini_site_add_photo);
+    protected void setViews(View view) {
+        mDeletePhotoButton = (ImageButton) view.findViewById(R.id.mini_site_delete_photo);
+        mAddPhotoButton = (ImageButton) view.findViewById(R.id.mini_site_add_photo);
 
         // Sets up Image Pager
-        mImagePager = (CoverPhotoPagerView) mParentActivity.findViewById(R.id.mini_site_photo_pager_view);
+        mImagePager = (CoverPhotoPagerView) view.findViewById(R.id.mini_site_photo_pager_view);
         mImageAdapter = new PhotoPagerAdapter(mParentActivity, getPhotos());
         mImagePager.setAdapter(mImageAdapter);
 
-        mLayout = (RelativeLayout) mParentActivity.findViewById(R.id.mini_site_create_layout);
-        mTitleField = (EditText) mParentActivity.findViewById(R.id.create_mini_site_title);
-        mDescriptionField = (EditText) mParentActivity.findViewById(R.id.create_mini_site_description);
-        mAddressField = (EditText) mParentActivity.findViewById(R.id.create_mini_site_address);
-        mCityField = (EditText) mParentActivity.findViewById(R.id.create_mini_site_city);
-        mZipField = (EditText) mParentActivity.findViewById(R.id.create_mini_site_zip);
-        mStateField = (EditText) mParentActivity.findViewById(R.id.create_mini_site_state);
+        mPlacesAdapter = new PlacePredictionAdapter(mParentActivity, mPredictions);
+
+        mLayout = (RelativeLayout) view.findViewById(R.id.mini_site_create_layout);
+        mTitleField = (EditText) view.findViewById(R.id.create_mini_site_title);
+        mDescriptionField = (EditText) view.findViewById(R.id.create_mini_site_description);
+        mAddressField = (AutoCompleteTextView) view.findViewById(R.id.create_mini_site_address);
+        mAddressField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().length() > 2) getPredictions(s.toString());
+            }
+        });
+
+        mAddressField.setAdapter(mPlacesAdapter);
 
         mDeletePhotoButton.setOnClickListener(this);
         mAddPhotoButton.setOnClickListener(this);
@@ -143,6 +170,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
      * onClickListeners for the buttons on the page.
      * @param view View that was clicked
      */
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.mini_site_delete_photo:
@@ -152,6 +180,24 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
                 openAddPhotoDialog();
                 break;
         }
+    }
+
+    private void getPredictions(String string) {
+        PendingResult result =
+                Places.GeoDataApi.getAutocompletePredictions(mParentActivity.getGoogleApiClient(), string,
+                        new LatLngBounds(new LatLng(10, -175), new LatLng(70, -50)), null);
+        result.setResultCallback(new ResultCallback<AutocompletePredictionBuffer>() {
+            @Override
+            public void onResult(AutocompletePredictionBuffer buffer) {
+                List<AutocompletePrediction> places = new ArrayList<AutocompletePrediction>();
+                for (AutocompletePrediction prediction : buffer) {
+                    AutocompletePrediction frozenPrediction = prediction.freeze();
+                    places.add(frozenPrediction);
+                }
+                buffer.release();
+                setPlaces(places);
+            }
+        });
     }
 
     /**
@@ -174,48 +220,36 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     public void validateAndSubmitMiniSite() {
         final MiniSite miniSite = mMiniSite == null ? new MiniSite() : mMiniSite;
 
-        boolean hasErrors = false;
+        List<String> errorStrings = new ArrayList<String>();
 
-        try {
-            int zipCode = Integer.parseInt(mZipField.getText().toString());
-            if (zipCode < 0) {
-                mZipField.setError("Invalid zip code");
-                hasErrors = true;
-            }
-        }
-        catch (Exception e) {
-            mZipField.setError("Invalid zip code");
-            hasErrors = true;
+        if (mTitleField.getText().toString().length() == 0) {
+            errorStrings.add("Title");
         }
 
-        EditText[] textFields = { mTitleField, mDescriptionField, mAddressField,
-                                  mCityField, mStateField, mZipField };
+        if (mDescriptionField.getText().toString().length() == 0) {
+            errorStrings.add("Description");
+        }
 
-        for (EditText editText : textFields) {
-            if (editText.getText().toString().length() == 0) {
-                editText.setError("Cannot be blank!");
-                hasErrors = true;
-            }
+        if (mAddressField.getText().toString().length() == 0) {
+            errorStrings.add("Address");
         }
 
         if (mPhotoList.size() < 1) {
-            Toast.makeText(mParentActivity, "Please upload at least one photo!", Toast.LENGTH_SHORT).show();
-            hasErrors = true;
+            errorStrings.add("Photos");
         }
 
-        if (hasErrors) return;
+        if (errorStrings.size() > 0) Utility.setEmpty(mParentActivity, errorStrings);
+        else submitMiniSiteRequest(miniSite);
+    }
 
+    private void submitMiniSiteRequest(final MiniSite miniSite) {
         for (Photo photo : mPhotoList) photo.getImage(mParentActivity);
-
         miniSite.setName(mTitleField.getText().toString());
         miniSite.setDescription(mDescriptionField.getText().toString());
         miniSite.setStreet(mAddressField.getText().toString());
-        miniSite.setCity(mCityField.getText().toString());
-        miniSite.setZipCode(Integer.valueOf(mZipField.getText().toString()));
         miniSite.setLatitude(0f); // Get this later
         miniSite.setLongitude(0f); // Get this later
         miniSite.setFieldReportsCount(miniSite.getFieldReportsCount());
-        miniSite.setState(mStateField.getText().toString());
         miniSite.setSiteId(mSite.getId());
         miniSite.setPhotos(mPhotoList);
 
@@ -299,7 +333,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
     /**
      * Handles taking a photo - starts new activity
      */
-    public void onTakePhotoButtonPressed(){
+    public void onTakePhotoButtonPressed() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(mParentActivity.getPackageManager()) != null) {
             File photoFile = null;
@@ -363,5 +397,11 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
 
             return builder.create();
         }
+    }
+
+    protected void setPlaces(List<AutocompletePrediction> places) {
+        mPredictions.clear();
+        mPredictions.addAll(places);
+        mPlacesAdapter.notifyDataSetChanged();
     }
 }

@@ -34,6 +34,14 @@ class Api::V1::TasksController < Api::V1::BaseController
     end
   end
 
+  def claim
+    if @task.claim(current_user)
+      render json: @task, serializer: TaskSerializer
+    else
+      error_response(@task, "This task has already been assigned!")
+    end
+  end
+
   private
 
   def task_params

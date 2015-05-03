@@ -115,7 +115,7 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
             setMiniSites(mSite.getMiniSites());
             mMiniSiteAdapter.notifyDataSetChanged();
         }
-        if (mSite.isMiniSiteEmpty()) getSiteRequest(mSite);
+        getSiteRequest(mSite);
         return view;
     }
 
@@ -156,7 +156,13 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
         mMiniSiteGridView.setOnItemClickListener(this);
 
         mSubscribeButton = (FloatingActionButton) mView.findViewById(R.id.site_subscribe_site);
-        if (mSite.getSubscribed()) {
+        setSubscribeButton(mSite);
+
+        setButtonListeners(view);
+    }
+
+    private void setSubscribeButton(Site site){
+        if (site.getSubscribed()) {
             mSubscribeButton.setTitle("Unsubscribe from Site");
             mSubscribeButton.setIcon(R.drawable.ic_bookmark_white_36dp);
         }
@@ -164,8 +170,6 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
             mSubscribeButton.setTitle("Subscribe to Site");
             mSubscribeButton.setIcon(R.drawable.ic_bookmark_outline_white_36dp);
         }
-
-        setButtonListeners(view);
     }
 
     private void setButtonListeners(View view) {
@@ -191,7 +195,7 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
         subscribeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mSite.getSubscribed()) subscribeToSite();
+                if (!mSite.getSubscribed()) subscribeToSite();
                 else unsubscribeFromSite();
             }
         });
@@ -205,6 +209,8 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
                 mSite.setSubscribed(true);
             }
         }, mSite.getSubscribed());
+        mSubscribeButton.setIcon(R.drawable.ic_bookmark_white_36dp);
+        mSubscribeButton.setTitle("Unsubscribe from Site");
         mNetworkManager.getRequestQueue().add(subRequest);
     }
 
@@ -216,6 +222,8 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
                 mSite.setSubscribed(false);
             }
         }, mSite.getSubscribed());
+        mSubscribeButton.setTitle("Subscribe to Site");
+        mSubscribeButton.setIcon(R.drawable.ic_bookmark_outline_white_36dp);
         mNetworkManager.getRequestQueue().add(subRequest);
     }
 
@@ -243,6 +251,7 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
 
     private void setSite(Site site) {
         mSite = site;
+        setSubscribeButton(mSite);
         setMiniSites(site.getMiniSites());
     }
 
