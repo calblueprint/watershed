@@ -10,4 +10,9 @@
 
 @interface WPPromoteTableViewCell : UITableViewCell
 
+@property (nonatomic) UILabel *userLabel;
+@property (nonatomic) UIButton *promoteButton;
+
+- (void)addSubviews;
+
 @end

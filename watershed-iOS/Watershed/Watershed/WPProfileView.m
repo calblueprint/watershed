@@ -20,6 +20,7 @@
 @property (nonatomic) UIImageView *profilePictureView;
 @property (nonatomic) UILabel *nameLabel;
 @property (nonatomic) NSMutableArray *userInformationArray;
+@property (nonatomic) UIButton *promoteButton;
 
 @end
 
@@ -62,10 +63,6 @@ static int PROFILE_PIC_HEIGHT = 65;
     if (user.phoneNumber) {
         [_userInformationArray addObject:user.phoneNumber];
     }
-    if (user.role) {
-        [_userInformationArray addObject:user.role];
-    }
-
     self.infoTableView.delegate = self;
     self.infoTableView.dataSource = self;
     self.infoTableView.scrollEnabled = YES;
@@ -129,7 +126,6 @@ static int PROFILE_PIC_HEIGHT = 65;
                 infoLabel.text = self.user.phoneNumber;
                 [cell setInfoLabel:infoLabel];
             }
-            break;
         }
         case 3: {
             if (_user.phoneNumber) {
@@ -146,9 +142,17 @@ static int PROFILE_PIC_HEIGHT = 65;
             break;
         }
         case 4: {
-            if (_user.role) {
-                
+            if (_user.role == 0) {
+                FAKIonIcons *phoneIcon = [FAKIonIcons starIconWithSize:26];
+                [phoneIcon addAttribute:NSForegroundColorAttributeName
+                                  value:[UIColor darkGrayColor]];
+                [cell setIconImageView:[[UIImageView alloc]
+                                        initWithImage:[phoneIcon imageWithSize:CGSizeMake(26, 26)]]];
+                UILabel *promoteLabel = [[UILabel alloc] init];
+                promoteLabel.text = @"Promote and delete users";
+                [cell setInfoLabel:promoteLabel];
             }
+            break;
         }
         default: {
             //do nothing
@@ -185,6 +189,19 @@ static int PROFILE_PIC_HEIGHT = 65;
         tableView;
     }) wp_addToSuperview:self];
 
+    _promoteButton = [({
+        UIButton *promote = [[UIButton alloc] init];
+        promote.titleLabel.textColor = [UIColor grayColor];
+        promote.titleLabel.numberOfLines = 0;
+        promote.titleLabel.textAlignment = NSTextAlignmentCenter;
+        promote.titleLabel.font = [UIFont systemFontOfSize:18];
+        [promote setTitle:@"Promote Users" forState:UIControlStateNormal];
+        [promote setTitleColor:[UIColor wp_darkBlue] forState:UIControlStateNormal];
+        [[promote layer] setBorderWidth:1.0f];
+        [[promote layer] setBorderColor:[UIColor wp_darkBlue].CGColor];
+        promote;
+    }) wp_addToSuperview:self];
+    
     _indicatorView = [({
         UIActivityIndicatorView *view = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         [view startAnimating];
@@ -210,9 +227,16 @@ static int PROFILE_PIC_HEIGHT = 65;
         make.top.equalTo(self.nameLabel.mas_bottom).with.offset(50);
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
-        make.bottom.equalTo(@0);
+        make.bottom.equalTo(self.promoteButton.mas_top).with.offset(-standardMargin);
     }];
-
+    
+    [self.promoteButton mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@50);
+        make.leading.equalTo(@(standardMargin));
+        make.trailing.equalTo(@(-standardMargin));
+        make.bottom.equalTo(@(-standardMargin));
+    }];
+    
     [self.indicatorView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@0).with.offset(topMargin + 2 * standardMargin); // For some reason topMargin in equalTo doesn't work...
         make.centerX.equalTo(self.mas_centerX);
