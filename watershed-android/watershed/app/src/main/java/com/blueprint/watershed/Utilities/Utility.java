@@ -165,7 +165,9 @@ public class Utility {
     }
 
     public static int getSecondaryColor(Context context, String primary) {
-        if (primary == null) return Color.parseColor("#81B4DE");
+        if (primary == null) {
+            return Color.parseColor("#81B4DE");
+        }
         int[] COLORS = context.getResources().getIntArray(R.array.colors);
         int[] SECONDARY_COLORS = context.getResources().getIntArray(R.array.secondary_colors);
         int color = Color.parseColor(primary);
@@ -175,9 +177,7 @@ public class Utility {
             if (COLORS[i] == color) foundColor = i;
         }
 
-        if (foundColor == -1) {
-            return Color.parseColor("#81B4DE");
-        }
+        if (foundColor == -1) return Color.parseColor("#81B4DE");
         return SECONDARY_COLORS[foundColor];
     }
 }
