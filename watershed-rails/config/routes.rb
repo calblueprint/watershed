@@ -35,10 +35,13 @@ Rails.application.routes.draw do
         end
       end
 
+      resources :tasks, except: [:new, :edit] do
+        member do
+          post :claim
+        end
+      end
       resources :mini_sites,    except: [:new, :edit]
-      resources :tasks,         except: [:new, :edit]
       resources :field_reports, except: [:new, :edit, :destroy]
     end
   end
-
 end

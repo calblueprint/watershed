@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ws_blue"
+    android:background="@color/medium_gray"
     android:orientation="vertical"
     tools:context="com.blueprint.watershed.Users.UserFragment">
 
@@ -25,18 +25,16 @@
         android:id = "@+id/profile_name"
         android:text="Name"
         android:gravity="center"
-        android:textColor="@color/white"
         android:textStyle="bold"
-        android:textSize="20sp"
-        android:layout_marginTop="@dimen/tight_margin"
+        android:textSize="30sp"
+        android:layout_marginTop="@dimen/hella_tight_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TextView
         android:id = "@+id/profile_email"
         android:text="Email"
-        android:layout_marginTop="8dp"
-        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/super_hella_tight_margin"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -44,8 +42,7 @@
     <TextView
         android:id = "@+id/profile_role"
         android:text="Role"
-        android:textColor="@color/white"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/super_hella_tight_margin"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
