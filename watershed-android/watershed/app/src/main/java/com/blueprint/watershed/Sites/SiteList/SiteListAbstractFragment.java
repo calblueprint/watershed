@@ -102,27 +102,6 @@ public abstract class SiteListAbstractFragment extends Fragment {
                 mParentActivity.replaceFragment(CreateSiteFragment.newInstance());
             }
         });
-
-        // Make sure we update the list if we delete a site
-//        Site deletedSite = mParentActivity.getSite();
-//        if (deletedSite != null) {
-//            int position = getDeletedSite(deletedSite);
-//            mSites.remove(position);
-//            mAdapter.notifyDataSetChanged();
-//            mParentActivity.setSite(null);
-//        }
-    }
-
-    /**
-     * Updates the list when we delete a site
-     * @param site Site that was deleted
-     * @return Position of that site
-     */
-    protected int getDeletedSite(Site site) {
-        for (int i = 0; i < mSites.size(); i++) {
-            if (mSites.get(i).getId().equals(site.getId())) return i;
-        }
-        return -1;
     }
 
     @Override
