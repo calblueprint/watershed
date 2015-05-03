@@ -1,6 +1,6 @@
 package com.blueprint.watershed.Sites;
 
-import com.blueprint.watershed.APIObject;
+import com.blueprint.watershed.Networking.APIObject;
 import com.blueprint.watershed.MiniSites.MiniSite;
 import com.blueprint.watershed.Networking.Sites.SiteSerializer;
 import com.blueprint.watershed.Photos.Photo;

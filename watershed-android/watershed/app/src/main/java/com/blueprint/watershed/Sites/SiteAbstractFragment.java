@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -45,6 +46,11 @@ public abstract class SiteAbstractFragment extends Fragment{
     protected static final String EDIT = "edit";
     protected static final String CREATE = "create";
     protected static final String COMPLETE = "complete";
+
+    private int SW_LAT = 37;
+    private int SW_LNG = -123;
+    private int NE_LAT = 38;
+    private int NE_LNG = -122;
 
     protected NetworkManager mNetworkManager;
     protected MainActivity mParentActivity;
@@ -128,12 +134,20 @@ public abstract class SiteAbstractFragment extends Fragment{
             @Override
             public void afterTextChanged(Editable s) {}
         });
+
+        mAddressField.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                AutocompletePrediction prediction = mPlacesAdapter.getItem(position);
+                mAddressField.setText(prediction.getDescription());
+            }
+        });
     }
 
     private void getPredictions(String string) {
         PendingResult result =
                 Places.GeoDataApi.getAutocompletePredictions(mParentActivity.getGoogleApiClient(), string,
-                        new LatLngBounds(new LatLng(10, -175), new LatLng(70, -50)), null);
+                        new LatLngBounds(new LatLng(SW_LAT, SW_LNG), new LatLng(NE_LAT, NE_LNG)), null);
         result.setResultCallback(new ResultCallback<AutocompletePredictionBuffer>() {
             @Override
             public void onResult(AutocompletePredictionBuffer buffer) {
@@ -170,7 +184,7 @@ public abstract class SiteAbstractFragment extends Fragment{
                 if (errorStrings.size() > 0) Utility.setEmpty(mParentActivity, errorStrings);
                 else {
                     submitListener();
-                    SiteListFragment returnFragment = SiteListFragment.newInstance();
+                    SiteViewPagerFragment returnFragment = SiteViewPagerFragment.newInstance();
                     mParentActivity.replaceFragment(returnFragment);
                 }
             }

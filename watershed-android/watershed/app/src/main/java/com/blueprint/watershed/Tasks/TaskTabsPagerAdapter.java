@@ -1,4 +1,4 @@
-package com.blueprint.watershed.Utilities;
+package com.blueprint.watershed.Tasks;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,12 +12,12 @@ import java.util.Arrays;
  * Sets up adapter for view pager
  */
 
-public class TabsPagerAdapter extends FragmentPagerAdapter {
+public class TaskTabsPagerAdapter extends FragmentPagerAdapter {
 
     private ArrayList<Fragment> mFragments;
     private ArrayList<String> mTitles;
 
-    public TabsPagerAdapter(FragmentManager fm) {
+    public TaskTabsPagerAdapter(FragmentManager fm) {
         super(fm);
         mFragments = new ArrayList<Fragment>();
         mTitles = new ArrayList<String>();

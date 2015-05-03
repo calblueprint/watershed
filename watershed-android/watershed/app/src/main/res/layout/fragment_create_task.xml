@@ -142,7 +142,7 @@
                 android:layout_centerVertical="true"
                 android:text="@string/urgent"
                 android:textColor="@color/form_gray"
-                android:textSize="20sp"/>
+                android:textSize="18sp"/>
 
             <Switch
                 android:id="@+id/field_report_urgent"

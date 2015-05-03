@@ -1,6 +1,8 @@
 package com.blueprint.watershed.Tasks;
 
 import android.content.DialogInterface;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -9,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Response;
@@ -35,11 +38,14 @@ public class TaskDetailFragment extends TaskAbstractFragment
     private NetworkManager mNetworkManager;
 
     private Button mCompleteButton;
+    private TextView mMiniSiteName;
     private TextView mDetailTitle;
     private TextView mDescription;
     private TextView mAssigner;
+    private TextView mAssignee;
     private TextView mDueDate;
     private TextView mLocation;
+    private RelativeLayout mBackgroundColor;
 
     public static TaskDetailFragment newInstance(Task task) {
         TaskDetailFragment taskFragment = new TaskDetailFragment();
@@ -71,6 +77,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
     public void onResume() {
         super.onResume();
         mParentActivity.setMenuAction(false);
+        mParentActivity.setToolbarElevation(0);
     }
 
     private void initializeViews(View view) {
@@ -82,26 +89,48 @@ public class TaskDetailFragment extends TaskAbstractFragment
         mDescription = (TextView) view.findViewById(R.id.task_description);
         mDueDate = (TextView) view.findViewById(R.id.task_due_date);
         mAssigner = (TextView) view.findViewById(R.id.task_assigner);
+        mAssignee = (TextView) view.findViewById(R.id.task_assignee);
         mLocation = (TextView) view.findViewById(R.id.task_location);
+        mMiniSiteName = (TextView) view.findViewById(R.id.task_site_name);
+        mBackgroundColor = (RelativeLayout) view.findViewById(R.id.task_title_container);
 
         mDetailTitle.setText(mTask.getTitle());
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy", Locale.US);
         if (mTask.getDueDate() != null) mDueDate.setText(sdf.format(mTask.getDueDate()));
 
         String assigner;
         if (mTask.getAssigner() == null) assigner = "None";
         else assigner = mTask.getAssigner().getName();
-        mAssigner.setText(assigner);
+        mAssigner.setText("Given by: " + assigner);
+
+        String assignee;
+        if (mTask.getAssignee() == null) assignee = "None";
+        else assignee = mTask.getAssignee().getName();
+        mAssignee.setText("Given to: " + assignee);
 
         String location;
         if (mTask.getMiniSite() == null) location = "MiniSite " + String.valueOf(mTask.getMiniSiteId());
-        else location = mTask.getMiniSite().getLocation();
+        else location = mTask.getMiniSite().getLocationOneLine();
         mLocation.setText(location);
 
         String description;
         if (mTask.getDescription() == null) description = "No Description";
         else description = mTask.getDescription();
         mDescription.setText(description);
+
+        String site;
+        if (mTask.getMiniSite() == null) site = "No Minisite";
+        else site = mTask.getMiniSite().getName();
+        mMiniSiteName.setText(site);
+
+        if (mTask.getColor() != null) {
+            mParentActivity.setToolBarColor(Color.parseColor(mTask.getColor()),
+                    Color.parseColor(Utility.getSecondaryColor(mParentActivity, mTask.getColor())));
+
+            mBackgroundColor.setBackgroundColor(Color.parseColor(mTask.getColor()));
+            mCompleteButton.setBackgroundColor(Color.parseColor(mTask.getColor()));
+        }
     }
 
     private void setButtonListeners(View view){
@@ -146,11 +175,6 @@ public class TaskDetailFragment extends TaskAbstractFragment
     @Override
     public void submitListener() {}
 
-    public void unCompleteTask() {
-        Utility.hideKeyboard(mParentActivity, mLayout);
-        createTask(UNCOMPLETE, mTask);
-
-    }
 
     public void fieldReportButtonPressed() {
         if (mTask.getFieldReport() == null) {
@@ -192,5 +216,12 @@ public class TaskDetailFragment extends TaskAbstractFragment
             }
         });
         mNetworkManager.getRequestQueue().add(request);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Resources resources = mParentActivity.getResources();
+        mParentActivity.setToolBarColor(resources.getColor(R.color.ws_blue), resources.getColor(R.color.ws_title_bar));
     }
 }

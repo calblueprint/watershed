@@ -47,32 +47,12 @@
                 style="@style/TaskTextView"
                 android:id="@+id/create_site_address"
                 android:hint="@string/create_site_address"
+                android:maxLines="3"
+                android:minLines="1"
+                android:inputType="textMultiLine"
                 android:layout_toRightOf="@id/create_site_address_icon"
                 />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/create_site_address"
-                android:layout_toRightOf="@id/create_site_address_icon"
-                android:layout_marginTop="10dp"
-                >
-
-                <EditText
-                    style="@style/TaskTextView"
-                    android:id="@+id/create_site_city"
-                    android:hint="@string/create_site_city"
-                    android:layout_weight="3"
-                    />
-
-                <EditText
-                    style="@style/TaskTextView"
-                    android:id="@+id/create_site_state"
-                    android:hint="@string/create_site_state"
-                    android:layout_weight="3"
-                    />
-
-            </LinearLayout>
         </RelativeLayout>
 
         <RelativeLayout
@@ -94,6 +74,8 @@
                 android:hint="@string/description"
                 android:layout_toRightOf="@id/create_site_description_icon"
                 android:inputType="textMultiLine"
+                android:minLines="1"
+                android:maxLines="4"
                 />
         </RelativeLayout>
     </RelativeLayout>
