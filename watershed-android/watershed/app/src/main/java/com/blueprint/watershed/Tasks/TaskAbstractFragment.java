@@ -178,7 +178,7 @@ public abstract class TaskAbstractFragment extends Fragment {
 
     private void validateAndSubmit() {
         List<String> errorStrings = new ArrayList<String>();
-        
+
         if (mTitleField.getText().toString().length() == 0) {
             errorStrings.add("Title");
         }

@@ -222,10 +222,21 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
 
         List<String> errorStrings = new ArrayList<String>();
 
-        if (mTitleField.getText().toString().length() == 0) errorStrings.add("Title");
-        if (mDescriptionField.getText().toString().length() == 0) errorStrings.add("Description");
-        if (mAddressField.getText().toString().length() == 0) errorStrings.add("Address");
-        if (mPhotoList.size() < 1) errorStrings.add("Photos");
+        if (mTitleField.getText().toString().length() == 0) {
+            errorStrings.add("Title");
+        }
+
+        if (mDescriptionField.getText().toString().length() == 0) {
+            errorStrings.add("Description");
+        }
+
+        if (mAddressField.getText().toString().length() == 0) {
+            errorStrings.add("Address");
+        }
+
+        if (mPhotoList.size() < 1) {
+            errorStrings.add("Photos");
+        }
 
         if (errorStrings.size() > 0) Utility.setEmpty(mParentActivity, errorStrings);
         else submitMiniSiteRequest(miniSite);
