@@ -1,4 +1,5 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/standard_margin">
@@ -25,8 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_below="@id/name_field"
-            android:background="@color/light_gray"
-            />
+            android:background="@color/light_gray"/>
 
         <EditText
             android:id="@+id/email_field"
@@ -42,7 +42,7 @@
 
         <View
             android:id="@+id/second_divider"
-            android:layout_width="@dimen/button_large_width"
+            android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_below="@id/email_field"
             android:background="@color/light_gray"/>
@@ -62,7 +62,7 @@
 
         <View
             android:id="@+id/third_divider"
-            android:layout_width="@dimen/button_large_width"
+            android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_below="@id/password_field"
             android:background="@color/light_gray" />
