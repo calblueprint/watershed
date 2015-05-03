@@ -151,7 +151,9 @@ static NSString * const TASKS_URL = @"tasks";
     [self addAuthenticationParameters:parameters];
     NSMutableDictionary *taskJSON = [MTLJSONAdapter JSONDictionaryFromModel:task].mutableCopy;
     NSLog(@"%@", task.assigner.userId);
-    [taskJSON setObject:task.assignee.userId forKey:@"assignee_id"];
+    if (task.assignee) {
+        [taskJSON setObject:task.assignee.userId forKey:@"assignee_id"];
+    }
     [taskJSON setObject:task.assigner.userId forKey:@"assigner_id"];
     [taskJSON setObject:task.miniSite.miniSiteId forKey:@"mini_site_id"];
     [parameters setObject:taskJSON forKey:@"task"];

@@ -75,7 +75,7 @@ static NSString *CellIdentifier = @"Cell";
         //need to add urgent
         NSNumberFormatter *userFormatter = [[NSNumberFormatter alloc] init];
         [userFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
-        int isUrgentInt = [self isUrgent];
+//        int isUrgentInt = [self isUrgent];
 //        NSString *isUrgentString = [NSString stringWithFormat:@"%i", isUrgentInt];
         NSDictionary *taskJSON = @{
                                    @"title" : self.taskField.text,
@@ -186,7 +186,7 @@ static NSString *CellIdentifier = @"Cell";
             [datePicker addTarget:self action:@selector(datePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
             datePicker.tag = indexPath.row;
             self.dateField.inputView = datePicker;
-            self.dateField.placeholder = @"Required";
+            self.dateField.placeholder = @"Choose a due date";
             self.dateField.textColor = [UIColor wp_paragraph];
             self.dateField.font = [UIFont systemFontOfSize:16];
             cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:_dateField];
@@ -209,7 +209,7 @@ static NSString *CellIdentifier = @"Cell";
             break;
         }
         case 4: {
-            self.assigneeField.placeholder = @"Required";
+            self.assigneeField.placeholder = @"Choose an assignee";
             self.assigneeField.tag = 3;
             self.assigneeField.textColor = [UIColor wp_paragraph];
             self.assigneeField.font = [UIFont systemFontOfSize:16];
