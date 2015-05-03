@@ -12,6 +12,7 @@
 
 int WPButtonHeight = 75;
 
+
 @implementation WPTaskView
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -87,12 +88,19 @@ int WPButtonHeight = 75;
 }
 
 - (void)setUpActions {
-    [_completed setTitle:@"Mark as\nComplete" forState:UIControlStateNormal];
+    if (self.task.assignee != NULL) {
+        [_completed setTitle:@"Mark as\nComplete" forState:UIControlStateNormal];
+        [_completed setTitle:@"Completed" forState:UIControlStateSelected];
+        [_completed addTarget:self action:@selector(onClick) forControlEvents:UIControlEventTouchUpInside];
+    } else {
+        [_completed setTitle:@"Claim this\nTask" forState:UIControlStateNormal];
+        [_completed setTitle:@"Claimed" forState:UIControlStateSelected];
+        [_completed addTarget:self action:@selector(onClick) forControlEvents:UIControlEventTouchUpInside];
+    }
+
     [_completed setTitleColor:[UIColor wp_darkBlue] forState:UIControlStateNormal];
-    [_completed setTitle:@"Completed" forState:UIControlStateSelected];
     [_completed setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
     [_completed setBackgroundImage:[WPTaskView imageFromColor:[UIColor wp_lightGreen]] forState:UIControlStateSelected];
-    [_completed addTarget:self action:@selector(onClick) forControlEvents:UIControlEventTouchUpInside];
     [_addFieldReportButton setTitle:@"Add Field\nReport" forState:UIControlStateNormal];
     [_addFieldReportButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_siteLinkButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
@@ -125,7 +133,13 @@ int WPButtonHeight = 75;
 
     self.dueDate.text = dueDateString;
     self.taskDescription.text = task.taskDescription;
-    self.assigneeLabel.text = [NSString stringWithFormat:@"Assigned to %@ by %@", task.assignee.name, task.assigner.name];
+    NSString *assigneeText = @"";
+    if (task.assignee == NULL) {
+        assigneeText = [NSString stringWithFormat: @"Created by %@", task.assigner.name];
+    } else {
+        assigneeText = [NSString stringWithFormat:@"Assigned to %@ by %@", task.assignee.name, task.assigner.name];
+    }
+    self.assigneeLabel.text = assigneeText;
     self.title.text = task.title;
     if (!task.miniSite.name) {
         [self.siteLinkButton setTitle:@"Not assigned to a mini site" forState:UIControlStateNormal];
@@ -135,6 +149,7 @@ int WPButtonHeight = 75;
     if (task.completed) {
         [self.completed setSelected:YES];
     }
+    self.task = task;
 }
 
 - (void)updateConstraints {
