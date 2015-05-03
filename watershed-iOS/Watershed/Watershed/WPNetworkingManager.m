@@ -150,12 +150,14 @@ static NSString * const TASKS_URL = @"tasks";
     NSString *taskString = [WPNetworkingManager createURLWithEndpoint:TASKS_URL];
     [self addAuthenticationParameters:parameters];
     NSMutableDictionary *taskJSON = [MTLJSONAdapter JSONDictionaryFromModel:task].mutableCopy;
-    NSLog(@"%@", task.assigner.userId);
     if (task.assignee) {
         [taskJSON setObject:task.assignee.userId forKey:@"assignee_id"];
+    } else {
+        [taskJSON setObject:[NSNull null] forKey:@"assignee_id"];
     }
     [taskJSON setObject:task.assigner.userId forKey:@"assigner_id"];
     [taskJSON setObject:task.miniSite.miniSiteId forKey:@"mini_site_id"];
+    NSLog(@"%@", taskJSON);
     [parameters setObject:taskJSON forKey:@"task"];
     [self POST:taskString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         success();
