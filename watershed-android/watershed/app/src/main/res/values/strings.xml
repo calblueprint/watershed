@@ -56,6 +56,7 @@
     <string name="create_task_submit">Create Task</string>
     <string name="required">Required</string>
     <string name="assignee">Assign to user</string>
+
     <string name="pick_user">Pick User</string>
     <string name="loading_users">Loading Users..</string>
     <string name="pick_site">Pick MiniSite</string>
@@ -89,6 +90,7 @@
     <string name="edit_info_text">General Information</string>
     <string name="edit_password_text">Change Password</string>
     <string name="edit_save_text">Confirm Changes</string>
+    <string name="manage_profile">Manage User</string>
 
     <!-- Task Index -->
     <string name="no_tasks">Looks like you don\'t have any tasks!\nSwipe up to refresh.</string>

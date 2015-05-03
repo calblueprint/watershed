@@ -29,9 +29,9 @@ public abstract class BaseRequest extends JsonObjectRequest {
     private Response.Listener listener;
     private Response.Listener errorListener;
 
-//    private static final String baseURL = "http://192.168.0.103:3000/api/v1/";
+    private static final String baseURL = "http://192.168.0.109:3000/api/v1/";
 //    private static final String baseURL = "https://intense-reaches-1457.herokuapp.com/api/v1/";
-    private static final String baseURL = "https://floating-bayou-8262.herokuapp.com/api/v1/";
+//    private static final String baseURL = "https://floating-bayou-8262.herokuapp.com/api/v1/";
 
     public BaseRequest(int method, String url, JSONObject jsonRequest,
                        final Response.Listener listener, final Response.Listener<APIError> errorListener,

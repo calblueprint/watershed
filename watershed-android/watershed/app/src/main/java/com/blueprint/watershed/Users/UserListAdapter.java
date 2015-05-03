@@ -37,6 +37,8 @@ public class UserListAdapter extends ArrayAdapter<User> {
             holder = new UserIndexListHolder();
 
             holder.mName = (TextView) row.findViewById(R.id.user_name);
+
+            row.setTag(holder);
         } else {
             holder = (UserIndexListHolder) row.getTag();
         }
