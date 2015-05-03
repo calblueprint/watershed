@@ -26,7 +26,6 @@
         android:layout_marginBottom="10dp"
         android:layout_alignParentBottom="true"
         android:text="Top Label"
-        android:textSize="16sp"
         android:textColor="@color/white"
         />
 </RelativeLayout>
