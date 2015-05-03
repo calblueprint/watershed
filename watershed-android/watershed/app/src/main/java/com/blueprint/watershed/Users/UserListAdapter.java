@@ -43,21 +43,23 @@ public class UserListAdapter extends ArrayAdapter<User> {
             holder = (UserIndexListHolder) row.getTag();
         }
 
-        final View rowCopy = row;
-
-        User user = getItem(position);
+        final User user = getItem(position);
         holder.mName.setText(user.getName());
         holder.mName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (holder.mToolbar.getVisibility() == View.GONE) {
-                    Utility.expand(rowCopy);
+                    Utility.expand(holder.mToolbar);
+                    user.setExpanded(true);
                 } else {
-                    Utility.collapse(rowCopy);
+                    Utility.collapse(holder.mToolbar);
+                    user.setExpanded(false);
                 }
             }
         });
-        holder.mToolbar.setVisibility(View.GONE);
+        if (user.getExpanded()) { holder.mToolbar.setVisibility(View.VISIBLE); }
+        else { holder.mToolbar.setVisibility(View.GONE); }
+
 
         return row;
     }

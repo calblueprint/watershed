@@ -33,6 +33,8 @@ public class User implements APIObject {
     private String mDeviceType;
     private String mRegistrationId;
 
+    public boolean isExpanded = false;
+
     public static String MANAGER = "Manager";
     public static String COMMUNITY_MEMBER = "Community Member";
     public static String EMPLOYEE = "Employee";
@@ -102,5 +104,11 @@ public class User implements APIObject {
 
     @JsonIgnore
     public void setLayoutType(String type) { mHeaderType = type; }
+
+    @JsonIgnore
+    public boolean getExpanded() { return isExpanded; }
+
+    @JsonIgnore
+    public void setExpanded(boolean expanded) { isExpanded = expanded; }
 
 }
