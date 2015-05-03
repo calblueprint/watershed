@@ -62,6 +62,9 @@ static int PROFILE_PIC_HEIGHT = 65;
     if (user.phoneNumber) {
         [_userInformationArray addObject:user.phoneNumber];
     }
+    if (user.role) {
+        [_userInformationArray addObject:user.role];
+    }
 
     self.infoTableView.delegate = self;
     self.infoTableView.dataSource = self;
@@ -141,6 +144,11 @@ static int PROFILE_PIC_HEIGHT = 65;
                 [cell setInfoLabel:infoLabel];
             }
             break;
+        }
+        case 4: {
+            if (_user.role) {
+                
+            }
         }
         default: {
             //do nothing
