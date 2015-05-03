@@ -16,30 +16,61 @@
 
 @property (nonatomic) WPMyTasksTableView *tableView;
 @property (nonatomic) WPUser *user;
+@property (nonatomic) NSMutableArray *sites;
+@property (nonatomic) NSNumber *userId;
 @end
 
 @implementation WPUnclaimedTasksTableController
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self requestAndLoadMyTasks];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self requestAndLoadMyTasks];
+}
 
 #pragma mark - Networking Methods
 
-- (void)requestAndLoadMyTasks {
-    
-    _user = [[WPUser alloc] init];
-    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
-    [f setNumberStyle:NSNumberFormatterDecimalStyle];
-    _user.userId = [f numberFromString:[[WPNetworkingManager sharedManager] keyChainStore][@"user_id"]];
-    [[WPNetworkingManager sharedManager] requestUserWithUser:_user parameters:[[NSMutableDictionary alloc] init] success:^(WPUser *user) {
-        _user = user;
+- (void)getUser {
+    NSNumberFormatter *userFormatter = [[NSNumberFormatter alloc] init];
+    [userFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    _userId = [userFormatter numberFromString:[[WPNetworkingManager sharedManager] keyChainStore][@"user_id"]];
+}
+
+- (void)requestAndLoadMySites {
+    __weak __typeof(self)weakSelf = self;
+    [[WPNetworkingManager sharedManager] requestMySitesListWithUser:_userId parameters: [[NSMutableDictionary alloc] init] success:^(NSMutableArray *sites) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        for (WPSite *s in sites) {
+            [strongSelf.sites addObject:s.siteId];
+        }
     }];
+}
+
+
+- (void)requestAndLoadMyTasks {
+    [self getUser];
+    [self requestAndLoadMySites];
 
     __weak __typeof(self)weakSelf = self;
     [[WPNetworkingManager sharedManager] requestTasksListWithParameters:[[NSMutableDictionary alloc] init] success:^(NSMutableArray *tasksList) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         NSMutableArray *toBeRemoved = [[NSMutableArray alloc] init];
         for (WPTask *t in tasksList) {
-            if (t.miniSite.site.siteId) {
+            if ([strongSelf.sites indexOfObject:t.miniSite.site.siteId] != 0 ||  t.assignee != NULL) {
                 [toBeRemoved addObject:t];
+            } else {
+                NSLog(@"%lu", (unsigned long)[strongSelf.sites indexOfObject:t.miniSite.site.siteId]);
             }
         }
         [tasksList removeObjectsInArray:toBeRemoved];

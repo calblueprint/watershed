@@ -248,6 +248,27 @@ static NSString * const TASKS_URL = @"tasks";
     }];
 }
 
+- (void)requestMySitesListWithUser:(NSNumber *)userId parameters:(NSMutableDictionary *)parameters success:(void (^)(NSMutableArray *sitesList))success {
+    NSString *myUserString = [NSString stringWithFormat:@"%@/%@/%@",USERS_URL, userId, SITES_URL];
+    NSString *userString = [WPNetworkingManager createURLWithEndpoint:myUserString];
+    
+    [self addAuthenticationParameters:parameters];
+    
+    [self GET:userString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSArray *sitesListJSON = (NSArray *)responseObject[@"sites"];
+        NSMutableArray *sitesList = [[NSMutableArray alloc] init];
+        for (NSDictionary *siteJSON in sitesListJSON) {
+            WPSite *site = [MTLJSONAdapter modelOfClass:WPTask.class fromJSONDictionary:siteJSON error:nil];
+            [sitesList addObject:site];
+        }
+        success(sitesList);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load user sites." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
+}
+
 
 - (void)requestMiniSitesListWithParameters:(NSMutableDictionary *)parameters success:(void (^)(NSMutableArray *sitesList))success {
     NSString *sitesString = [WPNetworkingManager createURLWithEndpoint:MINI_SITES_URL];
