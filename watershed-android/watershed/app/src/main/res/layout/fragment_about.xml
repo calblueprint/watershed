@@ -1,43 +1,59 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="30dp"
     android:background="@color/medium_gray"
     >
-
-    <TextView
-        android:id="@+id/about_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:gravity="center"
-        android:text="@string/watershed_title"/>
-
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/wide_margin"
-        android:layout_below="@id/about_title"
-        android:gravity="center"
-        android:textSize="14sp"
-        android:text="@string/about_us" />
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="30dp">
+            <TextView
+                android:id="@+id/about_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:text="@string/watershed_title"/>
 
-    <TextView
-        android:id="@+id/watershed_link"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/watershed_link"
-        android:textStyle="bold"
-        android:textColorLink="@color/ws_blue"/>
+            <TextView
+                android:id="@+id/about_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/wide_margin"
+                android:layout_below="@id/about_title"
+                android:gravity="center"
+                android:textSize="14sp"
+                android:text="@string/about_us"
+                android:layout_marginBottom="60dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/watershed_link"
-        android:layout_centerHorizontal="true"
-        android:text="@string/learn_more" />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                >
+                <TextView
+                    android:id="@+id/learn_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/learn_more" />
+
+                <TextView
+                    android:id="@+id/watershed_link"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/learn_more"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/watershed_link"
+                    android:textStyle="bold"
+                    android:textColorLink="@color/ws_blue"/>
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>
