@@ -397,9 +397,4 @@ public class LandingPageActivity extends Activity implements View.OnClickListene
         super.onSaveInstanceState(savedInstanceState);
         mUiHelper.onSaveInstanceState(savedInstanceState);
     }
-
-    // Setters
-    public void setLoginButton(Button loginButton) { mLoginButton = loginButton; }
-    public void setFacebookButton(com.facebook.widget.LoginButton facebookButton) { mFacebookButton = facebookButton; }
-    public void setSignUpButton(Button signUpButton) { mSignUpButton = signUpButton; }
 }

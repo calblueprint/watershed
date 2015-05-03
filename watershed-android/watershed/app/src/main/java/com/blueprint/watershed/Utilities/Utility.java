@@ -6,17 +6,24 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.blueprint.watershed.R;
+import com.google.android.gms.maps.model.LatLng;
 
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by charlesx on 2/23/15.
@@ -122,6 +129,40 @@ public class Utility {
         builder.show();
     }
 
+    /**
+     * Get latitude/longitude of an address
+     * @param context Context of application
+     * @param address Address of place to get lat/lng
+     * @return returns a LatLng object
+     */
+    public static LatLng getLatLng(Context context, String address) {
+        Geocoder coder = new Geocoder(context);
+        List<Address> addresses;
+        try {
+            addresses = coder.getFromLocationName(address, 1);
+            if (address == null) {
+                return null;
+            }
+            Address location = addresses.get(0);
+            return new LatLng(location.getLatitude(), location.getLongitude());
+        } catch (IOException e ) {
+            Log.i("Address exception", e.toString());
+        }
+
+        return null;
+    }
+
+    /**
+     * Sets Empty Error messages.
+     * @param errors The field names (eg. City, Street...)
+     */
+    public static void setEmpty(Context context, List<String> errors) {
+        String errorString = "";
+        for (String error : errors) errorString += error + ", ";
+        errorString = errorString.replaceAll(", $", " ");
+        errorString += "cannot be blank!";
+        Toast.makeText(context, errorString, Toast.LENGTH_SHORT).show();
+    }
 
     public static String getSecondaryColor(Context context, String primary) {
         if (primary == null) return "#1976D2";

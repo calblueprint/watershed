@@ -80,13 +80,9 @@ public class Site implements APIObject {
     public Boolean getSubscribed() { return mSubscribed; }
 
     @JsonIgnore
-    public String getLocation() {
-        return String.format("%s\n%s, %s %d", getStreet(), getCity(), getState(), getZipCode());
-    }
-
-    @JsonIgnore
     public String getLocationOneLine() {
-        return String.format("%s, %s, %s", getStreet(), getCity(), getState());
+        if (getCity() != null) return String.format("%s, %s, %s", getStreet(), getCity(), getState());
+        else return getStreet();
     }
 
     @JsonIgnore
