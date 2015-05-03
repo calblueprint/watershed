@@ -35,8 +35,6 @@ public class User implements APIObject {
 
     public static String MANAGER = "Manager";
     public static String COMMUNITY_MEMBER = "Community Member";
-    public static String EMPLOYEE = "Employee";
-
 
     private ArrayList<FieldReport> mFieldReports;
 
@@ -64,8 +62,7 @@ public class User implements APIObject {
 
     public String getRoleString() {
         if (isManager()) return MANAGER;
-        else if (isCommunityMember()) return COMMUNITY_MEMBER;
-        else return EMPLOYEE;
+        else return COMMUNITY_MEMBER;
     }
 
     // Getters

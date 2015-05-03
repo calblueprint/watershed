@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  enum role: [ :community_member, :employee, :manager ]
+  enum role: [ :community_member, :manager ]
   enum device_type: [ :android, :ios ]
 
   has_many :field_reports
