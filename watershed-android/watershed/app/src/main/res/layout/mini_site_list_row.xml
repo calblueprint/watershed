@@ -29,14 +29,4 @@
         android:textSize="16sp"
         android:textColor="@color/white"
         />
-
-    <TextView
-        android:id="@+id/cover_photo_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="6dp"
-        android:text="Label"
-        android:textSize="12sp"
-        android:textColor="@color/white"
-        />
 </RelativeLayout>

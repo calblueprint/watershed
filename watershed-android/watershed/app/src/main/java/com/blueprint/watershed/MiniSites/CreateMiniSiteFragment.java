@@ -6,10 +6,8 @@ import android.view.MenuItem;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Networking.MiniSites.CreateMiniSiteRequest;
-import com.blueprint.watershed.Sites.Site;
 import com.blueprint.watershed.R;
-import com.blueprint.watershed.Sites.SiteList.AllSiteListFragment;
-import com.blueprint.watershed.Sites.SiteList.SiteListAbstractFragment;
+import com.blueprint.watershed.Sites.Site;
 import com.blueprint.watershed.Sites.SiteViewPagerFragment;
 import com.blueprint.watershed.Utilities.Utility;
 
