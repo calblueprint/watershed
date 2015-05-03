@@ -8,8 +8,7 @@
         style="@style/CoverPhotoPagerView"
         android:id="@+id/cover_photo_pager_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent" />
 
     <View
         android:layout_width="match_parent"
