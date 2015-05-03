@@ -67,10 +67,8 @@
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         NSMutableArray *toBeRemoved = [[NSMutableArray alloc] init];
         for (WPTask *t in tasksList) {
-            if ([strongSelf.sites indexOfObject:t.miniSite.site.siteId] != 0 ||  t.assignee != NULL) {
+            if ([strongSelf.sites indexOfObject:t.miniSite.site.siteId] != 0 ||  t.assignee != nil || [strongSelf.sites count] == 0) {
                 [toBeRemoved addObject:t];
-            } else {
-                NSLog(@"%lu", (unsigned long)[strongSelf.sites indexOfObject:t.miniSite.site.siteId]);
             }
         }
         [tasksList removeObjectsInArray:toBeRemoved];
