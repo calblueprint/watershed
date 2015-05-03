@@ -25,26 +25,10 @@ Rails.application.routes.draw do
       end
 
       namespace :managers do
-        resources :sites, except: [:new, :edit] do
-          member do
-            post :subscribe
-            delete :unsubscribe
-          end
-
-          collection do
-            get :search
-          end
-        end
-
-        resources :tasks, except: [:new, :edit] do
-          member do
-            post :claim
-          end
-        end
-
-        resources :mini_sites,    except: [:new, :edit]
+        resources :sites,      except: [:new, :edit]
+        resources :tasks,      except: [:new, :edit]
+        resources :mini_sites, except: [:new, :edit]
       end
-
 
       resources :sites, except: [:new, :edit] do
         member do

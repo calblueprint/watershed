@@ -1,4 +1,4 @@
-class Api::V1::TasksController < Api::V1::BaseController
+class Api::V1::TasksController < BaseController
   load_and_authorize_resource param_method: :task_params
 
   def create

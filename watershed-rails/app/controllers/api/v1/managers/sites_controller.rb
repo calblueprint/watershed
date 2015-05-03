@@ -1,4 +1,4 @@
-class Api::V1::SitesController < Api::V1::BaseController
+class Api::V1::SitesController < BaseController
   load_and_authorize_resource param_method: :site_params
 
   def create
