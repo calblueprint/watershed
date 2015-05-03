@@ -23,7 +23,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Response;
-import com.blueprint.watershed.Users.AboutFragment;
 import com.blueprint.watershed.AbstractFragments.FloatingActionMenuAbstractFragment;
 import com.blueprint.watershed.FieldReports.FieldReportFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteAbstractFragment;
@@ -46,10 +45,11 @@ import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Tasks.TaskDetailFragment;
 import com.blueprint.watershed.Tasks.TaskList.UserTaskListFragment;
 import com.blueprint.watershed.Tasks.TaskViewPagerFragment;
+import com.blueprint.watershed.Users.AboutFragment;
+import com.blueprint.watershed.Users.ManageViewPagerFragment;
 import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Users.UserFieldReportFragment;
 import com.blueprint.watershed.Users.UserFragment;
-import com.blueprint.watershed.Users.UserListFragment;
 import com.blueprint.watershed.Users.UserMiniSiteFragment;
 import com.blueprint.watershed.Users.UserTaskFragment;
 import com.blueprint.watershed.Utilities.Utility;
@@ -89,9 +89,9 @@ public class MainActivity extends ActionBarActivity
     private NavigationRowAdapter mNavAdapter;
 
     // MenuItem
-    private String mTitles[] = { "Tasks", "Sites", "About", "Manage", "Logout" };
+    private String mTitles[] = { "Tasks", "Sites", "About", "Manage" };
     private int mIcons[] = { R.drawable.tasks_dark, R.drawable.sites_dark, R.drawable.about_dark,
-                             R.drawable.profile_dark, R.drawable.logout_dark };
+                             R.drawable.profile_dark };
 
     private RelativeLayout mUserInfo;
     private TextView mUserName;
@@ -317,7 +317,7 @@ public class MainActivity extends ActionBarActivity
         else if (f instanceof UserFragment)               setTitle("Profile");
         else if (f instanceof MiniSiteAbstractFragment ||
                  f instanceof MiniSiteFragment)           setTitle("MiniSite");
-        else if (f instanceof UserListFragment)           setTitle("Manage");
+        else if (f instanceof ManageViewPagerFragment)    setTitle("Manage");
     }
 
     public void replaceFragment(Fragment newFragment) {
@@ -377,7 +377,6 @@ public class MainActivity extends ActionBarActivity
         mDrawerLayout.setStatusBarBackgroundColor(getResources().getColor(R.color.ws_blue));
         mDrawer = (RelativeLayout) findViewById(R.id.left_drawer);
         mDrawerList = (ListView) findViewById(R.id.left_drawer_list_view);
-        String titles[] = { "Tasks", "Sites", "About", "Manage", "Logout"};
 
         List<MenuRow> menuItems = new ArrayList<>();
         for (int i = 0; i < mTitles.length; i ++)
@@ -440,7 +439,7 @@ public class MainActivity extends ActionBarActivity
                 break;
             case 3:
                 mNavAdapter.setHighlighted("Manage");
-                replaceFragment(UserListFragment.newInstance());
+                replaceFragment(ManageViewPagerFragment.newInstance());
                 break;
             case 4:
                 logoutCurrentUser(this);

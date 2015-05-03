@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.R;
-import com.blueprint.watershed.Tasks.TaskList.AllTaskListFragment;
 import com.blueprint.watershed.Tasks.TaskList.TaskListTransformer;
 
 import com.blueprint.watershed.Tasks.TaskList.UnclaimedTaskListFragment;
@@ -35,6 +34,14 @@ public class TaskViewPagerFragment extends ViewPagerAbstractFragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         mParentActivity = (MainActivity) getActivity();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_view_pager, container, false);
+        initializeViews(view);
+        return view;
     }
 
     @Override
