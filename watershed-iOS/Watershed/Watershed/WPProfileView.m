@@ -20,7 +20,6 @@
 @property (nonatomic) UIImageView *profilePictureView;
 @property (nonatomic) UILabel *nameLabel;
 @property (nonatomic) NSMutableArray *userInformationArray;
-@property (nonatomic) UIButton *promoteButton;
 
 @end
 

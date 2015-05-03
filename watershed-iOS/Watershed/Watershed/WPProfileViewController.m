@@ -9,6 +9,7 @@
 #import "WPProfileViewController.h"
 #import "WPSettingsTableViewController.h"
 #import "WPUser.h"
+#import "WPPromoteViewController.h"
 #import "WPNetworkingManager.h"
 
 @interface WPProfileViewController ()
@@ -37,6 +38,7 @@
         [self.view stopIndicator];
     }];
     
+    [self.view.promoteButton addTarget:self action:@selector(promoteUserList) forControlEvents:UIControlEventTouchUpInside];
     [super viewDidLoad];
 }
 
@@ -52,6 +54,11 @@
     WPSettingsTableViewController *settingsTableViewController = [[WPSettingsTableViewController alloc] init];
     settingsTableViewController.user = self.user;
     [self.navigationController pushViewController:settingsTableViewController animated:YES];
+}
+
+- (void)promoteUserList {
+    WPPromoteViewController *promoteViewController = [[WPPromoteViewController alloc] init];
+    [[self navigationController] pushViewController:promoteViewController animated:YES];
 }
 
 
