@@ -72,9 +72,9 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
         mSiteTitle.setText(site.getName());
 
         mSiteDescription = (TextView) view.findViewById(R.id.site_description);
-        mShowMore = (Button) view.findViewById(R.id.read_more);
         mSiteDescription.setText(site.getTrimmedText());
 
+        mShowMore = (Button) view.findViewById(R.id.read_more);
         if (site.shouldShowDescriptionDialog()) {
             mShowMore.setOnClickListener(new View.OnClickListener() {
                 @Override

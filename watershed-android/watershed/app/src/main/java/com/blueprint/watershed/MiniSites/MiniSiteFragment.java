@@ -73,16 +73,29 @@ public class MiniSiteFragment extends FloatingActionMenuAbstractFragment
         setFieldReports(miniSite.getFieldReports());
     }
 
-    public void configureViewWithMiniSite(View view, MiniSite miniSite) {
+    public void configureViewWithMiniSite(View view, final MiniSite miniSite) {
         mCoverView = (CoverPhotoPagerView)view.findViewById(R.id.cover_photo_pager_view);
         mCoverView.configureWithPhotos(miniSite.getPhotos());
 
         mName = (TextView) view.findViewById(R.id.mini_site_name);
         mName.setText(miniSite.getName());
 
-        mReadMore = (Button) view.findViewById(R.id.read_more);
         mDescription = (TextView) view.findViewById(R.id.mini_site_description);
-        mDescription.setText(miniSite.getDescription());
+        mDescription.setText(miniSite.getTrimmedText());
+        mReadMore = (Button) view.findViewById(R.id.read_more);
+        if (miniSite.shouldShowDescriptionDialog()) {
+            mReadMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Utility.showAndBuildDialog(mParentActivity, null, miniSite.getDescription(), "Back", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }, null);
+                }
+            });
+        }
 
         mLocation = (TextView) view.findViewById(R.id.mini_site_location);
         mLocation.setText(miniSite.getLocationOneLine());

@@ -15,8 +15,7 @@
         android:layout_below="@id/cover_photo_pager_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/hella_wide_margin"
-        android:orientation="vertical">
+        android:padding="@dimen/hella_wide_margin">
 
         <TextView
             android:id="@+id/mini_site_name"
@@ -62,5 +61,17 @@
             android:textSize="14sp"
             android:text="Site Description"
             />
+
+        <Button
+            android:id="@+id/read_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mini_site_description"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:padding="10dp"
+            android:textColor="@color/ws_blue"
+            android:background="@drawable/blue_border_button"
+            android:text="@string/read_more"/>
     </RelativeLayout>
 </RelativeLayout>
