@@ -87,7 +87,7 @@
         android:layout_below="@id/sign_up_with_email_layout"
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/border_button"
+        android:background="@drawable/white_border_button"
         android:text="@string/sign_up_fragment_login_button"
         android:textColor="@color/white"
         />

@@ -48,7 +48,7 @@
         android:layout_below="@id/login_with_email_layout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:background="@drawable/border_button"
+        android:background="@drawable/white_border_button"
         android:textSize="14sp"
         android:text="@string/login_fragment_login_button"
         android:textColor="@color/white"

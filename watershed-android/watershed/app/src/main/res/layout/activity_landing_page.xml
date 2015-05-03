@@ -81,7 +81,7 @@
                 android:text="@string/landing_page_sign_up_button"
                 android:textColor="@color/white"
                 android:layout_weight="0.5"
-                android:background="@drawable/border_button"
+                android:background="@drawable/white_border_button"
                 />
         </LinearLayout>
 
