@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.ConnectivityManager;
@@ -22,7 +23,6 @@ import com.blueprint.watershed.R;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -79,7 +79,7 @@ public class Utility {
     /**
      * Checks if device is connected to the internet....
      * @param context - Context of call
-     * @return
+     * @return Boolean whether or not device is connected to internet
      */
     public static boolean isConnectedToInternet(Context context) {
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -91,7 +91,7 @@ public class Utility {
      * Converts your DP pixels into regular pixels!
      * @param context Context of application
      * @param dp The number you want to convert to pixels
-     * @return
+     * @return int representing number of pixels
      */
     public static int convertDptoPix(Context context, int dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
@@ -164,10 +164,22 @@ public class Utility {
         Toast.makeText(context, errorString, Toast.LENGTH_SHORT).show();
     }
 
-    public static String getSecondaryColor(Context context, String primary) {
-        if (primary == null) return "#1976D2";
-        String[] COLORS = context.getResources().getStringArray(R.array.colors);
-        String[] SECONDARY_COLORS = context.getResources().getStringArray(R.array.secondary_colors);
-        return SECONDARY_COLORS[Arrays.asList(COLORS).indexOf(primary)];
+    public static int getSecondaryColor(Context context, String primary) {
+        if (primary == null) {
+            return Color.parseColor("#81B4DE");
+        }
+        int[] COLORS = context.getResources().getIntArray(R.array.colors);
+        int[] SECONDARY_COLORS = context.getResources().getIntArray(R.array.secondary_colors);
+        int color = Color.parseColor(primary);
+        int foundColor = -1;
+
+        for (int i = 0; i < COLORS.length; i++) {
+            if (COLORS[i] == color) foundColor = i;
+        }
+
+        if (foundColor == -1) {
+            return Color.parseColor("#81B4DE");
+        }
+        return SECONDARY_COLORS[foundColor];
     }
 }
