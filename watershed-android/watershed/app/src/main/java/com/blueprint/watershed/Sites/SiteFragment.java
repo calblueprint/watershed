@@ -89,8 +89,6 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
             });
         }
 
-
-
         mSiteAddress = (TextView) view.findViewById(R.id.site_location);
         mSiteAddress.setText(site.getLocationOneLine());
     }

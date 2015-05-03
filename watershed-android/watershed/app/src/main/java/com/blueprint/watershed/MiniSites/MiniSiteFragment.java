@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.Response;
@@ -48,13 +49,21 @@ public class MiniSiteFragment extends FloatingActionMenuAbstractFragment
     private FloatingActionButton mEditButton;
     private FloatingActionButton mFieldReportButton;
 
+    // Header Views
+
+    private CoverPhotoPagerView mCoverView;
+    private TextView mName;
+    private TextView mDescription;
+    private TextView mLocation;
+    private Button mReadMore;
+
+
     public static MiniSiteFragment newInstance(Site site, MiniSite miniSite) {
         MiniSiteFragment miniSiteFragment = new MiniSiteFragment();
         miniSiteFragment.setMiniSite(miniSite);
         miniSiteFragment.setSite(site);
         return miniSiteFragment;
     }
-
 
     public void setSite(Site site) { mSite = site; }
 
@@ -65,10 +74,19 @@ public class MiniSiteFragment extends FloatingActionMenuAbstractFragment
     }
 
     public void configureViewWithMiniSite(View view, MiniSite miniSite) {
-        ((CoverPhotoPagerView)view.findViewById(R.id.cover_photo_pager_view)).configureWithPhotos(miniSite.getPhotos());
-        ((TextView) view.findViewById(R.id.mini_site_name)).setText(miniSite.getName());
-        ((TextView) view.findViewById(R.id.mini_site_description)).setText(miniSite.getDescription());
-        ((TextView) view.findViewById(R.id.mini_site_location)).setText(miniSite.getLocationOneLine());
+        mCoverView = (CoverPhotoPagerView)view.findViewById(R.id.cover_photo_pager_view);
+        mCoverView.configureWithPhotos(miniSite.getPhotos());
+
+        mName = (TextView) view.findViewById(R.id.mini_site_name);
+        mName.setText(miniSite.getName());
+
+        mReadMore = (Button) view.findViewById(R.id.read_more);
+        mDescription = (TextView) view.findViewById(R.id.mini_site_description);
+        mDescription.setText(miniSite.getDescription());
+
+        mLocation = (TextView) view.findViewById(R.id.mini_site_location);
+        mLocation.setText(miniSite.getLocationOneLine());
+
     }
 
     @Override
