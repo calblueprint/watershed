@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.android.volley.Response;
@@ -22,7 +21,6 @@ import com.blueprint.watershed.Networking.Users.DeleteUserRequest;
 import com.blueprint.watershed.Networking.Users.UpdateUserRequest;
 import com.blueprint.watershed.Networking.Users.UsersRequest;
 import com.blueprint.watershed.R;
-import com.blueprint.watershed.Views.ExpandAnimation;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -79,20 +77,6 @@ public class UserListFragment extends Fragment {
         mAdapter = new UserListAdapter(mParentActivity, mUsers);
         mListView = (ListView) mParentActivity.findViewById(R.id.list);
         mListView.setAdapter(mAdapter);
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                User user = mAdapter.getItem(position);
-
-                View toolbar = view.findViewById(R.id.user_options);
-
-                // Creating the expand animation for the item
-                ExpandAnimation expandAni = new ExpandAnimation(toolbar, 500);
-
-                // Start the animation on the toolbar
-                toolbar.startAnimation(expandAni);
-            }
-        });
 
         mSwipeLayout = (SwipeRefreshLayout) mParentActivity.findViewById(R.id.user_swipe_container);
         mNoUsers = (SwipeRefreshLayout) mParentActivity.findViewById(R.id.no_user_layout);
@@ -122,7 +106,7 @@ public class UserListFragment extends Fragment {
     private void presetUsers() {
         List<User> users = mParentActivity.getUsers();
         if (users != null && users.size() > 0) setUsers(users);
-        else if (!mShouldRequest)makeUsersRequest(null);
+        else if (!mShouldRequest) makeUsersRequest(null);
     }
 
     private void makeUsersRequest(final SwipeRefreshLayout layout) {

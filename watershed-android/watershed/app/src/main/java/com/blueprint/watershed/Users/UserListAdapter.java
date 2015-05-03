@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Utilities.Utility;
 
 import java.util.List;
 
@@ -31,30 +32,38 @@ public class UserListAdapter extends ArrayAdapter<User> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
-        UserIndexListHolder holder;
+        final UserIndexListHolder holder;
         if (row == null) {
             row = mActivity.getLayoutInflater().inflate(R.layout.user_index_list_row, parent, false);
-
             holder = new UserIndexListHolder();
-
             holder.mName = (TextView) row.findViewById(R.id.user_name);
-
+            holder.mToolbar = (LinearLayout) row.findViewById(R.id.user_options);
             row.setTag(holder);
         } else {
             holder = (UserIndexListHolder) row.getTag();
         }
 
-        View toolbar = row.findViewById(R.id.user_options);
-        ((LinearLayout.LayoutParams) toolbar.getLayoutParams()).bottomMargin = -50;
-        toolbar.setVisibility(View.GONE);
+        final View rowCopy = row;
 
         User user = getItem(position);
         holder.mName.setText(user.getName());
+        holder.mName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (holder.mToolbar.getVisibility() == View.GONE) {
+                    Utility.expand(rowCopy);
+                } else {
+                    Utility.collapse(rowCopy);
+                }
+            }
+        });
+        holder.mToolbar.setVisibility(View.GONE);
 
         return row;
     }
 
     static class UserIndexListHolder {
         TextView mName;
+        LinearLayout mToolbar;
     }
 }

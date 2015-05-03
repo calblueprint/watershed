@@ -1,9 +1,9 @@
-package com.blueprint.watershed.Views;
+package com.blueprint.watershed.Views.Animations;
 
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
-import android.widget.LinearLayout.LayoutParams;
+import android.widget.RelativeLayout.LayoutParams;
 
 /**
  * Created by maxwolffe on 4/28/15.

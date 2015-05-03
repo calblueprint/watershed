@@ -1,5 +1,7 @@
 package com.blueprint.watershed.Utilities;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -16,6 +18,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
@@ -181,5 +184,55 @@ public class Utility {
             return Color.parseColor("#81B4DE");
         }
         return SECONDARY_COLORS[foundColor];
+    }
+
+    //
+    // ANIMATORS
+    //
+
+    public static void expand(View view) {
+        view.setVisibility(View.VISIBLE);
+
+        final int width = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        final int height = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+
+        view.measure(width, height);
+
+        ValueAnimator mAnimator = slideAnimator(view, 0, view.getMeasuredHeight());
+        mAnimator.start();
+    }
+
+    public static void collapse(final View view) {
+        ValueAnimator mAnimator = slideAnimator(view, view.getHeight(), 0);
+        mAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {}
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                view.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {}
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {}
+        });
+        mAnimator.start();
+    }
+
+    public static ValueAnimator slideAnimator(final View view, int start, int end) {
+        final ValueAnimator animator = ValueAnimator.ofInt(start, end);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int value = (Integer) animator.getAnimatedValue();
+                ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+                layoutParams.height = value;
+                view.setLayoutParams(layoutParams);
+            }
+        });
+        return animator;
     }
 }

@@ -1,13 +1,15 @@
 package com.blueprint.watershed.Users;
 
-import android.view.View;
-import com.blueprint.watershed.R;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+
+import com.blueprint.watershed.R;
 import com.blueprint.watershed.Views.Material.SlidingTabLayout;
 import com.blueprint.watershed.Views.ViewPagerAbstractFragment;
 
 /**
  * Created by max wolffe on 4/26/15.
+ * View pager for the manage section
  */
 public class ManageViewPagerFragment extends ViewPagerAbstractFragment {
 
