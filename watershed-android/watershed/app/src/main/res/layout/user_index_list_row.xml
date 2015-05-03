@@ -1,26 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="30dp">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"/>
+        android:text="test text"
+        android:padding="10dp"/>
 
-    <LinearLayout android:id="@+id/user_options"
-        android:layout_marginBottom="-20dp"
-        android:visibility="gone"
-        android:layout_height="20dp"
-        android:layout_width="fill_parent">
-        <Button android:id="@+id/doSomething1"
-            android:layout_height="20dp"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/user_options"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_below="@id/user_name"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/doSomething1"
+            android:layout_height="50dp"
+            android:layout_width="fill_parent"
+            android:background="@color/facebook_blue"
+            android:layout_weight="1"
+            android:text="Harder"/>
+
+        <Button
+            android:id="@+id/doSomething2"
+            android:layout_height="50dp"
+            android:layout_width="fill_parent"
+            android:layout_toRightOf="@id/doSomething1"
+            android:background="@color/red_500"
+            android:layout_weight="1"
             android:text="Harder"/>
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>
