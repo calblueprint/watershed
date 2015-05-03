@@ -17,7 +17,7 @@
 #
 
 class Task < ActiveRecord::Base
-  default_scope -> { order 'updated_at DESC' }
+  default_scope -> { where("created_at > :date", date: 4.weeks.ago).order("updated_at DESC") }
   scope :unassigned, -> { where("assignee_id IS NULL") }
   scope :completed, -> { where(complete: true) }
   scope :for_mini_sites, -> (mini_sites) { where(mini_site: mini_sites) }
@@ -43,6 +43,12 @@ class Task < ActiveRecord::Base
 
   before_create :add_color
 
+  validates :title, presence: true
+  validates :description, presence: true
+  validates :mini_site_id, presence: true
+  validates :assigner_id, presence: true
+  validates :due_date, presence: true
+
   def send_notifications
     if assignee.blank?
       SendNotificationJob.new.async.perform(mini_site.site.users, NEW_UNASSIGNED_TASK, self)
@@ -57,6 +63,11 @@ class Task < ActiveRecord::Base
 
   def undo_complete!
     update_attribute(:complete, false)
+  end
+
+  def claim(user)
+    return false if assignee
+    update_attribute(:assignee_id, user.id)
   end
 
   private

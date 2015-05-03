@@ -43,7 +43,7 @@ class User < ActiveRecord::Base
   has_many :user_sites
   has_many :sites, through: :user_sites
 
-  validates :email, presence: true
+  validates :email, presence: true, uniqueness: true
   validates :name, presence: true
 
   #
