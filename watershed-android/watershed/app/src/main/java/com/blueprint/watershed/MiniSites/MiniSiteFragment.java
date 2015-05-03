@@ -80,8 +80,8 @@ public class MiniSiteFragment extends FloatingActionMenuAbstractFragment
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_mini_site, container, false);
         initializeViews(view, inflater);
         getMiniSite(mMiniSite);
