@@ -177,7 +177,9 @@ public class Utility {
             if (COLORS[i] == color) foundColor = i;
         }
 
-        if (foundColor == -1) return Color.parseColor("#81B4DE");
+        if (foundColor == -1) {
+            return Color.parseColor("#81B4DE");
+        }
         return SECONDARY_COLORS[foundColor];
     }
 }
