@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,10 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Networking.NetworkManager;
-import com.blueprint.watershed.Networking.Sites.SiteListRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Sites.CreateSiteFragment;
 import com.blueprint.watershed.Sites.Site;
@@ -105,28 +102,6 @@ public abstract class SiteListAbstractFragment extends Fragment {
                 mParentActivity.replaceFragment(CreateSiteFragment.newInstance());
             }
         });
-
-        // Make sure we update the list if we delete a site
-        Site deletedSite = mParentActivity.getSite();
-        if (deletedSite != null) {
-            int position = getDeletedSite(deletedSite);
-            mSites.remove(position);
-            mAdapter.notifyItemRemoved(position);
-//            mAdapter.notifyDataSetChanged();
-            mParentActivity.setSite(null);
-        }
-    }
-
-    /**
-     * Updates the list when we delete a site
-     * @param site Site that was deleted
-     * @return Position of that site
-     */
-    protected int getDeletedSite(Site site) {
-        for (int i = 0; i < mSites.size(); i++) {
-            if (mSites.get(i).getId() == site.getId()) return i;
-        }
-        return -1;
     }
 
     @Override
