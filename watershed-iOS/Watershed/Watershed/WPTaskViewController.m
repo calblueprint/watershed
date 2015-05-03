@@ -67,11 +67,20 @@
     NSNumberFormatter *userFormatter = [[NSNumberFormatter alloc] init];
     [userFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
     NSMutableDictionary *task2JSON = [[NSMutableDictionary alloc] init];
-    _task.completed = !_task.completed;
+    if (self.task.assignee != NULL) {
+        _task.completed = !_task.completed;
+    } else {
+        WPUser *currUser = [[WPUser alloc] init];
+        NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+        [f setNumberStyle:NSNumberFormatterDecimalStyle];
+        currUser.userId = [f numberFromString:[[WPNetworkingManager sharedManager] keyChainStore][@"user_id"]];
+        _task.assignee = currUser;
+    }
     [[WPNetworkingManager sharedManager] editTaskWithTask:_task parameters:task2JSON success:^(WPTask *task) {
         [self.navigationController popViewControllerAnimated:YES];
     }];
 }
+
 
 #pragma mark - Navigation Bar Setup
 

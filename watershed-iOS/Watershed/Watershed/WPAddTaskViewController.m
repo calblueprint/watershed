@@ -76,7 +76,7 @@ static NSString *CellIdentifier = @"Cell";
         NSNumberFormatter *userFormatter = [[NSNumberFormatter alloc] init];
         [userFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
         int isUrgentInt = [self isUrgent];
-        NSString *isUrgentString = [NSString stringWithFormat:@"%i", isUrgentInt];
+//        NSString *isUrgentString = [NSString stringWithFormat:@"%i", isUrgentInt];
         NSDictionary *taskJSON = @{
                                    @"title" : self.taskField.text,
                                    @"site_id" : [self.selectedMiniSite.miniSiteId stringValue],

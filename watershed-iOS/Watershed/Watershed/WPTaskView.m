@@ -88,16 +88,6 @@ int WPButtonHeight = 75;
 }
 
 - (void)setUpActions {
-    if (self.task.assignee != NULL) {
-        [_completed setTitle:@"Mark as\nComplete" forState:UIControlStateNormal];
-        [_completed setTitle:@"Completed" forState:UIControlStateSelected];
-        [_completed addTarget:self action:@selector(onClick) forControlEvents:UIControlEventTouchUpInside];
-    } else {
-        [_completed setTitle:@"Claim this\nTask" forState:UIControlStateNormal];
-        [_completed setTitle:@"Claimed" forState:UIControlStateSelected];
-        [_completed addTarget:self action:@selector(onClick) forControlEvents:UIControlEventTouchUpInside];
-    }
-
     [_completed setTitleColor:[UIColor wp_darkBlue] forState:UIControlStateNormal];
     [_completed setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
     [_completed setBackgroundImage:[WPTaskView imageFromColor:[UIColor wp_lightGreen]] forState:UIControlStateSelected];
@@ -136,8 +126,14 @@ int WPButtonHeight = 75;
     NSString *assigneeText = @"";
     if (task.assignee == NULL) {
         assigneeText = [NSString stringWithFormat: @"Created by %@", task.assigner.name];
+        [_completed setTitle:@"Claim this\nTask" forState:UIControlStateNormal];
+        [_completed setTitle:@"Claimed" forState:UIControlStateSelected];
+        [_completed addTarget:self action:@selector(onClick) forControlEvents:UIControlEventTouchUpInside];
     } else {
         assigneeText = [NSString stringWithFormat:@"Assigned to %@ by %@", task.assignee.name, task.assigner.name];
+        [_completed setTitle:@"Mark as\nComplete" forState:UIControlStateNormal];
+        [_completed setTitle:@"Completed" forState:UIControlStateSelected];
+        [_completed addTarget:self action:@selector(onClick) forControlEvents:UIControlEventTouchUpInside];
     }
     self.assigneeLabel.text = assigneeText;
     self.title.text = task.title;
