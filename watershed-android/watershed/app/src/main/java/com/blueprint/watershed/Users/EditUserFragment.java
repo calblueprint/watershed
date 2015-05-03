@@ -184,6 +184,5 @@ public class EditUserFragment extends Fragment {
         mUser.setEmail(user.getEmail());
         mUser.setId(user.getId());
         mUser.setName(user.getName());
-        Log.i("saved things", "lol");
     }
 }
