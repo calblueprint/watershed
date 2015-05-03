@@ -530,8 +530,10 @@ public class MainActivity extends ActionBarActivity
     @SuppressWarnings("deprecation")
     @TargetApi(21)
     public void setToolbarElevation(float elevation) {
-        mToolBar.setElevation(elevation);
-        mToolBar.invalidate();
+        if (Utility.currentVersion() >= 21) {
+            mToolBar.setElevation(elevation);
+            mToolBar.invalidate();
+        }
     }
 
     @Override
