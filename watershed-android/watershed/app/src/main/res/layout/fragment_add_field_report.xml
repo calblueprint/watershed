@@ -92,6 +92,7 @@
                     android:hint="@string/title"
                     android:layout_marginLeft="0dp"
                     android:padding="0dp"
+                    android:maxLines="1"
                     android:background="@color/transparent"
                     android:inputType="textMultiLine"
                     />
