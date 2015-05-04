@@ -54,25 +54,26 @@ public class MiniSiteListAdapter extends ArrayAdapter<MiniSite> {
         final MiniSite miniSite = mMiniSites.get(position);
         holder.photosView.configureWithPhotos(miniSite.getPhotos());
         holder.topLabel.setText(miniSite.getName());
+        if (mSite != null) {
+            final TapGestureListener listener = new TapGestureListener(mActivity, mSite, miniSite);
+            final GestureDetectorCompat gesture = new GestureDetectorCompat(mActivity, listener);
 
-        final TapGestureListener listener = new TapGestureListener(mActivity, mSite, miniSite);
-        final GestureDetectorCompat gesture = new GestureDetectorCompat(mActivity, listener);
+            row.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mActivity.replaceFragment(MiniSiteFragment.newInstance(mSite, miniSite));
+                }
+            });
 
-        row.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mActivity.replaceFragment(MiniSiteFragment.newInstance(mSite, miniSite));
-            }
-        });
-
-        holder.photosView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                gesture.onTouchEvent(event);
-                return false;
-            }
-        });
-        return row;
+            holder.photosView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    gesture.onTouchEvent(event);
+                    return false;
+                }
+            });
+            return row;
+        }
     }
 
     static class MiniSiteHolder {
