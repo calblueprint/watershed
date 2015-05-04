@@ -2,7 +2,8 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="30dp">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/user_name"
@@ -12,11 +13,10 @@
         android:layout_marginLeft="10dp"/>
 
     <LinearLayout android:id="@+id/user_options"
-        android:layout_marginBottom="-20dp"
         android:visibility="gone"
         android:layout_height="20dp"
         android:layout_width="fill_parent">
-        <Button android:id="@+id/doSomething1"
+        <TextView android:id="@+id/doSomething1"
             android:layout_height="20dp"
             android:focusable="false"
             android:focusableInTouchMode="false"

@@ -49,10 +49,12 @@ public class UserListAdapter extends ArrayAdapter<User> {
             @Override
             public void onClick(View v) {
                 if (holder.mToolbar.getVisibility() == View.GONE) {
-                    Utility.expand(holder.mToolbar);
+                    Utility.expand(holder.mToolbar, 40);
+                    Utility.expand(v, holder.mToolbar.getHeight());
                     user.setExpanded(true);
                 } else {
-                    Utility.collapse(holder.mToolbar);
+                    //Utility.collapse(v, holder.mToolbar.getHeight());
+                    //Utility.collapse(holder.mToolbar, holder.mToolbar.getHeight());
                     user.setExpanded(false);
                 }
             }
