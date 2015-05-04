@@ -25,7 +25,6 @@
         self.backgroundColor = [UIColor whiteColor];
         [self createSubviews];
     }
-    
     return self;
 }
 

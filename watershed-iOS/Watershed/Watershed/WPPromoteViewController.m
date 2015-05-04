@@ -18,6 +18,7 @@
 @property NSMutableArray *userArray;
 @property NSMutableArray *managerArray;
 @property NSMutableArray *employeeArray;
+@property WPUser *chosenUser;
 
 @end
 @implementation WPPromoteViewController
@@ -55,13 +56,15 @@ NSString *userIdentifier = @"WPUserCell";
         strongSelf.userArray = usersList;
         [self splitUsers];
         [strongSelf.view.userTableView reloadData];
+        [self.view stopIndicator];
     }];
 }
 
 
 - (void)showUserActionSheet:(WPUser *)user {
     if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
-        UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Delete User" otherButtonTitles:
+        UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"" delegate:self
+                                                  cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Delete User" otherButtonTitles:
                                 @"Promote User",
                                 nil];
         popup.tag = 1;
@@ -89,7 +92,7 @@ NSString *userIdentifier = @"WPUserCell";
                                           }];
         }
         UIAlertAction *delete = [UIAlertAction
-                                                 actionWithTitle:@"delete" style:UIAlertActionStyleDestructive handler:^(UIAlertAction* action){
+                                                 actionWithTitle:@"Delete User" style:UIAlertActionStyleDestructive handler:^(UIAlertAction* action){
                                                      [changeUserActionSheet dismissViewControllerAnimated:YES completion:nil];
                                                      [self deleteUser:user];
                                                  }];
@@ -112,18 +115,16 @@ NSString *userIdentifier = @"WPUserCell";
 
 - (void)actionSheet:(UIActionSheet *)popup
 clickedButtonAtIndex:(NSInteger)buttonIndex {
-    WPUser *u = [[WPUser alloc] init];
     NSInteger buttonShift = popup.numberOfButtons - 3;
     switch (popup.tag) {
         case 1: {
             if (buttonIndex == popup.destructiveButtonIndex && buttonShift == 1) {
+                [self deleteUser:self.chosenUser];
             }
             else if (buttonIndex == 0 + buttonShift) {
-                [self changeUserStatus:u];
-            } else if (buttonIndex == 1 + buttonShift) {
-                [self changeUserStatus:u];
-            }
+                [self changeUserStatus:self.chosenUser];
             break;
+            }
         }
         default:
             break;
@@ -131,6 +132,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 }
 
 - (void)changeUserStatus:(WPUser *)user {
+    
     NSLog(@"hi");
 }
 
@@ -156,7 +158,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
         case 1:
             user = [_employeeArray objectAtIndex:indexPath.row];
             cell.textLabel.textColor = [UIColor wp_darkBlue];
-
             break;
         case 2:
             user = [_userArray objectAtIndex:indexPath.row];
@@ -165,6 +166,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
         default:
             break;
     }
+    self.chosenUser = user;
     cell.textLabel.text = user.name;
     return cell;
 }

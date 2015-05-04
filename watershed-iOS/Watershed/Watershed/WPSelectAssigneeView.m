@@ -25,27 +25,13 @@
 - (void)createSubviews {
     _selectAssigneeTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     [self addSubview:_selectAssigneeTableView];
-    
-    _searchField = [({
-        UITextField *searchField = [[UITextField alloc] init];
-        searchField.font = [UIFont systemFontOfSize:14];
-        searchField.textColor = [UIColor wp_paragraph];
-        searchField;
-    }) wp_addToSuperview:self];
-    
+
 }
 
 - (void)updateConstraints {
-    //
-    //    [self.searchField mas_makeConstraints:^(MASConstraintMaker *make) {
-    //        make.top.equalTo(@(topMargin));
-    //        make.leading.equalTo(@0);
-    //        make.trailing.equalTo(@0);
-    //    }];
-    
+
     [self.selectAssigneeTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(topMargin));
-        //        make.top.equalTo(self.searchField.mas_bottom);
         make.leading.equalTo(@0);
         make.trailing.equalTo(@0);
         make.bottom.equalTo(@0);
