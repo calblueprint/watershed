@@ -47,7 +47,7 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :mini_sites,    only:   [:index, :destroy]
+      resources :mini_sites,    only:   [:index, :show]
       resources :field_reports, except: [:new, :edit, :destroy]
     end
   end

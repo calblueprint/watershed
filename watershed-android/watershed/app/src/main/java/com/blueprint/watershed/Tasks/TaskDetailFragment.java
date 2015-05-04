@@ -90,6 +90,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
         mLocation = (TextView) view.findViewById(R.id.task_location);
         mMiniSiteName = (TextView) view.findViewById(R.id.task_site_name);
         mBackgroundColor = (RelativeLayout) view.findViewById(R.id.task_title_container);
+        mCompleteButton = (Button) view.findViewById(R.id.complete_button);
 
         mDetailTitle.setText(mTask.getTitle());
 

@@ -12,6 +12,7 @@ import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -55,7 +56,7 @@ public class FieldReportListAdapter extends ArrayAdapter<FieldReport> {
         final FieldReport fieldReport = fieldReports.get(position);
         holder.photosView.configureWithPhotos(fieldReport.getPhotos());
         holder.coverPhotoLabel.setText(String.format("Rating: %s", fieldReport.getHealthRating()));
-        holder.topLabel.setText("12/8/2014");
+        holder.topLabel.setText(new SimpleDateFormat("MMMM dd, yyyy").format(fieldReport.getCreatedAt()));
         holder.bottomLabel.setText(String.format("By: %s", fieldReport.getUserName()));
 
         row.setOnClickListener(new View.OnClickListener() {

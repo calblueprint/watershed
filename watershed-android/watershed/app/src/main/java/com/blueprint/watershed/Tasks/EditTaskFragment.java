@@ -2,6 +2,8 @@ package com.blueprint.watershed.Tasks;
 
 import android.os.Bundle;
 
+import java.text.SimpleDateFormat;
+
 /**
  * Created by charlesx on 2/19/15.
  * Fragment to edit tasks
@@ -41,7 +43,7 @@ public class EditTaskFragment extends TaskAbstractFragment {
 
         if (mTask.getDueDate() != null) {
             mDate = mTask.getDueDate();
-            mDueDateField.setText(mTask.getDueDate().toString());
+            mDueDateField.setText(new SimpleDateFormat("MMMM dd, yyyy").format(mDate));
         }
 
         if (mTask.getMiniSiteId() != null) {

@@ -286,7 +286,7 @@ public abstract class TaskAbstractFragment extends Fragment {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day);
         mDate = calendar.getTime();
-        mDueDateField.setText(new SimpleDateFormat("MM/dd/yyyy").format(mDate));
+        mDueDateField.setText(new SimpleDateFormat("MMMM dd, yyyy").format(mDate));
     }
 
     public void setUser(User user) {
