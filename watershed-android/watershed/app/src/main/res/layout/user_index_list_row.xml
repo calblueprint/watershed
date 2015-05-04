@@ -1,39 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <TextView
-        android:id="@+id/user_name"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:textSize="16sp"
-        android:text="test text"
-        android:gravity="center_vertical"
-        android:padding="10dp"/>
+    android:background="@color/white"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/user_options"
-        android:layout_height="50dp"
         android:layout_width="fill_parent"
-        android:layout_below="@id/user_name">
+        android:layout_height="@dimen/button_large_height"
+        android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/doSomething1"
-            android:layout_height="match_parent"
-            android:layout_width="fill_parent"
-            android:background="@color/facebook_blue"
+        <TextView
+            android:id="@+id/user_name"
+            android:text="Name"
             android:layout_weight="1"
-            android:text="Harder"/>
+            android:layout_width="0dp"
+            android:textSize="20sp"
+            android:layout_height="@dimen/button_large_height"
+            android:paddingTop="10dp"
+            android:layout_marginLeft="10dp"/>
 
-        <Button
-            android:id="@+id/doSomething2"
-            android:layout_height="match_parent"
-            android:layout_width="fill_parent"
-            android:layout_toRightOf="@id/doSomething1"
-            android:background="@color/red_500"
+        <TextView
+            android:id="@+id/user_role"
+            android:text="MANAGER"
+            android:textSize="15sp"
+            android:layout_width="0dp"
             android:layout_weight="1"
-            android:text="Harder"/>
+            android:layout_height="@dimen/button_large_height"
+            android:gravity="end"
+            android:layout_marginRight="10dp"/>
     </LinearLayout>
-</RelativeLayout>
+
+    <LinearLayout android:id="@+id/user_options"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:orientation="vertical">
+        <Button android:id="@+id/make_manager"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:layout_width="fill_parent"
+            android:text="@string/make_user_admin"
+            android:background="@color/dark_blue_700"
+            android:textColor="@color/white"
+            />
+        <Button android:id="@+id/make_member"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:layout_width="fill_parent"
+            android:text="@string/make_user_member"
+            android:background="@color/dark_blue_500"
+            android:textColor="@color/white"
+            />
+        <Button android:id="@+id/delete_user"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:layout_width="fill_parent"
+            android:background="@color/red_orange_700"
+            android:textColor="@color/white"
+            android:text="@string/delete_user"
+            />
+    </LinearLayout>
+</LinearLayout>

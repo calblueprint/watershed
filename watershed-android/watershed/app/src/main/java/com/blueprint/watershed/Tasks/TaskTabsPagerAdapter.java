@@ -4,6 +4,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.blueprint.watershed.Tasks.TaskList.AllTaskListFragment;
+import com.blueprint.watershed.Tasks.TaskList.UnclaimedTaskListFragment;
+import com.blueprint.watershed.Tasks.TaskList.UserTaskListFragment;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -46,4 +50,5 @@ public class TaskTabsPagerAdapter extends FragmentPagerAdapter {
     public void addTitles(String... titles) {
         mTitles.addAll(Arrays.asList(titles));
     }
+
 }

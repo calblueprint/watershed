@@ -32,7 +32,7 @@ import java.util.List;
  * Created by charlesx on 4/28/15.
  * Lists all the users for the admin to manage
  */
-public class UserListFragment extends Fragment {
+public class UserListFragment extends Fragment{
 
     private MainActivity mParentActivity;
     private NetworkManager mNetworkManager;
@@ -46,6 +46,10 @@ public class UserListFragment extends Fragment {
     // Parameters
     private List<User> mUsers;
     private boolean mShouldRequest = false;
+
+    // Dialog
+    public int DIALOG_REQUEST_CODE = 200;
+    public String DIALOG_TAG = "CheckDeleteDialog";
 
     public static UserListFragment newInstance() { return new UserListFragment(); }
 
@@ -74,7 +78,7 @@ public class UserListFragment extends Fragment {
      * Initializes all the views
      */
     private void initializeViews() {
-        mAdapter = new UserListAdapter(mParentActivity, mUsers);
+        mAdapter = new UserListAdapter(mParentActivity, mUsers, this);
         mListView = (ListView) mParentActivity.findViewById(R.id.list);
         mListView.setAdapter(mAdapter);
 
@@ -120,7 +124,7 @@ public class UserListFragment extends Fragment {
         mNetworkManager.getRequestQueue().add(request);
     }
 
-    private void setUsers(List<User> users) {
+    public void setUsers(List<User> users) {
         mUsers.clear();
         mUsers.addAll(users);
         mAdapter.notifyDataSetChanged();
@@ -139,44 +143,29 @@ public class UserListFragment extends Fragment {
         mSwipeLayout.setVisibility(View.GONE);
     }
 
-    public static class ChooseActionDialogFragment extends DialogFragment {
-
-        private User mUser;
-
-        public static ChooseActionDialogFragment newInstance(User user) {
-            ChooseActionDialogFragment dialog = new ChooseActionDialogFragment();
-            dialog.setUser(user);
-            return dialog;
-        }
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle(R.string.manage_profile)
-                   .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                   dialog.dismiss();
-                }
-            });
-            String[] items = { "Set User to Admin", "Set User to Employee", "Set User to Volunteer", "Delete User"};
-            builder.setItems(items, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    if (!(getTargetFragment() instanceof UserListFragment)) Log.e("can't", "even fragment");
-                    UserListFragment fragment = (UserListFragment) getTargetFragment();
-                    if (which < 3) fragment.setUserRole(mUser, which);
-                    else fragment.deleteUser(mUser);
-                }
-            });
-
-            return builder.create();
-        }
-
-        public void setUser(User user) { mUser = user; }
+    public void showDeleteCheckDialog(User user){
+        CheckDeleteDialogFragment dialog = CheckDeleteDialogFragment.newInstance(user);
+        dialog.setTargetFragment(this, DIALOG_REQUEST_CODE);
+        dialog.show(mParentActivity.getSupportFragmentManager(), DIALOG_TAG);
     }
 
-    private void setUserRole(User user, int role) {
+    public void deleteUser(User user) {
+        DeleteUserRequest request = new DeleteUserRequest(mParentActivity, user, new Response.Listener<ArrayList<User>>() {
+            @Override
+            public void onResponse(ArrayList<User> users) {
+                setUsers(users);
+            }
+        });
+
+        mNetworkManager.getRequestQueue().add(request);
+    }
+
+    /**
+     * Submits a request to change the role of the selected user.
+     * @param user User to promote or demote
+     * @param role numerical role to assign to (Admin = 1, Community Member = 2)
+     */
+    public void setUserRole(User user, int role) {
         JSONObject userObj = new JSONObject();
         JSONObject params = new JSONObject();
         try {
@@ -187,23 +176,47 @@ public class UserListFragment extends Fragment {
         }
 
         UpdateUserRequest request = new UpdateUserRequest(mParentActivity, user, userObj,
-            new Response.Listener<User>() {
-                @Override
-                public void onResponse(User user) {
-                    mAdapter.notifyDataSetChanged();
-                }
-            },BaseRequest.makeUserResourceURL(user.getId(), "register"));
+                new Response.Listener<User>() {
+                    @Override
+                    public void onResponse(User user) {
+                        Log.d("Update Roles", user.getRoleString());
+                        mAdapter.notifyDataSetChanged();
+                    }
+                },BaseRequest.makeUserResourceURL(user.getId(), "register"));
         mNetworkManager.getRequestQueue().add(request);
     }
 
-    private void deleteUser(User user) {
-        DeleteUserRequest request = new DeleteUserRequest(mParentActivity, user, new Response.Listener<ArrayList<User>>() {
-            @Override
-            public void onResponse(ArrayList<User> users) {
-                setUsers(users);
-            }
-        });
 
-        mNetworkManager.getRequestQueue().add(request);
+    public static class CheckDeleteDialogFragment extends DialogFragment {
+
+        private User mUser;
+
+        public static CheckDeleteDialogFragment newInstance(User user) {
+            CheckDeleteDialogFragment dialog = new CheckDeleteDialogFragment();
+            dialog.setUser(user);
+            return dialog;
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(R.string.delete_user)
+                    .setPositiveButton(R.string.delete_user, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            if (!(getTargetFragment() instanceof UserListFragment)) Log.e("can't", "even fragment");
+                            UserListFragment fragment = (UserListFragment) getTargetFragment();
+                            fragment.deleteUser(mUser);
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            return builder.create();
+        }
+
+        public void setUser(User user) { mUser = user; }
     }
 }
