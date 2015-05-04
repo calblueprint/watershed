@@ -341,7 +341,7 @@ static NSString * const PROMOTE_URL = @"promote";
         WPSite *siteResponse = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:siteJSON error:nil];
         NSArray *photosListJSON = siteJSON[@"photos"];
         for (NSDictionary *photoJSON in photosListJSON) {
-            if (![photoJSON[@"url"] isEqual:[NSNull null]]) {
+            if (photoJSON[@"url"] != [NSNull null]) {
                 [siteResponse.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];
             }
         }
@@ -352,7 +352,7 @@ static NSString * const PROMOTE_URL = @"promote";
             WPMiniSite *miniSite = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:miniSiteJSON error:nil];
             NSArray *photosListJSON = miniSiteJSON[@"photos"];
             for (NSDictionary *photoJSON in photosListJSON) {
-                if (![photoJSON[@"url"] isEqual:[NSNull null]]) {
+                if (photoJSON[@"url"] != [NSNull null]) {
                     [miniSite.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];
                 }
             }
