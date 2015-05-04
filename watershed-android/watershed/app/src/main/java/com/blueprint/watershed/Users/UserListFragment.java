@@ -143,7 +143,13 @@ public class UserListFragment extends Fragment{
         mSwipeLayout.setVisibility(View.GONE);
     }
 
-    public void showDeleteCheckDialog(User user){
+    public void showChangeRoleDialog(User user) {
+        CheckChangeRoleDialog dialog = CheckChangeRoleDialog.newInstance(user);
+        dialog.setTargetFragment(this, DIALOG_REQUEST_CODE);
+        dialog.show(mParentActivity.getSupportFragmentManager(), DIALOG_TAG);
+    }
+
+    public void showDeleteCheckDialog(User user) {
         CheckDeleteDialogFragment dialog = CheckDeleteDialogFragment.newInstance(user);
         dialog.setTargetFragment(this, DIALOG_REQUEST_CODE);
         dialog.show(mParentActivity.getSupportFragmentManager(), DIALOG_TAG);
@@ -185,7 +191,6 @@ public class UserListFragment extends Fragment{
         mNetworkManager.getRequestQueue().add(request);
     }
 
-
     public static class CheckDeleteDialogFragment extends DialogFragment {
 
         private User mUser;
@@ -200,11 +205,49 @@ public class UserListFragment extends Fragment{
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle(R.string.delete_user)
+                    .setMessage(R.string.delete_user_message)
                     .setPositiveButton(R.string.delete_user, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            if (!(getTargetFragment() instanceof UserListFragment)) Log.e("can't", "even fragment");
+                            if (!(getTargetFragment() instanceof UserListFragment))
+                                Log.e("can't", "even fragment");
                             UserListFragment fragment = (UserListFragment) getTargetFragment();
                             fragment.deleteUser(mUser);
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            return builder.create();
+        }
+
+        public void setUser(User user) { mUser = user; }
+    }
+
+    public static class CheckChangeRoleDialog extends DialogFragment {
+
+        private User mUser;
+
+        public static CheckChangeRoleDialog newInstance(User user) {
+            CheckChangeRoleDialog dialog = new CheckChangeRoleDialog();
+            dialog.setUser(user);
+            return dialog;
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            String[] roles = { "Change User to Member", "Change User to Admin" };
+            builder.setTitle(R.string.change_role)
+                    .setItems(roles, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (!(getTargetFragment() instanceof UserListFragment))
+                                Log.e("can't", "even fragment");
+                            UserListFragment fragment = (UserListFragment) getTargetFragment();
+                            fragment.setUserRole(mUser, which);
                         }
                     })
                     .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

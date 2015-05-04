@@ -1,41 +1,23 @@
 package com.blueprint.watershed.Users;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
-import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
-import com.blueprint.watershed.Networking.BaseRequest;
 import com.blueprint.watershed.Networking.NetworkManager;
-import com.blueprint.watershed.Networking.Users.DeleteUserRequest;
-import com.blueprint.watershed.Networking.Users.UpdateUserRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Utilities.Utility;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by charlesx on 4/28/15.
  */
 public class UserListAdapter extends ArrayAdapter<User> {
-
-    private int ADMIN = 1;
-    private int VOLUNTEER = 2;
 
     private MainActivity mParentActivity;
     private List<User> mUsers;
@@ -85,22 +67,16 @@ public class UserListAdapter extends ArrayAdapter<User> {
         View makeMemberButton;
         View deleteUserButton;
 
-        makeAdminButton = holder.mToolbar.findViewById(R.id.make_manager);
         makeMemberButton = holder.mToolbar.findViewById(R.id.make_member);
         deleteUserButton = holder.mToolbar.findViewById(R.id.delete_user);
-        makeAdminButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mParentFragment.setUserRole(user, ADMIN);
-            }
-        });
 
         makeMemberButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mParentFragment.setUserRole(user, VOLUNTEER);
+                mParentFragment.showChangeRoleDialog(user);
             }
         });
+
         deleteUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
