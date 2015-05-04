@@ -34,7 +34,7 @@ public class MiniSiteFragment extends FloatingActionMenuAbstractFragment {
     private MainActivity mParentActivity;
     private HeaderGridView mFieldReportGridView;
     private FieldReportListAdapter mFieldReportAdapter;
-    
+
     private MiniSite mMiniSite;
     private Site mSite;
     private List<FieldReport> mFieldReports;
