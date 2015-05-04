@@ -65,15 +65,9 @@ public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHo
             if (numSites > 1 || numSites == 0) numSitesString += "s";
             holder.sitesLabel.setText(numSitesString);
 
-            View.OnClickListener clickListener = new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mParentActivity.replaceFragment(SiteFragment.newInstance(site));
-                }
-            };
-
             TapGestureListener listener = new TapGestureListener(mParentActivity, site);
             final GestureDetector detector = new GestureDetector(mParentActivity, listener);
+
             holder.photosView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -81,7 +75,13 @@ public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHo
                     return false;
                 }
             });
-            holder.parentView.setOnClickListener(clickListener);
+
+            holder.parentView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mParentActivity.replaceFragment(SiteFragment.newInstance(site));
+                }
+            });
         }
     }
 

@@ -1,5 +1,6 @@
 package com.blueprint.watershed.MiniSites;
 
+import android.support.v4.view.GestureDetectorCompat;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -55,19 +56,24 @@ public class MiniSiteListAdapter extends ArrayAdapter<MiniSite> {
         holder.photosView.configureWithPhotos(miniSite.getPhotos());
         holder.coverPhotoLabel.setText(String.format("%s Field Reports", miniSite.getFieldReportsCount()));
         holder.topLabel.setText(miniSite.getName());
-        if (mSite != null) {
-            final TapGestureListener listener = new TapGestureListener(mActivity, mSite, miniSite);
-            final GestureDetector gesture = new GestureDetector(mActivity, listener);
 
-            holder.photosView.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    gesture.onTouchEvent(event);
-                    return false;
-                }
-            });
-        }
+        final TapGestureListener listener = new TapGestureListener(mActivity, mSite, miniSite);
+        final GestureDetectorCompat gesture = new GestureDetectorCompat(mActivity, listener);
 
+        row.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mActivity.replaceFragment(MiniSiteFragment.newInstance(mSite, miniSite));
+            }
+        });
+
+        holder.photosView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                gesture.onTouchEvent(event);
+                return false;
+            }
+        });
         return row;
     }
 
@@ -92,7 +98,7 @@ public class MiniSiteListAdapter extends ArrayAdapter<MiniSite> {
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
             activity.replaceFragment(MiniSiteFragment.newInstance(site, minisite));
-            return super.onSingleTapConfirmed(e);
+            return super.onSingleTapUp(e);
         }
     }
 }
