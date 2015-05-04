@@ -64,6 +64,8 @@ public class UserListAdapter extends ArrayAdapter<User> {
             row = mParentActivity.getLayoutInflater().inflate(R.layout.user_index_list_row, parent, false);
             holder = new UserIndexListHolder();
             holder.mName = (TextView) row.findViewById(R.id.user_name);
+            holder.mRole = (TextView) row.findViewById(R.id.user_role);
+            holder.mRow = row;
             holder.mToolbar = (LinearLayout) row.findViewById(R.id.user_options);
             row.setTag(holder);
         } else {
@@ -107,7 +109,8 @@ public class UserListAdapter extends ArrayAdapter<User> {
         });
 
         holder.mName.setText(user.getName());
-        holder.mName.setOnClickListener(new View.OnClickListener() {
+        holder.mRole.setText(user.getRoleString());
+        holder.mRow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (holder.mToolbar.getVisibility() == View.GONE) {
@@ -123,6 +126,8 @@ public class UserListAdapter extends ArrayAdapter<User> {
 
     static class UserIndexListHolder {
         TextView mName;
+        TextView mRole;
         LinearLayout mToolbar;
+        View mRow;
     }
 }

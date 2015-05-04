@@ -18,7 +18,7 @@ import java.util.ArrayList;
  */
 public class DeleteUserRequest extends BaseRequest {
     public DeleteUserRequest(final Activity activity, User user, final Response.Listener<ArrayList<User>> listener) {
-        super(Method.DELETE, makeURL("users" + user.getId()), null, new Response.Listener<JSONObject>() {
+        super(Method.DELETE, makeURL("users/" + user.getId()), null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 try {

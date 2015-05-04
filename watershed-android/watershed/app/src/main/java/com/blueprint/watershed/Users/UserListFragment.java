@@ -175,6 +175,7 @@ public class UserListFragment extends Fragment{
                     @Override
                     public void onResponse(User user) {
                         Log.d("Update Roles", user.getRoleString());
+                        mAdapter.notifyDataSetChanged();
                     }
                 },BaseRequest.makeUserResourceURL(user.getId(), "register"));
         mNetworkManager.getRequestQueue().add(request);

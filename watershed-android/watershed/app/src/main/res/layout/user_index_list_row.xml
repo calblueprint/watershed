@@ -2,15 +2,35 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/user_name"
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="20dp"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"/>
+        android:layout_height="@dimen/button_large_height"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/user_name"
+            android:text="Name"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:textSize="20sp"
+            android:layout_height="@dimen/button_large_height"
+            android:paddingTop="10dp"
+            android:layout_marginLeft="10dp"/>
+
+        <TextView
+            android:id="@+id/user_role"
+            android:text="MANAGER"
+            android:textSize="15sp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="@dimen/button_large_height"
+            android:gravity="end"
+            android:layout_marginRight="10dp"/>
+    </LinearLayout>
 
     <LinearLayout android:id="@+id/user_options"
         android:visibility="gone"
