@@ -68,21 +68,20 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 -(void)saveForm:(UIButton *)sender {
-    if (_taskField.text.length == 0 || _siteField.text.length == 0) {
+    if (_taskField.text.length == 0 || _siteField.text.length == 0 || _dateField.text.length == 0 || _descriptionView.text.length == 0) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Cannot leave fields blank." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [incorrect show];
     } else {
         //need to add urgent
         NSNumberFormatter *userFormatter = [[NSNumberFormatter alloc] init];
         [userFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
-        int isUrgentInt = [self isUrgent];
-        NSString *isUrgentString = [NSString stringWithFormat:@"%i", isUrgentInt];
         NSDictionary *taskJSON = @{
                                    @"title" : self.taskField.text,
                                    @"site_id" : [self.selectedMiniSite.miniSiteId stringValue],
                                    @"due_date" : self.dateField.text,
                                    @"description" : self.descriptionView.text
                                    };
+
         WPTask *task = [MTLJSONAdapter modelOfClass:WPTask.class fromJSONDictionary:taskJSON error:nil];
         _currUser = [[WPUser alloc] init];
         NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
@@ -209,7 +208,7 @@ static NSString *CellIdentifier = @"Cell";
             break;
         }
         case 4: {
-            self.assigneeField.placeholder = @"Required";
+            self.assigneeField.placeholder = @"Optional";
             self.assigneeField.tag = 3;
             self.assigneeField.textColor = [UIColor wp_paragraph];
             self.assigneeField.font = [UIFont systemFontOfSize:16];
@@ -218,6 +217,7 @@ static NSString *CellIdentifier = @"Cell";
             break;
         }
         case 5: {
+            self.descriptionView.text = @"Required";
             self.descriptionView.textColor = [UIColor wp_paragraph];
             self.descriptionView.font = [UIFont systemFontOfSize:12];
             cell = [[WPAddTaskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier andControl:_descriptionView];

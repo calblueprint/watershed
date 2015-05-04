@@ -150,10 +150,14 @@ static NSString * const TASKS_URL = @"tasks";
     NSString *taskString = [WPNetworkingManager createURLWithEndpoint:TASKS_URL];
     [self addAuthenticationParameters:parameters];
     NSMutableDictionary *taskJSON = [MTLJSONAdapter JSONDictionaryFromModel:task].mutableCopy;
-    NSLog(@"%@", task.assigner.userId);
-    [taskJSON setObject:task.assignee.userId forKey:@"assignee_id"];
+    if (task.assignee) {
+        [taskJSON setObject:task.assignee.userId forKey:@"assignee_id"];
+    } else {
+        [taskJSON setObject:[NSNull null] forKey:@"assignee_id"];
+    }
     [taskJSON setObject:task.assigner.userId forKey:@"assigner_id"];
     [taskJSON setObject:task.miniSite.miniSiteId forKey:@"mini_site_id"];
+    NSLog(@"%@", taskJSON);
     [parameters setObject:taskJSON forKey:@"task"];
     [self POST:taskString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         success();
@@ -214,6 +218,7 @@ static NSString * const TASKS_URL = @"tasks";
     [parameters setObject:taskJSON forKey:@"task"];
 
     [self DELETE:taskString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        success(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not delete task." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [incorrect show];
@@ -234,13 +239,36 @@ static NSString * const TASKS_URL = @"tasks";
             WPSite *site = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:siteJSON error:nil];
             NSArray *photosListJSON = siteJSON[@"photos"];
             for (NSDictionary *photoJSON in photosListJSON) {
-                [site.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];
+                if ([photoJSON objectForKey:@"url"] != [NSNull null]) {
+                    [site.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];                    
+                }
             }
             [sitesList addObject:site];
         }
         success(sitesList);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load sites." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+- (void)requestMySitesListWithUser:(NSNumber *)userId parameters:(NSMutableDictionary *)parameters success:(void (^)(NSMutableArray *sitesList))success {
+    NSString *myUserString = [NSString stringWithFormat:@"%@/%@/%@",USERS_URL, userId, SITES_URL];
+    NSString *userString = [WPNetworkingManager createURLWithEndpoint:myUserString];
+    
+    [self addAuthenticationParameters:parameters];
+    
+    [self GET:userString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSArray *sitesListJSON = (NSArray *)responseObject[@"sites"];
+        NSMutableArray *sitesList = [[NSMutableArray alloc] init];
+        for (NSDictionary *siteJSON in sitesListJSON) {
+            WPSite *site = [MTLJSONAdapter modelOfClass:WPTask.class fromJSONDictionary:siteJSON error:nil];
+            [sitesList addObject:site];
+        }
+        success(sitesList);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not load user sites." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [incorrect show];
         NSLog(@"Error: %@", error);
     }];

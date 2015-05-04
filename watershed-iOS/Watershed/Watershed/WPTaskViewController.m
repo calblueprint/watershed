@@ -15,6 +15,7 @@
 @interface WPTaskViewController ()
 
 @property (nonatomic) WPTaskView *view;
+@property (nonatomic) WPUser *currUser;
 
 @end
 
@@ -24,11 +25,24 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self getUser];
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = self.task.title;
     [self.view.addFieldReportButton addTarget:self action:@selector(addFieldReportAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view.completed addTarget:self action:@selector(changeCompletion) forControlEvents:UIControlEventTouchUpInside];
-    [self setUpRightBarButtonItems];
+}
+
+- (void)getUser {
+    self.currUser = [[WPUser alloc] init];
+    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+    [f setNumberStyle:NSNumberFormatterDecimalStyle];
+    self.currUser.userId = [f numberFromString:[[WPNetworkingManager sharedManager] keyChainStore][@"user_id"]];
+    [[WPNetworkingManager sharedManager] requestUserWithUser:self.currUser parameters:[[NSMutableDictionary alloc] init] success:^(WPUser *user) {
+        self.currUser = user;
+        if (self.task.assigner.userId == self.currUser.userId || self.currUser.role == [NSNumber numberWithInt:2] || self.currUser.role == [NSNumber numberWithInt:1]) {
+            [self setUpRightBarButtonItems];
+        }
+    }];
 }
 
 - (void)loadView {
@@ -67,11 +81,16 @@
     NSNumberFormatter *userFormatter = [[NSNumberFormatter alloc] init];
     [userFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
     NSMutableDictionary *task2JSON = [[NSMutableDictionary alloc] init];
-    _task.completed = !_task.completed;
+    if (self.task.assignee != NULL) {
+        _task.completed = !_task.completed;
+    } else {
+        self.task.assignee = self.currUser;
+    }
     [[WPNetworkingManager sharedManager] editTaskWithTask:_task parameters:task2JSON success:^(WPTask *task) {
         [self.navigationController popViewControllerAnimated:YES];
     }];
 }
+
 
 #pragma mark - Navigation Bar Setup
 
