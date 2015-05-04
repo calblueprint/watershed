@@ -24,6 +24,7 @@ static NSString * const SITES_URL = @"sites";
 static NSString * const MINI_SITES_URL = @"mini_sites";
 static NSString * const FIELD_REPORTS_URL = @"field_reports";
 static NSString * const TASKS_URL = @"tasks";
+static NSString * const PROMOTE_URL = @"promote";
 
 #pragma mark - Singleton Methods
 
@@ -61,6 +62,24 @@ static NSString * const TASKS_URL = @"tasks";
     }];
 }
 
+- (void)editUserRoleWithUser:(WPUser *)user parameters:(NSMutableDictionary *)parameters success:(void (^)(WPUser *user))success {
+    NSString *userEndpoint = [NSString stringWithFormat:@"%@/%@/%@",USERS_URL, user.userId, PROMOTE_URL];
+    NSString *userString = [WPNetworkingManager createURLWithEndpoint:userEndpoint];
+    [self addAuthenticationParameters:parameters];
+    NSMutableDictionary *userJSON = [MTLJSONAdapter JSONDictionaryFromModel:user].mutableCopy;
+    [parameters setObject:userJSON forKey:@"user"];
+
+    [self PUT:userString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *userJSON = (NSDictionary *)responseObject[@"user"];
+        WPUser *userResponse = [MTLJSONAdapter modelOfClass:WPUser.class fromJSONDictionary:userJSON error:nil];
+        success(userResponse);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not edit user." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
+}
+
 - (void)deleteUserWithUser:(WPUser *)user parameters:(NSMutableDictionary *)parameters success:(void (^)(WPUser *user))success {
     NSString *userEndpoint = [@"/" stringByAppendingString:[user.userId stringValue]];
     NSString *USER_URL = [USERS_URL stringByAppendingString:userEndpoint];
@@ -91,7 +110,6 @@ static NSString * const TASKS_URL = @"tasks";
         NSDictionary *userJSON = sessionDictionary[@"user"];
         WPUser *user = [MTLJSONAdapter modelOfClass:WPUser.class fromJSONDictionary:userJSON error:nil];
         [self updateLoginKeyChainInfoWithUser:user AuthToken:authToken email:email];
-        
         success(user);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Incorrect email or password." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -168,7 +186,6 @@ static NSString * const TASKS_URL = @"tasks";
     NSString *taskString = [WPNetworkingManager createURLWithEndpoint:TASKS_URL];
     [self addAuthenticationParameters:parameters];
     NSMutableDictionary *taskJSON = [MTLJSONAdapter JSONDictionaryFromModel:task].mutableCopy;
-    NSLog(@"%@", task.assigner.userId);
     [taskJSON setObject:task.assignee.userId forKey:@"assignee_id"];
     [taskJSON setObject:task.assigner.userId forKey:@"assigner_id"];
     [taskJSON setObject:task.miniSite.miniSiteId forKey:@"mini_site_id"];

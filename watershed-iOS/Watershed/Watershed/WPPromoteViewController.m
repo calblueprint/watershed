@@ -132,15 +132,24 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 }
 
 - (void)changeUserStatus:(WPUser *)user {
-    
-    NSLog(@"hi");
+    __weak __typeof(self)weakSelf = self;
+    if ([user.role isEqualToNumber:[NSNumber numberWithInt:0]]) {
+        user.role = [NSNumber numberWithInt:1];
+    } else {
+        user.role = [NSNumber numberWithInt:0];
+    }
+    [[WPNetworkingManager sharedManager] editUserRoleWithUser: user
+                                               parameters:[[NSMutableDictionary alloc] init]
+                                                  success:^(WPUser *userResponse){
+                                                      __strong __typeof(weakSelf)strongSelf = weakSelf;
+                                                      [strongSelf requestAndLoadUsers];
+                                                  }];
 }
 
 - (void)deleteUser:(WPUser *)user {
     NSMutableDictionary *userJSON = [[NSMutableDictionary alloc] init];
     [[WPNetworkingManager sharedManager] deleteUserWithUser:user parameters:userJSON success:^(WPUser *user) {
         [self requestAndLoadUsers];
-//        [self.navigationController popViewControllerAnimated:YES];
     }];}
 
 
