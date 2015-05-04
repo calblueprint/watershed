@@ -22,6 +22,7 @@
     <dimen name="button_standard_height">40dp</dimen>
     <dimen name="button_large_height">48dp</dimen>
     <dimen name="button_border_standard_height">39dp</dimen>
+    <dimen name="button_large_width">250dp</dimen>
 
     <!-- Other -->
     <dimen name="activity_horizontal_margin">16dp</dimen>

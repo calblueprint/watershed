@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.Response;
@@ -54,6 +55,7 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
     private TextView mSiteTitle;
     private TextView mSiteDescription;
     private TextView mSiteAddress;
+    private Button mShowMore;
 
     FloatingActionButton mSubscribeButton;
 
@@ -69,11 +71,12 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
         mSiteTitle = (TextView) view.findViewById(R.id.site_name);
         mSiteTitle.setText(site.getName());
 
-        mSiteDescription =   (TextView) view.findViewById(R.id.site_description);
+        mSiteDescription = (TextView) view.findViewById(R.id.site_description);
         mSiteDescription.setText(site.getTrimmedText());
 
+        mShowMore = (Button) view.findViewById(R.id.read_more);
         if (site.shouldShowDescriptionDialog()) {
-            mSiteDescription.setOnClickListener(new View.OnClickListener() {
+            mShowMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Utility.showAndBuildDialog(mParentActivity, null, site.getDescription(), "Back", new DialogInterface.OnClickListener() {
@@ -100,8 +103,7 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_site, container, false);
         mView = view;
@@ -199,7 +201,6 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
         });
     }
 
-
     private void subscribeToSite() {
         SiteSubscribeRequest subRequest = new SiteSubscribeRequest(mParentActivity, mSite, new HashMap<String, JSONObject>(), new Response.Listener<String>() {
             @Override
@@ -213,7 +214,7 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
         mNetworkManager.getRequestQueue().add(subRequest);
     }
 
-    private void unsubscribeFromSite(){
+    private void unsubscribeFromSite() {
         SiteSubscribeRequest subRequest = new SiteSubscribeRequest(mParentActivity, mSite, new HashMap<String, JSONObject>(), new Response.Listener<String>() {
             @Override
             public void onResponse(String message) {
