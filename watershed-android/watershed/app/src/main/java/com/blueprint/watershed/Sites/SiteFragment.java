@@ -119,10 +119,10 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         if (mParentActivity.getUser().isManager()) {
-            inflater.inflate(R.menu.site_menu_manager, menu);
+            inflater.inflate(R.menu.site_manager, menu);
         }
         else {
-            inflater.inflate(R.menu.site_menu_member, menu);
+            inflater.inflate(R.menu.site_member, menu);
         }
         mMenu = menu;
         setSubscribedButton(mSite.getSubscribed());
