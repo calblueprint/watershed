@@ -19,6 +19,7 @@
 @property (nonatomic) UIButton *completed;
 @property (nonatomic) UIButton *addFieldReportButton;
 @property (nonatomic) UIButton *siteLinkButton;
+@property (nonatomic) WPTask *task;
 
 - (void)configureWithTask:(WPTask *)task;
 

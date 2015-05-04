@@ -40,8 +40,10 @@
 - (void)loadView {
     _myTasksTableController = [[WPMyTasksTableViewController alloc] init];
     _allTasksTableController = [[WPAllTasksTableViewController alloc] init];
+    _unclaimedTasksTableController = [[WPUnclaimedTasksTableController alloc] init];
     [self addChildViewController:_myTasksTableController];
     [self addChildViewController:_allTasksTableController];
+    [self addChildViewController:_unclaimedTasksTableController];
     self.view = [[WPTasksListView alloc] initWithFrame:CGRectZero  andTableViewController:self];
 }
 
@@ -54,6 +56,7 @@
 - (void)requestAndLoadTasks {
     [self.myTasksTableController requestAndLoadMyTasks];
     [self.allTasksTableController requestAndLoadAllTasks];
+    [self.unclaimedTasksTableController requestAndLoadMyTasks];
 }
 
 
