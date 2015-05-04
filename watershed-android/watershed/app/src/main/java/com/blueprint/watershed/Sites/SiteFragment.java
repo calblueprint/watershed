@@ -8,8 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.Response;
@@ -17,7 +16,6 @@ import com.blueprint.watershed.AbstractFragments.FloatingActionMenuAbstractFragm
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.MiniSites.CreateMiniSiteFragment;
 import com.blueprint.watershed.MiniSites.MiniSite;
-import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteListAdapter;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Sites.DeleteSiteRequest;
@@ -35,8 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class SiteFragment extends FloatingActionMenuAbstractFragment
-                          implements AbsListView.OnItemClickListener {
+public class SiteFragment extends FloatingActionMenuAbstractFragment {
 
     private NetworkManager mNetworkManager;
     private MainActivity mParentActivity;
@@ -52,6 +49,7 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
     private TextView mSiteTitle;
     private TextView mSiteDescription;
     private TextView mSiteAddress;
+    private Button mShowMore;
 
     private Menu mMenu;
     private FloatingActionButton mCreateMiniSite;
@@ -71,8 +69,9 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
         mSiteDescription = (TextView) view.findViewById(R.id.site_description);
         mSiteDescription.setText(site.getTrimmedText());
 
+        mShowMore = (Button) view.findViewById(R.id.read_more);
         if (site.shouldShowDescriptionDialog()) {
-            mSiteDescription.setOnClickListener(new View.OnClickListener() {
+            mShowMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Utility.showAndBuildDialog(mParentActivity, null, site.getDescription(), "Back", new DialogInterface.OnClickListener() {
@@ -99,8 +98,7 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_site, container, false);
         initializeViews(view);
@@ -161,7 +159,6 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
 
         mMiniSiteAdapter = new MiniSiteListAdapter(mParentActivity, getMiniSites(), mSite);
         mMiniSiteGridView.setAdapter(mMiniSiteAdapter);
-        mMiniSiteGridView.setOnItemClickListener(this);
 
         if (mParentActivity.getUser().isManager()) {
             mCreateMiniSite = (FloatingActionButton) view.findViewById(R.id.site_add_minisite);
@@ -190,20 +187,13 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
     private void unsubscribeFromSite() {
         SiteSubscribeRequest subRequest =
             new SiteSubscribeRequest(mParentActivity, mSite, new HashMap<String, JSONObject>(), new Response.Listener<String>() {
-            @Override
-            public void onResponse(String message) {
-                mSite.setSubscribed(false);
-                setSubscribedButton(mSite.getSubscribed());
-            }
+                @Override
+                public void onResponse(String message) {
+                    mSite.setSubscribed(false);
+                    setSubscribedButton(mSite.getSubscribed());
+                }
         }, mSite.getSubscribed());
         mNetworkManager.getRequestQueue().add(subRequest);
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        MiniSite miniSite = getMiniSite(position);
-        MiniSiteFragment miniSiteFragment = MiniSiteFragment.newInstance(mSite, miniSite);
-        mParentActivity.replaceFragment(miniSiteFragment);
     }
 
     // Networking

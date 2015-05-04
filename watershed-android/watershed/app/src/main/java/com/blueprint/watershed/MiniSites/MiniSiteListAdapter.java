@@ -44,7 +44,6 @@ public class MiniSiteListAdapter extends ArrayAdapter<MiniSite> {
 
             holder = new MiniSiteHolder();
             holder.photosView = (CoverPhotoPagerView) row.findViewById(R.id.cover_photo_pager_view);
-            holder.coverPhotoLabel = (TextView) row.findViewById(R.id.cover_photo_label);
             holder.topLabel = (TextView) row.findViewById(R.id.top_label);
 
             row.setTag(holder);
@@ -54,7 +53,6 @@ public class MiniSiteListAdapter extends ArrayAdapter<MiniSite> {
 
         final MiniSite miniSite = mMiniSites.get(position);
         holder.photosView.configureWithPhotos(miniSite.getPhotos());
-        holder.coverPhotoLabel.setText(String.format("%s Field Reports", miniSite.getFieldReportsCount()));
         holder.topLabel.setText(miniSite.getName());
 
         final TapGestureListener listener = new TapGestureListener(mActivity, mSite, miniSite);
@@ -79,7 +77,6 @@ public class MiniSiteListAdapter extends ArrayAdapter<MiniSite> {
 
     static class MiniSiteHolder {
         CoverPhotoPagerView photosView;
-        TextView coverPhotoLabel;
         TextView topLabel;
     }
 

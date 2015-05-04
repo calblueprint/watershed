@@ -87,11 +87,8 @@ public class Site implements APIObject {
 
     @JsonIgnore
     public String getTrimmedText() {
-        if (shouldShowDescriptionDialog()) {
-            return String.format("%s...read more", getDescription().substring(0, TRIM_LENGTH) + "...");
-        } else {
-            return getDescription();
-        }
+        if (shouldShowDescriptionDialog()) { return getDescription().substring(0, TRIM_LENGTH); }
+        else                               { return getDescription(); }
     }
 
     @JsonIgnore
