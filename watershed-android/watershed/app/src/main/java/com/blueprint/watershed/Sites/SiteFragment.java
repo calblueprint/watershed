@@ -54,6 +54,7 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
     private TextView mSiteAddress;
 
     private Menu mMenu;
+    private FloatingActionButton mCreateMiniSite;
 
     public static SiteFragment newInstance(Site site) {
         SiteFragment siteFragment = new SiteFragment();
@@ -158,25 +159,21 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
         mMiniSiteGridView.addHeaderView(mHeader, null, false);
         configureViewWithSite(mHeader, mSite);
 
-
-        // Set the adapter to fill the list of mini sites
         mMiniSiteAdapter = new MiniSiteListAdapter(mParentActivity, getMiniSites(), mSite);
         mMiniSiteGridView.setAdapter(mMiniSiteAdapter);
         mMiniSiteGridView.setOnItemClickListener(this);
 
-        setButtonListeners(view);
+        if (mParentActivity.getUser().isManager()) {
+            mCreateMiniSite = (FloatingActionButton) view.findViewById(R.id.site_add_minisite);
+            mCreateMiniSite.setVisibility(View.VISIBLE);
+            mCreateMiniSite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mParentActivity.replaceFragment(CreateMiniSiteFragment.newInstance(mSite));
+                }
+            });
+        }
     }
-
-    private void setButtonListeners(View view) {
-        FloatingActionButton miniSiteCreate = (FloatingActionButton) view.findViewById(R.id.site_add_minisite);
-        miniSiteCreate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mParentActivity.replaceFragment(CreateMiniSiteFragment.newInstance(mSite));
-            }
-        });
-    }
-
 
     private void subscribeToSite() {
         SiteSubscribeRequest subRequest =
