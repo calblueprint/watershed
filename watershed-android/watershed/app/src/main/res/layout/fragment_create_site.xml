@@ -75,7 +75,7 @@
                 android:layout_toRightOf="@id/create_site_description_icon"
                 android:inputType="textMultiLine"
                 android:minLines="1"
-                android:maxLines="4"
+                android:maxLines="5"
                 />
         </RelativeLayout>
     </RelativeLayout>

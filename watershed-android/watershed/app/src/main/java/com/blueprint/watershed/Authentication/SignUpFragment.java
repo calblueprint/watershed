@@ -3,7 +3,6 @@ package com.blueprint.watershed.Authentication;
 import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,9 +49,6 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         setPasswordField((EditText) rootView.findViewById(R.id.password_field));
         setPasswordConfirmationField((EditText) rootView.findViewById(R.id.password_confirmation_field));
         setSignUpButton((Button) rootView.findViewById(R.id.sign_up_button));
-
-        getPasswordField().setTransformationMethod(new PasswordTransformationMethod());
-        getPasswordConfirmationField().setTransformationMethod(new PasswordTransformationMethod());
 
         // Set OnClickListeners
         getSignUpButton().setOnClickListener(this);

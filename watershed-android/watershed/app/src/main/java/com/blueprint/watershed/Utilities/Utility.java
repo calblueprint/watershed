@@ -175,7 +175,6 @@ public class Utility {
         int[] SECONDARY_COLORS = context.getResources().getIntArray(R.array.secondary_colors);
         int color = Color.parseColor(primary);
         int foundColor = -1;
-
         for (int i = 0; i < COLORS.length; i++) {
             if (COLORS[i] == color) foundColor = i;
         }

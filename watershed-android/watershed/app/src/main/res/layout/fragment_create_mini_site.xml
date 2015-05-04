@@ -60,6 +60,7 @@
                     android:hint="@string/title"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:maxLines="1"
                     android:background="@color/transparent"
                     android:textSize="20sp"
                     android:textColor="@color/black"

@@ -18,6 +18,8 @@ import java.util.List;
 @JsonSerialize(using = MiniSiteSerializer.class)
 public class MiniSite implements APIObject {
 
+    public int TRIM_LENGTH = 140;
+
     private Integer mId;
     private String mName;
     private String mDescription;
@@ -33,7 +35,17 @@ public class MiniSite implements APIObject {
     private List<FieldReport> mFieldReports;
     private List<Photo> mPhotos;
 
-    public MiniSite() {
+    public MiniSite() {}
+
+    @JsonIgnore
+    public String getTrimmedText() {
+        if (shouldShowDescriptionDialog()) { return getDescription().substring(0, TRIM_LENGTH); }
+        else                               { return getDescription(); }
+    }
+
+    @JsonIgnore
+    public boolean shouldShowDescriptionDialog() {
+        return getDescription().length() > TRIM_LENGTH;
     }
 
     public String toString() {
