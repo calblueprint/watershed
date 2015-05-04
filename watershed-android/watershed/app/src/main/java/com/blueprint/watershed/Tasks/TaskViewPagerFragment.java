@@ -9,11 +9,11 @@ import android.view.ViewGroup;
 
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Tasks.TaskList.AllTaskListFragment;
 import com.blueprint.watershed.Tasks.TaskList.TaskListTransformer;
 
 import com.blueprint.watershed.Tasks.TaskList.UnclaimedTaskListFragment;
 import com.blueprint.watershed.Tasks.TaskList.UserTaskListFragment;
-
 import com.blueprint.watershed.Views.Material.SlidingTabLayout;
 import com.blueprint.watershed.Views.ViewPagerAbstractFragment;
 
@@ -22,32 +22,8 @@ import com.blueprint.watershed.Views.ViewPagerAbstractFragment;
  */
 public class TaskViewPagerFragment extends ViewPagerAbstractFragment {
 
-
-    private MainActivity mParentActivity;
-
     public static TaskViewPagerFragment newInstance() {
         return new TaskViewPagerFragment();
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-        mParentActivity = (MainActivity) getActivity();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_view_pager, container, false);
-        initializeViews(view);
-        return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mParentActivity.setToolbarElevation(0);
     }
 
     protected void initializeViews(View view) {
@@ -61,24 +37,11 @@ public class TaskViewPagerFragment extends ViewPagerAbstractFragment {
         mViewPager.setOffscreenPageLimit(2);
         mViewPager.setAdapter(mAdapter);
 
-        mAdapter.addFragment(new UserTaskListFragment());
-        mAdapter.addFragment(new UnclaimedTaskListFragment());
+        mAdapter.addFragment(UserTaskListFragment.newInstance());
+        mAdapter.addFragment(UnclaimedTaskListFragment.newInstance());
         mAdapter.addTitles("Your", "Unclaimed");
         mAdapter.notifyDataSetChanged();
 
-
-        mTabs = (SlidingTabLayout) view.findViewById(R.id.pager_title_strip);
-        mTabs.setDistributeEvenly(true);
-        setUpTabs(mTabs);
         mTabs.setViewPager(mViewPager);
-    }
-
-    public void setUpTabs(SlidingTabLayout tabs){
-        tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
-            @Override
-            public int getIndicatorColor(int position) {
-                return getResources().getColor(R.color.white);
-            }
-        });
     }
 }
