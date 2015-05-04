@@ -9,7 +9,9 @@ class Ability
     can :manage, FieldReport
     can :read, MiniSite
     can :read, Task
+
     can :read, Site
+    can [:subscribe, :unsubscribe], Site
 
     can :manage, User, id: user.id
 

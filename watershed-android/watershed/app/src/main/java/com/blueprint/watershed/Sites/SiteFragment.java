@@ -48,7 +48,6 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
     private User mUser;
     private Site mSite;
     private ArrayList<MiniSite> mMiniSites;
-    private View mView;
 
     private TextView mSiteTitle;
     private TextView mSiteDescription;
@@ -68,7 +67,7 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
         mSiteTitle = (TextView) view.findViewById(R.id.site_name);
         mSiteTitle.setText(site.getName());
 
-        mSiteDescription =   (TextView) view.findViewById(R.id.site_description);
+        mSiteDescription = (TextView) view.findViewById(R.id.site_description);
         mSiteDescription.setText(site.getTrimmedText());
 
         if (site.shouldShowDescriptionDialog()) {
@@ -103,7 +102,6 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_site, container, false);
-        mView = view;
         initializeViews(view);
         Site site = mParentActivity.getSite();
         if (site != null) {
@@ -133,11 +131,18 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.subscribe:
+                if (!mSite.getSubscribed()) subscribeToSite();
+                else unsubscribeFromSite();
+                break;
+            case R.id.edit:
+                editSite();
+                break;
             case R.id.delete:
                 deleteSiteRequest();
-            default:
-                return super.onOptionsItemSelected(item);
+                break;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -159,33 +164,15 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
         mMiniSiteGridView.setAdapter(mMiniSiteAdapter);
         mMiniSiteGridView.setOnItemClickListener(this);
 
-//        setSubscribedButton(mSite.getSubscribed());
-
         setButtonListeners(view);
     }
 
     private void setButtonListeners(View view) {
-        FloatingActionButton editButton = (FloatingActionButton) view.findViewById(R.id.site_edit_site);
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editSite();
-            }
-        });
         FloatingActionButton miniSiteCreate = (FloatingActionButton) view.findViewById(R.id.site_add_minisite);
         miniSiteCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mParentActivity.replaceFragment(CreateMiniSiteFragment.newInstance(mSite));
-            }
-        });
-
-        View subscribeButton = view.findViewById(R.id.site_subscribe_site);
-        subscribeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!mSite.getSubscribed()) subscribeToSite();
-                else unsubscribeFromSite();
             }
         });
     }
