@@ -28,7 +28,6 @@ import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Utilities.Utility;
 import com.blueprint.watershed.Views.HeaderGridView;
 import com.blueprint.watershed.Views.Material.FloatingActionButton;
-import com.blueprint.watershed.Views.Material.FloatingActionsMenu;
 
 import org.json.JSONObject;
 
@@ -55,7 +54,7 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
     private TextView mSiteDescription;
     private TextView mSiteAddress;
 
-    FloatingActionButton mSubscribeButton;
+    private Menu mMenu;
 
     public static SiteFragment newInstance(Site site) {
         SiteFragment siteFragment = new SiteFragment();
@@ -93,10 +92,10 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
         mParentActivity = (MainActivity) getActivity();
         mUser = mParentActivity.getUser();
         mNetworkManager = NetworkManager.getInstance(mParentActivity);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -120,7 +119,13 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.delete_menu, menu);
+        if (mParentActivity.getUser().isManager()) {
+            inflater.inflate(R.menu.site_menu_manager, menu);
+        }
+        else {
+            inflater.inflate(R.menu.site_menu_member, menu);
+        }
+        mMenu = menu;
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -153,30 +158,17 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
         mMiniSiteGridView.setAdapter(mMiniSiteAdapter);
         mMiniSiteGridView.setOnItemClickListener(this);
 
-        mSubscribeButton = (FloatingActionButton) mView.findViewById(R.id.site_subscribe_site);
-        setSubscribeButton(mSite);
+        setSubscribedButton(mSite.getSubscribed());
 
         setButtonListeners(view);
     }
 
-    private void setSubscribeButton(Site site){
-        if (site.getSubscribed()) {
-            mSubscribeButton.setTitle("Unsubscribe from Site");
-            mSubscribeButton.setIcon(R.drawable.ic_bookmark_white_36dp);
-        }
-        else {
-            mSubscribeButton.setTitle("Subscribe to Site");
-            mSubscribeButton.setIcon(R.drawable.ic_bookmark_outline_white_36dp);
-        }
-    }
-
     private void setButtonListeners(View view) {
-        mMenu = (FloatingActionsMenu) view.findViewById(R.id.site_settings);
+
         FloatingActionButton editButton = (FloatingActionButton) view.findViewById(R.id.site_edit_site);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mMenu.collapse();
                 editSite();
             }
         });
@@ -184,7 +176,6 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
         miniSiteCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mMenu.collapse();
                 mParentActivity.replaceFragment(CreateMiniSiteFragment.newInstance(mSite));
             }
         });
@@ -201,28 +192,26 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
 
 
     private void subscribeToSite() {
-        SiteSubscribeRequest subRequest = new SiteSubscribeRequest(mParentActivity, mSite, new HashMap<String, JSONObject>(), new Response.Listener<String>() {
+        SiteSubscribeRequest subRequest =
+            new SiteSubscribeRequest(mParentActivity, mSite, new HashMap<String, JSONObject>(), new Response.Listener<String>() {
             @Override
             public void onResponse(String message) {
-                mSubscribeButton.setIcon(R.drawable.ic_bookmark_white_36dp);
                 mSite.setSubscribed(true);
+                setSubscribedButton(mSite.getSubscribed());
             }
         }, mSite.getSubscribed());
-        mSubscribeButton.setIcon(R.drawable.ic_bookmark_white_36dp);
-        mSubscribeButton.setTitle("Unsubscribe from Site");
         mNetworkManager.getRequestQueue().add(subRequest);
     }
 
-    private void unsubscribeFromSite(){
-        SiteSubscribeRequest subRequest = new SiteSubscribeRequest(mParentActivity, mSite, new HashMap<String, JSONObject>(), new Response.Listener<String>() {
+    private void unsubscribeFromSite() {
+        SiteSubscribeRequest subRequest =
+            new SiteSubscribeRequest(mParentActivity, mSite, new HashMap<String, JSONObject>(), new Response.Listener<String>() {
             @Override
             public void onResponse(String message) {
-                mSubscribeButton.setIcon(R.drawable.ic_bookmark_outline_white_36dp);
                 mSite.setSubscribed(false);
+                setSubscribedButton(mSite.getSubscribed());
             }
         }, mSite.getSubscribed());
-        mSubscribeButton.setTitle("Subscribe to Site");
-        mSubscribeButton.setIcon(R.drawable.ic_bookmark_outline_white_36dp);
         mNetworkManager.getRequestQueue().add(subRequest);
     }
 
@@ -250,7 +239,7 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
 
     private void setSite(Site site) {
         mSite = site;
-        setSubscribeButton(mSite);
+        setSubscribedButton(site.getSubscribed());
         setMiniSites(site.getMiniSites());
     }
 
@@ -300,9 +289,11 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
         mNetworkManager.getRequestQueue().add(request);
     }
 
-    @Override
-    public void onPause() {
-        super.onDestroy();
-        if (mMenu != null) closeMenu();
+    private void setSubscribedButton(boolean showSubscribed) {
+        if (showSubscribed) {
+            mMenu.findItem(R.id.subscribe).setIcon(R.drawable.ic_bookmark_white_36dp);
+        } else {
+            mMenu.findItem(R.id.subscribe).setIcon(R.drawable.ic_bookmark_outline_white_36dp);
+        }
     }
 }
