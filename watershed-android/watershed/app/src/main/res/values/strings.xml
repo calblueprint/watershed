@@ -103,8 +103,7 @@
     <!-- User Index -->
     <string name="no_user">Looks like there aren\'t any users!\nSwipe up to refresh.</string>
     <string name="no_user_refresh">Refresh</string>
-    <string name="make_user_admin">Set User to Admin</string>
-    <string name="make_user_member">Set User to Member</string>
+    <string name="set_role">Set User Role</string>
 
     <!-- User Lists -->
     <string name="no_user_tasks">Looks like this user has no tasks!</string>

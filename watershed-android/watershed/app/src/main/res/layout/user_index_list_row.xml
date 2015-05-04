@@ -6,52 +6,41 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="@dimen/button_large_height"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
 
         <TextView
             android:id="@+id/user_name"
             android:text="Name"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:textSize="20sp"
-            android:layout_height="@dimen/button_large_height"
-            android:paddingTop="10dp"
-            android:layout_marginLeft="10dp"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"/>
 
         <TextView
             android:id="@+id/user_role"
             android:text="MANAGER"
-            android:textSize="15sp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="@dimen/button_large_height"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="end"
-            android:layout_marginRight="10dp"/>
-    </LinearLayout>
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
 
     <LinearLayout android:id="@+id/user_options"
-        android:visibility="gone"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:orientation="vertical">
-        <Button android:id="@+id/make_manager"
-            android:layout_height="wrap_content"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:layout_width="fill_parent"
-            android:text="@string/make_user_admin"
-            android:background="@color/dark_blue_700"
-            android:textColor="@color/white"
-            />
         <Button android:id="@+id/make_member"
             android:layout_height="wrap_content"
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:layout_width="fill_parent"
-            android:text="@string/make_user_member"
+            android:text="@string/set_role"
             android:background="@color/dark_blue_500"
             android:textColor="@color/white"
             />

@@ -156,7 +156,6 @@ public class UserListFragment extends Fragment{
                 setUsers(users);
             }
         });
-
         mNetworkManager.getRequestQueue().add(request);
     }
 
