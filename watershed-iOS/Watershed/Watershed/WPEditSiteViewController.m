@@ -42,7 +42,7 @@
 
 - (void)confirmDeletion {
     UIAlertView *confirmDelete = [[UIAlertView alloc] initWithTitle:@"Confirm Deletion"
-                                                            message:@"Are you sure you want to delete this task?"
+                                                            message:@"Are you sure you want to delete this site?"
                                                            delegate:self
                                                   cancelButtonTitle:@"Cancel"
                                                   otherButtonTitles:@"Yes",nil];
