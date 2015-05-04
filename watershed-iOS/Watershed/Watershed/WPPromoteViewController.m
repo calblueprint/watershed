@@ -59,8 +59,7 @@ NSString *userIdentifier = @"WPUserCell";
 }
 
 
-- (void)addPhotoButtonAction {
-    WPUser *u = [[WPUser alloc] init];
+- (void)showUserActionSheet:(WPUser *)user {
     if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
         UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Delete User" otherButtonTitles:
                                 @"Promote User",
@@ -68,44 +67,44 @@ NSString *userIdentifier = @"WPUserCell";
         popup.tag = 1;
         [popup showInView:[UIApplication sharedApplication].keyWindow];
     } else {
-        UIAlertController *addPhotoActionSheet = [UIAlertController alertControllerWithTitle:nil
-                                                                                     message:nil
-                                                                              preferredStyle:UIAlertControllerStyleActionSheet];
-        UIAlertAction *takePhoto = [UIAlertAction
-                                    actionWithTitle:@"Promote User"
-                                    style:UIAlertActionStyleDefault
-                                    handler:^(UIAlertAction * action)
-                                    {
-                                        [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
-                                        [self changeUserStatus:u];
-                                    }];
-        UIAlertAction *selectPhoto = [UIAlertAction
-                                      actionWithTitle:@"Choose Existing"
-                                      style:UIAlertActionStyleDefault
-                                      handler:^(UIAlertAction * action)
-                                      {
-                                          [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
-                                          [self changeUserStatus:u];
-                                          
-                                      }];
+        UIAlertController *changeUserActionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertAction *changeUser = [[UIAlertAction alloc] init];
+        if ([user.role isEqualToNumber:[NSNumber numberWithInt:1]] || [user.role isEqualToNumber:[NSNumber numberWithInt:2]]) {
+            changeUser = [UIAlertAction
+                                         actionWithTitle:@"Demote User"
+                                         style:UIAlertActionStyleDefault
+                                         handler:^(UIAlertAction * action)
+                                         {
+                                             [changeUserActionSheet dismissViewControllerAnimated:YES completion:nil];
+                                             [self changeUserStatus:user];
+                                         }];
+        } else {
+            changeUser = [UIAlertAction
+                                          actionWithTitle:@"Promote User"
+                                          style:UIAlertActionStyleDefault
+                                          handler:^(UIAlertAction * action)
+                                          {
+                                              [changeUserActionSheet dismissViewControllerAnimated:YES completion:nil];
+                                              [self changeUserStatus:user];
+                                          }];
+        }
         UIAlertAction *delete = [UIAlertAction
                                                  actionWithTitle:@"delete" style:UIAlertActionStyleDestructive handler:^(UIAlertAction* action){
-                                                     [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
-                                                     [self changeUserStatus:u];
-                                                     
+                                                     [changeUserActionSheet dismissViewControllerAnimated:YES completion:nil];
+                                                     [self deleteUser:user];
                                                  }];
         UIAlertAction *cancel = [UIAlertAction
                                  actionWithTitle:@"Cancel"
                                  style:UIAlertActionStyleCancel
                                  handler:^(UIAlertAction * action)
                                  {
-                                     [addPhotoActionSheet dismissViewControllerAnimated:YES completion:nil];
+                                     [changeUserActionSheet dismissViewControllerAnimated:YES completion:nil];
                                  }];
         
-        [addPhotoActionSheet addAction:takePhoto];
-        [addPhotoActionSheet addAction:selectPhoto];
-        [addPhotoActionSheet addAction:cancel];
-        [self presentViewController:addPhotoActionSheet animated:YES completion:nil];
+        [changeUserActionSheet addAction:changeUser];
+        [changeUserActionSheet addAction:delete];
+        [changeUserActionSheet addAction:cancel];
+        [self presentViewController:changeUserActionSheet animated:YES completion:nil];
     }
 }
 
@@ -136,8 +135,11 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 }
 
 - (void)deleteUser:(WPUser *)user {
-    
-}
+    NSMutableDictionary *userJSON = [[NSMutableDictionary alloc] init];
+    [[WPNetworkingManager sharedManager] deleteUserWithUser:user parameters:userJSON success:^(WPUser *user) {
+        [self requestAndLoadUsers];
+//        [self.navigationController popViewControllerAnimated:YES];
+    }];}
 
 
 #pragma mark - Table View Protocols
@@ -170,15 +172,12 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
         if (indexPath.section == 0) {
-            
-//            [self.selectAssigneeDelegate selectAssigneeViewControllerDismissed:self.managerArray[indexPath.row]];
+            [self showUserActionSheet:self.managerArray[indexPath.row]];
         } else if (indexPath.section == 1) {
-//            [self.selectAssigneeDelegate selectAssigneeViewControllerDismissed:self.employeeArray[indexPath.row]];
+            [self showUserActionSheet:self.employeeArray[indexPath.row]];
         } else {
-            [self addPhotoButtonAction];
-//            [self.selectAssigneeDelegate selectAssigneeViewControllerDismissed:self.userArray[indexPath.row]];
+            [self showUserActionSheet:self.userArray[indexPath.row]];
         }
-//    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)splitUsers {
