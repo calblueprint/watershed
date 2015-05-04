@@ -197,7 +197,7 @@ public class UserListFragment extends Fragment{
         mNetworkManager.getRequestQueue().add(request);
     }
 
-    private void deleteUser(User user) {
+    public void deleteUser(User user) {
         DeleteUserRequest request = new DeleteUserRequest(mParentActivity, user, new Response.Listener<ArrayList<User>>() {
             @Override
             public void onResponse(ArrayList<User> users) {

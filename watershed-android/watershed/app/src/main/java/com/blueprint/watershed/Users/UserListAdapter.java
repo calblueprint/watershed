@@ -1,6 +1,11 @@
 package com.blueprint.watershed.Users;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
@@ -85,7 +90,7 @@ public class UserListAdapter extends ArrayAdapter<User> {
         deleteUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                CheckDeleteFragment.newInstance(user).show(mParentActivity.getSupportFragmentManager(), "check_delete") ;
             }
         });
 
@@ -110,6 +115,8 @@ public class UserListAdapter extends ArrayAdapter<User> {
         return row;
     }
 
+
+
     private void setUserRole(User user, int role) {
         JSONObject userObj = new JSONObject();
         JSONObject params = new JSONObject();
@@ -133,4 +140,39 @@ public class UserListAdapter extends ArrayAdapter<User> {
         TextView mName;
         LinearLayout mToolbar;
     }
+
+    public static class CheckDeleteFragment extends DialogFragment {
+
+        private User mUser;
+
+        public static CheckDeleteFragment newInstance(User user) {
+            CheckDeleteFragment dialog = new CheckDeleteFragment();
+            dialog.setUser(user);
+            return dialog;
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(R.string.manage_profile)
+                    .setPositiveButton(R.string.delete_user, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            if (!(getTargetFragment() instanceof UserListFragment)) Log.e("can't", "even fragment");
+                            UserListFragment fragment = (UserListFragment) getTargetFragment();
+                            fragment.deleteUser(mUser);
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            return builder.create();
+        }
+
+        public void setUser(User user) { mUser = user; }
+    }
+
+
 }

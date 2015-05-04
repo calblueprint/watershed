@@ -92,6 +92,7 @@
     <string name="edit_password_text">Change Password</string>
     <string name="edit_save_text">Confirm Changes</string>
     <string name="manage_profile">Manage User</string>
+    <string name="delete_user">Delete User</string>
 
     <!-- Task Index -->
     <string name="no_tasks">Looks like you don\'t have any tasks!\nSwipe up to refresh.</string>
