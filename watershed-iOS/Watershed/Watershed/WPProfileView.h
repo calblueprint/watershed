@@ -11,6 +11,7 @@
 #import "WPUser.h"
 
 @interface WPProfileView : WPView <UITableViewDataSource, UITableViewDelegate>
+@property (nonatomic) UIButton *promoteButton;
 
 - (void)configureWithUser:(WPUser *)user;
 - (void)stopIndicator;

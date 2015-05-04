@@ -45,7 +45,6 @@
         strongSelf.task = taskResponse;
         [strongSelf dismissSelf];
     }];
-
 }
 
 
