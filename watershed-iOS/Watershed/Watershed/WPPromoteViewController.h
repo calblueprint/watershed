@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WPPromoteViewController : UIViewController
+@interface WPPromoteViewController : UIViewController<
+    UITableViewDataSource,
+    UITableViewDelegate,
+    UIActionSheetDelegate>
 
 @end

@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WPView.h"
 
-@interface WPPromoteView : UIView
+@interface WPPromoteView : WPView
+
+@property (nonatomic) UITableView *userTableView;
+- (void)stopIndicator;
 
 @end
