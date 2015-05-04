@@ -102,6 +102,8 @@
     <!-- User Index -->
     <string name="no_user">Looks like there aren\'t any users!\nSwipe up to refresh.</string>
     <string name="no_user_refresh">Refresh</string>
+    <string name="make_user_admin">Set User to Admin</string>
+    <string name="make_user_member">Set User to Member</string>
 
     <!-- User Lists -->
     <string name="no_user_tasks">Looks like this user has no tasks!</string>
@@ -125,4 +127,6 @@
     
     <string name="logout_title">Are you sure you want to log out?</string>
     <string name="logout_message">You will have to sign back in to view the application.</string>
+
+
 </resources>

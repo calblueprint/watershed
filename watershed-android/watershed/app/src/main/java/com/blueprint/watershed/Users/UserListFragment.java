@@ -32,7 +32,7 @@ import java.util.List;
  * Created by charlesx on 4/28/15.
  * Lists all the users for the admin to manage
  */
-public class UserListFragment extends Fragment {
+public class UserListFragment extends Fragment{
 
     private MainActivity mParentActivity;
     private NetworkManager mNetworkManager;
@@ -139,6 +139,7 @@ public class UserListFragment extends Fragment {
         mSwipeLayout.setVisibility(View.GONE);
     }
 
+
     public static class ChooseActionDialogFragment extends DialogFragment {
 
         private User mUser;
@@ -176,7 +177,7 @@ public class UserListFragment extends Fragment {
         public void setUser(User user) { mUser = user; }
     }
 
-    private void setUserRole(User user, int role) {
+    public void setUserRole(User user, int role) {
         JSONObject userObj = new JSONObject();
         JSONObject params = new JSONObject();
         try {
@@ -187,12 +188,12 @@ public class UserListFragment extends Fragment {
         }
 
         UpdateUserRequest request = new UpdateUserRequest(mParentActivity, user, userObj,
-            new Response.Listener<User>() {
-                @Override
-                public void onResponse(User user) {
-                    mAdapter.notifyDataSetChanged();
-                }
-            },BaseRequest.makeUserResourceURL(user.getId(), "register"));
+                new Response.Listener<User>() {
+                    @Override
+                    public void onResponse(User user) {
+                        mAdapter.notifyDataSetChanged();
+                    }
+                },BaseRequest.makeUserResourceURL(user.getId(), "register"));
         mNetworkManager.getRequestQueue().add(request);
     }
 
