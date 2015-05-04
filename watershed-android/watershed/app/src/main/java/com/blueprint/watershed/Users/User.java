@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * Created by maxwolffe on 10/29/14.
  **/
 enum Role {
-    COMMUNITY_MEMBER(0), EMPLOYEE(1), MANAGER(2);
+    COMMUNITY_MEMBER(0), MANAGER(1);
 
     private int value;
 
@@ -35,8 +35,6 @@ public class User implements APIObject {
 
     public static String MANAGER = "Manager";
     public static String COMMUNITY_MEMBER = "Community Member";
-    public static String EMPLOYEE = "Employee";
-
 
     private ArrayList<FieldReport> mFieldReports;
 
@@ -59,13 +57,11 @@ public class User implements APIObject {
 
     // Roles
     public Boolean isManager() { return mRole == Role.MANAGER.getValue(); }
-    public Boolean isEmployee() { return mRole == Role.EMPLOYEE.getValue(); }
     public Boolean isCommunityMember() { return mRole == Role.COMMUNITY_MEMBER.getValue(); }
 
     public String getRoleString() {
         if (isManager()) return MANAGER;
-        else if (isCommunityMember()) return COMMUNITY_MEMBER;
-        else return EMPLOYEE;
+        else return COMMUNITY_MEMBER;
     }
 
     // Getters

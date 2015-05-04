@@ -119,14 +119,17 @@ public abstract class TaskListAbstractFragment extends ListFragment {
             }
         });
 
-        mCreateTask = (FloatingActionButton) view.findViewById(R.id.create_task_button);
-        mCreateTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CreateTaskFragment newTask = CreateTaskFragment.newInstance();
-                mParentActivity.replaceFragment(newTask);
-            }
-        });
+        if (mParentActivity.getUser().isManager()) {
+            mCreateTask = (FloatingActionButton) view.findViewById(R.id.create_task_button);
+            mCreateTask.setVisibility(View.VISIBLE);
+            mCreateTask.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CreateTaskFragment newTask = CreateTaskFragment.newInstance();
+                    mParentActivity.replaceFragment(newTask);
+                }
+            });
+        }
     }
 
     @Override

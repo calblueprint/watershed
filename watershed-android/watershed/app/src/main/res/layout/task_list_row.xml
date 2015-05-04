@@ -10,7 +10,7 @@
     android:paddingBottom="2dp"
     android:paddingLeft="5dp"
     android:paddingRight="5dp"
-    android:orientation="vertical">
+    >
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"

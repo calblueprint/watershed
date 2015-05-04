@@ -8,15 +8,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.AbstractFragments.FloatingActionMenuAbstractFragment;
 import com.blueprint.watershed.Activities.MainActivity;
-import com.blueprint.watershed.FieldReports.AddFieldReportFragment;
 import com.blueprint.watershed.FieldReports.FieldReport;
 import com.blueprint.watershed.FieldReports.FieldReportListAdapter;
 import com.blueprint.watershed.Networking.MiniSites.DeleteMiniSiteRequest;
@@ -28,19 +25,17 @@ import com.blueprint.watershed.Utilities.Utility;
 import com.blueprint.watershed.Views.CoverPhotoPagerView;
 import com.blueprint.watershed.Views.HeaderGridView;
 import com.blueprint.watershed.Views.Material.FloatingActionButton;
-import com.blueprint.watershed.Views.Material.FloatingActionsMenu;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class MiniSiteFragment extends FloatingActionMenuAbstractFragment
-                              implements AbsListView.OnItemClickListener {
+public class MiniSiteFragment extends FloatingActionMenuAbstractFragment {
 
     private NetworkManager mNetworkManager;
     private MainActivity mParentActivity;
     private HeaderGridView mFieldReportGridView;
     private FieldReportListAdapter mFieldReportAdapter;
+
     private MiniSite mMiniSite;
     private Site mSite;
     private List<FieldReport> mFieldReports;
@@ -56,7 +51,6 @@ public class MiniSiteFragment extends FloatingActionMenuAbstractFragment
     private TextView mDescription;
     private TextView mLocation;
     private Button mReadMore;
-
 
     public static MiniSiteFragment newInstance(Site site, MiniSite miniSite) {
         MiniSiteFragment miniSiteFragment = new MiniSiteFragment();
@@ -127,7 +121,6 @@ public class MiniSiteFragment extends FloatingActionMenuAbstractFragment
                 mFieldReportAdapter.notifyDataSetChanged();
             }
         });
-
         mNetworkManager.getRequestQueue().add(request);
     }
 
@@ -142,37 +135,19 @@ public class MiniSiteFragment extends FloatingActionMenuAbstractFragment
         // Configure the header
         configureViewWithMiniSite(header, mMiniSite);
 
-        // Set FAB listeners
-        setButtonListeners(view);
-
         // Set the adapter to fill the list of field reports
         mFieldReportAdapter = new FieldReportListAdapter(mParentActivity, mParentActivity, R.layout.field_report_list_row, getFieldReports());
         mFieldReportGridView.setAdapter(mFieldReportAdapter);
-        mFieldReportGridView.setOnItemClickListener(this);
-    }
-
-    private void setButtonListeners(View view) {
-        mMenu = (FloatingActionsMenu) view.findViewById(R.id.mini_site_menu);
-        mEditButton = (FloatingActionButton) view.findViewById(R.id.mini_site_edit_minisite);
-        mEditButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mParentActivity.replaceFragment(EditMiniSiteFragment.newInstance(mSite, mMiniSite));
-            }
-        });
-
-        mFieldReportButton = (FloatingActionButton) view.findViewById(R.id.mini_site_add_fieldreport);
-        mFieldReportButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Add Field Report. Unless we are requiring a user to be completing a task to submit a report.
-            }
-        });
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
+        if (mParentActivity.getUser().isManager()) {
+            inflater.inflate(R.menu.mini_site_manager, menu);
+        } else {
+            inflater.inflate(R.menu.mini_site_member, menu);
+        }
         inflater.inflate(R.menu.delete_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -180,11 +155,14 @@ public class MiniSiteFragment extends FloatingActionMenuAbstractFragment
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.edit:
+                mParentActivity.replaceFragment(EditMiniSiteFragment.newInstance(mSite, mMiniSite));
+                break;
             case R.id.delete:
                 deleteMiniSite();
-            default:
-                return super.onOptionsItemSelected(item);
+                break;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -192,16 +170,6 @@ public class MiniSiteFragment extends FloatingActionMenuAbstractFragment
         super.onResume();
         mParentActivity.setMenuAction(false);
     }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // Load Field Report
-        FieldReport fieldReport = getFieldReport(position);
-        AddFieldReportFragment addFieldReportFragment = new AddFieldReportFragment();
-        mParentActivity.replaceFragment(addFieldReportFragment);
-    }
-
-    public FieldReport getFieldReport(int position) { return mFieldReports.get(position); }
 
     public List<FieldReport> getFieldReports() {
         if (mFieldReports == null) mFieldReports = new ArrayList<>();

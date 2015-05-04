@@ -1,7 +1,7 @@
 package com.blueprint.watershed.FieldReports;
 
-import com.blueprint.watershed.Networking.APIObject;
 import com.blueprint.watershed.MiniSites.MiniSite;
+import com.blueprint.watershed.Networking.APIObject;
 import com.blueprint.watershed.Networking.FieldReports.FieldReportSerializer;
 import com.blueprint.watershed.Photos.Photo;
 import com.blueprint.watershed.Tasks.Task;
@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by maxwolffe on 11/18/14.
@@ -24,6 +25,7 @@ public class FieldReport implements APIObject {
     private String mDescription;
     private Integer mHealthRating;
     private Boolean mUrgent;
+    private Date mCreatedAt;
 
     // Relationships
     private User mUser;
@@ -31,8 +33,7 @@ public class FieldReport implements APIObject {
     private Task mTask;
     private Photo mPhoto;
 
-    public FieldReport() {
-    }
+    public FieldReport() {}
 
     public FieldReport(String description, Integer healthRating, Boolean urgent, Photo photo,
                        User user, MiniSite miniSite, Task task) {
@@ -80,10 +81,11 @@ public class FieldReport implements APIObject {
     public void setUser(User user) { mUser = user; }
     public void setMiniSite(MiniSite miniSite) { mMiniSite = miniSite; }
     public void setTask(Task task) { mTask = task; }
-
     public void setPhotoAttributes(Photo photo) { mPhoto = photo; }
-
     public void setPhoto(Photo photo) { mPhoto = photo; }
+    public void setCreatedAt(Date createdAt) {
+        this.mCreatedAt = createdAt;
+    }
 
     /*
      * Attributes
@@ -103,6 +105,9 @@ public class FieldReport implements APIObject {
     }
     public Boolean getUrgent() {
         return mUrgent;
+    }
+    public Date getCreatedAt() {
+        return mCreatedAt;
     }
 
     // Setters

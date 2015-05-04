@@ -82,8 +82,6 @@ public class TaskDetailFragment extends TaskAbstractFragment
     }
 
     private void initializeViews(View view) {
-        setButtonListeners(view);
-
         mDetailTitle = (TextView) view.findViewById(R.id.task_title);
         mDescription = (TextView) view.findViewById(R.id.task_description);
         mDueDate = (TextView) view.findViewById(R.id.task_due_date);
@@ -92,6 +90,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
         mLocation = (TextView) view.findViewById(R.id.task_location);
         mMiniSiteName = (TextView) view.findViewById(R.id.task_site_name);
         mBackgroundColor = (RelativeLayout) view.findViewById(R.id.task_title_container);
+        mCompleteButton = (Button) view.findViewById(R.id.complete_button);
 
         mDetailTitle.setText(mTask.getTitle());
 
@@ -133,32 +132,28 @@ public class TaskDetailFragment extends TaskAbstractFragment
         refreshCompletion();
     }
 
-    private void setButtonListeners(View view){
-        View editTaskButton = view.findViewById(R.id.edit_task_button);
-        editTaskButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mParentActivity.replaceFragment(EditTaskFragment.newInstance(mTask));
-            }
-        });
-        mCompleteButton = (Button) view.findViewById(R.id.complete_button);
-        mCompleteButton.setOnClickListener(this);
-    }
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.delete_menu, menu);
+        if (mParentActivity.getUser().isManager()) {
+            inflater.inflate(R.menu.task_manager, menu);
+        } else {
+            inflater.inflate(R.menu.task_member, menu);
+        }
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.edit:
+                mParentActivity.replaceFragment(EditTaskFragment.newInstance(mTask));
+                break;
             case R.id.delete:
                 deleteTask();
-            default:
-                return super.onOptionsItemSelected(item);
+                break;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -166,8 +161,6 @@ public class TaskDetailFragment extends TaskAbstractFragment
         switch(view.getId()){
             case (R.id.complete_button):
                 bottomButton();
-                break;
-            default:
                 break;
         }
     }

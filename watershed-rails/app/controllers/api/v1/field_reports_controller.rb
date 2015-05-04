@@ -1,6 +1,6 @@
 class Api::V1::FieldReportsController < Api::V1::BaseController
   prepend_before_filter :convert_base64_to_image, only: [:create]
-  load_and_authorize_resource param_method: :field_report_params
+  load_and_authorize_resource
 
   def index
     render json: @field_reports, each_serializer: FieldReportListSerializer
