@@ -95,13 +95,16 @@ public abstract class SiteListAbstractFragment extends Fragment {
             getSitesRequest();
         }
 
-        mCreateSiteButton = (FloatingActionButton) view.findViewById(R.id.create_site_button);
-        mCreateSiteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mParentActivity.replaceFragment(CreateSiteFragment.newInstance());
-            }
-        });
+        if (mParentActivity.getUser().isManager()) {
+            mCreateSiteButton = (FloatingActionButton) view.findViewById(R.id.create_site_button);
+            mCreateSiteButton.setVisibility(View.VISIBLE);
+            mCreateSiteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mParentActivity.replaceFragment(CreateSiteFragment.newInstance());
+                }
+            });
+        }
     }
 
     @Override

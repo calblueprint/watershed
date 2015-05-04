@@ -41,6 +41,7 @@
     <com.blueprint.watershed.Views.Material.FloatingActionButton
         style="@style/AddFABRightCorner"
         android:id="@+id/create_site_button"
+        android:visibility="gone"
         fab:fab_plusIconColor="@color/white"
         fab:fab_colorNormal="@color/pink"
         fab:fab_colorPressed="@color/pink_pressed"

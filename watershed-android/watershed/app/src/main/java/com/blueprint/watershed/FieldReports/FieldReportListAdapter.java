@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.R;
-import com.blueprint.watershed.Views.CoverPhotoPagerView;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -42,7 +42,6 @@ public class FieldReportListAdapter extends ArrayAdapter<FieldReport> {
             row = inflater.inflate(layoutResourceId, parent, false);
 
             holder = new FieldReportHolder();
-            holder.photosView = (CoverPhotoPagerView) row.findViewById(R.id.cover_photo_pager_view);
             holder.coverPhotoLabel = (TextView) row.findViewById(R.id.cover_photo_label);
             holder.topLabel = (TextView) row.findViewById(R.id.top_label);
             holder.bottomLabel = (TextView) row.findViewById(R.id.bottom_label);
@@ -53,10 +52,21 @@ public class FieldReportListAdapter extends ArrayAdapter<FieldReport> {
         }
 
         final FieldReport fieldReport = fieldReports.get(position);
-        holder.photosView.configureWithPhotos(fieldReport.getPhotos());
-        holder.coverPhotoLabel.setText(String.format("Rating: %s", fieldReport.getHealthRating()));
-        holder.topLabel.setText("12/8/2014");
-        holder.bottomLabel.setText(String.format("By: %s", fieldReport.getUserName()));
+        holder.coverPhotoLabel.setText(String.valueOf(fieldReport.getHealthRating()));
+
+        int color;
+        if (fieldReport.getHealthRating() < 3) {
+            color = R.color.red_500;
+        } else if (fieldReport.getHealthRating() < 5) {
+            color = R.color.yellow_500;
+        } else {
+            color = R.color.green_500;
+        }
+        holder.coverPhotoLabel.setTextColor(mMainActivity.getResources().getColor(color));
+
+        String date = new SimpleDateFormat("MMMM dd, yyyy").format(fieldReport.getCreatedAt());
+        holder.topLabel.setText("Field Report - " + date);
+        holder.bottomLabel.setText(String.format("Submitted by: %s", fieldReport.getUserName()));
 
         row.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +80,6 @@ public class FieldReportListAdapter extends ArrayAdapter<FieldReport> {
     }
 
     static class FieldReportHolder {
-        CoverPhotoPagerView photosView;
         TextView coverPhotoLabel;
         TextView topLabel;
         TextView bottomLabel;

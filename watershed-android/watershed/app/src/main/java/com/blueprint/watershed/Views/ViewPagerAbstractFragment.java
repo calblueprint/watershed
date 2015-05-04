@@ -21,7 +21,7 @@ import com.blueprint.watershed.Views.Material.SlidingTabLayout;
  */
 public abstract class ViewPagerAbstractFragment extends Fragment implements ActionBar.TabListener {
 
-    private MainActivity mParentActivity;
+    protected MainActivity mParentActivity;
 
     protected SlidingTabLayout mTabs;
     protected ViewPager mViewPager;

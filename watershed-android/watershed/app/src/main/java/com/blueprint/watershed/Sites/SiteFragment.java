@@ -8,8 +8,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -18,7 +16,6 @@ import com.blueprint.watershed.AbstractFragments.FloatingActionMenuAbstractFragm
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.MiniSites.CreateMiniSiteFragment;
 import com.blueprint.watershed.MiniSites.MiniSite;
-import com.blueprint.watershed.MiniSites.MiniSiteFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteListAdapter;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Sites.DeleteSiteRequest;
@@ -29,7 +26,6 @@ import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Utilities.Utility;
 import com.blueprint.watershed.Views.HeaderGridView;
 import com.blueprint.watershed.Views.Material.FloatingActionButton;
-import com.blueprint.watershed.Views.Material.FloatingActionsMenu;
 
 import org.json.JSONObject;
 
@@ -37,8 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class SiteFragment extends FloatingActionMenuAbstractFragment
-                          implements AbsListView.OnItemClickListener {
+public class SiteFragment extends FloatingActionMenuAbstractFragment {
 
     private NetworkManager mNetworkManager;
     private MainActivity mParentActivity;
@@ -50,14 +45,14 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
     private User mUser;
     private Site mSite;
     private ArrayList<MiniSite> mMiniSites;
-    private View mView;
 
     private TextView mSiteTitle;
     private TextView mSiteDescription;
     private TextView mSiteAddress;
     private Button mShowMore;
 
-    FloatingActionButton mSubscribeButton;
+    private Menu mMenu;
+    private FloatingActionButton mCreateMiniSite;
 
     public static SiteFragment newInstance(Site site) {
         SiteFragment siteFragment = new SiteFragment();
@@ -96,17 +91,16 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
         mParentActivity = (MainActivity) getActivity();
         mUser = mParentActivity.getUser();
         mNetworkManager = NetworkManager.getInstance(mParentActivity);
+        setHasOptionsMenu(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_site, container, false);
-        mView = view;
         initializeViews(view);
         Site site = mParentActivity.getSite();
         if (site != null) {
@@ -122,18 +116,32 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.delete_menu, menu);
+        if (mParentActivity.getUser().isManager()) {
+            inflater.inflate(R.menu.site_manager, menu);
+        }
+        else {
+            inflater.inflate(R.menu.site_member, menu);
+        }
+        mMenu = menu;
+        setSubscribedButton(mSite.getSubscribed());
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.subscribe:
+                if (!mSite.getSubscribed()) subscribeToSite();
+                else unsubscribeFromSite();
+                break;
+            case R.id.edit:
+                editSite();
+                break;
             case R.id.delete:
                 deleteSiteRequest();
-            default:
-                return super.onOptionsItemSelected(item);
+                break;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -149,89 +157,43 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
         mMiniSiteGridView.addHeaderView(mHeader, null, false);
         configureViewWithSite(mHeader, mSite);
 
-
-        // Set the adapter to fill the list of mini sites
         mMiniSiteAdapter = new MiniSiteListAdapter(mParentActivity, getMiniSites(), mSite);
         mMiniSiteGridView.setAdapter(mMiniSiteAdapter);
-        mMiniSiteGridView.setOnItemClickListener(this);
 
-        mSubscribeButton = (FloatingActionButton) mView.findViewById(R.id.site_subscribe_site);
-        setSubscribeButton(mSite);
-
-        setButtonListeners(view);
-    }
-
-    private void setSubscribeButton(Site site){
-        if (site.getSubscribed()) {
-            mSubscribeButton.setTitle("Unsubscribe from Site");
-            mSubscribeButton.setIcon(R.drawable.ic_bookmark_white_36dp);
+        if (mParentActivity.getUser().isManager()) {
+            mCreateMiniSite = (FloatingActionButton) view.findViewById(R.id.site_add_minisite);
+            mCreateMiniSite.setVisibility(View.VISIBLE);
+            mCreateMiniSite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mParentActivity.replaceFragment(CreateMiniSiteFragment.newInstance(mSite));
+                }
+            });
         }
-        else {
-            mSubscribeButton.setTitle("Subscribe to Site");
-            mSubscribeButton.setIcon(R.drawable.ic_bookmark_outline_white_36dp);
-        }
-    }
-
-    private void setButtonListeners(View view) {
-        mMenu = (FloatingActionsMenu) view.findViewById(R.id.site_settings);
-        FloatingActionButton editButton = (FloatingActionButton) view.findViewById(R.id.site_edit_site);
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mMenu.collapse();
-                editSite();
-            }
-        });
-        FloatingActionButton miniSiteCreate = (FloatingActionButton) view.findViewById(R.id.site_add_minisite);
-        miniSiteCreate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mMenu.collapse();
-                mParentActivity.replaceFragment(CreateMiniSiteFragment.newInstance(mSite));
-            }
-        });
-
-        View subscribeButton = view.findViewById(R.id.site_subscribe_site);
-        subscribeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!mSite.getSubscribed()) subscribeToSite();
-                else unsubscribeFromSite();
-            }
-        });
     }
 
     private void subscribeToSite() {
-        SiteSubscribeRequest subRequest = new SiteSubscribeRequest(mParentActivity, mSite, new HashMap<String, JSONObject>(), new Response.Listener<String>() {
+        SiteSubscribeRequest subRequest =
+            new SiteSubscribeRequest(mParentActivity, mSite, new HashMap<String, JSONObject>(), new Response.Listener<String>() {
             @Override
             public void onResponse(String message) {
-                mSubscribeButton.setIcon(R.drawable.ic_bookmark_white_36dp);
                 mSite.setSubscribed(true);
+                setSubscribedButton(mSite.getSubscribed());
             }
         }, mSite.getSubscribed());
-        mSubscribeButton.setIcon(R.drawable.ic_bookmark_white_36dp);
-        mSubscribeButton.setTitle("Unsubscribe from Site");
         mNetworkManager.getRequestQueue().add(subRequest);
     }
 
     private void unsubscribeFromSite() {
-        SiteSubscribeRequest subRequest = new SiteSubscribeRequest(mParentActivity, mSite, new HashMap<String, JSONObject>(), new Response.Listener<String>() {
-            @Override
-            public void onResponse(String message) {
-                mSubscribeButton.setIcon(R.drawable.ic_bookmark_outline_white_36dp);
-                mSite.setSubscribed(false);
-            }
+        SiteSubscribeRequest subRequest =
+            new SiteSubscribeRequest(mParentActivity, mSite, new HashMap<String, JSONObject>(), new Response.Listener<String>() {
+                @Override
+                public void onResponse(String message) {
+                    mSite.setSubscribed(false);
+                    setSubscribedButton(mSite.getSubscribed());
+                }
         }, mSite.getSubscribed());
-        mSubscribeButton.setTitle("Subscribe to Site");
-        mSubscribeButton.setIcon(R.drawable.ic_bookmark_outline_white_36dp);
         mNetworkManager.getRequestQueue().add(subRequest);
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        MiniSite miniSite = getMiniSite(position);
-        MiniSiteFragment miniSiteFragment = MiniSiteFragment.newInstance(mSite, miniSite);
-        mParentActivity.replaceFragment(miniSiteFragment);
     }
 
     // Networking
@@ -251,7 +213,7 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
 
     private void setSite(Site site) {
         mSite = site;
-        setSubscribeButton(mSite);
+        setSubscribedButton(site.getSubscribed());
         setMiniSites(site.getMiniSites());
     }
 
@@ -301,9 +263,11 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
         mNetworkManager.getRequestQueue().add(request);
     }
 
-    @Override
-    public void onPause() {
-        super.onDestroy();
-        if (mMenu != null) closeMenu();
+    private void setSubscribedButton(boolean showSubscribed) {
+        if (showSubscribed) {
+            mMenu.findItem(R.id.subscribe).setIcon(R.drawable.ic_bookmark_white_36dp);
+        } else {
+            mMenu.findItem(R.id.subscribe).setIcon(R.drawable.ic_bookmark_outline_white_36dp);
+        }
     }
 }

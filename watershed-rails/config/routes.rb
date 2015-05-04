@@ -25,7 +25,13 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :sites, except: [:new, :edit] do
+      scope module: :managers do
+        resources :sites,      only: [:create, :update, :destroy]
+        resources :tasks,      only: [:create, :update, :destroy]
+        resources :mini_sites, only: [:create, :update, :destroy]
+      end
+
+      resources :sites, only: [:index, :show] do
         member do
           post :subscribe
           delete :unsubscribe
@@ -36,12 +42,13 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :tasks, except: [:new, :edit] do
+      resources :tasks, only: [:index, :show] do
         member do
           post :claim
         end
       end
-      resources :mini_sites,    except: [:new, :edit]
+
+      resources :mini_sites,    only:   [:index, :show]
       resources :field_reports, except: [:new, :edit, :destroy]
     end
   end

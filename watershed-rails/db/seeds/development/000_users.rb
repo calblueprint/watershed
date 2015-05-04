@@ -24,5 +24,5 @@ def create_users(users_info, role)
 end
 
 create_users(managers, :manager)
-create_users(employees, :employee)
+# create_users(employees, :employee)
 create_users(community_members, :community_member)

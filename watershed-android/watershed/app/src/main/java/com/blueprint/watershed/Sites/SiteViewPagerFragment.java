@@ -25,7 +25,9 @@ public class SiteViewPagerFragment extends ViewPagerAbstractFragment {
         SiteTabsPagerAdapter mAdapter = new SiteTabsPagerAdapter(getChildFragmentManager());
         mViewPager = (ViewPager) view.findViewById(R.id.pager);
         mViewPager.setAdapter(mAdapter);
-        mViewPager.setPageTransformer(true, new SiteListTransformer());
+        if (mParentActivity.getUser().isManager()) {
+            mViewPager.setPageTransformer(true, new SiteListTransformer());
+        }
         mTabs.setViewPager(mViewPager);
     }
 }
