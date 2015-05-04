@@ -33,7 +33,7 @@ first_site = Site.first
 end
 
 images = [
-  "http://www.foodsystemsnyc.org/files/Cross%20River%20Resevoir_courtesy%20of%20@JoshDickPhoto.com.jpg",
+  # "http://www.foodsystemsnyc.org/files/Cross%20River%20Resevoir_courtesy%20of%20@JoshDickPhoto.com.jpg",
   "http://miriadna.com/desctopwalls/images/max/Ideal-landscape.jpg",
   "http://s.hswstatic.com/gif/landscape-photography-1.jpg",
   "http://image.cdnllnwnl.xosnetwork.com/pics33/800/AN/ANJLCPIXOGYUBNC.20130607192302.jpg",
