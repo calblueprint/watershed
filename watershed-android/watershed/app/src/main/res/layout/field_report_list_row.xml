@@ -6,25 +6,6 @@
     android:layout_height="60dp"
     android:background="@color/white">
 
-    <LinearLayout
-        android:layout_width="60dp"
-        android:layout_height="match_parent"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:gravity="center"
-        >
-
-        <TextView
-            android:id="@+id/cover_photo_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="5"
-            android:textSize="30sp"
-            android:textColor="@color/white"
-            />
-
-    </LinearLayout>
-
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,13 +22,30 @@
 
         <TextView
             android:id="@+id/bottom_label"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="Bottom Label"
             android:textSize="12sp"
             android:layout_below="@id/top_label"
             />
-
     </RelativeLayout>
+    
+    <LinearLayout
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:id="@+id/cover_photo_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5"
+            android:textSize="30sp"
+            />
+
+    </LinearLayout>
 </RelativeLayout>
