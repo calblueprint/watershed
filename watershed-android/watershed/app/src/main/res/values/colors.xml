@@ -43,6 +43,7 @@
     <color name="pink_pressed">#ec407a</color>
 
     <!-- Material design colors -->
+    <color name="yellow_500">#FFEB3B</color>
     <color name="red_orange_500">#F44336</color>
     <color name="purple_500">#673AB7</color>
     <color name="baby_blue_500">#03A9F4</color>
