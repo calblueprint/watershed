@@ -160,6 +160,11 @@ public class UserListFragment extends Fragment{
         mNetworkManager.getRequestQueue().add(request);
     }
 
+    /**
+     * Submits a request to change the role of the selected user.
+     * @param user User to promote or demote
+     * @param role numerical role to assign to (Admin = 1, Community Member = 2)
+     */
     public void setUserRole(User user, int role) {
         JSONObject userObj = new JSONObject();
         JSONObject params = new JSONObject();
