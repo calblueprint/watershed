@@ -7,7 +7,6 @@ class Api::V1::MiniSitesController < Api::V1::BaseController
     else
       render json: @mini_sites, each_serializer: MiniSiteInfoListSerializer
     end
-
   end
 
   def show
