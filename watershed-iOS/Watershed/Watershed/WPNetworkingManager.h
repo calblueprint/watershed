@@ -37,6 +37,7 @@
 - (void)createMiniSiteWithMiniSite:(WPMiniSite *)miniSite parameters:(NSMutableDictionary *)parameters success:(void (^)(WPMiniSite *miniSite))success;
 - (void)requestFieldReportWithFieldReport:(WPFieldReport *)fieldReport parameters:(NSMutableDictionary *)parameters success:(void (^)(WPFieldReport *fieldReport))success;
 - (void)requestUserWithUser:(WPUser *)user parameters:(NSMutableDictionary *)parameters success:(void (^)(WPUser *user))success;
+- (void)deleteUserWithUser:(WPUser *)user parameters:(NSMutableDictionary *)parameters success:(void (^)(WPUser *user))success;
 - (void)requestUsersListWithParameters:(NSMutableDictionary *)parameters success:(void (^)(NSMutableArray *usersList))success;
 - (void)postUserWithParameters:(NSDictionary *)parameters success:(void (^)(WPUser *user))success;
 - (void)postFieldReportWithParameters:(NSMutableDictionary *)parameters success:(void (^)(WPFieldReport *fieldReport))success;

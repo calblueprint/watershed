@@ -135,6 +135,10 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     NSLog(@"hi");
 }
 
+- (void)deleteUser:(WPUser *)user {
+    
+}
+
 
 #pragma mark - Table View Protocols
 

@@ -61,6 +61,24 @@ static NSString * const TASKS_URL = @"tasks";
     }];
 }
 
+- (void)deleteUserWithUser:(WPUser *)user parameters:(NSMutableDictionary *)parameters success:(void (^)(WPUser *user))success {
+    NSString *userEndpoint = [@"/" stringByAppendingString:[user.userId stringValue]];
+    NSString *USER_URL = [USERS_URL stringByAppendingString:userEndpoint];
+    NSString *userString = [WPNetworkingManager createURLWithEndpoint:USER_URL];
+    [self addAuthenticationParameters:parameters];
+    NSMutableDictionary *userJSON = [MTLJSONAdapter JSONDictionaryFromModel:user].mutableCopy;
+    [userJSON setObject:user.userId forKey:@"user_id"];
+    [parameters setObject:userJSON forKey:@"user"];
+    [self DELETE:userString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        success(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not delete user." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
+    
+}
+
 - (void)postUserWithParameters:(NSDictionary *)parameters success:(void (^)(WPUser *user))success {
     NSString *signUpString = [WPNetworkingManager createURLWithEndpoint:SIGNUP_URL];
     
