@@ -44,10 +44,7 @@ import com.blueprint.watershed.Tasks.TaskDetailFragment;
 import com.blueprint.watershed.Tasks.TaskList.UserTaskListFragment;
 import com.blueprint.watershed.Tasks.TaskViewPagerFragment;
 import com.blueprint.watershed.Users.AboutFragment;
-<<<<<<< HEAD
 import com.blueprint.watershed.Users.ManageViewPagerFragment;
-=======
->>>>>>> 0afb82a3bf0c91f64b955fc152dc2f8d7405ff88
 import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Users.UserFieldReportFragment;
 import com.blueprint.watershed.Users.UserFragment;
