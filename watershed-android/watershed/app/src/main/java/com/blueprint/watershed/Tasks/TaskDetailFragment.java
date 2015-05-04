@@ -142,7 +142,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
         }
         super.onCreateOptionsMenu(menu, inflater);
     }
-m
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
