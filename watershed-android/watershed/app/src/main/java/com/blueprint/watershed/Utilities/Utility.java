@@ -190,7 +190,7 @@ public class Utility {
     // ANIMATORS
     //
 
-    public static void expand(View view, int amount) {
+    public static void expand(View view) {
         view.setVisibility(View.VISIBLE);
 
         final int width = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
@@ -198,12 +198,12 @@ public class Utility {
 
         view.measure(width, height);
 
-        ValueAnimator mAnimator = slideAnimator(view, view.getMeasuredHeight(), view.getMeasuredHeight() + amount);
+        ValueAnimator mAnimator = slideAnimator(view, 0, view.getMeasuredHeight());
         mAnimator.start();
     }
 
-    public static void collapse(final View view, int amount) {
-        ValueAnimator mAnimator = slideAnimator(view, view.getHeight(), amount);
+    public static void collapse(final View view) {
+        ValueAnimator mAnimator = slideAnimator(view, view.getHeight(), 0);
         mAnimator.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {}

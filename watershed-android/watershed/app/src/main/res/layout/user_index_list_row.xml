@@ -7,20 +7,29 @@
 
     <TextView
         android:id="@+id/user_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="20dp"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"/>
 
     <LinearLayout android:id="@+id/user_options"
         android:visibility="gone"
-        android:layout_height="20dp"
-        android:layout_width="fill_parent">
-        <TextView android:id="@+id/doSomething1"
-            android:layout_height="20dp"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:orientation="vertical">
+        <Button android:id="@+id/promote"
+            android:layout_height="wrap_content"
             android:focusable="false"
             android:focusableInTouchMode="false"
-            android:layout_width="wrap_content"
-            android:text="Harder"/>
+            android:layout_width="fill_parent"
+            android:text="Promote"
+            android:layout_marginLeft="10dp"/>
+        <Button android:id="@+id/delete"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:layout_width="fill_parent"
+            android:text="Delete"
+            android:layout_marginLeft="10dp"/>
     </LinearLayout>
 </LinearLayout>
