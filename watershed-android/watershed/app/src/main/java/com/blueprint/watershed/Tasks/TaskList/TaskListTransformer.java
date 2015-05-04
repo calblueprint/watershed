@@ -11,7 +11,9 @@ import com.blueprint.watershed.Views.Material.FloatingActionButton;
  * Animates the create button.
  */
 public class TaskListTransformer implements ViewPager.PageTransformer {
+
     private static final float MIN_SCALE = 0.75f;
+
     @Override
     public void transformPage(View view, float position) {
         int pageWidth = view.getWidth();
