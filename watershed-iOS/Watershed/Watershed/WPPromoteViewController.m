@@ -122,6 +122,11 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
                 [self deleteUser:self.chosenUser];
             }
             else if (buttonIndex == 0 + buttonShift) {
+                if ([self.chosenUser.role isEqualToNumber:[NSNumber numberWithInt:0]]) {
+                    self.chosenUser.role = [NSNumber numberWithInt:1];
+                } else {
+                    self.chosenUser.role = [NSNumber numberWithInt:0];
+                }
                 [self changeUserStatus:self.chosenUser];
             break;
             }
@@ -150,7 +155,8 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     NSMutableDictionary *userJSON = [[NSMutableDictionary alloc] init];
     [[WPNetworkingManager sharedManager] deleteUserWithUser:user parameters:userJSON success:^(WPUser *user) {
         [self requestAndLoadUsers];
-    }];}
+    }];
+}
 
 
 #pragma mark - Table View Protocols
