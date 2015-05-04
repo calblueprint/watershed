@@ -126,6 +126,7 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
             inflater.inflate(R.menu.site_menu_member, menu);
         }
         mMenu = menu;
+        setSubscribedButton(mSite.getSubscribed());
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -158,13 +159,12 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment
         mMiniSiteGridView.setAdapter(mMiniSiteAdapter);
         mMiniSiteGridView.setOnItemClickListener(this);
 
-        setSubscribedButton(mSite.getSubscribed());
+//        setSubscribedButton(mSite.getSubscribed());
 
         setButtonListeners(view);
     }
 
     private void setButtonListeners(View view) {
-
         FloatingActionButton editButton = (FloatingActionButton) view.findViewById(R.id.site_edit_site);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -23,8 +23,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Response;
-import com.blueprint.watershed.Users.AboutFragment;
-import com.blueprint.watershed.AbstractFragments.FloatingActionMenuAbstractFragment;
 import com.blueprint.watershed.FieldReports.FieldReportFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteAbstractFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
@@ -46,6 +44,7 @@ import com.blueprint.watershed.Tasks.Task;
 import com.blueprint.watershed.Tasks.TaskDetailFragment;
 import com.blueprint.watershed.Tasks.TaskList.UserTaskListFragment;
 import com.blueprint.watershed.Tasks.TaskViewPagerFragment;
+import com.blueprint.watershed.Users.AboutFragment;
 import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Users.UserFieldReportFragment;
 import com.blueprint.watershed.Users.UserFragment;
@@ -541,7 +540,6 @@ public class MainActivity extends ActionBarActivity
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
         Utility.hideKeyboard(this, f.getView());
         if (mDrawerLayout.isDrawerOpen(mDrawer)) mDrawerLayout.closeDrawer(mDrawer);
-        else if (checkClosedMenu(f)) ((FloatingActionMenuAbstractFragment) f).closeMenu();
         else super.onBackPressed();
     }
 
@@ -561,17 +559,4 @@ public class MainActivity extends ActionBarActivity
 
     public void setSite(Site site) { mSite = site; }
     public Site getSite() { return mSite; }
-
-    /**
-     * MINI SITE MENU AND SITE MENU
-     */
-
-    /**
-     * Checks whether or not we have to close a menu
-     * @return boolean of whether or not a menu was closed
-     */
-    private boolean checkClosedMenu(Fragment f) {
-        return f instanceof FloatingActionMenuAbstractFragment &&
-               ((FloatingActionMenuAbstractFragment) f).isMenuOpen();
-    }
 }
