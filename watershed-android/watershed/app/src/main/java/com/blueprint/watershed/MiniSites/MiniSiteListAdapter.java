@@ -72,8 +72,8 @@ public class MiniSiteListAdapter extends ArrayAdapter<MiniSite> {
                     return false;
                 }
             });
-            return row;
         }
+        return row;
     }
 
     static class MiniSiteHolder {
