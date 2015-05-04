@@ -185,10 +185,21 @@ public class UserListFragment extends Fragment{
                     @Override
                     public void onResponse(User user) {
                         Log.d("Update Roles", user.getRoleString());
-                        mAdapter.notifyDataSetChanged();
+                        setNewUser(user);
                     }
                 },BaseRequest.makeUserResourceURL(user.getId(), "register"));
         mNetworkManager.getRequestQueue().add(request);
+    }
+
+    private void setNewUser(User user) {
+        for (int i = 0; i < mUsers.size(); i++) {
+            User u = mUsers.get(i);
+            if (u.getId().equals(user.getId())) {
+                mUsers.set(i, user);
+                mAdapter.notifyDataSetChanged();
+                break;
+            }
+        }
     }
 
     public static class CheckDeleteDialogFragment extends DialogFragment {
