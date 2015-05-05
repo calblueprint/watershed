@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import com.blueprint.watershed.Activities.LandingPageActivity;
 import com.blueprint.watershed.R;
@@ -20,7 +20,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     private LandingPageActivity mParentActivity;
 
-    private FrameLayout mLayout;
+    private RelativeLayout mLayout;
     private EditText mEmailField;
     private EditText mPasswordField;
     private Button mLoginButton;
@@ -56,7 +56,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         mEmailField = (EditText) view.findViewById(R.id.email_field);
         mPasswordField = (EditText) view.findViewById(R.id.password_field);
         mLoginButton = (Button) view.findViewById(R.id.login_button);
-        mLayout = (FrameLayout) view.findViewById(R.id.login_container);
+        mLayout = (RelativeLayout) view.findViewById(R.id.login_container);
         mLoginButton.setOnClickListener(this);
     }
 
