@@ -76,8 +76,9 @@ public class MiniSiteFragment extends FloatingActionMenuAbstractFragment {
 
         mDescription = (TextView) view.findViewById(R.id.mini_site_description);
         mDescription.setText(miniSite.getTrimmedText());
-        mReadMore = (Button) view.findViewById(R.id.read_more);
         if (miniSite.shouldShowDescriptionDialog()) {
+            mReadMore = (Button) view.findViewById(R.id.read_more);
+            mReadMore.setVisibility(View.VISIBLE);
             mReadMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
