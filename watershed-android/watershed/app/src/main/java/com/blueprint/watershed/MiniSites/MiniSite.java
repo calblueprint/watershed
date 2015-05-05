@@ -31,6 +31,7 @@ public class MiniSite implements APIObject {
     private Float mLongitude;
     private Integer mFieldReportsCount;
     private Integer mSiteId;
+    private Boolean mSubscribed;
 
     private List<FieldReport> mFieldReports;
     private List<Photo> mPhotos;
@@ -83,6 +84,7 @@ public class MiniSite implements APIObject {
     public Float getLongitude() { return mLongitude; }
     public Integer getFieldReportsCount() { return mFieldReportsCount; }
     public Integer getSiteId() { return mSiteId; }
+    public Boolean getSubscribed() { return mSubscribed; }
 
     @JsonIgnore
     public String getLocation() {
@@ -108,4 +110,7 @@ public class MiniSite implements APIObject {
     public void setFieldReportsCount(Integer fieldReportsCount) { mFieldReportsCount = fieldReportsCount; }
     public void setPhotos(List<Photo> Photos){mPhotos = Photos;}
     public void setSiteId(Integer siteId) { mSiteId = siteId; }
+    public void setSubscribed(Boolean subscribed) {
+        this.mSubscribed = subscribed;
+    }
 }

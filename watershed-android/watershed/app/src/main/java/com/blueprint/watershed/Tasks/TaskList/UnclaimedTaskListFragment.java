@@ -1,11 +1,6 @@
 package com.blueprint.watershed.Tasks.TaskList;
 
-import com.android.volley.Response;
-import com.blueprint.watershed.MiniSites.MiniSite;
-import com.blueprint.watershed.Networking.Users.UserMiniSitesRequest;
 import com.blueprint.watershed.Tasks.Task;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,7 +49,7 @@ public class UnclaimedTaskListFragment extends TaskListAbstractFragment {
         ArrayList<Task> unclaimedTasks = new ArrayList<Task>();
         for (Task task : tasks) {
             Integer id = task.getMiniSiteId();
-            if (id != null && mUserMiniSiteIdList.contains(id) && task.getAssigneeId() == null) unclaimedTasks.add(task);
+            if (task.getAssigneeId() == null && task.getMiniSite().getSubscribed()) unclaimedTasks.add(task);
         }
         return unclaimedTasks;
     }
