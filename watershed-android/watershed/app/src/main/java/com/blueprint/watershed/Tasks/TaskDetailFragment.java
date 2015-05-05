@@ -91,6 +91,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
         mMiniSiteName = (TextView) view.findViewById(R.id.task_site_name);
         mBackgroundColor = (RelativeLayout) view.findViewById(R.id.task_title_container);
         mCompleteButton = (Button) view.findViewById(R.id.complete_button);
+        mCompleteButton.setOnClickListener(this);
 
         mDetailTitle.setText(mTask.getTitle());
 
@@ -140,7 +141,6 @@ public class TaskDetailFragment extends TaskAbstractFragment
         } else {
             inflater.inflate(R.menu.task_member, menu);
         }
-        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -158,7 +158,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
 
     @Override
     public void onClick(View view) {
-        switch(view.getId()){
+        switch(view.getId()) {
             case (R.id.complete_button):
                 bottomButton();
                 break;

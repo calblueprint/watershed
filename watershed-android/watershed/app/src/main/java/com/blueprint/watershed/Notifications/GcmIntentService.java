@@ -46,7 +46,7 @@ public class GcmIntentService extends IntentService {
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
         NotificationCompat.Builder mBuilder =
             new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.watershed_logo)
+                .setSmallIcon(R.drawable.tasks_dark)
                 .setContentTitle("You've gotten a notification")
                 .setStyle(new NotificationCompat.BigTextStyle())
                 .setContentText(message)

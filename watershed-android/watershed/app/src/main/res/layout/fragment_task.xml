@@ -24,21 +24,6 @@
             android:textColor="@color/white"/>
     </RelativeLayout>
 
-    <com.blueprint.watershed.Views.Material.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/edit_task_button"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="45dp"
-        fab:fab_plusIconColor="@color/white"
-        fab:fab_colorNormal="@color/pink"
-        fab:fab_colorPressed="@color/pink_pressed"
-        fab:fab_size="mini"
-        fab:fab_icon="@drawable/ic_edit"
-        android:elevation="4dp"
-        />
-
     <RelativeLayout
         android:id="@+id/task_site_name_container"
         android:layout_below="@id/task_title_container"
