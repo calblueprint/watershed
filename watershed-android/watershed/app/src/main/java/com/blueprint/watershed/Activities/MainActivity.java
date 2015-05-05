@@ -441,9 +441,6 @@ public class MainActivity extends ActionBarActivity
                 mNavAdapter.setHighlighted("Manage");
                 replaceFragment(ManageViewPagerFragment.newInstance());
                 break;
-            case 4:
-                logoutCurrentUser(this);
-                break;
             default:
                 logoutCurrentUser(this);
                 break;

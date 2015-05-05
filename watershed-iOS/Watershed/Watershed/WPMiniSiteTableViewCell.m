@@ -58,14 +58,14 @@ const static float CELL_HEIGHT = 86.0f;
 
     _taskCountLabel = [({
         FAKIonIcons *checkIcon = [FAKIonIcons ios7AmericanfootballOutlineIconWithSize:[WPLabeledIcon viewHeight]];
-        UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
+        UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake([WPLabeledsIcon viewHeight], [WPLabeledIcon viewHeight])];
         WPLabeledIcon *taskCountLabel = [[WPLabeledIcon alloc] initWithText:@"Task Count" icon:checkImage];
         taskCountLabel.alpha = 0.3;
         taskCountLabel;
     }) wp_addToSuperview:content];
 
     _fieldReportCountLabel = [({
-        FAKIonIcons *clipboardIcon = [FAKIonIcons ios7ArrowBackIconWithSize:[WPLabeledIcon viewHeight]];
+        FAKIonIcons *clipboardIcon = [FAKIonIcons iosArrowBackIconWithSize:[WPLabeledIcon viewHeight]];
         UIImage *clipboardImage = [clipboardIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
         WPLabeledIcon *fieldReportCountLabel = [[WPLabeledIcon alloc] initWithText:@"Field Report Count" icon:clipboardImage];
         fieldReportCountLabel.alpha = 0.3;
