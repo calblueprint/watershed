@@ -10,6 +10,7 @@
 #import "WPCreateSiteView.h"
 #import "WPCreateSiteTableViewCell.h"
 #import "WPNetworkingManager.h"
+#import "WPSite.h"
 
 @interface WPCreateSiteViewController ()
 
