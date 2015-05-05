@@ -64,7 +64,6 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
     private Switch mUrgent;
     private ImageView mImage;
 
-
     private Photo mPhoto;
 
     private Task mTask;

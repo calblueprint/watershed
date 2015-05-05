@@ -48,8 +48,7 @@ public class UnclaimedTaskListFragment extends TaskListAbstractFragment {
     private ArrayList<Task> getUnclaimedTasks(List<Task> tasks) {
         ArrayList<Task> unclaimedTasks = new ArrayList<Task>();
         for (Task task : tasks) {
-            Integer id = task.getMiniSiteId();
-            if (task.getAssigneeId() == null && task.getMiniSite().getSubscribed()) unclaimedTasks.add(task);
+            if (task.getAssigneeId() == null && task.getSubscribed()) unclaimedTasks.add(task);
         }
         return unclaimedTasks;
     }
