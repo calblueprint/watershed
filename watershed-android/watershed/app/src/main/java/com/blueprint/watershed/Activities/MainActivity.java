@@ -87,10 +87,11 @@ public class MainActivity extends ActionBarActivity
     private NavigationRowAdapter mNavAdapter;
 
     // MenuItem
-    private String mTitles[] = { "Tasks", "Sites", "About", "Manage" };
-    private int mIcons[] = { R.drawable.tasks_dark, R.drawable.sites_dark, R.drawable.about_dark,
+    private String mManagerTitles[] = { "Tasks", "Sites", "About", "Manage" };
+    private String mMemberTitles[] = { "Tasks", "Sites", "About" };
+    private int mManagerIcons[] = { R.drawable.tasks_dark, R.drawable.sites_dark, R.drawable.about_dark,
                              R.drawable.profile_dark };
-
+    private int mMemberIcons[] = { R.drawable.tasks_dark, R.drawable.sites_dark, R.drawable.about_dark };
     private RelativeLayout mUserInfo;
     private TextView mUserName;
     private TextView mUserRole;
@@ -369,8 +370,17 @@ public class MainActivity extends ActionBarActivity
         mDrawerList = (ListView) findViewById(R.id.left_drawer_list_view);
 
         List<MenuRow> menuItems = new ArrayList<>();
-        for (int i = 0; i < mTitles.length; i ++)
-            menuItems.add(new MenuRow(mIcons[i], mTitles[i], mTitles[i].equals("Tasks")));
+        String[] titles;
+        int[] icons;
+        if (getUser().isManager()) {
+            titles = mManagerTitles;
+            icons = mManagerIcons;
+        } else {
+            titles = mMemberTitles;
+            icons = mMemberIcons;
+        }
+        for (int i = 0; i < titles.length; i ++)
+            menuItems.add(new MenuRow(icons[i], titles[i], titles[i].equals("Tasks")));
 
         mNavAdapter = new NavigationRowAdapter(this, R.layout.menu_list_item, menuItems);
         mDrawerList.setOnItemClickListener(this);
@@ -430,9 +440,6 @@ public class MainActivity extends ActionBarActivity
             case 3:
                 mNavAdapter.setHighlighted("Manage");
                 replaceFragment(ManageViewPagerFragment.newInstance());
-                break;
-            case 4:
-                logoutCurrentUser(this);
                 break;
             default:
                 logoutCurrentUser(this);
