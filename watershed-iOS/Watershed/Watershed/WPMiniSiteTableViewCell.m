@@ -57,7 +57,7 @@ const static float CELL_HEIGHT = 86.0f;
     }) wp_addToSuperview:content];
 
     _taskCountLabel = [({
-        FAKIonIcons *checkIcon = [FAKIonIcons ios7AmericanfootballOutlineIconWithSize:[WPLabeledIcon viewHeight]];
+        FAKIonIcons *checkIcon = [FAKIonIcons ios7CheckmarkEmptyIconWithSize:[WPLabeledIcon viewHeight]];
         UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake([WPLabeledIcon viewHeight], [WPLabeledIcon viewHeight])];
         WPLabeledIcon *taskCountLabel = [[WPLabeledIcon alloc] initWithText:@"Task Count" icon:checkImage];
         taskCountLabel.alpha = 0.3;
