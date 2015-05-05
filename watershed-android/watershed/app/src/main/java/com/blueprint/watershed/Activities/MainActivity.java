@@ -44,6 +44,7 @@ import com.blueprint.watershed.Tasks.TaskDetailFragment;
 import com.blueprint.watershed.Tasks.TaskList.UserTaskListFragment;
 import com.blueprint.watershed.Tasks.TaskViewPagerFragment;
 import com.blueprint.watershed.Users.AboutFragment;
+import com.blueprint.watershed.Users.ManageViewPagerFragment;
 import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Users.UserFieldReportFragment;
 import com.blueprint.watershed.Users.UserFragment;
@@ -86,9 +87,9 @@ public class MainActivity extends ActionBarActivity
     private NavigationRowAdapter mNavAdapter;
 
     // MenuItem
-    private String mTitles[] = { "Tasks", "Sites", "About", "Manage", "Logout" };
+    private String mTitles[] = { "Tasks", "Sites", "About", "Manage" };
     private int mIcons[] = { R.drawable.tasks_dark, R.drawable.sites_dark, R.drawable.about_dark,
-                             R.drawable.profile_dark, R.drawable.logout_dark };
+                             R.drawable.profile_dark };
 
     private RelativeLayout mUserInfo;
     private TextView mUserName;
@@ -314,6 +315,7 @@ public class MainActivity extends ActionBarActivity
         else if (f instanceof UserFragment)               setTitle("Profile");
         else if (f instanceof MiniSiteAbstractFragment ||
                  f instanceof MiniSiteFragment)           setTitle("MiniSite");
+        else if (f instanceof ManageViewPagerFragment)    setTitle("Manage");
     }
 
     public void replaceFragment(Fragment newFragment) {
@@ -427,12 +429,13 @@ public class MainActivity extends ActionBarActivity
                 break;
             case 3:
                 mNavAdapter.setHighlighted("Manage");
+                replaceFragment(ManageViewPagerFragment.newInstance());
                 break;
             case 4:
-                mNavAdapter.setHighlighted("Logout");
                 logoutCurrentUser(this);
                 break;
             default:
+                logoutCurrentUser(this);
                 break;
         }
         mDrawerList.setItemChecked(position, true);

@@ -17,24 +17,8 @@ import com.blueprint.watershed.Views.ViewPagerAbstractFragment;
  */
 public class TaskViewPagerFragment extends ViewPagerAbstractFragment {
 
-
-    private MainActivity mParentActivity;
-
     public static TaskViewPagerFragment newInstance() {
         return new TaskViewPagerFragment();
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-        mParentActivity = (MainActivity) getActivity();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mParentActivity.setToolbarElevation(0);
     }
 
     protected void initializeViews(View view) {
@@ -50,24 +34,11 @@ public class TaskViewPagerFragment extends ViewPagerAbstractFragment {
         mViewPager.setOffscreenPageLimit(2);
         mViewPager.setAdapter(mAdapter);
 
-        mAdapter.addFragment(new UserTaskListFragment());
-        mAdapter.addFragment(new UnclaimedTaskListFragment());
+        mAdapter.addFragment(UserTaskListFragment.newInstance());
+        mAdapter.addFragment(UnclaimedTaskListFragment.newInstance());
         mAdapter.addTitles("Your", "Unclaimed");
         mAdapter.notifyDataSetChanged();
 
-
-        mTabs = (SlidingTabLayout) view.findViewById(R.id.pager_title_strip);
-        mTabs.setDistributeEvenly(true);
-        setUpTabs(mTabs);
         mTabs.setViewPager(mViewPager);
-    }
-
-    public void setUpTabs(SlidingTabLayout tabs){
-        tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
-            @Override
-            public int getIndicatorColor(int position) {
-                return getResources().getColor(R.color.white);
-            }
-        });
     }
 }

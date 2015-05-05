@@ -1,7 +1,5 @@
 package com.blueprint.watershed.Tasks.TaskList;
 
-import android.util.Log;
-
 import com.blueprint.watershed.Tasks.Task;
 
 import java.util.ArrayList;
@@ -11,7 +9,6 @@ import java.util.List;
 public class UserTaskListFragment extends TaskListAbstractFragment {
 
     public static UserTaskListFragment newInstance() {
-        Log.e("New Instance Created", "User");
         return new UserTaskListFragment();
     }
 
@@ -36,14 +33,17 @@ public class UserTaskListFragment extends TaskListAbstractFragment {
             if (task.getComplete()) userFinishedTasks.add(task);
             else userUncompleteTasks.add(task);
         }
+
         if (userUncompleteTasks.size() > 0) {
             headers.add(INCOMPLETE);
             taskList.put(INCOMPLETE, userUncompleteTasks);
         }
+
         if (userFinishedTasks.size() > 0) {
             headers.add(COMPLETE);
             taskList.put(COMPLETE, userFinishedTasks);
         }
+
         setTasks(taskList);
         setHeaders(headers);
     }

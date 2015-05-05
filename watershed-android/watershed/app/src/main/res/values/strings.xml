@@ -56,8 +56,10 @@
     <string name="create_task_submit">Create Task</string>
     <string name="required">Required</string>
     <string name="assignee">Assign to user</string>
+
     <string name="pick_user">Pick User</string>
     <string name="loading_users">Loading Users..</string>
+
     <string name="pick_site">Pick MiniSite</string>
     <string name="loading_sites">Loading MiniSites..</string>
     <string name="cancel">Cancel</string>
@@ -89,6 +91,12 @@
     <string name="edit_info_text">General Information</string>
     <string name="edit_password_text">Change Password</string>
     <string name="edit_save_text">Confirm Changes</string>
+    <string name="manage_profile">Manage User</string>
+
+    <string name="delete_user">Delete User</string>
+    <string name="delete_user_message">Are you sure you want to delete this user?</string>
+
+    <string name="change_role">Change Role</string>
 
     <!-- Task Index -->
     <string name="no_tasks">Looks like you don\'t have any tasks!\nSwipe up to refresh.</string>
@@ -96,6 +104,10 @@
     <!-- Site Index -->
     <string name="no_site">Looks like you don\'t have any sites!\nSwipe up to refresh.</string>
     <string name="no_site_refresh">Refresh</string>
+    <!-- User Index -->
+    <string name="no_user">Looks like there aren\'t any users!\nSwipe up to refresh.</string>
+    <string name="no_user_refresh">Refresh</string>
+    <string name="set_role">Set User Role</string>
 
     <!-- User Lists -->
     <string name="no_user_tasks">Looks like this user has no tasks!</string>
@@ -121,4 +133,6 @@
 
     <string name="logout_title">Are you sure you want to log out?</string>
     <string name="logout_message">You will have to sign back in to view the application.</string>
+
+
 </resources>
