@@ -39,7 +39,7 @@
     self.currUser.userId = [f numberFromString:[[WPNetworkingManager sharedManager] keyChainStore][@"user_id"]];
     [[WPNetworkingManager sharedManager] requestUserWithUser:self.currUser parameters:[[NSMutableDictionary alloc] init] success:^(WPUser *user) {
         self.currUser = user;
-        if (self.task.assigner.userId == self.currUser.userId || self.currUser.role == [NSNumber numberWithInt:2] || self.currUser.role == [NSNumber numberWithInt:1]) {
+        if ([self.task.assigner.userId isEqualToNumber:self.currUser.userId] || [self.currUser.role isEqualToNumber:[NSNumber numberWithInt:2]] || [self.currUser.role isEqualToNumber: [NSNumber numberWithInt:1]]) {
             [self setUpRightBarButtonItems];
         }
     }];
@@ -95,7 +95,7 @@
 #pragma mark - Navigation Bar Setup
 
 - (void)setUpRightBarButtonItems {
-    FAKIonIcons *deleteIcon = [FAKIonIcons androidTrashIconWithSize:26];
+    FAKIonIcons *deleteIcon = [FAKIonIcons iosTrashIconWithSize:26];
     UIImage *deleteIconImage = [deleteIcon imageWithSize:CGSizeMake(24, 24)];
     UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc]
                                      initWithImage:deleteIconImage

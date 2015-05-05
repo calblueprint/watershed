@@ -25,11 +25,12 @@
 		0666867E1AEDE24200AFE029 /* WPUnclaimedTasksTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0666867D1AEDE24200AFE029 /* WPUnclaimedTasksTableController.m */; };
 		068AB39E1A1B4155009BB746 /* WPAddFieldReportView.m in Sources */ = {isa = PBXBuildFile; fileRef = 068AB39B1A1B4155009BB746 /* WPAddFieldReportView.m */; };
 		068AB39F1A1B4155009BB746 /* WPAddFieldReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 068AB39D1A1B4155009BB746 /* WPAddFieldReportViewController.m */; };
-		068C11671AF6DB3C005FC99D /* WPPromoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 068C11661AF6DB3C005FC99D /* WPPromoteViewController.m */; };
-		068C116A1AF6DB54005FC99D /* WPPromoteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 068C11691AF6DB54005FC99D /* WPPromoteView.m */; };
 		06A8139519D911C900E3EB05 /* WPTasksListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A8139419D911C900E3EB05 /* WPTasksListViewController.m */; };
 		06A8139819D91A7500E3EB05 /* WPTasksListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A8139719D91A7500E3EB05 /* WPTasksListView.m */; };
 		06A8139B19D91D8600E3EB05 /* UIColor+WPColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A8139A19D91D8600E3EB05 /* UIColor+WPColors.m */; };
+		06BFA1C31AF832FD000683F4 /* WPPromoteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06BFA1C01AF832FD000683F4 /* WPPromoteView.m */; };
+		06BFA1C41AF832FD000683F4 /* WPPromoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06BFA1C21AF832FD000683F4 /* WPPromoteViewController.m */; };
+		06BFA1C61AF835C2000683F4 /* WPSite.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B9CF781A18597100CEB5A8 /* WPSite.m */; };
 		06C588A91AA2751E003420F8 /* WPAddFieldReportTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 06C666C41A994BE000530B65 /* WPAddFieldReportTableViewCell.m */; };
 		06C588BF1AA2760E003420F8 /* WPAddTaskTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 06C588AD1AA2760E003420F8 /* WPAddTaskTableViewCell.m */; };
 		06C588C01AA2760E003420F8 /* WPAddTaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06C588AF1AA2760E003420F8 /* WPAddTaskView.m */; };
@@ -59,7 +60,6 @@
 		27714CB219D93405005344B0 /* WPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 27714CB119D93405005344B0 /* WPAppDelegate.m */; };
 		277B93241A6761D6001F9CF8 /* WPAddVegetationTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 277B93231A6761D6001F9CF8 /* WPAddVegetationTextField.m */; };
 		278A358E1A3FC7E300852BF6 /* WPSelectVegetationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 278A358D1A3FC7E300852BF6 /* WPSelectVegetationTableViewCell.m */; };
-		27B9CF791A18597100CEB5A8 /* WPSite.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B9CF781A18597100CEB5A8 /* WPSite.m */; };
 		27B9CF7C1A185B6700CEB5A8 /* WPMiniSite.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B9CF7B1A185B6700CEB5A8 /* WPMiniSite.m */; };
 		27B9CF7F1A185DE800CEB5A8 /* WPFieldReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B9CF7E1A185DE800CEB5A8 /* WPFieldReport.m */; };
 		27B9CF821A19AD7F00CEB5A8 /* WPNetworkingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B9CF811A19AD7F00CEB5A8 /* WPNetworkingManager.m */; };
@@ -142,10 +142,6 @@
 		068AB39B1A1B4155009BB746 /* WPAddFieldReportView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPAddFieldReportView.m; sourceTree = "<group>"; };
 		068AB39C1A1B4155009BB746 /* WPAddFieldReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPAddFieldReportViewController.h; sourceTree = "<group>"; };
 		068AB39D1A1B4155009BB746 /* WPAddFieldReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPAddFieldReportViewController.m; sourceTree = "<group>"; };
-		068C11651AF6DB3C005FC99D /* WPPromoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPPromoteViewController.h; sourceTree = "<group>"; };
-		068C11661AF6DB3C005FC99D /* WPPromoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPPromoteViewController.m; sourceTree = "<group>"; };
-		068C11681AF6DB54005FC99D /* WPPromoteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPPromoteView.h; sourceTree = "<group>"; };
-		068C11691AF6DB54005FC99D /* WPPromoteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPPromoteView.m; sourceTree = "<group>"; };
 		06A039BC19EB973800EB83CC /* WPTasksTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPTasksTableViewCell.h; sourceTree = "<group>"; };
 		06A039BD19EB973800EB83CC /* WPTasksTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPTasksTableViewCell.m; sourceTree = "<group>"; };
 		06A8139319D911C900E3EB05 /* WPTasksListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPTasksListViewController.h; sourceTree = "<group>"; };
@@ -154,6 +150,10 @@
 		06A8139719D91A7500E3EB05 /* WPTasksListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPTasksListView.m; sourceTree = "<group>"; };
 		06A8139919D91D8600E3EB05 /* UIColor+WPColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+WPColors.h"; sourceTree = "<group>"; };
 		06A8139A19D91D8600E3EB05 /* UIColor+WPColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+WPColors.m"; sourceTree = "<group>"; };
+		06BFA1BF1AF832FD000683F4 /* WPPromoteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPPromoteView.h; sourceTree = "<group>"; };
+		06BFA1C01AF832FD000683F4 /* WPPromoteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPPromoteView.m; sourceTree = "<group>"; };
+		06BFA1C11AF832FD000683F4 /* WPPromoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPPromoteViewController.h; sourceTree = "<group>"; };
+		06BFA1C21AF832FD000683F4 /* WPPromoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPPromoteViewController.m; sourceTree = "<group>"; };
 		06C588AC1AA2760E003420F8 /* WPAddTaskTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPAddTaskTableViewCell.h; sourceTree = "<group>"; };
 		06C588AD1AA2760E003420F8 /* WPAddTaskTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPAddTaskTableViewCell.m; sourceTree = "<group>"; };
 		06C588AE1AA2760E003420F8 /* WPAddTaskView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPAddTaskView.h; sourceTree = "<group>"; };
@@ -361,6 +361,17 @@
 				0666867D1AEDE24200AFE029 /* WPUnclaimedTasksTableController.m */,
 			);
 			name = UnclaimedTasks;
+			sourceTree = "<group>";
+		};
+		06BFA1C51AF8330C000683F4 /* Promote Users */ = {
+			isa = PBXGroup;
+			children = (
+				06BFA1C11AF832FD000683F4 /* WPPromoteViewController.h */,
+				06BFA1C21AF832FD000683F4 /* WPPromoteViewController.m */,
+				06BFA1BF1AF832FD000683F4 /* WPPromoteView.h */,
+				06BFA1C01AF832FD000683F4 /* WPPromoteView.m */,
+			);
+			name = "Promote Users";
 			sourceTree = "<group>";
 		};
 		06C588AA1AA275E1003420F8 /* CreateTasks */ = {
@@ -582,6 +593,7 @@
 		BA24044C19E2474A00E9DB2F /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				06BFA1C51AF8330C000683F4 /* Promote Users */,
 				064463011A073A6100C6FE8B /* WPUser.h */,
 				064463021A073A6100C6FE8B /* WPUser.m */,
 				064462F81A073A3000C6FE8B /* WPProfileTableViewCell.h */,
@@ -591,7 +603,6 @@
 				064462EE1A0739BF00C6FE8B /* Settings */,
 				BA24044D19E2477000E9DB2F /* WPProfileViewController.h */,
 				BA24044E19E2477000E9DB2F /* WPProfileViewController.m */,
-				068C11711AF6DCEF005FC99D /* Promote */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -857,6 +868,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				06BFA1C61AF835C2000683F4 /* WPSite.m in Sources */,
 				06C588A91AA2751E003420F8 /* WPAddFieldReportTableViewCell.m in Sources */,
 				06C588C21AA2760E003420F8 /* WPSelectAssigneeView.m in Sources */,
 				06C588C31AA2760E003420F8 /* WPSelectAssigneeViewController.m in Sources */,
@@ -867,7 +879,6 @@
 				275C799019EC4F6500E722C7 /* WPMiniSiteTableViewCell.m in Sources */,
 				2747232E1A4D113A003281A9 /* WPMyTasksTableView.m in Sources */,
 				06A8139819D91A7500E3EB05 /* WPTasksListView.m in Sources */,
-				068C116A1AF6DB54005FC99D /* WPPromoteView.m in Sources */,
 				06A8139519D911C900E3EB05 /* WPTasksListViewController.m in Sources */,
 				BA38117E1A106B9A00019447 /* WPAboutViewController.m in Sources */,
 				06C588C61AA2760E003420F8 /* WPSelectTaskView.m in Sources */,
@@ -887,8 +898,6 @@
 				063089761ADAFA1B00DB0A00 /* WPEditTaskViewController.m in Sources */,
 				BA24044519DCF06C00E9DB2F /* WPRootViewController.m in Sources */,
 				BAF96EA41A2EBDCB009CB4BC /* WPSignupViewController.m in Sources */,
-				068C11671AF6DB3C005FC99D /* WPPromoteViewController.m in Sources */,
-				27B9CF791A18597100CEB5A8 /* WPSite.m in Sources */,
 				064462E91A0739A500C6FE8B /* WPMyTasksTableViewController.m in Sources */,
 				06A8139B19D91D8600E3EB05 /* UIColor+WPColors.m in Sources */,
 				27BABFE91A0202F300F9CCCE /* WPViewController.m in Sources */,
@@ -898,6 +907,7 @@
 				27EE2DBF1A2EE8F200106803 /* WPCreateSiteViewController.m in Sources */,
 				064462FD1A073A3000C6FE8B /* WPProfileView.m in Sources */,
 				06305F4719D9274400BD2CE4 /* UIView+WPExtensions.m in Sources */,
+				06BFA1C41AF832FD000683F4 /* WPPromoteViewController.m in Sources */,
 				27714CB219D93405005344B0 /* WPAppDelegate.m in Sources */,
 				064462EB1A0739A500C6FE8B /* WPTaskViewController.m in Sources */,
 				27F277621A743141001552DC /* WPTermsView.m in Sources */,
@@ -913,6 +923,7 @@
 				27E36EE119FCBBE5008A63FB /* WPView.m in Sources */,
 				275C798D19EB911900E722C7 /* WPLabeledIcon.m in Sources */,
 				2769407D1A3D5784000B4B95 /* WPSelectVegetationViewController.m in Sources */,
+				06BFA1C31AF832FD000683F4 /* WPPromoteView.m in Sources */,
 				06C588C71AA2760E003420F8 /* WPSelectTaskViewController.m in Sources */,
 				064462F61A073A0F00C6FE8B /* WPSettingsTableViewCell.m in Sources */,
 				276959961A081DAF00A5368A /* WPFieldReportTableViewCell.m in Sources */,
