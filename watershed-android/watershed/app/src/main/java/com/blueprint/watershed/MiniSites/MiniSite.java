@@ -1,9 +1,10 @@
 package com.blueprint.watershed.MiniSites;
 
-import com.blueprint.watershed.Networking.APIObject;
 import com.blueprint.watershed.FieldReports.FieldReport;
+import com.blueprint.watershed.Networking.APIObject;
 import com.blueprint.watershed.Networking.MiniSites.MiniSiteSerializer;
 import com.blueprint.watershed.Photos.Photo;
+import com.blueprint.watershed.Sites.Site;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -35,6 +36,7 @@ public class MiniSite implements APIObject {
 
     private List<FieldReport> mFieldReports;
     private List<Photo> mPhotos;
+    private Site mSite;
 
     public MiniSite() {}
 
@@ -71,6 +73,14 @@ public class MiniSite implements APIObject {
     }
 
     public Photo getPhoto(int position) { return mPhotos.get(position); }
+
+    public Site getSite() {
+        return mSite;
+    }
+
+    public void setSite(Site site) {
+        this.mSite = site;
+    }
 
     // Getters
     public Integer getId() { return mId; }

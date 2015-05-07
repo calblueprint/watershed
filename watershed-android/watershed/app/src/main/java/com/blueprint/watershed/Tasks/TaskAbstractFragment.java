@@ -31,6 +31,7 @@ import com.blueprint.watershed.Networking.Tasks.CreateTaskRequest;
 import com.blueprint.watershed.Networking.Tasks.EditTaskRequest;
 import com.blueprint.watershed.Networking.Users.UsersRequest;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Sites.Site;
 import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Users.UserHeaderAdapter;
 import com.blueprint.watershed.Utilities.Utility;
@@ -412,6 +413,7 @@ public abstract class TaskAbstractFragment extends Fragment {
     public static class PickMiniSite extends DialogFragment {
 
         protected List<MiniSite> mMiniSites;
+        protected HashMap<Site, List<MiniSite>> mSortedSites;
 
         public static PickMiniSite newInstance(List<MiniSite> miniSites) {
             PickMiniSite dialog = new PickMiniSite();
@@ -432,7 +434,7 @@ public abstract class TaskAbstractFragment extends Fragment {
                     });
 
             if (mMiniSites != null && mMiniSites.size() > 0) {
-                builder.setItems(getUserNames(), new DialogInterface.OnClickListener() {
+                builder.setItems(getMiniSites(), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Log.i("user", mMiniSites.get(i).getName());
@@ -449,13 +451,17 @@ public abstract class TaskAbstractFragment extends Fragment {
 
         }
 
-        public String[] getUserNames() {
+        public String[] getMiniSites() {
             String[] names = new String[mMiniSites.size()];
             for (int i = 0; i < mMiniSites.size(); i++) names[i] = mMiniSites.get(i).getName();
             return names;
         }
 
-        private void setMiniSites(List<MiniSite> miniSites) { mMiniSites = miniSites; }
+        private void setMiniSites(List<MiniSite> miniSites) {
+            for (MiniSite miniSite : miniSites) {
+                miniSite.getSiteId()
+            }
+        }
 
     }
 }
