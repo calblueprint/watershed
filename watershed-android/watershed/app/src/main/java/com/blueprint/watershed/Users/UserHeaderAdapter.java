@@ -29,7 +29,7 @@ public class UserHeaderAdapter extends ArrayAdapter<User> {
     String ROW = "row";
 
     public UserHeaderAdapter(Activity mainActivity, List<User> users, Fragment fragment) {
-        super(mainActivity, R.layout.user_list_row, users);
+        super(mainActivity, R.layout.pick_user_list_row, users);
         mMainActivity = mainActivity;
         mUsers = users;
         mFragment = fragment;
@@ -43,7 +43,7 @@ public class UserHeaderAdapter extends ArrayAdapter<User> {
 
         if (row == null) {
             LayoutInflater inflater = mMainActivity.getLayoutInflater();
-            row = inflater.inflate(R.layout.user_list_row, parent, false);
+            row = inflater.inflate(R.layout.pick_user_list_row, parent, false);
 
             holder = new UserHolder();
             holder.mTextView = (TextView) row.findViewById(R.id.user_row_text);

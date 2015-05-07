@@ -371,7 +371,7 @@ public abstract class TaskAbstractFragment extends Fragment {
                    });
 
             if (mUsers != null && mUsers.size() > 0) {
-                View layout = getActivity().getLayoutInflater().inflate(R.layout.user_list_view, null);
+                View layout = getActivity().getLayoutInflater().inflate(R.layout.pick_user_list_view, null);
                 ListView listView = (ListView) layout.findViewById(R.id.user_list);
                 UserHeaderAdapter adapter = new UserHeaderAdapter(getActivity(), getUsers(), getFragment());
                 listView.setAdapter(adapter);
@@ -415,7 +415,7 @@ public abstract class TaskAbstractFragment extends Fragment {
 
         public static PickMiniSite newInstance(List<MiniSite> miniSites) {
             PickMiniSite dialog = new PickMiniSite();
-            dialog.setUsers(miniSites);
+            dialog.setMiniSites(miniSites);
             return dialog;
         }
 
@@ -455,7 +455,7 @@ public abstract class TaskAbstractFragment extends Fragment {
             return names;
         }
 
-        private void setUsers(List<MiniSite> miniSites) { mMiniSites = miniSites; }
+        private void setMiniSites(List<MiniSite> miniSites) { mMiniSites = miniSites; }
 
     }
 }

@@ -6,7 +6,9 @@ class Ability
 
     # Our gracious PL says it's the client's responsiblity to hide things from the user
     can :manage, FieldReport
+
     can :read, MiniSite
+
     can :read, Task
     can [:claim], Task
 
