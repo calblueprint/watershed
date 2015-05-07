@@ -172,8 +172,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
     public void bottomButton() {
         if (mTask.getAssignee() == null) {
             claimTask();
-        }
-        if (mTask.getFieldReport() == null) {
+        } else if (mTask.getFieldReport() == null) {
             mParentActivity.setFieldReportTask(mTask);
             mParentActivity.replaceFragment(AddFieldReportFragment.newInstance(mTask, mTask.getMiniSite()));
         } else {
