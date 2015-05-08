@@ -52,11 +52,11 @@
             android:name="com.crashlytics.ApiKey"
             android:value="54afb894a34a5e0e989e1cedb236dc72cd0acd8d" />
         <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/lololol"/>
-        <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/lololol"/>
 
         <!-- RECIEVERS -->
         <receiver

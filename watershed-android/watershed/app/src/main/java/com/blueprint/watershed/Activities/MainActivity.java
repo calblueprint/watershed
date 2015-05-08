@@ -371,9 +371,15 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onMapReady(GoogleMap map) {
-        map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Location"));
-        map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(0, 0)));
-        map.moveCamera(CameraUpdateFactory.zoomBy(14f));
+        map.addMarker(new MarkerOptions().position(new LatLng(43.318418,11.331644)).title("Location"));
+        map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(43.318418,11.331644)));
+        map.moveCamera(CameraUpdateFactory.zoomTo(10f));
+        map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                Log.i("LOCK","CLOCK");
+            }
+        });
 //        map.getUiSettings().setScrollGesturesEnabled(false);
     }
 
