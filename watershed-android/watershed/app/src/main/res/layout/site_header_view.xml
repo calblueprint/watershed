@@ -5,11 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     
-    <fragment
+    <com.google.android.gms.maps.MapView
         android:id="@+id/site_map"
         android:layout_width="match_parent"
         android:layout_height="220dp"
-        class="com.google.android.gms.maps.MapFragment"
         />
 
 

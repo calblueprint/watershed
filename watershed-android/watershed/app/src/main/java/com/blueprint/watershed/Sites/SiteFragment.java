@@ -2,11 +2,11 @@ package com.blueprint.watershed.Sites;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -27,8 +27,11 @@ import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Utilities.Utility;
 import com.blueprint.watershed.Views.HeaderGridView;
 import com.blueprint.watershed.Views.Material.FloatingActionButton;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONObject;
 
@@ -53,7 +56,7 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment {
     private TextView mSiteDescription;
     private TextView mSiteAddress;
     private Button mShowMore;
-    private MapFragment mMapFragment;
+    private MapView mMapView;
     private GoogleMap mMap;
 
     private Menu mMenu;
@@ -92,9 +95,6 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment {
 
         mSiteAddress = (TextView) view.findViewById(R.id.site_location);
         mSiteAddress.setText(site.getLocationOneLine());
-
-        mMapFragment = (MapFragment) mParentActivity.getFragmentManager().findFragmentById(R.id.site_map);
-        mMapFragment.getMapAsync(mParentActivity);
     }
 
     @Override
@@ -110,7 +110,8 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_site, container, false);
-        initializeViews(view);
+        initializeViews(view, savedInstanceState);
+
         Site site = mParentActivity.getSite();
         if (site != null) {
             mSite = site;
@@ -156,10 +157,11 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment {
     @Override
     public void onResume() {
         super.onResume();
+        mMapView.onResume();
         mParentActivity.setMenuAction(false);
     }
 
-    private void initializeViews(View view) {
+    private void initializeViews(View view, Bundle savedInstanceState) {
         // Create MiniSite grid
         mMiniSiteGridView = (HeaderGridView) view.findViewById(R.id.mini_sites_grid);
         mHeader = (ViewGroup) mParentActivity.getLayoutInflater().inflate(R.layout.site_header_view, mMiniSiteGridView, false);
@@ -179,6 +181,21 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment {
                 }
             });
         }
+
+        mMapView = (MapView) mHeader.findViewById(R.id.site_map);
+        mMapView.onCreate(savedInstanceState);
+
+        mMap = mMapView.getMap();
+
+        mMap.addMarker(new MarkerOptions().position(new LatLng(43.318418,11.331644)).title("Location"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(43.318418, 11.331644), 10f));
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                Log.i("LOCK", "CLOCK");
+            }
+        });
+        mMap.getUiSettings().setScrollGesturesEnabled(false);
     }
 
     private void subscribeToSite() {
@@ -278,5 +295,17 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment {
         } else {
             mMenu.findItem(R.id.subscribe).setIcon(R.drawable.ic_bookmark_outline_white_36dp);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mMapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mMapView.onLowMemory();
     }
 }
