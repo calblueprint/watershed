@@ -7,7 +7,7 @@
     android:paddingTop="5dp"
     android:paddingBottom="5dp">
     <TextView
-        android:id="@+id/user_row_text"
+        android:id="@+id/object_row_text"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_centerVertical="true"

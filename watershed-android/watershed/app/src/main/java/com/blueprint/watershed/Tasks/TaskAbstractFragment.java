@@ -25,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.MiniSites.MiniSite;
+import com.blueprint.watershed.MiniSites.PickingMiniSiteAdapter;
 import com.blueprint.watershed.Networking.MiniSites.MiniSiteInfoListRequest;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Tasks.CreateTaskRequest;
@@ -32,8 +33,8 @@ import com.blueprint.watershed.Networking.Tasks.EditTaskRequest;
 import com.blueprint.watershed.Networking.Users.UsersRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Sites.Site;
+import com.blueprint.watershed.Users.PickingUserAdapter;
 import com.blueprint.watershed.Users.User;
-import com.blueprint.watershed.Users.UserHeaderAdapter;
 import com.blueprint.watershed.Utilities.Utility;
 
 import org.json.JSONObject;
@@ -372,9 +373,9 @@ public abstract class TaskAbstractFragment extends Fragment {
                    });
 
             if (mUsers != null && mUsers.size() > 0) {
-                View layout = getActivity().getLayoutInflater().inflate(R.layout.pick_user_list_view, null);
-                ListView listView = (ListView) layout.findViewById(R.id.user_list);
-                UserHeaderAdapter adapter = new UserHeaderAdapter(getActivity(), getUsers(), getFragment());
+                View layout = getActivity().getLayoutInflater().inflate(R.layout.pick_task_object_list_view, null);
+                ListView listView = (ListView) layout.findViewById(R.id.object_list);
+                PickingUserAdapter adapter = new PickingUserAdapter(getActivity(), getUsers(), getFragment());
                 listView.setAdapter(adapter);
                 builder.setView(layout);
             } else {
@@ -414,10 +415,12 @@ public abstract class TaskAbstractFragment extends Fragment {
 
         protected List<MiniSite> mMiniSites;
         protected HashMap<Site, List<MiniSite>> mSortedSites;
+        protected Fragment mFragment;
 
-        public static PickMiniSite newInstance(List<MiniSite> miniSites) {
+        public static PickMiniSite newInstance(List<MiniSite> miniSites, Fragment fragment) {
             PickMiniSite dialog = new PickMiniSite();
             dialog.setMiniSites(miniSites);
+            dialog.setFragment(fragment);
             return dialog;
         }
 
@@ -434,15 +437,11 @@ public abstract class TaskAbstractFragment extends Fragment {
                     });
 
             if (mMiniSites != null && mMiniSites.size() > 0) {
-                builder.setItems(getMiniSites(), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Log.i("user", mMiniSites.get(i).getName());
-                        if (!(getTargetFragment() instanceof TaskAbstractFragment)) Log.e("can't", "even fragment");
-                        TaskAbstractFragment fragment = (TaskAbstractFragment) getTargetFragment();
-                        fragment.setMiniSite(mMiniSites.get(i));
-                    }
-                });
+                View layout = getActivity().getLayoutInflater().inflate(R.layout.pick_task_object_list_view, null);
+                ListView listView = (ListView) layout.findViewById(R.id.object_list);
+                PickingMiniSiteAdapter adapter = new PickingMiniSiteAdapter(getActivity(), getMiniSites(), getFragment());
+                listView.setAdapter(adapter);
+                builder.setView(layout);
             } else {
                 builder.setMessage(R.string.loading_sites);
             }
@@ -451,11 +450,7 @@ public abstract class TaskAbstractFragment extends Fragment {
 
         }
 
-        public String[] getMiniSites() {
-            String[] names = new String[mMiniSites.size()];
-            for (int i = 0; i < mMiniSites.size(); i++) names[i] = mMiniSites.get(i).getName();
-            return names;
-        }
+        public List<MiniSite> getMiniSites() { return mMiniSites; }
 
         private void setMiniSites(List<MiniSite> miniSites) {
             for (MiniSite miniSite : miniSites) {
@@ -469,7 +464,17 @@ public abstract class TaskAbstractFragment extends Fragment {
                 miniSiteArray.add(miniSite);
                 mSortedSites.put(site, miniSiteArray);
             }
-        }
 
+            if (mMiniSites == null) mMiniSites = new ArrayList<MiniSite>();
+            for (Site siteKey : mSortedSites.keySet()) {
+                List<MiniSite> siteMiniSites = mSortedSites.get(siteKey);
+                mMiniSites.add(new MiniSite(siteKey.getName()));
+                for (MiniSite miniSite : siteMiniSites) {
+                    miniSites.add(miniSite);
+                }
+            }
+        }
+        public void setFragment(Fragment fragment) { mFragment = fragment; }
+        public Fragment getFragment() { return mFragment; }
     }
 }

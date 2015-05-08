@@ -38,7 +38,16 @@ public class MiniSite implements APIObject {
     private List<Photo> mPhotos;
     private Site mSite;
 
-    public MiniSite() {}
+    private boolean isHeader;
+
+    public MiniSite(String name) {
+        mName = name;
+        isHeader = true;
+    }
+
+    public MiniSite() {
+        isHeader = false;
+    }
 
     @JsonIgnore
     public String getTrimmedText() {
@@ -95,6 +104,7 @@ public class MiniSite implements APIObject {
     public Integer getFieldReportsCount() { return mFieldReportsCount; }
     public Integer getSiteId() { return mSiteId; }
     public Boolean getSubscribed() { return mSubscribed; }
+    public Boolean isHeader() { return isHeader; }
 
     @JsonIgnore
     public String getLocation() {

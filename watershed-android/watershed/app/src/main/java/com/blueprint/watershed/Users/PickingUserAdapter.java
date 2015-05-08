@@ -19,17 +19,14 @@ import java.util.List;
  * Created by Mark Miyashita on 11/19/14.
  * Shows a list of users you can pick
  */
-public class UserHeaderAdapter extends ArrayAdapter<User> {
+public class PickingUserAdapter extends ArrayAdapter<User> {
 
     Activity mMainActivity;
     List<User> mUsers;
     Fragment mFragment;
 
-    String HEADER = "header";
-    String ROW = "row";
-
-    public UserHeaderAdapter(Activity mainActivity, List<User> users, Fragment fragment) {
-        super(mainActivity, R.layout.pick_user_list_row, users);
+    public PickingUserAdapter(Activity mainActivity, List<User> users, Fragment fragment) {
+        super(mainActivity, R.layout.pick_task_object_list_row, users);
         mMainActivity = mainActivity;
         mUsers = users;
         mFragment = fragment;
@@ -43,10 +40,10 @@ public class UserHeaderAdapter extends ArrayAdapter<User> {
 
         if (row == null) {
             LayoutInflater inflater = mMainActivity.getLayoutInflater();
-            row = inflater.inflate(R.layout.pick_user_list_row, parent, false);
+            row = inflater.inflate(R.layout.pick_task_object_list_row, parent, false);
 
             holder = new UserHolder();
-            holder.mTextView = (TextView) row.findViewById(R.id.user_row_text);
+            holder.mTextView = (TextView) row.findViewById(R.id.object_row_text);
 
             row.setTag(holder);
         } else {
