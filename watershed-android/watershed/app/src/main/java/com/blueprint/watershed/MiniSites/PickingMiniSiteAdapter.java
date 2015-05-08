@@ -51,7 +51,7 @@ public class PickingMiniSiteAdapter extends ArrayAdapter<MiniSite> {
         int fontSize;
         int fontWeight;
         String text = miniSite.getName();
-        if (miniSite.isHeader()) {
+        if (!miniSite.isHeader()) {
             fontWeight = Typeface.NORMAL;
             fontSize = 18;
             row.setOnClickListener(new View.OnClickListener() {

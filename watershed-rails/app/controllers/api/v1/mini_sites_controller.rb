@@ -2,7 +2,7 @@ class Api::V1::MiniSitesController < Api::V1::BaseController
   load_and_authorize_resource
 
   def index
-    if params[:get_photos]
+    if params[:get_photos] == "true"
       render json: @mini_sites, each_serializer: MiniSitePhotoListSerializer
     else
       render json: @mini_sites, each_serializer: MiniSiteInfoListSerializer

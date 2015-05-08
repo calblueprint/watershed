@@ -75,6 +75,7 @@ public abstract class TaskAbstractFragment extends Fragment {
 
     // Dialogs
     private PickUserDialog mUserDialog;
+    private PickMiniSite mMiniSiteDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -143,7 +144,9 @@ public abstract class TaskAbstractFragment extends Fragment {
     private void getMiniSites() {
         MiniSiteInfoListRequest request = new MiniSiteInfoListRequest(mParentActivity, new Response.Listener<ArrayList<MiniSite>>() {
             @Override
-            public void onResponse(ArrayList<MiniSite> miniSites) { mMiniSites = miniSites; }
+            public void onResponse(ArrayList<MiniSite> miniSites) {
+                mMiniSites = miniSites;
+            }
         });
         mNetworkManager.getRequestQueue().add(request);
     }
@@ -216,9 +219,9 @@ public abstract class TaskAbstractFragment extends Fragment {
     }
 
     private void openSiteDialog() {
-        PickMiniSite newFragment = PickMiniSite.newInstance(mMiniSites, this);
-        newFragment.setTargetFragment(this, REQUEST_CODE);
-        newFragment.show(mParentActivity.getSupportFragmentManager(), "timePicker");
+        mMiniSiteDialog = PickMiniSite.newInstance(mMiniSites, this);
+        mMiniSiteDialog.setTargetFragment(this, REQUEST_CODE);
+        mMiniSiteDialog.show(mParentActivity.getSupportFragmentManager(), "sitePicker");
     }
 
     /**
@@ -306,6 +309,7 @@ public abstract class TaskAbstractFragment extends Fragment {
     public void setMiniSite(MiniSite site) {
         mMiniSite = site;
         mMiniSiteId.setText(site.getName());
+        if (mMiniSiteDialog != null) mMiniSiteDialog.dismiss();
     }
 
     public abstract void refreshCompletion();
@@ -458,8 +462,11 @@ public abstract class TaskAbstractFragment extends Fragment {
         private void setMiniSites(List<MiniSite> miniSites) {
             for (MiniSite miniSite : miniSites) {
                 Site site = miniSite.getSite();
+                if (site == null) continue;
                 List<MiniSite> miniSiteArray;
-                if (mSortedSites.containsKey(site)) {
+
+                if (mSortedSites == null) mSortedSites = new HashMap<Site, List<MiniSite>>();
+                if ( mSortedSites.containsKey(site)) {
                     miniSiteArray = mSortedSites.get(site);
                 } else {
                     miniSiteArray = new ArrayList<MiniSite>();
@@ -473,7 +480,7 @@ public abstract class TaskAbstractFragment extends Fragment {
                 List<MiniSite> siteMiniSites = mSortedSites.get(siteKey);
                 mMiniSites.add(new MiniSite(siteKey.getName()));
                 for (MiniSite miniSite : siteMiniSites) {
-                    miniSites.add(miniSite);
+                    mMiniSites.add(miniSite);
                 }
             }
         }

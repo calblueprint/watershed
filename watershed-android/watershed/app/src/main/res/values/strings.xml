@@ -52,6 +52,7 @@
     <string name="title">Title</string>
     <string name="description">Description</string>
     <string name="task_due_date">Pick a Date</string>
+    <string name="task_mini_site">Pick a Mini Site</string>
     <string name="site">Site</string>
     <string name="create_task_submit">Create Task</string>
     <string name="required">Required</string>
