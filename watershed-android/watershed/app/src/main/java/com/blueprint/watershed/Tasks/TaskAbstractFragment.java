@@ -459,7 +459,15 @@ public abstract class TaskAbstractFragment extends Fragment {
 
         private void setMiniSites(List<MiniSite> miniSites) {
             for (MiniSite miniSite : miniSites) {
-                miniSite.getSiteId()
+                Site site = miniSite.getSite();
+                List<MiniSite> miniSiteArray;
+                if (mSortedSites.containsKey(site)) {
+                    miniSiteArray = mSortedSites.get(site);
+                } else {
+                    miniSiteArray = new ArrayList<MiniSite>();
+                }
+                miniSiteArray.add(miniSite);
+                mSortedSites.put(site, miniSiteArray);
             }
         }
 
