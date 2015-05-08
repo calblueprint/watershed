@@ -4,9 +4,17 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+    
+    <fragment
+        android:id="@+id/site_map"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        class="com.google.android.gms.maps.MapFragment"
+        />
+
 
     <RelativeLayout
-        android:layout_below="@id/cover_photo_pager_view"
+        android:layout_below="@id/site_map"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/hella_wide_margin"

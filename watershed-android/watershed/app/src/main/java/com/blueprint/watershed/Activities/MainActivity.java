@@ -57,6 +57,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.location.places.Places;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONObject;
 
@@ -66,7 +71,8 @@ import java.util.List;
 
 public class MainActivity extends ActionBarActivity
                           implements View.OnClickListener,
-                                     ListView.OnItemClickListener {
+                                     ListView.OnItemClickListener,
+                                     OnMapReadyCallback {
 
     // Constants
     private static final String PREFERENCES = "LOGIN_PREFERENCES";
@@ -361,6 +367,14 @@ public class MainActivity extends ActionBarActivity
                 break;
         }
         return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+        map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Location"));
+        map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(0, 0)));
+        map.moveCamera(CameraUpdateFactory.zoomBy(14f));
+//        map.getUiSettings().setScrollGesturesEnabled(false);
     }
 
     private void initializeNavigationDrawer() {

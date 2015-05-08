@@ -26,6 +26,8 @@ import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Utilities.Utility;
 import com.blueprint.watershed.Views.HeaderGridView;
 import com.blueprint.watershed.Views.Material.FloatingActionButton;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 
 import org.json.JSONObject;
 
@@ -50,6 +52,8 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment {
     private TextView mSiteDescription;
     private TextView mSiteAddress;
     private Button mShowMore;
+    private MapFragment mMapFragment;
+    private GoogleMap mMap;
 
     private Menu mMenu;
     private FloatingActionButton mCreateMiniSite;
@@ -87,6 +91,9 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment {
 
         mSiteAddress = (TextView) view.findViewById(R.id.site_location);
         mSiteAddress.setText(site.getLocationOneLine());
+
+        mMapFragment = (MapFragment) mParentActivity.getFragmentManager().findFragmentById(R.id.site_map);
+        mMapFragment.getMapAsync(mParentActivity);
     }
 
     @Override
