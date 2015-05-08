@@ -72,7 +72,7 @@
             <TextView
                 style="@style/TaskTextView"
                 android:id="@+id/create_task_site"
-                android:hint="@string/site"
+                android:hint="@string/"
                 android:layout_toRightOf="@id/create_task_site_icon"
                 />
 

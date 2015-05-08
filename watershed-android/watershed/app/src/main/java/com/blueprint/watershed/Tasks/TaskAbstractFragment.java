@@ -216,7 +216,7 @@ public abstract class TaskAbstractFragment extends Fragment {
     }
 
     private void openSiteDialog() {
-        PickMiniSite newFragment = PickMiniSite.newInstance(mMiniSites);
+        PickMiniSite newFragment = PickMiniSite.newInstance(mMiniSites, this);
         newFragment.setTargetFragment(this, REQUEST_CODE);
         newFragment.show(mParentActivity.getSupportFragmentManager(), "timePicker");
     }
@@ -419,7 +419,7 @@ public abstract class TaskAbstractFragment extends Fragment {
 
         public static PickMiniSite newInstance(List<MiniSite> miniSites, Fragment fragment) {
             PickMiniSite dialog = new PickMiniSite();
-            dialog.setMiniSites(miniSites);
+            if (miniSites != null) dialog.setMiniSites(miniSites);
             dialog.setFragment(fragment);
             return dialog;
         }
@@ -450,7 +450,10 @@ public abstract class TaskAbstractFragment extends Fragment {
 
         }
 
-        public List<MiniSite> getMiniSites() { return mMiniSites; }
+        public List<MiniSite> getMiniSites() {
+            if (mMiniSites == null) mMiniSites = new ArrayList<MiniSite>();
+            return mMiniSites;
+        }
 
         private void setMiniSites(List<MiniSite> miniSites) {
             for (MiniSite miniSite : miniSites) {
