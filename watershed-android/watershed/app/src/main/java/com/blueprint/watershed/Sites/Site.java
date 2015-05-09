@@ -28,8 +28,8 @@ public class Site implements APIObject {
     private String mCity;
     private String mState;
     private Integer mZipCode;
-    private String mLatitude;
-    private String mLongitude;
+    private Float mLatitude;
+    private Float mLongitude;
     private Integer mTasksCount;
     private Integer mMiniSitesCount;
     private Boolean mSubscribed;
@@ -73,8 +73,8 @@ public class Site implements APIObject {
     public String getCity() { return mCity; }
     public String getState() { return mState; }
     public Integer getZipCode() { return mZipCode; }
-    public String getLatitude() { return mLatitude; }
-    public String getLongitude() { return mLongitude; }
+    public Float getLatitude() { return mLatitude; }
+    public Float getLongitude() { return mLongitude; }
     public Integer getTasksCount() { return mTasksCount; }
     public Integer getMiniSitesCount() { return mMiniSitesCount; }
     public Boolean getSubscribed() { return mSubscribed; }
@@ -104,8 +104,8 @@ public class Site implements APIObject {
     public void setCity(String city) { mCity = city; }
     public void setState(String state) { mState = state; }
     public void setZipCode(Integer zipCode) { mZipCode = zipCode; }
-    public void setLatitude(String latitude) { mLatitude = latitude; }
-    public void setLongitude(String longitude) { mLongitude = longitude; }
+    public void setLatitude(Float latitude) { mLatitude = latitude; }
+    public void setLongitude(Float longitude) { mLongitude = longitude; }
     public void setTasksCount(Integer tasksCount) { mTasksCount = tasksCount; }
     public void setMiniSitesCount(Integer miniSitesCount) { mMiniSitesCount = miniSitesCount; }
     public void setSubscribed(Boolean subscribed) {

@@ -57,7 +57,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.location.places.Places;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONObject;
 
@@ -67,7 +72,8 @@ import java.util.List;
 
 public class MainActivity extends ActionBarActivity
                           implements View.OnClickListener,
-                                     ListView.OnItemClickListener {
+                                     ListView.OnItemClickListener,
+                                     OnMapReadyCallback {
 
     // Constants
     private static final String PREFERENCES = "LOGIN_PREFERENCES";
@@ -237,6 +243,23 @@ public class MainActivity extends ActionBarActivity
             @Override
             protected void onPostExecute(String msg) { Log.i("ERROR", msg + "\n"); }
         }.execute(null, null, null);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+        if (getSite() == null) return;
+
+        Site site = getSite();
+        float lat = site.getLatitude()
+        map.addMarker(new MarkerOptions().position(new LatLng(43.318418, 11.331644)).title("Location"));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(43.318418, 11.331644), 10f));
+        map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                Log.i("LOCK", "CLOCK");
+            }
+        });
+        map.getUiSettings().setScrollGesturesEnabled(false);
     }
 
     private void setUserObject() {

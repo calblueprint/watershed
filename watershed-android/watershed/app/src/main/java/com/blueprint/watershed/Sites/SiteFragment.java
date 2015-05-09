@@ -2,7 +2,6 @@ package com.blueprint.watershed.Sites;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,11 +26,8 @@ import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Utilities.Utility;
 import com.blueprint.watershed.Views.HeaderGridView;
 import com.blueprint.watershed.Views.Material.FloatingActionButton;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONObject;
 
@@ -182,20 +178,11 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment {
             });
         }
 
+        mParentActivity.setSite(mSite);
         mMapView = (MapView) mHeader.findViewById(R.id.site_map);
         mMapView.onCreate(savedInstanceState);
 
-        mMap = mMapView.getMap();
-
-        mMap.addMarker(new MarkerOptions().position(new LatLng(43.318418,11.331644)).title("Location"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(43.318418, 11.331644), 10f));
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                Log.i("LOCK", "CLOCK");
-            }
-        });
-        mMap.getUiSettings().setScrollGesturesEnabled(false);
+        mMapView.getMapAsync(mParentActivity);
     }
 
     private void subscribeToSite() {
@@ -301,6 +288,7 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment {
     public void onDestroy() {
         super.onDestroy();
         mMapView.onDestroy();
+        mParentActivity.setSite(null);
     }
 
     @Override
