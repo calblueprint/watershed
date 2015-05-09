@@ -209,8 +209,8 @@ public abstract class SiteAbstractFragment extends Fragment{
     protected void createSite(String type, Site new_site) {
         if (type.equals(CREATE)) {
             new_site = new Site();
-            new_site.setLatitude("0");
-            new_site.setLongitude("0");
+            new_site.setLatitude(0f);
+            new_site.setLongitude(0f);
             new_site.setTasksCount(0);
             new_site.setMiniSitesCount(0);
         }
@@ -220,8 +220,8 @@ public abstract class SiteAbstractFragment extends Fragment{
         new_site.setStreet(mAddressField.getText().toString());
         LatLng latLng = Utility.getLatLng(mParentActivity, mAddressField.getText().toString());
         if (latLng != null) {
-            new_site.setLatitude(String.valueOf(latLng.latitude));
-            new_site.setLongitude(String.valueOf(latLng.longitude));
+            new_site.setLatitude((float) latLng.latitude);
+            new_site.setLongitude((float) latLng.longitude);
         }
         createSiteRequest(type, new_site);
     }

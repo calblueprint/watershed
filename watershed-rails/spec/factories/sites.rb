@@ -5,8 +5,8 @@
 #  id          :integer          not null, primary key
 #  name        :string(255)
 #  description :text
-#  latitude    :decimal(10, 6)
-#  longitude   :decimal(10, 6)
+#  latitude    :decimal(10, 6)   default(0.0)
+#  longitude   :decimal(10, 6)   default(0.0)
 #  street      :text
 #  city        :string(255)
 #  state       :string(255)

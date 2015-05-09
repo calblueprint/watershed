@@ -250,9 +250,10 @@ public class MainActivity extends ActionBarActivity
         if (getSite() == null) return;
 
         Site site = getSite();
-        float lat = site.getLatitude()
-        map.addMarker(new MarkerOptions().position(new LatLng(43.318418, 11.331644)).title("Location"));
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(43.318418, 11.331644), 10f));
+        float lat = site.getLatitude();
+        float lng = site.getLongitude();
+        map.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title("Location"));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), 10f));
         map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
