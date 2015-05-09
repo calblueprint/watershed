@@ -99,6 +99,7 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment {
         mParentActivity = (MainActivity) getActivity();
         mUser = mParentActivity.getUser();
         mNetworkManager = NetworkManager.getInstance(mParentActivity);
+        mParentActivity.setMapSite(mSite);
         setHasOptionsMenu(true);
     }
 
@@ -178,7 +179,6 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment {
             });
         }
 
-        mParentActivity.setSite(mSite);
         mMapView = (MapView) mHeader.findViewById(R.id.site_map);
         mMapView.onCreate(savedInstanceState);
 
@@ -288,7 +288,7 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment {
     public void onDestroy() {
         super.onDestroy();
         mMapView.onDestroy();
-        mParentActivity.setSite(null);
+        mParentActivity.setMapSite(null);
     }
 
     @Override

@@ -2,9 +2,11 @@ package com.blueprint.watershed.Activities;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -69,6 +71,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends ActionBarActivity
                           implements View.OnClickListener,
@@ -119,6 +122,7 @@ public class MainActivity extends ActionBarActivity
 
     // Temp Vars
     private Site mSite;
+    private Site mMapSite;
 
     // Task for FieldReport
     private Task mFieldReportTask;
@@ -247,20 +251,37 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onMapReady(GoogleMap map) {
-        if (getSite() == null) return;
+        if (getMapSite() == null) return;
 
-        Site site = getSite();
-        float lat = site.getLatitude();
-        float lng = site.getLongitude();
+        Site site = getMapSite();
+        final float lat = site.getLatitude();
+        final float lng = site.getLongitude();
         map.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title("Location"));
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), 10f));
         map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                Log.i("LOCK", "CLOCK");
+                Utility.showAndBuildDialog(
+                    MainActivity.this, R.string.map_title, R.string.map_message, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            openMap(lat, lng);
+                        }
+                    }, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                    });
             }
         });
         map.getUiSettings().setScrollGesturesEnabled(false);
+    }
+
+    public void openMap(Float lat, Float lng) {
+        String uri = String.format(Locale.ENGLISH, "geo:%f,%f", lat, lng);
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        startActivity(intent);
     }
 
     private void setUserObject() {
@@ -586,4 +607,6 @@ public class MainActivity extends ActionBarActivity
 
     public void setSite(Site site) { mSite = site; }
     public Site getSite() { return mSite; }
+    public void setMapSite(Site site) { mMapSite = site; }
+    public Site getMapSite() { return mMapSite; }
 }
