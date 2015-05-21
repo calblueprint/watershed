@@ -57,6 +57,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.location.places.Places;
+import com.squareup.leakcanary.LeakCanary;
 
 import org.json.JSONObject;
 

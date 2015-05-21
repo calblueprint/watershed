@@ -17,6 +17,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
+        android:name="com.blueprint.watershed.WatershedApplication"
         android:allowBackup="true"
         android:icon="@drawable/watershed_logo"
         android:label="@string/app_name"
