@@ -149,7 +149,6 @@ public class MiniSiteFragment extends FloatingActionMenuAbstractFragment {
         } else {
             inflater.inflate(R.menu.mini_site_member, menu);
         }
-        inflater.inflate(R.menu.delete_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
