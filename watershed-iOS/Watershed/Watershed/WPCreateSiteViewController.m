@@ -38,7 +38,7 @@
     self.navigationItem.leftBarButtonItem = cancelButton;
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor wp_blue];
     
-    FAKIonIcons *checkIcon = [FAKIonIcons chevronUpIconWithSize:24];
+    FAKIonIcons *checkIcon = [FAKIonIcons androidDoneIconWithSize:24];
     UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake(24, 24)];
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithImage:checkImage style:UIBarButtonItemStylePlain target:self action:@selector(saveAndDismissSelf)];
     self.navigationItem.rightBarButtonItem = doneButton;
@@ -57,7 +57,7 @@
 }
 
 - (void)saveAndDismissSelf {
-    
+
     if (!(self.nameTextField.text.length &&
           self.streetTextField.text.length &&
           self.cityTextField.text.length &&
@@ -75,19 +75,35 @@
                                    };
 
         self.navigationItem.rightBarButtonItem.enabled = NO;
-
         WPSite *site = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:siteJSON error:nil];
-        __weak __typeof(self)weakSelf = self;
-        [[WPNetworkingManager sharedManager] createSiteWithSite:site parameters:[[NSMutableDictionary alloc] init] success:^{
-            __strong __typeof(weakSelf)strongSelf = weakSelf;
-            [strongSelf dismissSelf];
-        }];
+        [self updateServerWithSite:site];
     }
 }
 
 - (void)presentErrorAlert {
-    UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Cannot leave fields blank." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [incorrect show];
+
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                   message:@"Cannot leave any field blank."
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* ok = [UIAlertAction
+                         actionWithTitle:@"OK"
+                         style:UIAlertActionStyleDefault
+                         handler:^(UIAlertAction * action)
+                         {
+                             [alert dismissViewControllerAnimated:YES completion:nil];
+                         }];
+
+    [alert addAction:ok];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)updateServerWithSite:(WPSite *)site {
+    // Don't request the list of sites, because it is already called in the ViewController's viewWillAppear
+    __weak __typeof(self)weakSelf = self;
+    [[WPNetworkingManager sharedManager] createSiteWithSite:site parameters:[[NSMutableDictionary alloc] init] success:^{
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf dismissSelf];
+    }];
 }
 
 #pragma mark - Table View Delegate / Data Source Methods

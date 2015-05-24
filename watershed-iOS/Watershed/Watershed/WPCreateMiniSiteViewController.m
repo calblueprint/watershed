@@ -46,7 +46,7 @@
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithImage:closeImage style:UIBarButtonItemStylePlain target:self action:@selector(dismissSelf)];
     self.navigationItem.leftBarButtonItem = cancelButton;
 
-    FAKIonIcons *checkIcon = [FAKIonIcons checkmarkCircledIconWithSize:24];
+    FAKIonIcons *checkIcon = [FAKIonIcons androidDoneIconWithSize:24];
     UIImage *checkImage = [checkIcon imageWithSize:CGSizeMake(24, 24)];
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithImage:checkImage style:UIBarButtonItemStylePlain target:self action:@selector(saveAndDismissSelf)];
     self.navigationItem.rightBarButtonItem = doneButton;
@@ -66,6 +66,7 @@
 }
 
 - (void)saveAndDismissSelf {
+
     if (!(self.nameTextField.text.length &&
           self.streetTextField.text.length &&
           self.cityTextField.text.length &&
@@ -92,18 +93,34 @@
 
         self.navigationItem.rightBarButtonItem.enabled = NO;
 
-        __weak __typeof(self)weakSelf = self;
-        [[WPNetworkingManager sharedManager] createMiniSiteWithMiniSite:miniSite parameters:parameters success:^(WPMiniSite *miniSite) {
-            __strong __typeof(weakSelf)strongSelf = weakSelf;
-            strongSelf.parent = nil;
-            [strongSelf dismissSelf];
-        }];
+        [self updateServerWithMiniSite:miniSite parameters:parameters];
     }
 }
 
 - (void)presentErrorAlert {
-    UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Cannot leave fields blank." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [incorrect show];
+
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                   message:@"Cannot leave any field blank."
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* ok = [UIAlertAction
+                         actionWithTitle:@"OK"
+                         style:UIAlertActionStyleDefault
+                         handler:^(UIAlertAction * action)
+                         {
+                             [alert dismissViewControllerAnimated:YES completion:nil];
+                         }];
+
+    [alert addAction:ok];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)updateServerWithMiniSite:(WPMiniSite *)miniSite parameters:(NSMutableDictionary *)parameters {
+    __weak __typeof(self)weakSelf = self;
+    [[WPNetworkingManager sharedManager] createMiniSiteWithMiniSite:miniSite parameters:parameters success:^(WPMiniSite *miniSite) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        strongSelf.parent = nil;
+        [strongSelf dismissSelf];
+    }];
 }
 
 - (UIImage *)compressForUpload:(UIImage *)original withScale:(CGFloat)scale {

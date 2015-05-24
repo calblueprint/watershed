@@ -10,6 +10,7 @@
 #import "WPViewController.h"
 #import "WPSitesTableViewController.h"
 #import "BSKeyboardControls.h"
+#import "WPSite.h"
 
 @interface WPCreateSiteViewController : WPViewController <
     UITableViewDelegate,
@@ -24,5 +25,8 @@
 @property (nonatomic) UITextField *stateTextField;
 @property (nonatomic) UITextField *zipCodeTextField;
 @property (nonatomic) UITextView *descriptionTextView;
+
+- (void)dismissSelf;
+- (void)updateServerWithSite:(WPSite *)site;
 
 @end

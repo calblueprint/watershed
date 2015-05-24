@@ -11,6 +11,7 @@
 #import "WPFieldReportTableViewCell.h"
 #import "WPFieldReportViewController.h"
 #import "WPNetworkingManager.h"
+#import "WPEditMiniSiteViewController.h"
 #import "WPAddFieldReportViewController.h"
 
 @interface WPMiniSiteViewController ()
@@ -30,10 +31,9 @@ static NSString *cellIdentifier = @"FieldReportCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = self.miniSite.name;
-    FAKIonIcons *plusIcon = [FAKIonIcons androidAddIconWithSize:26];
-    UIImage *plusImage = [plusIcon imageWithSize:CGSizeMake(24, 24)];
-    UIBarButtonItem *addFieldReportButtonItem = [[UIBarButtonItem alloc] initWithImage:plusImage style:UIBarButtonItemStylePlain target:self action:@selector(addNewFieldReport)];
-    self.navigationItem.rightBarButtonItem = addFieldReportButtonItem;
+
+    [self setUpRightBarButtonItems];
+
     self.fieldReportTableView.delegate = self;
     self.fieldReportTableView.dataSource = self;
     
@@ -50,7 +50,9 @@ static NSString *cellIdentifier = @"FieldReportCell";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self requestAndLoadMiniSite];
+    if (!self.isDismissing) {
+        [self requestAndLoadMiniSite];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -69,11 +71,6 @@ static NSString *cellIdentifier = @"FieldReportCell";
     }
 }
 
-- (void)addNewFieldReport {
-    WPAddFieldReportViewController *addFieldReportViewController = [[WPAddFieldReportViewController alloc] init];
-    [self.navigationController pushViewController:addFieldReportViewController animated:YES];
-}
-
 #pragma mark - Networking Methods
 
 - (void)requestAndLoadMiniSite {
@@ -86,6 +83,54 @@ static NSString *cellIdentifier = @"FieldReportCell";
         [strongSelf.view stopIndicator];
         [strongSelf.refreshControl endRefreshing];
     }];
+}
+
+#pragma mark - Navigation Bar Setup
+
+- (void)setUpRightBarButtonItems {
+    NSMutableArray *barButtonItems = [[NSMutableArray alloc] init];
+    NSString *userRole = [WPNetworkingManager sharedManager].keyChainStore[@"role"];
+    if (YES) {
+        [barButtonItems insertObject:[self newAddFieldReportButtonItem] atIndex:0];
+        [barButtonItems insertObject:[self newEditMiniSiteButtonItem] atIndex:1];
+    }
+    [self.navigationItem setRightBarButtonItems:barButtonItems animated:YES];
+}
+
+#pragma mark - Add Field Report Button / Methods
+
+- (UIBarButtonItem *)newAddFieldReportButtonItem {
+    FAKIonIcons *plusIcon = [FAKIonIcons androidAddIconWithSize:26];
+    UIImage *plusImage = [plusIcon imageWithSize:CGSizeMake(24, 24)];
+    UIBarButtonItem *addFieldReportButtonItem = [[UIBarButtonItem alloc] initWithImage:plusImage style:UIBarButtonItemStylePlain target:self action:@selector(addNewFieldReport)];
+    addFieldReportButtonItem.tintColor = [UIColor whiteColor];
+    return addFieldReportButtonItem;
+}
+
+- (void)addNewFieldReport {
+    WPAddFieldReportViewController *addFieldReportViewController = [[WPAddFieldReportViewController alloc] init];
+    [self.navigationController pushViewController:addFieldReportViewController animated:YES];
+}
+
+#pragma mark - Edit Mini Site Button / Methods
+
+- (UIBarButtonItem *)newEditMiniSiteButtonItem {
+    FAKIonIcons *editIcon = [FAKIonIcons androidCreateIconWithSize:24];
+    UIImage *editImage = [editIcon imageWithSize:CGSizeMake(24, 24)];
+    UIBarButtonItem *editMiniSiteButtonItem = [[UIBarButtonItem alloc] initWithImage:editImage style:UIBarButtonItemStylePlain target:self action:@selector(showEditMiniSiteView)];
+    editMiniSiteButtonItem.tintColor = [UIColor whiteColor];
+    return editMiniSiteButtonItem;
+}
+
+- (void)showEditMiniSiteView {
+    WPEditMiniSiteViewController *editMiniSiteViewController = [[WPEditMiniSiteViewController alloc] init];
+    editMiniSiteViewController.miniSite = self.miniSite;
+    editMiniSiteViewController.delegate = self;
+    UINavigationController *editMiniSiteNavController = [[UINavigationController alloc] initWithRootViewController:editMiniSiteViewController];
+    [editMiniSiteNavController.navigationBar setBackgroundColor:[UIColor whiteColor]];
+    [editMiniSiteNavController.navigationBar setBarTintColor:[UIColor whiteColor]];
+    [editMiniSiteNavController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
+    [self.navigationController presentViewController:editMiniSiteNavController animated:YES completion:nil];
 }
 
 #pragma mark - TableView Delegate/DataSource Methods

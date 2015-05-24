@@ -12,5 +12,6 @@
 
 @interface WPSiteViewController : WPViewController <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic) WPSite *site;
+@property (nonatomic) BOOL isDismissing;
 - (void)requestAndLoadSite;
 @end

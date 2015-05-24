@@ -12,6 +12,7 @@
 #import "WPMiniSiteTableViewCell.h"
 #import "WPMiniSiteViewController.h"
 #import "WPCreateMiniSiteViewController.h"
+#import "WPEditSiteViewController.h"
 #import "WPNetworkingManager.h"
 
 @interface WPSiteViewController ()
@@ -48,7 +49,9 @@ static NSString *cellIdentifier = @"MiniSiteCell";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self requestAndLoadSite];
+    if (!self.isDismissing) {
+        [self requestAndLoadSite];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -139,6 +142,7 @@ static NSString *cellIdentifier = @"MiniSiteCell";
     NSString *userRole = [WPNetworkingManager sharedManager].keyChainStore[@"role"];
     if (YES) {
         [barButtonItems insertObject:[self newAddSiteButtonItem] atIndex:0];
+        [barButtonItems insertObject:[self newEditSiteButtonItem] atIndex:1];
     }
     [self.navigationItem setRightBarButtonItems:barButtonItems animated:YES];
 }
@@ -163,10 +167,32 @@ static NSString *cellIdentifier = @"MiniSiteCell";
     [self.navigationController presentViewController:createMiniSiteNavController animated:YES completion:nil];
 }
 
+#pragma mark - Edit Site Button / Methods
+
+- (UIBarButtonItem *)newEditSiteButtonItem {
+    FAKIonIcons *editIcon = [FAKIonIcons androidCreateIconWithSize:24];
+    UIImage *editImage = [editIcon imageWithSize:CGSizeMake(24, 24)];
+    UIBarButtonItem *editSiteButtonItem = [[UIBarButtonItem alloc] initWithImage:editImage style:UIBarButtonItemStylePlain target:self action:@selector(showEditSiteView)];
+    editSiteButtonItem.tintColor = [UIColor whiteColor];
+    return editSiteButtonItem;
+}
+
+- (void)showEditSiteView {
+    WPEditSiteViewController *editSiteViewController = [[WPEditSiteViewController alloc] init];
+    editSiteViewController.site = self.site;
+    editSiteViewController.delegate = self;
+    UINavigationController *editSiteNavController = [[UINavigationController alloc] initWithRootViewController:editSiteViewController];
+    [editSiteNavController.navigationBar setBackgroundColor:[UIColor whiteColor]];
+    [editSiteNavController.navigationBar setBarTintColor:[UIColor whiteColor]];
+    [editSiteNavController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
+    [self.navigationController presentViewController:editSiteNavController animated:YES completion:nil];
+}
+
 #pragma mark - Setter Methods
 
 - (void)setSite:(WPSite *)site {
     _site = site;
+    self.title = site.name;
     [self.view configureWithSite:site];
 }
 

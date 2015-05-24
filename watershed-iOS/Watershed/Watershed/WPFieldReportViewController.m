@@ -23,6 +23,8 @@
     self.navigationItem.title = [self.fieldReport dateString];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
+    [self setUpRightBarButtonItems];
+
     [self.refreshControl addTarget:self action:@selector(requestAndLoadFieldReport) forControlEvents:UIControlEventValueChanged];
     [self.view.contentScrollView addSubview:self.refreshControl];
 }
@@ -92,6 +94,23 @@
         [strongSelf setUpActions];
         [strongSelf.refreshControl endRefreshing];
     }];
+}
+
+#pragma mark - Navigation Bar Setup
+
+- (void)setUpRightBarButtonItems {
+    NSMutableArray *barButtonItems = [[NSMutableArray alloc] initWithObjects:[self newEditFieldReportButtonItem], nil];
+    [self.navigationItem setRightBarButtonItems:barButtonItems animated:YES];
+}
+
+#pragma mark - Edit FieldReport Button / Methods
+
+- (UIBarButtonItem *)newEditFieldReportButtonItem {
+    FAKIonIcons *editIcon = [FAKIonIcons androidCreateIconWithSize:24];
+    UIImage *editImage = [editIcon imageWithSize:CGSizeMake(24, 24)];
+    UIBarButtonItem *editFieldReportButtonItem = [[UIBarButtonItem alloc] initWithImage:editImage style:UIBarButtonItemStylePlain target:self action:nil];
+    editFieldReportButtonItem.tintColor = [UIColor whiteColor];
+    return editFieldReportButtonItem;
 }
 
 #pragma mark - Update field report view

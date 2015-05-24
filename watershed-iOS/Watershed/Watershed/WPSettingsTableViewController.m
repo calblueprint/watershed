@@ -120,7 +120,6 @@ NSString *settingsReuseIdentifier = @"WPSettingsCell";
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     if (indexPath.section == 0 && indexPath.row == 0) { // Edit Profile
         _editViewController = [[WPEditViewController alloc] initWithUser:_user];
-        _editViewController.delegate = self;
         UINavigationController *editNavController = [[UINavigationController alloc] initWithRootViewController:_editViewController];
         [editNavController.navigationBar setBackgroundColor:[UIColor whiteColor]];
         [editNavController.navigationBar setBarTintColor:[UIColor whiteColor]];

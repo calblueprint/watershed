@@ -11,10 +11,5 @@
 #import "WPUser.h"
 
 @interface WPSettingsTableViewController : WPViewController <UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate>
-
 @property (nonatomic) WPUser *user;
-
--(void)dismissEdit;
--(void)saveAndDismissEdit;
-
 @end

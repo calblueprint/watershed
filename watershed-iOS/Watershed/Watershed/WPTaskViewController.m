@@ -95,7 +95,7 @@
 #pragma mark - Navigation Bar Setup
 
 - (void)setUpRightBarButtonItems {
-    FAKIonIcons *deleteIcon = [FAKIonIcons iosTrashIconWithSize:26];
+    FAKIonIcons *deleteIcon = [FAKIonIcons androidDeleteIconWithSize:26];
     UIImage *deleteIconImage = [deleteIcon imageWithSize:CGSizeMake(24, 24)];
     UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc]
                                      initWithImage:deleteIconImage

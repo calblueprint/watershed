@@ -341,7 +341,9 @@ static NSString * const PROMOTE_URL = @"promote";
         WPSite *siteResponse = [MTLJSONAdapter modelOfClass:WPSite.class fromJSONDictionary:siteJSON error:nil];
         NSArray *photosListJSON = siteJSON[@"photos"];
         for (NSDictionary *photoJSON in photosListJSON) {
-            [siteResponse.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];
+            if (photoJSON[@"url"] != [NSNull null]) {
+                [siteResponse.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];
+            }
         }
 
         NSArray *miniSiteListJSON = siteJSON[@"mini_sites"];
@@ -350,7 +352,9 @@ static NSString * const PROMOTE_URL = @"promote";
             WPMiniSite *miniSite = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:miniSiteJSON error:nil];
             NSArray *photosListJSON = miniSiteJSON[@"photos"];
             for (NSDictionary *photoJSON in photosListJSON) {
-                [miniSite.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];
+                if (photoJSON[@"url"] != [NSNull null]) {
+                    [miniSite.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];
+                }
             }
 
             miniSite.site = siteResponse;
@@ -380,6 +384,43 @@ static NSString * const PROMOTE_URL = @"promote";
         NSLog(@"Error: %@", error);
     }];
 }
+
+- (void)editSiteWithSite:(WPSite *)site parameters:(NSMutableDictionary *)parameters success:(void (^)())success {
+    NSString *siteEndpoint = [@"/" stringByAppendingString:[site.siteId stringValue]];
+    NSString *SITE_URL = [SITES_URL stringByAppendingString:siteEndpoint];
+    NSString *siteString = [WPNetworkingManager createURLWithEndpoint:SITE_URL];
+
+    [self addAuthenticationParameters:parameters];
+    NSDictionary *siteJSON = [MTLJSONAdapter JSONDictionaryFromModel:site];
+    [parameters setObject:siteJSON forKey:@"site"];
+
+    [self PUT:siteString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        success();
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not edit site." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+- (void)deleteSiteWithSite:(WPSite *)site parameters:(NSMutableDictionary *)parameters success:(void (^)())success {
+    NSString *siteEndpoint = [@"/" stringByAppendingString:[site.siteId stringValue]];
+    NSString *SITE_URL = [SITES_URL stringByAppendingString:siteEndpoint];
+    NSString *siteString = [WPNetworkingManager createURLWithEndpoint:SITE_URL];
+
+    [self addAuthenticationParameters:parameters];
+    NSDictionary *siteJSON = [MTLJSONAdapter JSONDictionaryFromModel:site];
+    [parameters setObject:siteJSON forKey:@"site"];
+
+    [self DELETE:siteString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        success();
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not delete site." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
+}
+
 
 - (void)requestMiniSiteWithMiniSite:(WPMiniSite *)miniSite parameters:(NSMutableDictionary *)parameters success:(void (^)(WPMiniSite *miniSite, NSMutableArray *fieldReportList))success {
     NSString *miniSiteEndpoint = [@"/" stringByAppendingString:[miniSite.miniSiteId stringValue]];
@@ -436,6 +477,60 @@ static NSString * const PROMOTE_URL = @"promote";
         success(miniSiteResponse);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not create mini site." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+- (void)editMiniSiteWithMiniSite:(WPMiniSite *)miniSite parameters:(NSMutableDictionary *)parameters success:(void (^)(WPMiniSite *miniSite))success {
+    NSString *miniSiteEndpoint = [@"/" stringByAppendingString:[miniSite.miniSiteId stringValue]];
+    NSString *MINI_SITE_URL = [MINI_SITES_URL stringByAppendingString:miniSiteEndpoint];
+    NSString *miniSiteString = [WPNetworkingManager createURLWithEndpoint:MINI_SITE_URL];
+
+    [self addAuthenticationParameters:parameters];
+    NSMutableDictionary *miniSiteJSON = [MTLJSONAdapter JSONDictionaryFromModel:miniSite].mutableCopy;
+    [miniSiteJSON setObject:miniSite.site.siteId forKey:@"site_id"];
+
+    //Pass photo attributes through parameters and then insert them into the miniSiteJSON
+    NSDictionary *photoAttributes = parameters[@"photos_attributes"];
+    [parameters removeObjectForKey:@"photos_attributes"];
+    [miniSiteJSON setObject:photoAttributes forKey:@"photos_attributes"];
+    [parameters setObject:miniSiteJSON forKey:@"mini_site"];
+
+    [self PUT:miniSiteString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *miniSiteJSON = (NSDictionary *)responseObject[@"mini_site"];
+        WPMiniSite *miniSiteResponse = [MTLJSONAdapter modelOfClass:WPMiniSite.class fromJSONDictionary:miniSiteJSON error:nil];
+        miniSiteResponse.site = miniSite.site;
+        NSArray *photosListJSON = miniSiteJSON[@"photos"];
+        for (NSDictionary *photoJSON in photosListJSON) {
+            if (![photoJSON[@"url"] isEqual:[NSNull null]]) {
+                [miniSiteResponse.imageURLs addObject:[NSURL URLWithString:photoJSON[@"url"]]];
+            }
+        }
+
+        success(miniSiteResponse);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not edit mini site." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [incorrect show];
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+- (void)deleteMiniSiteWithMiniSite:(WPMiniSite *)miniSite parameters:(NSMutableDictionary *)parameters success:(void (^)())success {
+    NSString *miniSiteEndpoint = [@"/" stringByAppendingString:[miniSite.miniSiteId stringValue]];
+    NSString *MINI_SITE_URL = [MINI_SITES_URL stringByAppendingString:miniSiteEndpoint];
+    NSString *miniSiteString = [WPNetworkingManager createURLWithEndpoint:MINI_SITE_URL];
+
+    [self addAuthenticationParameters:parameters];
+    NSMutableDictionary *miniSiteJSON = [MTLJSONAdapter JSONDictionaryFromModel:miniSite].mutableCopy;
+    [miniSiteJSON setObject:miniSite.site.siteId forKey:@"site_id"];
+
+    [parameters setObject:miniSiteJSON forKey:@"mini_site"];
+
+    [self DELETE:miniSiteString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        success();
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *incorrect = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Could not delete mini site." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [incorrect show];
         NSLog(@"Error: %@", error);
     }];

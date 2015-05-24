@@ -14,6 +14,5 @@
 
 - (instancetype)initWithUser:(WPUser *)user;
 @property (nonatomic) WPUser *user;
-@property (nonatomic) WPSettingsTableViewController *delegate;
 
 @end

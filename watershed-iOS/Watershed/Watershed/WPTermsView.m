@@ -61,7 +61,6 @@
         label.textColor = [UIColor whiteColor];
         label;
     }) wp_addToSuperview:self.scrollView];
-
 }
 
 - (void)updateConstraints {
