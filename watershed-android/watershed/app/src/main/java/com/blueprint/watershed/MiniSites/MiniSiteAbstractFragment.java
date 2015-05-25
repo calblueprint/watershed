@@ -21,10 +21,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.GoogleApis.Places.PlacePredictionAdapter;
@@ -140,9 +142,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -151,6 +151,13 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         });
 
         mAddressField.setAdapter(mPlacesAdapter);
+        mAddressField.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                AutocompletePrediction prediction = mPredictions.get(position);
+                mAddressField.setText(prediction.toString());
+            }
+        });
 
         mDeletePhotoButton.setOnClickListener(this);
         mAddPhotoButton.setOnClickListener(this);
@@ -209,9 +216,14 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
      * Opens dialog to pick between taking or selecting a photo
      */
     public void openAddPhotoDialog() {
-        PickPhotoTypeDialog dialog = PickPhotoTypeDialog.newInstance();
-        dialog.setTargetFragment(this, DIALOG_REQUEST_CODE);
-        dialog.show(mParentActivity.getSupportFragmentManager(), DIALOG_TAG);
+        if (mPhotoList.size() < 3) {
+            PickPhotoTypeDialog dialog = PickPhotoTypeDialog.newInstance();
+            dialog.setTargetFragment(this, DIALOG_REQUEST_CODE);
+            dialog.show(mParentActivity.getSupportFragmentManager(), DIALOG_TAG);
+        } else {
+            Toast.makeText(mParentActivity, "You can only upload a max of 3 photos!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     /**
@@ -308,7 +320,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
 
         }
 
-        else if (requestCode == SELECT_PHOTO_REQUEST && resultCode == MainActivity.RESULT_OK){
+        else if (requestCode == SELECT_PHOTO_REQUEST && resultCode == MainActivity.RESULT_OK) {
             Uri targetUri = data.getData();
 
             try { photo = BitmapFactory.decodeStream(mParentActivity.getContentResolver().openInputStream(targetUri)); }
