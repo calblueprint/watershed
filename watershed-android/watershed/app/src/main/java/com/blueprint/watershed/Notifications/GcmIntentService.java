@@ -53,6 +53,5 @@ public class GcmIntentService extends IntentService {
                 .setAutoCancel(true);
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
-
     }
 }

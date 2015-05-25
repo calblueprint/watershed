@@ -104,7 +104,6 @@ public class MainActivity extends ActionBarActivity
     private int mMemberIcons[] = { R.drawable.tasks_dark, R.drawable.sites_dark, R.drawable.about_dark };
     private RelativeLayout mUserInfo;
     private TextView mUserName;
-    private TextView mUserRole;
 
     // Action Bar Elements
 
@@ -205,7 +204,7 @@ public class MainActivity extends ActionBarActivity
         int currentVersion = Utility.getAppVersion(this);
         if (mAppVersion != currentVersion) {
             Log.i(TAG, "App version changed.");
-            mPreferences.edit().putInt("app_version", currentVersion).commit();
+            mPreferences.edit().putInt("app_version", currentVersion).apply();
             return "";
         }
         return mRegistrationId;
@@ -279,7 +278,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void openMap(Float lat, Float lng) {
-        String uri = String.format(Locale.ENGLISH, "geo:%f,%f", lat, lng);
+        String uri = String.format(Locale.ENGLISH, "geo:%f,%f?q=%f,%f", lat, lng, lat, lng);
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
         startActivity(intent);
     }
@@ -312,7 +311,6 @@ public class MainActivity extends ActionBarActivity
 
     private void initializeViews() {
         mProgress = (ProgressBar) findViewById(R.id.progressBar);
-//        mProgress.setVisibility(View.VISIBLE);
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
         mContainer = findViewById(R.id.container);
 
@@ -349,14 +347,10 @@ public class MainActivity extends ActionBarActivity
         else if (f instanceof CreateTaskFragment)         setTitle("Add Task");
         else if (f instanceof EditTaskFragment)           setTitle("Edit Task");
         else if (f instanceof TaskDetailFragment)         setTitle("");
-        else if (f instanceof UserTaskFragment)           setTitle("Tasks");
         else if (f instanceof SiteListAbstractFragment ||
                  f instanceof UserMiniSiteFragment ||
                  f instanceof SiteViewPagerFragment ||
                  f instanceof SiteFragment)               setTitle("Sites");
-        else if (f instanceof SiteListAbstractFragment ||
-                 f instanceof UserMiniSiteFragment)       setTitle("Sites");
-        else if (f instanceof SiteFragment)               setTitle("Sites");
         else if (f instanceof AboutFragment)              setTitle("About");
         else if (f instanceof UserFieldReportFragment ||
                  f instanceof FieldReportFragment)        setTitle("Field Reports");
@@ -599,7 +593,7 @@ public class MainActivity extends ActionBarActivity
     public Task getFieldReportTask() { return mFieldReportTask; }
     public ProgressBar getSpinner() { return mProgress; }
     public GoogleApiClient getGoogleApiClient() { return mGoogleApiClient; }
-    public void setmGoogleApiClient(GoogleApiClient client) { mGoogleApiClient = client; }
+    public void setGoogleApiClient(GoogleApiClient client) { mGoogleApiClient = client; }
 
     /**
      * HELPERS FOR SITE FRAGMENT

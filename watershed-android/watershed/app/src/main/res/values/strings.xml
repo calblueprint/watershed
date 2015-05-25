@@ -136,6 +136,6 @@
     <string name="logout_title">Are you sure you want to log out?</string>
     <string name="logout_message">You will have to sign back in to view the application.</string>
 
-    <string name="map_title">Are you sure?</string>
+    <string name="map_title">Continue to Maps?</string>
     <string name="map_message">If you continue, you will be redirected to the Google Maps app.</string>
 </resources>
