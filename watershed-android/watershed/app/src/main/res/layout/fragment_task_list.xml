@@ -33,12 +33,15 @@
         android:id="@+id/tasks_swipe_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        android:visibility="gone"
+        >
 
         <ExpandableListView
             android:id="@android:id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingBottom="50dp"
+            android:clipToPadding="false"
             />
     </android.support.v4.widget.SwipeRefreshLayout>
 

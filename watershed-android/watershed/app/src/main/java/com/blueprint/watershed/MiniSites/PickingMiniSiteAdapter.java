@@ -62,10 +62,11 @@ public class PickingMiniSiteAdapter extends ArrayAdapter<MiniSite> {
                     }
                 }
             });
+            row.setClickable(true);
         } else {
             fontSize = 15;
             fontWeight = Typeface.BOLD;
-            row.setClickable(false);
+            row.setEnabled(false);
         }
 
         holder.mTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize);
