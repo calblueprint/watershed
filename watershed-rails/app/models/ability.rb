@@ -16,6 +16,7 @@ class Ability
     can [:subscribe, :unsubscribe], Site
 
     can :manage, User, id: user.id
+    can [:promote], User
 
     if user.manager?
       can :manage, :all
