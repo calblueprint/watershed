@@ -71,10 +71,10 @@
             android:layout_below="@id/site_description"
             android:layout_marginTop="10dp"
             android:layout_centerHorizontal="true"
-
             android:padding="5dp"
             android:textColor="@color/ws_blue"
             android:background="@drawable/blue_border_button"
-            android:text="@string/read_more"/>
+            android:text="@string/read_more"
+            android:visibility="gone"/>
     </RelativeLayout>
 </RelativeLayout>
