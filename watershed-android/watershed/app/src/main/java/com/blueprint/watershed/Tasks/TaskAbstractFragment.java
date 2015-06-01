@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -240,6 +241,7 @@ public abstract class TaskAbstractFragment extends Fragment {
             request = new CreateTaskRequest(mParentActivity, task, params, new Response.Listener<Task>() {
                 @Override
                 public void onResponse(Task task) {
+                    Toast.makeText(mParentActivity, "You've created a task!", Toast.LENGTH_SHORT).show();
                     TaskViewPagerFragment taskFragment = TaskViewPagerFragment.newInstance();
                     mParentActivity.replaceFragment(taskFragment);
                     Log.e("successful task", "creation");
@@ -250,8 +252,11 @@ public abstract class TaskAbstractFragment extends Fragment {
                 @Override
                 public void onResponse(Task task) {
                     mTask = task;
-                    if (type.equals(EDIT)) mParentActivity.getSupportFragmentManager().popBackStack();
-                    else refreshCompletion();
+                    if (type.equals(EDIT)) {
+                        Toast.makeText(mParentActivity, "You've edited the task!", Toast.LENGTH_SHORT).show();
+                        mParentActivity.getSupportFragmentManager().popBackStack();
+                    }
+                    else { refreshCompletion(); }
                     Log.i("successful task", "editing");
                 }
             });
