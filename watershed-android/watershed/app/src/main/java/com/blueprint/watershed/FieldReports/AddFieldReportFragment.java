@@ -120,6 +120,12 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
             }
         });
 
+        mRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                mRatingText.setText(String.valueOf(rating));
+            }
+        });
 
         mUrgent = (Switch) view.findViewById(R.id.field_report_urgent);
         mDescription = (EditText) view.findViewById(R.id.report_description);

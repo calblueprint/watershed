@@ -294,16 +294,12 @@ public abstract class TaskAbstractFragment extends Fragment {
     }
 
     public void setUser(User user) {
-        if (mUserDialog != null) {
-            mUser = user;
-            if (mUser != null) {
-                mAssigneeField.setText(mUser.getName());
-            }
-            else {
-                mAssigneeField.setText("Unclaimed");
-            }
-            mUserDialog.dismiss();
-        }
+        mUser = user;
+        if (mUser != null) { mAssigneeField.setText(mUser.getName()); }
+        else { mAssigneeField.setText("Unclaimed"); }
+
+        if (mUserDialog != null) mUserDialog.dismiss();
+        mUserDialog = null;
     }
 
     public void setMiniSite(MiniSite site) {
@@ -449,9 +445,7 @@ public abstract class TaskAbstractFragment extends Fragment {
             } else {
                 builder.setMessage(R.string.loading_sites);
             }
-
             return builder.create();
-
         }
 
         public List<MiniSite> getMiniSites() {
@@ -459,7 +453,7 @@ public abstract class TaskAbstractFragment extends Fragment {
             return mMiniSites;
         }
 
-        private void setMiniSites(List<MiniSite> miniSites) {
+        public void setMiniSites(List<MiniSite> miniSites) {
             for (MiniSite miniSite : miniSites) {
                 Site site = miniSite.getSite();
                 if (site == null) continue;

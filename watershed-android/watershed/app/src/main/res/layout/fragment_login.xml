@@ -37,6 +37,7 @@
             android:paddingRight="@dimen/standard_margin"
             android:inputType="textPassword"
             android:hint="@string/password_hint"
+            android:fontFamily="sans-serif"
             android:background="@color/transparent"
             />
     </RelativeLayout>

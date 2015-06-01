@@ -11,7 +11,7 @@
         android:layout_marginLeft="@dimen/no_margin"
         android:layout_marginRight="@dimen/no_margin"
         android:background="@color/medium_gray"
-        android:numColumns="2"
+        android:numColumns="1"
         android:verticalSpacing="@dimen/tight_margin"
         android:horizontalSpacing="@dimen/tight_margin">
     </com.blueprint.watershed.Views.HeaderGridView>
