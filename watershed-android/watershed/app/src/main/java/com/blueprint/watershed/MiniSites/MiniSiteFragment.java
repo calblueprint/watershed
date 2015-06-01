@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.AbstractFragments.FloatingActionMenuAbstractFragment;
@@ -204,6 +205,9 @@ public class MiniSiteFragment extends FloatingActionMenuAbstractFragment {
         DeleteMiniSiteRequest request = new DeleteMiniSiteRequest(mParentActivity, mMiniSite, new Response.Listener<Site>() {
             @Override
             public void onResponse(Site site) {
+                Toast.makeText(mParentActivity,
+                               "You've deleted " + mMiniSite.getName(),
+                               Toast.LENGTH_SHORT).show();
                 mParentActivity.setSite(site);
                 mParentActivity.getSupportFragmentManager().popBackStack();
             }

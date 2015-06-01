@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.AbstractFragments.FloatingActionMenuAbstractFragment;
@@ -252,23 +253,26 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment {
 
     private void deleteSiteRequest() {
         Utility.showAndBuildDialog(mParentActivity, R.string.site_delete_title, R.string.site_delete_msg,
-            new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    makeDeleteSiteRequest();
-                }
-            }, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        makeDeleteSiteRequest();
+                    }
+                }, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
     }
 
     private void makeDeleteSiteRequest() {
         DeleteSiteRequest request = new DeleteSiteRequest(mParentActivity, mSite, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+                Toast.makeText(mParentActivity,
+                               "You've deleted " + mSite.getName(),
+                               Toast.LENGTH_SHORT).show();
                 mParentActivity.setSite(mSite);
                 mParentActivity.getSupportFragmentManager().popBackStack();
             }
