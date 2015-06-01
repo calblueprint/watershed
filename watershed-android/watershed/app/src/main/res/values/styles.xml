@@ -45,12 +45,6 @@
         <item name="android:background">@color/ws_blue</item>
     </style>
 
-    <style name="BackGroundImageView">
-        <item name="android:alpha">0.5</item>
-        <item name="android:scaleType">fitXY</item>
-        <item name="android:src">@drawable/landing_page_photo</item>
-    </style>
-
     <style name="WsLabel">
         <item name="android:gravity">bottom|left</item>
         <item name="android:layout_width">0px</item>
