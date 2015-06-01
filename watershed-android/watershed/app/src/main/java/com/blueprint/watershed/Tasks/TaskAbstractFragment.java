@@ -176,7 +176,9 @@ public abstract class TaskAbstractFragment extends Fragment {
         mMiniSiteId = (TextView) mParentActivity.findViewById(R.id.create_task_site);
         mMiniSiteId.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) { openSiteDialog(); }
+            public void onClick(View view) {
+                openSiteDialog();
+            }
         });
     }
 
@@ -308,6 +310,7 @@ public abstract class TaskAbstractFragment extends Fragment {
         if (mMiniSiteDialog != null) mMiniSiteDialog.dismiss();
     }
 
+
     public abstract void refreshCompletion();
 
     /**
@@ -415,11 +418,11 @@ public abstract class TaskAbstractFragment extends Fragment {
 
         protected List<MiniSite> mMiniSites;
         protected HashMap<Site, List<MiniSite>> mSortedSites;
-        protected Fragment mFragment;
+        protected TaskAbstractFragment mFragment;
 
-        public static PickMiniSite newInstance(List<MiniSite> miniSites, Fragment fragment) {
+        public static PickMiniSite newInstance(List<MiniSite> miniSites, TaskAbstractFragment fragment) {
             PickMiniSite dialog = new PickMiniSite();
-            if (miniSites != null) dialog.setMiniSites(miniSites);
+            dialog.setMiniSites(miniSites);
             dialog.setFragment(fragment);
             return dialog;
         }
@@ -428,7 +431,8 @@ public abstract class TaskAbstractFragment extends Fragment {
         @NonNull
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle(R.string.pick_site)
+
+            builder.setTitle(R.string.site)
                     .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -478,7 +482,7 @@ public abstract class TaskAbstractFragment extends Fragment {
                 }
             }
         }
-        public void setFragment(Fragment fragment) { mFragment = fragment; }
-        public Fragment getFragment() { return mFragment; }
+        public void setFragment(TaskAbstractFragment fragment) { mFragment = fragment; }
+        public TaskAbstractFragment getFragment() { return mFragment; }
     }
 }
