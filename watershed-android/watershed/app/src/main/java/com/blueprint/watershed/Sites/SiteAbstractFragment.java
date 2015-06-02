@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
@@ -193,8 +193,6 @@ public abstract class SiteAbstractFragment extends Fragment{
                     Utility.setEmpty(mParentActivity, errorStrings);
                 } else {
                     submitListener();
-                    SiteViewPagerFragment returnFragment = SiteViewPagerFragment.newInstance();
-                    mParentActivity.replaceFragment(returnFragment);
                 }
             }
         };
@@ -233,7 +231,9 @@ public abstract class SiteAbstractFragment extends Fragment{
             CreateSiteRequest createSiteRequest = new CreateSiteRequest(mParentActivity, site, params, new Response.Listener<Site>() {
                 @Override
                 public void onResponse(Site site) {
-                    Log.e("successful site", "creation");
+                    Toast.makeText(mParentActivity, R.string.create_site, Toast.LENGTH_SHORT).show();
+                    SiteViewPagerFragment returnFragment = SiteViewPagerFragment.newInstance();
+                    mParentActivity.replaceFragment(returnFragment);
                 }
             });
             mNetworkManager.getRequestQueue().add(createSiteRequest);
@@ -242,7 +242,8 @@ public abstract class SiteAbstractFragment extends Fragment{
             EditSiteRequest editSiteRequest = new EditSiteRequest(mParentActivity, site, params, new Response.Listener<Site>() {
                 @Override
                 public void onResponse(Site site) {
-                    Log.e("successful site", "edit");
+                    Toast.makeText(mParentActivity, R.string.edit_site, Toast.LENGTH_SHORT).show();
+                    mParentActivity.getSupportFragmentManager().popBackStack();
                 }
             });
             mNetworkManager.getRequestQueue().add(editSiteRequest);

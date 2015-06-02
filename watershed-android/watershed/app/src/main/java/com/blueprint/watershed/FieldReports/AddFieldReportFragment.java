@@ -342,7 +342,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
         CreateFieldReportRequest createFieldReportRequest = new CreateFieldReportRequest(mParentActivity, fieldReport, params, new Response.Listener<FieldReport>() {
             @Override
             public void onResponse(FieldReport fieldReport) {
-                Log.e("successful field report", "creation");
+                Toast.makeText(mParentActivity, R.string.create_field_report, Toast.LENGTH_SHORT).show();
                 mTask.setFieldReport(fieldReport);
                 mParentActivity.getSupportFragmentManager().popBackStack();
             }

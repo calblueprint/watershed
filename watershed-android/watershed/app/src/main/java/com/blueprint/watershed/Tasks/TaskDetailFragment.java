@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
@@ -184,6 +185,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
         ClaimTaskRequest request = new ClaimTaskRequest(mParentActivity, mTask, new Response.Listener<Task>() {
             @Override
             public void onResponse(Task task) {
+                Toast.makeText(mParentActivity, R.string.claim_task, Toast.LENGTH_SHORT).show();
                 mTask = task;
                 refreshCompletion();
             }

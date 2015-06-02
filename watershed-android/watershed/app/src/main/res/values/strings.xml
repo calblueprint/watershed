@@ -36,7 +36,7 @@
     <string name="not_urgent">Not Urgent</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-
+    <string name="create_field_report">You\'ve submitted a field report!</string>
     <string name="add_fieldreport">Add Field Report</string>
 
     <!--About-->
@@ -65,6 +65,9 @@
     <string name="pick_site">Pick MiniSite</string>
     <string name="loading_sites">Loading MiniSites..</string>
     <string name="cancel">Cancel</string>
+    
+    <!-- Task Show -->
+    <string name="claim_task">You\'ve claimed this task!</string>
 
     <!-- Site Creation -->
     <string name="create_site_title">Title</string>
@@ -74,19 +77,23 @@
     <string name="create_site_state">State</string>
     <string name="create_site_submit">Create Site</string>
 
+    <string name="create_site">You\'ve created a site!</string>
+    <string name="edit_site">You\'ve edited the site!</string>
+
     <string name="add_minisite">Add Minisite</string>
-    <string name="edit_site">Edit Site</string>
+    <string name="edit_site_title">Edit Site</string>
     <string name="subscribe_site">Subscribe to Site</string>
 
-    <!-- Site -->
-    <string name="subscribed_to_site">You've subscribed to this site! You can now view unassigned tasks for all the site's minisites.</string>
-    <string name="unsubscribed_to_site">You've unsubscribed to this site!</string>
+    <!-- Site Show-->
+    <string name="subscribed_to_site">You\'ve subscribed to this site! You can now view unassigned tasks for all the site\'s minisites.</string>
+    <string name="unsubscribed_to_site">You\'ve unsubscribed to this site!</string>
 
     <!-- Mini Site Creation -->
-    <string name="create_mini_site_submit">Create Mini Site</string>
+    <string name="create_mini_site_title">Create Mini Site</string>
     <string name="mini_site_destroy">Delete Mini Site</string>
-
-    <string name="edit_minisite">Edit Mini Site</string>
+    <string name="create_mini_site">You\'ve created a mini site!</string>
+    <string name="edit_mini_site">You\'ve edited the mini site!</string>
+    <string name="edit_mini_site_title">Edit Mini Site</string>
 
     <!-- Editing User -->
     <string name="edit_profile_name">Name</string>
@@ -107,9 +114,11 @@
     <!-- Task Index -->
     <string name="no_tasks">Looks like you don\'t have any tasks!\nSwipe up to refresh.</string>
     <string name="no_tasks_refresh">Refresh</string>
+    
     <!-- Site Index -->
     <string name="no_site">Looks like you don\'t have any sites!\nSwipe up to refresh.</string>
     <string name="no_site_refresh">Refresh</string>
+    
     <!-- User Index -->
     <string name="no_user">Looks like there aren\'t any users!\nSwipe up to refresh.</string>
     <string name="no_user_refresh">Refresh</string>
