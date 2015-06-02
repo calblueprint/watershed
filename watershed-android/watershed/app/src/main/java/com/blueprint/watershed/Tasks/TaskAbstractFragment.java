@@ -242,8 +242,8 @@ public abstract class TaskAbstractFragment extends Fragment {
                 @Override
                 public void onResponse(Task task) {
                     Toast.makeText(mParentActivity, "You've created a task!", Toast.LENGTH_SHORT).show();
-                    TaskViewPagerFragment taskFragment = TaskViewPagerFragment.newInstance();
-                    mParentActivity.replaceFragment(taskFragment);
+                    mParentActivity.getSupportFragmentManager().popBackStack();
+                    mParentActivity.replaceFragment(TaskDetailFragment.newInstance(task));
                     Log.e("successful task", "creation");
                 }
             });
