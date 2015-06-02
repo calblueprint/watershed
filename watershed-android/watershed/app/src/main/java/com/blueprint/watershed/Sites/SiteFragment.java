@@ -191,6 +191,7 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment {
             new SiteSubscribeRequest(mParentActivity, mSite, new HashMap<String, JSONObject>(), new Response.Listener<String>() {
             @Override
             public void onResponse(String message) {
+                Toast.makeText(mParentActivity, R.string.subscribed_to_site, Toast.LENGTH_LONG).show();
                 mSite.setSubscribed(true);
                 setSubscribedButton(mSite.getSubscribed());
             }
@@ -203,6 +204,7 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment {
             new SiteSubscribeRequest(mParentActivity, mSite, new HashMap<String, JSONObject>(), new Response.Listener<String>() {
                 @Override
                 public void onResponse(String message) {
+                    Toast.makeText(mParentActivity, R.string.unsubscribed_to_site, Toast.LENGTH_SHORT).show();
                     mSite.setSubscribed(false);
                     setSubscribedButton(mSite.getSubscribed());
                 }

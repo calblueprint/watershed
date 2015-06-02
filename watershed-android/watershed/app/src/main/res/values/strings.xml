@@ -78,6 +78,10 @@
     <string name="edit_site">Edit Site</string>
     <string name="subscribe_site">Subscribe to Site</string>
 
+    <!-- Site -->
+    <string name="subscribed_to_site">You've subscribed to this site! You can now view unassigned tasks for all the site's minisites.</string>
+    <string name="unsubscribed_to_site">You've unsubscribed to this site!</string>
+
     <!-- Mini Site Creation -->
     <string name="create_mini_site_submit">Create Mini Site</string>
     <string name="mini_site_destroy">Delete Mini Site</string>
