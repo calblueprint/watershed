@@ -114,7 +114,7 @@ public abstract class SiteListAbstractFragment extends Fragment {
     }
 
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
         RequestQueue requestQueue = mNetworkManager.getRequestQueue();
         if (requestQueue != null) {

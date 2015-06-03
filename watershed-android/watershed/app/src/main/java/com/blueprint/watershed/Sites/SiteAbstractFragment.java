@@ -176,6 +176,7 @@ public abstract class SiteAbstractFragment extends Fragment{
      * @return  an OnClickListener to validate Site data.
      */
     protected void validateAndSubmit() {
+        Utility.hideKeyboard(mParentActivity, mLayout);
         List<String> errorStrings = new ArrayList<String>();
         if (mTitleField.getText().toString().length() == 0) {
             errorStrings.add("Title");
@@ -223,7 +224,6 @@ public abstract class SiteAbstractFragment extends Fragment{
     }
 
     public void createSiteRequest(String type, Site site){
-        Utility.hideKeyboard(mParentActivity, mLayout);
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
         if (type.equals(CREATE)) {
             CreateSiteRequest createSiteRequest = new CreateSiteRequest(mParentActivity, site, params, new Response.Listener<Site>() {
@@ -241,14 +241,12 @@ public abstract class SiteAbstractFragment extends Fragment{
                 @Override
                 public void onResponse(Site site) {
                     Toast.makeText(mParentActivity, R.string.edit_site, Toast.LENGTH_SHORT).show();
-                    Utility.hideKeyboard(mParentActivity, mLayout);
                     mParentActivity.getSupportFragmentManager().popBackStack();
+
                 }
             });
             mNetworkManager.getRequestQueue().add(editSiteRequest);
         }
-        mParentActivity.getSupportFragmentManager().popBackStack();
-
     }
 
     public abstract void submitListener();

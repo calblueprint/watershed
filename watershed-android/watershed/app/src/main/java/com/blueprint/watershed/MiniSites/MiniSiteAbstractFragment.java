@@ -155,7 +155,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 AutocompletePrediction prediction = mPredictions.get(position);
-                mAddressField.setText(prediction.toString());
+                mAddressField.setText(prediction.getDescription());
             }
         });
 
@@ -230,6 +230,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
      * Validates and makes a submit request
      */
     public void validateAndSubmitMiniSite() {
+        Utility.hideKeyboard(mParentActivity, mLayout);
         final MiniSite miniSite = mMiniSite == null ? new MiniSite() : mMiniSite;
 
         List<String> errorStrings = new ArrayList<String>();
@@ -265,12 +266,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         miniSite.setSiteId(mSite.getId());
         miniSite.setPhotos(mPhotoList);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                submitMiniSite(miniSite);
-            }
-        }).start();
+        submitMiniSite(miniSite);
     }
 
     /**
@@ -283,7 +279,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(imageFileName, ".jpg", storageDir);
-        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+        mCurrentPhotoPath = image.getAbsolutePath();
         return image;
     }
 
@@ -330,10 +326,11 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         Bitmap scaledBitmap = null;
 
         if (photo != null) {
-            int width = photo.getWidth() / 6;
             int height = photo.getHeight() / 6;
+            int width = photo.getWidth() / 6;
             scaledBitmap = Bitmap.createScaledBitmap(photo, width, height, false);
         }
+
 
         if (scaledBitmap != null) {
             mPhotoList.add(new Photo(scaledBitmap));
