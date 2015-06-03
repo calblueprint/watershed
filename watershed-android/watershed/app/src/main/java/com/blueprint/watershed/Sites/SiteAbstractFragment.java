@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -57,6 +58,7 @@ public abstract class SiteAbstractFragment extends Fragment{
     protected EditText mTitleField;
     protected EditText mDescriptionField;
     protected AutoCompleteTextView mAddressField;
+    protected RelativeLayout mLayout;
 
     // Params for maps
     private ArrayAdapter<AutocompletePrediction> mPlacesAdapter;
@@ -114,12 +116,13 @@ public abstract class SiteAbstractFragment extends Fragment{
         mParentActivity.setMenuAction(false);
     }
 
-    protected void setButtonListeners(View view){
-        mTitleField = (EditText)view.findViewById(R.id.create_site_title);
-        mDescriptionField = (EditText)view.findViewById(R.id.create_site_description);
+    protected void setButtonListeners(View view) {
+        mLayout = (RelativeLayout) view.findViewById(R.id.create_site_layout);
+        mTitleField = (EditText) view.findViewById(R.id.create_site_title);
+        mDescriptionField = (EditText) view.findViewById(R.id.create_site_description);
 
         mPlacesAdapter = new PlacePredictionAdapter(mParentActivity, mPredictions);
-        mAddressField = (AutoCompleteTextView)view.findViewById(R.id.create_site_address);
+        mAddressField = (AutoCompleteTextView) view.findViewById(R.id.create_site_address);
         mAddressField.setAdapter(mPlacesAdapter);
         mAddressField.setThreshold(3);
         mAddressField.addTextChangedListener(new TextWatcher() {
@@ -172,30 +175,25 @@ public abstract class SiteAbstractFragment extends Fragment{
      *  Validates Site data, and calls the submit listener implemented by subclasses.
      * @return  an OnClickListener to validate Site data.
      */
-    protected View.OnClickListener validateAndSubmit(){
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                List<String> errorStrings = new ArrayList<String>();
-                if (mTitleField.getText().toString().length() == 0) {
-                    errorStrings.add("Title");
-                }
+    protected void validateAndSubmit() {
+        List<String> errorStrings = new ArrayList<String>();
+        if (mTitleField.getText().toString().length() == 0) {
+            errorStrings.add("Title");
+        }
 
-                if (mDescriptionField.getText().toString().length() == 0) {
-                    errorStrings.add("Description");
-                }
+        if (mDescriptionField.getText().toString().length() == 0) {
+            errorStrings.add("Description");
+        }
 
-                if (mAddressField.getText().toString().length() == 0) {
-                    errorStrings.add("Address");
-                }
+        if (mAddressField.getText().toString().length() == 0) {
+            errorStrings.add("Address");
+        }
 
-                if (errorStrings.size() > 0) {
-                    Utility.setEmpty(mParentActivity, errorStrings);
-                } else {
-                    submitListener();
-                }
-            }
-        };
+        if (errorStrings.size() > 0) {
+            Utility.setEmpty(mParentActivity, errorStrings);
+        } else {
+            submitListener();
+        }
     }
 
     /**
@@ -225,15 +223,15 @@ public abstract class SiteAbstractFragment extends Fragment{
     }
 
     public void createSiteRequest(String type, Site site){
+        Utility.hideKeyboard(mParentActivity, mLayout);
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
-
         if (type.equals(CREATE)) {
             CreateSiteRequest createSiteRequest = new CreateSiteRequest(mParentActivity, site, params, new Response.Listener<Site>() {
                 @Override
                 public void onResponse(Site site) {
                     Toast.makeText(mParentActivity, R.string.create_site, Toast.LENGTH_SHORT).show();
-                    SiteViewPagerFragment returnFragment = SiteViewPagerFragment.newInstance();
-                    mParentActivity.replaceFragment(returnFragment);
+                    mParentActivity.getSupportFragmentManager().popBackStack();
+                    mParentActivity.replaceFragment(SiteFragment.newInstance(site));
                 }
             });
             mNetworkManager.getRequestQueue().add(createSiteRequest);
@@ -243,6 +241,7 @@ public abstract class SiteAbstractFragment extends Fragment{
                 @Override
                 public void onResponse(Site site) {
                     Toast.makeText(mParentActivity, R.string.edit_site, Toast.LENGTH_SHORT).show();
+                    Utility.hideKeyboard(mParentActivity, mLayout);
                     mParentActivity.getSupportFragmentManager().popBackStack();
                 }
             });

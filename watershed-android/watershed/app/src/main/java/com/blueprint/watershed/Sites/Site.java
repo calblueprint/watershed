@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class Site implements APIObject {
 
     public int TRIM_LENGTH = 140;
-
+    public String NOT_AVAILABLE = "Not Available";
     // Attributes
     private Integer mId;
     private String mName;
@@ -82,7 +82,14 @@ public class Site implements APIObject {
     @JsonIgnore
     public String getLocationOneLine() {
         if (getCity() != null) return String.format("%s, %s, %s", getStreet(), getCity(), getState());
+        else if (getStreet() == null) return NOT_AVAILABLE;
         else return getStreet();
+    }
+
+    public String getShortenedOneLine() {
+        if (getCity() != null) return getStreet();
+        else if (getStreet() == null) return NOT_AVAILABLE;
+        else return getStreet().split(",")[0];
     }
 
     @JsonIgnore

@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Networking.BaseRequest;
 import com.blueprint.watershed.Sites.Site;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -35,12 +34,12 @@ public class CreateSiteRequest extends BaseRequest {
                     public void onResponse(JSONObject jsonObject) {
                         try {
                             String siteJson = jsonObject.get("site").toString();
-                            ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
+                            ObjectMapper mapper = getNetworkManager(activity).getObjectMapper();
                             Site site = mapper.readValue(siteJson, new TypeReference<Site>() {
                             });
                             listener.onResponse(site);
                         } catch (Exception e) {
-                            Log.e("Create Site Json exception", e.toString());
+                            Log.e("Create Site exception", e.toString());
                         }
                     }
                 }, activity);
@@ -54,7 +53,7 @@ public class CreateSiteRequest extends BaseRequest {
      */
     protected static JSONObject siteParams(final Activity activity, final Site site) {
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
-        ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
+        ObjectMapper mapper = getNetworkManager(activity).getObjectMapper();
 
         try {
             JSONObject siteJson = new JSONObject(mapper.writeValueAsString(site));
