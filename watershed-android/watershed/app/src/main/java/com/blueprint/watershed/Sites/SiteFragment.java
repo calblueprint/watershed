@@ -219,7 +219,6 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment {
             @Override
             public void onResponse(Site site) {
                 setSite(site);
-                mParentActivity.getSpinner().setVisibility(View.GONE);
                 mMiniSiteAdapter.notifyDataSetChanged();
             }
         });

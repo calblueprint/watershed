@@ -20,7 +20,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -108,7 +107,7 @@ public class MainActivity extends ActionBarActivity
     // Action Bar Elements
 
     private View mContainer;
-    private ProgressBar mProgress;
+    private RelativeLayout mProgressContainer;
     private Toolbar mToolBar;
 
     // Networking
@@ -261,17 +260,17 @@ public class MainActivity extends ActionBarActivity
             @Override
             public void onMapClick(LatLng latLng) {
                 Utility.showAndBuildDialog(
-                    MainActivity.this, R.string.map_title, R.string.map_message, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            openMap(lat, lng);
-                        }
-                    }, new DialogInterface.OnClickListener() {
+                        MainActivity.this, R.string.map_title, R.string.map_message, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                openMap(lat, lng);
+                            }
+                        }, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
                             }
-                    });
+                        });
             }
         });
         map.getUiSettings().setScrollGesturesEnabled(false);
@@ -310,7 +309,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     private void initializeViews() {
-        mProgress = (ProgressBar) findViewById(R.id.progressBar);
+        mProgressContainer = (RelativeLayout) findViewById(R.id.progress_bar_container);
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
         mContainer = findViewById(R.id.container);
 
@@ -387,6 +386,14 @@ public class MainActivity extends ActionBarActivity
         android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, taskFragment);
         ft.commit();
+    }
+
+    public void showProgress() {
+        mProgressContainer.setVisibility(View.VISIBLE);
+    }
+
+    public void hideProgress() {
+        mProgressContainer.setVisibility(View.GONE);
     }
 
     @Override
@@ -591,7 +598,6 @@ public class MainActivity extends ActionBarActivity
     public int getUserId() { return mUserId; }
     public void setFieldReportTask(Task task) { mFieldReportTask = task; }
     public Task getFieldReportTask() { return mFieldReportTask; }
-    public ProgressBar getSpinner() { return mProgress; }
     public GoogleApiClient getGoogleApiClient() { return mGoogleApiClient; }
     public void setGoogleApiClient(GoogleApiClient client) { mGoogleApiClient = client; }
 

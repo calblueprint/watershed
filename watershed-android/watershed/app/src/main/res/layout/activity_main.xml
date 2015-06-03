@@ -32,17 +32,38 @@
             android:animateLayoutChanges="true"
             />
 
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
+        <RelativeLayout
+            android:id="@+id/progress_bar_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:visibility="gone"
-            android:indeterminateDrawable="@drawable/progress" >
-        </ProgressBar>
+            android:background="@color/black_semi_transparent"
+            android:clickable="true">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/progressBar"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/loading"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:fontFamily="sans-serif"
+                    />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
 
     </RelativeLayout>
 
