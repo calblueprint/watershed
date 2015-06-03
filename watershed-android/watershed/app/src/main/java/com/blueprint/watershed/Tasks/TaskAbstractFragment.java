@@ -184,6 +184,7 @@ public abstract class TaskAbstractFragment extends Fragment {
     }
 
     private void validateAndSubmit() {
+        Utility.hideKeyboard(mParentActivity, mLayout);
         List<String> errorStrings = new ArrayList<String>();
 
         if (mTitleField.getText().toString().length() == 0) {
@@ -259,8 +260,7 @@ public abstract class TaskAbstractFragment extends Fragment {
                 }
             });
         }
-
-        mNetworkManager.getRequestQueue().add(request);
+        mParentActivity.addRequest(request);
     }
 
     /**
@@ -270,7 +270,7 @@ public abstract class TaskAbstractFragment extends Fragment {
     public void createTask(String type, Task task) {
         if (type.equals(CREATE)) task = new Task();
 
-        if (type.equals(UNCOMPLETE)){
+        if (type.equals(UNCOMPLETE)) {
             task.setComplete(false);
             createTaskRequest(task, type);
             return;
@@ -284,8 +284,6 @@ public abstract class TaskAbstractFragment extends Fragment {
         if (mUser != null) task.setAssigneeId(mUser.getId());
         if (mMiniSite != null) task.setMiniSiteId(mMiniSite.getId());
 
-
-        Utility.hideKeyboard(mParentActivity, mLayout);
         createTaskRequest(task, type);
     }
 

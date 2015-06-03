@@ -62,13 +62,14 @@ public class EditMiniSiteFragment extends MiniSiteAbstractFragment {
                 new EditMiniSiteRequest(mParentActivity, miniSite, new Response.Listener<MiniSite>() {
                     @Override
                     public void onResponse(MiniSite miniSite) {
+                        mMiniSite = miniSite;
                         Toast.makeText(mParentActivity, R.string.edit_mini_site, Toast.LENGTH_SHORT).show();
                         Utility.hideKeyboard(mParentActivity, mLayout);
                         mParentActivity.getSupportFragmentManager().popBackStack();
                     }
                 });
 
-        mNetworkManager.getRequestQueue().add(editMiniSiteRequest);
+        mParentActivity.addRequest(editMiniSiteRequest);
     }
 
 

@@ -42,7 +42,7 @@ import java.util.List;
 /**
  * Created by maxwolffe on 4/5/15.
  */
-public abstract class SiteAbstractFragment extends Fragment{
+public abstract class SiteAbstractFragment extends Fragment {
 
     protected static final String EDIT = "edit";
     protected static final String CREATE = "create";
@@ -63,6 +63,8 @@ public abstract class SiteAbstractFragment extends Fragment{
     // Params for maps
     private ArrayAdapter<AutocompletePrediction> mPlacesAdapter;
     private List<AutocompletePrediction> mPredictions;
+
+    protected Site mSite;
 
     /**
      * Use this factory method to create a new instance of
@@ -220,6 +222,7 @@ public abstract class SiteAbstractFragment extends Fragment{
             new_site.setLatitude((float) latLng.latitude);
             new_site.setLongitude((float) latLng.longitude);
         }
+
         createSiteRequest(type, new_site);
     }
 
@@ -229,23 +232,25 @@ public abstract class SiteAbstractFragment extends Fragment{
             CreateSiteRequest createSiteRequest = new CreateSiteRequest(mParentActivity, site, params, new Response.Listener<Site>() {
                 @Override
                 public void onResponse(Site site) {
+                    mSite = site;
                     Toast.makeText(mParentActivity, R.string.create_site, Toast.LENGTH_SHORT).show();
                     mParentActivity.getSupportFragmentManager().popBackStack();
                     mParentActivity.replaceFragment(SiteFragment.newInstance(site));
                 }
             });
-            mNetworkManager.getRequestQueue().add(createSiteRequest);
+            mParentActivity.addRequest(createSiteRequest);
         }
         else {
             EditSiteRequest editSiteRequest = new EditSiteRequest(mParentActivity, site, params, new Response.Listener<Site>() {
                 @Override
                 public void onResponse(Site site) {
+                    mSite = site;
                     Toast.makeText(mParentActivity, R.string.edit_site, Toast.LENGTH_SHORT).show();
                     mParentActivity.getSupportFragmentManager().popBackStack();
 
                 }
             });
-            mNetworkManager.getRequestQueue().add(editSiteRequest);
+            mParentActivity.addRequest(editSiteRequest);
         }
     }
 

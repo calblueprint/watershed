@@ -43,6 +43,7 @@ public class CreateMiniSiteFragment extends MiniSiteAbstractFragment {
                 new CreateMiniSiteRequest(mParentActivity, miniSite, new Response.Listener<MiniSite>() {
                     @Override
                     public void onResponse(MiniSite miniSite) {
+                        mMiniSite = miniSite;
                         Toast.makeText(mParentActivity, R.string.create_mini_site, Toast.LENGTH_SHORT).show();
                         Utility.hideKeyboard(mParentActivity, mLayout);
                         mParentActivity.getSupportFragmentManager().popBackStack();
@@ -50,6 +51,6 @@ public class CreateMiniSiteFragment extends MiniSiteAbstractFragment {
                     }
                 });
 
-        mNetworkManager.getRequestQueue().add(createMiniSiteRequest);
+        mParentActivity.addRequest(createMiniSiteRequest);
     }
 }

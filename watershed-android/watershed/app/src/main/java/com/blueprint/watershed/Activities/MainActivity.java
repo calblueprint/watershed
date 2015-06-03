@@ -24,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Response;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.blueprint.watershed.FieldReports.FieldReportFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteAbstractFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
@@ -394,6 +395,11 @@ public class MainActivity extends ActionBarActivity
 
     public void hideProgress() {
         mProgressContainer.setVisibility(View.GONE);
+    }
+
+    public void addRequest(JsonObjectRequest request) {
+        showProgress();
+        mNetworkManager.getRequestQueue().add(request);
     }
 
     @Override

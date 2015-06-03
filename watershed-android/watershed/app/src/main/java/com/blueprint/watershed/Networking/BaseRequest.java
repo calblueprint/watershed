@@ -34,11 +34,18 @@ public abstract class BaseRequest extends JsonObjectRequest {
 //    private static final String baseURL = "https://floating-bayou-8262.herokuapp.com/api/v1/";
 
     public BaseRequest(int method, String url, JSONObject jsonRequest,
-                       final Response.Listener listener, final Response.Listener<APIError> errorListener,
+                       final Response.Listener<JSONObject> listener, final Response.Listener<APIError> errorListener,
                        final Activity activity) {
-        super(method, url, jsonRequest, listener, new Response.ErrorListener() {
+        super(method, url, jsonRequest, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                if (activity instanceof MainActivity) ((MainActivity) activity).hideProgress();
+                listener.onResponse(jsonObject);
+            }
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                if (activity instanceof MainActivity) ((MainActivity) activity).hideProgress();
                 Log.e("Request Error", "Custom ErrorListener detected");
                 NetworkResponse networkResponse = volleyError.networkResponse;
                 APIError apiError = new APIError();
@@ -59,7 +66,8 @@ public abstract class BaseRequest extends JsonObjectRequest {
                                 JSONObject errorJsonObject = new JSONObject(errorJson);
                                 errorJson = errorJsonObject.getString("error");
                                 ObjectMapper mapper = getNetworkManager(activity).getObjectMapper();
-                                apiError = mapper.readValue(errorJson, new TypeReference<APIError>() {});
+                                apiError = mapper.readValue(errorJson, new TypeReference<APIError>() {
+                                });
                             } catch (Exception e) {
                                 Log.e("Json exception base", e.toString());
                             }
@@ -68,7 +76,8 @@ public abstract class BaseRequest extends JsonObjectRequest {
                     }
                 }
                 errorListener.onResponse(apiError);
-            }});
+            }
+        });
 
         this.listener = listener;
         this.errorListener = errorListener;

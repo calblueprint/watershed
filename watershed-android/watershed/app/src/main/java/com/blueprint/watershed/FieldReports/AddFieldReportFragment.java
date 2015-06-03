@@ -348,7 +348,7 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
             }
         });
 
-        mNetworkManager.getRequestQueue().add(createFieldReportRequest);
+        mParentActivity.addRequest(createFieldReportRequest);
     }
 
 
