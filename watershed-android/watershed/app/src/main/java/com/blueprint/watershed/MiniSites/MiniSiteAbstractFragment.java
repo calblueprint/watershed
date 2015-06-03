@@ -331,7 +331,6 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
             scaledBitmap = Bitmap.createScaledBitmap(photo, width, height, false);
         }
 
-
         if (scaledBitmap != null) {
             mPhotoList.add(new Photo(scaledBitmap));
             mImageAdapter.notifyDataSetChanged();
@@ -351,6 +350,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
             catch (IOException ex) { Log.e("Mini Site Photo", "Error"); }
 
             if (photoFile != null) {
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
                 startActivityForResult(takePictureIntent, CAMERA_REQUEST);
             }
         }

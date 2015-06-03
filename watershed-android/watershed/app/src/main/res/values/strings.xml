@@ -61,6 +61,7 @@
 
     <string name="pick_user">Pick User</string>
     <string name="loading_users">Loading Users..</string>
+    <string name="clear_user">Clear User</string>
 
     <string name="pick_site">Pick MiniSite</string>
     <string name="loading_sites">Loading MiniSites..</string>

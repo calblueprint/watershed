@@ -244,7 +244,6 @@ public abstract class TaskAbstractFragment extends Fragment {
                     Toast.makeText(mParentActivity, "You've created a task!", Toast.LENGTH_SHORT).show();
                     mParentActivity.getSupportFragmentManager().popBackStack();
                     mParentActivity.replaceFragment(TaskDetailFragment.newInstance(task));
-                    Log.e("successful task", "creation");
                 }
             });
         } else {
@@ -257,7 +256,6 @@ public abstract class TaskAbstractFragment extends Fragment {
                         mParentActivity.getSupportFragmentManager().popBackStack();
                     }
                     else { refreshCompletion(); }
-                    Log.i("successful task", "editing");
                 }
             });
         }
@@ -440,8 +438,15 @@ public abstract class TaskAbstractFragment extends Fragment {
             builder.setTitle(R.string.site)
                     .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
+                        public void onClick(DialogInterface dialog, int i) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setNeutralButton(R.string.clear_user, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            getFragment().setUser(null);
+                            dialog.dismiss();
                         }
                     });
 
