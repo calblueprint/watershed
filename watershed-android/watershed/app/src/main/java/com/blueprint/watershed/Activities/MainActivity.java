@@ -398,7 +398,12 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void addRequest(JsonObjectRequest request) {
-        showProgress();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                showProgress();
+            }
+        });
         mNetworkManager.getRequestQueue().add(request);
     }
 

@@ -374,6 +374,13 @@ public abstract class TaskAbstractFragment extends Fragment {
                        public void onClick(DialogInterface dialogInterface, int i) {
                            dialogInterface.dismiss();
                        }
+                   })
+                   .setNeutralButton(R.string.clear_user, new DialogInterface.OnClickListener() {
+                       @Override
+                       public void onClick(DialogInterface dialog, int which) {
+                            getFragment().setUser(null);
+                            dialog.dismiss();
+                       }
                    });
 
             if (mUsers != null && mUsers.size() > 0) {
@@ -437,13 +444,6 @@ public abstract class TaskAbstractFragment extends Fragment {
                     .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int i) {
-                            dialog.dismiss();
-                        }
-                    })
-                    .setNeutralButton(R.string.clear_user, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            getFragment().setUser(null);
                             dialog.dismiss();
                         }
                     });

@@ -29,7 +29,7 @@ public abstract class BaseRequest extends JsonObjectRequest {
     private Response.Listener listener;
     private Response.Listener errorListener;
 
-    private static final String baseURL = "http://192.168.0.103:3000/api/v1/";
+    private static final String baseURL = "http://192.168.0.102:3000/api/v1/";
 //    private static final String baseURL = "https://intense-reaches-1457.herokuapp.com/api/v1/";
 //    private static final String baseURL = "https://floating-bayou-8262.herokuapp.com/api/v1/";
 
@@ -39,13 +39,19 @@ public abstract class BaseRequest extends JsonObjectRequest {
         super(method, url, jsonRequest, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                if (activity instanceof MainActivity) ((MainActivity) activity).hideProgress();
                 listener.onResponse(jsonObject);
+                if (activity instanceof MainActivity) {
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((MainActivity) activity).hideProgress();
+                        }
+                    });
+                }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                if (activity instanceof MainActivity) ((MainActivity) activity).hideProgress();
                 Log.e("Request Error", "Custom ErrorListener detected");
                 NetworkResponse networkResponse = volleyError.networkResponse;
                 APIError apiError = new APIError();
@@ -76,6 +82,14 @@ public abstract class BaseRequest extends JsonObjectRequest {
                     }
                 }
                 errorListener.onResponse(apiError);
+                if (activity instanceof MainActivity) {
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((MainActivity) activity).hideProgress();
+                        }
+                    });
+                }
             }
         });
 
