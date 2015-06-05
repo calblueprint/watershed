@@ -139,8 +139,18 @@ public class MainActivity extends ActionBarActivity
     private String NEW_UNASSIGNED_TASK = "new_unassigned_task";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setUpMainActivity(getIntent());
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setUpMainActivity(getIntent());
+    }
+
+    private void setUpMainActivity(Intent intent) {
         setContentView(R.layout.activity_main);
         setNetworkManager(NetworkManager.getInstance(this));
 
@@ -169,7 +179,7 @@ public class MainActivity extends ActionBarActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        Bundle extras = getIntent().getExtras();
+        Bundle extras = intent.getExtras();
         if (extras != null) {
             startNewFragment(extras);
         } else {
@@ -193,12 +203,6 @@ public class MainActivity extends ActionBarActivity
     public void onStop() {
         super.onStop();
         mGoogleApiClient.disconnect();
-    }
-
-    @Override
-    public void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        Log.i("asdf", "asdf");
     }
 
     private void startNewFragment(Bundle extras) {
