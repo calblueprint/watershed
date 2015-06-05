@@ -239,7 +239,6 @@ public class TaskDetailFragment extends TaskAbstractFragment
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Resources resources = mParentActivity.getResources();
-        mParentActivity.setToolBarColor(resources.getColor(R.color.ws_blue), resources.getColor(R.color.ws_title_bar));
+        mParentActivity.setToolBarDefault();
     }
 }

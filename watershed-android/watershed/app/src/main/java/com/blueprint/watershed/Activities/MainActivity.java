@@ -54,6 +54,7 @@ import com.blueprint.watershed.Users.UserMiniSiteFragment;
 import com.blueprint.watershed.Users.UserTaskFragment;
 import com.blueprint.watershed.Utilities.Utility;
 import com.facebook.Session;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -133,6 +134,10 @@ public class MainActivity extends ActionBarActivity
     // Params (so we don't have to set them later)
     private List<User> mUsers;
 
+    // Activity Contants
+    private String NEW_TASK = "new_task";
+    private String NEW_UNASSIGNED_TASK = "new_unassigned_task";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -164,7 +169,12 @@ public class MainActivity extends ActionBarActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        initializeFragments();
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            startNewFragment(extras);
+        } else {
+            initializeFragments();
+        }
     }
 
     @Override
@@ -183,6 +193,39 @@ public class MainActivity extends ActionBarActivity
     public void onStop() {
         super.onStop();
         mGoogleApiClient.disconnect();
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.i("asdf", "asdf");
+    }
+
+    private void startNewFragment(Bundle extras) {
+        String type = extras.getString("type");
+        String object = extras.getString(type);
+        try {
+            if (type.equals(NEW_TASK)) {
+                Task task = mNetworkManager.getObjectMapper()
+                                           .readValue(object, new TypeReference<Task>() {
+                                           });
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, TaskViewPagerFragment.newInstance())
+                        .replace(R.id.container, TaskDetailFragment.newInstance(task))
+                        .addToBackStack(null).commit();
+            } else if (type.equals(NEW_UNASSIGNED_TASK)) {
+                Task task = mNetworkManager.getObjectMapper()
+                        .readValue(object, new TypeReference<Task>() {
+                        });
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, TaskViewPagerFragment.newInstance())
+                        .replace(R.id.container, TaskDetailFragment.newInstance(task))
+                        .addToBackStack(null).commit();
+            }
+
+        } catch (Exception e) {
+            Log.i("Exception", e.toString());
+        }
     }
 
     /**
@@ -285,7 +328,7 @@ public class MainActivity extends ActionBarActivity
 
     private void setUserObject() {
         String userObject = mPreferences.getString("user", "none");
-        if (!userObject.equals("none")) getUserFromPreferences(userObject);
+        if (userObject != null && !userObject.equals("none")) getUserFromPreferences(userObject);
         else makeHomeRequest();
     }
 
@@ -301,7 +344,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void makeHomeRequest(){
-        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
+        HashMap<String, JSONObject> params = new HashMap<>();
         HomeRequest homeRequest = new HomeRequest(this, mUserId, params, new Response.Listener<User>() {
             @Override
             public void onResponse(User home) { setUser(home); }
@@ -344,7 +387,7 @@ public class MainActivity extends ActionBarActivity
     public void updateFragment(Fragment f) {
         if (f instanceof TaskViewPagerFragment ||
             f instanceof UserTaskFragment)                setTitle("Tasks");
-        else if (f instanceof CreateTaskFragment)         setTitle("Add Task");
+        else if (f instanceof CreateTaskFragment)         setTitle("Create Task");
         else if (f instanceof EditTaskFragment)           setTitle("Edit Task");
         else if (f instanceof TaskDetailFragment)         setTitle("");
         else if (f instanceof SiteListAbstractFragment ||
