@@ -70,7 +70,7 @@ public class User implements APIObject {
     public Integer getId() { return mId; }
     public Integer getRole() { return mRole; }
     public String getName() { return mName; }
-    
+
     public Integer getTasksCount() {
         if (mTasksCount == null) return 0;
         return mTasksCount;

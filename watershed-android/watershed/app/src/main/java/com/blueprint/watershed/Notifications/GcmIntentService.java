@@ -20,7 +20,6 @@ public class GcmIntentService extends IntentService {
 
     public static final int NOTIFICATION_ID = 1;
     private NotificationManager mNotificationManager;
-    private NotificationCompat.Builder builder;
 
     public GcmIntentService() {
         super("GcmIntentService");
@@ -44,30 +43,30 @@ public class GcmIntentService extends IntentService {
     }
 
     private void sendNotification(String message, String type, String object) {
-        Bundle intentBundle = new Bundle();
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.tasks_dark)
+                        .setContentTitle("Watershed Notification")
+                        .setStyle(new NotificationCompat.BigTextStyle())
+                        .setContentText(message)
+                        .setAutoCancel(true);
 
+        Bundle intentBundle = new Bundle();
         intentBundle.putString("type", type);
         intentBundle.putString(type, object);
 
-        mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                        Intent.FLAG_ACTIVITY_SINGLE_TOP |
-                        PendingIntent.FLAG_UPDATE_CURRENT);
+                Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
-        NotificationCompat.Builder mBuilder =
-            new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.tasks_dark)
-                .setContentTitle("Watershed Notification")
-                .setStyle(new NotificationCompat.BigTextStyle())
-                .setContentText(message)
-                .setAutoCancel(true);
+        intent.putExtras(intentBundle);
 
-        mBuilder.addExtras(intentBundle);
+        PendingIntent contentIntent =
+                PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(contentIntent);
 
+        mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
 }

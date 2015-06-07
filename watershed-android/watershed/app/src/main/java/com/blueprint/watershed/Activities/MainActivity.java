@@ -147,7 +147,7 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        setUpMainActivity(getIntent());
+        setUpMainActivity(intent);
     }
 
     private void setUpMainActivity(Intent intent) {
