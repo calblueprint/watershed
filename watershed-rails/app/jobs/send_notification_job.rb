@@ -23,7 +23,7 @@ class SendNotificationJob
     return {
              message: message,
              type: type,
-             object: object.as_json
+             object: object
            }
   end
 

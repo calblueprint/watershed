@@ -71,10 +71,15 @@ class Task < ActiveRecord::Base
   end
 
   def send_notifications
+    task_json = TaskSerializer.new(self).as_json
     if assignee.blank?
-      SendNotificationJob.new.async.perform(mini_site.site.users, NEW_UNASSIGNED_TASK, self)
+      SendNotificationJob.new.async.perform(mini_site.site.users,
+                                            NEW_UNASSIGNED_TASK,
+                                            task_json)
     else
-      SendNotificationJob.new.async.perform([assignee], NEW_TASK, self)
+      SendNotificationJob.new.async.perform([assignee],
+                                            NEW_TASK,
+                                            task_json)
     end
   end
 end

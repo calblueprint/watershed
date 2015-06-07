@@ -6,6 +6,6 @@ class BaseTaskSerializer < ActiveModel::Serializer
   has_one :assigner, serializer: UserListSerializer
 
   def subscribed
-    scope.mini_sites.include? object.mini_site
+    scope.mini_sites.include? object.mini_site unless scope.nil?
   end
 end
