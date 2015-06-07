@@ -225,6 +225,8 @@ public class MainActivity extends ActionBarActivity
                         .replace(R.id.container, TaskViewPagerFragment.newInstance())
                         .replace(R.id.container, TaskDetailFragment.newInstance(task))
                         .addToBackStack(null).commit();
+            } else {
+                initializeFragments();
             }
 
         } catch (Exception e) {
