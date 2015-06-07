@@ -214,13 +214,13 @@ public class MainActivity extends ActionBarActivity
                 Task task = mNetworkManager.getObjectMapper()
                                            .readValue(taskObject, new TypeReference<Task>() {
                                            });
-                replaceFragment(TaskViewPagerFragment.newInstance());
+                initializeFragments();
                 replaceFragment(TaskDetailFragment.newInstance(task));
             } else if (type.equals(NEW_UNASSIGNED_TASK)) {
                 Task task = mNetworkManager.getObjectMapper()
                         .readValue(object, new TypeReference<Task>() {
                         });
-                replaceFragment(TaskViewPagerFragment.newInstance());
+                initializeFragments();
                 replaceFragment(TaskDetailFragment.newInstance(task));
             } else {
                 initializeFragments();
@@ -618,6 +618,7 @@ public class MainActivity extends ActionBarActivity
             @Override
             public void onClick(View v) {
                 mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
                 onBackPressed();
             }
         });
@@ -645,6 +646,7 @@ public class MainActivity extends ActionBarActivity
     public void onBackPressed() {
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
         Utility.hideKeyboard(this, f.getView());
+        updateFragment(f);
         if (mDrawerLayout.isDrawerOpen(mDrawer)) mDrawerLayout.closeDrawer(mDrawer);
         else super.onBackPressed();
     }
