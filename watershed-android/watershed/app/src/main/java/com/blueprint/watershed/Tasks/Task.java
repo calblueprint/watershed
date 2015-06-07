@@ -1,13 +1,12 @@
 package com.blueprint.watershed.Tasks;
 
-import com.blueprint.watershed.Networking.APIObject;
 import com.blueprint.watershed.FieldReports.FieldReport;
 import com.blueprint.watershed.MiniSites.MiniSite;
+import com.blueprint.watershed.Networking.APIObject;
 import com.blueprint.watershed.Networking.Tasks.TaskSerializer;
 import com.blueprint.watershed.Users.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.Date;
@@ -19,8 +18,6 @@ import java.util.Date;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonSerialize(using = TaskSerializer.class)
 public class Task implements APIObject {
-
-    private ObjectMapper mMapper = new ObjectMapper();
 
     private Integer mId;
     private String mTitle;

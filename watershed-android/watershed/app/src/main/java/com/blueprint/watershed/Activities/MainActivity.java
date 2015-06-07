@@ -210,21 +210,18 @@ public class MainActivity extends ActionBarActivity
         String object = extras.getString(type);
         try {
             if (type.equals(NEW_TASK)) {
+                String taskObject = new JSONObject(object).get("task").toString();
                 Task task = mNetworkManager.getObjectMapper()
-                                           .readValue(object, new TypeReference<Task>() {
+                                           .readValue(taskObject, new TypeReference<Task>() {
                                            });
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, TaskViewPagerFragment.newInstance())
-                        .replace(R.id.container, TaskDetailFragment.newInstance(task))
-                        .addToBackStack(null).commit();
+                replaceFragment(TaskViewPagerFragment.newInstance());
+                replaceFragment(TaskDetailFragment.newInstance(task));
             } else if (type.equals(NEW_UNASSIGNED_TASK)) {
                 Task task = mNetworkManager.getObjectMapper()
                         .readValue(object, new TypeReference<Task>() {
                         });
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, TaskViewPagerFragment.newInstance())
-                        .replace(R.id.container, TaskDetailFragment.newInstance(task))
-                        .addToBackStack(null).commit();
+                replaceFragment(TaskViewPagerFragment.newInstance());
+                replaceFragment(TaskDetailFragment.newInstance(task));
             } else {
                 initializeFragments();
             }
