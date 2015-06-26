@@ -126,8 +126,7 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment {
         menu.clear();
         if (mParentActivity.getUser().isManager()) {
             inflater.inflate(R.menu.site_manager, menu);
-        }
-        else {
+        } else {
             inflater.inflate(R.menu.site_member, menu);
         }
         mMenu = menu;

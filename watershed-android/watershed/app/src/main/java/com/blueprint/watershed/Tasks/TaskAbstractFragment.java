@@ -34,6 +34,8 @@ import com.blueprint.watershed.Networking.Tasks.EditTaskRequest;
 import com.blueprint.watershed.Networking.Users.UsersRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Sites.Site;
+import com.blueprint.watershed.Tasks.TaskList.TaskEnum;
+import com.blueprint.watershed.Tasks.TaskList.TaskEvent;
 import com.blueprint.watershed.Users.PickingUserAdapter;
 import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Utilities.Utility;
@@ -243,6 +245,7 @@ public abstract class TaskAbstractFragment extends Fragment {
                 @Override
                 public void onResponse(Task task) {
                     Toast.makeText(mParentActivity, "You've created a task!", Toast.LENGTH_SHORT).show();
+                    mParentActivity.post(new TaskEvent(task, TaskEnum.TASK_CREATED));
                     mParentActivity.getSupportFragmentManager().popBackStack();
                     mParentActivity.replaceFragment(TaskDetailFragment.newInstance(task));
                 }
@@ -253,6 +256,7 @@ public abstract class TaskAbstractFragment extends Fragment {
                 public void onResponse(Task task) {
                     mTask = task;
                     if (type.equals(EDIT)) {
+                        mParentActivity.post(new TaskEvent(task, TaskEnum.TASK_EDITED));
                         Toast.makeText(mParentActivity, "You've edited the task!", Toast.LENGTH_SHORT).show();
                         mParentActivity.getSupportFragmentManager().popBackStack();
                     }

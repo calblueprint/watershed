@@ -74,6 +74,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import de.greenrobot.event.EventBus;
+
 public class MainActivity extends ActionBarActivity
                           implements View.OnClickListener,
                                      ListView.OnItemClickListener,
@@ -668,4 +670,6 @@ public class MainActivity extends ActionBarActivity
     public Site getSite() { return mSite; }
     public void setMapSite(Site site) { mMapSite = site; }
     public Site getMapSite() { return mMapSite; }
+
+    public void post(Object object) { EventBus.getDefault().post(object); }
 }

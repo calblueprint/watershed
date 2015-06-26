@@ -15,12 +15,10 @@ public class UserTaskListFragment extends TaskListAbstractFragment {
     public void refreshTaskList(List<Task> tasks) {
         tasks = getUserTasks(tasks);
         if (tasks.size() > 0) {
-            showList();
             setUserTasks(tasks);
             for (int i = 0; i < mTaskAdapter.getGroupCount(); i++) mListView.expandGroup(i);
-        } else {
-            hideList();
         }
+        toggleList();
     }
 
     private void setUserTasks(List<Task> tasks) {
@@ -44,8 +42,7 @@ public class UserTaskListFragment extends TaskListAbstractFragment {
             taskList.put(COMPLETE, userFinishedTasks);
         }
 
-        setTasks(taskList);
-        setHeaders(headers);
+        setTasksAndHeaders(taskList, headers);
     }
 
     private ArrayList<Task> getUserTasks(List<Task> tasks) {
@@ -55,5 +52,9 @@ public class UserTaskListFragment extends TaskListAbstractFragment {
             if (id != null && id == mParentActivity.getUserId()) userTasks.add(task);
         }
         return userTasks;
+    }
+
+    public boolean rightTaskType(Task task) {
+        return task.getAssignee() != null && task.getAssignee().getId() == mParentActivity.getUserId();
     }
 }

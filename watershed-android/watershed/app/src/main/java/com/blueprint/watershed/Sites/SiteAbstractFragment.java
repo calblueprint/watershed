@@ -24,6 +24,8 @@ import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Sites.CreateSiteRequest;
 import com.blueprint.watershed.Networking.Sites.EditSiteRequest;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Sites.SiteList.SiteEnum;
+import com.blueprint.watershed.Sites.SiteList.SiteEvent;
 import com.blueprint.watershed.Utilities.Utility;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
@@ -234,6 +236,7 @@ public abstract class SiteAbstractFragment extends Fragment {
                 public void onResponse(Site site) {
                     mSite = site;
                     Toast.makeText(mParentActivity, R.string.create_site, Toast.LENGTH_SHORT).show();
+                    mParentActivity.post(new SiteEvent(site, SiteEnum.SITE_CREATED));
                     mParentActivity.getSupportFragmentManager().popBackStack();
                     mParentActivity.replaceFragment(SiteFragment.newInstance(site));
                 }
@@ -246,6 +249,7 @@ public abstract class SiteAbstractFragment extends Fragment {
                 public void onResponse(Site site) {
                     mSite = site;
                     Toast.makeText(mParentActivity, R.string.edit_site, Toast.LENGTH_SHORT).show();
+                    mParentActivity.post(new SiteEvent(site, SiteEnum.SITE_EDITED));
                     mParentActivity.getSupportFragmentManager().popBackStack();
 
                 }

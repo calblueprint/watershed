@@ -23,6 +23,8 @@ import com.blueprint.watershed.Views.Material.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
+
 public abstract class SiteListAbstractFragment extends Fragment {
 
     public static final String SITE_LIST_REQUEST = "SiteListTag";
@@ -40,15 +42,13 @@ public abstract class SiteListAbstractFragment extends Fragment {
     protected SiteListAdapter mAdapter;
     protected List<Site> mSites;
 
-    protected boolean mInitializeSites = false;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         mParentActivity = (MainActivity) getActivity();
         mNetworkManager = NetworkManager.getInstance(mParentActivity);
-        mSites = new ArrayList<Site>();
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -56,6 +56,7 @@ public abstract class SiteListAbstractFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_site_list, container, false);
         initializeViews(view);
+        refreshList();
         return view;
     }
 
@@ -87,14 +88,6 @@ public abstract class SiteListAbstractFragment extends Fragment {
             }
         });
 
-        mAdapter = new SiteListAdapter(mParentActivity, R.layout.site_list_row, mSites);
-        mSiteListView.setAdapter(mAdapter);
-
-        if (!mInitializeSites) {
-            mNoSiteLayout.setRefreshing(true);
-            getSitesRequest();
-        }
-
         if (mParentActivity.getUser().isManager()) {
             mCreateSiteButton = (FloatingActionButton) view.findViewById(R.id.create_site_button);
             mCreateSiteButton.setVisibility(View.VISIBLE);
@@ -107,6 +100,47 @@ public abstract class SiteListAbstractFragment extends Fragment {
         }
     }
 
+    private void refreshList() {
+        if (mSites == null) {
+            mNoSiteLayout.setRefreshing(true);
+            getSitesRequest();
+        }
+    }
+
+    public void onEvent(SiteEvent event) {
+        Site site = event.getSite();
+        if (!rightSiteType(site)) return;
+
+        switch (event.getType()) {
+            case SITE_CREATED:
+                addSiteToList(site);
+                break;
+            case SITE_EDITED:
+                removeSiteFromList(site);
+                addSiteToList(site);
+                break;
+            case SITE_DESTROYED:
+                removeSiteFromList(site);
+                break;
+        }
+
+        if (mAdapter != null) mAdapter.notifyDataSetChanged();
+    }
+
+    private void addSiteToList(Site site) { mSites.add(0, site); }
+
+    private void removeSiteFromList(Site site) {
+        for (Site siteObj : mSites) {
+            if (siteObj.getId().equals(site.getId())) {
+                mSites.remove(siteObj);
+            }
+        }
+    }
+
+
+    public abstract boolean rightSiteType(Site site);
+
+
     @Override
     public void onResume() {
         super.onResume();
@@ -117,9 +151,13 @@ public abstract class SiteListAbstractFragment extends Fragment {
     public void onPause() {
         super.onPause();
         RequestQueue requestQueue = mNetworkManager.getRequestQueue();
-        if (requestQueue != null) {
-            requestQueue.cancelAll(SITE_LIST_REQUEST);
-        }
+        if (requestQueue != null) { requestQueue.cancelAll(SITE_LIST_REQUEST); }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -153,23 +191,25 @@ public abstract class SiteListAbstractFragment extends Fragment {
      * @param sites ArrayList of sites
      */
     public void setSites(ArrayList<Site> sites) {
+        if (mSites == null) mSites = new ArrayList<>();
         mSites.clear();
         mSites.addAll(sites);
+
+        if (mAdapter == null) {
+            mAdapter = new SiteListAdapter(mParentActivity, R.layout.site_list_row, mSites);
+            mSiteListView.setAdapter(mAdapter);
+        }
+
+        mAdapter.notifyDataSetChanged();
     }
 
-    /**
-     * Shows the list of sites, hides the empty textview
-     */
-    protected void showList() {
-        mNoSiteLayout.setVisibility(View.GONE);
-        mSiteListView.setVisibility(View.VISIBLE);
-    }
-
-    /**
-     * Hides the list of sites, shows the empty textview
-     */
-    protected void hideList() {
-        mNoSiteLayout.setVisibility(View.VISIBLE);
-        mSiteListView.setVisibility(View.GONE);
+    protected void toggleList() {
+        if (mSites == null || mSites.size() == 0) {
+            mNoSiteLayout.setVisibility(View.VISIBLE);
+            mSiteListView.setVisibility(View.GONE);
+        } else {
+            mNoSiteLayout.setVisibility(View.GONE);
+            mSiteListView.setVisibility(View.VISIBLE);
+        }
     }
 }

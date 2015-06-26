@@ -1,7 +1,6 @@
 package com.blueprint.watershed.Tasks;
 
 import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,6 +22,8 @@ import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Tasks.ClaimTaskRequest;
 import com.blueprint.watershed.Networking.Tasks.DeleteTaskRequest;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Tasks.TaskList.TaskEnum;
+import com.blueprint.watershed.Tasks.TaskList.TaskEvent;
 import com.blueprint.watershed.Utilities.Utility;
 
 import java.text.SimpleDateFormat;
@@ -230,6 +231,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
         DeleteTaskRequest request = new DeleteTaskRequest(mParentActivity, mTask, new Response.Listener<ArrayList<Task>>() {
             @Override
             public void onResponse(ArrayList<Task> tasks) {
+                mParentActivity.post(new TaskEvent(mTask, TaskEnum.TASK_DELETED));
                 mParentActivity.getSupportFragmentManager().popBackStack();
             }
         });
