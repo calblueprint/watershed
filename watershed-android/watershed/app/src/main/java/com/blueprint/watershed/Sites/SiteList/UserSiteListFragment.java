@@ -16,11 +16,11 @@ public class UserSiteListFragment extends SiteListAbstractFragment {
 
     public static UserSiteListFragment newInstance() { return new UserSiteListFragment(); }
 
-    @Override
     /**
      * Request to get all the sites, updates and shows them according,
      * or displays a text view telling the user that there are no sites.
      */
+    @Override
     public void getSitesRequest() {
         UserSitesRequest siteListRequest =
             new UserSitesRequest(mParentActivity, new HashMap<String, JSONObject>(), new Response.Listener<ArrayList<Site>>() {

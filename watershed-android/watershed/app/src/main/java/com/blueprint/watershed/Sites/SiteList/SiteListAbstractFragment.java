@@ -77,6 +77,7 @@ public abstract class SiteListAbstractFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(mParentActivity);
         mSiteListView = (RecyclerView) view.findViewById(R.id.list);
         mSiteListView.setLayoutManager(mLayoutManager);
+        if (mAdapter != null) mSiteListView.setAdapter(mAdapter);
 
         mSwipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.site_swipe_container);
         mSwipeLayout.setColorSchemeResources(R.color.ws_blue, R.color.facebook_blue, R.color.facebook_dark_blue, R.color.dark_gray);
@@ -101,10 +102,8 @@ public abstract class SiteListAbstractFragment extends Fragment {
     }
 
     private void refreshList() {
-        if (mSites == null) {
-            mNoSiteLayout.setRefreshing(true);
-            getSitesRequest();
-        }
+        if (mSites == null) getSitesRequest();
+        toggleList();
     }
 
     public void onEvent(SiteEvent event) {
@@ -133,10 +132,10 @@ public abstract class SiteListAbstractFragment extends Fragment {
         for (Site siteObj : mSites) {
             if (siteObj.getId().equals(site.getId())) {
                 mSites.remove(siteObj);
+                break;
             }
         }
     }
-
 
     public abstract boolean rightSiteType(Site site);
 
