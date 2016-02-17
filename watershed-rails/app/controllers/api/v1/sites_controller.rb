@@ -2,7 +2,7 @@ class Api::V1::SitesController < Api::V1::BaseController
   load_and_authorize_resource
 
   def index
-    if params[:get_photos]
+    if params[:get_photos] == "true"
       render json: @sites, each_serializer: SitePhotoListSerializer
     else
       render json: @sites, each_serializer: SiteInfoListSerializer

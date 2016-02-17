@@ -19,12 +19,8 @@ public class SiteSerializer extends JsonSerializer<Site> {
         jgen.writeStringField("name", value.getName());
         jgen.writeStringField("description", value.getDescription());
         jgen.writeStringField("street", value.getStreet());
-        jgen.writeStringField("city", value.getCity());
-        jgen.writeStringField("state", value.getState());
-        jgen.writeStringField("state", value.getState());
-        jgen.writeNumberField("zip_code", value.getZipCode());
-        jgen.writeStringField("latitude", value.getLatitude());
-        jgen.writeStringField("longitude", value.getLongitude());
+        jgen.writeNumberField("latitude", value.getLatitude());
+        jgen.writeNumberField("longitude", value.getLongitude());
         jgen.writeEndObject();
     }
 }

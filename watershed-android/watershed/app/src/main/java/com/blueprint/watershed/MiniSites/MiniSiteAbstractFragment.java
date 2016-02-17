@@ -21,10 +21,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.GoogleApis.Places.PlacePredictionAdapter;
@@ -140,9 +142,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -151,6 +151,13 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         });
 
         mAddressField.setAdapter(mPlacesAdapter);
+        mAddressField.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                AutocompletePrediction prediction = mPredictions.get(position);
+                mAddressField.setText(prediction.getDescription());
+            }
+        });
 
         mDeletePhotoButton.setOnClickListener(this);
         mAddPhotoButton.setOnClickListener(this);
@@ -209,15 +216,21 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
      * Opens dialog to pick between taking or selecting a photo
      */
     public void openAddPhotoDialog() {
-        PickPhotoTypeDialog dialog = PickPhotoTypeDialog.newInstance();
-        dialog.setTargetFragment(this, DIALOG_REQUEST_CODE);
-        dialog.show(mParentActivity.getSupportFragmentManager(), DIALOG_TAG);
+        if (mPhotoList.size() < 3) {
+            PickPhotoTypeDialog dialog = PickPhotoTypeDialog.newInstance();
+            dialog.setTargetFragment(this, DIALOG_REQUEST_CODE);
+            dialog.show(mParentActivity.getSupportFragmentManager(), DIALOG_TAG);
+        } else {
+            Toast.makeText(mParentActivity, "You can only upload a max of 3 photos!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     /**
      * Validates and makes a submit request
      */
     public void validateAndSubmitMiniSite() {
+        Utility.hideKeyboard(mParentActivity, mLayout);
         final MiniSite miniSite = mMiniSite == null ? new MiniSite() : mMiniSite;
 
         List<String> errorStrings = new ArrayList<String>();
@@ -253,12 +266,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         miniSite.setSiteId(mSite.getId());
         miniSite.setPhotos(mPhotoList);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                submitMiniSite(miniSite);
-            }
-        }).start();
+        submitMiniSite(miniSite);
     }
 
     /**
@@ -271,7 +279,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(imageFileName, ".jpg", storageDir);
-        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+        mCurrentPhotoPath = image.getAbsolutePath();
         return image;
     }
 
@@ -308,7 +316,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
 
         }
 
-        else if (requestCode == SELECT_PHOTO_REQUEST && resultCode == MainActivity.RESULT_OK){
+        else if (requestCode == SELECT_PHOTO_REQUEST && resultCode == MainActivity.RESULT_OK) {
             Uri targetUri = data.getData();
 
             try { photo = BitmapFactory.decodeStream(mParentActivity.getContentResolver().openInputStream(targetUri)); }
@@ -318,8 +326,8 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
         Bitmap scaledBitmap = null;
 
         if (photo != null) {
-            int width = photo.getWidth() / 6;
             int height = photo.getHeight() / 6;
+            int width = photo.getWidth() / 6;
             scaledBitmap = Bitmap.createScaledBitmap(photo, width, height, false);
         }
 
@@ -342,6 +350,7 @@ public abstract class MiniSiteAbstractFragment extends Fragment implements View.
             catch (IOException ex) { Log.e("Mini Site Photo", "Error"); }
 
             if (photoFile != null) {
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
                 startActivityForResult(takePictureIntent, CAMERA_REQUEST);
             }
         }

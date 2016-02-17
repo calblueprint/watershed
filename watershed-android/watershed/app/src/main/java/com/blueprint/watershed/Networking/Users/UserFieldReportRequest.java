@@ -17,6 +17,7 @@ import java.util.HashMap;
 
 /**
  * Created by maxwolffe on 3/16/15.
+ * Gets the field reports for a user
  */
 public class UserFieldReportRequest extends BaseRequest{
 

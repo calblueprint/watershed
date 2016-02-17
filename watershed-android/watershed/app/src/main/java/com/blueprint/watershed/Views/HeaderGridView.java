@@ -34,7 +34,7 @@ import java.util.ArrayList;
 
 /**
  * A {@link GridView} that supports adding header rows in a
- * very similar way to {@link ListView}.
+ * very similar way listview.
  * See {@link HeaderGridView#addHeaderView(View, Object, boolean)}
  */
 public class HeaderGridView extends GridView {
@@ -117,12 +117,12 @@ public class HeaderGridView extends GridView {
         info.data = data;
         info.isSelectable = isSelectable;
         mHeaderViewInfos.add(info);
-
         // in the case of re-adding a header view, or adding one later on,
         // we need to notify the observer
         if (adapter != null) {
             ((HeaderViewGridAdapter) adapter).notifyDataSetChanged();
         }
+
     }
 
     /**

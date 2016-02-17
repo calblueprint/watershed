@@ -70,9 +70,22 @@ public class User implements APIObject {
     public Integer getId() { return mId; }
     public Integer getRole() { return mRole; }
     public String getName() { return mName; }
-    public Integer getTasksCount() { return mTasksCount; }
-    public Integer getSitesCount() { return mSitesCount; }
-    public Integer getFieldReportsCount() { return mFieldReportsCount; }
+
+    public Integer getTasksCount() {
+        if (mTasksCount == null) return 0;
+        return mTasksCount;
+    }
+
+    public Integer getSitesCount() {
+        if (mSitesCount == null) return 0;
+        return mSitesCount;
+    }
+
+    public Integer getFieldReportsCount() {
+        if (mFieldReportsCount == null) return 0;
+        return mFieldReportsCount;
+    }
+
     public String getDeviceType() { return mDeviceType; }
     public String getRegistrationId() { return mRegistrationId; }
 

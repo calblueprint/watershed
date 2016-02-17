@@ -15,12 +15,10 @@ public class UnclaimedTaskListFragment extends TaskListAbstractFragment {
     public void refreshTaskList(List<Task> tasks) {
         tasks = getUnclaimedTasks(tasks);
         if (tasks.size() > 0) {
-            showList();
             setUnclaimedTasks(tasks);
             for (int i = 0; i < mTaskAdapter.getGroupCount(); i++) mListView.expandGroup(i);
-        } else {
-            hideList();
         }
+        toggleList();
     }
 
     private void setUnclaimedTasks(List<Task> tasks) {
@@ -41,8 +39,7 @@ public class UnclaimedTaskListFragment extends TaskListAbstractFragment {
             headers.add(COMPLETE);
             taskList.put(COMPLETE, userFinishedTasks);
         }
-        setTasks(taskList);
-        setHeaders(headers);
+        setTasksAndHeaders(taskList, headers);
     }
 
     private ArrayList<Task> getUnclaimedTasks(List<Task> tasks) {
@@ -51,5 +48,9 @@ public class UnclaimedTaskListFragment extends TaskListAbstractFragment {
             if (task.getAssigneeId() == null && task.getSubscribed()) unclaimedTasks.add(task);
         }
         return unclaimedTasks;
+    }
+
+    public boolean rightTaskType(Task task) {
+        return task.getAssignee().getId() == null;
     }
 }

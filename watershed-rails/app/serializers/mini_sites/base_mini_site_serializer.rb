@@ -5,6 +5,6 @@ class BaseMiniSiteSerializer < ActiveModel::Serializer
              :subscribed
 
   def subscribed
-    !scope.mini_sites.find_by(id: object.id).nil?
+    !scope.mini_sites.find_by(id: object.id).nil? unless scope.nil?
   end
 end

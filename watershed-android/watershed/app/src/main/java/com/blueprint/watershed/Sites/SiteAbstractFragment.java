@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,6 +14,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
@@ -23,6 +24,8 @@ import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Sites.CreateSiteRequest;
 import com.blueprint.watershed.Networking.Sites.EditSiteRequest;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Sites.SiteList.SiteEnum;
+import com.blueprint.watershed.Sites.SiteList.SiteEvent;
 import com.blueprint.watershed.Utilities.Utility;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
@@ -41,7 +44,7 @@ import java.util.List;
 /**
  * Created by maxwolffe on 4/5/15.
  */
-public abstract class SiteAbstractFragment extends Fragment{
+public abstract class SiteAbstractFragment extends Fragment {
 
     protected static final String EDIT = "edit";
     protected static final String CREATE = "create";
@@ -57,10 +60,13 @@ public abstract class SiteAbstractFragment extends Fragment{
     protected EditText mTitleField;
     protected EditText mDescriptionField;
     protected AutoCompleteTextView mAddressField;
+    protected RelativeLayout mLayout;
 
     // Params for maps
     private ArrayAdapter<AutocompletePrediction> mPlacesAdapter;
     private List<AutocompletePrediction> mPredictions;
+
+    protected Site mSite;
 
     /**
      * Use this factory method to create a new instance of
@@ -114,12 +120,13 @@ public abstract class SiteAbstractFragment extends Fragment{
         mParentActivity.setMenuAction(false);
     }
 
-    protected void setButtonListeners(View view){
-        mTitleField = (EditText)view.findViewById(R.id.create_site_title);
-        mDescriptionField = (EditText)view.findViewById(R.id.create_site_description);
+    protected void setButtonListeners(View view) {
+        mLayout = (RelativeLayout) view.findViewById(R.id.create_site_layout);
+        mTitleField = (EditText) view.findViewById(R.id.create_site_title);
+        mDescriptionField = (EditText) view.findViewById(R.id.create_site_description);
 
         mPlacesAdapter = new PlacePredictionAdapter(mParentActivity, mPredictions);
-        mAddressField = (AutoCompleteTextView)view.findViewById(R.id.create_site_address);
+        mAddressField = (AutoCompleteTextView) view.findViewById(R.id.create_site_address);
         mAddressField.setAdapter(mPlacesAdapter);
         mAddressField.setThreshold(3);
         mAddressField.addTextChangedListener(new TextWatcher() {
@@ -172,32 +179,26 @@ public abstract class SiteAbstractFragment extends Fragment{
      *  Validates Site data, and calls the submit listener implemented by subclasses.
      * @return  an OnClickListener to validate Site data.
      */
-    protected View.OnClickListener validateAndSubmit(){
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                List<String> errorStrings = new ArrayList<String>();
-                if (mTitleField.getText().toString().length() == 0) {
-                    errorStrings.add("Title");
-                }
+    protected void validateAndSubmit() {
+        Utility.hideKeyboard(mParentActivity, mLayout);
+        List<String> errorStrings = new ArrayList<String>();
+        if (mTitleField.getText().toString().length() == 0) {
+            errorStrings.add("Title");
+        }
 
-                if (mDescriptionField.getText().toString().length() == 0) {
-                    errorStrings.add("Description");
-                }
+        if (mDescriptionField.getText().toString().length() == 0) {
+            errorStrings.add("Description");
+        }
 
-                if (mAddressField.getText().toString().length() == 0) {
-                    errorStrings.add("Address");
-                }
+        if (mAddressField.getText().toString().length() == 0) {
+            errorStrings.add("Address");
+        }
 
-                if (errorStrings.size() > 0) {
-                    Utility.setEmpty(mParentActivity, errorStrings);
-                } else {
-                    submitListener();
-                    SiteViewPagerFragment returnFragment = SiteViewPagerFragment.newInstance();
-                    mParentActivity.replaceFragment(returnFragment);
-                }
-            }
-        };
+        if (errorStrings.size() > 0) {
+            Utility.setEmpty(mParentActivity, errorStrings);
+        } else {
+            submitListener();
+        }
     }
 
     /**
@@ -209,8 +210,8 @@ public abstract class SiteAbstractFragment extends Fragment{
     protected void createSite(String type, Site new_site) {
         if (type.equals(CREATE)) {
             new_site = new Site();
-            new_site.setLatitude("0");
-            new_site.setLongitude("0");
+            new_site.setLatitude(0f);
+            new_site.setLongitude(0f);
             new_site.setTasksCount(0);
             new_site.setMiniSitesCount(0);
         }
@@ -220,35 +221,41 @@ public abstract class SiteAbstractFragment extends Fragment{
         new_site.setStreet(mAddressField.getText().toString());
         LatLng latLng = Utility.getLatLng(mParentActivity, mAddressField.getText().toString());
         if (latLng != null) {
-            new_site.setLatitude(String.valueOf(latLng.latitude));
-            new_site.setLongitude(String.valueOf(latLng.longitude));
+            new_site.setLatitude((float) latLng.latitude);
+            new_site.setLongitude((float) latLng.longitude);
         }
+
         createSiteRequest(type, new_site);
     }
 
     public void createSiteRequest(String type, Site site){
         HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
-
         if (type.equals(CREATE)) {
             CreateSiteRequest createSiteRequest = new CreateSiteRequest(mParentActivity, site, params, new Response.Listener<Site>() {
                 @Override
                 public void onResponse(Site site) {
-                    Log.e("successful site", "creation");
+                    mSite = site;
+                    Toast.makeText(mParentActivity, R.string.create_site, Toast.LENGTH_SHORT).show();
+                    mParentActivity.post(new SiteEvent(site, SiteEnum.SITE_CREATED));
+                    mParentActivity.getSupportFragmentManager().popBackStack();
+                    mParentActivity.replaceFragment(SiteFragment.newInstance(site));
                 }
             });
-            mNetworkManager.getRequestQueue().add(createSiteRequest);
+            mParentActivity.addRequest(createSiteRequest);
         }
         else {
             EditSiteRequest editSiteRequest = new EditSiteRequest(mParentActivity, site, params, new Response.Listener<Site>() {
                 @Override
                 public void onResponse(Site site) {
-                    Log.e("successful site", "edit");
+                    mSite = site;
+                    Toast.makeText(mParentActivity, R.string.edit_site, Toast.LENGTH_SHORT).show();
+                    mParentActivity.post(new SiteEvent(site, SiteEnum.SITE_EDITED));
+                    mParentActivity.getSupportFragmentManager().popBackStack();
+
                 }
             });
-            mNetworkManager.getRequestQueue().add(editSiteRequest);
+            mParentActivity.addRequest(editSiteRequest);
         }
-        mParentActivity.getSupportFragmentManager().popBackStack();
-
     }
 
     public abstract void submitListener();

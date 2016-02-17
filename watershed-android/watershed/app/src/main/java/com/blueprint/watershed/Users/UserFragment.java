@@ -89,10 +89,7 @@ public class UserFragment extends Fragment implements ListView.OnItemClickListen
         mList = (ListView) mParentActivity.findViewById(R.id.profile_options);
         ArrayList<String> options = new ArrayList <String>();
 
-        options.add("Field-Reports " + mUser.getFieldReportsCount());
-        if (mUser.isManager())  {
-            // Manager only information goes here.
-        }
+        options.add("Field Reports: " + mUser.getFieldReportsCount());
 
         mAdapter = new ProfileOptionsAdapter(getActivity(), R.layout.option_item, options);
         mList.setAdapter(mAdapter);

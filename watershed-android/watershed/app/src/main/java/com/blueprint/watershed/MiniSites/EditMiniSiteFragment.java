@@ -1,15 +1,14 @@
 package com.blueprint.watershed.MiniSites;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Networking.MiniSites.EditMiniSiteRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Sites.Site;
-import com.blueprint.watershed.Sites.SiteList.SiteListAbstractFragment;
-import com.blueprint.watershed.Sites.SiteViewPagerFragment;
+import com.blueprint.watershed.Utilities.Utility;
 
 /**
  * Created by charlesx on 3/17/15.
@@ -63,13 +62,14 @@ public class EditMiniSiteFragment extends MiniSiteAbstractFragment {
                 new EditMiniSiteRequest(mParentActivity, miniSite, new Response.Listener<MiniSite>() {
                     @Override
                     public void onResponse(MiniSite miniSite) {
-                        SiteViewPagerFragment siteList = SiteViewPagerFragment.newInstance();
-                        mParentActivity.replaceFragment(siteList);
-                        Log.e("successful mini site", "edit");
+                        mMiniSite = miniSite;
+                        Toast.makeText(mParentActivity, R.string.edit_mini_site, Toast.LENGTH_SHORT).show();
+                        Utility.hideKeyboard(mParentActivity, mLayout);
+                        mParentActivity.getSupportFragmentManager().popBackStack();
                     }
                 });
 
-        mNetworkManager.getRequestQueue().add(editMiniSiteRequest);
+        mParentActivity.addRequest(editMiniSiteRequest);
     }
 
 

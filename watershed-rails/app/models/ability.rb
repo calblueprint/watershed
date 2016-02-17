@@ -5,15 +5,18 @@ class Ability
     user ||= User.new
 
     # Our gracious PL says it's the client's responsiblity to hide things from the user
-    # can :manage, :all
     can :manage, FieldReport
+
     can :read, MiniSite
+
     can :read, Task
+    can [:claim], Task
 
     can :read, Site
     can [:subscribe, :unsubscribe], Site
 
     can :manage, User, id: user.id
+    can [:promote], User
 
     if user.manager?
       can :manage, :all

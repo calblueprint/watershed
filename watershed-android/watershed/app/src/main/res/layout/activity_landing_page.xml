@@ -26,9 +26,8 @@
         <ImageView
             android:id="@+id/login_logo"
             android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:src="@drawable/watershed_logo"
-            android:scaleType="centerCrop"
+            android:layout_height="wrap_content"
+            android:src="@drawable/login_logo"
             />
 
         <TextView

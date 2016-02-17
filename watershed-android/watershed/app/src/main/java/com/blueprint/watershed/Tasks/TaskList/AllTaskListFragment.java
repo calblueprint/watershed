@@ -17,19 +17,17 @@ public class AllTaskListFragment extends TaskListAbstractFragment {
 
     public void refreshTaskList(List<Task> tasks) {
         if (tasks.size() > 0) {
-            showList();
             setAllTasks(tasks);
             for (int i = 0; i < mTaskAdapter.getGroupCount(); i++) mListView.expandGroup(i);
-        } else {
-            hideList();
         }
+        toggleList();
     }
 
     /**
      * Sets the tasks for all tasks list and user tasks lists
      * @param tasks - ArrayList of all tasks from server
      */
-    private void setAllTasks(List<Task> tasks){
+    private void setAllTasks(List<Task> tasks) {
         HashMap<String, List<Task>> taskList = new HashMap<String, List<Task>>();
         List<String> headers = new ArrayList<String>();
         List<Task> allFinishedTasks = new ArrayList<Task>();
@@ -46,7 +44,10 @@ public class AllTaskListFragment extends TaskListAbstractFragment {
             headers.add(COMPLETE);
             taskList.put(COMPLETE, allFinishedTasks);
         }
-        setTasks(taskList);
-        setHeaders(headers);
+        setTasksAndHeaders(taskList, headers);
+    }
+
+    public boolean rightTaskType(Task task) {
+        return true;
     }
 }

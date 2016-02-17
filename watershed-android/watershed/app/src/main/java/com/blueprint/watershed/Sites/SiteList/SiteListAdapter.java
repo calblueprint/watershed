@@ -58,7 +58,7 @@ public class SiteListAdapter extends RecyclerView.Adapter<SiteListAdapter.ViewHo
             final Site site = sites.get(position);
             holder.photosView.configureWithPhotos(site.getPhotos());
             holder.topLabel.setText(site.getName());
-            holder.bottomLabel.setText(String.format("%s, %s", site.getCity(), site.getState()));
+            holder.bottomLabel.setText(site.getShortenedOneLine());
 
             int numSites = site.getMiniSitesCount();
             String numSitesString = String.format("%s Site", numSites);

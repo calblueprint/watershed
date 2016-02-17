@@ -20,19 +20,24 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.MiniSites.MiniSite;
+import com.blueprint.watershed.MiniSites.PickingMiniSiteAdapter;
 import com.blueprint.watershed.Networking.MiniSites.MiniSiteInfoListRequest;
 import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Tasks.CreateTaskRequest;
 import com.blueprint.watershed.Networking.Tasks.EditTaskRequest;
 import com.blueprint.watershed.Networking.Users.UsersRequest;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Sites.Site;
+import com.blueprint.watershed.Tasks.TaskList.TaskEnum;
+import com.blueprint.watershed.Tasks.TaskList.TaskEvent;
+import com.blueprint.watershed.Users.PickingUserAdapter;
 import com.blueprint.watershed.Users.User;
-import com.blueprint.watershed.Users.UserHeaderAdapter;
 import com.blueprint.watershed.Utilities.Utility;
 
 import org.json.JSONObject;
@@ -73,6 +78,7 @@ public abstract class TaskAbstractFragment extends Fragment {
 
     // Dialogs
     private PickUserDialog mUserDialog;
+    private PickMiniSite mMiniSiteDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -141,7 +147,9 @@ public abstract class TaskAbstractFragment extends Fragment {
     private void getMiniSites() {
         MiniSiteInfoListRequest request = new MiniSiteInfoListRequest(mParentActivity, new Response.Listener<ArrayList<MiniSite>>() {
             @Override
-            public void onResponse(ArrayList<MiniSite> miniSites) { mMiniSites = miniSites; }
+            public void onResponse(ArrayList<MiniSite> miniSites) {
+                mMiniSites = miniSites;
+            }
         });
         mNetworkManager.getRequestQueue().add(request);
     }
@@ -171,11 +179,14 @@ public abstract class TaskAbstractFragment extends Fragment {
         mMiniSiteId = (TextView) mParentActivity.findViewById(R.id.create_task_site);
         mMiniSiteId.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) { openSiteDialog(); }
+            public void onClick(View view) {
+                openSiteDialog();
+            }
         });
     }
 
     private void validateAndSubmit() {
+        Utility.hideKeyboard(mParentActivity, mLayout);
         List<String> errorStrings = new ArrayList<String>();
 
         if (mTitleField.getText().toString().length() == 0) {
@@ -214,9 +225,9 @@ public abstract class TaskAbstractFragment extends Fragment {
     }
 
     private void openSiteDialog() {
-        PickMiniSite newFragment = PickMiniSite.newInstance(mMiniSites);
-        newFragment.setTargetFragment(this, REQUEST_CODE);
-        newFragment.show(mParentActivity.getSupportFragmentManager(), "timePicker");
+        mMiniSiteDialog = PickMiniSite.newInstance(mMiniSites, this);
+        mMiniSiteDialog.setTargetFragment(this, REQUEST_CODE);
+        mMiniSiteDialog.show(mParentActivity.getSupportFragmentManager(), "sitePicker");
     }
 
     /**
@@ -233,9 +244,10 @@ public abstract class TaskAbstractFragment extends Fragment {
             request = new CreateTaskRequest(mParentActivity, task, params, new Response.Listener<Task>() {
                 @Override
                 public void onResponse(Task task) {
-                    TaskViewPagerFragment taskFragment = TaskViewPagerFragment.newInstance();
-                    mParentActivity.replaceFragment(taskFragment);
-                    Log.e("successful task", "creation");
+                    Toast.makeText(mParentActivity, "You've created a task!", Toast.LENGTH_SHORT).show();
+                    mParentActivity.post(new TaskEvent(task, TaskEnum.TASK_CREATED));
+                    mParentActivity.getSupportFragmentManager().popBackStack();
+                    mParentActivity.replaceFragment(TaskDetailFragment.newInstance(task));
                 }
             });
         } else {
@@ -243,14 +255,16 @@ public abstract class TaskAbstractFragment extends Fragment {
                 @Override
                 public void onResponse(Task task) {
                     mTask = task;
-                    if (type.equals(EDIT)) mParentActivity.getSupportFragmentManager().popBackStack();
-                    else refreshCompletion();
-                    Log.i("successful task", "editing");
+                    if (type.equals(EDIT)) {
+                        mParentActivity.post(new TaskEvent(task, TaskEnum.TASK_EDITED));
+                        Toast.makeText(mParentActivity, "You've edited the task!", Toast.LENGTH_SHORT).show();
+                        mParentActivity.getSupportFragmentManager().popBackStack();
+                    }
+                    else { refreshCompletion(); }
                 }
             });
         }
-
-        mNetworkManager.getRequestQueue().add(request);
+        mParentActivity.addRequest(request);
     }
 
     /**
@@ -260,7 +274,7 @@ public abstract class TaskAbstractFragment extends Fragment {
     public void createTask(String type, Task task) {
         if (type.equals(CREATE)) task = new Task();
 
-        if (type.equals(UNCOMPLETE)){
+        if (type.equals(UNCOMPLETE)) {
             task.setComplete(false);
             createTaskRequest(task, type);
             return;
@@ -274,8 +288,6 @@ public abstract class TaskAbstractFragment extends Fragment {
         if (mUser != null) task.setAssigneeId(mUser.getId());
         if (mMiniSite != null) task.setMiniSiteId(mMiniSite.getId());
 
-
-        Utility.hideKeyboard(mParentActivity, mLayout);
         createTaskRequest(task, type);
     }
 
@@ -289,22 +301,20 @@ public abstract class TaskAbstractFragment extends Fragment {
     }
 
     public void setUser(User user) {
-        if (mUserDialog != null) {
-            mUser = user;
-            if (mUser != null) {
-                mAssigneeField.setText(mUser.getName());
-            }
-            else {
-                mAssigneeField.setText("Unclaimed");
-            }
-            mUserDialog.dismiss();
-        }
+        mUser = user;
+        if (mUser != null) { mAssigneeField.setText(mUser.getName()); }
+        else { mAssigneeField.setText("Unclaimed"); }
+
+        if (mUserDialog != null) mUserDialog.dismiss();
+        mUserDialog = null;
     }
 
     public void setMiniSite(MiniSite site) {
         mMiniSite = site;
         mMiniSiteId.setText(site.getName());
+        if (mMiniSiteDialog != null) mMiniSiteDialog.dismiss();
     }
+
 
     public abstract void refreshCompletion();
 
@@ -368,12 +378,19 @@ public abstract class TaskAbstractFragment extends Fragment {
                        public void onClick(DialogInterface dialogInterface, int i) {
                            dialogInterface.dismiss();
                        }
+                   })
+                   .setNeutralButton(R.string.clear_user, new DialogInterface.OnClickListener() {
+                       @Override
+                       public void onClick(DialogInterface dialog, int which) {
+                            getFragment().setUser(null);
+                            dialog.dismiss();
+                       }
                    });
 
             if (mUsers != null && mUsers.size() > 0) {
-                View layout = getActivity().getLayoutInflater().inflate(R.layout.user_list_view, null);
-                ListView listView = (ListView) layout.findViewById(R.id.user_list);
-                UserHeaderAdapter adapter = new UserHeaderAdapter(getActivity(), getUsers(), getFragment());
+                View layout = getActivity().getLayoutInflater().inflate(R.layout.pick_task_object_list_view, null);
+                ListView listView = (ListView) layout.findViewById(R.id.object_list);
+                PickingUserAdapter adapter = new PickingUserAdapter(getActivity(), getUsers(), getFragment());
                 listView.setAdapter(adapter);
                 builder.setView(layout);
             } else {
@@ -412,10 +429,13 @@ public abstract class TaskAbstractFragment extends Fragment {
     public static class PickMiniSite extends DialogFragment {
 
         protected List<MiniSite> mMiniSites;
+        protected HashMap<Site, List<MiniSite>> mSortedSites;
+        protected TaskAbstractFragment mFragment;
 
-        public static PickMiniSite newInstance(List<MiniSite> miniSites) {
+        public static PickMiniSite newInstance(List<MiniSite> miniSites, TaskAbstractFragment fragment) {
             PickMiniSite dialog = new PickMiniSite();
-            dialog.setUsers(miniSites);
+            dialog.setMiniSites(miniSites);
+            dialog.setFragment(fragment);
             return dialog;
         }
 
@@ -423,39 +443,58 @@ public abstract class TaskAbstractFragment extends Fragment {
         @NonNull
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle(R.string.pick_site)
+
+            builder.setTitle(R.string.site)
                     .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
+                        public void onClick(DialogInterface dialog, int i) {
+                            dialog.dismiss();
                         }
                     });
 
             if (mMiniSites != null && mMiniSites.size() > 0) {
-                builder.setItems(getUserNames(), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Log.i("user", mMiniSites.get(i).getName());
-                        if (!(getTargetFragment() instanceof TaskAbstractFragment)) Log.e("can't", "even fragment");
-                        TaskAbstractFragment fragment = (TaskAbstractFragment) getTargetFragment();
-                        fragment.setMiniSite(mMiniSites.get(i));
-                    }
-                });
+                View layout = getActivity().getLayoutInflater().inflate(R.layout.pick_task_object_list_view, null);
+                ListView listView = (ListView) layout.findViewById(R.id.object_list);
+                PickingMiniSiteAdapter adapter = new PickingMiniSiteAdapter(getActivity(), getMiniSites(), getFragment());
+                listView.setAdapter(adapter);
+                builder.setView(layout);
             } else {
                 builder.setMessage(R.string.loading_sites);
             }
-
             return builder.create();
-
         }
 
-        public String[] getUserNames() {
-            String[] names = new String[mMiniSites.size()];
-            for (int i = 0; i < mMiniSites.size(); i++) names[i] = mMiniSites.get(i).getName();
-            return names;
+        public List<MiniSite> getMiniSites() {
+            if (mMiniSites == null) mMiniSites = new ArrayList<MiniSite>();
+            return mMiniSites;
         }
 
-        private void setUsers(List<MiniSite> miniSites) { mMiniSites = miniSites; }
+        public void setMiniSites(List<MiniSite> miniSites) {
+            for (MiniSite miniSite : miniSites) {
+                Site site = miniSite.getSite();
+                if (site == null) continue;
+                List<MiniSite> miniSiteArray;
 
+                if (mSortedSites == null) mSortedSites = new HashMap<Site, List<MiniSite>>();
+                if ( mSortedSites.containsKey(site)) {
+                    miniSiteArray = mSortedSites.get(site);
+                } else {
+                    miniSiteArray = new ArrayList<MiniSite>();
+                }
+                miniSiteArray.add(miniSite);
+                mSortedSites.put(site, miniSiteArray);
+            }
+
+            if (mMiniSites == null) mMiniSites = new ArrayList<MiniSite>();
+            for (Site siteKey : mSortedSites.keySet()) {
+                List<MiniSite> siteMiniSites = mSortedSites.get(siteKey);
+                mMiniSites.add(new MiniSite(siteKey.getName()));
+                for (MiniSite miniSite : siteMiniSites) {
+                    mMiniSites.add(miniSite);
+                }
+            }
+        }
+        public void setFragment(TaskAbstractFragment fragment) { mFragment = fragment; }
+        public TaskAbstractFragment getFragment() { return mFragment; }
     }
 }

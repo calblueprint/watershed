@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.AbstractFragments.FloatingActionMenuAbstractFragment;
@@ -26,6 +27,8 @@ import com.blueprint.watershed.Users.User;
 import com.blueprint.watershed.Utilities.Utility;
 import com.blueprint.watershed.Views.HeaderGridView;
 import com.blueprint.watershed.Views.Material.FloatingActionButton;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
 
 import org.json.JSONObject;
 
@@ -50,6 +53,8 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment {
     private TextView mSiteDescription;
     private TextView mSiteAddress;
     private Button mShowMore;
+    private MapView mMapView;
+    private GoogleMap mMap;
 
     private Menu mMenu;
     private FloatingActionButton mCreateMiniSite;
@@ -95,6 +100,7 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment {
         mParentActivity = (MainActivity) getActivity();
         mUser = mParentActivity.getUser();
         mNetworkManager = NetworkManager.getInstance(mParentActivity);
+        mParentActivity.setMapSite(mSite);
         setHasOptionsMenu(true);
     }
 
@@ -102,7 +108,8 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_site, container, false);
-        initializeViews(view);
+        initializeViews(view, savedInstanceState);
+
         Site site = mParentActivity.getSite();
         if (site != null) {
             mSite = site;
@@ -119,8 +126,7 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment {
         menu.clear();
         if (mParentActivity.getUser().isManager()) {
             inflater.inflate(R.menu.site_manager, menu);
-        }
-        else {
+        } else {
             inflater.inflate(R.menu.site_member, menu);
         }
         mMenu = menu;
@@ -148,10 +154,11 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment {
     @Override
     public void onResume() {
         super.onResume();
+        mMapView.onResume();
         mParentActivity.setMenuAction(false);
     }
 
-    private void initializeViews(View view) {
+    private void initializeViews(View view, Bundle savedInstanceState) {
         // Create MiniSite grid
         mMiniSiteGridView = (HeaderGridView) view.findViewById(R.id.mini_sites_grid);
         mHeader = (ViewGroup) mParentActivity.getLayoutInflater().inflate(R.layout.site_header_view, mMiniSiteGridView, false);
@@ -171,6 +178,11 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment {
                 }
             });
         }
+
+        mMapView = (MapView) mHeader.findViewById(R.id.site_map);
+        mMapView.onCreate(savedInstanceState);
+
+        mMapView.getMapAsync(mParentActivity);
     }
 
     private void subscribeToSite() {
@@ -178,6 +190,7 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment {
             new SiteSubscribeRequest(mParentActivity, mSite, new HashMap<String, JSONObject>(), new Response.Listener<String>() {
             @Override
             public void onResponse(String message) {
+                Toast.makeText(mParentActivity, R.string.subscribed_to_site, Toast.LENGTH_LONG).show();
                 mSite.setSubscribed(true);
                 setSubscribedButton(mSite.getSubscribed());
             }
@@ -190,6 +203,7 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment {
             new SiteSubscribeRequest(mParentActivity, mSite, new HashMap<String, JSONObject>(), new Response.Listener<String>() {
                 @Override
                 public void onResponse(String message) {
+                    Toast.makeText(mParentActivity, R.string.unsubscribed_to_site, Toast.LENGTH_SHORT).show();
                     mSite.setSubscribed(false);
                     setSubscribedButton(mSite.getSubscribed());
                 }
@@ -204,7 +218,6 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment {
             @Override
             public void onResponse(Site site) {
                 setSite(site);
-                mParentActivity.getSpinner().setVisibility(View.GONE);
                 mMiniSiteAdapter.notifyDataSetChanged();
             }
         });
@@ -240,23 +253,26 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment {
 
     private void deleteSiteRequest() {
         Utility.showAndBuildDialog(mParentActivity, R.string.site_delete_title, R.string.site_delete_msg,
-            new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    makeDeleteSiteRequest();
-                }
-            }, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        makeDeleteSiteRequest();
+                    }
+                }, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
     }
 
     private void makeDeleteSiteRequest() {
         DeleteSiteRequest request = new DeleteSiteRequest(mParentActivity, mSite, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+                Toast.makeText(mParentActivity,
+                               "You've deleted " + mSite.getName(),
+                               Toast.LENGTH_SHORT).show();
                 mParentActivity.setSite(mSite);
                 mParentActivity.getSupportFragmentManager().popBackStack();
             }
@@ -270,5 +286,18 @@ public class SiteFragment extends FloatingActionMenuAbstractFragment {
         } else {
             mMenu.findItem(R.id.subscribe).setIcon(R.drawable.ic_bookmark_outline_white_36dp);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mMapView.onDestroy();
+        mParentActivity.setMapSite(null);
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mMapView.onLowMemory();
     }
 }

@@ -9,7 +9,6 @@ Rails.application.routes.draw do
       resources :users do
         member do
           put :register
-          put :promote
         end
 
         collection do
@@ -29,6 +28,9 @@ Rails.application.routes.draw do
         resources :sites,      only: [:create, :update, :destroy]
         resources :tasks,      only: [:create, :update, :destroy]
         resources :mini_sites, only: [:create, :update, :destroy]
+        resources :users do
+          put :promote
+        end
       end
 
       resources :sites, only: [:index, :show] do

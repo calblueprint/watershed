@@ -187,7 +187,8 @@ public class UserListFragment extends Fragment{
                         Log.d("Update Roles", user.getRoleString());
                         setNewUser(user);
                     }
-                },BaseRequest.makeUserResourceURL(user.getId(), "register"));
+                }, BaseRequest.makeUserResourceURL(mParentActivity.getUser().getId(),
+                   "promote?other_user_id=" + user.getId()));
         mNetworkManager.getRequestQueue().add(request);
     }
 

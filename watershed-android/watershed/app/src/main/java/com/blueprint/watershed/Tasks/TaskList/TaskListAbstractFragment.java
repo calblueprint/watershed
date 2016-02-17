@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ExpandableListView;
 
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
 import com.blueprint.watershed.Networking.NetworkManager;
@@ -27,6 +28,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Created by charlesx on 4/16/15.
  */
@@ -34,6 +37,7 @@ public abstract class TaskListAbstractFragment extends ListFragment {
 
     protected static String INCOMPLETE = "Incomplete Tasks";
     protected static String COMPLETE = "Completed Tasks";
+    protected static String TASK_LIST_TAG = "TaskListTag";
 
     protected MainActivity mParentActivity;
     protected NetworkManager mNetworkManager;
@@ -41,8 +45,6 @@ public abstract class TaskListAbstractFragment extends ListFragment {
     protected HashMap<String, List<Task>> mTaskList;
     protected List<String> mTaskListHeaders;
     protected TaskAdapter mTaskAdapter;
-
-    protected ArrayList<Integer> mUserMiniSiteIdList;
 
     protected FloatingActionButton mCreateTask;
     protected ExpandableListView mListView;
@@ -55,9 +57,7 @@ public abstract class TaskListAbstractFragment extends ListFragment {
         setHasOptionsMenu(true);
         mParentActivity = (MainActivity) getActivity();
         mNetworkManager = NetworkManager.getInstance(mParentActivity);
-        mTaskList = new HashMap<String, List<Task>>();
-        mTaskListHeaders = new ArrayList<String>();
-        mUserMiniSiteIdList = new ArrayList<Integer>();
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -65,7 +65,7 @@ public abstract class TaskListAbstractFragment extends ListFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View finalView = inflater.inflate(R.layout.fragment_task_list, container, false);
         initializeViews(finalView);
-        getTasksRequest();
+        refreshList();
         return finalView;
     }
 
@@ -74,6 +74,21 @@ public abstract class TaskListAbstractFragment extends ListFragment {
         super.onResume();
         mParentActivity.setMenuAction(true);
         mParentActivity.setToolbarElevation(0);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        RequestQueue requestQueue = mNetworkManager.getRequestQueue();
+        if (requestQueue != null) {
+            requestQueue.cancelAll(TASK_LIST_TAG);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     /**
@@ -92,11 +107,11 @@ public abstract class TaskListAbstractFragment extends ListFragment {
             }
         });
 
-        mTaskAdapter = new TaskAdapter(mParentActivity, mTaskListHeaders, mTaskList);
         mListView = (ExpandableListView) view.findViewById(android.R.id.list);
         mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {}
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+            }
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
@@ -105,9 +120,10 @@ public abstract class TaskListAbstractFragment extends ListFragment {
                 mSwipeLayout.setEnabled((topRowVerticalPosition >= 0));
             }
         });
+
         mListView.setChildDivider(mParentActivity.getResources().getDrawable(R.color.transparent));
         mListView.setDivider(mParentActivity.getResources().getDrawable(R.color.transparent));
-        mListView.setAdapter(mTaskAdapter);
+        if (mTaskAdapter != null) mListView.setAdapter(mTaskAdapter);
 
         mNoTasks = (SwipeRefreshLayout) view.findViewById(R.id.no_tasks_layout);
         mNoTasks.setColorSchemeResources(R.color.ws_blue, R.color.facebook_blue, R.color.facebook_dark_blue, R.color.dark_gray);
@@ -132,6 +148,56 @@ public abstract class TaskListAbstractFragment extends ListFragment {
         }
     }
 
+    private void refreshList() {
+        if (mTaskList == null) getTasksRequest();
+        toggleList();
+    }
+
+    public void onEvent(TaskEvent event) {
+        Task task = event.getTask();
+        if (!rightTaskType(task)) return;
+        switch (event.getType()) {
+            case TASK_CREATED:
+                addTaskToList(task);
+                break;
+            case TASK_EDITED:
+                removeTaskFromList(task);
+                addTaskToList(task);
+                break;
+            case TASK_DELETED:
+                removeTaskFromList(task);
+                break;
+        }
+
+        if (mTaskAdapter != null) mTaskAdapter.notifyDataSetChanged();
+    }
+
+    private void addTaskToList(Task task) {
+        String type = task.getComplete() ? COMPLETE : INCOMPLETE;
+        List<Task> taskList = getTaskList(type);
+        taskList.add(0, task);
+        mTaskList.put(type, taskList);
+    }
+
+    private void removeTaskFromList(Task task) {
+        String type = task.getComplete() ? COMPLETE : INCOMPLETE;
+        List<Task> taskList = getTaskList(type);
+        for (Task taskObj : taskList) {
+            if (taskObj.getId().equals(task.getId())) {
+                taskList.remove(taskObj);
+                break;
+            }
+        }
+        mTaskList.put(type, taskList);
+    }
+
+    private List<Task> getTaskList(String type) {
+        return mTaskList.containsKey(type) ?
+                mTaskList.get(type) : new ArrayList<Task>();
+    }
+
+    public abstract boolean rightTaskType(Task task);
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
@@ -153,6 +219,7 @@ public abstract class TaskListAbstractFragment extends ListFragment {
                 setSwipeFalse();
             }
         }, this);
+        taskListRequest.setTag(TASK_LIST_TAG);
         mNetworkManager.getRequestQueue().add(taskListRequest);
     }
 
@@ -168,25 +235,30 @@ public abstract class TaskListAbstractFragment extends ListFragment {
         }.start();
     }
 
-    public void showList() {
-        mNoTasks.setVisibility(View.GONE);
-        mSwipeLayout.setVisibility(View.VISIBLE);
+    public void toggleList() {
+        if (mTaskList == null || mTaskList.size() == 0) {
+            mNoTasks.setVisibility(View.VISIBLE);
+            mSwipeLayout.setVisibility(View.GONE);
+        } else {
+            mNoTasks.setVisibility(View.GONE);
+            mSwipeLayout.setVisibility(View.VISIBLE);
+        }
     }
 
-    public void hideList() {
-        mNoTasks.setVisibility(View.VISIBLE);
-        mSwipeLayout.setVisibility(View.GONE);
-    }
-
-    public void setHeaders(List<String> headers) {
-        mTaskListHeaders.clear();
-        mTaskListHeaders.addAll(headers);
-        mTaskAdapter.notifyDataSetChanged();
-    }
-
-    public void setTasks(HashMap<String, List<Task>> tasks) {
+    public void setTasksAndHeaders(HashMap<String, List<Task>> tasks, List<String> headers) {
+        if (mTaskList == null) mTaskList = new HashMap<>();
         mTaskList.clear();
         mTaskList.putAll(tasks);
+
+        if (mTaskListHeaders == null) mTaskListHeaders = new ArrayList<>();
+        mTaskListHeaders.clear();
+        mTaskListHeaders.addAll(headers);
+
+        if (mTaskAdapter == null) {
+            mTaskAdapter = new TaskAdapter(mParentActivity, mTaskListHeaders, mTaskList);
+            mListView.setAdapter(mTaskAdapter);
+        }
+
         mTaskAdapter.notifyDataSetChanged();
     }
 }

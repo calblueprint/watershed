@@ -42,6 +42,7 @@ class Task < ActiveRecord::Base
   has_one :field_report
 
   before_create :add_color
+  after_save :send_notifications
 
   validates :title, presence: true
   validates :description, presence: true
@@ -49,13 +50,6 @@ class Task < ActiveRecord::Base
   validates :assigner_id, presence: true
   validates :due_date, presence: true
 
-  def send_notifications
-    if assignee.blank?
-      SendNotificationJob.new.async.perform(mini_site.site.users, NEW_UNASSIGNED_TASK, self)
-    else
-      SendNotificationJob.new.async.perform([assignee], NEW_TASK, self)
-    end
-  end
 
   def complete!
     update_attribute(:complete, true)
@@ -74,5 +68,18 @@ class Task < ActiveRecord::Base
 
   def add_color
     self.color = Constants.get_color self
+  end
+
+  def send_notifications
+    task_json = TaskSerializer.new(self).as_json
+    if assignee.blank?
+      SendNotificationJob.new.async.perform(mini_site.site.users,
+                                            NEW_UNASSIGNED_TASK,
+                                            task_json)
+    else
+      SendNotificationJob.new.async.perform([assignee],
+                                            NEW_TASK,
+                                            task_json)
+    end
   end
 end

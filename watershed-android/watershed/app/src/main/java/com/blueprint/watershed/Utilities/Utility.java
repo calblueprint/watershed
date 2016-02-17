@@ -143,7 +143,7 @@ public class Utility {
         List<Address> addresses;
         try {
             addresses = coder.getFromLocationName(address, 1);
-            if (address == null) {
+            if (addresses == null || addresses.size() == 0) {
                 return null;
             }
             Address location = addresses.get(0);

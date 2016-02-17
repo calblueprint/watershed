@@ -2,9 +2,11 @@ package com.blueprint.watershed.Activities;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,11 +20,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Response;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.blueprint.watershed.FieldReports.FieldReportFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteAbstractFragment;
 import com.blueprint.watershed.MiniSites.MiniSiteFragment;
@@ -52,21 +54,32 @@ import com.blueprint.watershed.Users.UserMiniSiteFragment;
 import com.blueprint.watershed.Users.UserTaskFragment;
 import com.blueprint.watershed.Utilities.Utility;
 import com.facebook.Session;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.location.places.Places;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+
+import de.greenrobot.event.EventBus;
 
 public class MainActivity extends ActionBarActivity
                           implements View.OnClickListener,
-                                     ListView.OnItemClickListener {
+                                     ListView.OnItemClickListener,
+                                     OnMapReadyCallback {
 
     // Constants
     private static final String PREFERENCES = "LOGIN_PREFERENCES";
@@ -94,12 +107,11 @@ public class MainActivity extends ActionBarActivity
     private int mMemberIcons[] = { R.drawable.tasks_dark, R.drawable.sites_dark, R.drawable.about_dark };
     private RelativeLayout mUserInfo;
     private TextView mUserName;
-    private TextView mUserRole;
 
     // Action Bar Elements
 
     private View mContainer;
-    private ProgressBar mProgress;
+    private RelativeLayout mProgressContainer;
     private Toolbar mToolBar;
 
     // Networking
@@ -112,6 +124,7 @@ public class MainActivity extends ActionBarActivity
 
     // Temp Vars
     private Site mSite;
+    private Site mMapSite;
 
     // Task for FieldReport
     private Task mFieldReportTask;
@@ -123,9 +136,23 @@ public class MainActivity extends ActionBarActivity
     // Params (so we don't have to set them later)
     private List<User> mUsers;
 
+    // Activity Contants
+    private String NEW_TASK = "new_task";
+    private String NEW_UNASSIGNED_TASK = "new_unassigned_task";
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setUpMainActivity(getIntent());
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setUpMainActivity(intent);
+    }
+
+    private void setUpMainActivity(Intent intent) {
         setContentView(R.layout.activity_main);
         setNetworkManager(NetworkManager.getInstance(this));
 
@@ -145,6 +172,7 @@ public class MainActivity extends ActionBarActivity
 
         if (getRegistrationId().isEmpty())
             registerInBackground();
+        MapsInitializer.initialize(this);
 
         initializeViews();
         initializeNavigationDrawer();
@@ -153,7 +181,12 @@ public class MainActivity extends ActionBarActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        initializeFragments();
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            startNewFragment(extras);
+        } else {
+            initializeFragments();
+        }
     }
 
     @Override
@@ -172,6 +205,32 @@ public class MainActivity extends ActionBarActivity
     public void onStop() {
         super.onStop();
         mGoogleApiClient.disconnect();
+    }
+
+    private void startNewFragment(Bundle extras) {
+        String type = extras.getString("type");
+        String object = extras.getString(type);
+        try {
+            if (type.equals(NEW_TASK)) {
+                String taskObject = new JSONObject(object).get("task").toString();
+                Task task = mNetworkManager.getObjectMapper()
+                                           .readValue(taskObject, new TypeReference<Task>() {
+                                           });
+                initializeFragments();
+                replaceFragment(TaskDetailFragment.newInstance(task));
+            } else if (type.equals(NEW_UNASSIGNED_TASK)) {
+                Task task = mNetworkManager.getObjectMapper()
+                        .readValue(object, new TypeReference<Task>() {
+                        });
+                initializeFragments();
+                replaceFragment(TaskDetailFragment.newInstance(task));
+            } else {
+                initializeFragments();
+            }
+
+        } catch (Exception e) {
+            Log.i("Exception", e.toString());
+        }
     }
 
     /**
@@ -193,7 +252,7 @@ public class MainActivity extends ActionBarActivity
         int currentVersion = Utility.getAppVersion(this);
         if (mAppVersion != currentVersion) {
             Log.i(TAG, "App version changed.");
-            mPreferences.edit().putInt("app_version", currentVersion).commit();
+            mPreferences.edit().putInt("app_version", currentVersion).apply();
             return "";
         }
         return mRegistrationId;
@@ -237,9 +296,44 @@ public class MainActivity extends ActionBarActivity
         }.execute(null, null, null);
     }
 
+    @Override
+    public void onMapReady(GoogleMap map) {
+        if (getMapSite() == null) return;
+
+        Site site = getMapSite();
+        final float lat = site.getLatitude();
+        final float lng = site.getLongitude();
+        map.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title("Location"));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), 10f));
+        map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                Utility.showAndBuildDialog(
+                        MainActivity.this, R.string.map_title, R.string.map_message, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                openMap(lat, lng);
+                            }
+                        }, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+            }
+        });
+        map.getUiSettings().setScrollGesturesEnabled(false);
+    }
+
+    public void openMap(Float lat, Float lng) {
+        String uri = String.format(Locale.ENGLISH, "geo:%f,%f?q=%f,%f", lat, lng, lat, lng);
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        startActivity(intent);
+    }
+
     private void setUserObject() {
         String userObject = mPreferences.getString("user", "none");
-        if (!userObject.equals("none")) getUserFromPreferences(userObject);
+        if (userObject != null && !userObject.equals("none")) getUserFromPreferences(userObject);
         else makeHomeRequest();
     }
 
@@ -255,7 +349,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void makeHomeRequest(){
-        HashMap<String, JSONObject> params = new HashMap<String, JSONObject>();
+        HashMap<String, JSONObject> params = new HashMap<>();
         HomeRequest homeRequest = new HomeRequest(this, mUserId, params, new Response.Listener<User>() {
             @Override
             public void onResponse(User home) { setUser(home); }
@@ -264,8 +358,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     private void initializeViews() {
-        mProgress = (ProgressBar) findViewById(R.id.progressBar);
-//        mProgress.setVisibility(View.VISIBLE);
+        mProgressContainer = (RelativeLayout) findViewById(R.id.progress_bar_container);
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
         mContainer = findViewById(R.id.container);
 
@@ -299,17 +392,13 @@ public class MainActivity extends ActionBarActivity
     public void updateFragment(Fragment f) {
         if (f instanceof TaskViewPagerFragment ||
             f instanceof UserTaskFragment)                setTitle("Tasks");
-        else if (f instanceof CreateTaskFragment)         setTitle("Add Task");
+        else if (f instanceof CreateTaskFragment)         setTitle("Create Task");
         else if (f instanceof EditTaskFragment)           setTitle("Edit Task");
         else if (f instanceof TaskDetailFragment)         setTitle("");
-        else if (f instanceof UserTaskFragment)           setTitle("Tasks");
         else if (f instanceof SiteListAbstractFragment ||
                  f instanceof UserMiniSiteFragment ||
                  f instanceof SiteViewPagerFragment ||
                  f instanceof SiteFragment)               setTitle("Sites");
-        else if (f instanceof SiteListAbstractFragment ||
-                 f instanceof UserMiniSiteFragment)       setTitle("Sites");
-        else if (f instanceof SiteFragment)               setTitle("Sites");
         else if (f instanceof AboutFragment)              setTitle("About");
         else if (f instanceof UserFieldReportFragment ||
                  f instanceof FieldReportFragment)        setTitle("Field Reports");
@@ -346,6 +435,24 @@ public class MainActivity extends ActionBarActivity
         android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, taskFragment);
         ft.commit();
+    }
+
+    public void showProgress() {
+        mProgressContainer.setVisibility(View.VISIBLE);
+    }
+
+    public void hideProgress() {
+        mProgressContainer.setVisibility(View.GONE);
+    }
+
+    public void addRequest(JsonObjectRequest request) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                showProgress();
+            }
+        });
+        mNetworkManager.getRequestQueue().add(request);
     }
 
     @Override
@@ -513,6 +620,7 @@ public class MainActivity extends ActionBarActivity
             @Override
             public void onClick(View v) {
                 mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
                 onBackPressed();
             }
         });
@@ -540,6 +648,7 @@ public class MainActivity extends ActionBarActivity
     public void onBackPressed() {
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
         Utility.hideKeyboard(this, f.getView());
+        updateFragment(f);
         if (mDrawerLayout.isDrawerOpen(mDrawer)) mDrawerLayout.closeDrawer(mDrawer);
         else super.onBackPressed();
     }
@@ -550,9 +659,8 @@ public class MainActivity extends ActionBarActivity
     public int getUserId() { return mUserId; }
     public void setFieldReportTask(Task task) { mFieldReportTask = task; }
     public Task getFieldReportTask() { return mFieldReportTask; }
-    public ProgressBar getSpinner() { return mProgress; }
     public GoogleApiClient getGoogleApiClient() { return mGoogleApiClient; }
-    public void setmGoogleApiClient(GoogleApiClient client) { mGoogleApiClient = client; }
+    public void setGoogleApiClient(GoogleApiClient client) { mGoogleApiClient = client; }
 
     /**
      * HELPERS FOR SITE FRAGMENT
@@ -560,4 +668,8 @@ public class MainActivity extends ActionBarActivity
 
     public void setSite(Site site) { mSite = site; }
     public Site getSite() { return mSite; }
+    public void setMapSite(Site site) { mMapSite = site; }
+    public Site getMapSite() { return mMapSite; }
+
+    public void post(Object object) { EventBus.getDefault().post(object); }
 }

@@ -120,6 +120,12 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
             }
         });
 
+        mRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                mRatingText.setText(String.valueOf(rating));
+            }
+        });
 
         mUrgent = (Switch) view.findViewById(R.id.field_report_urgent);
         mDescription = (EditText) view.findViewById(R.id.report_description);
@@ -336,13 +342,13 @@ public class AddFieldReportFragment extends Fragment implements View.OnClickList
         CreateFieldReportRequest createFieldReportRequest = new CreateFieldReportRequest(mParentActivity, fieldReport, params, new Response.Listener<FieldReport>() {
             @Override
             public void onResponse(FieldReport fieldReport) {
-                Log.e("successful field report", "creation");
+                Toast.makeText(mParentActivity, R.string.create_field_report, Toast.LENGTH_SHORT).show();
                 mTask.setFieldReport(fieldReport);
                 mParentActivity.getSupportFragmentManager().popBackStack();
             }
         });
 
-        mNetworkManager.getRequestQueue().add(createFieldReportRequest);
+        mParentActivity.addRequest(createFieldReportRequest);
     }
 
 

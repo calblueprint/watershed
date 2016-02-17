@@ -94,7 +94,7 @@ public class TaskAdapter extends BaseExpandableListAdapter {
             Calendar cal = Calendar.getInstance();
             cal.setTime(task.getDueDate());
             holder.mDay.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
-            holder.mMonth.setText(new DateFormatSymbols().getMonths()[cal.get(Calendar.MONTH) - 1].substring(0, 3));
+            holder.mMonth.setText(new DateFormatSymbols().getMonths()[cal.get(Calendar.MONTH)].substring(0, 3));
             holder.mYear.setText(String.valueOf(cal.get(Calendar.YEAR)));
         }
 

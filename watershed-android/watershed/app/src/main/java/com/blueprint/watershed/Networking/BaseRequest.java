@@ -29,14 +29,27 @@ public abstract class BaseRequest extends JsonObjectRequest {
     private Response.Listener listener;
     private Response.Listener errorListener;
 
-//    private static final String baseURL = "http://10.142.38.237:3000/api/v1/";
+    private static final String baseURL = "http://192.168.0.100:3000/api/v1/";
 //    private static final String baseURL = "https://intense-reaches-1457.herokuapp.com/api/v1/";
-    private static final String baseURL = "https://floating-bayou-8262.herokuapp.com/api/v1/";
+//    private static final String baseURL = "https://floating-bayou-8262.herokuapp.com/api/v1/";
 
     public BaseRequest(int method, String url, JSONObject jsonRequest,
-                       final Response.Listener listener, final Response.Listener<APIError> errorListener,
+                       final Response.Listener<JSONObject> listener, final Response.Listener<APIError> errorListener,
                        final Activity activity) {
-        super(method, url, jsonRequest, listener, new Response.ErrorListener() {
+        super(method, url, jsonRequest, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                listener.onResponse(jsonObject);
+                if (activity instanceof MainActivity) {
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((MainActivity) activity).hideProgress();
+                        }
+                    });
+                }
+            }
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Log.e("Request Error", "Custom ErrorListener detected");
@@ -59,7 +72,8 @@ public abstract class BaseRequest extends JsonObjectRequest {
                                 JSONObject errorJsonObject = new JSONObject(errorJson);
                                 errorJson = errorJsonObject.getString("error");
                                 ObjectMapper mapper = getNetworkManager(activity).getObjectMapper();
-                                apiError = mapper.readValue(errorJson, new TypeReference<APIError>() {});
+                                apiError = mapper.readValue(errorJson, new TypeReference<APIError>() {
+                                });
                             } catch (Exception e) {
                                 Log.e("Json exception base", e.toString());
                             }
@@ -68,7 +82,16 @@ public abstract class BaseRequest extends JsonObjectRequest {
                     }
                 }
                 errorListener.onResponse(apiError);
-            }});
+                if (activity instanceof MainActivity) {
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((MainActivity) activity).hideProgress();
+                        }
+                    });
+                }
+            }
+        });
 
         this.listener = listener;
         this.errorListener = errorListener;

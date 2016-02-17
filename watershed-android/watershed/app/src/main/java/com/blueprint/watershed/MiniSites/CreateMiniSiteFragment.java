@@ -1,13 +1,12 @@
 package com.blueprint.watershed.MiniSites;
 
-import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Networking.MiniSites.CreateMiniSiteRequest;
 import com.blueprint.watershed.R;
 import com.blueprint.watershed.Sites.Site;
-import com.blueprint.watershed.Sites.SiteViewPagerFragment;
 import com.blueprint.watershed.Utilities.Utility;
 
 /**
@@ -44,13 +43,14 @@ public class CreateMiniSiteFragment extends MiniSiteAbstractFragment {
                 new CreateMiniSiteRequest(mParentActivity, miniSite, new Response.Listener<MiniSite>() {
                     @Override
                     public void onResponse(MiniSite miniSite) {
+                        mMiniSite = miniSite;
+                        Toast.makeText(mParentActivity, R.string.create_mini_site, Toast.LENGTH_SHORT).show();
                         Utility.hideKeyboard(mParentActivity, mLayout);
-                        SiteViewPagerFragment siteList = SiteViewPagerFragment.newInstance();
-                        mParentActivity.replaceFragment(siteList);
-                        Log.e("successful mini site", "creation");
+                        mParentActivity.getSupportFragmentManager().popBackStack();
+                        mParentActivity.replaceFragment(MiniSiteFragment.newInstance(mSite, miniSite));
                     }
                 });
 
-        mNetworkManager.getRequestQueue().add(createMiniSiteRequest);
+        mParentActivity.addRequest(createMiniSiteRequest);
     }
 }

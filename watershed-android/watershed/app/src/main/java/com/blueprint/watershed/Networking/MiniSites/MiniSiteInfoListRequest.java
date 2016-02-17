@@ -27,7 +27,7 @@ public class MiniSiteInfoListRequest extends BaseRequest {
                     public void onResponse(JSONObject jsonObject) {
                         try {
                             String miniSitesJson = jsonObject.get("mini_sites").toString();
-                            ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
+                            ObjectMapper mapper = getNetworkManager(activity).getObjectMapper();
                             ArrayList<MiniSite> miniSites = mapper.readValue(miniSitesJson, new TypeReference<ArrayList<MiniSite>>() {
                             });
                             listener.onResponse(miniSites);

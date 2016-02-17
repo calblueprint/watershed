@@ -1,7 +1,6 @@
 package com.blueprint.watershed.Tasks;
 
 import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.blueprint.watershed.Activities.MainActivity;
@@ -22,6 +22,8 @@ import com.blueprint.watershed.Networking.NetworkManager;
 import com.blueprint.watershed.Networking.Tasks.ClaimTaskRequest;
 import com.blueprint.watershed.Networking.Tasks.DeleteTaskRequest;
 import com.blueprint.watershed.R;
+import com.blueprint.watershed.Tasks.TaskList.TaskEnum;
+import com.blueprint.watershed.Tasks.TaskList.TaskEvent;
 import com.blueprint.watershed.Utilities.Utility;
 
 import java.text.SimpleDateFormat;
@@ -172,8 +174,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
     public void bottomButton() {
         if (mTask.getAssignee() == null) {
             claimTask();
-        }
-        if (mTask.getFieldReport() == null) {
+        } else if (mTask.getFieldReport() == null) {
             mParentActivity.setFieldReportTask(mTask);
             mParentActivity.replaceFragment(AddFieldReportFragment.newInstance(mTask, mTask.getMiniSite()));
         } else {
@@ -185,6 +186,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
         ClaimTaskRequest request = new ClaimTaskRequest(mParentActivity, mTask, new Response.Listener<Task>() {
             @Override
             public void onResponse(Task task) {
+                Toast.makeText(mParentActivity, R.string.claim_task, Toast.LENGTH_SHORT).show();
                 mTask = task;
                 refreshCompletion();
             }
@@ -229,6 +231,7 @@ public class TaskDetailFragment extends TaskAbstractFragment
         DeleteTaskRequest request = new DeleteTaskRequest(mParentActivity, mTask, new Response.Listener<ArrayList<Task>>() {
             @Override
             public void onResponse(ArrayList<Task> tasks) {
+                mParentActivity.post(new TaskEvent(mTask, TaskEnum.TASK_DELETED));
                 mParentActivity.getSupportFragmentManager().popBackStack();
             }
         });
@@ -238,7 +241,6 @@ public class TaskDetailFragment extends TaskAbstractFragment
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Resources resources = mParentActivity.getResources();
-        mParentActivity.setToolBarColor(resources.getColor(R.color.ws_blue), resources.getColor(R.color.ws_title_bar));
+        mParentActivity.setToolBarDefault();
     }
 }

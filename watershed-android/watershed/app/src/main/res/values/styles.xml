@@ -15,6 +15,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="android:windowActionBar">false</item>
+        <item name="android:windowActionBarOverlay">true</item>
         <item name="android:actionBarStyle">@style/WsActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/WsActionBarTabText</item>
         <item name="android:actionBarTabBarStyle">@style/WsActionBarTabView</item>
@@ -43,12 +44,6 @@
 
     <style name="WsActionBarTabView" parent="@android:style/Widget.Holo.ActionBar.TabBar">
         <item name="android:background">@color/ws_blue</item>
-    </style>
-
-    <style name="BackGroundImageView">
-        <item name="android:alpha">0.5</item>
-        <item name="android:scaleType">fitXY</item>
-        <item name="android:src">@drawable/landing_page_photo</item>
     </style>
 
     <style name="WsLabel">

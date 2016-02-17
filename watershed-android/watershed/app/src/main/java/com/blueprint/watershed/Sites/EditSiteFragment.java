@@ -5,15 +5,13 @@ import android.os.Bundle;
 
 public class EditSiteFragment extends SiteAbstractFragment {
 
-    private Site mSite;
-
-    public static EditSiteFragment newInstance(Site site){
+    public static EditSiteFragment newInstance(Site site) {
         EditSiteFragment fragment = new EditSiteFragment();
         fragment.setSite(site);
         return fragment;
     }
 
-    private void setSite(Site site){ mSite = site; }
+    private void setSite(Site site) { mSite = site; }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
